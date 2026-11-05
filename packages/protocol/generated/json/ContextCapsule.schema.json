@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "focusedRegion": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "width": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "x": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "y": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "type": "object"
+    },
+    "page": {
+      "additionalProperties": false,
+      "properties": {
+        "handles": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "bbox": {
+                "additionalProperties": false,
+                "properties": {
+                  "height": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "width": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "x": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "y": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "width",
+                  "height"
+                ],
+                "type": "object"
+              },
+              "id": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "role",
+              "label",
+              "value",
+              "bbox"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "url": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "handles"
+      ],
+      "type": "object"
+    },
+    "screen": {
+      "additionalProperties": false,
+      "properties": {
+        "image": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "ocrLines": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "bbox": {
+                "additionalProperties": false,
+                "properties": {
+                  "height": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "width": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "x": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "y": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y",
+                  "width",
+                  "height"
+                ],
+                "type": "object"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "bbox"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "screenIndex": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "screenIndex",
+        "summary",
+        "ocrLines"
+      ],
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
