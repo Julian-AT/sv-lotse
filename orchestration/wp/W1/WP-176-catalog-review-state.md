@@ -5,11 +5,13 @@ wave: W1
 lane: knowledge
 risk: normal
 codex_effort: high
-depends_on: [WP-101]
+depends_on: [WP-101, WP-170]
 fr: [NFR-13, FR-O1, FR-D10]
 owns:
   - packages/knowledge/src/schemas/**
   - packages/knowledge/test/schemas/**
+  - packages/knowledge/src/loader/**
+  - packages/knowledge/test/loader/**
   - packages/knowledge/offices/README.md
   - packages/knowledge/forms/README.md
   - packages/knowledge/catalog/README.md
@@ -46,7 +48,8 @@ explicit and additive.
 3. `Office` gains optional `name_simple` and optional `opening_hours` (structured per weekday with
    free-text notes, quoted from the source).
 4. The loader and `catalog:load` report the number of records awaiting review per kind (console
-   summary); nothing else changes in loader behaviour.
+   summary), and the database load preserves each form schema's declared `status` (`auto` or
+   `verified`) instead of always writing `verified`; regression tests for both.
 5. Update the data-folder READMEs: how review state works and an example of each.
 
 ## Acceptance criteria
