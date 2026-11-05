@@ -7,9 +7,18 @@ import { fileURLToPath } from "node:url";
 import { z } from "zod";
 import * as protocol from "../src/index.ts";
 import { projectSwiftSchema, restoreSwiftUnions } from "./swift.ts";
+import { generateSwiftValidation } from "./swift-validation.ts";
+import {
+  generateSwiftValidationFixture,
+  swiftValidationFixtureDirectory,
+} from "./swift-validation-fixture.ts";
 
 const packageRoot = fileURLToPath(new URL("../", import.meta.url));
-export const generatedPaths = ["generated/json", "swift/Sources/LotseProtocol"] as const;
+export const generatedPaths = [
+  "generated/json",
+  "swift/Sources/LotseProtocol",
+  swiftValidationFixtureDirectory,
+] as const;
 
 export function stableJson(value: unknown): string {
   return `${JSON.stringify(
@@ -106,10 +115,21 @@ export async function generate(outputRoot: string): Promise<void> {
     );
     if (result.error) throw result.error;
     if (result.status !== 0) throw new Error(`quicktype failed: ${result.stderr}`);
-    await writeFile(swiftPath, restoreSwiftUnions(await readFile(swiftPath, "utf8"), unions));
+    const validated = generateSwiftValidation(
+      await readFile(swiftPath, "utf8"),
+      swiftSchema,
+      unions,
+    );
+    await writeFile(swiftPath, restoreSwiftUnions(validated, unions));
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }
+  const fixtureDirectory = join(outputRoot, swiftValidationFixtureDirectory);
+  await mkdir(fixtureDirectory, { recursive: true });
+  await writeFile(
+    join(fixtureDirectory, "ValidationFixture.swift"),
+    generateSwiftValidationFixture(),
+  );
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

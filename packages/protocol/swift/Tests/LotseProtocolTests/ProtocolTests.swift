@@ -17,38 +17,44 @@ final class ProtocolTests: XCTestCase {
         return try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys, .fragmentsAllowed])
     }
 
-    private func roundTrip<Value: Codable & Sendable & Equatable>(
+    private func roundTrip<Value: ProtocolValidating & Sendable & Equatable>(
         _ type: Value.Type, _ data: Data
     ) throws -> Data {
-        let value = try JSONDecoder().decode(type, from: data)
+        let value: Value = try decodeValidated(data)
         let encoded = try JSONEncoder().encode(value)
-        XCTAssertEqual(value, try JSONDecoder().decode(type, from: encoded))
+        let decoded: Value = try decodeValidated(encoded)
+        XCTAssertEqual(value, decoded)
         return encoded
     }
 
     private func roundTrip(_ name: String, _ data: Data) throws -> Data {
-        switch name {
-        case "BridgeHello": return try roundTrip(BridgeHello.self, data)
-        case "ClientHello": return try roundTrip(ClientHello.self, data)
-        case "Transcript": return try roundTrip(Transcript.self, data)
-        case "TurnRequest": return try roundTrip(TurnRequest.self, data)
-        case "ContextCapsule": return try roundTrip(ContextCapsule.self, data)
-        case "SpeechSegment": return try roundTrip(SpeechSegment.self, data)
-        case "Action": return try roundTrip(Action.self, data)
-        case "ToolInvocation": return try roundTrip(ToolInvocation.self, data)
-        case "ToolOutput": return try roundTrip(ToolOutput.self, data)
-        case "ApprovalContext": return try roundTrip(ApprovalContext.self, data)
-        case "ApprovalDecision": return try roundTrip(ApprovalDecision.self, data)
-        case "ActionResult": return try roundTrip(ActionResult.self, data)
-        case "SpeechControl": return try roundTrip(SpeechControl.self, data)
-        case "TargetRect": return try roundTrip(TargetRect.self, data)
-        case "Fact": return try roundTrip(Fact.self, data)
-        case "CaseEvent": return try roundTrip(CaseEvent.self, data)
-        case "JobProgress": return try roundTrip(JobProgress.self, data)
-        case "SafetyNotice": return try roundTrip(SafetyNotice.self, data)
-        case "Target": return try roundTrip(Target.self, data)
-        default: throw NSError(domain: "Uncovered protocol fixture", code: 1)
+        let codecs: [String: (Data) throws -> Data] = [
+            "BridgeHello": { try self.roundTrip(BridgeHello.self, $0) },
+            "ClientHello": { try self.roundTrip(ClientHello.self, $0) },
+            "Transcript": { try self.roundTrip(Transcript.self, $0) },
+            "TurnRequest": { try self.roundTrip(TurnRequest.self, $0) },
+            "ContextCapsule": { try self.roundTrip(ContextCapsule.self, $0) },
+            "SpeechSegment": { try self.roundTrip(SpeechSegment.self, $0) },
+            "Action": { try self.roundTrip(Action.self, $0) },
+            "ToolInvocation": { try self.roundTrip(ToolInvocation.self, $0) },
+            "ToolOutput": { try self.roundTrip(ToolOutput.self, $0) },
+            "ApprovalContext": { try self.roundTrip(ApprovalContext.self, $0) },
+            "ApprovalDecision": { try self.roundTrip(ApprovalDecision.self, $0) },
+            "ActionResult": { try self.roundTrip(ActionResult.self, $0) },
+            "SpeechControl": { try self.roundTrip(SpeechControl.self, $0) },
+            "TargetRect": { try self.roundTrip(TargetRect.self, $0) },
+            "Fact": { try self.roundTrip(Fact.self, $0) },
+            "CaseEvent": { try self.roundTrip(CaseEvent.self, $0) },
+            "JobProgress": { try self.roundTrip(JobProgress.self, $0) },
+            "SafetyNotice": { try self.roundTrip(SafetyNotice.self, $0) },
+            "Target": { try self.roundTrip(Target.self, $0) },
+            "BridgeToNative": { try self.roundTrip(BridgeToNative.self, $0) },
+            "BridgeToWorkspace": { try self.roundTrip(BridgeToWorkspace.self, $0) }
+        ]
+        guard let codec = codecs[name] else {
+            throw NSError(domain: "Uncovered protocol fixture", code: 1)
         }
+        return try codec(data)
     }
 
     func testAC3EveryValidFixtureRoundTripsWithoutChangingJSON() throws {
@@ -70,7 +76,7 @@ final class ProtocolTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(count, 19)
     }
 
-    func testAC3InvalidFixturesRespectSwiftTypeConstraints() throws {
+    func testAC1EveryInvalidFixtureIsRejectedByValidatedDecoding() throws {
         let directories = try FileManager.default.contentsOfDirectory(
             at: fixtureRoot, includingPropertiesForKeys: nil
         ).filter { $0.hasDirectoryPath }
@@ -79,20 +85,69 @@ final class ProtocolTests: XCTestCase {
                 at: directory, includingPropertiesForKeys: nil
             ).filter({ $0.lastPathComponent.hasPrefix("invalid") && $0.pathExtension == "json" }) {
                 let data = try Data(contentsOf: fixture)
-                if fixture.lastPathComponent.hasPrefix("invalid-uri-") {
-                    // URI formats are schema constraints; Codable represents them as strings.
-                    let encoded = try roundTrip(directory.lastPathComponent, data)
-                    XCTAssertEqual(try normalize(data), try normalize(encoded), fixture.path)
-                } else {
-                    XCTAssertThrowsError(try roundTrip(directory.lastPathComponent, data), fixture.path)
-                }
+                XCTAssertThrowsError(try roundTrip(directory.lastPathComponent, data), fixture.path)
             }
+        }
+    }
+
+    func testAC1SharedConstraintFixturesAgreeWithZod() throws {
+        struct Fixture: Decodable {
+            let name: String
+            let schema: String
+            let valid: Bool
+            let value: JSONValue
+        }
+        let url = fixtureRoot.deletingLastPathComponent()
+            .appendingPathComponent("test/fixtures/validation.json")
+        let fixtures = try JSONDecoder().decode([Fixture].self, from: Data(contentsOf: url))
+        XCTAssertGreaterThan(fixtures.count, 40)
+        for fixture in fixtures {
+            let data = try JSONEncoder().encode(fixture.value)
+            if fixture.valid {
+                XCTAssertNoThrow(try roundTrip(fixture.schema, data), fixture.name)
+            } else {
+                XCTAssertThrowsError(try roundTrip(fixture.schema, data), fixture.name)
+            }
+        }
+    }
+
+    func testNFR13ValidateAlsoRejectsInvalidValuesConstructedInSwift() throws {
+        let result = ActionResult(actionID: "", confidence: 1.01, failureReason: nil,
+                                  resolvedBy: .ui, success: true)
+        XCTAssertThrowsError(try result.validate())
+        let point = TargetPoint(confidence: 0.5, kind: .point, screenIndex: -1, x: 0, y: 1)
+        XCTAssertThrowsError(try point.validate())
+        let target = Target.point(point)
+        XCTAssertThrowsError(try target.validate())
+        let request = TurnRequest(actionResults: [result], capsule: ContextCapsule(
+            focusedRegion: nil, page: nil, screen: nil
+        ), caseID: nil, inputKind: .text, language: nil, subjectID: nil)
+        XCTAssertThrowsError(try request.validate()) { error in
+            XCTAssertEqual(error as? ProtocolValidationError,
+                           ProtocolValidationError(path: ["actionResults", "0", "actionId"],
+                                                   keyword: "minLength"))
+        }
+    }
+
+    func testNFR13JSONValuesKeepOpenKeysAndRecursivelyRejectNonfiniteNumbers() throws {
+        let valid = JSONValue.unionMap(["additional": .unionArray([.null, .double(0.5)])])
+        XCTAssertNoThrow(try valid.validate())
+        let encoded = try JSONEncoder().encode(valid)
+        let decoded: JSONValue = try decodeValidated(encoded)
+        XCTAssertEqual(decoded, valid)
+        let invalid = JSONValue.unionMap(["additional": .unionArray([.double(.infinity)])])
+        XCTAssertThrowsError(try invalid.validate()) { error in
+            XCTAssertEqual(error as? ProtocolValidationError,
+                           ProtocolValidationError(path: ["additional", "0"], keyword: "type"))
         }
     }
 
     func testFRC5BridgeEnvelopesPreserveDiscriminantsAndRejectMismatchedPayloads() throws {
         let workspace = ["BridgeHello", "Transcript", "ToolOutput", "ApprovalDecision", "ActionResult", "SpeechControl"]
-        let native = ["SpeechSegment", "Action", "TargetRect", "ToolInvocation", "ApprovalContext", "JobProgress", "SafetyNotice", "SpeechControl"]
+        let native = [
+            "SpeechSegment", "Action", "TargetRect", "ToolInvocation",
+            "ApprovalContext", "JobProgress", "SafetyNotice", "SpeechControl"
+        ]
         for (names, isWorkspace) in [(workspace, true), (native, false)] {
             for name in names {
                 let payload = try JSONSerialization.jsonObject(with: Data(contentsOf:
@@ -111,17 +166,17 @@ final class ProtocolTests: XCTestCase {
                     invalid[key] = value
                     let data = try JSONSerialization.data(withJSONObject: invalid)
                     if isWorkspace {
-                        XCTAssertThrowsError(try JSONDecoder().decode(BridgeToWorkspace.self, from: data))
+                        XCTAssertThrowsError(try decodeValidated(data) as BridgeToWorkspace)
                     } else {
-                        XCTAssertThrowsError(try JSONDecoder().decode(BridgeToNative.self, from: data))
+                        XCTAssertThrowsError(try decodeValidated(data) as BridgeToNative)
                     }
                 }
                 envelope["payload"] = ["unexpected": true]
                 let invalidPayload = try JSONSerialization.data(withJSONObject: envelope)
                 if isWorkspace {
-                    XCTAssertThrowsError(try JSONDecoder().decode(BridgeToWorkspace.self, from: invalidPayload))
+                    XCTAssertThrowsError(try decodeValidated(invalidPayload) as BridgeToWorkspace)
                 } else {
-                    XCTAssertThrowsError(try JSONDecoder().decode(BridgeToNative.self, from: invalidPayload))
+                    XCTAssertThrowsError(try decodeValidated(invalidPayload) as BridgeToNative)
                 }
             }
         }

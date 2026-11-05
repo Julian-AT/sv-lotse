@@ -7,7 +7,9 @@ let package = Package(
     products: [.library(name: "LotseProtocol", targets: ["LotseProtocol"])],
     targets: [
         .target(name: "LotseProtocol"),
-        .testTarget(name: "LotseProtocolTests", dependencies: ["LotseProtocol"])
+        .testTarget(name: "LotseProtocolTests", dependencies: ["LotseProtocol"]),
+        // Isolate the synthetic generated types from the frozen protocol module.
+        .testTarget(name: "SwiftValidationGeneratorTests")
     ],
     swiftLanguageModes: [.v6]
 )

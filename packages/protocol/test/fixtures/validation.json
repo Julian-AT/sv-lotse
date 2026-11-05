@@ -1,0 +1,1619 @@
+[
+  {
+    "name": "empty action id",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": "person-name"
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": 80
+      },
+      "sentenceIndex": 1
+    }
+  },
+  {
+    "name": "negative sentence index",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "action-type",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": "person-name"
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": 80
+      },
+      "sentenceIndex": -1
+    }
+  },
+  {
+    "name": "fractional sentence index",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "action-type",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": "person-name"
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": 80
+      },
+      "sentenceIndex": 0.5
+    }
+  },
+  {
+    "name": "unsafe sentence index",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "action-type",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": "person-name"
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": 80
+      },
+      "sentenceIndex": 9007199254740992
+    }
+  },
+  {
+    "name": "empty nested target id",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "action-type",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": ""
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": 80
+      },
+      "sentenceIndex": 1
+    }
+  },
+  {
+    "name": "zero typing pace",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "action-type",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": "person-name"
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": 0
+      },
+      "sentenceIndex": 1
+    }
+  },
+  {
+    "name": "negative typing pace",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "action-type",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": "person-name"
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": -0.1
+      },
+      "sentenceIndex": 1
+    }
+  },
+  {
+    "name": "nested unknown payload key",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "action-type",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": "person-name"
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": 80,
+        "unexpected": true
+      },
+      "sentenceIndex": 1
+    }
+  },
+  {
+    "name": "confidence outside unit interval -0.01",
+    "schema": "ActionResult",
+    "valid": false,
+    "value": {
+      "actionId": "action-highlight",
+      "resolvedBy": "ocr",
+      "confidence": -0.01,
+      "success": true
+    }
+  },
+  {
+    "name": "confidence outside unit interval 1.01",
+    "schema": "ActionResult",
+    "valid": false,
+    "value": {
+      "actionId": "action-highlight",
+      "resolvedBy": "ocr",
+      "confidence": 1.01,
+      "success": true
+    }
+  },
+  {
+    "name": "confidence boundary 0",
+    "schema": "ActionResult",
+    "valid": true,
+    "value": {
+      "actionId": "action-highlight",
+      "resolvedBy": "ocr",
+      "confidence": 0,
+      "success": true
+    }
+  },
+  {
+    "name": "confidence boundary 1",
+    "schema": "ActionResult",
+    "valid": true,
+    "value": {
+      "actionId": "action-highlight",
+      "resolvedBy": "ocr",
+      "confidence": 1,
+      "success": true
+    }
+  },
+  {
+    "name": "nonpositive scale 0",
+    "schema": "TargetRect",
+    "valid": false,
+    "value": {
+      "targetId": "person-name",
+      "rect": {
+        "x": 140,
+        "y": 320,
+        "width": 280,
+        "height": 32
+      },
+      "scale": 0,
+      "visible": true
+    }
+  },
+  {
+    "name": "nonpositive scale -1",
+    "schema": "TargetRect",
+    "valid": false,
+    "value": {
+      "targetId": "person-name",
+      "rect": {
+        "x": 140,
+        "y": 320,
+        "width": 280,
+        "height": 32
+      },
+      "scale": -1,
+      "visible": true
+    }
+  },
+  {
+    "name": "positive scale",
+    "schema": "TargetRect",
+    "valid": true,
+    "value": {
+      "targetId": "person-name",
+      "rect": {
+        "x": 140,
+        "y": 320,
+        "width": 280,
+        "height": 32
+      },
+      "scale": 0.1,
+      "visible": true
+    }
+  },
+  {
+    "name": "negative window width",
+    "schema": "TargetRect",
+    "valid": false,
+    "value": {
+      "targetId": "person-name",
+      "rect": {
+        "x": 140,
+        "y": 320,
+        "width": -1,
+        "height": 32
+      },
+      "scale": 2,
+      "visible": true
+    }
+  },
+  {
+    "name": "window position can be negative",
+    "schema": "TargetRect",
+    "valid": true,
+    "value": {
+      "targetId": "person-name",
+      "rect": {
+        "x": -100,
+        "y": 320,
+        "width": 280,
+        "height": 32
+      },
+      "scale": 2,
+      "visible": true
+    }
+  },
+  {
+    "name": "empty optional case id",
+    "schema": "TurnRequest",
+    "valid": false,
+    "value": {
+      "caseId": "",
+      "subjectId": "subject-person",
+      "inputKind": "transcript",
+      "language": "de-AT",
+      "capsule": {
+        "screen": {
+          "screenIndex": 0,
+          "summary": "Entlassungsbrief, Seite 5",
+          "ocrLines": [
+            {
+              "text": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+              "bbox": {
+                "x": 0.12,
+                "y": 0.25,
+                "width": 0.7,
+                "height": 0.04
+              }
+            }
+          ],
+          "image": "discharge-page-image"
+        },
+        "page": {
+          "url": "https://www.sozialversicherung.at/",
+          "handles": [
+            {
+              "id": "field-person-name",
+              "role": "textbox",
+              "label": "Name",
+              "value": "",
+              "bbox": {
+                "x": 0.12,
+                "y": 0.25,
+                "width": 0.7,
+                "height": 0.04
+              }
+            }
+          ]
+        },
+        "focusedRegion": {
+          "x": 0.12,
+          "y": 0.25,
+          "width": 0.7,
+          "height": 0.04
+        }
+      },
+      "actionResults": [
+        {
+          "actionId": "action-highlight",
+          "resolvedBy": "ocr",
+          "confidence": 0.99,
+          "success": true
+        }
+      ]
+    }
+  },
+  {
+    "name": "null optional case id",
+    "schema": "TurnRequest",
+    "valid": false,
+    "value": {
+      "caseId": null,
+      "subjectId": "subject-person",
+      "inputKind": "transcript",
+      "language": "de-AT",
+      "capsule": {
+        "screen": {
+          "screenIndex": 0,
+          "summary": "Entlassungsbrief, Seite 5",
+          "ocrLines": [
+            {
+              "text": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+              "bbox": {
+                "x": 0.12,
+                "y": 0.25,
+                "width": 0.7,
+                "height": 0.04
+              }
+            }
+          ],
+          "image": "discharge-page-image"
+        },
+        "page": {
+          "url": "https://www.sozialversicherung.at/",
+          "handles": [
+            {
+              "id": "field-person-name",
+              "role": "textbox",
+              "label": "Name",
+              "value": "",
+              "bbox": {
+                "x": 0.12,
+                "y": 0.25,
+                "width": 0.7,
+                "height": 0.04
+              }
+            }
+          ]
+        },
+        "focusedRegion": {
+          "x": 0.12,
+          "y": 0.25,
+          "width": 0.7,
+          "height": 0.04
+        }
+      },
+      "actionResults": [
+        {
+          "actionId": "action-highlight",
+          "resolvedBy": "ocr",
+          "confidence": 0.99,
+          "success": true
+        }
+      ]
+    }
+  },
+  {
+    "name": "index limit 0",
+    "schema": "SpeechSegment",
+    "valid": true,
+    "value": {
+      "turnId": "turn-document",
+      "index": 0,
+      "text": "Hier steht die dokumentierte Empfehlung.",
+      "language": "de-AT",
+      "citations": [
+        {
+          "passageId": "passage-recommendation",
+          "url": "https://lotse.example/api/documents/document-discharge",
+          "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+        }
+      ],
+      "actionIds": ["action-highlight"]
+    }
+  },
+  {
+    "name": "index limit 9007199254740991",
+    "schema": "SpeechSegment",
+    "valid": true,
+    "value": {
+      "turnId": "turn-document",
+      "index": 9007199254740991,
+      "text": "Hier steht die dokumentierte Empfehlung.",
+      "language": "de-AT",
+      "citations": [
+        {
+          "passageId": "passage-recommendation",
+          "url": "https://lotse.example/api/documents/document-discharge",
+          "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+        }
+      ],
+      "actionIds": ["action-highlight"]
+    }
+  },
+  {
+    "name": "index limit 9007199254740992",
+    "schema": "SpeechSegment",
+    "valid": false,
+    "value": {
+      "turnId": "turn-document",
+      "index": 9007199254740992,
+      "text": "Hier steht die dokumentierte Empfehlung.",
+      "language": "de-AT",
+      "citations": [
+        {
+          "passageId": "passage-recommendation",
+          "url": "https://lotse.example/api/documents/document-discharge",
+          "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+        }
+      ],
+      "actionIds": ["action-highlight"]
+    }
+  },
+  {
+    "name": "index limit -1",
+    "schema": "SpeechSegment",
+    "valid": false,
+    "value": {
+      "turnId": "turn-document",
+      "index": -1,
+      "text": "Hier steht die dokumentierte Empfehlung.",
+      "language": "de-AT",
+      "citations": [
+        {
+          "passageId": "passage-recommendation",
+          "url": "https://lotse.example/api/documents/document-discharge",
+          "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+        }
+      ],
+      "actionIds": ["action-highlight"]
+    }
+  },
+  {
+    "name": "index limit 0.5",
+    "schema": "SpeechSegment",
+    "valid": false,
+    "value": {
+      "turnId": "turn-document",
+      "index": 0.5,
+      "text": "Hier steht die dokumentierte Empfehlung.",
+      "language": "de-AT",
+      "citations": [
+        {
+          "passageId": "passage-recommendation",
+          "url": "https://lotse.example/api/documents/document-discharge",
+          "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+        }
+      ],
+      "actionIds": ["action-highlight"]
+    }
+  },
+  {
+    "name": "empty id in array",
+    "schema": "SpeechSegment",
+    "valid": false,
+    "value": {
+      "turnId": "turn-document",
+      "index": 0,
+      "text": "Hier steht die dokumentierte Empfehlung.",
+      "language": "de-AT",
+      "citations": [
+        {
+          "passageId": "passage-recommendation",
+          "url": "https://lotse.example/api/documents/document-discharge",
+          "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+        }
+      ],
+      "actionIds": [""]
+    }
+  },
+  {
+    "name": "invalid language pattern",
+    "schema": "SpeechSegment",
+    "valid": false,
+    "value": {
+      "turnId": "turn-document",
+      "index": 0,
+      "text": "Hier steht die dokumentierte Empfehlung.",
+      "language": "de_AT",
+      "citations": [
+        {
+          "passageId": "passage-recommendation",
+          "url": "https://lotse.example/api/documents/document-discharge",
+          "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+        }
+      ],
+      "actionIds": ["action-highlight"]
+    }
+  },
+  {
+    "name": "valid language pattern",
+    "schema": "SpeechSegment",
+    "valid": true,
+    "value": {
+      "turnId": "turn-document",
+      "index": 0,
+      "text": "Hier steht die dokumentierte Empfehlung.",
+      "language": "de-AT",
+      "citations": [
+        {
+          "passageId": "passage-recommendation",
+          "url": "https://lotse.example/api/documents/document-discharge",
+          "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+        }
+      ],
+      "actionIds": ["action-highlight"]
+    }
+  },
+  {
+    "name": "invalid hash pattern",
+    "schema": "ApprovalContext",
+    "valid": false,
+    "value": {
+      "approvalId": "approval-field-group",
+      "caseId": "case-application",
+      "toolCallId": "tool-confirm-fields",
+      "toolName": "form.commitGroup",
+      "inputHash": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "provenance": [
+        {
+          "factId": "fact-recommendation",
+          "source": {
+            "kind": "document",
+            "documentId": "document-discharge",
+            "page": 5,
+            "bbox": {
+              "x": 0.12,
+              "y": 0.25,
+              "width": 0.7,
+              "height": 0.04
+            },
+            "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+          }
+        }
+      ],
+      "summary": "Den angezeigten Namen im Formularentwurf bestätigen."
+    }
+  },
+  {
+    "name": "short hash",
+    "schema": "ApprovalContext",
+    "valid": false,
+    "value": {
+      "approvalId": "approval-field-group",
+      "caseId": "case-application",
+      "toolCallId": "tool-confirm-fields",
+      "toolName": "form.commitGroup",
+      "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "provenance": [
+        {
+          "factId": "fact-recommendation",
+          "source": {
+            "kind": "document",
+            "documentId": "document-discharge",
+            "page": 5,
+            "bbox": {
+              "x": 0.12,
+              "y": 0.25,
+              "width": 0.7,
+              "height": 0.04
+            },
+            "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+          }
+        }
+      ],
+      "summary": "Den angezeigten Namen im Formularentwurf bestätigen."
+    }
+  },
+  {
+    "name": "hash pattern unanchored suffix",
+    "schema": "ApprovalContext",
+    "valid": false,
+    "value": {
+      "approvalId": "approval-field-group",
+      "caseId": "case-application",
+      "toolCallId": "tool-confirm-fields",
+      "toolName": "form.commitGroup",
+      "inputHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaax",
+      "provenance": [
+        {
+          "factId": "fact-recommendation",
+          "source": {
+            "kind": "document",
+            "documentId": "document-discharge",
+            "page": 5,
+            "bbox": {
+              "x": 0.12,
+              "y": 0.25,
+              "width": 0.7,
+              "height": 0.04
+            },
+            "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+          }
+        }
+      ],
+      "summary": "Den angezeigten Namen im Formularentwurf bestätigen."
+    }
+  },
+  {
+    "name": "semver '1.2.3'",
+    "schema": "BridgeHello",
+    "valid": true,
+    "value": {
+      "appVersion": "1.2.3",
+      "protocolVersion": "1.0.0",
+      "capabilities": {
+        "overlay": true,
+        "accessibility": true,
+        "ocr": true,
+        "onDeviceModel": false,
+        "onDeviceContextSize": 0
+      }
+    }
+  },
+  {
+    "name": "semver '1.2.3-rc.1+build'",
+    "schema": "BridgeHello",
+    "valid": true,
+    "value": {
+      "appVersion": "1.2.3-rc.1+build",
+      "protocolVersion": "1.0.0",
+      "capabilities": {
+        "overlay": true,
+        "accessibility": true,
+        "ocr": true,
+        "onDeviceModel": false,
+        "onDeviceContextSize": 0
+      }
+    }
+  },
+  {
+    "name": "semver '01.2.3'",
+    "schema": "BridgeHello",
+    "valid": false,
+    "value": {
+      "appVersion": "01.2.3",
+      "protocolVersion": "1.0.0",
+      "capabilities": {
+        "overlay": true,
+        "accessibility": true,
+        "ocr": true,
+        "onDeviceModel": false,
+        "onDeviceContextSize": 0
+      }
+    }
+  },
+  {
+    "name": "semver '1.٢.3'",
+    "schema": "BridgeHello",
+    "valid": false,
+    "value": {
+      "appVersion": "1.٢.3",
+      "protocolVersion": "1.0.0",
+      "capabilities": {
+        "overlay": true,
+        "accessibility": true,
+        "ocr": true,
+        "onDeviceModel": false,
+        "onDeviceContextSize": 0
+      }
+    }
+  },
+  {
+    "name": "semver '1.2.3\\r'",
+    "schema": "BridgeHello",
+    "valid": false,
+    "value": {
+      "appVersion": "1.2.3\r",
+      "protocolVersion": "1.0.0",
+      "capabilities": {
+        "overlay": true,
+        "accessibility": true,
+        "ocr": true,
+        "onDeviceModel": false,
+        "onDeviceContextSize": 0
+      }
+    }
+  },
+  {
+    "name": "semver '1.2.3\\n'",
+    "schema": "BridgeHello",
+    "valid": false,
+    "value": {
+      "appVersion": "1.2.3\n",
+      "protocolVersion": "1.0.0",
+      "capabilities": {
+        "overlay": true,
+        "accessibility": true,
+        "ocr": true,
+        "onDeviceModel": false,
+        "onDeviceContextSize": 0
+      }
+    }
+  },
+  {
+    "name": "unknown protocol version",
+    "schema": "BridgeHello",
+    "valid": false,
+    "value": {
+      "appVersion": "0.1.0",
+      "protocolVersion": "2.0.0",
+      "capabilities": {
+        "overlay": true,
+        "accessibility": true,
+        "ocr": true,
+        "onDeviceModel": false,
+        "onDeviceContextSize": 0
+      }
+    }
+  },
+  {
+    "name": "unknown top-level key",
+    "schema": "Action",
+    "valid": false,
+    "value": {
+      "id": "action-type",
+      "kind": "type",
+      "target": {
+        "kind": "form",
+        "formInstanceId": "form-instance-draft",
+        "fieldId": "person-name"
+      },
+      "payload": {
+        "value": "Anna Berger",
+        "provenance": {
+          "factId": "fact-name",
+          "source": {
+            "kind": "statement",
+            "turnId": "turn-name",
+            "quote": "Mein Name ist Anna Berger."
+          }
+        },
+        "pace": 80
+      },
+      "sentenceIndex": 1,
+      "unexpected": true
+    }
+  },
+  {
+    "name": "nested empty id in union",
+    "schema": "ToolOutput",
+    "valid": false,
+    "value": {
+      "toolCallId": "tool-highlight",
+      "output": {
+        "actionId": "",
+        "confidence": 0.5,
+        "resolvedBy": "ui",
+        "success": true
+      }
+    }
+  },
+  {
+    "name": "nested bounding box above maximum",
+    "schema": "ContextCapsule",
+    "valid": false,
+    "value": {
+      "screen": {
+        "screenIndex": 0,
+        "summary": "Entlassungsbrief, Seite 5",
+        "ocrLines": [
+          {
+            "text": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+            "bbox": {
+              "x": 0.12,
+              "y": 0.25,
+              "width": 0.7,
+              "height": 0.04
+            }
+          }
+        ],
+        "image": "discharge-page-image"
+      },
+      "page": {
+        "url": "https://www.sozialversicherung.at/",
+        "handles": [
+          {
+            "id": "field-person-name",
+            "role": "textbox",
+            "label": "Name",
+            "value": "",
+            "bbox": {
+              "x": 0.12,
+              "y": 0.25,
+              "width": 0.7,
+              "height": 0.04
+            }
+          }
+        ]
+      },
+      "focusedRegion": {
+        "x": 0,
+        "y": 0,
+        "width": 1.1,
+        "height": 1
+      }
+    }
+  },
+  {
+    "name": "page is a positive integer 0",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "text",
+      "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+      "page": 0
+    }
+  },
+  {
+    "name": "page is a positive integer -1",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "text",
+      "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+      "page": -1
+    }
+  },
+  {
+    "name": "page is a positive integer 0.5",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "text",
+      "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+      "page": 0.5
+    }
+  },
+  {
+    "name": "page is a positive integer 1",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "text",
+      "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+      "page": 1
+    }
+  },
+  {
+    "name": "URI 'https://example.com/entlassungsbrief%20%C3%B6sterreich'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/entlassungsbrief%20%C3%B6sterreich"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/%c3%b6sterreich?q=Pr%C3%BCfung#page-5'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/%c3%b6sterreich?q=Pr%C3%BCfung#page-5"
+    }
+  },
+  {
+    "name": "URI 'https://user:password@example.com:443/document?x=1&y=2#page-5'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://user:password@example.com:443/document?x=1&y=2#page-5"
+    }
+  },
+  {
+    "name": "URI 'http://[2001:db8::1]/document'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "http://[2001:db8::1]/document"
+    }
+  },
+  {
+    "name": "URI 'http://[::ffff:192.0.2.1]/document'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "http://[::ffff:192.0.2.1]/document"
+    }
+  },
+  {
+    "name": "URI 'http://[v1.example]/document'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "http://[v1.example]/document"
+    }
+  },
+  {
+    "name": "URI 'urn:isbn:0451450523'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "urn:isbn:0451450523"
+    }
+  },
+  {
+    "name": "URI 'mailto:beratung@example.com'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "mailto:beratung@example.com"
+    }
+  },
+  {
+    "name": "URI 'file:///documents/discharge.pdf'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "file:///documents/discharge.pdf"
+    }
+  },
+  {
+    "name": "URI 'https://example.com:invalid/'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com:invalid/"
+    }
+  },
+  {
+    "name": "URI 'HTTPS://EXAMPLE.COM/path'",
+    "schema": "Target",
+    "valid": true,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "HTTPS://EXAMPLE.COM/path"
+    }
+  },
+  {
+    "name": "URI 'custom:'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "custom:"
+    }
+  },
+  {
+    "name": "URI '/documents/discharge.pdf'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "/documents/discharge.pdf"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/raw space'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/raw space"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/österreich'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/österreich"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/%zz'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/%zz"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/%2'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/%2"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/%'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/%"
+    }
+  },
+  {
+    "name": "URI 'https://österreich.example/'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://österreich.example/"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/?q=raw space'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/?q=raw space"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/#österreich'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/#österreich"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/\\\\document'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/\\document"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/<document>'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/<document>"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/[document]'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/[document]"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/#page#5'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/#page#5"
+    }
+  },
+  {
+    "name": "URI 'https://[2001:::1]/'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://[2001:::1]/"
+    }
+  },
+  {
+    "name": "URI 'https://[::ffff:999.0.2.1]/'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://[::ffff:999.0.2.1]/"
+    }
+  },
+  {
+    "name": "URI ' https://example.com/'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": " https://example.com/"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/\\n'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/\n"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/\\r'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/\r"
+    }
+  },
+  {
+    "name": "URI 'https://example.com/\\x00'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "https://example.com/\u0000"
+    }
+  },
+  {
+    "name": "URI 'httpſ://example.com/'",
+    "schema": "Target",
+    "valid": false,
+    "value": {
+      "kind": "dom",
+      "handle": "field-person-name",
+      "url": "httpſ://example.com/"
+    }
+  },
+  {
+    "name": "BridgeToNative valid nested payload",
+    "schema": "BridgeToNative",
+    "valid": true,
+    "value": {
+      "v": "1.0.0",
+      "id": "bridge-message-1",
+      "type": "Action",
+      "payload": {
+        "id": "action-type",
+        "kind": "type",
+        "target": {
+          "kind": "form",
+          "formInstanceId": "form-instance-draft",
+          "fieldId": "person-name"
+        },
+        "payload": {
+          "value": "Anna Berger",
+          "provenance": {
+            "factId": "fact-name",
+            "source": {
+              "kind": "statement",
+              "turnId": "turn-name",
+              "quote": "Mein Name ist Anna Berger."
+            }
+          },
+          "pace": 80
+        },
+        "sentenceIndex": 1
+      }
+    }
+  },
+  {
+    "name": "BridgeToNative empty envelope id",
+    "schema": "BridgeToNative",
+    "valid": false,
+    "value": {
+      "v": "1.0.0",
+      "id": "",
+      "type": "Action",
+      "payload": {
+        "id": "action-type",
+        "kind": "type",
+        "target": {
+          "kind": "form",
+          "formInstanceId": "form-instance-draft",
+          "fieldId": "person-name"
+        },
+        "payload": {
+          "value": "Anna Berger",
+          "provenance": {
+            "factId": "fact-name",
+            "source": {
+              "kind": "statement",
+              "turnId": "turn-name",
+              "quote": "Mein Name ist Anna Berger."
+            }
+          },
+          "pace": 80
+        },
+        "sentenceIndex": 1
+      }
+    }
+  },
+  {
+    "name": "BridgeToNative invalid nested constraint",
+    "schema": "BridgeToNative",
+    "valid": false,
+    "value": {
+      "v": "1.0.0",
+      "id": "bridge-message-1",
+      "type": "Action",
+      "payload": {
+        "id": "",
+        "kind": "type",
+        "target": {
+          "kind": "form",
+          "formInstanceId": "form-instance-draft",
+          "fieldId": "person-name"
+        },
+        "payload": {
+          "value": "Anna Berger",
+          "provenance": {
+            "factId": "fact-name",
+            "source": {
+              "kind": "statement",
+              "turnId": "turn-name",
+              "quote": "Mein Name ist Anna Berger."
+            }
+          },
+          "pace": 80
+        },
+        "sentenceIndex": 1
+      }
+    }
+  },
+  {
+    "name": "BridgeToNative unknown envelope key",
+    "schema": "BridgeToNative",
+    "valid": false,
+    "value": {
+      "v": "1.0.0",
+      "id": "bridge-message-1",
+      "type": "Action",
+      "payload": {
+        "id": "action-type",
+        "kind": "type",
+        "target": {
+          "kind": "form",
+          "formInstanceId": "form-instance-draft",
+          "fieldId": "person-name"
+        },
+        "payload": {
+          "value": "Anna Berger",
+          "provenance": {
+            "factId": "fact-name",
+            "source": {
+              "kind": "statement",
+              "turnId": "turn-name",
+              "quote": "Mein Name ist Anna Berger."
+            }
+          },
+          "pace": 80
+        },
+        "sentenceIndex": 1
+      },
+      "unexpected": true
+    }
+  },
+  {
+    "name": "BridgeToWorkspace valid nested payload",
+    "schema": "BridgeToWorkspace",
+    "valid": true,
+    "value": {
+      "v": "1.0.0",
+      "id": "bridge-message-1",
+      "type": "Transcript",
+      "payload": {
+        "text": "Bitte zeigen Sie mir die Empfehlung im Entlassungsbrief.",
+        "language": "de-AT",
+        "final": true,
+        "capsule": {
+          "screen": {
+            "screenIndex": 0,
+            "summary": "Entlassungsbrief, Seite 5",
+            "ocrLines": [
+              {
+                "text": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+                "bbox": {
+                  "x": 0.12,
+                  "y": 0.25,
+                  "width": 0.7,
+                  "height": 0.04
+                }
+              }
+            ],
+            "image": "discharge-page-image"
+          },
+          "page": {
+            "url": "https://www.sozialversicherung.at/",
+            "handles": [
+              {
+                "id": "field-person-name",
+                "role": "textbox",
+                "label": "Name",
+                "value": "",
+                "bbox": {
+                  "x": 0.12,
+                  "y": 0.25,
+                  "width": 0.7,
+                  "height": 0.04
+                }
+              }
+            ]
+          },
+          "focusedRegion": {
+            "x": 0.12,
+            "y": 0.25,
+            "width": 0.7,
+            "height": 0.04
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "BridgeToWorkspace empty envelope id",
+    "schema": "BridgeToWorkspace",
+    "valid": false,
+    "value": {
+      "v": "1.0.0",
+      "id": "",
+      "type": "Transcript",
+      "payload": {
+        "text": "Bitte zeigen Sie mir die Empfehlung im Entlassungsbrief.",
+        "language": "de-AT",
+        "final": true,
+        "capsule": {
+          "screen": {
+            "screenIndex": 0,
+            "summary": "Entlassungsbrief, Seite 5",
+            "ocrLines": [
+              {
+                "text": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+                "bbox": {
+                  "x": 0.12,
+                  "y": 0.25,
+                  "width": 0.7,
+                  "height": 0.04
+                }
+              }
+            ],
+            "image": "discharge-page-image"
+          },
+          "page": {
+            "url": "https://www.sozialversicherung.at/",
+            "handles": [
+              {
+                "id": "field-person-name",
+                "role": "textbox",
+                "label": "Name",
+                "value": "",
+                "bbox": {
+                  "x": 0.12,
+                  "y": 0.25,
+                  "width": 0.7,
+                  "height": 0.04
+                }
+              }
+            ]
+          },
+          "focusedRegion": {
+            "x": 0.12,
+            "y": 0.25,
+            "width": 0.7,
+            "height": 0.04
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "BridgeToWorkspace invalid nested constraint",
+    "schema": "BridgeToWorkspace",
+    "valid": false,
+    "value": {
+      "v": "1.0.0",
+      "id": "bridge-message-1",
+      "type": "Transcript",
+      "payload": {
+        "text": "Bitte zeigen Sie mir die Empfehlung im Entlassungsbrief.",
+        "language": "invalid_language",
+        "final": true,
+        "capsule": {
+          "screen": {
+            "screenIndex": 0,
+            "summary": "Entlassungsbrief, Seite 5",
+            "ocrLines": [
+              {
+                "text": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+                "bbox": {
+                  "x": 0.12,
+                  "y": 0.25,
+                  "width": 0.7,
+                  "height": 0.04
+                }
+              }
+            ],
+            "image": "discharge-page-image"
+          },
+          "page": {
+            "url": "https://www.sozialversicherung.at/",
+            "handles": [
+              {
+                "id": "field-person-name",
+                "role": "textbox",
+                "label": "Name",
+                "value": "",
+                "bbox": {
+                  "x": 0.12,
+                  "y": 0.25,
+                  "width": 0.7,
+                  "height": 0.04
+                }
+              }
+            ]
+          },
+          "focusedRegion": {
+            "x": 0.12,
+            "y": 0.25,
+            "width": 0.7,
+            "height": 0.04
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "BridgeToWorkspace unknown envelope key",
+    "schema": "BridgeToWorkspace",
+    "valid": false,
+    "value": {
+      "v": "1.0.0",
+      "id": "bridge-message-1",
+      "type": "Transcript",
+      "payload": {
+        "text": "Bitte zeigen Sie mir die Empfehlung im Entlassungsbrief.",
+        "language": "de-AT",
+        "final": true,
+        "capsule": {
+          "screen": {
+            "screenIndex": 0,
+            "summary": "Entlassungsbrief, Seite 5",
+            "ocrLines": [
+              {
+                "text": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+                "bbox": {
+                  "x": 0.12,
+                  "y": 0.25,
+                  "width": 0.7,
+                  "height": 0.04
+                }
+              }
+            ],
+            "image": "discharge-page-image"
+          },
+          "page": {
+            "url": "https://www.sozialversicherung.at/",
+            "handles": [
+              {
+                "id": "field-person-name",
+                "role": "textbox",
+                "label": "Name",
+                "value": "",
+                "bbox": {
+                  "x": 0.12,
+                  "y": 0.25,
+                  "width": 0.7,
+                  "height": 0.04
+                }
+              }
+            ]
+          },
+          "focusedRegion": {
+            "x": 0.12,
+            "y": 0.25,
+            "width": 0.7,
+            "height": 0.04
+          }
+        }
+      },
+      "unexpected": true
+    }
+  }
+]

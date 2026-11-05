@@ -1,7 +1,7 @@
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
-//   let lotseProtocolBundle = try? JSONDecoder().decode(LotseProtocolBundle.self, from: jsonData)
+//   let lotseProtocolBundle: LotseProtocolBundle = try decodeValidated(jsonData)
 
 import Foundation
 
@@ -2764,6 +2764,1118 @@ public struct TurnRequest: Codable, Equatable, Sendable {
 public enum InputKind: String, Codable, Equatable, Sendable {
     case text = "text"
     case transcript = "transcript"
+}
+
+// Schema validation is separate from Codable so locally constructed values can
+// be checked as well. Error paths use wire keys and never include field values.
+public protocol ProtocolValidating: Codable {
+    func validate(at path: [String]) throws
+}
+
+public extension ProtocolValidating {
+    func validate() throws { try validate(at: []) }
+}
+
+public struct ProtocolValidationError: Error, Equatable, Sendable {
+    public let path: [String]
+    public let keyword: String
+
+    public init(path: [String], keyword: String) {
+        self.path = path
+        self.keyword = keyword
+    }
+}
+
+/// Decode strict wire JSON, then enforce the schema's recursive constraints.
+public func decodeValidated<Value: ProtocolValidating>(_ data: Data) throws -> Value {
+    let value = try JSONDecoder().decode(Value.self, from: data)
+    try value.validate()
+    return value
+}
+
+extension JSONValue: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        switch self {
+        case .double(let value):
+            guard value.isFinite else {
+                throw ProtocolValidationError(path: path, keyword: "type")
+            }
+        case .unionArray(let values):
+            for (index, value) in values.enumerated() {
+                try value.validate(at: path + [String(index)])
+            }
+        case .unionMap(let values):
+            for (key, value) in values {
+                try value.validate(at: path + [key])
+            }
+        case .bool, .string, .null: break
+        }
+    }
+}
+
+extension LotseProtocolBundle: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        try self.action.validate(at: path + ["Action"])
+        try self.actionResult.validate(at: path + ["ActionResult"])
+        try self.approvalContext.validate(at: path + ["ApprovalContext"])
+        try self.approvalDecision.validate(at: path + ["ApprovalDecision"])
+        try self.boundingBox.validate(at: path + ["BoundingBox"])
+        try self.bridgeHello.validate(at: path + ["BridgeHello"])
+        try self.bridgeToNative.validate(at: path + ["BridgeToNative"])
+        try self.bridgeToWorkspace.validate(at: path + ["BridgeToWorkspace"])
+        try self.capabilities.validate(at: path + ["Capabilities"])
+        try self.caseEvent.validate(at: path + ["CaseEvent"])
+        try self.clientHello.validate(at: path + ["ClientHello"])
+        try self.contextCapsule.validate(at: path + ["ContextCapsule"])
+        try self.fact.validate(at: path + ["Fact"])
+        try self.factSource.validate(at: path + ["FactSource"])
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["Id"], keyword: "minLength")
+        }
+        guard (try ProtocolPatterns.pattern0.get()).firstMatch(in: self.isoTimestamp, range: NSRange(location: 0, length: self.isoTimestamp.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["IsoTimestamp"], keyword: "pattern")
+        }
+        try self.jobProgress.validate(at: path + ["JobProgress"])
+        try self.jsonValue.validate(at: path + ["JsonValue"])
+        guard (try ProtocolPatterns.pattern1.get()).firstMatch(in: self.languageTag, range: NSRange(location: 0, length: self.languageTag.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["LanguageTag"], keyword: "pattern")
+        }
+        try self.provenance.validate(at: path + ["Provenance"])
+        try self.safetyNotice.validate(at: path + ["SafetyNotice"])
+        try self.speechControl.validate(at: path + ["SpeechControl"])
+        try self.speechSegment.validate(at: path + ["SpeechSegment"])
+        try self.target.validate(at: path + ["Target"])
+        try self.targetRect.validate(at: path + ["TargetRect"])
+        try self.toolInvocation.validate(at: path + ["ToolInvocation"])
+        try self.toolOutput.validate(at: path + ["ToolOutput"])
+        try self.transcript.validate(at: path + ["Transcript"])
+        try self.turnRequest.validate(at: path + ["TurnRequest"])
+        try self.windowRect.validate(at: path + ["WindowRect"])
+    }
+}
+
+extension Action: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        switch self {
+        case .annotate(let value): try value.validate(at: path)
+        case .caption(let value): try value.validate(at: path)
+        case .clear(let value): try value.validate(at: path)
+        case .highlight(let value): try value.validate(at: path)
+        case .openResource(let value): try value.validate(at: path)
+        case .point(let value): try value.validate(at: path)
+        case .type(let value): try value.validate(at: path)
+        }
+    }
+}
+
+extension ActionAnnotate: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "annotate" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.sentenceIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "minimum")
+        }
+        guard self.sentenceIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "maximum")
+        }
+        try self.target.validate(at: path + ["target"])
+    }
+}
+
+extension AnnotatePayload: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+    }
+}
+
+extension Target: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        switch self {
+        case .ax(let value): try value.validate(at: path)
+        case .dom(let value): try value.validate(at: path)
+        case .form(let value): try value.validate(at: path)
+        case .point(let value): try value.validate(at: path)
+        case .text(let value): try value.validate(at: path)
+        case .ui(let value): try value.validate(at: path)
+        }
+    }
+}
+
+extension TargetAx: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.appBundleID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["appBundleId"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "ax" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        guard self.role.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["role"], keyword: "minLength")
+        }
+    }
+}
+
+extension TargetDOM: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.handle.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["handle"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "dom" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        guard self.url.unicodeScalars.allSatisfy({ $0.isASCII }) else {
+            throw ProtocolValidationError(path: path + ["url"], keyword: "format")
+        }
+        guard (try ProtocolPatterns.pattern2.get()).firstMatch(in: self.url, range: NSRange(location: 0, length: self.url.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["url"], keyword: "format")
+        }
+    }
+}
+
+extension TargetForm: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.fieldID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["fieldId"], keyword: "minLength")
+        }
+        guard self.formInstanceID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["formInstanceId"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "form" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+    }
+}
+
+extension TargetPoint: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.confidence.isFinite else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "type")
+        }
+        guard self.confidence >= 0 else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "minimum")
+        }
+        guard self.confidence <= 1 else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "maximum")
+        }
+        guard self.kind.rawValue == "point" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        guard self.screenIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["screenIndex"], keyword: "minimum")
+        }
+        guard self.screenIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["screenIndex"], keyword: "maximum")
+        }
+        guard self.x.isFinite else {
+            throw ProtocolValidationError(path: path + ["x"], keyword: "type")
+        }
+        guard self.x >= 0 else {
+            throw ProtocolValidationError(path: path + ["x"], keyword: "minimum")
+        }
+        guard self.x <= 1 else {
+            throw ProtocolValidationError(path: path + ["x"], keyword: "maximum")
+        }
+        guard self.y.isFinite else {
+            throw ProtocolValidationError(path: path + ["y"], keyword: "type")
+        }
+        guard self.y >= 0 else {
+            throw ProtocolValidationError(path: path + ["y"], keyword: "minimum")
+        }
+        guard self.y <= 1 else {
+            throw ProtocolValidationError(path: path + ["y"], keyword: "maximum")
+        }
+    }
+}
+
+extension TargetText: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        if let value = self.documentID {
+            guard value.utf16.count >= 1 else {
+                throw ProtocolValidationError(path: path + ["documentId"], keyword: "minLength")
+            }
+        }
+        guard self.kind.rawValue == "text" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        if let value = self.page {
+            guard value <= 9007199254740991 else {
+                throw ProtocolValidationError(path: path + ["page"], keyword: "maximum")
+            }
+            guard value > 0 else {
+                throw ProtocolValidationError(path: path + ["page"], keyword: "exclusiveMinimum")
+            }
+        }
+        guard self.quote.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["quote"], keyword: "minLength")
+        }
+    }
+}
+
+extension TargetUI: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.elementID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["elementId"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "ui" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+    }
+}
+
+extension ActionCaption: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "caption" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.sentenceIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "minimum")
+        }
+        guard self.sentenceIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "maximum")
+        }
+        try self.target.validate(at: path + ["target"])
+    }
+}
+
+extension CaptionPayload: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+    }
+}
+
+extension ActionClear: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "clear" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.sentenceIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "minimum")
+        }
+        guard self.sentenceIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "maximum")
+        }
+        try self.target.validate(at: path + ["target"])
+    }
+}
+
+extension ClearPayload: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+    }
+}
+
+extension ActionHighlight: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "highlight" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.sentenceIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "minimum")
+        }
+        guard self.sentenceIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "maximum")
+        }
+        try self.target.validate(at: path + ["target"])
+    }
+}
+
+extension HighlightPayload: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+    }
+}
+
+extension ActionOpenResource: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "openResource" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.sentenceIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "minimum")
+        }
+        guard self.sentenceIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "maximum")
+        }
+        try self.target.validate(at: path + ["target"])
+    }
+}
+
+extension OpenResourcePayload: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+    }
+}
+
+extension ActionPoint: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "point" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.sentenceIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "minimum")
+        }
+        guard self.sentenceIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "maximum")
+        }
+        try self.target.validate(at: path + ["target"])
+    }
+}
+
+extension PointPayload: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+    }
+}
+
+extension ActionType: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        guard self.kind.rawValue == "type" else {
+            throw ProtocolValidationError(path: path + ["kind"], keyword: "const")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.sentenceIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "minimum")
+        }
+        guard self.sentenceIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["sentenceIndex"], keyword: "maximum")
+        }
+        try self.target.validate(at: path + ["target"])
+    }
+}
+
+extension TypePayload: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.pace.isFinite else {
+            throw ProtocolValidationError(path: path + ["pace"], keyword: "type")
+        }
+        guard self.pace > 0 else {
+            throw ProtocolValidationError(path: path + ["pace"], keyword: "exclusiveMinimum")
+        }
+        try self.provenance.validate(at: path + ["provenance"])
+    }
+}
+
+extension Provenance: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        if let value = self.factID {
+            guard value.utf16.count >= 1 else {
+                throw ProtocolValidationError(path: path + ["factId"], keyword: "minLength")
+            }
+        }
+        try self.source.validate(at: path + ["source"])
+    }
+}
+
+extension FactSource: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        if let value = self.bbox {
+            try value.validate(at: path + ["bbox"])
+        }
+        if let value = self.documentID {
+            guard value.utf16.count >= 1 else {
+                throw ProtocolValidationError(path: path + ["documentId"], keyword: "minLength")
+            }
+        }
+        if let value = self.page {
+            guard value <= 9007199254740991 else {
+                throw ProtocolValidationError(path: path + ["page"], keyword: "maximum")
+            }
+            guard value > 0 else {
+                throw ProtocolValidationError(path: path + ["page"], keyword: "exclusiveMinimum")
+            }
+        }
+        if let value = self.turnID {
+            guard value.utf16.count >= 1 else {
+                throw ProtocolValidationError(path: path + ["turnId"], keyword: "minLength")
+            }
+        }
+    }
+}
+
+extension BoundingBox: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.height.isFinite else {
+            throw ProtocolValidationError(path: path + ["height"], keyword: "type")
+        }
+        guard self.height >= 0 else {
+            throw ProtocolValidationError(path: path + ["height"], keyword: "minimum")
+        }
+        guard self.height <= 1 else {
+            throw ProtocolValidationError(path: path + ["height"], keyword: "maximum")
+        }
+        guard self.width.isFinite else {
+            throw ProtocolValidationError(path: path + ["width"], keyword: "type")
+        }
+        guard self.width >= 0 else {
+            throw ProtocolValidationError(path: path + ["width"], keyword: "minimum")
+        }
+        guard self.width <= 1 else {
+            throw ProtocolValidationError(path: path + ["width"], keyword: "maximum")
+        }
+        guard self.x.isFinite else {
+            throw ProtocolValidationError(path: path + ["x"], keyword: "type")
+        }
+        guard self.x >= 0 else {
+            throw ProtocolValidationError(path: path + ["x"], keyword: "minimum")
+        }
+        guard self.x <= 1 else {
+            throw ProtocolValidationError(path: path + ["x"], keyword: "maximum")
+        }
+        guard self.y.isFinite else {
+            throw ProtocolValidationError(path: path + ["y"], keyword: "type")
+        }
+        guard self.y >= 0 else {
+            throw ProtocolValidationError(path: path + ["y"], keyword: "minimum")
+        }
+        guard self.y <= 1 else {
+            throw ProtocolValidationError(path: path + ["y"], keyword: "maximum")
+        }
+    }
+}
+
+extension ActionResult: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.actionID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["actionId"], keyword: "minLength")
+        }
+        guard self.confidence.isFinite else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "type")
+        }
+        guard self.confidence >= 0 else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "minimum")
+        }
+        guard self.confidence <= 1 else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "maximum")
+        }
+    }
+}
+
+extension ApprovalContext: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.approvalID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["approvalId"], keyword: "minLength")
+        }
+        guard self.caseID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["caseId"], keyword: "minLength")
+        }
+        guard (try ProtocolPatterns.pattern3.get()).firstMatch(in: self.inputHash, range: NSRange(location: 0, length: self.inputHash.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["inputHash"], keyword: "pattern")
+        }
+        for (index, item) in self.provenance.enumerated() {
+            try item.validate(at: path + ["provenance"] + [String(index)])
+        }
+        guard self.toolCallID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["toolCallId"], keyword: "minLength")
+        }
+        guard self.toolName.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["toolName"], keyword: "minLength")
+        }
+    }
+}
+
+extension ApprovalDecision: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.approvalID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["approvalId"], keyword: "minLength")
+        }
+    }
+}
+
+extension BridgeHello: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard (try ProtocolPatterns.pattern4.get()).firstMatch(in: self.appVersion, range: NSRange(location: 0, length: self.appVersion.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["appVersion"], keyword: "pattern")
+        }
+        try self.capabilities.validate(at: path + ["capabilities"])
+        guard self.protocolVersion.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["protocolVersion"], keyword: "const")
+        }
+    }
+}
+
+extension Capabilities: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.onDeviceContextSize >= 0 else {
+            throw ProtocolValidationError(path: path + ["onDeviceContextSize"], keyword: "minimum")
+        }
+        guard self.onDeviceContextSize <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["onDeviceContextSize"], keyword: "maximum")
+        }
+    }
+}
+
+extension BridgeToNative: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        switch self {
+        case .action(let value): try value.validate(at: path)
+        case .approvalContext(let value): try value.validate(at: path)
+        case .jobProgress(let value): try value.validate(at: path)
+        case .safetyNotice(let value): try value.validate(at: path)
+        case .speechControl(let value): try value.validate(at: path)
+        case .speechSegment(let value): try value.validate(at: path)
+        case .targetRect(let value): try value.validate(at: path)
+        case .toolInvocation(let value): try value.validate(at: path)
+        }
+    }
+}
+
+extension BridgeToNativeAction: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "Action" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension BridgeToNativeApprovalContext: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "ApprovalContext" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension BridgeToNativeJobProgress: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "JobProgress" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension JobProgress: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.jobID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["jobId"], keyword: "minLength")
+        }
+        guard self.progress.isFinite else {
+            throw ProtocolValidationError(path: path + ["progress"], keyword: "type")
+        }
+        guard self.progress >= 0 else {
+            throw ProtocolValidationError(path: path + ["progress"], keyword: "minimum")
+        }
+        guard self.progress <= 1 else {
+            throw ProtocolValidationError(path: path + ["progress"], keyword: "maximum")
+        }
+        guard self.state.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["state"], keyword: "minLength")
+        }
+    }
+}
+
+extension BridgeToNativeSafetyNotice: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "SafetyNotice" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension SafetyNotice: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        for (index, item) in self.numbers.enumerated() {
+            try item.validate(at: path + ["numbers"] + [String(index)])
+        }
+        guard self.scopeAfter.rawValue == "administrative_only" else {
+            throw ProtocolValidationError(path: path + ["scopeAfter"], keyword: "const")
+        }
+    }
+}
+
+extension Number: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.number.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["number"], keyword: "minLength")
+        }
+    }
+}
+
+extension BridgeToNativeSpeechControl: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "SpeechControl" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension SpeechControl: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.segmentIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["segmentIndex"], keyword: "minimum")
+        }
+        guard self.segmentIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["segmentIndex"], keyword: "maximum")
+        }
+    }
+}
+
+extension BridgeToNativeSpeechSegment: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "SpeechSegment" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension SpeechSegment: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        for (index, item) in self.actionIDS.enumerated() {
+            guard item.utf16.count >= 1 else {
+                throw ProtocolValidationError(path: path + ["actionIds"] + [String(index)], keyword: "minLength")
+            }
+        }
+        for (index, item) in self.citations.enumerated() {
+            try item.validate(at: path + ["citations"] + [String(index)])
+        }
+        guard self.index >= 0 else {
+            throw ProtocolValidationError(path: path + ["index"], keyword: "minimum")
+        }
+        guard self.index <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["index"], keyword: "maximum")
+        }
+        guard (try ProtocolPatterns.pattern1.get()).firstMatch(in: self.language, range: NSRange(location: 0, length: self.language.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["language"], keyword: "pattern")
+        }
+        guard self.turnID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["turnId"], keyword: "minLength")
+        }
+    }
+}
+
+extension Citation: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.passageID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["passageId"], keyword: "minLength")
+        }
+        guard self.url.unicodeScalars.allSatisfy({ $0.isASCII }) else {
+            throw ProtocolValidationError(path: path + ["url"], keyword: "format")
+        }
+        guard (try ProtocolPatterns.pattern2.get()).firstMatch(in: self.url, range: NSRange(location: 0, length: self.url.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["url"], keyword: "format")
+        }
+    }
+}
+
+extension BridgeToNativeTargetRect: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "TargetRect" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension TargetRect: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        try self.rect.validate(at: path + ["rect"])
+        guard self.scale.isFinite else {
+            throw ProtocolValidationError(path: path + ["scale"], keyword: "type")
+        }
+        guard self.scale > 0 else {
+            throw ProtocolValidationError(path: path + ["scale"], keyword: "exclusiveMinimum")
+        }
+        guard self.targetID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["targetId"], keyword: "minLength")
+        }
+    }
+}
+
+extension WindowRect: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.height.isFinite else {
+            throw ProtocolValidationError(path: path + ["height"], keyword: "type")
+        }
+        guard self.height >= 0 else {
+            throw ProtocolValidationError(path: path + ["height"], keyword: "minimum")
+        }
+        guard self.width.isFinite else {
+            throw ProtocolValidationError(path: path + ["width"], keyword: "type")
+        }
+        guard self.width >= 0 else {
+            throw ProtocolValidationError(path: path + ["width"], keyword: "minimum")
+        }
+        guard self.x.isFinite else {
+            throw ProtocolValidationError(path: path + ["x"], keyword: "type")
+        }
+        guard self.y.isFinite else {
+            throw ProtocolValidationError(path: path + ["y"], keyword: "type")
+        }
+    }
+}
+
+extension BridgeToNativeToolInvocation: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "ToolInvocation" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension ToolInvocation: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        for (key, item) in self.input {
+            try item.validate(at: path + ["input"] + [key])
+        }
+        guard self.toolCallID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["toolCallId"], keyword: "minLength")
+        }
+    }
+}
+
+extension BridgeToWorkspace: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        switch self {
+        case .actionResult(let value): try value.validate(at: path)
+        case .approvalDecision(let value): try value.validate(at: path)
+        case .bridgeHello(let value): try value.validate(at: path)
+        case .speechControl(let value): try value.validate(at: path)
+        case .toolOutput(let value): try value.validate(at: path)
+        case .transcript(let value): try value.validate(at: path)
+        }
+    }
+}
+
+extension BridgeToWorkspaceActionResult: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "ActionResult" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension BridgeToWorkspaceApprovalDecision: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "ApprovalDecision" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension BridgeToWorkspaceBridgeHello: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "BridgeHello" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension BridgeToWorkspaceSpeechControl: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "SpeechControl" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension BridgeToWorkspaceToolOutput: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "ToolOutput" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension ToolOutput: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        try self.output.validate(at: path + ["output"])
+        guard self.toolCallID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["toolCallId"], keyword: "minLength")
+        }
+    }
+}
+
+extension ToolOutputOutput: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        switch self {
+        case .actionResult(let value): try value.validate(at: path)
+        case .contextCapsule(let value): try value.validate(at: path)
+        }
+    }
+}
+
+extension ContextCapsule: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        if let value = self.focusedRegion {
+            try value.validate(at: path + ["focusedRegion"])
+        }
+        if let value = self.page {
+            try value.validate(at: path + ["page"])
+        }
+        if let value = self.screen {
+            try value.validate(at: path + ["screen"])
+        }
+    }
+}
+
+extension Page: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        for (index, item) in self.handles.enumerated() {
+            try item.validate(at: path + ["handles"] + [String(index)])
+        }
+        guard self.url.unicodeScalars.allSatisfy({ $0.isASCII }) else {
+            throw ProtocolValidationError(path: path + ["url"], keyword: "format")
+        }
+        guard (try ProtocolPatterns.pattern2.get()).firstMatch(in: self.url, range: NSRange(location: 0, length: self.url.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["url"], keyword: "format")
+        }
+    }
+}
+
+extension Handle: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        try self.bbox.validate(at: path + ["bbox"])
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+    }
+}
+
+extension Screen: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        if let value = self.image {
+            guard value.utf16.count >= 1 else {
+                throw ProtocolValidationError(path: path + ["image"], keyword: "minLength")
+            }
+        }
+        for (index, item) in self.ocrLines.enumerated() {
+            try item.validate(at: path + ["ocrLines"] + [String(index)])
+        }
+        guard self.screenIndex >= 0 else {
+            throw ProtocolValidationError(path: path + ["screenIndex"], keyword: "minimum")
+        }
+        guard self.screenIndex <= 9007199254740991 else {
+            throw ProtocolValidationError(path: path + ["screenIndex"], keyword: "maximum")
+        }
+    }
+}
+
+extension OcrLine: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        try self.bbox.validate(at: path + ["bbox"])
+    }
+}
+
+extension BridgeToWorkspaceTranscript: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.payload.validate(at: path + ["payload"])
+        guard self.type.rawValue == "Transcript" else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "const")
+        }
+        guard self.v.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["v"], keyword: "const")
+        }
+    }
+}
+
+extension Transcript: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        if let value = self.capsule {
+            try value.validate(at: path + ["capsule"])
+        }
+        if let value = self.language {
+            guard (try ProtocolPatterns.pattern1.get()).firstMatch(in: value, range: NSRange(location: 0, length: value.utf16.count)) != nil else {
+                throw ProtocolValidationError(path: path + ["language"], keyword: "pattern")
+            }
+        }
+    }
+}
+
+extension CaseEvent: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.caseID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["caseId"], keyword: "minLength")
+        }
+        for (key, item) in self.payload {
+            try item.validate(at: path + ["payload"] + [key])
+        }
+    }
+}
+
+extension ClientHello: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard (try ProtocolPatterns.pattern4.get()).firstMatch(in: self.appVersion, range: NSRange(location: 0, length: self.appVersion.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["appVersion"], keyword: "pattern")
+        }
+        try self.capabilities.validate(at: path + ["capabilities"])
+        guard (try ProtocolPatterns.pattern1.get()).firstMatch(in: self.locale, range: NSRange(location: 0, length: self.locale.utf16.count)) != nil else {
+            throw ProtocolValidationError(path: path + ["locale"], keyword: "pattern")
+        }
+        guard self.protocolVersion.rawValue == "1.0.0" else {
+            throw ProtocolValidationError(path: path + ["protocolVersion"], keyword: "const")
+        }
+    }
+}
+
+extension Fact: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        guard self.confidence.isFinite else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "type")
+        }
+        guard self.confidence >= 0 else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "minimum")
+        }
+        guard self.confidence <= 1 else {
+            throw ProtocolValidationError(path: path + ["confidence"], keyword: "maximum")
+        }
+        guard self.id.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["id"], keyword: "minLength")
+        }
+        try self.source.validate(at: path + ["source"])
+        guard self.subjectID.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["subjectId"], keyword: "minLength")
+        }
+        guard self.type.utf16.count >= 1 else {
+            throw ProtocolValidationError(path: path + ["type"], keyword: "minLength")
+        }
+        try self.value.validate(at: path + ["value"])
+    }
+}
+
+extension TurnRequest: ProtocolValidating {
+    public func validate(at path: [String]) throws {
+        for (index, item) in self.actionResults.enumerated() {
+            try item.validate(at: path + ["actionResults"] + [String(index)])
+        }
+        try self.capsule.validate(at: path + ["capsule"])
+        if let value = self.caseID {
+            guard value.utf16.count >= 1 else {
+                throw ProtocolValidationError(path: path + ["caseId"], keyword: "minLength")
+            }
+        }
+        if let value = self.language {
+            guard (try ProtocolPatterns.pattern1.get()).firstMatch(in: value, range: NSRange(location: 0, length: value.utf16.count)) != nil else {
+                throw ProtocolValidationError(path: path + ["language"], keyword: "pattern")
+            }
+        }
+        if let value = self.subjectID {
+            guard value.utf16.count >= 1 else {
+                throw ProtocolValidationError(path: path + ["subjectId"], keyword: "minLength")
+            }
+        }
+    }
+}
+
+private enum ProtocolPatterns {
+    static let pattern0 = Result { try NSRegularExpression(pattern: "^(?:(?:[0-9][0-9][2468][048]|[0-9][0-9][13579][26]|[0-9][0-9]0[48]|[02468][048]00|[13579][26]00)-02-29|[0-9]{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12][0-9]|3[01])|(?:0[469]|11)-(?:0[1-9]|[12][0-9]|30)|(?:02)-(?:0[1-9]|1[0-9]|2[0-8])))T(?:(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]+)?(?:Z|([+-](?:[01][0-9]|2[0-3]):[0-5][0-9])))\\z", options: []) }
+    static let pattern1 = Result { try NSRegularExpression(pattern: "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*\\z", options: []) }
+    static let pattern2 = Result { try NSRegularExpression(pattern: "^[a-z][a-z0-9+.\\-]*:(?:\\/?\\/(?:(?:(?:[a-z0-9._~!$&'()*+,;=\\-]|%[0-9a-f]{2})|:)*@)?(?:\\[(?:(?:[0-9a-f]{1,4}:){6}(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|::(?:[0-9a-f]{1,4}:){5}(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){4}(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9a-f]{1,4}:){0,1}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){3}(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9a-f]{1,4}:){0,2}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){2}(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9a-f]{1,4}:){0,3}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){1}(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9a-f]{1,4}:){0,4}[0-9a-f]{1,4})?::(?:[0-9a-f]{1,4}:){0}(?:[0-9a-f]{1,4}:[0-9a-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9a-f]{1,4}:){0,5}[0-9a-f]{1,4})?::[0-9a-f]{1,4}|(?:(?:[0-9a-f]{1,4}:){0,6}[0-9a-f]{1,4})?::|v[0-9a-f]+\\.[a-z0-9._~!$&'()*+,;=:\\-]+)\\]|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[a-z0-9._~!$&'()*+,;=\\-]|%[0-9a-f]{2})*)(?::[0-9]*)?(?:/(?:[a-z0-9._~!$&'()*+,;=:@\\-]|%[0-9a-f]{2})*)*|/(?:(?:[a-z0-9._~!$&'()*+,;=:@\\-]|%[0-9a-f]{2})+(?:/(?:[a-z0-9._~!$&'()*+,;=:@\\-]|%[0-9a-f]{2})*)*)?|(?:[a-z0-9._~!$&'()*+,;=:@\\-]|%[0-9a-f]{2})+(?:/(?:[a-z0-9._~!$&'()*+,;=:@\\-]|%[0-9a-f]{2})*)*)(?:\\?(?:[a-z0-9._~!$&'()*+,;=:@/?\\-]|%[0-9a-f]{2})*)?(?:#(?:[a-z0-9._~!$&'()*+,;=:@/?\\-]|%[0-9a-f]{2})*)?\\z", options: .caseInsensitive) }
+    static let pattern3 = Result { try NSRegularExpression(pattern: "^[a-f0-9]{64}\\z", options: []) }
+    static let pattern4 = Result { try NSRegularExpression(pattern: "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?\\z", options: []) }
 }
 
 // Internal keys used by the generated strict-object and tagged-union decoders.

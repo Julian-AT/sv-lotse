@@ -5,7 +5,7 @@ import type { z } from "zod";
 
 type Schema = z.core.JSONSchema.JSONSchema;
 type Variant = { tag: string; property: string };
-type Union = { name: string; discriminator: string | undefined; variants: Variant[] };
+export type Union = { name: string; discriminator: string | undefined; variants: Variant[] };
 
 const pascal = (name: string) => name.charAt(0).toUpperCase() + name.slice(1);
 const camel = (name: string) => name.charAt(0).toLowerCase() + name.slice(1);
@@ -72,7 +72,7 @@ export function projectSwiftSchema(bundle: Schema): { schema: Schema; unions: Un
   return { schema, unions };
 }
 
-function fields(body: string): { name: string; type: string; wire: string }[] {
+export function fields(body: string): { name: string; type: string; wire: string }[] {
   const keys = new Map(
     Array.from(body.matchAll(/^ {8}case (\w+) = "([^"]+)"$/gm), (match) => [match[1], match[2]]),
   );
