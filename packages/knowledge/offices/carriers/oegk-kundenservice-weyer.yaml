@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-weyer"
+name_de: "Kundenservice Weyer"
+name_simple: "ÖGK-Büro Weyer"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882992&portal=oegkportal"
+address:
+  street: "Marktplatz 8"
+  postal_code: "3335"
+  locality: "Weyer"
+  country: "AT"
+phone: "+43 5 0766-14323970"
+email: "steyr@oegk.at"
+opening_hours:
+  notes: "Mittwoch:08.00 – 12.00 / 13.00 – 15.00"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882992&portal=oegkportal"
+    quote: |-
+      Kundenservice Weyer
+      Marktplatz 8
+      3335 Weyer
+      Telefon: +43 5 0766-14323970
+      E-Mail: steyr@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882992&portal=oegkportal"
+    quote: "Mittwoch:08.00 – 12.00 / 13.00 – 15.00"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882992&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
