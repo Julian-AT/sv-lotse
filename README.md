@@ -7,7 +7,7 @@ Challenge, Use Case 1.
 | --- | --- |
 | `docs/prd/SV-KI-Lotse-PRD.md` | Product requirements |
 | `docs/svbox-inventory.md` | What the challenge data contains |
-| `docs/challenge/` | Organizers' kickoff deck: use case brief and jury criteria |
+| `docs/challenge/use-case.pdf` | Use case brief and jury criteria from the organizers |
 | `data/svbox/` | Original challenge data (private, KI Challenge 2026 only) |
 | `ORCHESTRATION.md` | How the project is built: waves, pipeline, commit standard |
 | `CLAUDE.md`, `AGENTS.md` | Rules for the orchestrator and the coding agents |
