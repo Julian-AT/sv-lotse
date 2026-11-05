@@ -1,0 +1,157 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AC2 real ÖGK fixture normalizes stably with headings, lists and absolute links 1`] = `
+"# Kontakt
+
+Willkommen bei der Österreichischen Gesundheitskasse (ÖGK). Haben Sie Fragen oder Wünsche? Wir helfen Ihnen gerne weiter.
+
+Wenn Sie uns Anträge und andere Schriftstücke per Post senden möchten, schicken Sie diese bitte direkt an das für Sie zuständige **Kundenservice**.
+
+Außerhalb unserer Öffnungszeiten eingebrachte Anliegen gelten erst mit dem **nächstfolgenden Werktag** als eingelangt.
+
+## Burgenland
+
+Österreichische Gesundheitskasse Burgenland
+
+Siegfried Marcus-Straße 5
+
+7000 Eisenstadt  
+
+*   Tel. +43 5 0766-13 
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883443&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen im Burgenland](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761703) (Kontakt und Öffnungszeiten)  
+    
+
+## Kärnten
+
+Österreichische Gesundheitskasse Kärnten
+
+Kempfstraße 8
+
+9021 Klagenfurt am Wörthersee  
+
+*   Tel. +43 5 0766-16
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883444&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen in Kärnten](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761704) (Kontakt und Öffnungszeiten)  
+    
+
+## Niederösterreich
+
+Österreichische Gesundheitskasse Niederösterreich
+
+Kremser Landstraße 3
+
+3100 St. Pölten
+
+*   Tel. +43 5 0766-12
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883445&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen in Niederösterreich](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761707) (Kontakt und Öffnungszeiten)  
+    
+
+## Oberösterreich
+
+Österreichische Gesundheitskasse Oberösterreich  
+
+Gruberstraße 77
+
+Postfach 61
+
+4021 Linz
+
+*   Tel. +43 5 0766-14 
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883446&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen in Oberösterreich](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761708) (Kontakt und Öffnungszeiten)  
+    
+
+## Salzburg
+
+Österreichische Gesundheitskasse Salzburg  
+
+Engelbert-Weiß-Weg 10
+
+5020 Salzburg
+
+*   Tel. +43 5 0766-17
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883447&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen in Salzburg](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761709) (Kontakt und Öffnungszeiten)  
+    
+
+## Steiermark
+
+Österreichische Gesundheitskasse Steiermark
+
+Josef-Pongratz-Platz 1
+
+8010 Graz
+
+*   Tel. +43 5 0766-15
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883448&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen in der Steiermark](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761710) (Kontakt und Öffnungszeiten)  
+    
+
+## Tirol
+
+Österreichische Gesundheitskasse Tirol
+
+Klara-Pölt-Weg 2
+
+6020 Innsbruck
+
+*   Tel. +43 5 0766-18  
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883449&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen in Tirol](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761711) (Kontakt und Öffnungszeiten)  
+    
+
+## Vorarlberg
+
+Österreichische Gesundheitskasse Vorarlberg
+
+Jahngasse 4
+
+6850 Dornbirn
+
+*   Tel. +43 5 0766-19 
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883452&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen in Vorarlberg](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761712) (Kontakt und Öffnungszeiten)  
+    
+
+## Wien
+
+Österreichische Gesundheitskasse Wien
+
+Wienerbergstraße 15-19
+
+1100 Wien
+
+*   Tel. +43 5 0766-11   
+    
+*   [Allgemeine Anfrage](https://www.sozialversicherung.gv.at/formgen/?contentid=10007.883453&portal=oegkportal&layout=withoutNav)
+*   [Kundenservicestellen in Wien](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal#ac_droplink_18761713) (Kontakt und Öffnungszeiten)  
+    
+
+Österreichische Gesundheitskasse:  **[office@oegk.at](mailto:office@oegk.at)**  
+
+  
+
+#### Fax-Ablöse bei der ÖGK
+
+Die Übermittlung sensibler Daten erfolgt nun über [www.oegk.at/databox](https://www.oegk.at/cdscontent/?contentid=10007.900601&portal=oegkportal)  
+
+## Standortsuche
+
+Finden Sie Kundenservicestellen und Gesundheitseinrichtungen der ÖGK in Ihrer Nähe:
+
+Mit dem Aufruf der Karte erklären Sie sich einverstanden, dass Ihre Daten an Drittanbieter übermittelt werden und dass Sie die Datenschutzerklärung gelesen haben.
+
+Zurück zu den Ergebnissen
+
+Standorte filtern
+
+#### **Unsere Services in den Gesundheitszentren**
+
+Standortkarte wird geladen.
+
+* * *
+
+[Liste aller Kundenservicestellen](https://www.oegk.at/cdscontent/?contentid=10007.869522&portal=oegkportal)"
+`;
