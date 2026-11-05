@@ -8,10 +8,11 @@ codex_effort: high
 depends_on: [WP-013, WP-103, WP-166, WP-170, WP-005]
 fr: [NFR-13]
 owns:
-  - packages/knowledge/src/loader/db.ts
-  - packages/knowledge/src/ingest/indexer.ts
-  - packages/knowledge/src/loaders/sozdok/load.ts
-  - apps/web/src/server/**
+  - packages/knowledge/src/**
+  - packages/knowledge/test/**
+  - apps/web/src/**
+  - apps/web/scripts/**
+  - apps/web/test/**
 may_touch:
   - packages/knowledge/package.json
   - apps/web/package.json
@@ -23,7 +24,7 @@ allow_deps: none beyond the baseline; anything else needs a contract change requ
 live_services: []
 gates:
   - docker compose up -d --wait
-  - bun run --filter @lotse/brain db:migrate
+  - bun run --filter @lotse/db db:migrate
   - bun run typecheck
   - bun run test
   - bun run --filter @lotse/knowledge test:db
