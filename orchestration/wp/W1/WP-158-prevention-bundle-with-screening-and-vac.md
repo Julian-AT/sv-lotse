@@ -10,7 +10,9 @@ fr: [FR-G5, FR-G6, E2]
 owns:
   - packages/knowledge/catalog/praevention*
   - packages/knowledge/processes/praevention*
-may_touch: []
+may_touch:
+  - packages/knowledge/src/schemas/benefit.ts
+  - packages/knowledge/test/schemas/**
 allow_deps: none
 live_services: []
 gates:
@@ -60,6 +62,11 @@ descriptive.
   criteria describe administrative eligibility only.
 - Simple-language names (`name_simple`) at A2 level.
 - No code changes; no benefit, office or scenario id anywhere in code (E2 scan gate).
+
+## Orchestrator decision (2026-11-06)
+
+Make `verified_at` optional on `appointment_channels` entries in `BenefitSchema` (records await
+human review; never invent a verification date) and add a schema test.
 
 ## Acceptance criteria
 

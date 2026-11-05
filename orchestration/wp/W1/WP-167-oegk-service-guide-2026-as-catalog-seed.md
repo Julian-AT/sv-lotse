@@ -8,6 +8,7 @@ codex_effort: medium
 depends_on: [WP-101, WP-155, WP-156]
 fr: [FR-G1, E2]
 owns:
+  - packages/knowledge/processes/oegk-*
   - packages/knowledge/catalog/oegk-*
 may_touch: []
 allow_deps: none

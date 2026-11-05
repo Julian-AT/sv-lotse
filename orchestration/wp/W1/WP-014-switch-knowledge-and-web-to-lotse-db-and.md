@@ -10,7 +10,7 @@ fr: [NFR-13]
 owns:
   - packages/knowledge/src/**
   - packages/knowledge/test/**
-  - apps/web/src/**
+  - apps/web/src/server/**
   - apps/web/scripts/**
   - apps/web/test/**
 may_touch:

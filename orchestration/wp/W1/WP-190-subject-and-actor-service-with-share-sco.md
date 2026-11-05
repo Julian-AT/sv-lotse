@@ -11,6 +11,9 @@ owns:
   - packages/brain/src/subjects/**
   - packages/brain/test/subjects/**
 may_touch:
+  - packages/db/test/**
+  - packages/db/drizzle/**
+  - packages/db/src/db/schema/**
   - packages/brain/package.json
   - bun.lock
 allow_deps: none beyond what the brief names; deadline mode, document deviations
@@ -37,6 +40,12 @@ Uses `@lotse/db`. No tool registration (WP-180 does that).
 ## Context
 
 - PRD sections for the requirement IDs above; `AGENTS.md` (code quality standard, deadline mode).
+
+## Orchestrator decision (2026-11-06)
+
+Add a `helper_invite` table (unique token hash, case, issuer, share scope, expiry, consumed at;
+cascade on case deletion) to `@lotse/db` with a generated migration (`db:generate`); the schema
+freeze starts at M0, which has not been tagged.
 
 ## Acceptance criteria
 

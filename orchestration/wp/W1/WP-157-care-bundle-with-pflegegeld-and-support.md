@@ -8,6 +8,7 @@ codex_effort: medium
 depends_on: [WP-101, WP-155, WP-156]
 fr: [FR-G5, E2]
 owns:
+  - packages/knowledge/offices/federal/**
   - packages/knowledge/catalog/pflege*
   - packages/knowledge/processes/pflege*
 may_touch: []
@@ -60,6 +61,12 @@ descriptive.
   criteria describe administrative eligibility only.
 - Simple-language names (`name_simple`) at A2 level.
 - No code changes; no benefit, office or scenario id anywhere in code (E2 scan gate).
+
+## Orchestrator decision (2026-11-06)
+
+Add the Sozialministeriumservice offices you need (Landesstellen, including Steiermark, and the
+responsible offices for 24-hour care support) as office records under `offices/federal/`, with
+sources, and reference them from the care benefits.
 
 ## Acceptance criteria
 

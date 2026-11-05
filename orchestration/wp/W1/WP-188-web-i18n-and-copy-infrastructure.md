@@ -11,6 +11,7 @@ owns:
   - apps/web/src/i18n/**
   - apps/web/test/i18n/**
 may_touch:
+  - apps/web/src/features/shell/copy.ts
   - apps/web/package.json
   - bun.lock
 allow_deps: none beyond what the brief names; deadline mode, document deviations
