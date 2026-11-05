@@ -44,6 +44,17 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
   - no diagnosis, no interpretation of findings, no risk assessment, no therapy or medication advice;
   - only verbatim quotes of documented recommendations.
 - If something outside your paths must change, stop and report a contract change request.
+  These need no request and are always allowed:
+  - updating `AGENTS.md` and `README.md` of a package or app in which you own paths (commands,
+    invariants, how to run);
+  - `@types/*` packages for libraries you already use, and `workspace:*` dependencies on packages
+    whose public exports you import;
+  - a library whose API the brief names (for example `embedMany` implies `ai`), at the version the
+    rest of the repository uses;
+  - test-only fixtures you construct from real data when the data cannot show a case on its own
+    (say so in the test and the report).
+  Stop only for real conflicts: a frozen contract (protocol, database schema, tool schemas), a path
+  another WP owns, a new paid service, or a requirement that contradicts the PRD.
 - Never delete, move or edit `KI-Challenge_UseCase.yaml` (required by the challenge).
 - `data/svbox/` holds the original challenge files: read them (through `SVBOX_DIR`), never modify them.
 
