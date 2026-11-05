@@ -1,0 +1,8 @@
+email="$(git config user.email)"
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then range="$local_sha"; else range="$remote_sha..$local_sha"; fi
+  for c in $(git rev-list "$range" 2>/dev/null | head -n 200); do
+    [ "$(git log -1 --format=%ae "$c")" = "$email" ] || { echo "pre-push: $c is not authored by $email" >&2; exit 1; }
+  done
+done

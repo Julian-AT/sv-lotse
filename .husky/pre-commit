@@ -1,0 +1,8 @@
+email="$(git config user.email)"
+author="$(git var GIT_AUTHOR_IDENT | sed -E 's/.*<(.*)>.*/\1/')"
+committer="$(git var GIT_COMMITTER_IDENT | sed -E 's/.*<(.*)>.*/\1/')"
+if [ -z "$email" ] || [ "$author" != "$email" ] || [ "$committer" != "$email" ]; then
+  echo "pre-commit: author and committer must be $email" >&2
+  exit 1
+fi
+staged="$(git diff --cached --name-only --diff-filter=ACMR)"
