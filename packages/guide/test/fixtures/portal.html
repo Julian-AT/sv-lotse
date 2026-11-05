@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Verwaltungsportal</title>
+<style>body { font: 18px sans-serif; margin: 24px; } button, [role="button"], input { display: inline-block; margin: 4px; } form { max-width: 850px; } [hidden] { display: none; }</style>
+</head><body>
+<p>Prüfen Sie Ihre Angaben.</p>
+<form>
+<label for="reference">Aktenzeichen</label><input id="reference"><input hidden aria-label="Hidden field">
+<button data-denied type="submit">Weiter</button>
+<input data-denied type="submit" value="Fortfahren">
+<input data-denied type="image" aria-label="Fortsetzen" alt="Fortsetzen" width="80" height="24">
+<input data-denied type="reset" value="Zurücksetzen">
+<input data-denied type="password" aria-label="Passwort">
+<input data-denied type="file" aria-label="Attachment">
+<button data-denied type="button">Absenden</button>
+<button data-denied type="button">Senden</button>
+<button data-denied type="button">Jetzt bezahlen</button>
+<button data-denied type="button">Termin verbindlich buchen</button>
+<button data-denied type="button">Buchung bestätigen</button>
+<button data-denied type="button">Löschen</button>
+<button data-denied type="button">Submit application</button>
+<button data-denied type="button">Send message</button>
+<button data-denied type="button">Pay now</button>
+<button data-denied type="button">Confirm booking</button>
+<button data-denied type="button">Confirm appointment</button>
+<button data-denied type="button">Confirm reservation</button>
+<button data-denied type="button">Book appointment</button>
+<button data-denied type="button">Delete record</button>
+<a data-denied href="#payment">Checkout</a>
+<!-- biome-ignore lint/a11y/useSemanticElements: exercise third-party ARIA controls in the deny-list fixture -->
+<div data-denied role="button" aria-label="SEND" tabindex="0"><span>Send</span></div>
+<input data-denied aria-label="Delete record">
+<button type="button">Hilfe</button>
+</form>
+<script>
+window.observed = [];
+for (const type of ['focus', 'input', 'click', 'submit']) document.addEventListener(type, event => {
+  window.observed.push({ type, value: event.target.value ?? '', data: event.data ?? null, key: '', time: performance.now() });
+  if (type === 'submit') event.preventDefault();
+}, true);
+</script>
+</body></html>
