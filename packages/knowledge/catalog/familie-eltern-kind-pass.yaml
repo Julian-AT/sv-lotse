@@ -1,0 +1,237 @@
+# Awaiting human review; sources checked.
+id: familie-eltern-kind-pass
+name_de: Eltern-Kind-Pass
+name_simple: Untersuchungen in der Schwangerschaft und für Ihr Kind
+area: A
+life_situations:
+  - family-with-child
+scope: federal
+carriers:
+  - oegk
+  - svs
+  - bvaeb
+criteria:
+  - id: pass-issuance
+    text_de:
+      Nach ärztlich festgestellter Schwangerschaft erhalten Schwangere mit Wohnsitz in Österreich
+      den Eltern-Kind-Pass bei ihrer Ärztin oder ihrem Arzt.
+    condition: pregnancy_confirmed == true and residence_austria == true
+    legal_basis: Eltern-Kind-Pass-Programm des Gesundheitsministeriums; § 7 Abs. 1 KBGG (SozDok, in
+      Kraft seit 2026-10-01)
+    source:
+      url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+      quote:
+        Nach Feststellen einer Schwangerschaft erhält jede Schwangere mit Wohnsitz in Österreich von
+        Ihrem betreuenden Arzt/Ihrer betreuenden Ärztin einen Eltern-Kind-Pass.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: programme-2026
+    text_de: Seit 1. Oktober 2026 gilt das neue Programm auch für bestehende Papierpässe. Bereits
+      erfolgte Untersuchungen werden nicht allein wegen der Umstellung wiederholt.
+    legal_basis: Eltern-Kind-Pass-Untersuchungsprogramm ab 1. Oktober 2026 (Gesundheitsministerium)
+    source:
+      url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+      quote:
+        Das neue Untersuchungsprogramm gilt ab 01.10.2026 in ganz Österreich und somit auch für einen
+        bereits ausgestellten Papierpass.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: full-payment
+    text_de:
+      Für das volle Kinderbetreuungsgeld sind fünf Schwangerschaftsuntersuchungen und die ersten
+      fünf Kindesuntersuchungen vorgesehen. Es geht um den Nachweis, nicht um die Bewertung der
+      Ergebnisse.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+      quote:
+        Die Durchführung der Schwangerenuntersuchungen 1-5 sowie die Kindesuntersuchungen 1-5 (bis
+        zum 14. Lebensmonat des Kindes) ist Voraussetzung für den Erhalt des Kinderbetreuungsgeldes
+        in voller Höhe.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: initial-proof
+    text_de: Für das volle Kinderbetreuungsgeld sind bei der Antragstellung die fünf
+      Schwangerschaftsuntersuchungen und die erste Kindesuntersuchung nachzuweisen.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+      quote: Bei der Antragstellung müssen die fünf Schwangerschaftsuntersuchungen und die erste
+        Untersuchung des Kindes (in Kopie) nachgewiesen werden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: later-proof
+    text_de: Die Kindesuntersuchungen 2 bis 5 erfolgen bis zur Vollendung des 14. Lebensmonats. Der
+      Nachweis erfolgt spätestens bis zur Vollendung des 15. Lebensmonats.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+      quote:
+        Die restlichen Untersuchungen müssen bis zum 15. Lebensmonat des Kindes (ebenfalls in Kopie)
+        nachgewiesen werden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: electronic-proof
+    text_de: Nach erfolgreichem elektronischem Nachweis durch den eEKP sind keine weiteren Nachweise
+      nötig, solange die Krankenkasse nichts anderes mitteilt.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+      quote:
+        In jenen Fällen, in denen die Nachweise erfolgreich elektronisch durch den eEKP gemäß § 6
+        Abs. 2 EKPG erfolgt sind, entfällt die Nachweispflicht der antragstellenden Elternteile,
+        sofern seitens des Krankenversicherungsträgers keine gegenteilige Information ergeht.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: late-proof
+    text_de:
+      "Bei verspätetem Nachweis die Krankenkasse fragen: Die Nachweise können bis spätestens zur
+      Vollendung des 18. Lebensmonats nachgebracht werden."
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+      quote: die jeweiligen Nachweise bis spätestens zur Vollendung des 18. Lebensmonates des Kindes
+        nachgebracht werden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: reduction
+    text_de: Fehlt ein rechtzeitiger Nachweis, werden grundsätzlich 1.300 Euro pro beziehendem
+      Elternteil abgezogen. Ausnahmen und Nachreichung sind mit der Krankenkasse zu klären.
+    legal_basis:
+      "§ 3 Abs. 4 und § 24a Abs. 4 KBGG; Nachweise: § 7 KBGG und § 24c KBGG (SozDok, in Kraft
+      seit 2026-10-01; KBGG=PARA=7=115_82=2025-12-30=2026-10-01;
+      KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)"
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+      quote:
+        Wenn beide Elternteile Kinderbetreuungsgeld beziehen, erfolgt der Abzug von 1.300 Euro bei
+        jedem der Elternteile.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: unavoidable-missing-proof
+    text_de: Wurden Untersuchungen aus Gründen, die die Eltern nicht zu vertreten haben, nicht
+      durchgeführt oder nicht nachgewiesen, kann trotzdem Anspruch auf die volle Höhe bestehen. Die
+      Krankenkasse prüft das.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+      quote:
+        die Vornahme oder der Nachweis der Untersuchungen nur aus Gründen, die nicht von den Eltern
+        zu vertreten sind, unterbleibt oder
+      retrieved_at: 2026-11-05T23:54:09.967Z
+office_rules:
+  - when: responsible_carrier == "oegk" and region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: responsible_carrier == "oegk" and region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: responsible_carrier == "oegk" and region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: responsible_carrier == "oegk" and region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: responsible_carrier == "oegk" and region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: responsible_carrier == "oegk" and region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: responsible_carrier == "oegk" and region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: responsible_carrier == "oegk" and region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+  - when: responsible_carrier == "oegk" and region == "Wien"
+    office: ref:offices/oegk-kundenservice-wien-kinderbetreuungsgeld
+  - when: responsible_carrier == "svs"
+    office: ref:offices/svs-hauptstelle
+  - when: responsible_carrier == "bvaeb"
+    office: ref:offices/bvaeb-hauptstelle
+documents:
+  - id: paper-pass
+    name_de: Eltern-Kind-Pass und Zusatzheft für neue Leistungen ab Oktober 2026
+    required: false
+    obtain_from: Betreuende Ärztin oder betreuender Arzt; neue Leistungen werden im Zusatzheft dokumentiert.
+    source:
+      url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+      quote: Für die Dokumentation der neuen und zusätzlichen Untersuchungen erhalten Sie, bis zur
+        Umstellung auf den elektronischen Eltern-Kind-Pass (verpflichtende Einführung ab Oktober
+        2027), von Ihrem betreuenden medizinischen Fachpersonal ein Zusatzheft
+      retrieved_at: 2026-11-05T23:55:25.869Z
+  - id: examination-proofs
+    name_de: Bestätigungen der Eltern-Kind-Pass-Untersuchungen
+    required: false
+    obtain_from: Ärztin oder Arzt bestätigt die Untersuchungen. Bei Papiernachweisen Kopien für die
+      Krankenkasse machen; Originale im Pass lassen.
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+      quote:
+        Fertigen Sie eine Kopie der Nach­weisblätter an, aber belassen Sie die Originalblätter im
+        Eltern-Kind-Pass.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+forms:
+  - search: Eltern-Kind-Pass Nachweisblätter für Kinderbetreuungsgeld
+    publisher: Bundesministerium für Arbeit, Soziales, Gesundheit, Pflege und Konsumentenschutz
+process: ref:processes/familie-eltern-kind-pass
+appointment_channels: []
+sources:
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote:
+      Nach Feststellen einer Schwangerschaft erhält jede Schwangere mit Wohnsitz in Österreich von
+      Ihrem betreuenden Arzt/Ihrer betreuenden Ärztin einen Eltern-Kind-Pass.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote:
+      Das neue Untersuchungsprogramm gilt ab 01.10.2026 in ganz Österreich und somit auch für einen
+      bereits ausgestellten Papierpass.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote: Nur Untersuchungen und Beratungen, die im jeweiligen Zeitraum noch nicht gemacht wurden,
+      erfolgen nach dem neuen Untersuchungsprogramm und werden entsprechend dokumentiert.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote:
+      Die Durchführung der Schwangerenuntersuchungen 1-5 sowie die Kindesuntersuchungen 1-5 (bis
+      zum 14. Lebensmonat des Kindes) ist Voraussetzung für den Erhalt des Kinderbetreuungsgeldes in
+      voller Höhe.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote: Bei der Antragstellung müssen die fünf Schwangerschaftsuntersuchungen und die erste
+      Untersuchung des Kindes (in Kopie) nachgewiesen werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote:
+      Die restlichen Untersuchungen müssen bis zum 15. Lebensmonat des Kindes (ebenfalls in Kopie)
+      nachgewiesen werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote: In jenen Fällen, in denen die Nachweise erfolgreich elektronisch durch den eEKP gemäß § 6
+      Abs. 2 EKPG erfolgt sind, entfällt die Nachweispflicht der antragstellenden Elternteile,
+      sofern seitens des Krankenversicherungsträgers keine gegenteilige Information ergeht.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote: die jeweiligen Nachweise bis spätestens zur Vollendung des 18. Lebensmonates des Kindes
+      nachgebracht werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote:
+      Wenn beide Elternteile Kinderbetreuungsgeld beziehen, erfolgt der Abzug von 1.300 Euro bei
+      jedem der Elternteile.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote: Fertigen Sie eine Kopie der Nach­weisblätter an, aber belassen Sie die Originalblätter im
+      Eltern-Kind-Pass.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote:
+      Für die Antragstellung und Auszahlung dieser Leistungen ist jener Krankenversicherungsträger
+      zuständig, bei dem Wochengeld bezogen wurde beziehungsweise bei dem man versichert
+      (anspruchsberechtigt) ist beziehungsweise zuletzt versichert (anspruchsberechtigt) war.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote: Hat bisher keine Versicherung bestanden, ist die Österreichische Gesundheitskasse zuständig.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote:
+      die Vornahme oder der Nachweis der Untersuchungen nur aus Gründen, die nicht von den Eltern
+      zu vertreten sind, unterbleibt oder
+    retrieved_at: 2026-11-05T23:54:09.967Z
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote: Für die Dokumentation der neuen und zusätzlichen Untersuchungen erhalten Sie, bis zur
+      Umstellung auf den elektronischen Eltern-Kind-Pass (verpflichtende Einführung ab Oktober
+      2027), von Ihrem betreuenden medizinischen Fachpersonal ein Zusatzheft
+    retrieved_at: 2026-11-05T23:55:25.869Z
+as_of: 2026-11-06
