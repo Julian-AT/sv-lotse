@@ -32,6 +32,12 @@ CLI runs under Node.js 22 with type stripping; CLI and integration-test entrypoi
 environment files on import. Run TypeScript tooling scripts with `bun <file>.ts` and use only Node
 APIs so they also run under Node.
 
+- `bun run --filter @lotse/knowledge test:db` — run SozDok integration tests against real Postgres after brain migrations.
+- `bun run --filter @lotse/knowledge sozdok:load [--on YYYY-MM-DD]` — load SozDok sources; see `src/loaders/sozdok/README.md`.
+  There is no build step: the package exports TypeScript source. Unit/corpus tests exclude
+  `*.db.test.ts`; `test:db` explicitly runs the database suite. No generation or live-test script exists.
+  Run TypeScript tooling scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
+
 ## Invariants
 
 - Nothing without a source quote and `as_of`.
@@ -67,6 +73,14 @@ APIs so they also run under Node.
 - Read original challenge files through `SVBOX_DIR`; never modify `data/svbox/`.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
 - Export only implemented symbols from `src/index.ts`; no placeholder business logic.
+- SozDok provision identity is `(law_abbr, gldart, gldnr)`; validity ends exclusively at the next version.
+- SozDok sources use stable IDs because `source.url` has no uniqueness constraint. Never write
+  `kb_chunk` without a supplied, validated embedding; source-only reloads invalidate changed chunks.
+- SozDok loads hold one namespaced transaction lock and reconcile incoming and persisted provision
+  history atomically. Partial directories must preserve known validity bounds and invalidate chunks
+  when their text, validity, citation or chunk metadata changes.
+- SozDok table rows stay together only when they fit the chunk budget; inner absatz remain splittable.
+- SozDok database fixtures use unique test-only document IDs; cleanup must never delete corpus IDs.
 - Preserve the medical boundary in PRD §4 in user-facing text and fixtures.
 - Ingestion schemas live in `src/ingest/` pending WP-101 consolidation; `./ingest` exports the pipeline.
 - Ingestion seeds live in `ingest-sources.yaml`; `sources.yaml` is reserved for the shared
