@@ -407,6 +407,7 @@ wp: work-package pipeline (Claude orchestrates, Codex workers implement)
   wp pr      <WP>               check commits, rebase, push, open/update the PR
   wp land    <WP>               wait for CI, fast-forward main, clean up
   wp abort   <WP>               remove worktree, branch and database; keep run logs
+  wp autoland <WP>              commit from suggestions, land now, review after landing
   wp orch    <slug> [paths...]  worktree for orchestrator-only changes (briefs, config)
   wp protect                    create the GitHub ruleset for the base branch
   wp tag     <tag> <message>    annotated milestone tag on the base branch
@@ -1118,6 +1119,19 @@ cmd_land_once() {
   ok "$id landed on $BASE_BRANCH at ${sha:0:12}"
 }
 
+# Land a verified WP now (deadline mode): commit from suggested_commits when the tree is dirty,
+# push and land, then review after landing in the background.
+cmd_autoland() {
+  local id="${1:?usage: wp autoland <WP>}" run wt
+  run="$(get_state "$id" RUN_DIR)"
+  wt="$(require_wt "$id")"
+  if [ -n "$(git -C "$wt" status --porcelain | grep -v -E 'test-results/|tsbuildinfo|\.turbo/')" ]; then
+    auto_commit "$id" "$run" || die "$id: suggested commits do not cover the change; commit by hand"
+  fi
+  cmd_pr "$id" && cmd_land "$id" || die "$id: landing failed"
+  post_land_review "$id" "$run"
+}
+
 cmd_abort() {
   local id="${1:?usage: wp abort <WP>}"
   cleanup_wp "$id"
@@ -1204,6 +1218,7 @@ main() {
     pr) cmd_pr "$@" ;;
     land) cmd_land "$@" ;;
     abort) cmd_abort "$@" ;;
+    autoland) cmd_autoland "$@" ;;
     orch) cmd_orch "$@" ;;
     protect) cmd_protect ;;
     tag) cmd_tag "$@" ;;
