@@ -96,8 +96,12 @@ Out of scope: the injection bundle for `WKUserScript` (later WP), the workspace 
   character and the final value equals the payload value; pace is respected within tolerance.
 - [ ] AC4: Every deny-list fixture control is refused with `failureReason: "denied"`, in German and
   English; a static test asserts no `click()`/`submit()`/`requestSubmit()` call exists in `src/`.
-- [ ] AC5: Page scripts cannot find overlay nodes via `document.querySelector*`, and page CSS
-  (`* { display:none !important }` etc.) does not hide the overlay.
+- [ ] AC5: Page scripts cannot find overlay nodes via `document.querySelector*`. Page CSS that
+  targets everything below the root (`body *`, `* { opacity:0 !important; color:red !important }`),
+  the host's tag or attributes, or `body > *` does not hide or restyle the overlay; the host carries
+  its essential styles inline with `!important` and the content lives in the closed shadow root.
+  A page that hides its own document root (`html { display:none }`) hides itself and is out of
+  scope; no style is injected into the page's own stylesheets.
 - [ ] AC6: Actions on a non-allowlisted origin are refused; `src/` contains no `fetch`,
   `XMLHttpRequest`, `WebSocket` or `sendBeacon` use (static test).
 
