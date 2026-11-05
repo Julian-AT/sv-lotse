@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-wien-simmering"
+name_de: "Kundenservice Simmering"
+name_simple: "ÖGK-Büro Simmering"
+carrier: "oegk"
+region: "Wien"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882919&portal=oegkportal"
+address:
+  street: "Guglgasse 8, Gasometer B"
+  postal_code: "1110"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 0766-118000"
+email: "simmering@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.30
+    Dienstag:07.00 – 14.30
+    Mittwoch:07.00 – 14.30
+    Donnerstag:07.00 – 14.30
+    Freitag:07.00 – 14.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882919&portal=oegkportal"
+    quote: |-
+      Kundenservice Simmering
+      Guglgasse 8, Gasometer B
+      1110 Wien
+      Telefon: +43 5 0766-118000
+      E-Mail: simmering@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882919&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.30
+      Dienstag:07.00 – 14.30
+      Mittwoch:07.00 – 14.30
+      Donnerstag:07.00 – 14.30
+      Freitag:07.00 – 14.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882919&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

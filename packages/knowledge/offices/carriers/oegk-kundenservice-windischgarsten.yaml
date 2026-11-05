@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-windischgarsten"
+name_de: "Kundenservice Windischgarsten"
+name_simple: "ÖGK-Büro Windischgarsten"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882991&portal=oegkportal"
+address:
+  street: "Hauptstraße 5, Gemeindeamt"
+  postal_code: "4580"
+  locality: "Windischgarsten"
+  country: "AT"
+phone: "+43 5 0766-14193970"
+email: "kirchdorf@oegk.at"
+opening_hours:
+  notes: "Montag:08.00 – 12.00"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882991&portal=oegkportal"
+    quote: |-
+      Kundenservice Windischgarsten
+      Hauptstraße 5, Gemeindeamt
+      4580 Windischgarsten
+      Telefon: +43 5 0766-14193970
+      E-Mail: kirchdorf@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882991&portal=oegkportal"
+    quote: "Montag:08.00 – 12.00"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882991&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
