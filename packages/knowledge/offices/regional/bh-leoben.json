@@ -1,0 +1,29 @@
+{
+  "id": "bh-leoben",
+  "name_de": "Bezirkshauptmannschaft Leoben",
+  "name_simple": "Amt für den Bezirk Leoben",
+  "region": "Steiermark",
+  "address": {
+    "street": "Peter-Tunner-Straße 6",
+    "postal_code": "8700",
+    "locality": "Leoben",
+    "country": "AT"
+  },
+  "phone": "+43 (3842) 45571-0",
+  "email": "bhln@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Leoben",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Leoben\nBezirkshauptmann Mag. Markus Kraxner\nPeter-Tunner-Straße 6\n8700 Leoben\nTelefon: +43 (3842) 45571-0\nFAX: +43 (3842) 45571-550\nE-Mail: bhln@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

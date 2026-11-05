@@ -1,0 +1,29 @@
+{
+  "id": "bh-leibnitz",
+  "name_de": "Bezirkshauptmannschaft Leibnitz",
+  "name_simple": "Amt für den Bezirk Leibnitz",
+  "region": "Steiermark",
+  "address": {
+    "street": "Kadagasse 12",
+    "postal_code": "8430",
+    "locality": "Leibnitz",
+    "country": "AT"
+  },
+  "phone": "+43 (3452) 82911-0",
+  "email": "bhlb@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Leibnitz",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Leibnitz\nBezirkshauptfrau Mag.a Karin Wiesegger-Eck\nKadagasse 12\n8430 Leibnitz\nTelefon: +43 (3452) 82911-0\nFAX: +43 (3452) 82911-550\nE-Mail: bhlb@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
