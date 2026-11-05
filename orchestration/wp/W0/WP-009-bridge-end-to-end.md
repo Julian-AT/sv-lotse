@@ -5,7 +5,7 @@ wave: W0
 lane: bridge
 risk: high
 codex_effort: xhigh
-depends_on: [WP-007, WP-008]
+depends_on: [WP-007, WP-008, WP-012]
 fr: [FR-C3, FR-C9, NFR-1, NFR-3]
 owns:
   - apps/mac/Packages/LotseKit/Sources/LotseBridge/**
