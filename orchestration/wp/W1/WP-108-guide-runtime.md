@@ -11,7 +11,7 @@ owns:
   - packages/guide/**
 may_touch:
   - bun.lock
-allow_deps: "`@lotse/protocol` as `workspace:*`; nothing else beyond the WP-001 baseline"
+allow_deps: "`@lotse/protocol` as `workspace:*` and `zod@^4` (same version as protocol) in `@lotse/guide`"
 live_services: []
 gates:
   - bun run --filter @lotse/guide typecheck
@@ -57,8 +57,10 @@ Out of scope: the injection bundle for `WKUserScript` (later WP), the workspace 
 2. **Snapshot** (`src/snapshot/**`): interactive elements (inputs, selects, textareas, buttons,
    links, ARIA widgets) with a stable `handle` (stable across re-snapshots of an unchanged DOM;
    derived from structure and accessible name, not random), role, accessible name as `label`,
-   current `value` (never for `type=password`), visibility, and `bbox` normalized 0..1 to the
-   viewport. Output validates against `ContextCapsule.page`.
+   current `value` (never for `type=password`), `visible`, and `bbox` normalized 0..1 to the
+   viewport. This internal `PageSnapshot` type keeps `visible`; `toCapsulePage(snapshot)` projects
+   it to the frozen protocol shape `ContextCapsule.page` by keeping only visible elements and
+   dropping the extra field. Do not change `@lotse/protocol`.
 3. **Overlay** (`src/overlay/**`): cursor, highlight, annotation and caption rendered in a closed
    shadow root attached to one host element, with styles inside the shadow root; page CSS cannot
    restyle it and page scripts cannot query its content. `clear()` removes everything.
@@ -85,7 +87,8 @@ Out of scope: the injection bundle for `WKUserScript` (later WP), the workspace 
 
 ## Acceptance criteria
 
-- [ ] AC1: Snapshot of each fixture validates against `ContextCapsule.page`; handles are identical
+- [ ] AC1: `toCapsulePage` of each fixture snapshot validates against `ContextCapsule.page` and
+  omits hidden elements; handles are identical
   across two snapshots of an unchanged page and survive an unrelated DOM insertion.
 - [ ] AC2: `point` and `highlight` on a `dom` handle and on a `text` quote place the overlay over the
   element's or text range's bounding box (within 2 px) in Chromium.

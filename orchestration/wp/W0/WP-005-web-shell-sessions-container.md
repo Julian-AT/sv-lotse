@@ -113,6 +113,12 @@ workspace. After this WP:
 - [ ] AC5: axe finds no WCAG 2.2 AA violations on the home page.
 - [ ] AC6: No secret reaches client bundles (a test greps `.next/static` for the server env names).
 
+## Notes for the implementer
+
+- Import the database layer from WP-004's subpath exports: `@lotse/brain/db` (client),
+  `@lotse/brain/db/schema` (tables such as `users`, `sessions`), `@lotse/brain/storage/s3`.
+  Do not import `@lotse/brain` root or edit `packages/brain` (WP-006 owns `src/index.ts`).
+
 ## Suggested commits
 
 - `feat(web): add next.js app shell with env validation and telemetry`
