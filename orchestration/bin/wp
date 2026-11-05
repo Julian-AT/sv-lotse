@@ -19,6 +19,12 @@ fi
 : "${SHARED_FILES:=bun.lock}"
 # Start the read-only Codex cross-review automatically when a WP verifies (cycle and rework).
 : "${AUTO_XREVIEW:=1}"
+# Owner decision 2026-11-05: rework automatically while attempts remain, and land clean
+# normal-risk WPs (gates pass, cross-review APPROVE) without the orchestrator.
+: "${AUTO_REWORK:=1}"
+: "${AUTO_LAND:=1}"
+: "${XREVIEW_EFFORT:=xhigh}"
+FOLLOWUPS_DIR="${FOLLOWUPS_DIR:-$ROOT/.orchestration/followups}"
 # One Compose project for every worktree: gates and workers share the same Postgres and MinIO on
 # the fixed host ports; each WP gets its own database and S3 prefix (prepare_db).
 export COMPOSE_PROJECT_NAME="${COMPOSE_PROJECT_NAME:-lotse}"
@@ -580,7 +586,9 @@ cmd_run() {
 
   local cmd effort
   effort="$(fm_get "$b" codex_effort)"
-  [ -n "$effort" ] || effort="$CODEX_EFFORT"
+  if [ -z "$effort" ]; then
+    if [ "$(fm_get "$b" risk)" = high ]; then effort=xhigh; else effort=high; fi
+  fi
   cmd=("$CODEX_BIN" exec -C "$wt" --json --output-schema "$SCHEMA" -o "$run/report.json"
        -s workspace-write -c approval_policy=never -c sandbox_workspace_write.network_access=true
        -c "model_reasoning_effort=$effort")
@@ -767,11 +775,103 @@ cmd_cycle() {
   info "$id: $(wp_state "$id")"
 }
 
-auto_xreview() {
-  local id="$1"
-  [ "$AUTO_XREVIEW" = 1 ] || return 0
-  [ "$(wp_state "$id")" = verified ] || return 0
-  cmd_xreview "$id" || warn "$id: cross-review failed"
+auto_xreview() { auto_flow "$1"; }
+
+attempt_of() { get_state "$1" ATTEMPT; }
+
+# Automatic loop after a worker run: rework on fixable gate failures or a blocking cross-review
+# while attempts remain, and land clean normal-risk WPs. Anything else waits for the orchestrator.
+auto_flow() {
+  local id="$1" run b st verdict n
+  b="$(brief_path "$id")"
+  while :; do
+    run="$(get_state "$id" RUN_DIR)"
+    st="$(wp_state "$id")"
+    n="$(attempt_of "$id")"; n="${n:-1}"
+    if [ "$st" = failed ]; then
+      [ "$AUTO_REWORK" = 1 ] && [ "$n" -lt "$MAX_ATTEMPTS" ] || return 0
+      gate_rework_findings "$id" "$run" || return 0
+      info "$id: gates failed; automatic rework (attempt $((n + 1)))"
+      cmd_run "$id" --rework "$run/auto-rework.md" || true
+      cmd_verify "$id" || true
+      continue
+    fi
+    [ "$st" = verified ] || return 0
+    [ "$AUTO_XREVIEW" = 1 ] || return 0
+    [ -s "$run/xreview.md" ] || cmd_xreview "$id" || { warn "$id: cross-review failed"; return 0; }
+    verdict="$(grep -Eo 'VERDICT: (APPROVE|REWORK)' "$run/xreview.md" | tail -n 1 | cut -d' ' -f2)"
+    if [ "$verdict" = REWORK ]; then
+      [ "$AUTO_REWORK" = 1 ] && [ "$n" -lt "$MAX_ATTEMPTS" ] || return 0
+      { echo "## Blocking findings (automatic, from the cross-review)"; echo
+        sed '/^## Follow-ups/,$d; /^`not_run`/,$d; /^VERDICT/d' "$run/xreview.md"; } > "$run/auto-rework.md"
+      save_followups "$id" "$run"
+      info "$id: cross-review REWORK; automatic rework (attempt $((n + 1)))"
+      cmd_run "$id" --rework "$run/auto-rework.md" || true
+      cmd_verify "$id" || true
+      continue
+    fi
+    [ "$verdict" = APPROVE ] || return 0
+    save_followups "$id" "$run"
+    [ "$AUTO_LAND" = 1 ] || return 0
+    [ "$(fm_get "$b" risk)" != high ] || { info "$id: approved; risk high, waiting for the orchestrator"; return 0; }
+    auto_commit "$id" "$run" || { warn "$id: automatic commit not possible; waiting for the orchestrator"; return 0; }
+    cmd_pr "$id" && cmd_land "$id" || warn "$id: automatic landing failed; waiting for the orchestrator"
+    return 0
+  done
+}
+
+# Rework only for failing gates or ownership; never for blocked workers or change requests.
+gate_rework_findings() {
+  local id="$1" run="$2"
+  grep -qE '^report	fail	worker (status=blocked|raised contract)' "$run/verify.tsv" && return 1
+  grep -qE '^(secrets|forbidden)	fail' "$run/verify.tsv" && return 1
+  grep -qE '^(gate|ownership|diff|install)	fail' "$run/verify.tsv" || return 1
+  { echo "## Blocking findings (automatic, from verification)"; echo
+    echo "These checks failed when the orchestrator ran them outside your sandbox. Fix the cause; do not"
+    echo "weaken tests. Shared Compose services (project \`lotse\`) are running."; echo
+    grep -E '	fail	' "$run/verify.tsv" | sed 's/^/- /'; echo
+    echo '```'; tail -n 80 "$run/verify.log"; echo '```'; } > "$run/auto-rework.md"
+}
+
+save_followups() {
+  local id="$1" run="$2"
+  grep -q '^## Follow-ups' "$run/xreview.md" 2>/dev/null || return 0
+  mkdir -p "$FOLLOWUPS_DIR"
+  { echo "# Follow-ups from $id ($(basename "$run"))"; echo
+    sed -n '/^## Follow-ups/,/^VERDICT/p' "$run/xreview.md" | sed '1d; /^VERDICT/d'; } > "$FOLLOWUPS_DIR/$id.md"
+}
+
+# Build commits from the worker's suggested_commits; stop when a file is left over or a message is
+# invalid, so the orchestrator can split by hand.
+auto_commit() {
+  local id="$1" run="$2" wt b refs n i files msg
+  wt="$(require_wt "$id")"
+  b="$(brief_path "$id")"
+  [ -n "$(git -C "$wt" status --porcelain)" ] || return 1
+  refs="$id$(fm_list "$b" fr | head -n 3 | sed 's/^/, /' | tr -d '\n')"
+  n="$(jq '.suggested_commits | length' "$run/report.json" 2>/dev/null || echo 0)"
+  [ "$n" -gt 0 ] || return 1
+  for i in $(seq 0 $((n - 1))); do
+    files="$(jq -r ".suggested_commits[$i].files[]" "$run/report.json")"
+    msg="$(mktemp)"
+    jq -r ".suggested_commits[$i] | \"\(.type)(\(.scope)): \(.subject)\n\n\(.body)\n\nRefs: $refs\"" "$run/report.json" > "$msg"
+    valid_header "$wt" "$(head -n 1 "$msg")" || { rm -f "$msg"; git -C "$wt" reset -q "$(git -C "$wt" merge-base HEAD "$(base_ref)")" --soft 2>/dev/null; return 1; }
+    while IFS= read -r f; do
+      [ -n "$f" ] || continue
+      git -C "$wt" add -A -- "$f" 2>/dev/null || true
+    done <<EOF
+$files
+EOF
+    if git -C "$wt" diff --cached --quiet; then rm -f "$msg"; continue; fi
+    git -C "$wt" commit -q -F "$msg" || { rm -f "$msg"; return 1; }
+    rm -f "$msg"
+  done
+  # Anything left over means the suggested split was incomplete.
+  if [ -n "$(git -C "$wt" status --porcelain --untracked-files=normal | grep -v -E 'test-results/|tsbuildinfo|\.turbo/')" ]; then
+    git -C "$wt" reset -q --soft "$(git -C "$wt" merge-base HEAD "$(base_ref)")"
+    return 1
+  fi
+  return 0
 }
 
 cmd_batch() {
@@ -818,7 +918,7 @@ cmd_xreview() {
   out="$run/xreview.md"
   fill_template "$ORCH/templates/xreview-prompt.md" "WP_ID=$id" "BRIEF=@$b" "DIFF=@$run/diff.patch" > "$run/xreview-prompt.md"
   local cmd
-  cmd=("$CODEX_BIN" exec -C "$wt" -s read-only -o "$out" -c "model_reasoning_effort=$CODEX_EFFORT")
+  cmd=("$CODEX_BIN" exec -C "$wt" -s read-only -o "$out" -c "model_reasoning_effort=$XREVIEW_EFFORT")
   [ -z "$CODEX_MODEL" ] || cmd+=(-m "$CODEX_MODEL")
   cmd+=(-)
   "${cmd[@]}" < "$run/xreview-prompt.md" > "$run/xreview.events.jsonl" 2>&1 || warn "codex review exited non-zero"
