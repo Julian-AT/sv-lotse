@@ -1258,7 +1258,7 @@ The numbers below are proposed targets for the first pilot; each one is measured
 
 ## 17. Tech stack, repository and engineering standards
 
-One monorepo (Bun workspaces) holds every TypeScript package and the Xcode project, so a protocol change, its generated Swift types and the code using them land in one pull request.
+One monorepo (Bun workspaces with Turborepo) holds every TypeScript package and the Xcode project, so a protocol change, its generated Swift types and the code using them land in one pull request.
 
 ### Stack
 
@@ -1276,7 +1276,7 @@ One monorepo (Bun workspaces) holds every TypeScript package and the Xcode proje
 | PDF and forms | pdf-lib for filling and adding form fields; pdf.js for viewing, text layers and server-side field detection (text and vector operators); vision model for scanned forms | Commercial form-recognition service |
 | Tracing and evals | OpenTelemetry (`@ai-sdk/otel`), Langfuse, Vitest-based eval runner | Braintrust |
 | Analytics | PostHog | None |
-| Tooling | Bun workspaces and scripts, Biome, Vitest; Node.js 22 as the runtime | pnpm with Turborepo |
+| Tooling | Bun workspaces as package manager, Turborepo as task runner with caching, Biome, Vitest; Node.js 22 as the runtime | pnpm; plain `bun run --filter` without a task cache |
 | Windows (later) | Tauri v2 shell reusing the workspace and protocol | Electron |
 
 ### Repository layout
@@ -1500,6 +1500,7 @@ New IDs: FR-D10, FR-D11, E13, OT-13, OT-14. No ID was removed.
 | Model access reduced to the OpenAI API; the internal abstraction is called the model router | 7, 8, 17, 19 |
 | SV-Box files stored unmodified in the private repository under `data/svbox/` | 10, 19 |
 | Bun workspaces replace pnpm and Turborepo; Node.js stays the runtime; the job worker route is authorized with `CRON_SECRET` | 7, 16, 17 |
+| Turborepo reinstated as the task runner on top of Bun workspaces (owner decision, 2026-11-05): cached typecheck, test and generate tasks, affected-only runs in CI; Bun stays the package manager (ADR 0010) | 17 |
 
 ### Change log: architecture consolidation
 

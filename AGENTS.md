@@ -72,8 +72,8 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
 | Purpose | Command |
 | --- | --- |
 | Install | `bun install --frozen-lockfile` |
-| All checks | `bun run verify` (lint, then typecheck and test in every package) |
-| One package | `bun run --filter @lotse/<package> <script>` |
+| All checks | `bun run verify` (Biome lint, then `turbo run typecheck test` across packages, cached) |
+| One package | `bun run --filter @lotse/<package> <script>` or `bunx turbo run <task> --filter=@lotse/<package>` |
 | Add a dependency | `bun add <name>` inside the package folder |
 | Local services | `docker compose up -d --wait` (Postgres with pgvector, MinIO) |
 | Live tests | `RUN_LIVE=1 bun run --filter <package> test:live` (calls the real OpenAI and ElevenLabs APIs) |
