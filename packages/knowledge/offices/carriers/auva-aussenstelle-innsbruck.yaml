@@ -1,0 +1,33 @@
+id: "auva-aussenstelle-innsbruck"
+name_de: "AUVA – Außenstelle Innsbruck"
+name_simple: "AUVA-Büro in Innsbruck"
+carrier: "auva"
+region: "Tirol"
+url: "https://auva.at/servicestellen/landesstelle-salzburg/aussenstelle-innsbruck"
+address:
+  street: "Ing.-Etzel-Straße 17"
+  postal_code: "6020"
+  locality: "Innsbruck"
+  country: "AT"
+phone: "+43 5 93 93-34801"
+email: "AI@auva.at"
+opening_hours:
+  notes: |-
+    Die AUVA-Kundendienststellen sind wochentags (Mo - Fr) von 07:00 bis 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+    Wochentags (Mo - Fr) von 08:00 bis 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+sources:
+  - url: "https://auva.at/servicestellen/landesstelle-salzburg/aussenstelle-innsbruck"
+    quote: |-
+      Außenstelle Innsbruck
+      Allgemeine Unfallversicherungsanstalt
+      Ing.-Etzel-Straße 17, 6020 Innsbruck
+      Leistungsabteilung
+      AI@auva.at
+      +43 5 93 93-34801
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/landesstelle-salzburg/aussenstelle-innsbruck"
+    quote: |-
+      Die AUVA-Kundendienststellen sind wochentags (Mo - Fr) von 07:00 bis 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+      Wochentags (Mo - Fr) von 08:00 bis 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
