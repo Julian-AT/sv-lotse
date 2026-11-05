@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-perg"
+name_de: "Kundenservice Perg"
+name_simple: "ÖGK-Büro Perg"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882957&portal=oegkportal"
+address:
+  street: "Gartenstraße 14"
+  postal_code: "4320"
+  locality: "Perg"
+  country: "AT"
+phone: "+43 5 0766-14273900"
+email: "perg@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:06.45 – 15.00
+    Dienstag:06.45 – 15.00
+    Mittwoch:06.45 – 15.00
+    Donnerstag:06.45 – 15.00
+    Freitag:06.45 – 15.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882957&portal=oegkportal"
+    quote: |-
+      Kundenservice Perg
+      Gartenstraße 14
+      4320 Perg
+      Telefon: +43 5 0766-14273900
+      E-Mail: perg@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882957&portal=oegkportal"
+    quote: |-
+      Montag:06.45 – 15.00
+      Dienstag:06.45 – 15.00
+      Mittwoch:06.45 – 15.00
+      Donnerstag:06.45 – 15.00
+      Freitag:06.45 – 15.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882957&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
