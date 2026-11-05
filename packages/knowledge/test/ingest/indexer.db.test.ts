@@ -3,9 +3,9 @@ import { readFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { createDatabase } from "@lotse/brain/db";
 import { afterAll, beforeAll, expect, test } from "vitest";
-import { IngestionFetcher } from "../../src/ingest/fetcher.ts";
 import { enrich } from "../../src/ingest/enrich.ts";
 import { loadEnvironment } from "../../src/ingest/environment.ts";
+import { IngestionFetcher } from "../../src/ingest/fetcher.ts";
 import { indexDocument, storedValidators } from "../../src/ingest/indexer.ts";
 import { normalizeHtml } from "../../src/ingest/normalize.ts";
 import { ingestSource } from "../../src/ingest/pipeline.ts";
@@ -254,4 +254,67 @@ test("concurrent ingestion of the same URL creates one source and one chunk set"
   expect(
     await database.sql`SELECT id FROM kb_chunk WHERE source_id = ${results[0]?.source_id}`,
   ).toHaveLength(original.chunks.length);
+});
+
+// Constructed seasonal sections add validity cases absent from the saved contact page.
+test("WP-173 date filtering excludes expired seasonal chunks and retains unrelated contact chunks", async () => {
+  const localSeed = { ...seed, url: `${url}/seasonal` };
+  const document = enrich(
+    normalizeHtml(
+      "<main><h1>Information</h1><section><h2>Saisonangebot</h2><p>Gültig ab: 01.06.2025</p><p>Gültig bis: 31.08.2025</p><p>Saisonale Information</p></section><section><h2>Kontakt</h2><p>Kontaktstelle in Wien</p></section></main>",
+      localSeed.url,
+    ),
+    localSeed,
+    "2026-11-05T12:00:00.000Z",
+  );
+  const result = await indexDocument(database, document, embed);
+  const chunks = await database.sql<
+    { text: string; valid_from: string | null; valid_to: string | null }[]
+  >`SELECT text, valid_from, valid_to FROM kb_chunk WHERE source_id = ${result.source_id} ORDER BY text`;
+  expect(chunks).toHaveLength(2);
+  const seasonal = chunks.find((chunk) => chunk.text.includes("Saisonangebot"));
+  expect(seasonal?.valid_from && new Date(seasonal.valid_from).toISOString()).toBe(
+    "2025-06-01T00:00:00.000Z",
+  );
+  expect(seasonal?.valid_to && new Date(seasonal.valid_to).toISOString()).toBe(
+    "2025-08-31T00:00:00.000Z",
+  );
+  expect(chunks.find((chunk) => chunk.text.includes("Kontaktstelle"))).toMatchObject({
+    valid_from: null,
+    valid_to: null,
+  });
+  const asOf = "2026-11-05T12:00:00.000Z";
+  const active = await database.sql`SELECT text FROM kb_chunk WHERE source_id = ${result.source_id}
+    AND (valid_from IS NULL OR valid_from <= ${asOf}::timestamptz)
+    AND (valid_to IS NULL OR valid_to > ${asOf}::timestamptz)`;
+  expect(active).toHaveLength(1);
+  expect(active[0]?.text).toContain("Kontaktstelle in Wien");
+});
+
+test("WP-173 caption-only changes replace indexed eligibility context and content hash", async () => {
+  const localSeed = { ...seed, url: `${url}/caption` };
+  // The saved official page has no captioned payment table; this constructed
+  // administrative case exercises the qualification from the review finding.
+  const markup =
+    "<main><h1>Information</h1><table><caption>Nur für Versicherte ab 18 Jahren</caption><tr><th>Betrag</th></tr><tr><td>20 EUR</td></tr></table></main>";
+  const makeDocument = (html: string) =>
+    enrich(normalizeHtml(html, localSeed.url), localSeed, "2026-11-05T12:00:00.000Z");
+  const original = makeDocument(markup);
+  const first = await indexDocument(database, original, embed);
+  const before = await database.sql`SELECT text FROM kb_chunk WHERE source_id = ${first.source_id}`;
+  expect(before).toHaveLength(1);
+  expect(before[0]?.text).toContain("Nur für Versicherte ab 18 Jahren");
+  expect(before[0]?.text).toContain("20 EUR");
+  const changed = makeDocument(markup.replace("18 Jahren", "21 Jahren"));
+  expect(changed.metadata.content_hash).not.toBe(original.metadata.content_hash);
+  const result = await indexDocument(database, changed, embed);
+  expect(result).toMatchObject({ status: "indexed", source_id: first.source_id, chunks: 1 });
+  const after = await database.sql`SELECT text FROM kb_chunk WHERE source_id = ${first.source_id}`;
+  expect(after).toHaveLength(1);
+  expect(after[0]?.text).toContain("Nur für Versicherte ab 21 Jahren");
+  expect(after[0]?.text).toContain("20 EUR");
+  expect(after[0]?.text).not.toContain("18 Jahren");
+  const [stored] =
+    await database.sql`SELECT metadata->>'content_hash' AS hash FROM source WHERE id = ${first.source_id}`;
+  expect(stored?.hash).toBe(changed.metadata.content_hash);
 });

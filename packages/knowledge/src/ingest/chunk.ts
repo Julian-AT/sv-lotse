@@ -62,7 +62,7 @@ export function chunkMarkdown(markdown: string): MarkdownChunk[] {
       pending = "";
     };
     for (const block of section.blocks) {
-      const table = /^\|/.test(block) && /\n\|\s*:?-{3,}/.test(block);
+      const table = /^\|/m.test(block) && /\n\|\s*:?-{3,}/.test(block);
       if (table && block.length > capacity) {
         emit();
         pending = block;

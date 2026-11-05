@@ -23,7 +23,13 @@ export interface IngestionDocument {
   metadata: ChunkMetadata;
   valid_from: string | null;
   valid_to: string | null;
-  chunks: { text: string; metadata: ChunkMetadata; size_exception: string | null }[];
+  chunks: {
+    text: string;
+    metadata: ChunkMetadata;
+    size_exception: string | null;
+    valid_from: string | null;
+    valid_to: string | null;
+  }[];
 }
 
 export function enrich(
@@ -47,6 +53,7 @@ export function enrich(
         url: seed.url,
         valid_from: page.valid_from,
         valid_to: page.valid_to,
+        sections: page.sections,
       }),
     )
     .digest("hex");
@@ -70,10 +77,16 @@ export function enrich(
     metadata,
     valid_from: page.valid_from,
     valid_to: page.valid_to,
-    chunks: chunkMarkdown(page.markdown).map((chunk) => ({
-      text: chunk.text,
-      metadata: { ...metadata, heading_path: chunk.heading_path },
-      size_exception: chunk.size_exception,
-    })),
+    chunks: page.sections.flatMap((section) => {
+      if (section.valid_from && section.valid_to && section.valid_to <= section.valid_from)
+        throw new Error("Invalid section validity interval");
+      return chunkMarkdown(section.markdown).map((chunk) => ({
+        text: chunk.text,
+        metadata: { ...metadata, heading_path: chunk.heading_path },
+        size_exception: chunk.size_exception,
+        valid_from: section.valid_from,
+        valid_to: section.valid_to,
+      }));
+    }),
   };
 }

@@ -108,7 +108,7 @@ export async function indexDocument(
       if (!vector) throw new Error("Missing chunk embedding");
       await transaction`INSERT INTO kb_chunk (source_id, text, embedding, metadata, valid_from, valid_to)
         VALUES (${sourceId}, ${chunk.text}, ${JSON.stringify(vector)}::vector,
-          ${JSON.stringify({ ...chunk.metadata, embedding: identity, size_exception: chunk.size_exception })}::jsonb, ${document.valid_from}, ${document.valid_to})`;
+          ${JSON.stringify({ ...chunk.metadata, embedding: identity, size_exception: chunk.size_exception })}::jsonb, ${chunk.valid_from}, ${chunk.valid_to})`;
     }
     return {
       status: "indexed",

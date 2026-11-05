@@ -40,15 +40,21 @@ also re-embedded; a 304 cannot bypass this migration.
 Normalization selects the main article, removes navigation, cookie controls and
 scripts, and preserves headings, lists, links and Markdown tables. ARIA headings
 become Markdown headings; accordion level-one headings stay beneath the native
-page title. Collapsed accordions retain their prose. Merged table cells expand
-to a grid with shared values repeated across their spans; row spans stop at the
+page title. Form containers are unwrapped and their controls removed, preserving
+article prose. Collapsed accordions retain their prose. Table captions are
+normalized with their tables and stay in the same indivisible chunk. Merged
+table cells expand to a grid with shared values repeated across their spans; row spans stop at the
 row-group boundary. Multiple header rows combine into column heading paths.
 Overlapping spans fail explicitly rather than changing facts.
 Only validity metadata in the document head or standalone `Gültig ab/von/bis`
-labels directly in the main page preamble (before subsections) establish global
-validity. Labels within subsections remain quoted text, with global validity
-unset unless page-level dates are also present. Publication/update timestamps
-do not establish validity. Unknown validity remains null. Date-only
+labels in the main page preamble (before subsections) establish global
+validity, including labels inside neutral layout wrappers. Heading subsections
+and semantic `section`/`article` containers carry independent validity through
+normalization and enrichment to each indexed chunk. Child scopes inherit and
+may narrow parent intervals; sibling scopes do not share local dates. Section
+labels remain quoted text, with global validity unset unless page-level dates
+are also present. Publication/update timestamps do not establish validity.
+Unknown validity remains null. Date-only
 values use midnight UTC; the database interval is stored exactly as stated.
 
 Chunking estimates one token per four JavaScript string characters, targeting
@@ -65,7 +71,8 @@ without pretending that pdf-lib extracts text.
 
 The source record stores normalized Markdown in `text` and raw HTML plus HTTP
 validators in `metadata`. Its SHA-256 hash covers normalized content, title,
-publisher, language, routing metadata and validity. Source and chunk metadata
+publisher, language, routing metadata, validity and normalized section scopes.
+Scope-only changes therefore also cause reindexing. Source and chunk metadata
 also store `embedding: { model, dimensions }`, taken from the embedder's immutable
 identity. Only matching hashes AND embedding identities skip writes and calls.
 Changed sources replace all their chunks within one transaction. A model change

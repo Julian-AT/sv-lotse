@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { expect, test } from "vitest";
 import { chunkMarkdown } from "../../src/ingest/chunk.ts";
 import { enrich } from "../../src/ingest/enrich.ts";
@@ -7,6 +7,19 @@ import { loadRegistry } from "../../src/ingest/registry.ts";
 
 const url = "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal";
 const html = readFileSync(new URL("./fixtures/oegk-contact.html.txt", import.meta.url), "utf8");
+
+// Constructed layout variants cover form wrappers absent from the saved page.
+test.each([
+  '<form><main><h1>Kontakt</h1><p>Offizielle Information</p><input value="Private Eingabe"><button>Suchen</button></main></form>',
+  "<main><h1>Kontakt</h1><form><p>Offizielle Information</p><select><option>Auswahl</option></select><textarea>Private Eingabe</textarea></form><p>Weitere Information</p></main>",
+])("WP-173 preserves informational descendants of full and partial form wrappers", (markup) => {
+  const page = normalizeHtml(markup, url);
+  expect(page.title).toBe("Kontakt");
+  expect(page.markdown).toContain("Offizielle Information");
+  if (markup.includes("Weitere Information"))
+    expect(page.markdown).toContain("Weitere Information");
+  expect(page.markdown).not.toMatch(/Private Eingabe|Suchen|Auswahl/);
+});
 
 test("saved HTML fixtures redact provider keys, verification tokens, sessions and tracking IDs", () => {
   const fixtures = new URL("./fixtures/", import.meta.url);
@@ -168,6 +181,38 @@ test("normalizer preserves tables and chunker keeps them intact with a documente
     { size_exception: "oversized_table" },
   ]);
 });
+
+// Constructed eligibility captions and long tables exercise missing source cases.
+test.each([2, 220])(
+  "WP-173 keeps eligibility captions with tables across chunk boundaries (%i rows)",
+  (rows) => {
+    const caption = "Nur für Versicherte ab 18 Jahren";
+    const markup = `<main><h1>Service</h1><p>${"Offizielle Information. ".repeat(135)}</p><table><caption>${caption}</caption><tr><th>Ort</th><th>Betrag</th></tr>${"<tr><td>Wien</td><td>20 EUR</td></tr>".repeat(rows)}</table></main>`;
+    const seed = {
+      url,
+      publisher: "ÖGK",
+      refresh_days: 7,
+      carrier: "ÖGK",
+      region: "AT",
+      life_situations: [],
+    };
+    const document = enrich(normalizeHtml(markup, url), seed, "2026-11-05T12:00:00.000Z");
+    const tableChunks = document.chunks.filter((chunk) => chunk.text.includes("20 EUR"));
+    expect(tableChunks).toHaveLength(1);
+    expect(tableChunks[0]?.text).toContain(caption);
+    expect(tableChunks[0]?.text.match(/20 EUR/g)).toHaveLength(rows);
+    expect(tableChunks[0]?.size_exception).toBe(rows === 220 ? "oversized_table" : "section_tail");
+    const changed = enrich(
+      normalizeHtml(markup.replace("18 Jahren", "21 Jahren"), url),
+      seed,
+      "2026-11-05T12:00:00.000Z",
+    );
+    expect(changed.metadata.content_hash).not.toBe(document.metadata.content_hash);
+    expect(changed.chunks.find((chunk) => chunk.text.includes("20 EUR"))?.text).toContain(
+      "ab 21 Jahren",
+    );
+  },
+);
 test("registry validates real origins, source metadata and Austrian synonym groups", async () => {
   const registry = await loadRegistry();
   expect(registry.allowlist.origins.length).toBeGreaterThanOrEqual(15);
@@ -212,4 +257,117 @@ test("normalization recognizes explicit German validity labels and rejects impos
     normalizeHtml("<main><p>Aktualisiert am 03.01.2026</p></main>", url).valid_from,
   ).toBeNull();
   expect(normalizeHtml("<main><p>Gültig ab: 30.02.2026</p></main>", url).valid_from).toBeNull();
+});
+
+test("WP-173 reads wrapped preamble validity in order and stops at subsection boundaries", () => {
+  const page = normalizeHtml(
+    "<main><div><header><h1>Information</h1></header><div><p>Gültig ab: 01.01.2025</p><time>Gültig bis: 31.08.2025</time></div><div><h2>Kontakt</h2><p>Gültig bis: 31.12.2026</p></div></div></main>",
+    url,
+  );
+  expect(page.valid_from).toBe("2025-01-01T00:00:00.000Z");
+  expect(page.valid_to).toBe("2025-08-31T00:00:00.000Z");
+  for (const boundary of [
+    "<section><p>Kontakt</p></section>",
+    "<h2>Kontakt</h2>",
+    "<article>Kontakt</article>",
+  ]) {
+    expect(
+      normalizeHtml(
+        `<main><div><h1>Information</h1>${boundary}<div><p>Gültig bis: 31.08.2025</p></div></div></main>`,
+        url,
+      ).valid_to,
+    ).toBeNull();
+  }
+});
+
+test("WP-173 quoted validity inside a layout wrapper does not expire its containing section", () => {
+  const page = normalizeHtml(
+    "<main><h1>Information</h1><h2>Kontakt</h2><div><blockquote><p>Gültig bis: 31.08.2025</p></blockquote><p>Offizielle Information</p></div></main>",
+    url,
+  );
+  const seed = {
+    url,
+    publisher: "ÖGK",
+    refresh_days: 7,
+    carrier: "ÖGK",
+    region: "AT",
+    life_situations: [],
+  };
+  const document = enrich(page, seed, "2026-11-05T12:00:00.000Z");
+  expect(document.chunks).toMatchObject([{ valid_from: null, valid_to: null }]);
+  expect(document.chunks[0]?.text).toContain("31.08.2025");
+});
+
+test("WP-173 section dates follow heading ancestry and semantic containers across every chunk", () => {
+  const page = normalizeHtml(
+    `<html><head><meta name="valid_from" content="2024-01-01"><meta name="valid_to" content="2027-12-31"></head><body><main><div><h1>Information</h1><div><h2>Saisonangebot</h2><p>Gültig ab: 01.06.2025</p><p>Gültig bis: 31.08.2025</p><h3>Details</h3><p>${"Offizielle Information. ".repeat(400)}</p></div><h2>Kontakt</h2><p>Kontaktstelle in Wien</p><section><p>Gültig bis: 31.12.2026</p><p>Weitere Information</p></section></div></main></body></html>`,
+    url,
+  );
+  const seed = {
+    url,
+    publisher: "ÖGK",
+    refresh_days: 7,
+    carrier: "ÖGK",
+    region: "AT",
+    life_situations: [],
+  };
+  const document = enrich(page, seed, "2026-11-05T12:00:00.000Z");
+  const details = document.chunks.filter(
+    (chunk) => chunk.metadata.heading_path.at(-1) === "Details",
+  );
+  expect(details.length).toBeGreaterThan(1);
+  for (const chunk of details) {
+    expect(chunk.metadata.heading_path).toEqual(["Information", "Saisonangebot", "Details"]);
+    expect(chunk.valid_from).toBe("2025-06-01T00:00:00.000Z");
+    expect(chunk.valid_to).toBe("2025-08-31T00:00:00.000Z");
+  }
+  expect(document.chunks.find((chunk) => chunk.text.includes("Kontaktstelle"))).toMatchObject({
+    valid_from: "2024-01-01T00:00:00.000Z",
+    valid_to: "2027-12-31T00:00:00.000Z",
+  });
+  expect(document.chunks.find((chunk) => chunk.text.includes("Weitere Information"))).toMatchObject(
+    {
+      valid_from: "2024-01-01T00:00:00.000Z",
+      valid_to: "2026-12-31T00:00:00.000Z",
+    },
+  );
+});
+
+test("WP-173 identical subsection headings retain independent validity", () => {
+  const page = normalizeHtml(
+    "<main><h1>Information</h1><section><h2>Kontakt</h2><p>Gültig bis: 31.08.2025</p><p>Erste Kontaktstelle</p></section><section><h2>Kontakt</h2><p>Zweite Kontaktstelle</p></section></main>",
+    url,
+  );
+  expect(page.sections.map((section) => section.valid_to)).toEqual([
+    "2025-08-31T00:00:00.000Z",
+    null,
+  ]);
+});
+
+test("WP-173 scope-only changes update the hash even when normalized prose is unchanged", () => {
+  const parent = "<section><h2>Saisonangebot</h2><p>Gültig bis: 31.08.2025</p>";
+  const child = "<section><h3>Details</h3><p>Offizielle Information</p></section>";
+  const nested = normalizeHtml(`<main><h1>Information</h1>${parent}${child}</section></main>`, url);
+  const sibling = normalizeHtml(
+    `<main><h1>Information</h1>${parent}</section>${child}</main>`,
+    url,
+  );
+  expect(nested.markdown).toBe(sibling.markdown);
+  const seed = {
+    url,
+    publisher: "ÖGK",
+    refresh_days: 7,
+    carrier: "ÖGK",
+    region: "AT",
+    life_situations: [],
+  };
+  const first = enrich(nested, seed, "2026-11-05T12:00:00.000Z");
+  const changed = enrich(sibling, seed, "2026-11-05T12:00:00.000Z");
+  expect(
+    first.chunks.find((chunk) => chunk.metadata.heading_path.at(-1) === "Details")?.valid_to,
+  ).toBe("2025-08-31T00:00:00.000Z");
+  expect(
+    changed.chunks.find((chunk) => chunk.metadata.heading_path.at(-1) === "Details")?.valid_to,
+  ).toBeNull();
+  expect(changed.metadata.content_hash).not.toBe(first.metadata.content_hash);
 });

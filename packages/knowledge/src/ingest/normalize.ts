@@ -1,6 +1,7 @@
 import { load } from "cheerio";
 import TurndownService from "turndown";
-import { z } from "zod";
+import { type NormalizedSection, normalizeSections } from "./sections.ts";
+import { explicitDate, preambleValidity } from "./validity.ts";
 
 export interface NormalizedPage {
   title: string;
@@ -8,15 +9,7 @@ export interface NormalizedPage {
   language: string;
   valid_from: string | null;
   valid_to: string | null;
-}
-
-function explicitDate(value: string | undefined): string | null {
-  if (!value) return null;
-  const german = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(value);
-  const date = german ? `${german[3]}-${german[2]}-${german[1]}` : value;
-  if (z.iso.date().safeParse(date).success) return `${date}T00:00:00.000Z`;
-  if (z.iso.datetime({ offset: true }).safeParse(date).success) return new Date(date).toISOString();
-  return null;
+  sections: NormalizedSection[];
 }
 
 export function normalizeHtml(html: string, url: string): NormalizedPage {
@@ -33,8 +26,14 @@ export function normalizeHtml(html: string, url: string): NormalizedPage {
   // Collapsed accordions often carry real administrative content. Visibility
   // attributes alone are not a reliable signal for navigation or boilerplate.
   $(
-    "script, style, noscript, nav, footer, aside, form, iframe, [role=navigation], [role=banner], [role=contentinfo]",
+    "script, style, noscript, nav, footer, aside, iframe, input, button, select, textarea, [role=navigation], [role=banner], [role=contentinfo]",
   ).remove();
+  // Forms can be layout containers around the article. Remove their controls,
+  // but unwrap the container before selecting the main content.
+  $("form").each((_, element) => {
+    const form = $(element);
+    form.replaceWith(form.contents());
+  });
   $("[class*=cookie], [id*=cookie], .breadcrumb, .breadcrumbs").remove();
   let main = $("main, [role=main], article").first();
   if (main.length === 0) {
@@ -67,22 +66,11 @@ export function normalizeHtml(html: string, url: string): NormalizedPage {
     heading.replaceWith($(`<${tag}></${tag}>`).html(heading.html() ?? ""));
   });
   const title = main.find("h1").first().text().trim() || documentTitle || new URL(url).hostname;
-  const labels: string[] = [];
-  // Only direct page-preamble labels are global. Stop at the first subsection;
-  // nested dates remain verbatim section prose and never bound other chunks.
-  main.children().each((_, element) => {
-    const child = $(element);
-    if (child.is("section, article, h2, h3, h4, h5, h6") || child.find("h2, h3, h4, h5, h6").length)
-      return false;
-    if (child.is("p, time")) labels.push(child.text().trim());
-  });
-  const text = labels.join("\n");
-  valid_from ??= explicitDate(
-    /^Gültig (?:ab|von):?\s*(\d{4}-\d{2}-\d{2}|\d{2}\.\d{2}\.\d{4})\s*$/im.exec(text)?.[1],
-  );
-  valid_to ??= explicitDate(
-    /^Gültig bis:?\s*(\d{4}-\d{2}-\d{2}|\d{2}\.\d{2}\.\d{4})\s*$/im.exec(text)?.[1],
-  );
+  // Neutral layout wrappers do not change scope. Walk in document order so a
+  // wrapper containing both the preamble and a subsection retains only the former.
+  const preamble = preambleValidity($, main.children());
+  valid_from ??= preamble.valid_from;
+  valid_to ??= preamble.valid_to;
   main.find('img:not([alt]), img[alt=""]').remove();
   main.find("a").each((_, element) => {
     if (!$(element).text().trim() && $(element).find("img").length === 0) $(element).remove();
@@ -108,6 +96,10 @@ export function normalizeHtml(html: string, url: string): NormalizedPage {
     replacement: (_content, node) => {
       const table = load(node.outerHTML);
       const root = table("table").first();
+      const caption = converter
+        .turndown(root.children("caption").html() ?? "")
+        .replace(/\s*\n+\s*/g, " ")
+        .trim();
       const elements = root
         .find("tr")
         .filter((_, row) => table(row).closest("table")[0] === root[0])
@@ -150,7 +142,7 @@ export function normalizeHtml(html: string, url: string): NormalizedPage {
         }
       }
       const width = Math.max(0, ...rows.map((row) => row.length));
-      if (width === 0) return "";
+      if (width === 0) return caption ? `\n\n${caption}\n\n` : "";
       const render = (row: string[]) =>
         `| ${Array.from({ length: width }, (_, index) => row[index] ?? "").join(" | ")} |`;
       const hasHeader = table(elements[0]).children("th").length > 0;
@@ -177,14 +169,25 @@ export function normalizeHtml(html: string, url: string): NormalizedPage {
           ),
         ].join(" / "),
       );
-      return `\n\n${[render(header), render(Array.from({ length: width }, () => "---")), ...rows.slice(headerRows).map(render)].join("\n")}\n\n`;
+      // One block keeps the qualification attached to every row, including
+      // when the entire captioned table exceeds the normal chunk limit.
+      return `\n\n${[caption, render(header), render(Array.from({ length: width }, () => "---")), ...rows.slice(headerRows).map(render)].filter(Boolean).join("\n")}\n\n`;
     },
   });
-  const markdown = converter
-    .turndown(main.html() ?? "")
-    .replace(/\u00ad/g, "")
-    .replace(/\r\n/g, "\n")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
-  return { title, markdown, language, valid_from, valid_to };
+  const convert = (html: string) =>
+    converter
+      .turndown(html)
+      .replace(/\u00ad/g, "")
+      .replace(/\r\n/g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  const content = main.html() ?? "";
+  return {
+    title,
+    markdown: convert(content),
+    language,
+    valid_from,
+    valid_to,
+    sections: normalizeSections(content, convert, { valid_from, valid_to }),
+  };
 }
