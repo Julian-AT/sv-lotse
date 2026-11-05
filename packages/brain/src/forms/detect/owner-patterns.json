@@ -1,0 +1,35 @@
+[
+  {
+    "owner": "doctor",
+    "patterns": [
+      "\\bvom (?:behandelnden )?arzt.{0,25}auszufüllen",
+      "\\bvon der ärztin.{0,25}auszufüllen",
+      "^ärztliche (?:stellungnahme|angaben|bestätigung|untersuchung)",
+      "^von.{0,30}(?:arzt|ärztin).{0,35}auszufüllen"
+    ]
+  },
+  {
+    "owner": "hospital",
+    "patterns": [
+      "\\bvom (?:antragstellenden )?krankenhaus.{0,25}auszufüllen",
+      "\\bvon der krankenanstalt.{0,25}auszufüllen",
+      "^von der einrichtung.{0,40}auszufüllen"
+    ]
+  },
+  {
+    "owner": "office",
+    "patterns": [
+      "\\bvom versicherungsträger.{0,25}auszufüllen",
+      "^(?:erledigung|anmerkungen) des versicherungsträgers",
+      "^von.{0,30}versicherungsträger.{0,25}auszufüllen"
+    ]
+  },
+  {
+    "owner": "applicant",
+    "patterns": [
+      "^von.{0,65}(?:versicherten|antragsteller|antragstellerin).{0,65}auszufüllen",
+      "^vom antragsteller.{0,25}auszufüllen",
+      "^angaben (?:der|des|zur|zum) (?:antragstellenden|antragsteller|antragstellerin)"
+    ]
+  }
+]

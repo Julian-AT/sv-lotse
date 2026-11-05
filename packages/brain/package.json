@@ -9,11 +9,13 @@
     "./db/schema": "./src/db/schema/index.ts",
     "./db/approvals": "./src/db/approvals.ts",
     "./db/migrations": "./src/db/migrations.ts",
-    "./storage/s3": "./src/storage/s3.ts"
+    "./storage/s3": "./src/storage/s3.ts",
+    "./forms/detect": "./src/forms/detect/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests --exclude 'test/**/*.db.test.ts'",
+    "test": "vitest run --passWithNoTests --exclude 'test/**/*.db.test.ts' --exclude 'test/**/*.live.test.ts'",
+    "test:live": "node test/forms/detect/live.mjs",
     "test:db": "vitest run test/db --hookTimeout=30000 --testTimeout=15000",
     "test:integration": "bun run test:db",
     "db:generate": "drizzle-kit generate",
@@ -28,6 +30,7 @@
     "canonicalize": "^5.1.0",
     "drizzle-orm": "^0.45.4",
     "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.5.438",
     "postgres": "^4.0.0",
     "yaml": "^2.9.1",
     "zod": "^4"

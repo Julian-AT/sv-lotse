@@ -12,6 +12,8 @@ Run from the repository root:
 
 - `bun run --filter @lotse/brain typecheck` — check source and test types.
 - `bun run --filter @lotse/brain test` — run Vitest under Node.js, excluding `test/**/*.db.test.ts`.
+- `bun run --filter @lotse/brain test -- test/forms/detect` — real SV-Box AcroForm/flattened tests and E13 fixture harness; no provider calls.
+- `RUN_LIVE=1 bun run --filter @lotse/brain test:live -- test/forms/detect` — rasterize an original SV-Box page and detect fields through real OpenAI. Requires `OPENAI_API_KEY`; `FORM_VISION_MODEL` defaults to `gpt-4.1-mini` and can be overridden. Loads root `.env.local` without overwriting exported values.
 - `bun run --filter @lotse/brain test:db` — run persistence tests against real Postgres and MinIO.
 - `bun run --filter @lotse/brain test:integration` — run `test:db` for the CI integration job.
 - `bun run --filter @lotse/brain db:generate` — generate SQL and snapshots from the Drizzle schema.
@@ -50,6 +52,22 @@ neither skips service tests when dependencies are unavailable. `test` runs witho
   authorization checks in the approval service. A zero-row result must reject execution.
 - Form instance `fields` are a JSONB map of field ids to value, provenance, state and approval id.
   Validate writes and reads with `formFields`; confirmed fields require an approval id.
+- `@lotse/brain/forms/detect` returns `auto` drafts only. Boxes use the displayed PDF CropBox in
+  points, top-left origin, one-based pages, including rotation. `mode: "acroform"` reads exactly
+  one field per widget; the default `auto` mode also detects missing fields from page content.
+- Form detection owner headers are data in `src/forms/detect/owner-patterns.json`. Detection joins
+  nearby fragments and up to three adjacent, left-aligned lines with normalized whitespace.
+  Sections persist across pages until the next header; a heading within 80 points of the top also owns
+  running-header identifiers. Doctor/hospital fields are never implicitly reassigned to applicants.
+  Vision ownership is reconciled onto overlapping widgets before duplicate suppression; recompute
+  the signature flag using the preserved widget type. Comb grouping starts at the leftmost cell
+  in spatial order and emits each cell once, independently of PDF drawing order.
+- Vision configuration is validated only when needed. Scanned rendering uses PDF.js's optional
+  Node canvas, or a caller-supplied real `renderPage` implementation; absence fails explicitly.
+  Keep provider calls behind `detectVisionFields`; never log page content or provider errors.
+- Detection fixtures read `SVBOX_DIR` relative to the repository root (absolute paths also work).
+  Original PDFs are read-only; flattening and rasterization happen in memory. Live tests are
+  excluded from the offline `test` script and run only through `test:live`.
 - Audit records contain only opaque identifiers and action names, never user content. They have no
   cascading foreign keys; the database rejects UPDATE, DELETE and TRUNCATE.
 - Only `vector` and `pgcrypto` extensions are installed. Embeddings have 1536 dimensions; changing
