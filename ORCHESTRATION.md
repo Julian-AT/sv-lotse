@@ -46,8 +46,8 @@ flowchart LR
    - optional: `gitleaks`, `actionlint`.
 2. In the repository:
    - `bun install`, which installs the husky hooks;
-   - `cp .env.example .env.local`, then fill in `OPENAI_API_KEY` and generate `SESSION_SECRET` and
-     `APPROVAL_HMAC_SECRET` with `openssl rand -base64 48`.
+   - `cp .env.example .env.local`, then fill in `OPENAI_API_KEY` and generate `SESSION_SECRET`,
+     `APPROVAL_HMAC_SECRET` and `CRON_SECRET` with `openssl rand -base64 48`.
 3. Optional: `orchestration/config.env` runs 16 workers on GPT 6.1 Sol (`gpt-6.1-sol`) at `xhigh`
    effort. Override any of these in `.orchestration/config.local.env`.
 4. Run `orchestration/bin/wp doctor` until it is green.
