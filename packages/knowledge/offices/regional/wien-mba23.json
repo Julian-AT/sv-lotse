@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba23",
+  "name_de": "Bezirksamt Liesing",
+  "name_simple": "Bezirksamt Liesing",
+  "region": "Wien",
+  "address": {
+    "street": "Perchtoldsdorfer Straße 2",
+    "postal_code": "1230",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-23000",
+  "email": "post@mba23.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba23",
+  "jurisdiction": "Meldezettel, Reisepass und Parkpickerl; weitere Anliegen nach Zuständigkeit des Bezirksamts",
+  "accessibility": "Barrierefrei\nBarrierefreier Zugang: Perchtoldsdorfer Straße/Lehmanngasse",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba23",
+      "quote": "Bezirksamt Liesing\nMagistratische Bezirksämter\nMeldezettel\nParkpickerl\nReisepass\n23., Perchtoldsdorfer Straße 2\nBarrierefrei\nBarrierefreier Zugang: Perchtoldsdorfer Straße/Lehmanngasse\n+43 1 4000-23000\npost@mba23.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba23",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
