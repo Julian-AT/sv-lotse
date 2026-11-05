@@ -1,0 +1,21 @@
+included:
+  - App
+  - Packages
+  - Tests
+excluded:
+  - Packages/LotseKit/.build
+  - .build
+opt_in_rules:
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - closure_end_indentation
+  - sorted_imports
+line_length:
+  warning: 140
+  error: 180
+identifier_name:
+  min_length: 2
+  excluded: [id, x, y]
+type_body_length:
+  warning: 300
+  error: 400

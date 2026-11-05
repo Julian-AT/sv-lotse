@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Lotse bridge integration fixture</title>
+<script>
+window.received = [];
+window.__lotse = {
+  async receive(message) {
+    window.received.push(message);
+    const echo = {
+      v: message.v, id: message.id, type: "SpeechControl",
+      payload: {stop: false, state: "idle", segmentIndex: window.received.length - 1}
+    };
+    return await window.webkit.messageHandlers.lotse.postMessage(echo);
+  }
+};
+if (window.parent !== window) {
+  window.webkit.messageHandlers.lotse.postMessage({
+    v: "1.0.0", id: "frame-message", type: "SpeechControl",
+    payload: {stop: false, state: "idle", segmentIndex: 0}
+  }).then(() => parent.postMessage("accepted", "*"),
+          () => parent.postMessage("rejected", "*"));
+}
+</script>
