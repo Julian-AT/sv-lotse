@@ -4,11 +4,20 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./db": "./src/db/client.ts",
+    "./db/schema": "./src/db/schema/index.ts",
+    "./db/approvals": "./src/db/approvals.ts",
+    "./db/migrations": "./src/db/migrations.ts",
+    "./storage/s3": "./src/storage/s3.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --passWithNoTests --exclude 'test/**/*.db.test.ts'",
+    "test:db": "vitest run test/db --hookTimeout=30000 --testTimeout=15000",
+    "test:integration": "bun run test:db",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "bun src/db/migrate.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.109",
