@@ -171,5 +171,16 @@ export async function loadKnowledge(root = knowledgeRoot): Promise<Knowledge> {
       enumerable: true,
     });
   }
+  const allowedOrigins = new Set(registries.allowlist?.origins.map((entry) => entry.origin));
+  for (const benefit of Object.values(collections.catalog)) {
+    for (const [index, channel] of benefit.appointment_channels.entries()) {
+      if (channel.kind === "online" && !allowedOrigins.has(new URL(channel.url).origin))
+        throw new KnowledgeError(
+          files.get(`catalog/${benefit.id}`) ?? root,
+          `appointment_channels.${index}.url`,
+          "Online booking origin must be in allowlist.yaml",
+        );
+    }
+  }
   return freeze({ ...collections, ...registries, resolve });
 }

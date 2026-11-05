@@ -1,10 +1,19 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, symlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, expect, test } from "vitest";
 import { scanRepository } from "../../src/e2/index.ts";
 import { loadKnowledge } from "../../src/loader/index.ts";
-import { fixtureRoot, removeFixture } from "../loader/fixtures.ts";
+import { form, fixtureRoot as knowledgeFixtureRoot, removeFixture } from "../loader/fixtures.ts";
+
+async function fixtureRoot(overrides: Record<string, unknown> = {}) {
+  const root = await knowledgeFixtureRoot(overrides);
+  // An empty Git repository makes all fixture files untracked candidates without Git writes.
+  await mkdir(join(root, ".git/objects"), { recursive: true });
+  await mkdir(join(root, ".git/refs/heads"), { recursive: true });
+  await writeFile(join(root, ".git/HEAD"), "ref: refs/heads/main\n");
+  return root;
+}
 
 const roots: string[] = [];
 afterEach(async () => {
@@ -80,6 +89,143 @@ test("AC4 brain never imports knowledge", async () => {
   expect(
     await brainKnowledgeImports(fileURLToPath(new URL("../../../../", import.meta.url))),
   ).toEqual([]);
+});
+
+test.each(["ts", "tsx", "js", "mjs"])(
+  "AC1 E2 detects literals after postfix division in %s sources",
+  async (extension) => {
+    const root = await fixtureRoot();
+    roots.push(root);
+    await mkdir(join(root, "apps/web/src"), { recursive: true });
+    const file = `apps/web/src/example.${extension}`;
+    await writeFile(join(root, file), 'counter++ / "fixture-benefit".length;');
+    expect(await scanRepository(root, await loadKnowledge(root))).toContainEqual({
+      file,
+      line: 1,
+      value: "fixture-benefit",
+      rule: "catalog-id",
+    });
+  },
+);
+
+test.each([
+  "apps/web/next.config.mjs",
+  "packages/extra/src/flag.ts",
+  "apps/new-client/src/flag.tsx",
+  "scripts/release.sh",
+  "tools/release.mjs",
+  "package.json",
+  ".github/workflows/release.yml",
+  "Dockerfile",
+  "Dockerfile.release",
+  "apps/web/Dockerfile.production",
+  ".env.example",
+  "apps/web/.env.example",
+  "scripts/release.py",
+  "packages/extra/data/config.ts",
+  "packages/extra/test/unexpected.test.ts",
+  "packages/extra/generated/config.ts",
+])(
+  "AC2 E2 checks stub references repository-wide in %s with exact-path exceptions",
+  async (file) => {
+    const root = await fixtureRoot();
+    roots.push(root);
+    await mkdir(join(root, file, ".."), { recursive: true });
+    const source = file.endsWith(".json")
+      ? '{"scripts":{"build":"BRAIN_ALLOW_STUBS=1 next build"}}'
+      : "BRAIN_ALLOW_STUBS=1";
+    await writeFile(join(root, file), source);
+    const knowledge = await loadKnowledge(root);
+    const expected = { file, line: 1, value: "BRAIN_ALLOW_STUBS", rule: "stub-flag" };
+    expect(await scanRepository(root, knowledge)).toEqual([expected]);
+    expect(await scanRepository(root, knowledge, { allowedStubFiles: [file] })).toEqual([]);
+    expect(
+      await scanRepository(root, knowledge, { allowedStubFiles: [join(file, ".."), `${file}*`] }),
+    ).toEqual([expected]);
+  },
+);
+
+test("AC2 E2 ignores Git-ignored files containing stub references", async () => {
+  const root = await fixtureRoot();
+  roots.push(root);
+  await mkdir(join(root, "packages/brain/src"), { recursive: true });
+  await writeFile(join(root, ".gitignore"), "local-release.sh\nlocal.ts\n");
+  await writeFile(join(root, "local-release.sh"), "BRAIN_ALLOW_STUBS=1\n");
+  await writeFile(
+    join(root, "packages/brain/src/local.ts"),
+    'import "@lotse/knowledge"; const id = "fixture-benefit"; process.env.BRAIN_ALLOW_STUBS;\n',
+  );
+  expect(await scanRepository(root, await loadKnowledge(root))).toEqual([]);
+});
+
+test.each([".env", ".env.production", ".env.local", "apps/web/.env.production.local"])(
+  "AC2 E2 excludes private dotenv file %s even when Git does not ignore it",
+  async (file) => {
+    const root = await fixtureRoot();
+    roots.push(root);
+    await mkdir(join(root, file, ".."), { recursive: true });
+    await writeFile(join(root, file), "BRAIN_ALLOW_STUBS=1\n");
+    expect(await scanRepository(root, await loadKnowledge(root))).toEqual([]);
+  },
+);
+
+test("AC2 E2 never opens private dotenv paths", async () => {
+  const root = await fixtureRoot();
+  roots.push(root);
+  await symlink(join(root, "missing-private-file"), join(root, ".env.local"));
+  expect(await scanRepository(root, await loadKnowledge(root))).toEqual([]);
+});
+
+test("AC4 E2 rejects form template UUID literals", async () => {
+  const root = await fixtureRoot();
+  roots.push(root);
+  await mkdir(join(root, "packages/brain/src"), { recursive: true });
+  const file = "packages/brain/src/template.ts";
+  await writeFile(join(root, file), `const id = "${form.template_id}";`);
+  expect(await scanRepository(root, await loadKnowledge(root))).toEqual([
+    { file, line: 1, value: form.template_id, rule: "catalog-id" },
+  ]);
+});
+
+test.each([
+  [form.template_id, form.template_id.toUpperCase()],
+  [form.template_id.toUpperCase(), form.template_id],
+])("AC4 E2 matches template UUID %s against literal %s", async (templateId, literal) => {
+  const root = await fixtureRoot({ "forms/form.json": { ...form, template_id: templateId } });
+  roots.push(root);
+  await mkdir(join(root, "packages/brain/src"), { recursive: true });
+  const file = "packages/brain/src/template.ts";
+  await writeFile(join(root, file), `const id = "${literal}";`);
+  expect(await scanRepository(root, await loadKnowledge(root))).toEqual([
+    { file, line: 1, value: literal, rule: "catalog-id" },
+  ]);
+});
+
+test("AC4 E2 preserves case-sensitive matching for other catalog ids", async () => {
+  const root = await fixtureRoot();
+  roots.push(root);
+  await mkdir(join(root, "packages/brain/src"), { recursive: true });
+  await writeFile(
+    join(root, "packages/brain/src/example.ts"),
+    'const id = "FIXTURE-BENEFIT"; const situation = "FIXTURE_SITUATION";',
+  );
+  expect(await scanRepository(root, await loadKnowledge(root))).toEqual([]);
+});
+
+test.each([
+  '<div data-benefit-id="fixture&#45;benefit" />',
+  "<div>fixture&#45;benefit</div>",
+  '<div data-benefit-id="fixture&#x2d;benefit" />',
+  "<div>fixture&#x2D;benefit</div>",
+])("AC1 E2 detects JSX character references in %s", async (jsx) => {
+  const root = await fixtureRoot();
+  roots.push(root);
+  await mkdir(join(root, "apps/web/src"), { recursive: true });
+  const file = "apps/web/src/example.tsx";
+  await writeFile(join(root, file), `const view =\n${jsx};`);
+  expect(await scanRepository(root, await loadKnowledge(root))).toEqual([
+    { file, line: 2, value: "fixture-benefit", rule: "catalog-id" },
+  ]);
 });
 
 test("AC3 scan CLI exits nonzero for a forbidden literal in a temporary repository", async () => {

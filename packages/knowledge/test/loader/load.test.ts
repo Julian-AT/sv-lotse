@@ -1,3 +1,5 @@
+import { rm } from "node:fs/promises";
+import { join } from "node:path";
 import { afterEach, expect, test } from "vitest";
 import { loadKnowledge } from "../../src/loader/index.ts";
 import { benefit, fixtureRoot, removeFixture, source } from "./fixtures.ts";
@@ -58,4 +60,68 @@ test("AC1 reports the file and root path for duplicate YAML mapping keys", async
   roots.push(root);
   await writeFile(`${root}/catalog/benefit.yaml`, "id: first\nid: second\n");
   await expect(loadKnowledge(root)).rejects.toThrow(/catalog\/benefit.yaml.*\$.*YAML/);
+});
+
+const onlineChannel = (url: string) => ({ kind: "online", url, verified_at: "2026-11-02" });
+
+test("AC3 loads booking pages with allowlisted origins regardless of path", async () => {
+  const channels = [onlineChannel("https://EXAMPLE.org:443/booking?office=central")];
+  const knowledge = await load({
+    "catalog/benefit.yaml": { ...benefit, appointment_channels: channels },
+  });
+  expect(knowledge.catalog[benefit.id]?.appointment_channels).toEqual(channels);
+});
+
+test.each([
+  "https://unlisted.example/booking",
+  "https://example.org.evil.test/booking",
+  "https://booking.example.org/booking",
+  "http://example.org/booking",
+  "https://example.org:8443/booking",
+])(
+  "AC3 rejects unallowlisted booking origin in %s with the benefit file and channel path",
+  async (url) => {
+    await expect(
+      load({
+        "catalog/benefit.yaml": {
+          ...benefit,
+          appointment_channels: [
+            ...benefit.appointment_channels,
+            onlineChannel("https://example.org/booking"),
+            onlineChannel(url),
+          ],
+        },
+      }),
+    ).rejects.toMatchObject({
+      file: expect.stringContaining("catalog/benefit.yaml"),
+      path: "appointment_channels.2.url",
+    });
+  },
+);
+
+test("AC3 requires an allowlist when an online booking channel exists", async () => {
+  const root = await fixtureRoot({
+    "catalog/benefit.yaml": {
+      ...benefit,
+      appointment_channels: [
+        ...benefit.appointment_channels,
+        onlineChannel("https://example.org/booking"),
+      ],
+    },
+  });
+  roots.push(root);
+  await rm(join(root, "allowlist.yaml"));
+  await expect(loadKnowledge(root)).rejects.toMatchObject({
+    file: join(root, "catalog/benefit.yaml"),
+    path: "appointment_channels.1.url",
+  });
+});
+
+test("AC3 permits a missing allowlist when there are no online booking channels", async () => {
+  const root = await fixtureRoot();
+  roots.push(root);
+  await rm(join(root, "allowlist.yaml"));
+  expect((await loadKnowledge(root)).catalog[benefit.id]?.appointment_channels).toEqual(
+    benefit.appointment_channels,
+  );
 });

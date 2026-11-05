@@ -34,3 +34,43 @@ test("E2 scans literals after JSX closing tags", () => {
   const source = 'const view = <div></div>; const id = "fixture-benefit";';
   expect(codeTokens(source).map((token) => token.value)).toContain("fixture-benefit");
 });
+
+test.each(["++", "--"])("AC1 E2 reads division operands after postfix %s", (operator) => {
+  const source = `counter${operator} / "fixture-benefit".length;`;
+  expect(codeTokens(source)).toContainEqual({
+    value: "fixture-benefit",
+    offset: source.indexOf('"'),
+  });
+});
+
+test("AC1 E2 reads private identifiers", () => {
+  const source = "class View { #fixture_situation = 1; }";
+  expect(codeTokens(source).map((token) => token.value)).toContain("#fixture_situation");
+});
+
+test("AC1 E2 handles regular expressions after control flow and inside templates", () => {
+  const source = `if (ready) /"fixture-office"/.test(value); const id = \`prefix \${/}/.source} fixture-benefit\`;`;
+  const values = codeTokens(source).map((token) => token.value);
+  expect(values).not.toContain("fixture-office");
+  expect(values).toContain(" fixture-benefit");
+});
+
+test("AC1 E2 reads JSX attributes, text and expressions without treating text as comments", () => {
+  const source =
+    'const view = <div title="fixture-office">https://example.org/fixture-benefit{`fixture-form`}</div>;';
+  expect(codeTokens(source).map((token) => token.value)).toEqual(
+    expect.arrayContaining([
+      "fixture-office",
+      "https://example.org/fixture-benefit",
+      "fixture-form",
+    ]),
+  );
+});
+
+test("AC1 E2 decodes named JSX references once and leaves JavaScript literals unchanged", () => {
+  const source =
+    'const view = <div title="caf&eacute; &lt;tag&gt; &amp;#45;">caf&eacute; &lt;tag&gt; &amp;#45;</div>; const id = "fixture&#45;benefit";';
+  const values = codeTokens(source).map((token) => token.value);
+  expect(values.filter((value) => value === "café <tag> &#45;")).toHaveLength(2);
+  expect(values).toContain("fixture&#45;benefit");
+});

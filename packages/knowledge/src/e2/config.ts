@@ -3,8 +3,11 @@ export interface ScanConfig {
 }
 export const scanConfig: ScanConfig = Object.freeze({
   // Exact repository-relative paths only. Add build-time exceptions by review.
-  // There are no stub implementations in the current repository.
-  allowedStubFiles: Object.freeze([]),
+  allowedStubFiles: Object.freeze([
+    // Scanner vocabulary and isolated regression fixtures; neither enables stubs.
+    "packages/knowledge/src/e2/config.ts",
+    "packages/knowledge/test/e2/scan.test.ts",
+  ]),
 });
 export const scanRoots = [
   "packages/brain/src",

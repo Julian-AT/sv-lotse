@@ -105,3 +105,28 @@ test("AC2 rolls back the complete snapshot when a catalog write fails", async ()
     await removeFixture(transactionRoot);
   }
 });
+
+test("AC5 catalog:load updates an existing template using an uppercase template UUID", async () => {
+  const uppercaseForm = { ...form, template_id: form.template_id.toUpperCase() };
+  const uppercaseRoot = await fixtureRoot({ "forms/form.json": uppercaseForm });
+  try {
+    await database.sql`INSERT INTO form_template (id, publisher, title, source, hash, format, pages, schema, storage_key)
+      VALUES (${form.template_id}::uuid, 'Fixture publisher', 'Fixture application', 'https://example.org/form.pdf', 'fixture-hash', 'acroform', 1, '{}', 'fixture/form.pdf')
+      ON CONFLICT (id) DO UPDATE SET schema = '{}', status = 'auto'`;
+    const url = new URL(database.config.DATABASE_URL);
+    url.searchParams.set("search_path", `${namespace},public`);
+    const cli = fileURLToPath(new URL("../../src/loader/cli.ts", import.meta.url));
+    const { stdout, stderr } = await promisify(execFile)("bun", [cli, uppercaseRoot], {
+      env: { ...process.env, DATABASE_URL: url.toString() },
+      timeout: 10000,
+    });
+    expect(stdout).toContain("Catalog loaded.");
+    expect(stderr).toBe("");
+    const [stored] =
+      await database.sql`SELECT schema, status FROM form_template WHERE id = ${form.template_id}::uuid`;
+    expect(stored?.schema).toEqual(uppercaseForm);
+    expect(stored?.status).toBe("verified");
+  } finally {
+    await removeFixture(uppercaseRoot);
+  }
+});

@@ -7,7 +7,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "typecheck": "../../node_modules/.bin/tsc --noEmit",
     "test": "vitest run --exclude 'test/**/*.db.test.ts'",
     "test:db": "vitest run test/loader/catalog.db.test.ts --hookTimeout=30000 --testTimeout=15000",
     "catalog:load": "bun src/loader/cli.ts",
@@ -19,6 +19,7 @@
     "p-limit": "^7.3.3",
     "robots-parser": "^3.0.1",
     "turndown": "^7.2.5",
+    "typescript-compiler": "npm:typescript@^6.0.3",
     "yaml": "^2.9.1",
     "zod": "^4"
   }

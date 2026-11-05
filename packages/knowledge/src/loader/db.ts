@@ -37,7 +37,7 @@ export async function loadCatalog(database: Database, knowledge: Knowledge): Pro
     }
     for (const record of Object.values(knowledge.forms)) {
       await sql`UPDATE form_template SET schema = ${JSON.stringify(record)}::jsonb, status = 'verified'
-        WHERE id::text = ${record.template_id} AND (schema IS DISTINCT FROM ${JSON.stringify(record)}::jsonb OR status <> 'verified')`;
+        WHERE id = ${record.template_id}::uuid AND (schema IS DISTINCT FROM ${JSON.stringify(record)}::jsonb OR status <> 'verified')`;
     }
     // Processes must be removed before benefits because benefit_id is RESTRICT.
     for (const [table, records] of [

@@ -40,8 +40,23 @@ scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
 - Catalog database writes are one transaction with idempotent upserts and pruning by `key`.
   Form schemas identify existing acquired template versions with `template_id` (UUID); never invent
   PDF assets or prune form templates/instances.
-- E2 collects all record ids and `life_situations`; literals and identifiers in brain/client sources
-  must not embed them. Stub exceptions are exact paths in `src/e2/config.ts`, initially empty.
+- E2 collects all record ids, form `template_id` UUIDs and `life_situations`; literals and identifiers
+  in brain/client sources must not embed them. TypeScript's JavaScript compiler API parses TS/JS/JSX;
+  Swift has a separate lexer. The `typescript-compiler` alias uses the stable 6.x API because the
+  repository's native 7.x compiler has no stable in-process parser. The typecheck command explicitly
+  uses the root compiler to avoid the alias's local `tsc` binary.
+  JSX attribute/text references are decoded before matching. Template UUIDs match without regard
+  to case; other catalog ids retain case-sensitive matching.
+- Stub references are checked repository-wide in source and build configuration, including generated
+  sources and test files. Exceptions are exact paths in `src/e2/config.ts`: the scanner vocabulary
+  and its regression fixtures. No production stub implementation is exempt. Build/dependency trees
+  and original challenge input data are outside this source scan.
+  Candidates come from Git: tracked files plus untracked files not ignored by Git. All E2 source
+  checks use that candidate set. Private `.env*` paths are excluded before opening files; only
+  `.env.example` is scanned. Dockerfile variants are included regardless of their suffix.
+- Every online benefit appointment channel must match an origin in `allowlist.yaml` before knowledge
+  is returned. Without online channels, the allowlist remains optional. Template updates compare
+  `template_id` using Postgres UUID equality, including uppercase UUID spellings.
 - Allowlist and guard patterns reviewed by a second person.
 - Read original challenge files through `SVBOX_DIR`; never modify `data/svbox/`.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
