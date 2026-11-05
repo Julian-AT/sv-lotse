@@ -17,6 +17,9 @@ if [ -z "$CODEX_ADD_DIRS" ]; then
 fi
 
 : "${SHARED_FILES:=bun.lock}"
+# Package manifests merge cleanly across WPs; overlap checks skip them and 'wp pr' stops on a
+# real conflict.
+: "${MERGE_FILES:=package.json packages/*/package.json apps/*/package.json}"
 
 STATE_DIR="$LOCAL_DIR/state"
 RUNS_DIR="$LOCAL_DIR/runs"
@@ -169,15 +172,27 @@ is_shared_file() {
   return 1
 }
 
+overlap_exempt() {
+  local f
+  is_shared_file "$1" && return 0
+  set -f
+  for f in $MERGE_FILES; do
+    # shellcheck disable=SC2254
+    case "$1" in $f) set +f; return 0 ;; esac
+  done
+  set +f
+  return 1
+}
+
 # Shared generated files (lockfiles) never block parallel WPs; 'wp pr' regenerates them on rebase.
 claims_overlap() {
   local x y
   while IFS= read -r x; do
     [ -n "$x" ] || continue
-    is_shared_file "$x" && continue
+    overlap_exempt "$x" && continue
     while IFS= read -r y; do
       [ -n "$y" ] || continue
-      is_shared_file "$y" && continue
+      overlap_exempt "$y" && continue
       if pats_overlap "$x" "$y"; then
         printf '%s <> %s' "$x" "$y"
         return 0
@@ -871,6 +886,13 @@ cmd_land() {
     [ "$rhead" = "$head" ] || die "remote $branch ($rhead) differs from local HEAD ($head); run 'wp pr $id'"
     if [ "$USE_GH" = 1 ] && ci_required; then
       info "$id: waiting for required checks"
+      # Required checks appear only once their job is queued; wait up to 10 minutes for them.
+      local tries=0
+      until (cd "$wt" && gh pr checks "$branch" --required >/dev/null 2>&1) \
+        || (cd "$wt" && gh pr checks "$branch" --required 2>&1 | grep -qv "no required checks"); do
+        tries=$((tries + 1)); [ "$tries" -le 60 ] || die "$id: required checks never appeared"
+        sleep 10
+      done
       (cd "$wt" && gh pr checks "$branch" --watch --fail-fast --required) || die "$id: required checks failed or are missing"
     fi
     (cd "$wt" && WP_LANDING=1 git push -q "$REMOTE" "HEAD:refs/heads/$BASE_BRANCH") || die "$id: fast-forward push to $BASE_BRANCH rejected"
