@@ -19,6 +19,9 @@ owns:
   - apps/web/e2e/bridge/**
 may_touch:
   - apps/mac/project.yml
+  - apps/mac/AGENTS.md
+  - apps/mac/README.md
+  - apps/web/AGENTS.md
 allow_deps: none
 live_services: [openai]
 gates:

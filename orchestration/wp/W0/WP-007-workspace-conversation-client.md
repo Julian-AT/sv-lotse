@@ -13,6 +13,7 @@ owns:
   - apps/web/e2e/conversation/**
   - packages/ui/**
 may_touch:
+  - apps/web/AGENTS.md
   - apps/web/package.json
   - bun.lock
 allow_deps: test utilities for React components if needed

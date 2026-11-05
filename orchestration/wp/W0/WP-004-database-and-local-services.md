@@ -15,6 +15,7 @@ owns:
   - packages/brain/test/db/**
   - docs/adr/0004-data-model-and-storage.md
 may_touch:
+  - packages/brain/AGENTS.md
   - packages/brain/package.json
   - packages/brain/vitest.config.ts
   - .env.example

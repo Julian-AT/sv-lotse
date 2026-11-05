@@ -19,6 +19,8 @@ owns:
   - apps/web/src/app/api/turn/**
   - docs/adr/0006-agent-runtime-and-approvals.md
 may_touch:
+  - packages/brain/AGENTS.md
+  - apps/web/AGENTS.md
   - packages/brain/package.json
   - packages/brain/vitest.config.ts
   - bun.lock
