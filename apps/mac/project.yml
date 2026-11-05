@@ -1,0 +1,89 @@
+name: SVKILotse
+options:
+  minimumXcodeGenVersion: 2.44.0
+  deploymentTarget:
+    macOS: "14.2"
+settings:
+  base:
+    LOTSE_BUNDLE_IDENTIFIER: dev.svkilotse.mac
+    LOTSE_WORKSPACE_URL: http://localhost:3000
+    SWIFT_VERSION: "5.0"
+    ENABLE_HARDENED_RUNTIME: YES
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+packages:
+  LotseKit:
+    path: Packages/LotseKit
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    exactVersion: 2.10.1
+targets:
+  SVKILotse:
+    type: application
+    platform: macOS
+    sources:
+      - path: App
+      - path: THIRD_PARTY_NOTICES.md
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(LOTSE_BUNDLE_IDENTIFIER)
+        CODE_SIGN_ENTITLEMENTS: App/SVKILotse.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - package: LotseKit
+        products:
+          [
+            LotseCore,
+            LotseBridge,
+            LotseOverlay,
+            LotseVoice,
+            LotseCapture,
+            LotseResolver,
+            LotseImport,
+            LotseGuidedWindow,
+            LotseRelatives,
+          ]
+      - package: Sparkle
+    info:
+      path: App/Info.plist
+      properties:
+        LSMinimumSystemVersion: "14.2"
+        LSApplicationCategoryType: public.app-category.productivity
+        CFBundleName: SV KI-Lotse
+        CFBundleDisplayName: SV KI-Lotse
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: de
+        CFBundleLocalizations: [de]
+        NSMicrophoneUsageDescription: Für Spracheingaben und freigegebene Gespräche nimmt der Lotse Ihre Stimme nach Ihrer Zustimmung auf.
+        NSSpeechRecognitionUsageDescription: Die Apple-Spracherkennung wandelt Ihre Spracheingabe in Text für den Arbeitsbereich um.
+        NSCalendarsWriteOnlyAccessUsageDescription: Nach Ihrer Freigabe trägt der Lotse geprüfte Termine und Fristen in Ihren Kalender ein.
+        NSCalendarsFullAccessUsageDescription: Nach Ihrer Freigabe trägt der Lotse geprüfte Termine und Fristen in Ihren Kalender ein. Er liest keine bestehenden Termine.
+        LOTSE_WORKSPACE_URL: $(LOTSE_WORKSPACE_URL)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        SUEnableAutomaticChecks: false
+    entitlements:
+      path: App/SVKILotse.entitlements
+      properties:
+        com.apple.security.device.audio-input: true
+        com.apple.security.network.client: true
+        com.apple.security.personal-information.calendars: true
+  SVKILotseTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources: [Tests]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(LOTSE_BUNDLE_IDENTIFIER).tests
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: SVKILotse
+schemes:
+  SVKILotse:
+    build:
+      targets:
+        SVKILotse: all
+    test:
+      targets: [SVKILotseTests]
