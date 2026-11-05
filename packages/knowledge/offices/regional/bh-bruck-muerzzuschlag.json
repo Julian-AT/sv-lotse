@@ -1,0 +1,29 @@
+{
+  "id": "bh-bruck-muerzzuschlag",
+  "name_de": "Bezirkshauptmannschaft Bruck-Mürzzuschlag",
+  "name_simple": "Amt für den Bezirk Bruck-Mürzzuschlag",
+  "region": "Steiermark",
+  "address": {
+    "street": "Dr. Th. Körnerstraße 34",
+    "postal_code": "8600",
+    "locality": "Bruck an der Mur",
+    "country": "AT"
+  },
+  "phone": "+43 (3862) 899-0",
+  "email": "bhbm@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Bruck-Mürzzuschlag",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Bruck-Mürzzuschlag\nBezirkshauptmann Mag. Bernhard Preiner\nDr. Th. Körnerstraße 34\n8600 Bruck an der Mur\nTelefon: +43 (3862) 899-0\nFAX: +43 (3862) 899-550\nE-Mail: bhbm@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
