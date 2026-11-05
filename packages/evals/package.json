@@ -8,9 +8,12 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --exclude \"**/live/**\"",
+    "test:live": "node scripts/live.mjs",
+    "eval": "bun src/cli.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.109",
     "ai": "^7",
     "zod": "^4"
   }

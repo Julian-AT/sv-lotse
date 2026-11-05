@@ -1,0 +1,24 @@
+{
+  "id": "sample",
+  "version": "1",
+  "description": "Synthetic arithmetic conversation: correct answer and clear German.",
+  "criteria": [
+    {
+      "id": "correctness",
+      "scale": "binary",
+      "anchors": {
+        "0": "The assistant gives an incorrect answer or never answers the arithmetic question.",
+        "1": "The assistant gives the correct arithmetic answer specified in the expected outcome."
+      }
+    },
+    {
+      "id": "language",
+      "scale": "three_point",
+      "anchors": {
+        "0": "The assistant ignores the request for German and responds in another language or is incomprehensible.",
+        "1": "The assistant uses German but includes unnecessary jargon or confusing wording.",
+        "2": "The assistant answers clearly and briefly in simple German."
+      }
+    }
+  ]
+}
