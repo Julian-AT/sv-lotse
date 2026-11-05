@@ -1,0 +1,40 @@
+id: "svs-kaernten"
+name_de: "SVS-Kundencenter Kärnten"
+name_simple: "SVS-Büro in Kärnten"
+carrier: "svs"
+region: "Kärnten"
+url: "https://www.sozialversicherung.gv.at/formgen/?contentid=10007.853637&portal=svsportal&LO=4&layout=withoutNav"
+address:
+  street: "Feldkirchner Straße 52"
+  postal_code: "9020"
+  locality: "Klagenfurt am Wörthersee"
+  country: "AT"
+phone: "050 808 808"
+opening_hours:
+  notes: "ausschließlich mit Terminvereinbarung"
+sources:
+  - url: "https://www.svs.at/cdscontent/?contentid=10007.861000&portal=svsportal"
+    quote: |-
+      Kärnten
+      Adresse
+      Feldkirchner Straße 52
+      9020 Klagenfurt am Wörthersee
+      Vorsprache
+      ausschließlich mit Terminvereinbarung
+      Telefonische Erreichbarkeit
+      Tel: 050 808 808
+      Mo:
+      07:30 – 16:00 Uhr
+      Di:
+      07:30 – 16:00 Uhr
+      Mi:
+      07:30 – 16:00 Uhr
+      Do:
+      07:30 – 16:00 Uhr
+      Fr:
+      07:30 – 14:30 Uhr
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.sozialversicherung.gv.at/formgen/?contentid=10007.853637&portal=svsportal&LO=4&layout=withoutNav"
+    quote: "Allgemeine Anfrage"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

@@ -1,0 +1,40 @@
+id: "svs-burgenland"
+name_de: "SVS-Kundencenter Burgenland"
+name_simple: "SVS-Büro in Burgenland"
+carrier: "svs"
+region: "Burgenland"
+url: "https://www.sozialversicherung.gv.at/formgen/?contentid=10007.853637&portal=svsportal&LO=4&layout=withoutNav"
+address:
+  street: "Siegfried Marcus-Straße 5"
+  postal_code: "7000"
+  locality: "Eisenstadt"
+  country: "AT"
+phone: "050 808 808"
+opening_hours:
+  notes: "ausschließlich mit Terminvereinbarung"
+sources:
+  - url: "https://www.svs.at/cdscontent/?contentid=10007.861000&portal=svsportal"
+    quote: |-
+      Burgenland
+      Adresse
+      Siegfried Marcus-Straße 5
+      7000 Eisenstadt
+      Vorsprache
+      ausschließlich mit Terminvereinbarung
+      Telefonische Erreichbarkeit
+      Tel: 050 808 808
+      Mo:
+      07:30 - 16:00
+      Di:
+      07:30 - 16:00
+      Mi:
+      07:30 - 16:00
+      Do:
+      07:30 - 16:00
+      Fr:
+      07:30 - 14:30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.sozialversicherung.gv.at/formgen/?contentid=10007.853637&portal=svsportal&LO=4&layout=withoutNav"
+    quote: "Allgemeine Anfrage"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
