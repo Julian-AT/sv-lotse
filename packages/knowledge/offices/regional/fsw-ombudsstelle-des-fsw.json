@@ -1,0 +1,27 @@
+{
+  "id": "fsw-ombudsstelle-des-fsw",
+  "name_de": "Fonds Soziales Wien – Ombudsstelle des FSW",
+  "name_simple": "Hilfe bei Beschwerden beim FSW",
+  "region": "Wien",
+  "url": "https://www.fsw.at/standorte",
+  "jurisdiction": "Ombudsstelle des FSW",
+  "address": {
+    "street": "Guglgasse 7–9",
+    "postal_code": "1030",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "01 24 5 24",
+  "email": "ombudsstelle@fsw.at",
+  "opening_hours": {
+    "notes": "Mo–Fr 8:00–15:00 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.fsw.at/standorte",
+      "quote": "Ombudsstelle des FSW\nGuglgasse 7–9\n1030 Wien\nMo–Fr 8:00–15:00 Uhr\nTel.: 01 24 5 24\nE-Mail:\nombudsstelle@fsw.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
