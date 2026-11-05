@@ -1,0 +1,35 @@
+// WP-178 baseline: exact findings and symbols are inventoried in scripts/quality/baseline.json.
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": ["scripts/quality/*.test.mjs", "scripts/ci/commitlint.config.mjs"],
+      "project": ["*.{ts,mjs,cjs,js}", "scripts/**/*.{ts,mjs,cjs,js}"]
+    },
+    "packages/*": {
+      "entry": ["test/**/*.{test,spec}.{ts,tsx,js,mjs}"],
+      "project": ["**/*.{ts,tsx,js,mjs,cjs}", "!generated/**", "!drizzle/**"]
+    },
+    "apps/web": {
+      "entry": ["test/**/*.{test,spec}.{ts,tsx}", "e2e/**/*.spec.ts", "scripts/**/*.{ts,mjs}"],
+      "project": ["**/*.{ts,tsx,js,mjs}", "!.next/**", "!next-env.d.ts"]
+    },
+    "packages/brain": {
+      "ignoreDependencies": ["@ai-sdk/otel", "canonicalize", "yaml"]
+    },
+    "packages/ui": {
+      "ignoreDependencies": ["react", "react-dom"]
+    }
+  },
+  "ignoreIssues": {
+    "packages/knowledge/src/ingest/fetcher.ts": ["exports"],
+    "apps/web/src/server/session-cookie.ts": ["exports"],
+    "packages/brain/src/forms/detect/schema.ts": ["exports"],
+    "packages/brain/src/forms/detect/vision.ts": ["exports"],
+    "packages/evals/src/e13/index.ts": ["exports"],
+    "packages/guide/src/snapshot/index.ts": ["exports"],
+    "packages/knowledge/src/ingest/enrich.ts": ["types"],
+    "packages/knowledge/src/loaders/fees/pdf.ts": ["types"],
+    "apps/web/src/features/shell/copy.ts": ["types"]
+  }
+}

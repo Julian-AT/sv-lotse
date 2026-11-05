@@ -32,7 +32,94 @@
   },
   "linter": {
     "rules": {
-      "preset": "recommended"
+      "preset": "recommended",
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": {
+            "maxAllowedComplexity": 15
+          }
+        }
+      },
+      "suspicious": {
+        "noConsole": "error",
+        "noExplicitAny": "error"
+      },
+      "style": {
+        "noNonNullAssertion": "error",
+        "useImportType": "error",
+        "useExportType": "error"
+      },
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error"
+      }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "**/cli.ts",
+        "scripts/**",
+        "**/scripts/**",
+        "**/test/**",
+        "**/tests/**",
+        "**/*.test.*",
+        "**/*.spec.*",
+        "**/e2e/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/brain/src/forms/detect/candidates.ts",
+        "packages/brain/src/forms/detect/index.ts",
+        "packages/guide/src/index.ts",
+        "packages/guide/src/snapshot/index.ts",
+        "packages/guide/src/targets.ts",
+        "packages/guide/src/typing.ts",
+        "packages/guide/test/e2e/runtime.spec.ts",
+        "packages/knowledge/src/e2/index.ts",
+        "packages/knowledge/src/e2/swift.ts",
+        "packages/knowledge/src/ingest/chunk.ts",
+        "packages/knowledge/src/ingest/fetcher.ts",
+        "packages/knowledge/src/ingest/indexer.ts",
+        "packages/knowledge/src/ingest/normalize.ts",
+        "packages/knowledge/src/loader/db.ts",
+        "packages/knowledge/src/loader/index.ts",
+        "packages/knowledge/src/loaders/eko/index.ts",
+        "packages/knowledge/src/loaders/fees/parser.ts",
+        "packages/knowledge/src/loaders/sozdok/chunk.ts",
+        "packages/knowledge/src/loaders/sozdok/load.ts",
+        "packages/knowledge/src/loaders/sozdok/parse.ts",
+        "packages/knowledge/test/ingest/fetcher.test.ts",
+        "packages/protocol/scripts/swift-validation.ts",
+        "packages/protocol/scripts/swift.ts",
+        "src/checks/leakage.ts",
+        "src/runner/index.ts",
+        "test/sets/e5/loader.test.ts"
+      ],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["knip.json"],
+      "json": {
+        "parser": {
+          "allowComments": true
+        }
+      }
+    }
+  ]
 }

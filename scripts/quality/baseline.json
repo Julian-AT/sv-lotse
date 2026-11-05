@@ -1,0 +1,466 @@
+{
+  "knip": [
+    {
+      "path": "apps/web/src/features/shell/copy.ts",
+      "kind": "types",
+      "name": "Language",
+      "line": 39,
+      "col": 13,
+      "pos": 1734
+    },
+    {
+      "path": "apps/web/src/server/session-cookie.ts",
+      "kind": "exports",
+      "name": "SECURE_SESSION_COOKIE",
+      "line": 6,
+      "col": 14,
+      "pos": 203
+    },
+    {
+      "path": "packages/brain/package.json",
+      "kind": "dependencies",
+      "name": "@ai-sdk/otel",
+      "line": 26,
+      "col": 6,
+      "pos": 927
+    },
+    {
+      "path": "packages/brain/package.json",
+      "kind": "dependencies",
+      "name": "canonicalize",
+      "line": 30,
+      "col": 6,
+      "pos": 1045
+    },
+    {
+      "path": "packages/brain/package.json",
+      "kind": "dependencies",
+      "name": "yaml",
+      "line": 33,
+      "col": 6,
+      "pos": 1131
+    },
+    {
+      "path": "packages/brain/src/forms/detect/schema.ts",
+      "kind": "exports",
+      "name": "DetectionMethodSchema",
+      "line": 20,
+      "col": 14,
+      "pos": 579
+    },
+    {
+      "path": "packages/brain/src/forms/detect/vision.ts",
+      "kind": "exports",
+      "name": "VISION_PROMPT_VERSION",
+      "line": 45,
+      "col": 14,
+      "pos": 1304
+    },
+    {
+      "path": "packages/brain/src/forms/detect/vision.ts",
+      "kind": "exports",
+      "name": "VisionFieldsSchema",
+      "line": 14,
+      "col": 14,
+      "pos": 422
+    },
+    {
+      "path": "packages/evals/src/e13/index.ts",
+      "kind": "exports",
+      "name": "intersectionOverUnion",
+      "line": 93,
+      "col": 10,
+      "pos": 2857
+    },
+    {
+      "path": "packages/evals/src/e13/index.ts",
+      "kind": "exports",
+      "name": "measureFields",
+      "line": 93,
+      "col": 33,
+      "pos": 2880
+    },
+    {
+      "path": "packages/guide/src/snapshot/index.ts",
+      "kind": "exports",
+      "name": "inViewport",
+      "line": 184,
+      "col": 17,
+      "pos": 6039
+    },
+    {
+      "path": "packages/knowledge/src/ingest/enrich.ts",
+      "kind": "types",
+      "name": "ChunkMetadata",
+      "line": 18,
+      "col": 13,
+      "pos": 566
+    },
+    {
+      "path": "packages/knowledge/src/ingest/fetcher.ts",
+      "kind": "exports",
+      "name": "USER_AGENT",
+      "line": 6,
+      "col": 14,
+      "pos": 171
+    },
+    {
+      "path": "packages/knowledge/src/loaders/fees/pdf.ts",
+      "kind": "types",
+      "name": "TextCell",
+      "line": 4,
+      "col": 18,
+      "pos": 126
+    },
+    {
+      "path": "packages/ui/package.json",
+      "kind": "devDependencies",
+      "name": "react",
+      "line": 18,
+      "col": 6,
+      "pos": 336
+    },
+    {
+      "path": "packages/ui/package.json",
+      "kind": "devDependencies",
+      "name": "react-dom",
+      "line": 19,
+      "col": 6,
+      "pos": 360
+    }
+  ],
+  "biome": [
+    {
+      "path": "packages/brain/src/forms/detect/candidates.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 32,
+      "symbol": "paths",
+      "complexity": 26,
+      "source": "function paths(data: readonly number[]): { points: Point[]; closed: boolean; curved: boolean }[] {"
+    },
+    {
+      "path": "packages/brain/src/forms/detect/candidates.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 68,
+      "symbol": "vectorCandidates",
+      "complexity": 68,
+      "source": "export function vectorCandidates("
+    },
+    {
+      "path": "packages/brain/src/forms/detect/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 35,
+      "symbol": "=> ",
+      "complexity": 127,
+      "source": "return withPdf(pdfBytes, settings.signal, async (document) => {"
+    },
+    {
+      "path": "packages/evals/src/checks/leakage.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 25,
+      "symbol": "checkLeakage",
+      "complexity": 19,
+      "source": "export function checkLeakage("
+    },
+    {
+      "path": "packages/evals/src/runner/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 160,
+      "symbol": "runSuite",
+      "complexity": 21,
+      "source": "export async function runSuite(definition: RegisteredSuite, rawOptions: RunOptions) {"
+    },
+    {
+      "path": "packages/evals/test/sets/e5/loader.test.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 93,
+      "symbol": "=> ",
+      "complexity": 23,
+      "source": "test(\"E5 SR-1 labels explicit statements and near misses without inferring from documents\", () => {"
+    },
+    {
+      "path": "packages/guide/src/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 82,
+      "symbol": "denied",
+      "complexity": 16,
+      "source": "function denied(element: Element): boolean {"
+    },
+    {
+      "path": "packages/guide/src/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 121,
+      "symbol": "execute",
+      "complexity": 65,
+      "source": "async execute(input) {"
+    },
+    {
+      "path": "packages/guide/src/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 147,
+      "symbol": "=> ",
+      "complexity": 19,
+      "source": "const guard = () => {"
+    },
+    {
+      "path": "packages/guide/src/snapshot/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 97,
+      "symbol": "accessibleName",
+      "complexity": 19,
+      "source": "export function accessibleName(element: Element): string {"
+    },
+    {
+      "path": "packages/guide/src/snapshot/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 138,
+      "symbol": "roleOf",
+      "complexity": 16,
+      "source": "export function roleOf(element: Element): string {"
+    },
+    {
+      "path": "packages/guide/src/snapshot/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 208,
+      "symbol": "=> ",
+      "complexity": 28,
+      "source": "return rects.flatMap((rect) => {"
+    },
+    {
+      "path": "packages/guide/src/snapshot/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 316,
+      "symbol": "capture",
+      "complexity": 19,
+      "source": "capture(): PageSnapshot {"
+    },
+    {
+      "path": "packages/guide/src/snapshot/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 361,
+      "symbol": "=> ",
+      "complexity": 28,
+      "source": "const handles = candidates.map(({ element, role, label, key, structuralKey, stable }) => {"
+    },
+    {
+      "path": "packages/guide/src/targets.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 9,
+      "symbol": "visibleQuote",
+      "complexity": 16,
+      "source": "function visibleQuote("
+    },
+    {
+      "path": "packages/guide/src/targets.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 28,
+      "symbol": "visit",
+      "complexity": 29,
+      "source": "function visit(element: Element, parentDisplay = \"\") {"
+    },
+    {
+      "path": "packages/guide/src/typing.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 36,
+      "symbol": "typeVisible",
+      "complexity": 22,
+      "source": "export async function typeVisible("
+    },
+    {
+      "path": "packages/guide/test/e2e/runtime.spec.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 22,
+      "symbol": "=> ",
+      "complexity": 26,
+      "source": "}) => {"
+    },
+    {
+      "path": "packages/knowledge/src/e2/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 98,
+      "symbol": "scanRepository",
+      "complexity": 43,
+      "source": "export async function scanRepository("
+    },
+    {
+      "path": "packages/knowledge/src/e2/swift.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 10,
+      "symbol": "escaped",
+      "complexity": 18,
+      "source": "function escaped(rawHashes: string): string {"
+    },
+    {
+      "path": "packages/knowledge/src/e2/swift.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 59,
+      "symbol": "code",
+      "complexity": 55,
+      "source": "function code(end?: string): void {"
+    },
+    {
+      "path": "packages/knowledge/src/ingest/chunk.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 12,
+      "symbol": "chunkMarkdown",
+      "complexity": 50,
+      "source": "export function chunkMarkdown(markdown: string): MarkdownChunk[] {"
+    },
+    {
+      "path": "packages/knowledge/src/ingest/fetcher.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 80,
+      "symbol": "=> ",
+      "complexity": 23,
+      "source": "return queue(async () => {"
+    },
+    {
+      "path": "packages/knowledge/src/ingest/fetcher.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 151,
+      "symbol": "fetch",
+      "complexity": 37,
+      "source": "async fetch(value: string, previous: Validators = {}): Promise<FetchResult> {"
+    },
+    {
+      "path": "packages/knowledge/src/ingest/indexer.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 32,
+      "symbol": "=> ",
+      "complexity": 25,
+      "source": "return database.sql.begin(async (transaction) => {"
+    },
+    {
+      "path": "packages/knowledge/src/ingest/normalize.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 108,
+      "symbol": "=> ",
+      "complexity": 52,
+      "source": "replacement: (_content, node) => {"
+    },
+    {
+      "path": "packages/knowledge/src/loader/db.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 7,
+      "symbol": "=> ",
+      "complexity": 19,
+      "source": "await database.sql.begin(async (sql) => {"
+    },
+    {
+      "path": "packages/knowledge/src/loader/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 96,
+      "symbol": "loadKnowledge",
+      "complexity": 26,
+      "source": "export async function loadKnowledge(root = knowledgeRoot): Promise<Knowledge> {"
+    },
+    {
+      "path": "packages/knowledge/src/loaders/eko/index.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 217,
+      "symbol": "=> ",
+      "complexity": 20,
+      "source": "const coverage = matches.map((pack): CoveragePack => {"
+    },
+    {
+      "path": "packages/knowledge/src/loaders/fees/parser.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 19,
+      "symbol": "styria",
+      "complexity": 48,
+      "source": "function styria(pages: TextLine[][], file: string): FeeSchedule {"
+    },
+    {
+      "path": "packages/knowledge/src/loaders/fees/parser.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 81,
+      "symbol": "=> ",
+      "complexity": 16,
+      "source": ".flatMap((c) => {"
+    },
+    {
+      "path": "packages/knowledge/src/loaders/fees/parser.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 140,
+      "symbol": "dental",
+      "complexity": 124,
+      "source": "function dental(pages: TextLine[][], file: string): FeeSchedule {"
+    },
+    {
+      "path": "packages/knowledge/src/loaders/sozdok/chunk.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 33,
+      "symbol": "chunkSozdok",
+      "complexity": 17,
+      "source": "export function chunkSozdok(record: SozdokVersion, maxTokens = 1500): SozdokChunk[] {"
+    },
+    {
+      "path": "packages/knowledge/src/loaders/sozdok/load.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 68,
+      "symbol": "=> ",
+      "complexity": 51,
+      "source": "return database.sql.begin(async (sql) => {"
+    },
+    {
+      "path": "packages/knowledge/src/loaders/sozdok/parse.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 120,
+      "symbol": "render",
+      "complexity": 21,
+      "source": "function render(node: Element | string, boundaries = false, atomic = false): string {"
+    },
+    {
+      "path": "packages/knowledge/test/ingest/fetcher.test.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 9,
+      "symbol": "=> ",
+      "complexity": 22,
+      "source": "server = createServer((request, response) => {"
+    },
+    {
+      "path": "packages/protocol/scripts/swift-validation.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 10,
+      "symbol": "foundationPattern",
+      "complexity": 22,
+      "source": "function foundationPattern(pattern: string): string {"
+    },
+    {
+      "path": "packages/protocol/scripts/swift-validation.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 73,
+      "symbol": "visit",
+      "complexity": 22,
+      "source": "function visit(type: string, input: Schema): void {"
+    },
+    {
+      "path": "packages/protocol/scripts/swift-validation.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 114,
+      "symbol": "checks",
+      "complexity": 73,
+      "source": "function checks(input: Schema, type: string, value: string, path: string): string[] {"
+    },
+    {
+      "path": "packages/protocol/scripts/swift.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 16,
+      "symbol": "visit",
+      "complexity": 47,
+      "source": "function visit(node: Schema, name: string): void {"
+    }
+  ],
+  "syncpack": [
+    {
+      "path": "packages/guide/package.json",
+      "dependency": "@playwright/test",
+      "range": "1.64.1"
+    },
+    {
+      "path": "apps/web/package.json",
+      "dependency": "@playwright/test",
+      "range": "^1.64.1"
+    }
+  ]
+}

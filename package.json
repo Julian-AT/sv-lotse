@@ -21,7 +21,13 @@
     "test:integration": "turbo run test:integration",
     "test:live": "turbo run test:live",
     "generate": "turbo run generate",
-    "verify": "bun run lint && turbo run typecheck test"
+    "verify": "bun run lint && bun run quality && bun run quality:test && turbo run typecheck test",
+    "quality": "bun run quality:patterns && bun run quality:knip && bun run quality:architecture && bun run quality:versions",
+    "quality:patterns": "biome lint . && node scripts/quality/check-baseline.mjs biome",
+    "quality:knip": "knip && node scripts/quality/check-baseline.mjs knip",
+    "quality:architecture": "node --import ./scripts/quality/typescript.mjs node_modules/.bin/depcruise packages apps/web scripts --config .dependency-cruiser.cjs --ignore-known .dependency-cruiser-known-violations.json",
+    "quality:versions": "syncpack lint --dependency-types prod,dev,peer",
+    "quality:test": "node --test scripts/quality/*.test.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.5",
@@ -29,7 +35,10 @@
     "@commitlint/config-conventional": "^21.2.4",
     "@types/node": "^26.6.6",
     "@vitest/coverage-v8": "^5.1.0",
+    "dependency-cruiser": "^18.7.2",
     "husky": "^9.1.7",
+    "knip": "^6.44.1",
+    "syncpack": "^15.3.3",
     "turbo": "^2.11.10",
     "typescript": "^7.0.2",
     "vitest": "^5.1.0"

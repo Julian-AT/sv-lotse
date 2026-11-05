@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/syncpack/schema.json",
+  "source": ["package.json", "packages/*/package.json", "apps/*/package.json"],
+  "versionGroups": [
+    {
+      "label": "The knowledge compiler API intentionally uses the documented TypeScript 6 alias",
+      "packages": ["@lotse/knowledge"],
+      "dependencies": ["typescript-compiler"],
+      "pinVersion": "npm:typescript@^6.0.3"
+    },
+    {
+      "label": "Internal workspace dependencies use workspace:*",
+      "dependencies": ["@lotse/**"],
+      "dependencyTypes": ["prod", "dev", "peer"],
+      "pinVersion": "workspace:*"
+    },
+    {
+      "label": "WP-178 baseline: packages/guide/package.json pins Playwright (WP-179)",
+      "packages": ["@lotse/guide"],
+      "dependencies": ["@playwright/test"],
+      "pinVersion": "1.64.1"
+    },
+    {
+      "label": "WP-178 baseline counterpart: apps/web/package.json uses a Playwright range",
+      "packages": ["@lotse/web"],
+      "dependencies": ["@playwright/test"],
+      "pinVersion": "^1.64.1"
+    }
+  ]
+}

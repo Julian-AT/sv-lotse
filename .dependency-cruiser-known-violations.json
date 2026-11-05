@@ -1,0 +1,187 @@
+[
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/src/ingest/cli.ts",
+    "to": "packages/brain/src/db/client.ts",
+    "unresolvedTo": "@lotse/brain/db",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/src/ingest/embed.ts",
+    "to": "packages/brain/src/db/schema/index.ts",
+    "unresolvedTo": "@lotse/brain/db/schema",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/src/loader/cli.ts",
+    "to": "packages/brain/src/db/client.ts",
+    "unresolvedTo": "@lotse/brain/db",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/src/loaders/sozdok/cli.ts",
+    "to": "packages/brain/src/db/client.ts",
+    "unresolvedTo": "@lotse/brain/db",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/src/loaders/sozdok/load.ts",
+    "to": "packages/brain/src/db/schema/index.ts",
+    "unresolvedTo": "@lotse/brain/db/schema",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/test/ingest/indexer.db.test.ts",
+    "to": "packages/brain/src/db/client.ts",
+    "unresolvedTo": "@lotse/brain/db",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/test/ingest/ingestion.live.test.ts",
+    "to": "packages/brain/src/db/client.ts",
+    "unresolvedTo": "@lotse/brain/db",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/test/loader/catalog.db.test.ts",
+    "to": "packages/brain/src/db/client.ts",
+    "unresolvedTo": "@lotse/brain/db",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/knowledge/test/loaders/sozdok/load.db.test.ts",
+    "to": "packages/brain/src/db/client.ts",
+    "unresolvedTo": "@lotse/brain/db",
+    "dependencyTypes": ["aliased", "aliased-workspace", "local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "knowledge-no-brain-runtime"
+    }
+  },
+  {
+    "type": "cycle",
+    "from": "packages/db/src/db/schema/cases.ts",
+    "to": "packages/db/src/db/schema/users.ts",
+    "unresolvedTo": "./users.ts",
+    "dependencyTypes": ["local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "no-circular-imports-in-package"
+    },
+    "cycle": [
+      {
+        "name": "packages/db/src/db/schema/users.ts",
+        "dependencyTypes": ["local", "import"]
+      },
+      {
+        "name": "packages/db/src/db/schema/cases.ts",
+        "dependencyTypes": ["local", "import"]
+      }
+    ]
+  },
+  {
+    "type": "cycle",
+    "from": "packages/knowledge/src/e2/swift.ts",
+    "to": "packages/knowledge/src/e2/tokens.ts",
+    "unresolvedTo": "./tokens.ts",
+    "dependencyTypes": ["local", "type-only", "import", "pre-compilation-only"],
+    "rule": {
+      "severity": "error",
+      "name": "no-circular-imports-in-package"
+    },
+    "cycle": [
+      {
+        "name": "packages/knowledge/src/e2/tokens.ts",
+        "dependencyTypes": ["local", "type-only", "import", "pre-compilation-only"]
+      },
+      {
+        "name": "packages/knowledge/src/e2/swift.ts",
+        "dependencyTypes": ["local", "import"]
+      }
+    ]
+  },
+  {
+    "type": "dependency",
+    "from": "packages/brain/test/forms/detect/detect.test.ts",
+    "to": "packages/evals/src/e13/metrics.ts",
+    "unresolvedTo": "../../../../evals/src/e13/metrics.ts",
+    "dependencyTypes": ["local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "workspace-public-exports-only"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/brain/test/forms/detect/metrics.test.ts",
+    "to": "packages/evals/src/e13/index.ts",
+    "unresolvedTo": "../../../../evals/src/e13/index.ts",
+    "dependencyTypes": ["local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "workspace-public-exports-only"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/brain/test/forms/detect/metrics.test.ts",
+    "to": "packages/evals/src/e13/metrics.ts",
+    "unresolvedTo": "../../../../evals/src/e13/metrics.ts",
+    "dependencyTypes": ["local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "workspace-public-exports-only"
+    }
+  },
+  {
+    "type": "dependency",
+    "from": "packages/brain/test/forms/detect/metrics.test.ts",
+    "to": "packages/evals/src/runner/index.ts",
+    "unresolvedTo": "../../../../evals/src/runner/index.ts",
+    "dependencyTypes": ["local", "import"],
+    "rule": {
+      "severity": "error",
+      "name": "workspace-public-exports-only"
+    }
+  }
+]
