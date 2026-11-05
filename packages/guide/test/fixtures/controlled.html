@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Controlled form</title>
+<style>body { font: 18px sans-serif; margin: 40px; } input { display: block; margin: 16px 0; width: 260px; }</style>
+</head><body>
+<p>Enter the approved value.</p>
+<form><label for="controlled">Controlled name</label><input id="controlled"><input hidden aria-label="Hidden field"></form>
+<output id="state"></output>
+<script>
+// Model the value tracker and rerender used by controlled frameworks. A normal
+// assignment updates the tracker and is ignored; native-setter input is observed.
+const input = document.querySelector('#controlled');
+const descriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+let tracked = input.value;
+Object.defineProperty(input, 'value', {
+  configurable: true,
+  get() { return descriptor.get.call(this); },
+  set(value) { tracked = value; descriptor.set.call(this, value); }
+});
+window.observed = [];
+input.addEventListener('input', event => {
+  if (event.target.value === tracked) return;
+  const value = event.target.value;
+  window.observed.push({ type: 'input', value, data: event.data, key: '', time: performance.now() });
+  document.querySelector('#state').textContent = value;
+  input.value = value;
+});
+input.addEventListener('change', () => window.observed.push({ type: 'change', value: input.value, data: null, key: '', time: performance.now() }));
+for (const type of ['focus', 'keydown', 'beforeinput', 'keyup', 'blur', 'click', 'submit']) {
+  document.addEventListener(type, event => {
+    window.observed.push({ type, value: event.target.value ?? '', data: event.data ?? null, key: event.key ?? '', time: performance.now() });
+    if (type === 'submit') event.preventDefault();
+  }, true);
+}
+</script>
+</body></html>

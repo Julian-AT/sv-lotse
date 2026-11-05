@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Plain form</title>
+<style>body { font: 18px sans-serif; margin: 40px; } label, input, select, textarea { display: block; margin-bottom: 12px; } input { width: 260px; } .invisible { display: none; }</style>
+</head><body>
+<p id="quote">Bring the <strong>completed form</strong> to the office.</p>
+<div style="position:absolute;top:10px;left:350px;width:100px;height:40px;overflow:hidden">
+  <div style="margin-left:150px;width:260px"><input aria-label="Fully clipped field" value="Unchanged"><span>Fully clipped quote.</span></div>
+</div>
+<form>
+  <label for="name">Full name</label><input id="name" name="name" value="Previous">
+  <label>Postal code <input id="postal" name="postal"></label>
+  <textarea aria-label="Notes"></textarea>
+  <select aria-label="Language"><option>English</option><option>Deutsch</option></select>
+  <input id="password" type="password" aria-label="Password" value="private-password">
+  <input class="invisible" aria-label="Hidden field">
+  <input type="hidden" aria-label="Hidden type">
+  <div aria-hidden="true"><input aria-label="Hidden from accessibility"></div>
+  <input aria-labelledby="first second" aria-label="Ignored" placeholder="Ignored placeholder">
+  <span id="first">Preferred</span><span id="second">address</span>
+  <input placeholder="Reference number">
+  <div role="slider" aria-label="Zoom" aria-valuenow="40" tabindex="0"></div>
+  <a href="#quote">Instructions</a><button type="button">Help</button>
+</form>
+<script>
+window.observed = [];
+for (const type of ['focus', 'keydown', 'beforeinput', 'input', 'keyup', 'change', 'blur', 'click', 'submit']) {
+  document.addEventListener(type, event => {
+    window.observed.push({ type, value: event.target.value ?? '', data: event.data ?? null, key: event.key ?? '', time: performance.now() });
+    if (type === 'submit') event.preventDefault();
+  }, true);
+}
+</script>
+</body></html>
