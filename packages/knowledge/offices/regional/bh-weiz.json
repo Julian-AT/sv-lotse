@@ -1,0 +1,29 @@
+{
+  "id": "bh-weiz",
+  "name_de": "Bezirkshauptmannschaft Weiz",
+  "name_simple": "Amt für den Bezirk Weiz",
+  "region": "Steiermark",
+  "address": {
+    "street": "Birkfelderstraße 28",
+    "postal_code": "8160",
+    "locality": "Weiz",
+    "country": "AT"
+  },
+  "phone": "+43 (3172) 600-200",
+  "email": "bhwz@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Weiz",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Weiz\nBezirkshauptmann Hofrat Mag. Dr. Heinz Schwarzbeck\nBirkfelderstraße 28\nA-8160 Weiz\nTelefon: +43 (3172) 600-200\nFAX: +43 (3172) 600-550\nE-Mail: bhwz@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
