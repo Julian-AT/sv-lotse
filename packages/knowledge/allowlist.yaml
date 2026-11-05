@@ -1,0 +1,42 @@
+# Exact HTTPS origins from PRD §10. verified_at records registry/HTTPS checks,
+# including access-denied responses; it does not assert crawl permission.
+origins:
+  - origin: https://www.oegk.at
+    purpose: ÖGK benefits, forms and offices
+  - origin: https://www.svs.at
+    purpose: SVS benefits and forms
+  - origin: https://www.bvaeb.at
+    purpose: BVAEB benefits and forms
+  - origin: https://www.pv.at
+    purpose: Pension insurance, Pflegegeld and rehabilitation
+  - origin: https://www.sozialversicherung.at
+    purpose: Dachverband administrative information
+  - origin: https://www.sozialversicherung.gv.at
+    purpose: Dachverband official information
+  - origin: https://www.sozdok.at
+    purpose: Legal bases and published versions
+  - origin: https://www.gesundheit.gv.at
+    purpose: Official health portal and administrative navigation
+  - origin: https://www.oesterreich.gv.at
+    purpose: Official procedures and responsible offices
+  - origin: https://www.sozialministerium.gv.at
+    purpose: Care support and social administration
+  - origin: https://www.sozialministeriumservice.gv.at
+    purpose: Care support applications and service offices
+  - origin: https://www.bmf.gv.at
+    purpose: Familienbeihilfe and official tax forms
+  - origin: https://www.fsw.at
+    purpose: Vienna care and social services
+  - origin: https://www.aekwien.at
+    purpose: Carrier contract and fee information
+  - origin: https://www.bewegt-im-park.at
+    purpose: Seasonal public activity programme
+as_of: "2026-11-05"
+verified_at: "2026-11-05"
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: "Finden Sie Kundenservicestellen und Gesundheitseinrichtungen der ÖGK in Ihrer Nähe:"
+    retrieved_at: "2026-11-05T22:36:15Z"
+  - url: "https://www.pv.at/"
+    quote: "Pensionsversicherung Österreich: Pensionen, Pflegegeld, Reha | Pensionsversicherung"
+    retrieved_at: "2026-11-05T22:36:15Z"
