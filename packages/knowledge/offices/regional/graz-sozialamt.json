@@ -1,0 +1,33 @@
+{
+  "id": "graz-sozialamt",
+  "name_de": "Sozialamt der Stadt Graz",
+  "name_simple": "Sozialamt in Graz",
+  "region": "Steiermark",
+  "address": {
+    "street": "Schmiedgasse 26",
+    "postal_code": "8010",
+    "locality": "Graz",
+    "country": "AT"
+  },
+  "phone": "+43 316 872-6402",
+  "email": "sozialamt@stadt.graz.at",
+  "url": "https://www.graz.at/cms/beitrag/10018736/7761766",
+  "jurisdiction": "Sozialunterstützung in Graz",
+  "accessibility": "Barrierefreier Zugang: Behindertenlift",
+  "opening_hours": {
+    "notes": "Mo-Fr 8.00-12.30 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.graz.at/cms/beitrag/10018736/7761766",
+      "quote": "Kontakt\nSozialamt\n8010 Graz, Schmiedgasse 26\nTel: +43 316 872-6402\nFax: +43 316 872-6409\nE-Mail: sozialamt@stadt.graz.at\nStandort\n8010 Graz, Schmiedgasse 26\nErreichbarkeit\nÖV: alle Graz Linien über Jakominiplatz bzw. Hauptplatz\nParkplatz: gebührenpflichtige Kurzparkzonen\nBarrierefreier Zugang: Behindertenlift\nÖffnungszeiten / Parteienverkehr:\nMo-Fr 8.00-12.30 Uhr",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
