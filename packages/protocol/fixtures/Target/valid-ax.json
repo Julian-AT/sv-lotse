@@ -1,0 +1,7 @@
+{
+  "kind": "ax",
+  "role": "AXTextField",
+  "label": "Name",
+  "path": ["AXWindow", "AXGroup", "AXTextField"],
+  "appBundleId": "at.lotse.workspace"
+}
