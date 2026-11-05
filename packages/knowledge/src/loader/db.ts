@@ -2,7 +2,7 @@ import type { Database } from "@lotse/brain/db";
 import type { Knowledge } from "./index.ts";
 
 // Catalog tables are a repository-owned mirror. Form templates are acquired assets:
-// only their reviewed schemas are updated; originals and instances are retained.
+// only their declared schemas and review states are updated; originals and instances are retained.
 export async function loadCatalog(database: Database, knowledge: Knowledge): Promise<void> {
   await database.sql.begin(async (sql) => {
     // Serialize repository snapshots so concurrent loads cannot interleave pruning.
@@ -36,8 +36,8 @@ export async function loadCatalog(database: Database, knowledge: Knowledge): Pro
         WHERE process.record IS DISTINCT FROM EXCLUDED.record OR process.benefit_id IS DISTINCT FROM EXCLUDED.benefit_id`;
     }
     for (const record of Object.values(knowledge.forms)) {
-      await sql`UPDATE form_template SET schema = ${JSON.stringify(record)}::jsonb, status = 'verified'
-        WHERE id = ${record.template_id}::uuid AND (schema IS DISTINCT FROM ${JSON.stringify(record)}::jsonb OR status <> 'verified')`;
+      await sql`UPDATE form_template SET schema = ${JSON.stringify(record)}::jsonb, status = ${record.status}
+        WHERE id = ${record.template_id}::uuid AND (schema IS DISTINCT FROM ${JSON.stringify(record)}::jsonb OR status <> ${record.status})`;
     }
     // Processes must be removed before benefits because benefit_id is RESTRICT.
     for (const [table, records] of [

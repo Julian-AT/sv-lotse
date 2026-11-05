@@ -6,7 +6,11 @@ represented. Carriers are `oegk`, `svs`, `bvaeb`, `pva`, `auva`; scope is `socia
 `federal`, `state`, `municipality` or `other`; area is A–F. An empty forms array represents no
 applicable form; a search hint supports acquisition without a registered template.
 
-Illustrative authoring example (linked records must also exist):
+Records without `verified_at` await human review. Agents supply source quotes and `as_of`, never
+an invented review date. A reviewer adds `verified_at: YYYY-MM-DD` only after approving the record;
+the date is independent of source retrieval time. Malformed dates are rejected.
+
+Illustrative awaiting-review example (linked records must also exist):
 
 ```yaml
 id: example-benefit
@@ -41,8 +45,16 @@ process: ref:processes/example-process
 appointment_channels: []
 sources: [*source]
 as_of: 2026-11-01
+```
+
+For a reviewed version of the same example, a human reviewer adds their actual review date:
+
+```yaml
 verified_at: 2026-11-02
 ```
+
+`loadKnowledge().awaitingReview` and the `catalog:load` console summary count records without
+`verified_at` separately for `catalog`, `processes`, `offices`, `facilities` and `forms`.
 
 Criteria require `id`, `text_de` and `source`; `condition` and `legal_basis` are optional. Condition
 syntax is documented in the process folder. Documents require `obtain_from` even when optional.

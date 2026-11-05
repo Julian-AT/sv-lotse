@@ -4,10 +4,10 @@ import {
   DateSchema,
   HttpUrl,
   Id,
+  provenance,
   reference,
   SourceRefSchema,
   Text,
-  verifiedProvenance,
 } from "./common.ts";
 import { ConditionSchema } from "./condition.ts";
 export const BenefitSchema = z.strictObject({
@@ -65,6 +65,6 @@ export const BenefitSchema = z.strictObject({
       }),
     ]),
   ),
-  ...verifiedProvenance,
+  ...provenance,
 });
 export type Benefit = z.infer<typeof BenefitSchema>;

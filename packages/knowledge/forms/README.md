@@ -1,13 +1,18 @@
-# Reviewed form schemas
+# Form schemas and review state
 
-One strict `FormSchema` per JSON file. Acquired `auto` schemas stay in the database; repository
-schemas require `status: verified`, source quotes, `as_of` and `verified_at`.
+One strict `FormSchema` per JSON file. Repository schemas may be candidates awaiting review
+(`status: auto`, no `verified_at`) or reviewed schemas (`status: verified`, required `verified_at`).
+Both states require source quotes and `as_of`. Agents must not invent a human verification date;
+review dates must be valid `YYYY-MM-DD` dates. `auto` schemas with a review date and `verified`
+schemas without one are rejected. `catalog:load` reports the number of forms awaiting review.
+
+Illustrative candidate awaiting review:
 
 ```json
 {
   "id": "example-form",
   "template_id": "b508cc7c-bfb0-4f73-893d-ae85a8e73c56",
-  "status": "verified",
+  "status": "auto",
   "fields": [
     {
       "id": "applicant-name",
@@ -29,14 +34,24 @@ schemas require `status: verified`, source quotes, `as_of` and `verified_at`.
       "retrieved_at": "2026-11-01T12:00:00Z"
     }
   ],
-  "as_of": "2026-11-01",
+  "as_of": "2026-11-01"
+}
+```
+
+After approving the schema, a human reviewer changes `status` and adds their actual review date.
+For a reviewed version of the example, replace its review-state fields with:
+
+```json
+{
+  "status": "verified",
   "verified_at": "2026-11-02"
 }
 ```
 
 `id` is the stable catalog reference id. `template_id` is the UUID of the existing, acquired
-`form_template` version whose schema is reviewed; obtain it from the registry. Catalog loading
-updates that template's `schema` and `status` only when it exists. It never creates a template
+`form_template` version whose schema is recorded; obtain it from the registry. Catalog loading
+updates that template's `schema` and preserves the file's declared `status` only when it exists.
+It never promotes candidates automatically or creates a template
 without an original asset, or removes templates or form instances.
 
 Each field requires every PRD field except the alternative location: provide exactly one

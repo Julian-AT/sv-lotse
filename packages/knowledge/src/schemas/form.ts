@@ -26,14 +26,21 @@ export const FormFieldSchema = z
     path: ["acro_field"],
     message: "Provide exactly one of acro_field or box",
   });
+const formFields = {
+  id: Id,
+  template_id: z.uuid(),
+  fields: z.array(FormFieldSchema).min(1),
+  ...verifiedProvenance,
+};
 export const FormSchema = z
-  .strictObject({
-    id: Id,
-    template_id: z.uuid(),
-    status: z.literal("verified"),
-    fields: z.array(FormFieldSchema).min(1),
-    ...verifiedProvenance,
-  })
+  .discriminatedUnion("status", [
+    z.strictObject({
+      ...formFields,
+      status: z.literal("auto"),
+      verified_at: z.undefined().optional(),
+    }),
+    z.strictObject({ ...formFields, status: z.literal("verified") }),
+  ])
   .superRefine((form, context) => {
     const ids = new Set<string>();
     form.fields.forEach((field, index) => {

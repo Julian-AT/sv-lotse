@@ -13,6 +13,11 @@ async function main(): Promise<void> {
   try {
     await loadCatalog(database, knowledge);
     process.stdout.write("Catalog loaded.\n");
+    process.stdout.write(
+      `Awaiting review: ${Object.entries(knowledge.awaitingReview)
+        .map(([kind, count]) => `${kind}=${count}`)
+        .join(", ")}\n`,
+    );
   } finally {
     await database.close();
   }

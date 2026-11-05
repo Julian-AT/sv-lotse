@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CarrierSchema, HttpUrl, Id, reference, Text, verifiedProvenance } from "./common.ts";
+import { CarrierSchema, HttpUrl, Id, provenance, reference, Text } from "./common.ts";
 
 const address = z.strictObject({
   street: Text,
@@ -23,10 +23,23 @@ const directoryFields = {
     .optional(),
   appointment_channels: z.array(HttpUrl).optional(),
   accessibility: Text.optional(),
-  ...verifiedProvenance,
+  ...provenance,
 };
 export const OfficeSchema = z.strictObject({
   ...directoryFields,
+  name_simple: Text.optional(),
+  opening_hours: z
+    .strictObject({
+      monday: Text.optional(),
+      tuesday: Text.optional(),
+      wednesday: Text.optional(),
+      thursday: Text.optional(),
+      friday: Text.optional(),
+      saturday: Text.optional(),
+      sunday: Text.optional(),
+      notes: Text.optional(),
+    })
+    .optional(),
   carrier: CarrierSchema.optional(),
   jurisdiction: Text.optional(),
 });

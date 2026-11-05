@@ -32,6 +32,7 @@ export type DeepReadonly<T> = T extends (...args: never[]) => unknown
 type Collections = { [K in Kind]: Record<string, z.infer<(typeof schemas)[K]>> };
 export type Knowledge = DeepReadonly<
   Collections & {
+    awaitingReview: Record<Kind, number>;
     allowlist?: z.infer<typeof AllowlistSchema>;
     sources?: z.infer<typeof SourceRegistrySchema>;
     resolve: (reference: string) => unknown;
@@ -182,5 +183,11 @@ export async function loadKnowledge(root = knowledgeRoot): Promise<Knowledge> {
         );
     }
   }
-  return freeze({ ...collections, ...registries, resolve });
+  const awaitingReview = { catalog: 0, processes: 0, offices: 0, facilities: 0, forms: 0 };
+  for (const kind of Object.keys(schemas) as Kind[]) {
+    awaitingReview[kind] = Object.values(collections[kind]).filter(
+      (record) => record.verified_at === undefined,
+    ).length;
+  }
+  return freeze({ ...collections, ...registries, awaitingReview, resolve });
 }

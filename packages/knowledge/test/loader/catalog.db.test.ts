@@ -10,7 +10,15 @@ import { createDatabase } from "@lotse/brain/db";
 import { afterAll, beforeAll, expect, test } from "vitest";
 import { loadCatalog } from "../../src/loader/db.ts";
 import { loadKnowledge } from "../../src/loader/index.ts";
-import { fixtureRoot, form, removeFixture } from "./fixtures.ts";
+import {
+  benefit,
+  facility,
+  fixtureRoot,
+  form,
+  office,
+  processRecord,
+  removeFixture,
+} from "./fixtures.ts";
 
 const envFile = fileURLToPath(new URL("../../../../.env.local", import.meta.url));
 if (existsSync(envFile)) loadEnvFile(envFile);
@@ -130,3 +138,48 @@ test("AC5 catalog:load updates an existing template using an uppercase template 
     await removeFixture(uppercaseRoot);
   }
 });
+
+test.each(["auto", "verified"] as const)(
+  "WP-176 catalog:load preserves declared form status %s and prints review counts against real Postgres",
+  async (status) => {
+    const { verified_at, ...candidate } = form;
+    const record =
+      status === "auto" ? { ...candidate, status } : { ...candidate, status, verified_at };
+    const reviewRoot = await fixtureRoot({
+      "catalog/benefit.yaml": { ...benefit, verified_at: undefined },
+      "processes/process.yaml": { ...processRecord, verified_at: undefined },
+      "offices/nested/office.yml": { ...office, verified_at: undefined },
+      "facilities/facility.yaml": { ...facility, verified_at: undefined },
+      "forms/form.json": record,
+    });
+    try {
+      // An unchanged schema with a stale status must still be synchronized.
+      const previousStatus = status === "auto" ? "verified" : "auto";
+      await database.sql`INSERT INTO form_template (id, publisher, title, source, hash, format, pages, schema, storage_key, status)
+        VALUES (${form.template_id}::uuid, 'Fixture publisher', 'Fixture application', 'https://example.org/form.pdf', 'fixture-hash', 'acroform', 1, ${JSON.stringify(record)}::jsonb, 'fixture/form.pdf', ${previousStatus})
+        ON CONFLICT (id) DO UPDATE SET schema = EXCLUDED.schema, status = EXCLUDED.status`;
+      const url = new URL(database.config.DATABASE_URL);
+      url.searchParams.set("search_path", `${namespace},public`);
+      const cli = fileURLToPath(new URL("../../src/loader/cli.ts", import.meta.url));
+      const { stdout, stderr } = await promisify(execFile)("bun", [cli, reviewRoot], {
+        env: { ...process.env, DATABASE_URL: url.toString() },
+        timeout: 10000,
+      });
+      expect(stderr).toBe("");
+      expect(stdout).toContain("Catalog loaded.");
+      expect(stdout).toContain(
+        `Awaiting review: catalog=1, processes=1, offices=1, facilities=1, forms=${status === "auto" ? 1 : 0}\n`,
+      );
+      const stored =
+        await database.sql`SELECT schema, status, xmin::text AS version FROM form_template WHERE id = ${form.template_id}::uuid`;
+      expect(stored[0]?.schema).toEqual(record);
+      expect(stored[0]?.status).toBe(status);
+      await loadCatalog(database, await loadKnowledge(reviewRoot));
+      expect(
+        await database.sql`SELECT schema, status, xmin::text AS version FROM form_template WHERE id = ${form.template_id}::uuid`,
+      ).toEqual(stored);
+    } finally {
+      await removeFixture(reviewRoot);
+    }
+  },
+);

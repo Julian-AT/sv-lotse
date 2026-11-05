@@ -2,7 +2,16 @@ import { rm } from "node:fs/promises";
 import { join } from "node:path";
 import { afterEach, expect, test } from "vitest";
 import { loadKnowledge } from "../../src/loader/index.ts";
-import { benefit, fixtureRoot, removeFixture, source } from "./fixtures.ts";
+import {
+  benefit,
+  facility,
+  fixtureRoot,
+  form,
+  office,
+  processRecord,
+  removeFixture,
+  source,
+} from "./fixtures.ts";
 
 const roots: string[] = [];
 afterEach(async () => {
@@ -124,4 +133,58 @@ test("AC3 permits a missing allowlist when there are no online booking channels"
   expect((await loadKnowledge(root)).catalog[benefit.id]?.appointment_channels).toEqual(
     benefit.appointment_channels,
   );
+});
+
+test("WP-176 reports awaiting-review counts per record kind without inventing dates", async () => {
+  const candidateForm = { ...form, status: "auto", verified_at: undefined };
+  const knowledge = await load({
+    "catalog/benefit.yaml": { ...benefit, verified_at: undefined },
+    "processes/process.yaml": { ...processRecord, verified_at: undefined },
+    "offices/nested/office.yml": { ...office, verified_at: undefined },
+    "offices/reviewed.yaml": { ...office, id: "reviewed-office" },
+    "facilities/facility.yaml": { ...facility, verified_at: undefined },
+    "forms/form.json": candidateForm,
+  });
+  expect(knowledge.awaitingReview).toEqual({
+    catalog: 1,
+    processes: 1,
+    offices: 1,
+    facilities: 1,
+    forms: 1,
+  });
+  expect(knowledge.forms[form.id]).toEqual({ ...candidateForm, verified_at: undefined });
+  for (const records of [
+    knowledge.catalog,
+    knowledge.processes,
+    knowledge.offices,
+    knowledge.facilities,
+    knowledge.forms,
+  ]) {
+    for (const record of Object.values(records)) {
+      if (record.id !== "reviewed-office") expect(record.verified_at).toBeUndefined();
+    }
+  }
+  expect(Object.isFrozen(knowledge.awaitingReview)).toBe(true);
+});
+
+test("WP-176 reports zero awaiting-review counts for reviewed and empty collections", async () => {
+  expect((await load()).awaitingReview).toEqual({
+    catalog: 0,
+    processes: 0,
+    offices: 0,
+    facilities: 0,
+    forms: 0,
+  });
+  const root = await fixtureRoot();
+  roots.push(root);
+  for (const kind of ["catalog", "processes", "offices", "facilities", "forms"]) {
+    await rm(join(root, kind), { recursive: true });
+  }
+  expect((await loadKnowledge(root)).awaitingReview).toEqual({
+    catalog: 0,
+    processes: 0,
+    offices: 0,
+    facilities: 0,
+    forms: 0,
+  });
 });
