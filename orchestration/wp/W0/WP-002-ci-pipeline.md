@@ -62,8 +62,8 @@ is the single required status check that `wp land` waits for and the branch rule
    - **Job `ci-ok`:** `needs` all jobs above, `if: always()`. It fails if any needed job failed or was
      cancelled. Skipped conditional jobs count as success. This is the required check.
 2. `.github/workflows/nightly.yml`: `schedule` (once a night, Europe/Vienna) and `workflow_dispatch`.
-   Runs `RUN_LIVE=1 bun run test:live` with provider keys from repository secrets (names as in
-   `.env.example`). Not required for merging.
+   Runs `RUN_LIVE=1 bun run test:live` with provider keys from repository secrets
+   (`OPENAI_API_KEY`, `ELEVENLABS_*`; names as in `.env.example`). Not required for merging.
 3. `scripts/ci/check-commits.sh <base> <head>`: runs `bunx commitlint --from <base> --to <head>` and
    checks that every commit's author and committer equal `ALLOWED_AUTHOR_EMAIL`, with no merge or
    fixup commits; exits non-zero with readable output. History before the commit policy existed (the repository's

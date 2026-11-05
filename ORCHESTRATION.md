@@ -39,19 +39,25 @@ flowchart LR
 
 ## Setup
 
-1. Install the tools:
-   - Node 22+, Bun, Docker (or OrbStack), `gh` (logged in), `jq`;
-   - Codex CLI (`npm i -g @openai/codex`, then `codex login`) and Claude Code;
-   - for the Mac lane: Xcode, `xcodegen`, `swiftlint`;
-   - optional: `gitleaks`, `actionlint`.
-2. In the repository:
-   - `bun install`, which installs the husky hooks;
-   - `cp .env.example .env.local`, then fill in `OPENAI_API_KEY` and generate `SESSION_SECRET`,
-     `APPROVAL_HMAC_SECRET` and `CRON_SECRET` with `openssl rand -base64 48`.
-3. Optional: `orchestration/config.env` runs 16 workers on GPT 6.1 Sol (`gpt-6.1-sol`) at `xhigh`
-   effort. Override any of these in `.orchestration/config.local.env`.
-4. Run `orchestration/bin/wp doctor` until it is green.
+1. Install Homebrew and Xcode.
+2. Run `orchestration/bin/setup`. It is safe to re-run and:
+   - installs what is missing: Node 22+, Bun 1.4+, Docker (OrbStack), `gh`, `jq`, Codex CLI,
+     `xcodegen`, `swiftlint`, `gitleaks`, `actionlint`;
+   - runs `gh auth login` and `codex login` if needed;
+   - runs `bun install`, which installs the husky hooks;
+   - creates or completes `.env.local` without overwriting existing values: it asks for
+     `OPENAI_API_KEY` and generates `SESSION_SECRET`, `APPROVAL_HMAC_SECRET` and `CRON_SECRET`;
+   - runs `orchestration/bin/wp doctor`.
+3. Before W1, add the ElevenLabs key and voice ids to `.env.local`.
+4. Optional: `orchestration/config.env` runs 16 workers on GPT 6.1 Sol (`gpt-6.1-sol`) at `xhigh`
+   effort. Override any of these in `.orchestration/config.local.env`; lower `MAX_PARALLEL` only if
+   workers hit rate limits.
 5. Run `caffeinate -dimsu &`, start `claude` in the repository, then run `/orchestrate W0`.
+
+Local development, workers and CI use Postgres and MinIO from docker compose. The deployed app
+(Vercel `fra1`) uses Neon for `DATABASE_URL` (EU region, `?sslmode=require`) and Cloudflare R2 for
+the `S3_*` variables (`S3_REGION=auto`, endpoint `https://<account>.r2.cloudflarestorage.com`), set
+as Vercel environment variables.
 
 After WP-002 lands:
 

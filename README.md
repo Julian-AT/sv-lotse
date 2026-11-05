@@ -17,10 +17,8 @@ Challenge, Use Case 1.
 ## Start
 
 ```bash
-bun install
-cp .env.example .env.local
-orchestration/bin/wp doctor
-claude   # then /orchestrate W0
+orchestration/bin/setup   # tools, logins, bun install, .env.local, wp doctor
+claude                    # then /orchestrate W0
 ```
 
 The macOS app is derived from Clicky (MIT); see `apps/mac/THIRD_PARTY_NOTICES.md` once it exists.

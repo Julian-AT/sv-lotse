@@ -76,7 +76,8 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
 | One package | `bun run --filter @lotse/<package> <script>` |
 | Add a dependency | `bun add <name>` inside the package folder |
 | Local services | `docker compose up -d --wait` (Postgres with pgvector, MinIO) |
-| Live tests | `RUN_LIVE=1 bun run --filter <package> test:live` |
+| Live tests | `RUN_LIVE=1 bun run --filter <package> test:live` (calls the real OpenAI and ElevenLabs APIs) |
+| Build-time stubs | `BRAIN_ALLOW_STUBS=1` lets unbuilt tools return schema-valid fixtures; never in a release |
 | Mac project | `cd apps/mac && xcodegen generate` |
 | Mac build and test | `xcodebuild -project apps/mac/SVKILotse.xcodeproj -scheme SVKILotse -destination 'platform=macOS' -derivedDataPath .build/dd CODE_SIGNING_ALLOWED=NO test` |
 

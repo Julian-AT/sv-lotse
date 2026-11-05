@@ -90,9 +90,15 @@ Tests prove the schema against a real Postgres.
    - a custom first migration enables `vector` and `pgcrypto`;
    - `db:migrate` runs the drizzle-orm migrator from TypeScript, used by tests and at container start.
 5. **Clients.**
-   - `src/db/client.ts`: postgres.js pool; `DATABASE_URL` and pool size validated with Zod.
+   - `src/db/client.ts`: postgres.js pool; `DATABASE_URL` and pool size validated with Zod. The
+     deployed database is Neon: honour `sslmode=require` in the URL and do not depend on anything
+     Neon lacks (custom dictionaries, superuser-only settings).
    - `src/storage/s3.ts`: S3 client configured from the `S3_*` variables (path-style for MinIO);
-     put, get, delete and head-bucket helpers, with `S3_PREFIX` applied to every key.
+     put, get, delete and head-bucket helpers, with the optional `S3_PREFIX` (default empty) applied
+     to every key. The deployed store is Cloudflare R2 (`S3_REGION=auto`, endpoint
+     `https://<account>.r2.cloudflarestorage.com`): use only operations R2 supports.
+   - Keep `.env.example` minimal: add a variable only if nothing works without it; everything else
+     gets a Zod default.
 6. **Tests** (`test:db`, Vitest, against the compose Postgres and MinIO, no doubles):
    - migrations apply to an empty database;
    - every table and the listed indexes exist (catalog query);

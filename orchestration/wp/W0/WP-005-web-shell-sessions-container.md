@@ -61,7 +61,9 @@ workspace. After this WP:
    - `transpilePackages` for `@lotse/*`; `output: "standalone"`.
    - Tailwind (current major) or CSS modules; record which in the ADR.
 2. **Environment.** `src/server/env.ts`: Zod-validated server environment. Fail fast with a readable
-   error that lists missing variables (never their values).
+   error that lists missing variables (never their values). Optional variables have defaults and
+   stay out of `.env.example`: `LOTSE_WORKSPACE_URL` (`http://localhost:3000`), `SVBOX_DIR`
+   (`data/svbox`); Langfuse and PostHog keys are optional and absent means disabled.
 3. **Telemetry.** `src/instrumentation.ts` registers AI SDK 7 telemetry with `@ai-sdk/otel` once per
    process (PRD §15); export to Langfuse only when its keys are present.
 4. **Anonymous sessions** (`src/server/session.ts`):

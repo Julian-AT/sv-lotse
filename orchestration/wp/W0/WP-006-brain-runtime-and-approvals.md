@@ -72,7 +72,8 @@ Later waves implement the tools; this WP fixes their shape.
 2. **Model router.** `src/models/`:
    - roles `orchestrator`, `classifier`, `guard`, `extractor`, `embedding`;
    - each role has an OpenAI model and an optional fallback, configured by `OPENAI_MODEL_*`
-     environment variables with sensible defaults;
+     environment variables with sensible defaults; the variables are optional overrides and stay
+     out of `.env.example`;
    - a typed `modelFor(role)`.
 3. **Tool contracts.** `src/tools/contracts/`: a Zod input and output schema for every tool in the PRD
    §8 tools table, with its run location (server, display, client) and its approval flag.
