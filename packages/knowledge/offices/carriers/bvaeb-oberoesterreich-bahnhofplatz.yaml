@@ -1,0 +1,37 @@
+id: "bvaeb-oberoesterreich-bahnhofplatz"
+name_de: "BVAEB – Landesstelle für Oberösterreich, Bahnhofplatz"
+name_simple: "BVAEB-Büro in Oberösterreich"
+carrier: "bvaeb"
+region: "Oberösterreich"
+url: "https://www.bvaeb.at/cdscontent/?contentid=10007.854342&portal=bvaebbportal"
+address:
+  street: "Bahnhofplatz 3-6"
+  postal_code: "4020"
+  locality: "Linz"
+  country: "AT"
+phone: "050405-24700"
+email: "lst.oberoesterreich@bvaeb.at"
+opening_hours:
+  notes: |-
+    Öffnungszeiten:
+    Montag - Donnerstag von 8-14 Uhr
+    Freitag von 8-13 Uhr
+sources:
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.854342&portal=bvaebbportal"
+    quote: |-
+      Landesstelle für Oberösterreich
+      Hessenplatz 14
+      4020 Linz
+      oder
+      Bahnhofplatz 3-6
+      4020 Linz
+      050405-24700
+      lst.oberoesterreich@bvaeb.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.854342&portal=bvaebbportal"
+    quote: |-
+      Öffnungszeiten:
+      Montag - Donnerstag von 8-14 Uhr
+      Freitag von 8-13 Uhr
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

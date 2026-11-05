@@ -1,0 +1,42 @@
+id: "bvaeb-oberoesterreich"
+name_de: "BVAEB – Landesstelle für Oberösterreich"
+name_simple: "BVAEB-Büro in Oberösterreich"
+carrier: "bvaeb"
+region: "Oberösterreich"
+url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857150&portal=bvaebbportal"
+address:
+  street: "Hessenplatz 14"
+  postal_code: "4020"
+  locality: "Linz"
+  country: "AT"
+phone: "050405-24700"
+opening_hours:
+  notes: |-
+    Montag-Donnerstag 8:00-14:00 Uhr
+    Freitag 8:00-13:00 Uhr
+email: "lst.oberoesterreich@bvaeb.at"
+jurisdiction: "Leistungsauskunft & Bewilligungen"
+sources:
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857150&portal=bvaebbportal"
+    quote: |-
+      Landesstelle für
+      Oberösterreich
+      Öffnungszeiten:
+      Montag-Donnerstag 8:00-14:00 Uhr
+      Freitag 8:00-13:00 Uhr
+      Telefonische Erreichbarkeit (Service-Center):
+      Montag-Donnerstag 7:00-16:00 Uhr
+      Freitag 7:00-14:00 Uhr
+      Telefon: 050405-24700
+      e-Mail: Diese finden Sie untenstehend je Fachbereich
+      Standorte
+      Hessenplatz 14, 4020 Linz
+      Hessenplatz 14, 4020 Linz
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.854342&portal=bvaebbportal"
+    quote: "lst.oberoesterreich@bvaeb.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857150&portal=bvaebbportal"
+    quote: "Leistungsauskunft & Bewilligungen"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
