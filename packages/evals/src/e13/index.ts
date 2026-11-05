@@ -1,7 +1,13 @@
 import { z } from "zod";
 import type { RegisteredSuite, Registry } from "../runner/index.ts";
 import { CaseSchema, SourceSchema } from "../schema/index.ts";
-import { type EvaluationField, EvaluationFieldSchema, measureFields } from "./metrics.ts";
+import {
+  type EvaluationField,
+  EvaluationFieldSchema,
+  FieldCountsSchema,
+  measureFields,
+  summarizeFields,
+} from "./metrics.ts";
 
 const FixtureSchema = z.object({
   id: z.string().min(1),
@@ -49,9 +55,29 @@ export function createE13Suite(
       const detected = await detect(item.input, context);
       context.signal.throwIfAborted();
       const metrics = measureFields(detected, z.array(EvaluationFieldSchema).parse(item.expected));
-      // Both informational targets must hold; keep box-only recall separately for AC2.
-      const targetAttainment = Math.min(metrics.recall / 0.9, metrics.precision / 0.95, 1);
-      return { passed: targetAttainment >= 1, metrics: { ...metrics, targetAttainment } };
+      return { passed: metrics.targetAttainment >= 1, metrics };
+    },
+    reduce(results) {
+      const totals = {
+        goldCount: 0,
+        detectedCount: 0,
+        matchedCount: 0,
+        boxMatchedCount: 0,
+        labelMatchedCount: 0,
+        ownerMatchedCount: 0,
+      };
+      for (const result of results) {
+        // The runner retains errors and marks incomplete metric coverage as null.
+        if (result.status === "error" || result.status === "timeout") continue;
+        const counts = FieldCountsSchema.parse(result.metrics);
+        totals.goldCount += counts.goldCount;
+        totals.detectedCount += counts.detectedCount;
+        totals.matchedCount += counts.matchedCount;
+        totals.boxMatchedCount += counts.boxMatchedCount;
+        totals.labelMatchedCount += counts.labelMatchedCount;
+        totals.ownerMatchedCount += counts.ownerMatchedCount;
+      }
+      return summarizeFields(totals);
     },
   };
 }

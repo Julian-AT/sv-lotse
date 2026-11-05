@@ -16,6 +16,101 @@ afterEach(async () => {
 });
 const options = { seed: "fixture", modelVersion: "arithmetic-v1", gitSha: "a".repeat(40) };
 
+test("WP-177 default aggregation keeps arithmetic means, passRate and missing coverage", async () => {
+  const suite = createDemoSuite();
+  suite.suite.gate = {
+    kind: "blocking",
+    metric: "recall",
+    threshold: 0.7,
+    direction: "at_least",
+  };
+  suite.execute = async (item) => ({
+    passed: item.id !== "addition-1",
+    metrics: item.id === "addition-1" ? { recall: 0, partial: 1 } : { recall: 1 },
+  });
+  const result = await runSuite(suite, options);
+  expect(result.metrics).toEqual({ passRate: 0.75, recall: 0.75, partial: null });
+  expect(result.gateVerdict).toBe("passed");
+});
+
+test("WP-177 reducer receives completed selected results in selection order before gating", async () => {
+  const suite = createDemoSuite();
+  const selection = { subset: "pr" as const, sample: 2, seed: "same" };
+  const selected = selectCases(suite.cases, selection);
+  suite.suite.gate.metric = "score";
+  suite.suite.gate.threshold = 2;
+  suite.execute = async (item) => ({
+    passed: item.id !== selected[0]?.id,
+    metrics: { score: 1 },
+  });
+  suite.reduce = (results) => {
+    expect(results.map((item) => item.caseId)).toEqual(selected.map((item) => item.id));
+    expect(results.map((item) => item.status)).toEqual(["failed", "passed"]);
+    return { score: results.reduce((sum, item) => sum + (item.metrics.score ?? 0), 0) };
+  };
+  const registry = new Registry();
+  registry.register(suite);
+  const result = await runSuite(registry.get("E1"), {
+    ...options,
+    ...selection,
+  });
+  expect(result.metrics).toEqual({ passRate: 0.5, score: 2 });
+  expect(result.gateVerdict).toBe("passed");
+});
+
+test("WP-177 reducer cannot fill missing coverage or bypass errors and minimum set sizes", async () => {
+  const suite = createDemoSuite();
+  suite.suite.gate.metric = "score";
+  suite.reduce = () => ({ score: 1 });
+  suite.execute = async (item) => ({
+    passed: true,
+    metrics: item.id === "addition-1" ? {} : { score: 1 },
+  });
+  const missing = await runSuite(suite, options);
+  expect(missing.metrics.score).toBeNull();
+  expect(missing.gateVerdict).toBe("failed");
+
+  suite.suite.gate.metric = "passRate";
+  suite.suite.gate.threshold = 0;
+  suite.execute = async () => {
+    throw new Error("execution failed");
+  };
+  const errors = await runSuite(suite, options);
+  expect(errors.counts.errors).toBe(4);
+  expect(errors.metrics.passRate).toBe(0);
+  expect(errors.gateVerdict).toBe("failed");
+
+  suite.execute = async () => ({ passed: true, metrics: { score: 1 } });
+  suite.suite.minimumSetSize = 2;
+  expect((await runSuite(suite, { ...options, sample: 1 })).gateVerdict).toBe("insufficient_data");
+  const empty = await runSuite(suite, { ...options, sample: 0 });
+  expect(empty.metrics).toEqual({ passRate: null, score: null });
+  expect(empty.gateVerdict).toBe("insufficient_data");
+});
+
+test("WP-177 reducer output must use finite nullable metrics and cannot replace passRate", async () => {
+  const suite = createDemoSuite();
+  for (const metrics of [
+    { score: Number.NaN },
+    { score: Number.POSITIVE_INFINITY },
+    { passRate: 1 },
+  ]) {
+    suite.reduce = () => metrics;
+    await expect(runSuite(suite, options)).rejects.toThrow();
+  }
+  suite.suite.gate.metric = "score";
+  suite.execute = async () => ({ passed: true, metrics: { score: 1 } });
+  suite.reduce = () => ({ score: null });
+  const result = await runSuite(suite, options);
+  expect(result.metrics.score).toBeNull();
+  expect(result.gateVerdict).toBe("failed");
+
+  suite.reduce = () => ({ derived: 1 });
+  const omitted = await runSuite(suite, options);
+  expect(omitted.metrics).toEqual({ passRate: 1, score: null, derived: null });
+  expect(omitted.gateVerdict).toBe("failed");
+});
+
 test("AC2 same seed and subset select the same cases and order regardless of input order", () => {
   const suite = createDemoSuite();
   const subset = { subset: "pr" as const, sample: 2, seed: "same" };

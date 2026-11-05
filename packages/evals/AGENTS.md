@@ -32,6 +32,11 @@ loads root `.env.local` without overwriting exported values; without `RUN_LIVE=1
 - Execute adapters propagate abort signals and throw `TransportError` only for transient transport
   failures. Keep SDK retries disabled; the runner owns retries and per-case deadlines.
 - `passRate` is reserved; missing metric coverage and undersized sets must never pass a gate.
+- A registered suite may define synchronous `reduce(results)` to replace mean aggregation. It
+  receives all completed selected cases in selection order, including errors and timeouts, and
+  returns finite nullable metrics without `passRate`. Return every suite metric: omitted metrics
+  or metrics missing from a selected case become `null`. The runner still owns `passRate`, error
+  rejection and minimum-set verdicts.
 - Results contain synthetic data only, safe error categories, model/rubric/prompt versions and git SHA.
   Never attach raw provider errors or response bodies to exported errors.
 - Synthetic generators stay inside this package.
@@ -51,8 +56,11 @@ brain dependency and does not modify the demonstration CLI's default registry.
 E13 uses one-to-one maximum matching at IoU >= 0.5. Full recall/precision additionally require a
 normalized label match and exact owner match. Box-only recall/precision, label match and owner
 match are separate diagnostics. Both 90% recall and 95% precision are informational targets;
-the minimum set size stays 20. Three flattened SV-Box fixtures run in the brain detection tests
-and must report `insufficient_data` rather than claiming the full gold-set gate.
+the suite reducer sums matched, detected and gold field counts across selected forms before
+calculating recall, precision and target attainment. Diagnostic ratios also use summed counts;
+`passRate` still describes per-form outcomes. The minimum set size stays 20. Three flattened SV-Box
+fixtures run in the brain detection tests and must report `insufficient_data` rather than claiming
+the full gold-set gate.
 
 ## Forbidden paths
 

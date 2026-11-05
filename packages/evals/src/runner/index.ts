@@ -8,6 +8,7 @@ import {
   type EvalCase,
   type Evaluation,
   EvaluationSchema,
+  ReducedMetricsSchema,
   SubsetSchema,
   type Suite,
   SuiteIdSchema,
@@ -23,6 +24,12 @@ export interface RegisteredSuite {
   cases: EvalCase[];
   /** Implementations must propagate the signal to I/O and stop work when aborted. */
   execute(item: EvalCase, context: { signal: AbortSignal; attempt: number }): Promise<Evaluation>;
+  /**
+   * Replaces mean aggregation over completed selected results, in selection order.
+   * Return all suite metrics except reserved passRate. Each metric still requires
+   * coverage in every case; missing coverage or omitted output becomes null.
+   */
+  reduce?(results: readonly CaseResult[]): Record<string, number | null>;
 }
 
 export class Registry {
@@ -174,9 +181,13 @@ export async function runSuite(definition: RegisteredSuite, rawOptions: RunOptio
   const failed = cases.filter((item) => item.status === "failed").length;
   const total = cases.length;
   const errors = total - passed - failed;
+  const reduced = definition.reduce
+    ? ReducedMetricsSchema.parse(definition.reduce(cases))
+    : undefined;
   const metricNames = new Set([
     suite.gate.metric,
     ...cases.flatMap((item) => Object.keys(item.metrics)),
+    ...Object.keys(reduced ?? {}),
   ]);
   const metrics: Record<string, number | null> = { passRate: total ? passed / total : null };
   for (const metric of metricNames) {
@@ -184,9 +195,12 @@ export async function runSuite(definition: RegisteredSuite, rawOptions: RunOptio
     const values = cases.map((item) =>
       Object.hasOwn(item.metrics, metric) ? item.metrics[metric] : undefined,
     );
-    metrics[metric] = values.every((value): value is number => value !== undefined)
-      ? mean(values)
-      : null;
+    metrics[metric] =
+      total > 0 && values.every((value): value is number => value !== undefined)
+        ? reduced
+          ? (reduced[metric] ?? null)
+          : mean(values)
+        : null;
   }
   const value = metrics[suite.gate.metric];
   const meetsThreshold =

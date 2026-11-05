@@ -55,6 +55,9 @@ export const EvaluationSchema = z.object({
     .refine((metrics) => !("passRate" in metrics), "passRate is reserved"),
   judge: JudgeResultSchema.optional(),
 });
+export const ReducedMetricsSchema = z
+  .record(metricName, z.number().finite().nullable())
+  .refine((metrics) => !("passRate" in metrics), "passRate is reserved");
 export const CaseResultSchema = z.object({
   caseId: name,
   status: z.enum(["passed", "failed", "error", "timeout"]),

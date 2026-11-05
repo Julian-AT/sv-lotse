@@ -15,6 +15,39 @@ export const EvaluationFieldSchema = z.object({
 export type EvaluationField = z.infer<typeof EvaluationFieldSchema>;
 type Box = z.infer<typeof BoxSchema>;
 
+export const FieldCountsSchema = z.object({
+  goldCount: z.number().int().nonnegative(),
+  detectedCount: z.number().int().nonnegative(),
+  matchedCount: z.number().int().nonnegative(),
+  boxMatchedCount: z.number().int().nonnegative(),
+  labelMatchedCount: z.number().int().nonnegative(),
+  ownerMatchedCount: z.number().int().nonnegative(),
+});
+
+/** The same denominators and PRD targets apply to one form or a whole suite. */
+export function summarizeFields(counts: z.infer<typeof FieldCountsSchema>) {
+  const {
+    goldCount,
+    detectedCount,
+    matchedCount,
+    boxMatchedCount,
+    labelMatchedCount,
+    ownerMatchedCount,
+  } = counts;
+  const recall = goldCount ? matchedCount / goldCount : 0;
+  const precision = detectedCount ? matchedCount / detectedCount : 0;
+  return {
+    ...counts,
+    boxRecall: goldCount ? boxMatchedCount / goldCount : 0,
+    boxPrecision: detectedCount ? boxMatchedCount / detectedCount : 0,
+    labelMatch: boxMatchedCount ? labelMatchedCount / boxMatchedCount : 0,
+    ownerMatch: boxMatchedCount ? ownerMatchedCount / boxMatchedCount : 0,
+    recall,
+    precision,
+    targetAttainment: Math.min(recall / 0.9, precision / 0.95, 1),
+  };
+}
+
 export function intersectionOverUnion(a: Box, b: Box): number {
   BoxSchema.parse(a);
   BoxSchema.parse(b);
@@ -75,12 +108,12 @@ export function measureFields(
       (a, b) => a.owner === b.owner && normalizeLabel(a.label_de) === normalizeLabel(b.label_de),
     ),
   );
-  return {
-    boxRecall: gold.length ? boxes / gold.length : 0,
-    boxPrecision: detected.length ? boxes / detected.length : 0,
-    labelMatch: boxes ? labels / boxes : 0,
-    ownerMatch: boxes ? owners / boxes : 0,
-    recall: gold.length ? matched / gold.length : 0,
-    precision: detected.length ? matched / detected.length : 0,
-  };
+  return summarizeFields({
+    goldCount: gold.length,
+    detectedCount: detected.length,
+    matchedCount: matched,
+    boxMatchedCount: boxes,
+    labelMatchedCount: labels,
+    ownerMatchedCount: owners,
+  });
 }
