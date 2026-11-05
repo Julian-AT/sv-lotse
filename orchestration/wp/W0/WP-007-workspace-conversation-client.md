@@ -14,17 +14,17 @@ owns:
   - packages/ui/**
 may_touch:
   - apps/web/package.json
-  - pnpm-lock.yaml
+  - bun.lock
 allow_deps: test utilities for React components if needed
 live_services: [openai]
 gates:
-  - pnpm --filter @lotse/web typecheck
-  - pnpm --filter @lotse/web lint
-  - pnpm --filter @lotse/web test
-  - pnpm --filter @lotse/ui test
+  - bun run --filter @lotse/web typecheck
+  - bun run --filter @lotse/web lint
+  - bun run --filter @lotse/web test
+  - bun run --filter @lotse/ui test
   - docker compose up -d --wait
-  - pnpm --filter @lotse/brain db:migrate
-  - RUN_LIVE=1 pnpm --filter @lotse/web e2e -- --grep @conversation
+  - bun run --filter @lotse/brain db:migrate
+  - RUN_LIVE=1 bun run --filter @lotse/web e2e --grep @conversation
 pr_title: "feat(workspace): add conversation client with approvals and bridge"
 ---
 

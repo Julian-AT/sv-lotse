@@ -23,8 +23,8 @@ allow_deps: none
 live_services: [openai]
 gates:
   - docker compose up -d --wait
-  - pnpm --filter @lotse/brain db:migrate
-  - pnpm --filter @lotse/web test
+  - bun run --filter @lotse/brain db:migrate
+  - bun run --filter @lotse/web test
   - swift test --package-path apps/mac/Packages/LotseKit
   - bash apps/mac/E2E/run-bridge-e2e.sh
 pr_title: "feat(bridge): connect mac app to the live workspace end to end"

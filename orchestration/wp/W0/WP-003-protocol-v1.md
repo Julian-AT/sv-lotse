@@ -13,9 +13,9 @@ may_touch: []
 allow_deps: none (quicktype, ajv and ajv-formats are preinstalled by WP-001)
 live_services: []
 gates:
-  - pnpm --filter @lotse/protocol typecheck
-  - pnpm --filter @lotse/protocol test
-  - pnpm --filter @lotse/protocol check:generated
+  - bun run --filter @lotse/protocol typecheck
+  - bun run --filter @lotse/protocol test
+  - bun run --filter @lotse/protocol check:generated
   - swift test --package-path packages/protocol/swift
 pr_title: "feat(protocol): add protocol v1 with json schema and swift generation"
 ---

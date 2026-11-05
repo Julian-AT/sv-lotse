@@ -22,9 +22,9 @@ allow_deps: none (baseline from WP-001); raise a contract change request if one 
 live_services: []
 gates:
   - docker compose up -d --wait
-  - pnpm --filter @lotse/brain db:migrate
-  - pnpm --filter @lotse/brain typecheck
-  - pnpm --filter @lotse/brain test:db
+  - bun run --filter @lotse/brain db:migrate
+  - bun run --filter @lotse/brain typecheck
+  - bun run --filter @lotse/brain test:db
 pr_title: "feat(db): add data model, migrations and local postgres and minio"
 ---
 

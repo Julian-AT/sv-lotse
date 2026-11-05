@@ -21,17 +21,17 @@ owns:
 may_touch:
   - packages/brain/package.json
   - packages/brain/vitest.config.ts
-  - pnpm-lock.yaml
+  - bun.lock
 allow_deps: none beyond the baseline unless justified in the ADR
 live_services: [openai]
 gates:
   - docker compose up -d --wait
-  - pnpm --filter @lotse/brain db:migrate
-  - pnpm --filter @lotse/brain typecheck
-  - pnpm --filter @lotse/brain test
-  - pnpm --filter @lotse/brain test:integration
-  - RUN_LIVE=1 pnpm --filter @lotse/brain test:live
-  - pnpm --filter @lotse/web build
+  - bun run --filter @lotse/brain db:migrate
+  - bun run --filter @lotse/brain typecheck
+  - bun run --filter @lotse/brain test
+  - bun run --filter @lotse/brain test:integration
+  - RUN_LIVE=1 bun run --filter @lotse/brain test:live
+  - bun run --filter @lotse/web build
 pr_title: "feat(brain): add agent runtime, tool contracts and approvals"
 ---
 

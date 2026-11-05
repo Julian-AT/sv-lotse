@@ -41,8 +41,8 @@ is the single required status check that `wp land` waits for and the branch rule
 1. `.github/workflows/ci.yml`:
    - **Triggers:** `pull_request` and `push` to `main`. A concurrency group cancels superseded runs of
      the same ref. Minimal `permissions` (`contents: read`).
-   - **Job `verify`:** checkout, pnpm via `pnpm/action-setup`, Node from `.nvmrc` with pnpm cache,
-     `pnpm install --frozen-lockfile`, `pnpm -s verify`, `pnpm -s format:check`.
+   - **Job `verify`:** checkout, Bun via `oven-sh/setup-bun` at the `packageManager` version, Node
+     from `.nvmrc`, `bun install --frozen-lockfile`, `bun run verify`, `bun run format:check`.
    - **Job `commits`:**
      - checkout with full history;
      - check the PR range (`base.sha..head.sha`) or the push range (`before..after`; for a first push,
@@ -52,7 +52,7 @@ is the single required status check that `wp land` waits for and the branch rule
    - **Job `secrets`:** gitleaks over the commit range with the gitleaks CLI or the official container
      image (no paid action).
    - **Job `integration`:** runs only if `docker-compose.yml` exists (`hashFiles`).
-     `docker compose up -d --wait`, `pnpm install --frozen-lockfile`, `pnpm -s test:integration`, with
+     `docker compose up -d --wait`, `bun install --frozen-lockfile`, `bun run test:integration`, with
      `DATABASE_URL` and the S3 variables pointing at the compose services.
    - **Job `container`:** runs only if `apps/web/Dockerfile` exists. Runs
      `bash apps/web/scripts/container-smoke.sh`.
@@ -62,9 +62,9 @@ is the single required status check that `wp land` waits for and the branch rule
    - **Job `ci-ok`:** `needs` all jobs above, `if: always()`. It fails if any needed job failed or was
      cancelled. Skipped conditional jobs count as success. This is the required check.
 2. `.github/workflows/nightly.yml`: `schedule` (once a night, Europe/Vienna) and `workflow_dispatch`.
-   Runs `RUN_LIVE=1 pnpm -s test:live` with provider keys from repository secrets (names as in
+   Runs `RUN_LIVE=1 bun run test:live` with provider keys from repository secrets (names as in
    `.env.example`). Not required for merging.
-3. `scripts/ci/check-commits.sh <base> <head>`: runs `pnpm exec commitlint --from <base> --to <head>` and
+3. `scripts/ci/check-commits.sh <base> <head>`: runs `bunx commitlint --from <base> --to <head>` and
    checks that every commit's author and committer equal `ALLOWED_AUTHOR_EMAIL`, with no merge or
    fixup commits; exits non-zero with readable output. History before the commit policy existed (the repository's
    first commits) is never checked: CI checks only PR and push ranges.

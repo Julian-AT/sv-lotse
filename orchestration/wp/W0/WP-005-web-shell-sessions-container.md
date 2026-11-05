@@ -10,17 +10,17 @@ owns:
   - apps/web/**
   - docs/adr/0005-sessions.md
 may_touch:
-  - pnpm-lock.yaml
+  - bun.lock
 allow_deps: next, react, react-dom, tailwindcss, @playwright/test, @axe-core/playwright
 live_services: []
 gates:
   - docker compose up -d --wait
-  - pnpm --filter @lotse/brain db:migrate
-  - pnpm --filter @lotse/web typecheck
-  - pnpm --filter @lotse/web lint
-  - pnpm --filter @lotse/web test
-  - pnpm --filter @lotse/web build
-  - pnpm --filter @lotse/web e2e -- --grep @smoke
+  - bun run --filter @lotse/brain db:migrate
+  - bun run --filter @lotse/web typecheck
+  - bun run --filter @lotse/web lint
+  - bun run --filter @lotse/web test
+  - bun run --filter @lotse/web build
+  - bun run --filter @lotse/web e2e --grep @smoke
   - bash apps/web/scripts/container-smoke.sh
 pr_title: "feat(web): add app shell with anonymous sessions and container build"
 ---
@@ -79,8 +79,9 @@ workspace. After this WP:
    motion, 44-point targets. A "Neue Sitzung" control lives in settings.
 7. **`vercel.json`.** Functions region `fra1`.
 8. **Container.**
-   - `apps/web/Dockerfile`: multi-stage, pnpm workspace pruning, standalone output, non-root user,
-     `HEALTHCHECK`, runs migrations at start through the brain's migrator.
+   - `apps/web/Dockerfile`: multi-stage; install with `bun install --frozen-lockfile`, build the
+     standalone output, run it on a slim Node 22 image as a non-root user with a `HEALTHCHECK`; runs
+     migrations at start through the brain's migrator.
    - `apps/web/scripts/container-smoke.sh`: builds the image, runs it against the compose services
      with env from `.env.local`, polls `/api/health` until 200 or a timeout, then cleans up.
 9. **Tests.**
