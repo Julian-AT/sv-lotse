@@ -1,0 +1,17 @@
+# Query-time expansion only; no custom Postgres dictionary files (NFR-15).
+groups:
+  - [Spital, Krankenhaus]
+  - [Chefarzt, kontrollärztlicher Dienst, chefärztlicher Dienst]
+  - [e-card, ecard, Sozialversicherungskarte]
+  - [Rezeptgebühr, Rezeptgebühren]
+  - [Rezeptgebührenbefreiung, Befreiung von der Rezeptgebühr]
+  - [Wahlarzt, Wahlärztin, Wahlarztkosten]
+  - [Kostenerstattung, Kostenrückerstattung, Rückvergütung]
+  - [Krankenstand, Arbeitsunfähigkeit]
+  - [Pflegegeld, Pflegegeldleistung]
+  - [Heilbehelf, Heilbehelfe, Hilfsmittel]
+  - [Vorsorgeuntersuchung, Gesundenuntersuchung]
+  - [Eltern-Kind-Pass, Mutter-Kind-Pass]
+  - [ÖGK, Österreichische Gesundheitskasse]
+  - [SVS, Sozialversicherungsanstalt der Selbständigen]
+  - [PVA, Pensionsversicherungsanstalt]
