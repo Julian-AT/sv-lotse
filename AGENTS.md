@@ -56,7 +56,9 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
   Stop only for real conflicts: a frozen contract (protocol, database schema, tool schemas), a path
   another WP owns, a new paid service, or a requirement that contradicts the PRD.
 - Never delete, move or edit `KI-Challenge_UseCase.yaml` (required by the challenge).
-- `data/svbox/` holds the original challenge files: read them (through `SVBOX_DIR`), never modify them.
+- `data/svbox/` holds the original challenge files: read them, never modify them. Resolve the folder
+  from `SVBOX_DIR` when set, otherwise from the repository root derived from `import.meta.url`;
+  never relative to the current directory or the package (gates run from the package directory).
 
 ## Engineering standards
 

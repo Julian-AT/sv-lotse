@@ -18,7 +18,7 @@ live_services: []
 gates:
   - bun run --filter @lotse/knowledge typecheck
   - bun run --filter @lotse/knowledge test -- test/loaders/eko
-pr_title: "feat(knowledge): add eko loader with substance-level coverage lookup"
+pr_title: "feat(knowledge): add eko loader with product coverage lookup"
 ---
 
 # WP-154: EKO loader for medicine coverage with substance-level lookup
@@ -30,11 +30,13 @@ Parse the Erstattungskodex export in `data/svbox/Medikamenten Erstattungskodex/`
 `regeltext.txt` and `indtext.txt` (pipe-delimited rule and indication texts per pharma number; the
 `_v2` files are UTF-8 with HTML entities), and `atccode.txt`. Use `Zeichenerklärungen und
 Abkürzungen.pdf` to document the codes. Provide `loadEko(dir)` returning typed packs and
-`lookupCoverage({ query })` that answers by product or substance: listed or not, box (green, yellow
-RE1, yellow RE2, red), approval requirement, the rule text quoted verbatim and prescription-fee rules.
-PRD boundary: ATC codes and indication texts never leave the loader's internal index (they may be used
-to group by substance but are not returned). The `eko.lookupCoverage` tool wrapper is a later WP.
-Decode Windows-1252 correctly (umlauts) and document the fixed-width layout you derived.
+`lookupCoverage({ medicineNameExact })`, matching the PRD §8 tool input: exact product-name lookup
+(case- and whitespace-insensitive, umlaut-safe) returning listed or not, box (green, yellow RE1, yellow
+RE2, red), approval requirement, the rule text quoted verbatim and prescription-fee rules. Several
+packs of one product are returned as separate pack entries. Owner decision (2026-11-05):
+substance-level answers are out of scope because the SV-Box export has no pack-to-substance link;
+document this gap in the loader README. ATC codes and indication texts never leave the loader. The
+`eko.lookupCoverage` tool wrapper is a later WP. Decode Windows-1252 correctly (umlauts) and document the fixed-width layout you derived.
 
 ## Context
 
@@ -48,10 +50,10 @@ Decode Windows-1252 correctly (umlauts) and document the fixed-width layout you 
 ## Acceptance criteria
 
 - [ ] AC1: All packs in `medikament.txt` parse; a sample of 10 named packs matches the raw file values.
-- [ ] AC2: `lookupCoverage` returns box, approval requirement and verbatim rule text for known products and
-  for a substance query; results never contain ATC codes or indication text (test).
+- [ ] AC2: `lookupCoverage` returns box, approval requirement and verbatim rule text for known products
+  (exact name, several packs); results never contain ATC codes or indication text (test).
 - [ ] AC3: Umlauts decode correctly (test on a known product name).
 
 ## Suggested commits
 
-- `feat(knowledge): add eko loader with substance-level coverage lookup`
+- `feat(knowledge): add eko loader with product coverage lookup`

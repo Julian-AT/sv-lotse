@@ -49,6 +49,16 @@ data in events.
 - Medical boundary (PRD §4) in every prompt, string and fixture.
 
 
+Also fix this finding from the last WP-005 cross-review (telemetry masking is this WP's area):
+
+1. **major — Speech text bypasses telemetry redaction** — [apps/web/src/server/telemetry.ts:3](apps/web/src/server/telemetry.ts:3)
+
+   `contentAttributes` omits `ai.request.text`, which AI SDK 7 emits for speech generation when input recording is enabled—the default. Langfuse’s configured mask does not cover this attribute. I reproduced a speech telemetry event passing its text unchanged through `redactSpanContent` into the exporter.
+
+   This allows sensitive spoken content, including document excerpts or form values, to reach Langfuse despite the privacy filter. **Required change:** redact `ai.request.text` before delegation and add a speech telemetry regression test asserting that content is absent both before Langfuse processing and after export.
+
+not_run: build, database/service, Playwright and container gates (read-only review).
+
 ## Context
 
 - PRD sections for the requirement IDs above (§8 agent design and tools, §10 data, §14 evaluation,
