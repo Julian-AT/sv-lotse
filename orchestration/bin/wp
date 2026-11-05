@@ -626,6 +626,15 @@ cmd_verify() {
   : > "$res"; : > "$log"
   record() { printf '%s\t%s\t%s\n' "$1" "$2" "$3" >> "$res"; [ "$2" != fail ] || errors=$((errors + 1)); }
 
+  # Gates must see the dependencies of the current lockfile, also after a rebase moved it.
+  if [ -f "$wt/bun.lock" ]; then
+    if ( cd "$wt" && HUSKY=0 bun install --frozen-lockfile ) >> "$log" 2>&1; then
+      record install pass "bun install --frozen-lockfile"
+    else
+      record install fail "bun install --frozen-lockfile (lockfile out of date?)"
+    fi
+  fi
+
   if [ "$kind" != orch ]; then
     if [ -f "$run/report.json" ]; then
       st="$(jq -r '.status // "missing"' "$run/report.json" 2>/dev/null || echo invalid)"
