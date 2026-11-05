@@ -9,8 +9,9 @@ depends_on: [WP-001]
 fr: [FR-C3, FR-C5, FR-D5, FR-A2, FR-P1, NFR-13]
 owns:
   - packages/protocol/**
-may_touch: []
-allow_deps: none (quicktype, ajv and ajv-formats are preinstalled by WP-001)
+may_touch:
+  - bun.lock
+allow_deps: "`ai@^7` as a devDependency for the AC5 type test only; quicktype, ajv and ajv-formats are preinstalled by WP-001"
 live_services: []
 gates:
   - bun run --filter @lotse/protocol typecheck
