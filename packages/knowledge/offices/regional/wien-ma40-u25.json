@@ -1,0 +1,37 @@
+{
+  "id": "wien-ma40-u25",
+  "name_de": "Zielgruppenzentrum U25",
+  "name_simple": "Hilfe bei Geldproblemen für junge Menschen",
+  "region": "Wien",
+  "address": {
+    "street": "Lehrbachgasse 18",
+    "postal_code": "1120",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-8040",
+  "email": "post-rg6@ma40.wien.gv.at",
+  "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+  "jurisdiction": "Beratung für Jugendliche von 18 bis 24",
+  "opening_hours": {
+    "notes": "Öffnungszeiten:\nWährend der Öffnungszeiten können Besucher*innen Anträge und andere schriftliche Mitteilungen abgeben oder allgemeine Informationen einholen.\nMontag bis Donnerstag: von 8 bis 15.30 Uhr\nFreitag: von 8 bis 13 Uhr\nServicezeiten:\nWährend der Servicezeiten finden Beratungsgespräche mit Referent*innen und Sozialarbeiter*innen statt.\nMontag, Dienstag und Donnerstag: von 8 bis 12 Uhr und von 13 bis 14 Uhr\nMittwoch: von 8 bis 11 Uhr\nFreitag: von 8 bis 12 Uhr\nAn gesetzlichen Feiertagen geschlossen, am Karfreitag sowie am 24. und 31. Dezember von 8 bis 12 Uhr geöffnet"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+      "quote": "U25 - Beratung für Jugendliche von 18 bis 24\nDas U25 ist die Servicestelle für alle Wiener*innen unter 25 Jahren, die Dienstleistungen des AMS und der Stadt Wien benötigen.\nU25 Wiener Jugendunterstützung - Details zu den Beratungsangeboten\nAdresse: 12., Lehrbachgasse 18\nE-Mail: post-rg6@ma40.wien.gv.at\nÖffnungszeiten:\nWährend der Öffnungszeiten können Besucher*innen Anträge und andere schriftliche Mitteilungen abgeben oder allgemeine Informationen einholen.\nMontag bis Donnerstag: von 8 bis 15.30 Uhr\nFreitag: von 8 bis 13 Uhr\nServicezeiten:\nWährend der Servicezeiten finden Beratungsgespräche mit Referent*innen und Sozialarbeiter*innen statt.\nMontag, Dienstag und Donnerstag: von 8 bis 12 Uhr und von 13 bis 14 Uhr\nMittwoch: von 8 bis 11 Uhr\nFreitag: von 8 bis 12 Uhr\nAn gesetzlichen Feiertagen geschlossen, am Karfreitag sowie am 24. und 31. Dezember von 8 bis 12 Uhr geöffnet",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/ma40-u25-jugendunterstuetzung",
+      "quote": "12., Lehrbachgasse 18",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+      "quote": "Servicetelefon +43 1 4000-8040",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
