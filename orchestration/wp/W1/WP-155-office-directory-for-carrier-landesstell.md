@@ -5,7 +5,7 @@ wave: W1
 lane: knowledge
 risk: normal
 codex_effort: medium
-depends_on: [WP-101]
+depends_on: [WP-101, WP-176]
 fr: [FR-O1, E2]
 owns:
   - packages/knowledge/offices/carriers/**

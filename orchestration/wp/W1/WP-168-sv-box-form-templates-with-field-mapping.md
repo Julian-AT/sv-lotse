@@ -5,7 +5,7 @@ wave: W1
 lane: knowledge
 risk: normal
 codex_effort: medium
-depends_on: [WP-101]
+depends_on: [WP-101, WP-176]
 fr: [FR-D5, FR-D6, E7]
 owns:
   - packages/knowledge/forms/svbox-*
