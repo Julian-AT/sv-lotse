@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba1819",
+  "name_de": "Bezirksamt Währing/Döbling",
+  "name_simple": "Bezirksamt Währing/Döbling",
+  "region": "Wien",
+  "address": {
+    "street": "Martinstraße 100",
+    "postal_code": "1180",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-18000",
+  "email": "post@mba18.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba1819",
+  "jurisdiction": "Meldezettel, Reisepass und Parkpickerl; weitere Anliegen nach Zuständigkeit des Bezirksamts",
+  "accessibility": "Barrierefrei\nBarrierefreier Zugang: Martinstraße 100 (Treppenlift)",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba1819",
+      "quote": "Bezirksamt Währing/Döbling\nMagistratische Bezirksämter\nMeldezettel\nParkpickerl\nReisepass\n18., Martinstraße 100\nBarrierefrei\nBarrierefreier Zugang: Martinstraße 100 (Treppenlift)\n+43 1 4000-18000\npost@mba18.wien.gv.at\nInformation\nZusätzliche Servicestelle in der 19., Pfarrwiesengasse 23C - barrierefreier Zugang (Erdgeschoß: alles ohne Treppen)\nHier stehen Ihnen folgende Services zur Verfügung:\nMelde-, Pass- und Fundservice, Religionsaustritte, Lebensbescheinigungen, Unterstützungserklärungen sowie ID Austria\nTelefon: +43 1 4000-19000\nE-Mail: mb@mba18.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba1819",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
