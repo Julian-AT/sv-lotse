@@ -14,10 +14,15 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
     private let messageHandler: WorkspaceMessageHandler
     private let hello: BridgeHello
     private var documentReady = false
+    private var navigationID = UUID()
+    private var currentNavigation: WKNavigation?
+    private var helloTask: Task<Void, Never>?
+    private let receiverTimeout: Duration
 
-    public init(configuration: WorkspaceConfiguration, hello: BridgeHello) {
+    public init(configuration: WorkspaceConfiguration, hello: BridgeHello, receiverTimeout: Duration = .seconds(5)) {
         self.configuration = configuration
         self.hello = hello
+        self.receiverTimeout = receiverTimeout
         messageHandler = WorkspaceMessageHandler(origin: configuration.origin)
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.websiteDataStore = WKWebsiteDataStore(forIdentifier: configuration.dataStoreIdentifier)
@@ -41,10 +46,8 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
     required init?(coder: NSCoder) { nil }
 
     public func load() {
-        isReady = false
-        documentReady = false
-        loadError = nil
-        webView.load(URLRequest(url: configuration.url))
+        resetNavigation()
+        currentNavigation = webView.load(URLRequest(url: configuration.url))
     }
 
     public func showWorkspace() {
@@ -58,7 +61,13 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
     }
 
     public func send(_ message: BridgeToWorkspace) async throws {
-        guard documentReady, let url = webView.url,
+        guard isReady else { throw WorkspaceError.notReady }
+        try await deliver(message, navigationID: navigationID)
+    }
+
+    private func deliver(_ message: BridgeToWorkspace, navigationID: UUID) async throws {
+        try Task.checkCancellation()
+        guard self.navigationID == navigationID, documentReady, let url = webView.url,
             try WorkspaceOrigin(url: url) == configuration.origin
         else { throw WorkspaceError.notReady }
         let data = try JSONEncoder().encode(message)
@@ -67,6 +76,8 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
         _ = try await webView.callAsyncJavaScript(
             "return await window.__lotse.receive(message)", arguments: ["message": object], in: nil, contentWorld: .page
         )
+        try Task.checkCancellation()
+        guard self.navigationID == navigationID else { throw WorkspaceError.notReady }
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
@@ -80,8 +91,8 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
     }
 
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation?) {
-        isReady = false
-        documentReady = false
+        resetNavigation()
+        currentNavigation = navigation
     }
 
     public func webView(
@@ -95,28 +106,68 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation?) {
-        guard let url = webView.url, let origin = try? WorkspaceOrigin(url: url), origin == configuration.origin else { return }
+        guard navigation === currentNavigation,
+            let url = webView.url, let origin = try? WorkspaceOrigin(url: url), origin == configuration.origin
+        else { return }
         documentReady = true
-        Task { @MainActor [weak self] in
+        let navigationID = navigationID
+        helloTask?.cancel()
+        helloTask = Task { @MainActor [weak self] in
             guard let self else { return }
             do {
-                try await send(.bridgeHello(.init(id: UUID().uuidString, payload: hello, type: .bridgeHello, v: .the100)))
+                try await waitForReceiver(navigationID: navigationID)
+                try await deliver(
+                    .bridgeHello(.init(id: UUID().uuidString, payload: hello, type: .bridgeHello, v: .the100)),
+                    navigationID: navigationID
+                )
                 isReady = true
             } catch {
+                guard Task.isCancelled == false, self.navigationID == navigationID else { return }
                 loadError = error
             }
         }
     }
 
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation?, withError error: Error) {
-        isReady = false
-        documentReady = false
+        guard navigation === currentNavigation else { return }
+        resetNavigation()
         loadError = error
     }
 
-    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation?, withError error: Error) {
+        guard navigation === currentNavigation else { return }
+        resetNavigation()
+        loadError = error
+    }
+
+    private func resetNavigation() {
+        helloTask?.cancel()
+        helloTask = nil
+        navigationID = UUID()
+        currentNavigation = nil
         isReady = false
         documentReady = false
+        loadError = nil
+    }
+
+    private func waitForReceiver(navigationID: UUID) async throws {
+        let deadline = ContinuousClock.now.advanced(by: receiverTimeout)
+        while ContinuousClock.now < deadline {
+            try Task.checkCancellation()
+            guard self.navigationID == navigationID, documentReady else { throw WorkspaceError.notReady }
+            let ready = try await webView.callAsyncJavaScript(
+                "return typeof window.__lotse?.receive === 'function'", arguments: [:], in: nil, contentWorld: .page
+            )
+            try Task.checkCancellation()
+            guard self.navigationID == navigationID else { throw WorkspaceError.notReady }
+            if ready as? Bool == true { return }
+            try await Task.sleep(for: .milliseconds(50))
+        }
+        throw WorkspaceError.notReady
+    }
+
+    public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        resetNavigation()
         webView.reload()
     }
 }

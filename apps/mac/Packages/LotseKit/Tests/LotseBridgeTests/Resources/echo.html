@@ -3,7 +3,8 @@
 <title>Lotse bridge integration fixture</title>
 <script>
 window.received = [];
-window.__lotse = {
+window.installReceiver = () => {
+  window.__lotse = {
   async receive(message) {
     window.received.push(message);
     const echo = {
@@ -12,7 +13,9 @@ window.__lotse = {
     };
     return await window.webkit.messageHandlers.lotse.postMessage(echo);
   }
+  };
 };
+if (new URLSearchParams(location.search).has("late") === false) window.installReceiver();
 if (window.parent !== window) {
   window.webkit.messageHandlers.lotse.postMessage({
     v: "1.0.0", id: "frame-message", type: "SpeechControl",

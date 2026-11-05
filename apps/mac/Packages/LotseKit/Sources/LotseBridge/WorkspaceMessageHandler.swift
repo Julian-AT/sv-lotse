@@ -24,7 +24,7 @@ final class WorkspaceMessageHandler: NSObject, WKScriptMessageHandlerWithReply {
         do {
             guard JSONSerialization.isValidJSONObject(message.body) else { throw WorkspaceError.invalidEnvelope }
             let data = try JSONSerialization.data(withJSONObject: message.body)
-            let envelope = try JSONDecoder().decode(BridgeToNative.self, from: data)
+            let envelope: BridgeToNative = try decodeValidated(data)
             guard let receive else { throw WorkspaceError.unsupportedMessage }
             try receive(envelope)
             replyHandler(["accepted": true], nil)

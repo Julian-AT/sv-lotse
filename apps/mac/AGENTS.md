@@ -46,6 +46,17 @@ over real loopback HTTP in WebKit. They require a macOS GUI session and local li
 - Permission prompts occur only after a user enables a capability or presses the hotkey.
 - Start/stop the event tap on the main actor; its owner must stop it before release. Do not
   move its callbacks off the main run loop. Cancel speech and release the microphone on stop.
+- The default shortcut is Control-Shift-Space: an explicit key avoids modifier-only prefixes,
+  Control-Option is reserved by VoiceOver, and Caps Lock may also be its modifier. Never start
+  recording for either VoiceOver modifier. Menu-bar shortcut choices persist in UserDefaults
+  under `pushToTalkShortcut`; changing the choice cancels the current hold without sending.
+  Adding a disallowed modifier cancels the hold; only a non-repeat key-down starts a new hold.
+- A recognizer final while held stops audio input and retains text as a partial. Only release
+  requests a final transcript; cancel discards retained text.
+- BridgeHello waits at most five seconds for the page receiver after a navigation finishes.
+  Polling is cancelled on navigation/failure/process termination; stale completions cannot set
+  readiness. Refuse outbound messages until hello succeeds. Decode inbound envelopes through
+  generated `decodeValidated`, including schema constraints, before dispatching capabilities.
 - Push-to-talk owns a synchronous hold UUID. Release invalidates it and cancels pending start
   work; check cancellation and the hold after each permission await before starting capture.
   Released recognition sessions finalize independently of later holds, delivering at most one

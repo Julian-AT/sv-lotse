@@ -15,7 +15,7 @@ struct BridgeTests {
         var messages: [BridgeToNative] = []
         controller.onMessage = { messages.append($0) }
         controller.load()
-        try await wait { messages.count == 1 }
+        try await wait { messages.count == 1 && controller.isReady }
         let transcript = BridgeToWorkspace.transcript(
             .init(
                 id: "transcript-test",
@@ -58,7 +58,8 @@ struct BridgeTests {
     func invalidEnvelope() async throws {
         let (server, controller) = try await makeWorkspace()
         defer { server.stop() }
-        controller.onMessage = { _ in }
+        var accepted = 0
+        controller.onMessage = { _ in accepted += 1 }
         controller.load()
         try await wait { controller.isReady }
         for envelope in [
@@ -72,6 +73,37 @@ struct BridgeTests {
             )
             #expect(result as? Bool == true)
         }
+        #expect(accepted == 1) // Only the valid hello acknowledgement reached the native capability.
+    }
+
+    @Test("NFR-10 generated inbound validation rejects an empty id or a negative sentence index", arguments: [false, true])
+    func invalidConstraints(negativeIndex: Bool) async throws {
+        let (server, controller) = try await makeWorkspace()
+        defer { server.stop() }
+        var accepted = 0
+        controller.onMessage = { _ in accepted += 1 }
+        controller.load()
+        try await wait { controller.isReady }
+        let envelope = BridgeToNative.action(.init(
+            id: negativeIndex ? "negative-index" : "",
+            payload: .caption(.init(
+                id: "caption-test", kind: .caption, payload: .init(label: "Arbeitsbereich", style: nil),
+                sentenceIndex: negativeIndex ? -1 : 0, target: .ui(.init(elementID: "workspace", kind: .ui))
+            )),
+            type: .action, v: .the100
+        ))
+        let object = try JSONSerialization.jsonObject(with: JSONEncoder().encode(envelope))
+        let result = try await controller.webView.callAsyncJavaScript(
+            """
+            try {
+              await window.webkit.messageHandlers.lotse.postMessage(message);
+              return 'accepted';
+            } catch (error) { return error.message; }
+            """,
+            arguments: ["message": object], in: nil, contentWorld: .page
+        )
+        #expect((result as? String)?.contains("invalid_envelope") == true)
+        #expect(accepted == 1)
     }
 
     @Test("NFR-10 bridge rejects foreign origins and same-origin child frames")
@@ -151,19 +183,109 @@ struct BridgeTests {
         #expect(count == 1)
     }
 
-    private func makeWorkspace() async throws -> (HTTPFixtureServer, WorkspaceWindowController) {
+    @Test("NFR-10 BridgeHello waits for a receiver installed after page load and gates other messages")
+    func lateReceiver() async throws {
+        let (server, controller) = try await makeWorkspace(lateReceiver: true)
+        defer { server.stop() }
+        controller.onMessage = { _ in }
+        controller.load()
+        try await wait { controller.webView.isLoading == false && controller.webView.url != nil }
+        #expect(controller.isReady == false)
+        let transcript = BridgeToWorkspace.transcript(.init(
+            id: "premature", payload: .init(capsule: nil, language: "de-AT", text: "Bitte öffnen", transcriptFinal: true),
+            type: .transcript, v: .the100
+        ))
+        do {
+            try await controller.send(transcript)
+            Issue.record("Messages must be refused before hello succeeds")
+        } catch WorkspaceError.notReady { }
+        _ = try await controller.webView.callAsyncJavaScript(
+            """
+            window.installReceiver();
+            const receive = window.__lotse.receive.bind(window.__lotse);
+            return await new Promise((resolve, reject) => {
+              const timer = setTimeout(() => reject(new Error('hello timeout')), 5000);
+              window.__lotse.receive = async message => {
+                await new Promise(complete => {
+                  window.completeHello = complete;
+                  clearTimeout(timer);
+                  resolve(true);
+                });
+                return await receive(message);
+              };
+            });
+            """,
+            arguments: [:], in: nil, contentWorld: .page
+        )
+        #expect(controller.isReady == false)
+        do {
+            try await controller.send(transcript)
+            Issue.record("Messages must be refused while hello is still pending")
+        } catch WorkspaceError.notReady { }
+        _ = try await controller.webView.callAsyncJavaScript(
+            "window.completeHello(); return true", arguments: [:], in: nil, contentWorld: .page
+        )
+        try await wait { controller.isReady }
+        let types = try await controller.webView.callAsyncJavaScript(
+            "return window.received.map(message => message.type)", arguments: [:], in: nil, contentWorld: .page
+        )
+        #expect(types as? [String] == ["BridgeHello"])
+        #expect(controller.loadError == nil)
+    }
+
+    @Test("NFR-10 waiting for a missing receiver times out and a reload can recover")
+    func receiverTimeout() async throws {
+        let (server, controller) = try await makeWorkspace(lateReceiver: true, receiverTimeout: .seconds(1))
+        defer { server.stop() }
+        controller.onMessage = { _ in }
+        controller.load()
+        try await wait { controller.loadError != nil }
+        #expect(controller.isReady == false)
+        controller.webView.load(URLRequest(url: try server.url))
+        try await wait { controller.isReady }
+        #expect(controller.loadError == nil)
+    }
+
+    @Test("NFR-10 a new navigation cancels the old hello without changing the new navigation state")
+    func navigationCancelsHello() async throws {
+        let (server, controller) = try await makeWorkspace(lateReceiver: true, receiverTimeout: .seconds(1))
+        defer { server.stop() }
+        controller.onMessage = { _ in }
+        controller.load()
+        try await wait { controller.webView.isLoading == false && controller.webView.url != nil }
+        controller.webView.load(URLRequest(url: try server.url))
+        try await wait { controller.isReady }
+        try await Task.sleep(for: .milliseconds(1200))
+        #expect(controller.isReady)
+        #expect(controller.loadError == nil)
+        let count = try await controller.webView.callAsyncJavaScript(
+            "return window.received.length", arguments: [:], in: nil, contentWorld: .page
+        )
+        #expect(count as? Int == 1)
+    }
+
+    private var testHello: BridgeHello {
+        BridgeHello(
+            appVersion: "test",
+            capabilities: .init(accessibility: false, ocr: false, onDeviceContextSize: 0, onDeviceModel: false, overlay: true),
+            protocolVersion: .the100
+        )
+    }
+
+    private func makeWorkspace(
+        lateReceiver: Bool = false, receiverTimeout: Duration = .seconds(5)
+    ) async throws -> (HTTPFixtureServer, WorkspaceWindowController) {
         _ = NSApplication.shared
         let server = try HTTPFixtureServer()
         try await wait { server.port != 0 }
-        let configuration = try WorkspaceConfiguration(url: server.url, dataStoreIdentifier: UUID())
+        var components = URLComponents(url: try server.url, resolvingAgainstBaseURL: false)
+        if lateReceiver { components?.queryItems = [URLQueryItem(name: "late", value: "1")] }
+        let url = try #require(components?.url)
+        let configuration = try WorkspaceConfiguration(url: url, dataStoreIdentifier: UUID())
         let controller = WorkspaceWindowController(
             configuration: configuration,
-            hello: BridgeHello(
-                appVersion: "test",
-                capabilities: .init(
-                    accessibility: false, ocr: false, onDeviceContextSize: 0, onDeviceModel: false, overlay: true
-                ), protocolVersion: .the100
-            ))
+            hello: testHello, receiverTimeout: receiverTimeout
+        )
         return (server, controller)
     }
 
