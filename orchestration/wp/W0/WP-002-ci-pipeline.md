@@ -15,7 +15,7 @@ live_services: []
 gates:
   - actionlint
   - bash -n scripts/ci/check-commits.sh
-  - ALLOWED_AUTHOR_EMAIL="$(git config lotse.authorEmail)" bash scripts/ci/check-commits.sh --all
+  - bash scripts/ci/test-check-commits.sh
 pr_title: "ci(repo): add pull request and main pipeline with commit policy checks"
 ---
 
@@ -29,9 +29,10 @@ is the single required status check that `wp land` waits for and the branch rule
 ## Context
 
 - PRD §14 (continuous integration), §17 (CI).
-- The commit policy is defined once in `.githooks/lib.sh` (read-only for you). Reuse it; do not
-  re-implement it.
-- Repository variable `ALLOWED_AUTHOR_EMAIL` is set by the bootstrap script.
+- The commit policy is `commitlint.config.mjs` (read-only for you) plus the author rule enforced by
+  `.husky/pre-commit`. Reuse commitlint; do not re-implement header rules.
+- Repository variable `ALLOWED_AUTHOR_EMAIL` holds the owner's e-mail (the orchestrator asks the owner
+  to set it with `gh variable set ALLOWED_AUTHOR_EMAIL`).
 - Later packages add scripts such as `test:integration`, the Dockerfile and the Swift protocol package.
   The pipeline must pick these up conditionally, so nobody has to edit CI in every work package.
 
@@ -63,16 +64,20 @@ is the single required status check that `wp land` waits for and the branch rule
 2. `.github/workflows/nightly.yml`: `schedule` (once a night, Europe/Vienna) and `workflow_dispatch`.
    Runs `RUN_LIVE=1 pnpm -s test:live` with provider keys from repository secrets (names as in
    `.env.example`). Not required for merging.
-3. `scripts/ci/check-commits.sh <range> | --all`: sources `.githooks/lib.sh` and calls
-   `lotse_check_range`; exits non-zero with readable output.
+3. `scripts/ci/check-commits.sh <base> <head>`: runs `pnpm exec commitlint --from <base> --to <head>` and
+   checks that every commit's author and committer equal `ALLOWED_AUTHOR_EMAIL`, with no merge or
+   fixup commits; exits non-zero with readable output. History before the commit policy existed (the repository's
+   first commits) is never checked: CI checks only PR and push ranges.
+   `scripts/ci/test-check-commits.sh` builds a temporary repository and proves that good commits pass
+   and that bad ones fail: wrong author, bad header, co-author trailer, merge commit.
 4. `.github/pull_request_template.md`: the same sections as `orchestration/templates/pr-body.md`.
 5. Pin every third-party action to a full commit SHA, with the version in a trailing comment.
 
 ## Acceptance criteria
 
 - [ ] AC1: `actionlint` reports no errors.
-- [ ] AC2: `check-commits.sh --all` passes on the current history and fails on a crafted bad commit
-  (exercise this in a temporary repository inside a shell test under `scripts/ci/`).
+- [ ] AC2: `test-check-commits.sh` passes; it proves good commits pass and crafted bad ones fail.
+  It runs in a temporary repository under `scripts/ci/`.
 - [ ] AC3: `ci-ok` is the only job that branch protection needs to require; conditional jobs are
   skipped cleanly when their files do not exist yet.
 - [ ] AC4: No secret values appear in workflow files. Live keys are referenced only through `secrets.*`

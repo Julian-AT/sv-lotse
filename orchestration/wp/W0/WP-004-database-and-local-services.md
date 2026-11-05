@@ -5,7 +5,7 @@ wave: W0
 lane: db
 risk: high
 depends_on: [WP-001]
-fr: [FR-P1, FR-P5, FR-A2, FR-K1, FR-C10, NFR-4, NFR-5, NFR-15]
+fr: [FR-P1, FR-P5, FR-A2, FR-K1, FR-C10, FR-D5, FR-D10, FR-D11, NFR-4, NFR-5, NFR-15]
 owns:
   - docker-compose.yml
   - packages/brain/src/db/**
@@ -62,10 +62,13 @@ Tests prove the schema against a real Postgres.
 
    `docker compose up -d --wait` must succeed.
 2. **Drizzle schema.** In `packages/brain/src/db/schema/`, one file per aggregate:
-   - accounts and subjects: `user`, `subject`, `case_actor`, `profile`;
+   - users and subjects: `user` (kind `anonymous`), `session`, `subject`, `case_actor`, `profile`;
    - cases: `case`, `case_step`, `approval`, `message`, `turn`;
    - context: `fact`, `document`;
-   - catalog: `benefit`, `office`, `facility`, `form`, `process` (typed key columns plus a JSONB record);
+   - catalog: `benefit`, `office`, `facility`, `process` (typed key columns plus a JSONB record);
+   - forms: `form_template` (registry: source, hash, version date, format, status `auto` or `verified`,
+     schema JSONB, storage key) and `form_instance` (per-field value, provenance, state `draft` or
+     `confirmed`, approval id);
    - knowledge: `kb_chunk`, `source`;
    - work and audit: `reminder`, `job`, `helper_session`, `audit_event`.
 
@@ -114,7 +117,8 @@ Tests prove the schema against a real Postgres.
 
 - Docker may not be reachable inside your sandbox. Write the tests and list the Docker gates under
   `not_run`; the orchestrator runs them.
-- Do not create authentication tables. WP-005 adds them through a new migration.
+- There is no login: `user` and `session` support anonymous sessions only (PRD §11). Do not add
+  credential tables.
 
 ## Suggested commits
 

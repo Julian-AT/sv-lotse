@@ -13,7 +13,7 @@ owns:
   - packages/brain/src/tools/**
   - packages/brain/src/approvals/**
   - packages/brain/src/conversation/**
-  - packages/brain/src/gateway/**
+  - packages/brain/src/models/**
   - packages/brain/src/config/**
   - packages/brain/test/runtime/**
   - apps/web/src/app/api/turn/**
@@ -23,7 +23,7 @@ may_touch:
   - packages/brain/vitest.config.ts
   - pnpm-lock.yaml
 allow_deps: none beyond the baseline unless justified in the ADR
-live_services: [ai-gateway, openai]
+live_services: [openai]
 gates:
   - docker compose up -d --wait
   - pnpm --filter @lotse/brain db:migrate
@@ -69,18 +69,20 @@ Later waves implement the tools; this WP fixes their shape.
 
 1. **Configuration.** `src/config/`: Zod-validated brain configuration (model roles, the approval
    secret, the stub flag).
-2. **Model gateway.** `src/gateway/`:
+2. **Model router.** `src/models/`:
    - roles `orchestrator`, `classifier`, `guard`, `extractor`, `embedding`;
-   - each role has a fallback chain of models from the Vercel AI Gateway and the OpenAI API,
-     configured by environment variables;
+   - each role has an OpenAI model and an optional fallback, configured by `OPENAI_MODEL_*`
+     environment variables with sensible defaults;
    - a typed `modelFor(role)`.
 3. **Tool contracts.** `src/tools/contracts/`: a Zod input and output schema for every tool in the PRD
    §8 tools table, with its run location (server, display, client) and its approval flag.
    - `src/tools/registry.ts` builds the AI SDK tool set from the contracts plus implementations.
    - Implementations live in `src/tools/impl/<group>/index.ts`, one folder per group:
      `catalog`, `process`, `kb`, `office`, `facility`, `appointment`, `form`, `documents`, `docs`,
-     `eko`, `fees`, `case`, `reminder`, `handoff`, `context`, `ui`. Later WPs replace a group's file
-     without touching the registry.
+     `eko`, `fees`, `case`, `reminder`, `handoff`, `context`, `ui`, `form-live`.
+     The form tools (`form.find`, `form.acquire`, `form.analyze`, `form.getSchema`, `form.prefill`,
+     `form.fillLive`, `form.commitGroup`) are contracts and stubs here; W1 implements them.
+     Later WPs replace a group's file without touching the registry.
 4. **Real implementations now.**
    - Display tools `ui.point`, `ui.highlight`, `ui.annotate`, `ui.caption` and `ui.openResource` emit
      a `data-action` part bound to the current sentence index and return `{ actionId }`.
@@ -143,7 +145,7 @@ Later waves implement the tools; this WP fixes their shape.
 
 ## Suggested commits
 
-- `feat(brain): add model gateway with role-based fallback chains`
+- `feat(brain): add model router with role-based fallback chains`
 - `feat(brain): add tool contracts and registry for all prd tools`
 - `feat(approvals): add server-side approval records with hmac`
 - `feat(brain): add tool loop agent with autonomy-based tool filtering`

@@ -6,7 +6,7 @@ lane: protocol
 risk: high
 codex_effort: xhigh
 depends_on: [WP-001]
-fr: [FR-C3, FR-C5, FR-A2, FR-P1, NFR-13]
+fr: [FR-C3, FR-C5, FR-D5, FR-A2, FR-P1, NFR-13]
 owns:
   - packages/protocol/**
 may_touch: []
@@ -46,8 +46,10 @@ the Mac app. After this WP:
 1. **Zod schemas.** In `src/`, one schema per message:
    - `BridgeHello`, `ClientHello`, `Transcript`, `TurnRequest`, `ContextCapsule`, `SpeechSegment`,
      `Action`, `ToolInvocation`, `ToolOutput`, `ApprovalContext`, `ApprovalDecision`, `ActionResult`,
-     `SpeechControl`, `Fact`, `CaseEvent`, `JobProgress`, `SafetyNotice`;
-   - the `Target` tagged union (`ui`, `dom`, `ax`, `text`, `point`);
+     `SpeechControl`, `TargetRect`, `Fact`, `CaseEvent`, `JobProgress`, `SafetyNotice`;
+   - the `Target` tagged union (`ui`, `form`, `dom`, `ax`, `text`, `point`);
+   - `Action.kind` includes `type` and `clear` for live form filling. A `type` payload carries the
+     value, its provenance and the pace (PRD §9, FR-D5).
    - shared types: ids, ISO timestamps, `BoundingBox` (normalized 0..1 relative to the source image or
      page), language tags.
 
@@ -62,7 +64,7 @@ the Mac app. After this WP:
 3. **Bridge unions.**
    - `BridgeToWorkspace`: Mac → workspace. `BridgeHello`, `Transcript`, `ToolOutput`,
      `ApprovalDecision`, `ActionResult`, `SpeechControl`.
-   - `BridgeToNative`: workspace → Mac. `SpeechSegment`, `Action`, `ToolInvocation`,
+   - `BridgeToNative`: workspace → Mac. `SpeechSegment`, `Action`, `TargetRect`, `ToolInvocation`,
      `ApprovalContext`, `JobProgress`, `SafetyNotice`, `SpeechControl`.
    - Each envelope is `{ v: PROTOCOL_VERSION, type: "<message>", id, payload }`, discriminated on
      `type`.

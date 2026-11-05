@@ -16,7 +16,7 @@ may_touch:
   - apps/web/package.json
   - pnpm-lock.yaml
 allow_deps: test utilities for React components if needed
-live_services: [ai-gateway, openai]
+live_services: [openai]
 gates:
   - pnpm --filter @lotse/web typecheck
   - pnpm --filter @lotse/web lint
@@ -96,8 +96,8 @@ The web half of the native bridge is ready for the Mac app.
 
 ## Acceptance criteria
 
-- [ ] AC1 (live, Playwright `@conversation`): sign in with the virtual authenticator, ask "Was ist die
-  Rezeptgebühr?", and receive a streamed German answer. Reloading the page restores the conversation
+- [ ] AC1 (live, Playwright `@conversation`): open the workspace (an anonymous session is created), ask
+  "Was ist die Rezeptgebühr?", and receive a streamed German answer. Reloading the page restores the conversation
   from the server.
 - [ ] AC2: The approval card renders from protocol fixtures and calls `addToolApprovalResponse` with the
   right id on approve and on reject (component test).

@@ -44,6 +44,8 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
   - no diagnosis, no interpretation of findings, no risk assessment, no therapy or medication advice;
   - only verbatim quotes of documented recommendations.
 - If something outside your paths must change, stop and report a contract change request.
+- Never delete, move or edit `KI-Challenge_UseCase.yaml` (required by the challenge).
+- `data/svbox/` holds the original challenge files: read them (through `SVBOX_DIR`), never modify them.
 
 ## Engineering standards
 

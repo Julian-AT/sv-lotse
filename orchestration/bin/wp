@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
-# wp: the work-package pipeline for SV KI-Lotse.
-#
-# Claude (the orchestrator) drives this CLI; Codex CLI workers do the coding.
-# Every work package (WP) runs in its own git worktree and branch:
-#   start -> run (Codex) -> verify (gates) -> review (Claude) -> commit -> pr -> land
-#
-# Compatible with the macOS system bash (3.2). Requires git, jq; gh for PRs.
+# wp: work-package pipeline. Claude orchestrates, Codex workers implement.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
@@ -16,8 +10,6 @@ mkdir -p "$LOCAL_DIR"
 [ -f "$LOCAL_DIR/config.local.env" ] && . "$LOCAL_DIR/config.local.env"
 # shellcheck source=../config.env
 . "$ORCH/config.env"
-# shellcheck source=../../.githooks/lib.sh
-. "$ROOT/.githooks/lib.sh"
 
 : "${WT_ROOT:=$(dirname "$ROOT")/$(basename "$ROOT")-worktrees}"
 if [ -z "$CODEX_ADD_DIRS" ]; then
@@ -44,10 +36,6 @@ info() { printf '%s\n' "$*"; }
 now()  { date -u +%Y-%m-%dT%H:%M:%SZ; }
 journal() { printf -- '- %s %s\n' "$(now)" "$*" >> "$JOURNAL"; }
 
-# ---------------------------------------------------------------------------
-# Briefs and front matter
-# ---------------------------------------------------------------------------
-
 brief_path() {
   local id="$1" f
   f="$(find "$ORCH/wp" -type f -name "$id-*.md" 2>/dev/null | head -n 1)"
@@ -59,7 +47,6 @@ fm() {
   awk 'NR == 1 { if ($0 != "---") exit; next } $0 == "---" { exit } { print }' "$1"
 }
 
-# Scalar value of a front-matter key.
 fm_get() {
   fm "$1" | awk -v k="$2" -v q="'" '
     function unq(x,  a, b) {
@@ -71,7 +58,6 @@ fm_get() {
     index($0, k ":") == 1 { print unq(substr($0, length(k) + 2)); exit }'
 }
 
-# List value of a front-matter key: inline [a, b] or a block of "- item" lines.
 fm_list() {
   fm "$1" | awk -v k="$2" -v q="'" '
     function unq(x,  a, b) {
@@ -100,10 +86,6 @@ require_brief() {
   [ -n "$b" ] || die "no brief found for $1 under orchestration/wp/"
   printf '%s' "$b"
 }
-
-# ---------------------------------------------------------------------------
-# State (one KEY=value file per WP, git-ignored)
-# ---------------------------------------------------------------------------
 
 state_file() { printf '%s/%s.env' "$STATE_DIR" "$1"; }
 
@@ -135,7 +117,6 @@ is_active() {
   esac
 }
 
-# Claimed path patterns of a WP (owns + may_touch), one per line.
 claims() {
   local id="$1" b
   b="$(brief_path "$id")"
@@ -152,10 +133,6 @@ owns_of() {
   b="$(brief_path "$id")"
   if [ -n "$b" ]; then fm_list "$b" owns; else get_state "$id" OWNS | tr ' ' '\n'; fi
 }
-
-# ---------------------------------------------------------------------------
-# Path patterns
-# ---------------------------------------------------------------------------
 
 norm_pat() { printf '%s' "$1" | sed 's#\*\*#*#g'; }
 
@@ -218,10 +195,6 @@ check_overlap_with_active() {
   done
 }
 
-# ---------------------------------------------------------------------------
-# Git helpers
-# ---------------------------------------------------------------------------
-
 has_remote() { git -C "$ROOT" remote get-url "$REMOTE" >/dev/null 2>&1; }
 
 base_ref() {
@@ -256,14 +229,29 @@ make_patch() {
   done
 }
 
+check_commits() {
+  local wt="$1" base="$2" email sha bad=0
+  email="$(git -C "$ROOT" config user.email)"
+  if [ -n "$(git -C "$wt" rev-list --merges "$base..HEAD")" ]; then warn "merge commits are not allowed"; bad=1; fi
+  if git -C "$wt" log --format=%s "$base..HEAD" | grep -qE '^(fixup|squash|amend)! '; then warn "squash fixup commits first"; bad=1; fi
+  for sha in $(git -C "$wt" rev-list "$base..HEAD"); do
+    if [ "$(git -C "$wt" log -1 --format=%ae "$sha")" != "$email" ] || [ "$(git -C "$wt" log -1 --format=%ce "$sha")" != "$email" ]; then
+      warn "$(git -C "$wt" log -1 --format='%h %ae' "$sha"): author and committer must be $email"
+      bad=1
+    fi
+  done
+  (cd "$wt" && pnpm exec commitlint --from "$base" --to HEAD) || bad=1
+  return "$bad"
+}
+
+valid_header() {
+  printf '%s\n' "$2" | (cd "$1" && pnpm exec commitlint >/dev/null 2>&1)
+}
+
 changed_files() {
   local wt="$1" base="$2"
   { git -C "$wt" diff --name-only "$base"; git -C "$wt" ls-files --others --exclude-standard; } | sort -u
 }
-
-# ---------------------------------------------------------------------------
-# Local services
-# ---------------------------------------------------------------------------
 
 wp_db_name() { printf 'lotse_%s' "$(printf '%s' "$1" | tr 'A-Z-' 'a-z_')"; }
 
@@ -297,12 +285,6 @@ drop_wp_db() {
     || warn "could not drop database $db"
 }
 
-# ---------------------------------------------------------------------------
-# Templates
-# ---------------------------------------------------------------------------
-
-# fill_template <template> KEY=value... KEY=@file...
-# Whole-line markers {{KEY}} take file contents; inline markers take scalar values.
 fill_template() {
   local tpl="$1" kv line key val file handled
   shift
@@ -333,10 +315,6 @@ fill_template() {
     [ "$handled" = 1 ] || printf '%s\n' "$line"
   done < "$tpl"
 }
-
-# ---------------------------------------------------------------------------
-# Commands
-# ---------------------------------------------------------------------------
 
 cmd_help() {
   cat <<'EOF'
@@ -395,8 +373,8 @@ cmd_doctor() {
   name="$(git -C "$ROOT" config user.name || true)"
   email="$(git -C "$ROOT" config user.email || true)"
   [ -n "$name" ] && [ -n "$email" ] && ok "  ok  identity $name <$email>" || { printf '%s  --  git user.name/user.email not set%s\n' "$C_R" "$C_0"; bad=1; }
-  [ "$(git -C "$ROOT" config core.hooksPath || true)" = .githooks ] && ok "  ok  hooks (.githooks)" || { printf '%s  --  core.hooksPath is not .githooks; run bootstrap.sh%s\n' "$C_R" "$C_0"; bad=1; }
-  [ "$(lotse_expected_email)" = "$email" ] && ok "  ok  lotse.authorEmail = $email" || { printf '%s  --  lotse.authorEmail differs from user.email%s\n' "$C_R" "$C_0"; bad=1; }
+  [ "$(git -C "$ROOT" config core.hooksPath || true)" = .husky/_ ] && ok "  ok  husky hooks" || { printf '%s  --  git hooks not installed: pnpm install%s\n' "$C_R" "$C_0"; bad=1; }
+  [ -x "$ROOT/node_modules/.bin/commitlint" ] && ok "  ok  commitlint" || { printf '%s  --  commitlint missing: pnpm install%s\n' "$C_R" "$C_0"; bad=1; }
   if has_remote; then
     ok "  ok  remote $REMOTE ($(git -C "$ROOT" remote get-url "$REMOTE"))"
     if [ "$USE_GH" = 1 ] && command -v gh >/dev/null 2>&1; then
@@ -583,7 +561,6 @@ cmd_verify() {
   : > "$res"; : > "$log"
   record() { printf '%s\t%s\t%s\n' "$1" "$2" "$3" >> "$res"; [ "$2" != fail ] || errors=$((errors + 1)); }
 
-  # 1. Worker report
   if [ "$kind" != orch ]; then
     if [ -f "$run/report.json" ]; then
       st="$(jq -r '.status // "missing"' "$run/report.json" 2>/dev/null || echo invalid)"
@@ -596,7 +573,6 @@ cmd_verify() {
     fi
   fi
 
-  # 2. Ownership
   changed="$(changed_files "$wt" "$base")"
   [ -n "$changed" ] || record diff fail "no changes against $base"
   claimset="$(claims "$id")"
@@ -619,7 +595,6 @@ cmd_verify() {
 $changed
 EOF
 
-  # 3. Patch patterns and secrets
   make_patch "$wt" "$base" > "$run/diff.patch"
   added="$(grep -E '^\+' "$run/diff.patch" | grep -v -E '^\+\+\+ ' || true)"
   pat() {
@@ -648,7 +623,6 @@ EOF
     record secrets warn "gitleaks not installed; secret scan skipped"
   fi
 
-  # 4. Gates (brief gates + global gates), outside the worker sandbox, with .env.local loaded
   gates="$( { [ -z "$b" ] || fm_list "$b" gates
               printf '%s\n' "$GLOBAL_GATES" | awk '{ n = split($0, a, ";;"); for (i = 1; i <= n; i++) { g = a[i]; gsub(/^[ \t]+|[ \t]+$/, "", g); if (g != "") print g } }'; } )"
   while IFS= read -r g; do
@@ -664,7 +638,6 @@ EOF
 $gates
 EOF
 
-  # 5. Gates must not leave new untracked files behind (missing .gitignore entries)
   local after extra
   after="$(changed_files "$wt" "$base")"
   extra="$(comm -13 <(printf '%s\n' "$changed") <(printf '%s\n' "$after") | sed '/^$/d' || true)"
@@ -785,10 +758,7 @@ cmd_pr() {
   base="$(base_ref)"
   n="$(git -C "$wt" rev-list --count "$base..HEAD")"
   [ "$n" -gt 0 ] || die "$id has no commits ahead of $base"
-  if ! out="$(cd "$wt" && lotse_check_range "$(lotse_expected_email)" "$base..HEAD")"; then
-    printf '%s\n' "$out" >&2
-    die "$id: commit policy violations; fix with 'git rebase -i' in $wt"
-  fi
+  check_commits "$wt" "$base" || die "$id: commit policy violations; fix them with 'git rebase -i' in $wt"
   old_mb="$(git -C "$wt" merge-base HEAD "$base")"
   if ! git -C "$wt" rebase -q "$base"; then
     git -C "$wt" rebase --abort || true
@@ -811,9 +781,7 @@ cmd_pr() {
     title="$(git -C "$wt" log -1 --format=%s "$(git -C "$wt" rev-list --reverse "$base..HEAD" | head -n 1)")"
   fi
   [ "$n" -eq 1 ] && title="$(git -C "$wt" log -1 --format=%s HEAD)"
-  printf '%s\n' "$title" > "$LOCAL_DIR/.title.$$"
-  if ! out="$(lotse_validate_message "$LOCAL_DIR/.title.$$")"; then rm -f "$LOCAL_DIR/.title.$$"; die "PR title '$title' is not a Conventional Commit header: $out"; fi
-  rm -f "$LOCAL_DIR/.title.$$"
+  valid_header "$wt" "$title" || die "PR title '$title' is not a valid Conventional Commit header"
   run="$(get_state "$id" RUN_DIR)"
   [ -n "$run" ] || { run="$RUNS_DIR/$id/manual"; mkdir -p "$run"; set_state "$id" RUN_DIR "$run"; }
   render_pr_body "$id" "$wt" "$base" > "$run/pr-body.md"

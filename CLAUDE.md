@@ -17,7 +17,7 @@ sections of both on demand; do not load whole files into context without need.
 ## The loop for one work package (WP)
 
 1. **Brief.** Every change starts from a brief in `orchestration/wp/<wave>/`. W0 briefs exist. For later
-   waves, write briefs from ORCHESTRATION.md section 7 with `orchestration/templates/brief.md`, through
+   waves, write briefs from the ORCHESTRATION.md wave tables with `orchestration/templates/brief.md`, through
    `wp orch <slug>` (see "Orchestrator-only changes").
 2. **Run.** `wp batch <WP...>` for a set of ready, non-overlapping WPs (run it in the background), or
    `wp cycle <WP>` for one. This starts the worktree, runs the Codex worker and verifies.
@@ -45,7 +45,7 @@ While workers run, review finished WPs, write the next briefs, and keep the batc
   characters, with no period. The body explains what and why, wrapped at 72. Footer:
   `Refs: WP-006, FR-A2`.
 - Types: feat fix perf refactor revert docs test build ci chore style.
-- Scopes: the list in `.githooks/lib.sh` (`LOTSE_SCOPES`).
+- Scopes: the `scope-enum` list in `commitlint.config.mjs`.
 - One logical change per commit, and every commit builds. Breaking protocol changes use `!` and a
   `BREAKING CHANGE:` footer.
 - The author and committer are the owner's configured git identity. Never set `GIT_AUTHOR_*`,
@@ -70,6 +70,8 @@ While workers run, review finished WPs, write the next briefs, and keep the batc
   `live_services`, the real providers. `BRAIN_ALLOW_STUBS` exists only during the build and never in a
   release (NFR-17).
 - Never read `.env.local` or print secrets. Keys reach gates through the environment only.
+- `KI-Challenge_UseCase.yaml` stays exactly where and as it is (challenge requirement). `data/svbox/`
+  holds the original challenge files and is read-only.
 - Keep your context lean: delegate reviews to the subagent, read logs with `tail`, `jq` and `grep`, and
   never `cat` a whole diff that the reviewer already read.
 
@@ -85,6 +87,8 @@ While workers run, review finished WPs, write the next briefs, and keep the batc
   - anything irreversible.
 - When a WP has used all attempts, or a worker raises a contract change request that changes
   user-visible behaviour.
+- After WP-002 lands: ask the owner to run
+  `gh variable set ALLOWED_AUTHOR_EMAIL --body "$(git config user.email)"` and `orchestration/bin/wp protect`.
 - When `wp doctor` fails, or a credential, permission (macOS TCC) or GitHub setting is missing.
 
 Within a wave, act autonomously: run, verify, review, commit, open PRs and land without asking.

@@ -20,7 +20,7 @@ owns:
 may_touch:
   - apps/mac/project.yml
 allow_deps: none
-live_services: [ai-gateway, openai]
+live_services: [openai]
 gates:
   - docker compose up -d --wait
   - pnpm --filter @lotse/brain db:migrate
@@ -66,10 +66,8 @@ Mac → bridge → workspace → `/api/turn` → model → workspace → bridge 
    - Without the Screen Recording permission, Swift returns a typed `permission_missing` error output.
 5. **E2E harness.** `apps/mac/E2E/run-bridge-e2e.sh`:
    - starts the web app (`next start` after build) against the work package's database;
-   - creates a test user and session directly in that database, with a helper script under
-     `apps/web/e2e/bridge/`;
-   - runs an XCTest UI or integration test that injects the session cookie into the workspace
-     `WKWebsiteDataStore` and drives the flow above with a live model;
+   - runs an XCTest UI or integration test. In it, the workspace `WKWebView` obtains its anonymous
+     session on first load (no cookie injection), and the test drives the flow above with a live model;
    - asserts:
      - `BridgeHello` arrives, and `ClientHello` reports `clientKind: mac` with the capabilities;
      - the test transcript yields at least one `SpeechSegment` delivered to Swift;

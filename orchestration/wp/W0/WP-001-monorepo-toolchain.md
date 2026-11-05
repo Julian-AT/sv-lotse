@@ -18,7 +18,6 @@ owns:
   - .nvmrc
   - .npmrc
   - .editorconfig
-  - .gitattributes
   - packages/**
   - docs/adr/0001-monorepo-toolchain.md
 may_touch:
@@ -55,12 +54,13 @@ Out of scope: any product logic, CI (WP-002), the database (WP-004), apps.
 
 ## Deliverables
 
-1. **Root.**
+1. **Root.** `package.json` already exists with husky and commitlint (`prepare: husky`); extend it, keep
+   those entries.
    - `package.json`: private, `"type": "module"`, `packageManager` pinned to the current pnpm,
      `engines.node >=22`.
    - `pnpm-workspace.yaml` covering `apps/*` and `packages/*`.
-   - `.nvmrc` (22), `.npmrc` (`engine-strict=true`, `auto-install-peers=true`), `.editorconfig`,
-     `.gitattributes` (LF; lockfile `-diff`).
+   - `.nvmrc` (22), `.npmrc` (`engine-strict=true`, `auto-install-peers=true`), `.editorconfig`.
+   - `.gitignore` and `.gitattributes` already exist; leave them.
 2. **Turborepo.** `turbo.json` tasks:
    - `lint`, `typecheck`, `test`: cached, with inputs.
    - `test:integration` and `test:live`: not cached.
@@ -96,8 +96,7 @@ Out of scope: any product logic, CI (WP-002), the database (WP-004), apps.
    - root dev: `typescript`, `@biomejs/biome`, `turbo`, `vitest`, `@vitest/coverage-v8`, `tsx`,
      `@types/node`;
    - `@lotse/protocol`: `zod@^4`; dev `quicktype`, `ajv`, `ajv-formats`;
-   - `@lotse/brain`: `ai@^7`, the AI Gateway provider and `@ai-sdk/openai` (check the AI SDK 7 docs for
-     current package names), `@ai-sdk/otel`, `zod@^4`, `drizzle-orm`, `postgres`, `yaml`,
+   - `@lotse/brain`: `ai@^7`, `@ai-sdk/openai`, `@ai-sdk/otel`, `zod@^4`, `drizzle-orm`, `postgres`, `yaml`,
      `@aws-sdk/client-s3`, `pdf-lib`, `canonicalize` (RFC 8785); dev `drizzle-kit`;
    - `@lotse/knowledge`: `zod@^4`, `yaml`, `cheerio`, `turndown`, `robots-parser`, `p-limit`;
    - `@lotse/evals`: `ai@^7`, `zod@^4`;
@@ -119,8 +118,7 @@ Out of scope: any product logic, CI (WP-002), the database (WP-004), apps.
 
 ## Notes for the implementer
 
-- Check the current AI SDK 7 package names on ai-sdk.dev before installing. The gateway provider may
-  ship inside `ai` or as `@ai-sdk/gateway`.
+- Check the current AI SDK 7 package names on ai-sdk.dev before installing.
 - Keep the lockfile deterministic; do not commit `node_modules` or a pnpm store.
 
 ## Suggested commits
