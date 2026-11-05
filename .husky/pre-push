@@ -1,0 +1,6 @@
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$remote_ref" = "refs/heads/main" ] && [ "${WP_LANDING:-0}" != 1 ]; then
+    echo "pre-push: main only moves through orchestration/bin/wp land" >&2
+    exit 1
+  fi
+done

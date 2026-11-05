@@ -1,0 +1,5 @@
+tmp="$(mktemp)"
+grep -viE '^(co-authored-by:|claude-session:|generated-by:)|generated with \[?(claude|codex|chatgpt|openai)|noreply@(anthropic|openai)\.com|🤖' "$1" > "$tmp" || true
+cat "$tmp" > "$1"
+rm -f "$tmp"
+pnpm exec commitlint --edit "$1"
