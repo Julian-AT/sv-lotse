@@ -1,0 +1,47 @@
+{
+  "name": "sv-lotse",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.4",
+  "engines": {
+    "bun": ">=1.4",
+    "node": ">=22"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "typecheck": "turbo run typecheck && tsc --noEmit -p scripts/demo/tsconfig.json",
+    "test": "turbo run test",
+    "test:integration": "turbo run test:integration",
+    "test:live": "turbo run test:live",
+    "generate": "turbo run generate",
+    "verify": "bun run lint && turbo run typecheck test",
+    "evals": "bun run --filter @lotse/evals eval:baseline",
+    "ingest:e3": "bun run --filter @lotse/knowledge ingest:e3",
+    "demo:seed": "bun scripts/demo/seed.ts",
+    "demo:e2e": "bun scripts/demo/e2e.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.5",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@types/node": "^26.6.6",
+    "@vitest/coverage-v8": "^5.1.0",
+    "husky": "^9.1.7",
+    "turbo": "^2.11.10",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0",
+    "@lotse/brain": "workspace:*",
+    "@lotse/db": "workspace:*",
+    "@lotse/knowledge": "workspace:*",
+    "@lotse/protocol": "workspace:*",
+    "drizzle-orm": "^0.45.4",
+    "zod": "^4"
+  }
+}
