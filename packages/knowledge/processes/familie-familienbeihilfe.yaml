@@ -1,0 +1,223 @@
+# Awaiting human review; sources checked.
+id: familie-familienbeihilfe
+benefit: ref:catalog/familie-familienbeihilfe
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: centre_austria
+    type: boolean
+    question_hint: Liegt Ihr Lebensmittelpunkt in Österreich?
+  - id: shared_household
+    type: boolean
+    question_hint: Leben Sie mit dem Kind in einem Haushalt?
+  - id: child_with_no_parent
+    type: boolean
+    question_hint: Lebt das Kind bei keinem Elternteil?
+  - id: main_support
+    type: boolean
+    question_hint: Tragen Sie den überwiegenden Teil der Kosten für das Kind?
+  - id: claim_route
+    type: enum:claim-route
+    question_hint:
+      Geht es um eine Geburt in Österreich mit automatischer Prüfung, eine Antwort auf ein
+      Schreiben des Finanzamts oder einen eigenen Antrag?
+    validation:
+      options:
+        - automatic
+        - reply
+        - application
+  - id: increase_requested
+    type: boolean
+    question_hint: Möchten Sie zusätzlich den Erhöhungsbetrag mit Beih 3 beantragen? Die zuständige
+      Stelle prüft die Voraussetzungen.
+  - id: result_received
+    type: boolean
+    question_hint: Haben Sie die Mitteilung zur Familienbeihilfe bereits erhalten?
+  - id: handover_confirmed
+    type: boolean
+    question_hint: Haben Sie die Antwort oder den Antrag selbst an das Finanzamt weitergegeben?
+  - id: finance_letter_received
+    type: boolean
+    question_hint: Haben Sie ein Schreiben vom Finanzamt erhalten, in dem noch Daten oder Nachweise fehlen?
+steps:
+  - id: choose-route
+    needs:
+      - claim_route
+    outputs:
+      - id: route-summary
+        type: document
+    transitions:
+      - to: automatic-review
+        when: claim_route == "automatic"
+      - to: prepare-reply
+        when: claim_route == "reply"
+      - to: check-criteria
+        when: claim_route == "application"
+  - id: automatic-review
+    needs:
+      - result_received
+    outputs:
+      - id: automatic-review-note
+        type: document
+    reminders:
+      - after_days: 0
+        text_de:
+          Bei einer Geburt im Inland prüft das Finanzamt automatisch. Falls ein Informationsschreiben
+          Fragen enthält, die angeforderten Daten beantworten.
+        when: result_received == false
+    transitions:
+      - to: finish
+        when: result_received == true
+      - to: check-finance-letter
+        when: result_received == false
+  - id: prepare-reply
+    needs: []
+    documents: ref:catalog/familie-familienbeihilfe#documents
+    action: documents.checklist
+    outputs:
+      - id: finance-letter-reply-draft
+        type: document
+    transitions:
+      - to: review-increase
+  - id: check-criteria
+    needs:
+      - centre_austria
+      - shared_household
+    criteria: ref:catalog/familie-familienbeihilfe#criteria
+    outputs:
+      - id: eligibility-questions
+        type: document
+    transitions:
+      - to: prepare-application
+        when: shared_household == true
+      - to: check-support
+        when: shared_household == false
+  - id: check-support
+    needs:
+      - child_with_no_parent
+      - main_support
+    outputs:
+      - id: support-questions
+        type: document
+    transitions:
+      - to: prepare-application
+  - id: prepare-application
+    needs: []
+    documents: ref:catalog/familie-familienbeihilfe#documents
+    action: documents.checklist
+    outputs:
+      - id: beih-100-preparation
+        type: document
+    transitions:
+      - to: review-increase
+  - id: review-increase
+    needs:
+      - increase_requested
+    outputs:
+      - id: form-selection
+        type: document
+    transitions:
+      - to: prepare-increase
+        when: increase_requested == true
+      - to: user-handover
+        when: increase_requested == false
+  - id: prepare-increase
+    needs: []
+    signature: subject
+    outputs:
+      - id: beih-3-preparation
+        type: document
+    transitions:
+      - to: user-handover
+  - id: user-handover
+    needs:
+      - handover_confirmed
+    signature: subject
+    outputs:
+      - id: user-handover-note
+        type: document
+    reminders:
+      - after_days: 0
+        text_de:
+          Antwort oder Antrag selbst beim Finanzamt einreichen. Rückwirkend sind höchstens fünf Jahre
+          ab dem Monat der Antragstellung möglich.
+        when: handover_confirmed == false
+    transitions:
+      - to: finish
+        when: handover_confirmed == true
+  - id: check-finance-letter
+    needs:
+      - finance_letter_received
+    outputs:
+      - id: finance-letter-status
+        type: document
+    transitions:
+      - to: prepare-reply
+        when: finance_letter_received == true
+      - to: await-automatic-result
+        when: finance_letter_received == false
+  - id: await-automatic-result
+    needs: []
+    outputs:
+      - id: automatic-review-status
+        type: document
+    reminders:
+      - after_days: 0
+        text_de:
+          Das Finanzamt prüft die Familienbeihilfe automatisch. Wenn noch keine Mitteilung vorliegt,
+          können Sie beim Finanzamt nach dem Stand fragen. Es ist keine feste Bearbeitungsfrist
+          hinterlegt.
+    transitions:
+      - to: automatic-review
+  - id: finish
+    needs: []
+    outputs:
+      - id: family-benefit-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+    - document_present
+sources:
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote:
+      Einen Anspruch auf Familienbeihilfe haben Eltern, deren Lebensmittelpunkt in Österreich liegt
+      und deren Kind (leibliches Kind, Adoptivkind, Pflegekind, Stiefkind oder Enkelkind) mit ihnen
+      zusammen in einem Haushalt lebt oder – wenn das Kind mit keinem Elternteil im Haushalt lebt –
+      für das sie überwiegend Unterhalt leisten.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Ab der Volljährigkeit ist die Gewährung von Familienbeihilfe jedoch im Allgemeinen an das
+      Vorliegen einer Berufsausbildung gebunden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Auch in diesem Fall muss kein Familienbeihilfenantrag gestellt werden. Es genügt, das
+      Informationsschreiben mit den Antworten und eventuellen Nachweisen zurückzuschicken.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Die Familienbeihilfe kann jederzeit beantragt werden. Rückwirkend wird sie jedoch nur für
+      fünf Jahre ab dem Monat der Antragstellung gewährt.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/familienbeihilfe/basisinformation-zur-familienbeihilfe/antragstellung/antrag-auf-familienbeihilfe-finanzonline.html
+    quote:
+      Sie finden hier insbesondere die Vordrucke Beih 100 zur Beantragung der Familienbeihilfe und
+      Beih 3 zur Beantragung des Erhöhungszuschlages für erheblich behinderte Kinder, sowie Beih 20
+      (Antrag auf Direktauszahlung für volljährige Kinder).
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Finanzamt Österreich
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote:
+      Grundsätzlich kann die zuständige Stelle zur Überprüfung Ihrer Angaben im Antragsformular die
+      darin angegebenen Dokumente von Ihnen verlangen.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Nachweis einer laufenden Berufsausbildung oder Studienerfolgsnachweis
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Nachweis über den rechtmäßigen Aufenthalt nach §§ 8 oder 9 Niederlassungs- und
+      Aufenthaltsgesetz (NAG)
+    retrieved_at: 2026-11-05T23:52:44.349Z
+as_of: 2026-11-06

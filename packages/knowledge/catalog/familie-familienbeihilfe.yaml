@@ -1,0 +1,163 @@
+# Awaiting human review; sources checked.
+id: familie-familienbeihilfe
+name_de: Familienbeihilfe
+name_simple: Geld für Ihr Kind
+area: E
+life_situations:
+  - family-with-child
+  - disability
+scope: federal
+carriers: []
+criteria:
+  - id: family-household
+    text_de:
+      "Im österreichischen Regelfall: Lebensmittelpunkt in Österreich und gemeinsamer Haushalt
+      mit dem Kind. Lebt das Kind bei keinem Elternteil, kann überwiegender Unterhalt maßgeblich
+      sein."
+    condition:
+      centre_austria == true and (shared_household == true or (child_with_no_parent == true and
+      main_support == true))
+    legal_basis: § 2 FLAG (SozDok, in Kraft seit 2022-06-01; FLAG=PARA=2=220=2021-12-30=2022-06-01)
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+      quote:
+        Einen Anspruch auf Familienbeihilfe haben Eltern, deren Lebensmittelpunkt in Österreich liegt
+        und deren Kind (leibliches Kind, Adoptivkind, Pflegekind, Stiefkind oder Enkelkind) mit
+        ihnen zusammen in einem Haushalt lebt oder – wenn das Kind mit keinem Elternteil im Haushalt
+        lebt – für das sie überwiegend Unterhalt leisten.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: adult-children
+    text_de: Bei volljährigen Kindern gelten zusätzliche Regeln zur Ausbildung und Altersgrenzen.
+      Ausnahmen und Auslandsfälle prüft das Finanzamt; daraus folgt keine automatische Ablehnung.
+    legal_basis: § 2 FLAG (SozDok, in Kraft seit 2022-06-01; FLAG=PARA=2=220=2021-12-30=2022-06-01)
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+      quote:
+        Ab der Volljährigkeit ist die Gewährung von Familienbeihilfe jedoch im Allgemeinen an das
+        Vorliegen einer Berufsausbildung gebunden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: automatic-at-birth
+    text_de: Bei einer Geburt im Inland prüft das Finanzamt die Voraussetzungen automatisch. Werden
+      Daten angefordert, reicht die Antwort auf das Informationsschreiben; ein eigener Antrag ist
+      dafür nicht nötig.
+    legal_basis: § 10a FLAG; § 10 FLAG (SozDok, in Kraft seit 2015-05-01; FLAG=PARA=10=50=2015-04-22=2015-05-01)
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+      quote: Auch in diesem Fall muss kein Familienbeihilfenantrag gestellt werden. Es genügt, das
+        Informationsschreiben mit den Antworten und eventuellen Nachweisen zurückzuschicken.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: retroactive-period
+    text_de: Ein Antrag ist jederzeit möglich, rückwirkend höchstens für fünf Jahre ab dem Monat der
+      Antragstellung.
+    legal_basis: § 10 FLAG (SozDok, in Kraft seit 2015-05-01; FLAG=PARA=10=50=2015-04-22=2015-05-01)
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+      quote:
+        Die Familienbeihilfe kann jederzeit beantragt werden. Rückwirkend wird sie jedoch nur für
+        fünf Jahre ab dem Monat der Antragstellung gewährt.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: additional-payment-request
+    text_de: Beih 100 ist für die Familienbeihilfe. Beih 3 ist ein eigener Antrag auf den
+      Erhöhungsbetrag. Medizinische Voraussetzungen werden von der zuständigen Stelle festgestellt.
+    legal_basis: § 8 Abs. 4 bis 6 FLAG (SozDok, in Kraft seit 2026-01-01;
+      FLAG=PARA=8=25=2025-06-30=2026-01-01); § 10 FLAG (SozDok, in Kraft seit 2015-05-01;
+      FLAG=PARA=10=50=2015-04-22=2015-05-01)
+    source:
+      url: https://www.bundeskanzleramt.gv.at/agenda/familie/familienbeihilfe/basisinformation-zur-familienbeihilfe/antragstellung/antrag-auf-familienbeihilfe-finanzonline.html
+      quote:
+        Sie finden hier insbesondere die Vordrucke Beih 100 zur Beantragung der Familienbeihilfe und
+        Beih 3 zur Beantragung des Erhöhungszuschlages für erheblich behinderte Kinder, sowie Beih
+        20 (Antrag auf Direktauszahlung für volljährige Kinder).
+      retrieved_at: 2026-11-05T23:52:44.349Z
+office_rules:
+  - when: "true"
+    office: ref:offices/finanzamt-oesterreich
+documents:
+  - id: finance-letter
+    name_de: Informationsschreiben des Finanzamts, falls Daten fehlen
+    required: false
+    obtain_from: Finanzamt Österreich; das erhaltene Schreiben mit Antworten und gegebenenfalls
+      Nachweisen zurückgeben.
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+      quote: Auch in diesem Fall muss kein Familienbeihilfenantrag gestellt werden. Es genügt, das
+        Informationsschreiben mit den Antworten und eventuellen Nachweisen zurückzuschicken.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: education-proof
+    name_de: Ausbildungsnachweis oder Studienerfolgsnachweis bei volljährigen Kindern
+    required: false
+    obtain_from: Schule, Ausbildungsstelle oder Hochschule; nur wenn für den Antrag erforderlich.
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+      quote: Nachweis einer laufenden Berufsausbildung oder Studienerfolgsnachweis
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: residence-proof
+    name_de: Nachweis des rechtmäßigen Aufenthalts, falls erforderlich
+    required: false
+    obtain_from: Zuständige Aufenthaltsbehörde für den Aufenthaltstitel oder die Anmeldebescheinigung.
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+      quote: Nachweis über den rechtmäßigen Aufenthalt nach §§ 8 oder 9 Niederlassungs- und
+        Aufenthaltsgesetz (NAG)
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: requested-evidence
+    name_de: Weitere vom Finanzamt angeforderte Nachweise
+    required: false
+    obtain_from:
+      Im Schreiben des Finanzamts genannte ausstellende Stelle; nur angeforderte Unterlagen
+      beschaffen.
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+      quote:
+        Grundsätzlich kann die zuständige Stelle zur Überprüfung Ihrer Angaben im Antragsformular die
+        darin angegebenen Dokumente von Ihnen verlangen.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+forms:
+  - search: Beih 100 Familienbeihilfe Antrag
+    publisher: Bundesministerium für Finanzen
+  - search: Beih 3 Familienbeihilfe Erhöhungsbetrag wegen erheblicher Behinderung Antrag
+    publisher: Bundesministerium für Finanzen
+process: ref:processes/familie-familienbeihilfe
+appointment_channels: []
+sources:
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote:
+      Einen Anspruch auf Familienbeihilfe haben Eltern, deren Lebensmittelpunkt in Österreich liegt
+      und deren Kind (leibliches Kind, Adoptivkind, Pflegekind, Stiefkind oder Enkelkind) mit ihnen
+      zusammen in einem Haushalt lebt oder – wenn das Kind mit keinem Elternteil im Haushalt lebt –
+      für das sie überwiegend Unterhalt leisten.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Ab der Volljährigkeit ist die Gewährung von Familienbeihilfe jedoch im Allgemeinen an das
+      Vorliegen einer Berufsausbildung gebunden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Auch in diesem Fall muss kein Familienbeihilfenantrag gestellt werden. Es genügt, das
+      Informationsschreiben mit den Antworten und eventuellen Nachweisen zurückzuschicken.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Die Familienbeihilfe kann jederzeit beantragt werden. Rückwirkend wird sie jedoch nur für
+      fünf Jahre ab dem Monat der Antragstellung gewährt.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/familienbeihilfe/basisinformation-zur-familienbeihilfe/antragstellung/antrag-auf-familienbeihilfe-finanzonline.html
+    quote:
+      Sie finden hier insbesondere die Vordrucke Beih 100 zur Beantragung der Familienbeihilfe und
+      Beih 3 zur Beantragung des Erhöhungszuschlages für erheblich behinderte Kinder, sowie Beih 20
+      (Antrag auf Direktauszahlung für volljährige Kinder).
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Finanzamt Österreich
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote:
+      Grundsätzlich kann die zuständige Stelle zur Überprüfung Ihrer Angaben im Antragsformular die
+      darin angegebenen Dokumente von Ihnen verlangen.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Nachweis einer laufenden Berufsausbildung oder Studienerfolgsnachweis
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233
+    quote: Nachweis über den rechtmäßigen Aufenthalt nach §§ 8 oder 9 Niederlassungs- und
+      Aufenthaltsgesetz (NAG)
+    retrieved_at: 2026-11-05T23:52:44.349Z
+as_of: 2026-11-06
