@@ -110,6 +110,12 @@ the Mac app. After this WP:
 - [ ] AC5: `LotseDataParts` type-checks as the data-parts generic of an AI SDK 7 `UIMessage` (type
   test).
 
+## Notes for the implementer
+
+- `packages/brain/test/workspace.test.ts` (owned by WP-001, not by you) imports the type
+  `ZodType` from `@lotse/protocol`. Keep `export type { ZodType } from "zod";` in
+  `src/index.ts` alongside the protocol exports, or the brain test breaks.
+
 ## Suggested commits
 
 - `feat(protocol): add zod schemas for stream and bridge messages`
