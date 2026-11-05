@@ -17,7 +17,7 @@ Challenge, Use Case 1.
 ## Start
 
 ```bash
-pnpm install
+bun install
 cp .env.example .env.local
 orchestration/bin/wp doctor
 claude   # then /orchestrate W0

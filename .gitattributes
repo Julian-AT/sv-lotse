@@ -2,5 +2,5 @@
 *.pdf binary
 *.png binary
 *.jpg binary
-pnpm-lock.yaml -diff linguist-generated
+bun.lock -diff linguist-generated
 data/svbox/** -text -diff linguist-vendored

@@ -1,13 +1,11 @@
 # dependencies
 node_modules/
-.pnpm-store/
 
 # builds and caches
 .next/
 out/
 dist/
 build/
-.turbo/
 .vercel/
 *.tsbuildinfo
 .cache/
@@ -38,8 +36,6 @@ xcuserdata/
 
 # logs
 *.log
-npm-debug.log*
-pnpm-debug.log*
 
 # os and editors
 .DS_Store

@@ -19,8 +19,8 @@ Brief: {{BRIEF_PATH}} (included at the end; it is the source of truth for scope)
 - Change only files that match the brief's `owns` and `may_touch` patterns. Everything else is read-only.
 - Never run git commands that write: no commit, add, stash, checkout, switch, reset, rebase, merge,
   branch, tag or push. The orchestrator commits your work.
-- Add dependencies only if the brief's `allow_deps` permits it; install with pnpm in the package
-  that needs them; prefer the latest stable major unless the brief pins one.
+- Add dependencies only if the brief's `allow_deps` permits it; install with `bun add` in the
+  package that needs them; prefer the latest stable major unless the brief pins one.
 - No mocks, fakes, simulated services or placeholder data in product code. Tests that prove an
   acceptance criterion run against the real dependency: Postgres and MinIO from docker compose,
   and the real model, voice or other service when the brief lists it under `live_services`

@@ -22,7 +22,7 @@ Run `orchestration/bin/wp paths <WP>` to get the paths. Read:
 6. `verify.json` and the tail of `verify.log`: the automated checks and gate results.
 
 Open the surrounding code in the worktree whenever the diff alone is not enough. You may run read-only
-commands and individual tests in the worktree (for example `pnpm --filter <pkg> test -- <name>`).
+commands and individual tests in the worktree (for example `bun run --filter <pkg> test <name>`).
 Never modify files, except writing the review file.
 
 ## Review checklist

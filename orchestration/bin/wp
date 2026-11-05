@@ -13,7 +13,7 @@ mkdir -p "$LOCAL_DIR"
 
 : "${WT_ROOT:=$(dirname "$ROOT")/$(basename "$ROOT")-worktrees}"
 if [ -z "$CODEX_ADD_DIRS" ]; then
-  CODEX_ADD_DIRS="$HOME/Library/pnpm:$HOME/Library/Caches:$HOME/Library/org.swift.swiftpm:$HOME/.cache:$HOME/.npm"
+  CODEX_ADD_DIRS="$HOME/.bun:$HOME/Library/Caches:$HOME/Library/org.swift.swiftpm:$HOME/.cache"
 fi
 
 STATE_DIR="$LOCAL_DIR/state"
@@ -240,12 +240,12 @@ check_commits() {
       bad=1
     fi
   done
-  (cd "$wt" && pnpm exec commitlint --from "$base" --to HEAD) || bad=1
+  (cd "$wt" && bunx commitlint --from "$base" --to HEAD) || bad=1
   return "$bad"
 }
 
 valid_header() {
-  printf '%s\n' "$2" | (cd "$1" && pnpm exec commitlint >/dev/null 2>&1)
+  printf '%s\n' "$2" | (cd "$1" && bunx commitlint >/dev/null 2>&1)
 }
 
 changed_files() {
@@ -348,7 +348,7 @@ cmd_doctor() {
   check git "brew install git"
   check jq "brew install jq"
   check node "install Node.js 22+"
-  check pnpm "corepack enable && corepack prepare pnpm@latest --activate"
+  check bun "curl -fsSL https://bun.sh/install | bash"
   check "$CODEX_BIN" "npm install -g @openai/codex"
   check docker "install Docker Desktop or OrbStack"
   if [ "$USE_GH" = 1 ]; then check gh "brew install gh"; fi
@@ -373,8 +373,8 @@ cmd_doctor() {
   name="$(git -C "$ROOT" config user.name || true)"
   email="$(git -C "$ROOT" config user.email || true)"
   [ -n "$name" ] && [ -n "$email" ] && ok "  ok  identity $name <$email>" || { printf '%s  --  git user.name/user.email not set%s\n' "$C_R" "$C_0"; bad=1; }
-  [ "$(git -C "$ROOT" config core.hooksPath || true)" = .husky/_ ] && ok "  ok  husky hooks" || { printf '%s  --  git hooks not installed: pnpm install%s\n' "$C_R" "$C_0"; bad=1; }
-  [ -x "$ROOT/node_modules/.bin/commitlint" ] && ok "  ok  commitlint" || { printf '%s  --  commitlint missing: pnpm install%s\n' "$C_R" "$C_0"; bad=1; }
+  [ "$(git -C "$ROOT" config core.hooksPath || true)" = .husky/_ ] && ok "  ok  husky hooks" || { printf '%s  --  git hooks not installed: bun install%s\n' "$C_R" "$C_0"; bad=1; }
+  [ -x "$ROOT/node_modules/.bin/commitlint" ] && ok "  ok  commitlint" || { printf '%s  --  commitlint missing: bun install%s\n' "$C_R" "$C_0"; bad=1; }
   if has_remote; then
     ok "  ok  remote $REMOTE ($(git -C "$ROOT" remote get-url "$REMOTE"))"
     if [ "$USE_GH" = 1 ] && command -v gh >/dev/null 2>&1; then
@@ -454,8 +454,8 @@ cmd_start() {
   [ -f "$ROOT/.env.local" ] && cp "$ROOT/.env.local" "$wt/.env.local"
   setup_wp_db "$id" "$wt"
   if [ -f "$wt/package.json" ]; then
-    if ! ( cd "$wt" && if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile --prefer-offline; else pnpm install; fi ) > "$RUNS_DIR/$id-install.log" 2>&1; then
-      warn "pnpm install failed in $wt; see .orchestration/runs/$id-install.log"
+    if ! ( cd "$wt" && if [ -f bun.lock ]; then bun install --frozen-lockfile; else bun install; fi ) > "$RUNS_DIR/$id-install.log" 2>&1; then
+      warn "bun install failed in $wt; see .orchestration/runs/$id-install.log"
     fi
   fi
   journal "$id started on $branch from $base"

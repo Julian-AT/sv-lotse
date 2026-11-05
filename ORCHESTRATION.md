@@ -40,12 +40,12 @@ flowchart LR
 ## Setup
 
 1. Install the tools:
-   - Node 22+, pnpm, Docker (or OrbStack), `gh` (logged in), `jq`;
+   - Node 22+, Bun, Docker (or OrbStack), `gh` (logged in), `jq`;
    - Codex CLI (`npm i -g @openai/codex`, then `codex login`) and Claude Code;
    - for the Mac lane: Xcode, `xcodegen`, `swiftlint`;
    - optional: `gitleaks`, `actionlint`.
 2. In the repository:
-   - `pnpm install`, which installs the husky hooks;
+   - `bun install`, which installs the husky hooks;
    - `cp .env.example .env.local`, then fill in `OPENAI_API_KEY` and generate `SESSION_SECRET` and
      `APPROVAL_HMAC_SECRET` with `openssl rand -base64 48`.
 3. Optional: `orchestration/config.env` runs 16 workers on GPT 6.1 Sol (`gpt-6.1-sol`) at `xhigh`
@@ -262,7 +262,7 @@ WP-111 (after 001), WP-166 (after 004) and WP-120 (after 004).
 | Codex run fails or writes no report | Read `stderr.log` in the run folder. On rate limits, lower `MAX_PARALLEL`; then run `wp run` again |
 | Contract change request | A `CCR-n` WP changes the contract first; then the blocked WP runs again |
 | Ownership failure | Rework; if the brief was too narrow, fix the brief through `wp orch` |
-| Lockfile conflict in `wp pr` | Take main's lockfile: `git checkout --ours pnpm-lock.yaml`, `pnpm install`, `git add`, `git rebase --continue` |
+| Lockfile conflict in `wp pr` | Take main's lockfile: `git checkout --ours bun.lock`, `bun install`, `git add`, `git rebase --continue` |
 | Source conflict in `wp pr` | `git rebase --abort`; rework the WP with the conflict as a finding |
 | CI red | Read `gh run view --log-failed` and rework with its output; never just re-run |
 | Flaky test | A `fix(...)` WP makes it deterministic; tests are never skipped |

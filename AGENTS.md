@@ -71,13 +71,18 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
 
 | Purpose | Command |
 | --- | --- |
-| Install | `pnpm install --frozen-lockfile` |
-| All checks | `pnpm -s verify` (lint, typecheck, test via Turborepo) |
-| One package | `pnpm --filter @lotse/<package> <script>` |
+| Install | `bun install --frozen-lockfile` |
+| All checks | `bun run verify` (lint, then typecheck and test in every package) |
+| One package | `bun run --filter @lotse/<package> <script>` |
+| Add a dependency | `bun add <name>` inside the package folder |
 | Local services | `docker compose up -d --wait` (Postgres with pgvector, MinIO) |
-| Live tests | `RUN_LIVE=1 pnpm --filter <package> test:live` |
+| Live tests | `RUN_LIVE=1 bun run --filter <package> test:live` |
 | Mac project | `cd apps/mac && xcodegen generate` |
 | Mac build and test | `xcodebuild -project apps/mac/SVKILotse.xcodeproj -scheme SVKILotse -destination 'platform=macOS' -derivedDataPath .build/dd CODE_SIGNING_ALLOWED=NO test` |
+
+Bun installs packages and runs scripts; Node.js 22 is the runtime for Next.js and Vitest, so never
+pass `--bun`. Always use `bun run <script>`: `bun test` and `bun build` are Bun's own test runner and
+bundler, not the package scripts.
 
 Some gates (Docker, xcodebuild, TCC permissions) may not run inside a sandbox. Run what you can and list
 the rest under `not_run`; the orchestrator runs them outside the sandbox.

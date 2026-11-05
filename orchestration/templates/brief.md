@@ -11,12 +11,12 @@ owns:
   - packages/example/src/area/**
 may_touch:
   - packages/example/package.json
-  - pnpm-lock.yaml
+  - bun.lock
 allow_deps: none
 live_services: []
 gates:
-  - pnpm --filter @lotse/example typecheck
-  - pnpm --filter @lotse/example test
+  - bun run --filter @lotse/example typecheck
+  - bun run --filter @lotse/example test
 pr_title: "feat(brain): short conventional title"
 ---
 
