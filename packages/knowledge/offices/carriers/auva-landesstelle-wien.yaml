@@ -1,0 +1,37 @@
+id: "auva-landesstelle-wien"
+name_de: "AUVA – Landesstelle Wien"
+name_simple: "AUVA-Büro in Wien"
+carrier: "auva"
+region: "Wien"
+url: "https://auva.at/servicestellen/landesstelle-wien"
+address:
+  street: "Wienerbergstraße 11"
+  postal_code: "1100"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 93 93-31000"
+email: "WLD@auva.at"
+opening_hours:
+  notes: |-
+    Die AUVA-Kunden-:Kundinnendienststellen sind wochentags (Mo – Fr) von 07:00 bis 16:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+    Mo – Do von 07:30 bis 16:00 Uhr und Fr von 07:30 bis 15:15 sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+jurisdiction: "Die AUVA-Landesstelle Wien ist für die Länder Wien, Niederösterreich und Burgenland zuständig."
+sources:
+  - url: "https://auva.at/servicestellen/landesstelle-wien"
+    quote: |-
+      Landesstelle Wien
+      Direktion
+      WLD@auva.at
+      +43 5 93 93-31000
+      +43 5 93 93-31191
+      Wienerbergstraße 11 , 1100 Wien
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/landesstelle-wien"
+    quote: |-
+      Die AUVA-Kunden-:Kundinnendienststellen sind wochentags (Mo – Fr) von 07:00 bis 16:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+      Mo – Do von 07:30 bis 16:00 Uhr und Fr von 07:30 bis 15:15 sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/landesstelle-wien"
+    quote: "Die AUVA-Landesstelle Wien ist für die Länder Wien, Niederösterreich und Burgenland zuständig."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
