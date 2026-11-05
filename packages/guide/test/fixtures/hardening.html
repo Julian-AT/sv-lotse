@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Guide hardening</title>
+<style>
+  body { font: 18px sans-serif; margin: 24px; }
+  form, [role="group"], [role="region"] { margin-bottom: 16px; }
+</style>
+</head><body>
+<!-- Constructed third-party portal markup exercises ARIA container boundaries. -->
+<!-- biome-ignore lint/a11y/noRedundantRoles: reproduce third-party forms with explicit container roles -->
+<form role="form"><label>Form name <input id="form-name"></label><button type="button">Absenden</button></form>
+<!-- biome-ignore lint/a11y/useSemanticElements: exercise third-party ARIA group ancestors -->
+<div role="group"><label>Group name <input id="group-name"></label><button type="button">Absenden</button></div>
+<!-- biome-ignore lint/a11y/useSemanticElements: exercise third-party ARIA region ancestors -->
+<div role="region"><label>Region name <input id="region-name"></label><button type="button">Absenden</button></div>
+<button id="image-button" type="button"><img alt="Delete record" width="120" height="24"></button>
+<a id="image-link" href="#image-button"><span><img alt="Remove record" width="120" height="24"></span></a>
+<!-- biome-ignore lint/a11y/useSemanticElements: exercise third-party ARIA image controls -->
+<div id="image-widget" role="button" tabindex="0"><img alt="Send message" width="120" height="24"></div>
+<button id="labelled-image" type="button" aria-labelledby="image-label"></button>
+<span id="image-label"><img alt="Pay now" width="120" height="24"></span>
+<button id="named-descendant" type="button"><span role="img" aria-label="Submit application"></span></button>
+<button id="split-text" type="button">De<span title="Explanation">lete</span> draft</button>
+<!-- Blank ARIA alternatives must preserve destructive text in descendants and references. -->
+<!-- biome-ignore lint/a11y/useAriaPropsSupportedByRole: reproduce third-party descendants with blank ARIA labels -->
+<button id="whitespace-aria-label" type="button"><span aria-label=" ">Delete entry</span></button>
+<span id="blank-reference"> </span>
+<!-- biome-ignore lint/a11y/useAriaPropsSupportedByRole: reproduce a referenced descendant with a blank ARIA label -->
+<span id="whitespace-reference-text" aria-label=" ">Remove entry</span>
+<!-- biome-ignore lint/a11y/useAriaPropsSupportedByRole: reproduce third-party descendant naming through ARIA references -->
+<button id="whitespace-referenced-name" type="button"><span aria-labelledby="blank-reference whitespace-reference-text"></span></button>
+<button id="referenced-whitespace-label" type="button" aria-labelledby="whitespace-label-text"></button>
+<!-- biome-ignore lint/a11y/useAriaPropsSupportedByRole: reproduce a referenced descendant with a blank ARIA label -->
+<span id="whitespace-label-text" aria-label=" ">Delete document</span>
+</body></html>
