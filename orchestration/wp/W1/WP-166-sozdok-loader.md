@@ -76,8 +76,11 @@ sozdok.at updates.
 ## Acceptance criteria
 
 - [ ] AC1: All 14,244 files parse without error in under 60 seconds (test over the real folder).
-- [ ] AC2: For a paragraph with several versions in the data, `inForceOn` picks the right one for
-  dates before, between and after versions (test names the concrete file names).
+- [ ] AC2: The SV-Box snapshot holds one version per provision, so build a version history in the
+  test from real files (copy one real file and change only its in-force date and text); `inForceOn`
+  picks the right version for dates before, between and after versions, and on the real folder
+  every provision resolves to its single version. Provision identity includes `gldart`
+  (law, `gldart`, number).
 - [ ] AC3: No chunk crosses a paragraph boundary; citations match the PRD format for 5 sampled
   files.
 - [ ] AC4: `sozdok:load` writes `source` rows idempotently into real Postgres (`test:db`, on a

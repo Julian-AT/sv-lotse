@@ -11,7 +11,7 @@ owns:
   - docs/adr/0005-sessions.md
 may_touch:
   - bun.lock
-allow_deps: next, react, react-dom, tailwindcss, @playwright/test, @axe-core/playwright
+allow_deps: "next, react, react-dom, @types/react, @types/react-dom, tailwindcss, @playwright/test, @axe-core/playwright, zod, drizzle-orm, ai, @ai-sdk/otel, @lotse/brain (workspace), and for the optional Langfuse export `@langfuse/otel` with `@opentelemetry/sdk-trace-node` (export only when Langfuse keys are set)"
 live_services: []
 gates:
   - docker compose up -d --wait

@@ -16,7 +16,7 @@ owns:
 may_touch:
   - packages/knowledge/package.json
   - bun.lock
-allow_deps: "`@lotse/brain` as `workspace:*` (only `./db`, `./db/schema`); `@ai-sdk/openai` (brain's version)"
+allow_deps: "`@lotse/brain` as `workspace:*` (only `./db`, `./db/schema`); `ai` and `@ai-sdk/openai` (brain's versions)"
 live_services: [openai]
 gates:
   - docker compose up -d --wait
