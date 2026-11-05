@@ -159,7 +159,7 @@ norm_pat() { printf '%s' "$1" | sed 's#\*\*#*#g'; }
 # or app in which it owns paths.
 package_doc_allowed() {
   local f="$1" dir p base
-  case "$f" in */AGENTS.md|*/README.md|*/package.json) ;; *) return 1 ;; esac
+  case "$f" in */AGENTS.md|*/README.md|*/package.json|*/Package.resolved) ;; *) return 1 ;; esac
   dir="${f%/*}"
   set -f
   for p in $2; do
