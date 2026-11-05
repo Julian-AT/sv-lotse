@@ -1,0 +1,37 @@
+{
+  "name": "@lotse/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/run-next.mjs dev",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "test": "vitest run --config vitest.config.ts --project unit",
+    "test:services": "vitest run --config vitest.config.ts --project services",
+    "build": "node scripts/run-next.mjs build && bun run build:migrator && node scripts/check-client-env.mjs",
+    "start": "node scripts/start-standalone.mjs",
+    "e2e": "playwright test",
+    "test:integration": "bun run test:services && bun run e2e --grep @smoke",
+    "build:migrator": "bun scripts/build-migrator.mjs"
+  },
+  "dependencies": {
+    "@ai-sdk/otel": "^1.0.163",
+    "@langfuse/otel": "^6.1.1",
+    "@lotse/brain": "workspace:*",
+    "@lotse/db": "workspace:*",
+    "@opentelemetry/sdk-trace-node": "^2.12.0",
+    "ai": "^7",
+    "drizzle-orm": "^0.45.4",
+    "next": "^16.4.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0"
+  }
+}

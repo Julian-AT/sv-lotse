@@ -1,0 +1,111 @@
+.skipLink {
+  position: fixed;
+  z-index: 10;
+  top: 0.5rem;
+  left: 1rem;
+  padding: 0.75rem;
+  background: white;
+  transform: translateY(-160%);
+}
+.skipLink:focus {
+  transform: translateY(0);
+}
+.siteHeader {
+  max-width: 78rem;
+  margin: auto;
+  padding: 1.5rem clamp(1rem, 4vw, 4rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  border-bottom: 1px solid #d8dfd9;
+}
+.wordmark {
+  margin-right: auto;
+  color: #183632;
+  font-size: 1.25rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+.siteHeader nav {
+  display: flex;
+  gap: 1rem;
+}
+.siteHeader nav [aria-current] {
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+}
+.siteHeader details {
+  position: relative;
+}
+.siteHeader summary {
+  padding: 0.5rem;
+}
+.settingsPanel {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  width: min(21rem, 85vw);
+  padding: 1.25rem;
+  background: white;
+  border: 1px solid #b4c5ba;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px #18363218;
+}
+.settingsPanel p {
+  margin-top: 0;
+}
+.settingsPanel [role="status"] {
+  margin: 0.75rem 0 0;
+}
+.main {
+  max-width: 78rem;
+  margin: auto;
+  padding: clamp(3rem, 8vw, 7rem) clamp(1rem, 4vw, 4rem);
+  min-height: 65vh;
+}
+.welcome {
+  max-width: 48rem;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+.welcome h1 {
+  max-width: 15ch;
+  margin: 1rem 0 1.5rem;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.introduction {
+  max-width: 47ch;
+  font-size: 1.2rem;
+}
+.sessionNote {
+  margin: 2rem 0;
+  padding: 0.5rem 1.25rem;
+  border-left: 3px solid #227c6c;
+  background: #ecf2ec;
+}
+.boundary {
+  max-width: 60ch;
+  color: #465d56;
+}
+.footer {
+  max-width: 78rem;
+  margin: auto;
+  padding: 1rem clamp(1rem, 4vw, 4rem);
+  border-top: 1px solid #d8dfd9;
+  color: #465d56;
+  font-size: 0.9rem;
+}
+@media (max-width: 36rem) {
+  .wordmark {
+    width: 100%;
+  }
+}

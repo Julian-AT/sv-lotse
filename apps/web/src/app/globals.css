@@ -1,0 +1,57 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+  color: #183632;
+  background: #faf9f5;
+  font-size: 100%;
+  line-height: 1.6;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+a {
+  color: #135e53;
+  text-underline-offset: 0.25em;
+}
+a,
+button,
+summary {
+  min-height: 44px;
+  min-width: 44px;
+}
+a {
+  display: inline-flex;
+  align-items: center;
+}
+button,
+summary {
+  cursor: pointer;
+  font: inherit;
+}
+button {
+  padding: 0.6rem 1rem;
+  border: 1px solid #135e53;
+  border-radius: 0.5rem;
+  background: #135e53;
+  color: white;
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+:focus-visible {
+  outline: 3px solid #895000;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none;
+    transition: none;
+    scroll-behavior: auto;
+  }
+}
