@@ -34,7 +34,7 @@ flowchart LR
   real services. A fresh Claude reviewer then checks the diff against the brief and the PRD.
 - **Landing.** Claude commits under your identity, `wp pr` opens the pull request, and `wp land`
   fast-forwards `main` once CI is green.
-- **Parallelism.** Up to `MAX_PARALLEL` workers (8) run at once. WPs that claim overlapping paths
+- **Parallelism.** Up to `MAX_PARALLEL` workers (16) run at once. WPs that claim overlapping paths
   never run together.
 
 ## Setup
@@ -48,8 +48,8 @@ flowchart LR
    - `pnpm install`, which installs the husky hooks;
    - `cp .env.example .env.local`, then fill in `OPENAI_API_KEY` and generate `SESSION_SECRET` and
      `APPROVAL_HMAC_SECRET` with `openssl rand -base64 48`.
-3. Set `CODEX_MODEL` to the id of GPT 6.1 Sol in `.orchestration/config.local.env`:
-   `CODEX_MODEL=<id>`.
+3. Optional: `orchestration/config.env` runs 16 workers on GPT 6.1 Sol (`gpt-6.1-sol`) at `xhigh`
+   effort. Override any of these in `.orchestration/config.local.env`.
 4. Run `orchestration/bin/wp doctor` until it is green.
 5. Run `caffeinate -dimsu &`, start `claude` in the repository, then run `/orchestrate W0`.
 
