@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-stockerau"
+name_de: "Kundenservice Stockerau"
+name_simple: "ÖGK-Büro Stockerau"
+carrier: "oegk"
+region: "Niederösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882886&portal=oegkportal"
+address:
+  street: "Parkgasse 17"
+  postal_code: "2000"
+  locality: "Stockerau"
+  country: "AT"
+phone: "+43 5 0766-126100"
+email: "stockerau@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.30
+    Dienstag:07.30 – 14.30
+    Mittwoch:07.30 – 14.30
+    Donnerstag:07.30 – 14.30
+    Freitag:07.30 – 12.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882886&portal=oegkportal"
+    quote: |-
+      Kundenservice Stockerau
+      Parkgasse 17
+      2000 Stockerau
+      Telefon: +43 5 0766-126100
+      E-Mail: stockerau@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882886&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.30
+      Dienstag:07.30 – 14.30
+      Mittwoch:07.30 – 14.30
+      Donnerstag:07.30 – 14.30
+      Freitag:07.30 – 12.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882886&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
