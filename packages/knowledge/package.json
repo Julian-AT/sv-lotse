@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./loaders/eko": "./src/loaders/eko/index.ts"
   },
   "scripts": {
     "typecheck": "../../node_modules/.bin/tsc --noEmit",
