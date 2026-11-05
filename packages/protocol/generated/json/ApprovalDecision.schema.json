@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approvalId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "approved": {
+      "type": "boolean"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "via": {
+      "enum": [
+        "voice",
+        "key",
+        "click"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "approvalId",
+    "approved",
+    "via"
+  ],
+  "type": "object"
+}
