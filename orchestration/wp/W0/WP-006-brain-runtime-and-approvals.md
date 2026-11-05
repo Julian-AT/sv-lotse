@@ -148,6 +148,11 @@ Later waves implement the tools; this WP fixes their shape.
 
 ## Notes for the implementer
 
+- Autonomy level (decision 2026-11-05, recorded as a PRD deviation for M0): the schema stores it on
+  `profile.autonomy_level`, not on `case`. Resolve it server-side from the profile of the case's
+  subject (case -> subject -> profile, default `L1` when no profile exists). Never accept it from the
+  client. No schema change.
+
 - Database access goes through `@lotse/db` (WP-013), not `@lotse/brain/db`; add it as a
   `workspace:*` dependency.
 
