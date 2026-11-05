@@ -68,6 +68,25 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
 
 ## Engineering standards
 
+### Code quality (senior standard, enforced by `bun run quality` and Biome)
+
+- No configuration in logic: URLs, model ids, thresholds, timeouts, limits and feature switches come
+  from validated environment configuration or named, exported constants in one `config` module per
+  package. Model ids only through the brain's model router (or a package's single model config with
+  an environment override where the brain cannot be imported).
+- No domain data in code: benefits, offices, forms, fee rules, phrases, patterns and allowlists live
+  as data in `packages/knowledge` (or `data/` folders inside a package for its own fixtures), with
+  sources.
+- No user-facing text in components or tools: keep it in a copy module per feature (German first,
+  English second), never inline.
+- Small, single-purpose modules and functions (cognitive complexity at most 15); explicit return
+  types on exported functions; `import type` for types; no `any`, no non-null assertions, no
+  `console` outside CLIs and scripts; errors are typed and carry no user content.
+- Public API only through each package's `exports`; never import another package's `src/` paths.
+- Tests read like specifications: named after the behaviour, arrange-act-assert, no sleeps, no
+  snapshot-only logic tests.
+
+
 - **TypeScript:**
   - strict mode, ESM only, Node.js 22+;
   - Zod at every boundary (HTTP, tools, protocol, YAML, env);
