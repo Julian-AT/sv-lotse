@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>de</string>
+	<key>CFBundleDisplayName</key>
+	<string>SV KI-Lotse</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>de</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>SV KI-Lotse</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LOTSE_WORKSPACE_URL</key>
+	<string>$(LOTSE_WORKSPACE_URL)</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.2</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Nach Ihrer Freigabe trägt der Lotse geprüfte Termine und Fristen in Ihren Kalender ein. Er liest keine bestehenden Termine.</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>Nach Ihrer Freigabe trägt der Lotse geprüfte Termine und Fristen in Ihren Kalender ein.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Für Spracheingaben und freigegebene Gespräche nimmt der Lotse Ihre Stimme nach Ihrer Zustimmung auf.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Die Apple-Spracherkennung wandelt Ihre Spracheingabe in Text für den Arbeitsbereich um.</string>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
+</dict>
+</plist>
