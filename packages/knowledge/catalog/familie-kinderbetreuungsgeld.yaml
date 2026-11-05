@@ -1,0 +1,380 @@
+# Awaiting human review; sources checked.
+id: familie-kinderbetreuungsgeld
+name_de: Kinderbetreuungsgeld
+name_simple: Geld für die Betreuung Ihres Kindes
+area: E
+life_situations:
+  - family-with-child
+scope: federal
+carriers:
+  - oegk
+  - svs
+  - bvaeb
+criteria:
+  - id: family-benefit
+    text_de:
+      Im österreichischen Regelfall müssen Anspruch und tatsächlicher Bezug der Familienbeihilfe
+      bestehen. Gleichartige ausländische Leistungen sind gesondert zu prüfen.
+    condition: family_benefit_received == true
+    legal_basis: § 2 KBGG (SozDok, in Kraft seit 2025-11-01; KBGG=PARA=2=64=2025-10-31=2025-11-01);
+      aktuelle Aufenthaltsregeln vom Krankenversicherungsträger prüfen lassen
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote: Anspruch und Bezug der Familienbeihilfe für das Kind,
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: centre-of-life
+    text_de: Im österreichischen Regelfall liegt der Lebensmittelpunkt von Elternteil und Kind in
+      Österreich. Grenzüberschreitende Fälle mit der Krankenkasse klären.
+    condition: centre_austria == true
+    legal_basis: § 2 KBGG (SozDok, in Kraft seit 2025-11-01; KBGG=PARA=2=64=2025-10-31=2025-11-01);
+      aktuelle Aufenthaltsregeln vom Krankenversicherungsträger prüfen lassen
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote: Lebensmittelpunkt von antragstellendem Elternteil und Kind in Österreich,
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: shared-home
+    text_de:
+      Elternteil und Kind leben in einer auf Dauer angelegten, mindestens 91-tägigen Wohn- und
+      Wirtschaftsgemeinschaft und haben dort dieselbe Hauptwohnsitzmeldung. Gesetzliche Ausnahmen
+      sind gesondert zu prüfen.
+    condition: household_days >= 91 and same_main_residence == true
+    legal_basis: § 2 KBGG (SozDok, in Kraft seit 2025-11-01; KBGG=PARA=2=64=2025-10-31=2025-11-01);
+      aktuelle Aufenthaltsregeln vom Krankenversicherungsträger prüfen lassen
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote:
+        ein auf Dauer angelegter (mindestens 91-tägiger) gemeinsamer Haushalt mit dem Kind und idente
+        Hauptwohnsitzmeldungen an dieser Adresse,
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: income-limit
+    text_de:
+      Die Zuverdienstgrenze des gewählten Systems muss pro Kalenderjahr eingehalten werden. Die
+      Krankenkasse klärt die Berechnung; ein einfaches Monatsnettoeinkommen reicht dafür nicht aus.
+    legal_basis: § 2 Abs. 1 Z 3, §§ 8, 8b und § 24 Abs. 1 Z 3 KBGG (SozDok)
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote: Einhaltung der Zuverdienstgrenze pro Kalenderjahr.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: lawful-residence
+    text_de:
+      Bei nicht österreichischen Staatsangehörigen sind rechtmäßiger Aufenthalt oder einschlägige
+      asylrechtliche Voraussetzungen zu prüfen. Keine automatische Ablehnung anhand der
+      Staatsangehörigkeit.
+    legal_basis: § 2 KBGG (SozDok, in Kraft seit 2025-11-01; KBGG=PARA=2=64=2025-10-31=2025-11-01);
+      aktuelle Aufenthaltsregeln vom Krankenversicherungsträger prüfen lassen
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote:
+        Für Nicht-Österreicherinnen und Nicht-Österreicher zusätzlich ein rechtmäßiger Aufenthalt in
+        Österreich (NAG-Karte) bzw. die Erfüllung bestimmter asylrechtlicher Voraussetzungen.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: separated-parents
+    text_de: Bei getrennt lebenden Eltern sind zusätzlich Obsorge, überwiegende Betreuung und
+      Familienbeihilfenbezug durch den antragstellenden Elternteil zu prüfen.
+    legal_basis: § 2 KBGG (SozDok, in Kraft seit 2025-11-01; KBGG=PARA=2=64=2025-10-31=2025-11-01);
+      aktuelle Aufenthaltsregeln vom Krankenversicherungsträger prüfen lassen
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote:
+        Bei getrennt lebenden Eltern zusätzlich Obsorgeberechtigung (mit überwiegender Betreuung des
+        Kindes) und Bezug der Familienbeihilfe durch den antragstellenden Elternteil.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: cross-border
+    text_de: Wohnort oder Beschäftigung im Ausland erfordern eine Prüfung der Zuständigkeit für die
+      gesamte Familie durch die Krankenkasse; sie schließen einen Anspruch nicht automatisch aus.
+    legal_basis: KBGG; Verordnung (EG) Nr. 883/2004
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote: In bestimmten Fällen kann es aber möglich sein, auch bei einem Wohnort oder einer
+        Beschäftigung im EU-Ausland einen Anspruch auf österreichische Familienleistungen zu
+        erwerben.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: application
+    text_de: Kinderbetreuungsgeld ist gesondert zu beantragen, frühestens am Tag der Geburt. Eine
+      Geburtsmeldung oder ein Wochengeldantrag ersetzt den Antrag nicht.
+    condition: child_born == true
+    legal_basis: § 4 KBGG (SozDok)
+    source:
+      url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+      quote: Das Kinderbetreuungsgeld (KBG), der Partnerschaftsbonus und die Beihilfe zum pauschalen
+        Kinderbetreuungsgeld gebühren nur auf Antrag. Eine Antragstellung ist frühestens ab dem Tag
+        der Geburt möglich.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: application-period
+    text_de: Kinderbetreuungsgeld wird höchstens 182 Tage rückwirkend gewährt. Antrag bald nach der
+      Geburt stellen; fehlende Unterlagen können nachgereicht werden.
+    legal_basis: § 4 KBGG (SozDok)
+    source:
+      url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+      quote:
+        Da das Kinderbetreuungsgeld nur bis zu 182 Tage rückwirkend geltend gemacht werden kann, wird
+        empfohlen, unmittelbar nach der Geburt den Antrag zu stellen, damit keine Bezugszeiten
+        verloren gehen.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: initial-proof
+    text_de: Für das volle Kinderbetreuungsgeld sind bei der Antragstellung die fünf
+      Schwangerschaftsuntersuchungen und die erste Kindesuntersuchung nachzuweisen.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+      quote: Bei der Antragstellung müssen die fünf Schwangerschaftsuntersuchungen und die erste
+        Untersuchung des Kindes (in Kopie) nachgewiesen werden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: later-proof
+    text_de: Die Kindesuntersuchungen 2 bis 5 erfolgen bis zur Vollendung des 14. Lebensmonats. Der
+      Nachweis erfolgt spätestens bis zur Vollendung des 15. Lebensmonats.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+      quote:
+        Die restlichen Untersuchungen müssen bis zum 15. Lebensmonat des Kindes (ebenfalls in Kopie)
+        nachgewiesen werden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: electronic-proof
+    text_de: Nach erfolgreichem elektronischem Nachweis durch den eEKP sind keine weiteren Nachweise
+      nötig, solange die Krankenkasse nichts anderes mitteilt.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+      quote:
+        In jenen Fällen, in denen die Nachweise erfolgreich elektronisch durch den eEKP gemäß § 6
+        Abs. 2 EKPG erfolgt sind, entfällt die Nachweispflicht der antragstellenden Elternteile,
+        sofern seitens des Krankenversicherungsträgers keine gegenteilige Information ergeht.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: late-proof
+    text_de:
+      "Bei verspätetem Nachweis die Krankenkasse fragen: Die Nachweise können bis spätestens zur
+      Vollendung des 18. Lebensmonats nachgebracht werden."
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+      quote: die jeweiligen Nachweise bis spätestens zur Vollendung des 18. Lebensmonates des Kindes
+        nachgebracht werden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: unavoidable-missing-proof
+    text_de: Wurden Untersuchungen aus Gründen, die die Eltern nicht zu vertreten haben, nicht
+      durchgeführt oder nicht nachgewiesen, kann trotzdem Anspruch auf die volle Höhe bestehen. Die
+      Krankenkasse prüft das.
+    legal_basis: § 7 KBGG und § 24c KBGG (SozDok, in Kraft seit 2026-10-01;
+      KBGG=PARA=7=115_82=2025-12-30=2026-10-01; KBGG=PARA=24c=115_115_82=2025-12-30=2026-10-01)
+    source:
+      url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+      quote:
+        die Vornahme oder der Nachweis der Untersuchungen nur aus Gründen, die nicht von den Eltern
+        zu vertreten sind, unterbleibt oder
+      retrieved_at: 2026-11-05T23:54:09.967Z
+  - id: system-specific-conditions
+    text_de:
+      Beim einkommensabhängigen System gelten zusätzliche Regeln zur vorherigen Erwerbstätigkeit
+      und zu Leistungen aus der Arbeitslosenversicherung. Die Krankenkasse prüft anrechenbare
+      Zeiten, Unterbrechungen und mögliche Sonderleistungen. Vor der Antragstellung klären.
+    legal_basis: § 24 KBGG (SozDok, in Kraft seit 2025-01-01; KBGG=PARA=24=11=2025-03-18=2025-01-01); § 24d KBGG
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080613
+      quote:
+        Für das einkommensabhängige Kinderbetreuungsgeld gelten neben den allgemeinen auch spezielle
+        Anspruchsvoraussetzungen.
+      retrieved_at: 2026-11-05T23:54:09.967Z
+office_rules:
+  - when: responsible_carrier == "oegk" and region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: responsible_carrier == "oegk" and region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: responsible_carrier == "oegk" and region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: responsible_carrier == "oegk" and region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: responsible_carrier == "oegk" and region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: responsible_carrier == "oegk" and region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: responsible_carrier == "oegk" and region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: responsible_carrier == "oegk" and region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+  - when: responsible_carrier == "oegk" and region == "Wien"
+    office: ref:offices/oegk-kundenservice-wien-kinderbetreuungsgeld
+  - when: responsible_carrier == "svs"
+    office: ref:offices/svs-hauptstelle
+  - when: responsible_carrier == "bvaeb"
+    office: ref:offices/bvaeb-hauptstelle
+documents:
+  - id: birth-certificate
+    name_de: Geburtsurkunde des Kindes
+    required: false
+    obtain_from: Standesamt; Bedarf mit der Krankenkasse klären, insbesondere bei Geburt im Ausland.
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote: Geburtsurkunde des Kindes
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: initial-examination-proofs
+    name_de: Nachweise der fünf Schwangerschaftsuntersuchungen und der ersten Kindesuntersuchung
+    required: false
+    obtain_from:
+      Ärztin oder Arzt; bei Papiernachweisen Kopien der Bestätigungen. Bereits erfolgreich
+      elektronisch übermittelte Nachweise mit der Krankenkasse abgleichen.
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+      quote: Bei der Antragstellung müssen die fünf Schwangerschaftsuntersuchungen und die erste
+        Untersuchung des Kindes (in Kopie) nachgewiesen werden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: later-examination-proofs
+    name_de: Nachweise der Kindesuntersuchungen 2 bis 5
+    required: false
+    obtain_from:
+      Ärztin oder Arzt; Papiernachweise als Kopie grundsätzlich bis zur Vollendung des 15.
+      Lebensmonats an die Krankenkasse.
+    source:
+      url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+      quote:
+        Die restlichen Untersuchungen müssen bis zum 15. Lebensmonat des Kindes (ebenfalls in Kopie)
+        nachgewiesen werden.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: custody-proof
+    name_de: Obsorgenachweis bei getrennt lebenden Eltern
+    required: false
+    obtain_from: Gericht oder vorhandene Obsorgevereinbarung; zuständige Krankenkasse klärt den
+      erforderlichen Nachweis.
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote:
+        Obsorgeberechtigung für das Kind und Bezug der Familienbeihilfe durch den antragstellenden
+        Elternteil
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: residence-status
+    name_de: Aufenthaltsnachweise von Elternteil und Kind, falls erforderlich
+    required: false
+    obtain_from: Zuständige Aufenthalts- oder Asylbehörde; je nach Aufenthaltsstatus
+      Anmeldebescheinigung, Aufenthaltstitel oder Bescheid.
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote:
+        Für Nicht-Österreicherinnen und Nicht-Österreicher zusätzlich ein rechtmäßiger Aufenthalt in
+        Österreich (NAG-Karte) bzw. die Erfüllung bestimmter asylrechtlicher Voraussetzungen.
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: foreign-benefits
+    name_de: Nachweise ausländischer Familienleistungen, falls vorhanden
+    required: false
+    obtain_from: Zuständige ausländische Leistungsstelle.
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote: Nachweis über den Bezug der ausländischen Familienbeihilfe
+      retrieved_at: 2026-11-05T23:52:44.349Z
+  - id: maternity-payment
+    name_de: Wochengeldbestätigung, falls von einer anderen Stelle bezogen
+    required: false
+    obtain_from: Zahlender Krankenversicherungsträger oder ausländische beziehungsweise private Leistungsstelle.
+    source:
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+      quote: Wochengeldbestätigung bzw. Bestätigung über den Erhalt wochengeldähnlicher Leistungen
+      retrieved_at: 2026-11-05T23:52:44.349Z
+forms:
+  - search: Bundeseinheitlicher Antrag auf Kinderbetreuungsgeld
+    publisher: Österreichische Sozialversicherung
+process: ref:processes/familie-kinderbetreuungsgeld
+appointment_channels: []
+sources:
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote: Anspruch und Bezug der Familienbeihilfe für das Kind,
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote: Lebensmittelpunkt von antragstellendem Elternteil und Kind in Österreich,
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote:
+      ein auf Dauer angelegter (mindestens 91-tägiger) gemeinsamer Haushalt mit dem Kind und idente
+      Hauptwohnsitzmeldungen an dieser Adresse,
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote: Einhaltung der Zuverdienstgrenze pro Kalenderjahr.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote:
+      Für Nicht-Österreicherinnen und Nicht-Österreicher zusätzlich ein rechtmäßiger Aufenthalt in
+      Österreich (NAG-Karte) bzw. die Erfüllung bestimmter asylrechtlicher Voraussetzungen.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote:
+      Bei getrennt lebenden Eltern zusätzlich Obsorgeberechtigung (mit überwiegender Betreuung des
+      Kindes) und Bezug der Familienbeihilfe durch den antragstellenden Elternteil.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote: In bestimmten Fällen kann es aber möglich sein, auch bei einem Wohnort oder einer
+      Beschäftigung im EU-Ausland einen Anspruch auf österreichische Familienleistungen zu erwerben.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote: Das Kinderbetreuungsgeld (KBG), der Partnerschaftsbonus und die Beihilfe zum pauschalen
+      Kinderbetreuungsgeld gebühren nur auf Antrag. Eine Antragstellung ist frühestens ab dem Tag
+      der Geburt möglich.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote:
+      Da das Kinderbetreuungsgeld nur bis zu 182 Tage rückwirkend geltend gemacht werden kann, wird
+      empfohlen, unmittelbar nach der Geburt den Antrag zu stellen, damit keine Bezugszeiten
+      verloren gehen.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote: Bei der Antragstellung müssen die fünf Schwangerschaftsuntersuchungen und die erste
+      Untersuchung des Kindes (in Kopie) nachgewiesen werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote:
+      Die restlichen Untersuchungen müssen bis zum 15. Lebensmonat des Kindes (ebenfalls in Kopie)
+      nachgewiesen werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote: In jenen Fällen, in denen die Nachweise erfolgreich elektronisch durch den eEKP gemäß § 6
+      Abs. 2 EKPG erfolgt sind, entfällt die Nachweispflicht der antragstellenden Elternteile,
+      sofern seitens des Krankenversicherungsträgers keine gegenteilige Information ergeht.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote: die jeweiligen Nachweise bis spätestens zur Vollendung des 18. Lebensmonates des Kindes
+      nachgebracht werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote: Geburtsurkunde des Kindes
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote:
+      Obsorgeberechtigung für das Kind und Bezug der Familienbeihilfe durch den antragstellenden
+      Elternteil
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote: Nachweis über den Bezug der ausländischen Familienbeihilfe
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal
+    quote: Wochengeldbestätigung bzw. Bestätigung über den Erhalt wochengeldähnlicher Leistungen
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote:
+      Für die Antragstellung und Auszahlung dieser Leistungen ist jener Krankenversicherungsträger
+      zuständig, bei dem Wochengeld bezogen wurde beziehungsweise bei dem man versichert
+      (anspruchsberechtigt) ist beziehungsweise zuletzt versichert (anspruchsberechtigt) war.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote: Hat bisher keine Versicherung bestanden, ist die Österreichische Gesundheitskasse zuständig.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote: Fehlende Unterlagen können nachgereicht werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote:
+      Der Antrag ist im Original beim Krankenversicherungsträger einzubringen, hier ist ausnahmslos
+      das bundeseinheitliche Antragsformular zu verwenden. Eine Einbringung per E-Mail ist nicht
+      möglich.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote:
+      die Vornahme oder der Nachweis der Untersuchungen nur aus Gründen, die nicht von den Eltern
+      zu vertreten sind, unterbleibt oder
+    retrieved_at: 2026-11-05T23:54:09.967Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080613
+    quote:
+      Für das einkommensabhängige Kinderbetreuungsgeld gelten neben den allgemeinen auch spezielle
+      Anspruchsvoraussetzungen.
+    retrieved_at: 2026-11-05T23:54:09.967Z
+as_of: 2026-11-06
