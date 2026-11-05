@@ -32,6 +32,12 @@ public final class MacShellController {
             overlayVisible.toggle()
             if overlayVisible { overlay.showOverlay() } else { overlay.hideOverlay() }
         }
+        shortcut.configure(shortcut: menu.shortcutChoice.shortcut)
+        menu.shortcutChanged = { [weak self] choice in
+            guard let self else { return }
+            pushToTalk.cancel()
+            shortcut.configure(shortcut: choice.shortcut)
+        }
         menu.enableVoice = { [weak self] in self?.enableVoice() }
         menu.analyticsConsentChanged = { [weak self] enabled in self?.configureAnalytics(enabled) }
         shortcut.onTransition = { [weak self] transition in self?.handleShortcut(transition) }
@@ -83,7 +89,7 @@ public final class MacShellController {
         let alert = NSAlert()
         alert.messageText = "Sprechtaste aktivieren"
         alert.informativeText = """
-            Für die globale Sprechtaste ⌃⌥ benötigt der Lotse die Erlaubnis zur Eingabeüberwachung.
+            Für die globale Sprechtaste (\(menu.shortcutChoice.title)) benötigt der Lotse die Erlaubnis zur Eingabeüberwachung.
             Mikrofon und Spracherkennung werden beim ersten Sprechen angefragt.
             """
         alert.addButton(withTitle: "Aktivieren")

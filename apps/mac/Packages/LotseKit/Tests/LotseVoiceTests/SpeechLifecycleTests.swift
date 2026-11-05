@@ -1,3 +1,4 @@
+import CoreGraphics
 import Foundation
 import Testing
 
@@ -176,6 +177,72 @@ func cancelAllSpeechSessions() async throws {
     #expect(first.cancelCount == 1)
     #expect(second.cancelCount == 1)
     #expect(harness.updates.filter(\.final).isEmpty)
+}
+
+@Test("FR-C1 an early recognizer final stops input and sends exactly once on release", arguments: [false, true])
+@MainActor
+func earlyFinalWaitsForRelease(emptyFinal: Bool) async throws {
+    let harness = SpeechHarness()
+    let controller = PushToTalkController(transcription: harness.provider)
+    controller.handle(.pressed)
+    await controller.startTask?.value
+    let input = try #require(harness.inputs.first)
+    if emptyFinal { input.report(text: "Bitte öffnen", final: false) }
+    input.report(text: emptyFinal ? nil : "Bitte öffnen", final: true)
+    #expect(input.finishCount == 1)
+    #expect(harness.updates == [TranscriptUpdate(text: "Bitte öffnen", final: false)])
+    input.report(text: "Doppeltes Ergebnis", final: true)
+    controller.handle(.released)
+    controller.handle(.released)
+    input.report(text: "Spätes Ergebnis", final: true)
+    #expect(harness.updates.filter(\.final) == [TranscriptUpdate(text: "Bitte öffnen", final: true)])
+    controller.cancel()
+}
+
+@Test("FR-C1 cancel after an early final discards the transcript before release")
+@MainActor
+func cancelEarlyFinalBeforeRelease() async throws {
+    let harness = SpeechHarness()
+    let controller = PushToTalkController(transcription: harness.provider)
+    controller.handle(.pressed)
+    await controller.startTask?.value
+    let input = try #require(harness.inputs.first)
+    input.report(text: "Bitte öffnen", final: true)
+    controller.cancel()
+    controller.handle(.released)
+    input.report(text: "Bitte öffnen", final: true)
+    #expect(harness.updates.filter(\.final).isEmpty)
+    #expect(input.cancelCount == 1)
+}
+
+@Test("FR-C1 adding a disallowed modifier after an early final cancels without sending",
+      arguments: [CGEventFlags.maskAlternate, .maskCommand, .maskAlphaShift])
+@MainActor
+func addedModifierCancelsEarlyFinal(modifier: CGEventFlags) async throws {
+    let harness = SpeechHarness()
+    let controller = PushToTalkController(transcription: harness.provider)
+    defer { controller.cancel() }
+    var shortcut = PushToTalkShortcut()
+    let flags: CGEventFlags = [.maskControl, .maskShift]
+    controller.handle(shortcut.update(type: .keyDown, keyCode: 49, flags: flags))
+    await controller.startTask?.value
+    let input = try #require(harness.inputs.first)
+    input.report(text: "Bitte öffnen", final: true)
+    #expect(harness.updates.filter(\.final).isEmpty)
+
+    let transition = shortcut.update(type: .flagsChanged, keyCode: 0, flags: flags.union(modifier))
+    #expect(transition == .cancelled)
+    controller.handle(transition)
+    #expect(shortcut.isPressed == false)
+    #expect(harness.updates.filter(\.final).isEmpty)
+    #expect(input.cancelCount == 1)
+    controller.handle(shortcut.update(type: .flagsChanged, keyCode: 0, flags: flags))
+    controller.handle(shortcut.update(type: .keyDown, keyCode: 49, flags: flags, isAutorepeat: true))
+    await controller.startTask?.value
+    controller.handle(shortcut.update(type: .keyUp, keyCode: 49, flags: flags))
+    input.report(text: "Spätes Ergebnis", final: true)
+    #expect(harness.updates.filter(\.final).isEmpty)
+    #expect(harness.inputs.count == 1)
 }
 
 @MainActor

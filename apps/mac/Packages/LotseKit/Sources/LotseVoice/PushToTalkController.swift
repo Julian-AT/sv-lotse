@@ -34,6 +34,8 @@ public final class PushToTalkController {
             startTask?.cancel()
             startTask = nil
             transcription.finish()
+        case .cancelled:
+            cancel()
         case .none: break
         }
     }

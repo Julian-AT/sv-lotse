@@ -12,6 +12,12 @@ public final class GlobalPushToTalkShortcutMonitor {
 
     public init(shortcut: PushToTalkShortcut = PushToTalkShortcut()) { self.shortcut = shortcut }
 
+    public func configure(shortcut: PushToTalkShortcut) {
+        // The shell cancels the old hold before replacing its shortcut; never synthesize a release-to-send.
+        self.shortcut = shortcut
+        self.shortcut.reset()
+    }
+
     public func start() throws {
         guard eventTap == nil else { return }
         let mask = [CGEventType.flagsChanged, .keyDown, .keyUp].reduce(CGEventMask(0)) { $0 | (1 << $1.rawValue) }
@@ -57,7 +63,8 @@ public final class GlobalPushToTalkShortcutMonitor {
             return
         }
         let transition = shortcut.update(
-            type: type, keyCode: UInt16(event.getIntegerValueField(.keyboardEventKeycode)), flags: event.flags
+            type: type, keyCode: UInt16(event.getIntegerValueField(.keyboardEventKeycode)), flags: event.flags,
+            isAutorepeat: event.getIntegerValueField(.keyboardEventAutorepeat) != 0
         )
         if transition != .none { onTransition?(transition) }
     }

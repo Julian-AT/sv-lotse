@@ -46,8 +46,8 @@ public final class AppleSpeechTranscriptionProvider {
     public func start(whileHeld isHeld: @escaping @MainActor () -> Bool = { true }) async throws {
         try Task.checkCancellation()
         guard isHeld() else { throw CancellationError() }
-        // Release the previous microphone, but let its recognizer deliver its final transcript.
-        finish()
+        // Only release may send. A replacement start discards an unreleased recording.
+        if let activeSessionID { removeSession(activeSessionID) }
         let sessionID = UUID()
         pendingStartID = sessionID
         defer { if pendingStartID == sessionID { pendingStartID = nil } }
@@ -76,6 +76,12 @@ public final class AppleSpeechTranscriptionProvider {
         guard let sessionID = activeSessionID, let session = sessions[sessionID] else { return }
         activeSessionID = nil
         session.finalRequested = true
+        if session.recognitionEnded {
+            let update = session.accumulator.finish()
+            removeSession(sessionID)
+            if let update { onTranscript?(update.text, update.final) }
+            return
+        }
         session.input?.finish()
         let waitForFinal = waitForFinal
         session.fallbackTask = Task { @MainActor [weak self] in
@@ -101,8 +107,15 @@ public final class AppleSpeechTranscriptionProvider {
     }
 
     private func handleRecognition(_ event: SpeechRecognitionEvent, sessionID: UUID) {
-        guard let session = sessions[sessionID] else { return }
-        let update = session.accumulator.receive(event.text ?? "", final: event.final)
+        guard let session = sessions[sessionID], session.recognitionEnded == false else { return }
+        // A recognizer final ends input, but the user's release is the only send boundary.
+        let update = session.accumulator.receive(event.text ?? "", final: event.final && session.finalRequested)
+        if event.final && session.finalRequested == false {
+            session.recognitionEnded = true
+            session.input?.finish()
+            if let update { onTranscript?(update.text, update.final) }
+            return
+        }
         if event.final {
             removeSession(sessionID)
             if let update { onTranscript?(update.text, update.final) }
@@ -132,6 +145,7 @@ public final class AppleSpeechTranscriptionProvider {
         var accumulator = TranscriptAccumulator()
         var fallbackTask: Task<Void, Never>?
         var finalRequested = false
+        var recognitionEnded = false
     }
 }
 
