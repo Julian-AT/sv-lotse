@@ -1,0 +1,42 @@
+id: "bvaeb-salzburg"
+name_de: "BVAEB – Landesstelle für Salzburg"
+name_simple: "BVAEB-Büro in Salzburg"
+carrier: "bvaeb"
+region: "Salzburg"
+url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857152&portal=bvaebbportal"
+address:
+  street: "St.-Julien-Straße 12A"
+  postal_code: "5020"
+  locality: "Salzburg"
+  country: "AT"
+phone: "050405-27700"
+opening_hours:
+  notes: |-
+    Montag-Donnerstag 8:00-14:00 Uhr
+    Freitag 8:00-13:00 Uhr
+email: "lst.salzburg@bvaeb.at"
+jurisdiction: "Leistungsauskunft & Bewilligungen"
+sources:
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857152&portal=bvaebbportal"
+    quote: |-
+      Landesstelle für
+      Salzburg
+      Öffnungszeiten:
+      Montag-Donnerstag 8:00-14:00 Uhr
+      Freitag 8:00-13:00 Uhr
+      Telefonische Erreichbarkeit (Service-Center):
+      Montag-Donnerstag 7:00-16:00 Uhr
+      Freitag 7:00-14:00 Uhr
+      Telefon: 050405-27700
+      e-Mail: Diese finden Sie untenstehend je Fachbereich
+      Standort
+      St.-Julien-Straße 12A, 5020 Salzburg
+      St.-Julien-Straße 12A, 5020 Salzburg
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.854342&portal=bvaebbportal"
+    quote: "lst.salzburg@bvaeb.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857152&portal=bvaebbportal"
+    quote: "Leistungsauskunft & Bewilligungen"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
