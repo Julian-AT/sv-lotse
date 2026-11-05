@@ -1,0 +1,36 @@
+id: "oegk-kundenservice-bad-aussee"
+name_de: "Kundenservice Bad Aussee"
+name_simple: "ÖGK-Büro Bad Aussee"
+carrier: "oegk"
+region: "Steiermark"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882994&portal=oegkportal"
+address:
+  street: "Bahnhofstraße 237"
+  postal_code: "8990"
+  locality: "Bad Aussee"
+  country: "AT"
+phone: "+43 5 0766-157777"
+email: "badaussee@oegk.at"
+opening_hours:
+  notes: |-
+    Dienstag:07.00 – 14.00
+    Donnerstag:07.00 – 14.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882994&portal=oegkportal"
+    quote: |-
+      Kundenservice Bad Aussee
+      Bahnhofstraße 237
+      8990 Bad Aussee
+      Telefon: +43 5 0766-157777
+      E-Mail: badaussee@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882994&portal=oegkportal"
+    quote: |-
+      Dienstag:07.00 – 14.00
+      Donnerstag:07.00 – 14.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882994&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
