@@ -1,0 +1,132 @@
+:root {
+  font-family: var(--lotse-font-body);
+  color: var(--lotse-text);
+  background: var(--lotse-canvas);
+  font-size: 100%;
+  line-height: 1.6;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-image: var(--lotse-canvas-decoration);
+}
+a {
+  color: var(--lotse-accent);
+  text-underline-offset: 0.25em;
+}
+/* Element defaults sit in the base layer so component utilities (AI Elements) can override them. */
+@layer base {
+  a,
+  button,
+  summary {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+  }
+  button,
+  summary {
+    cursor: pointer;
+    font: inherit;
+  }
+  button {
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--lotse-accent);
+    border-radius: var(--lotse-radius-small);
+    background: var(--lotse-accent);
+    color: var(--lotse-on-accent);
+  }
+  button:disabled {
+    cursor: wait;
+    opacity: 0.75;
+  }
+  :focus-visible {
+    outline: 3px solid var(--lotse-focus);
+    outline-offset: 4px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none;
+      transition: none;
+      scroll-behavior: auto;
+    }
+  }
+  select,
+  textarea,
+  input:not([type="checkbox"]):not([type="radio"]) {
+    min-height: 44px;
+    min-width: 44px;
+    width: 100%;
+    padding: 0.5rem;
+    font: inherit;
+    color: inherit;
+    background: var(--lotse-surface);
+    border: 1px solid var(--lotse-border);
+    border-radius: var(--lotse-radius-small);
+  }
+  select {
+    max-width: 100%;
+  }
+}
+p,
+h1,
+h2,
+h3,
+label,
+legend,
+button,
+li {
+  overflow-wrap: anywhere;
+}
+html[data-reduced-motion="true"] *,
+html[data-reduced-motion="true"] *::before,
+html[data-reduced-motion="true"] *::after {
+  animation: none;
+  transition: none;
+  scroll-behavior: auto;
+}
+html[data-high-contrast="true"] {
+  --lotse-text: CanvasText;
+  --lotse-muted: CanvasText;
+  --lotse-canvas: Canvas;
+  --lotse-surface: Canvas;
+  --lotse-subtle: Canvas;
+  --lotse-border: CanvasText;
+  --lotse-accent: LinkText;
+  --lotse-on-accent: Canvas;
+  --lotse-color-brand-text: LinkText;
+}
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+  button,
+  select,
+  input {
+    border: 1px solid ButtonText;
+  }
+}
+
+/* Native chrome owns navigation and preferences around the sole embedded conversation. */
+html[data-native-workspace="true"] body > header,
+html[data-native-workspace="true"] body > footer,
+html[data-native-workspace="true"] #main > form {
+  display: none;
+}
+html[data-native-workspace="true"] #main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 1.5rem;
+}
+html[data-native-workspace="true"],
+html[data-native-workspace="true"] body {
+  background: transparent;
+}
