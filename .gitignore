@@ -1,0 +1,57 @@
+# dependencies
+node_modules/
+
+# builds and caches
+.next/
+out/
+dist/
+build/
+.vercel/
+*.tsbuildinfo
+.cache/
+.turbo/
+.eslintcache
+
+# tests
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# environment
+.env
+.env.*
+!.env.example
+
+# swift and xcode
+apps/mac/*.xcodeproj/
+.build/
+DerivedData/
+.swiftpm/
+xcuserdata/
+*.xcuserstate
+
+# local orchestration state
+
+# logs
+*.log
+
+# os and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# SozDok XML corpus (14k files): kept locally, not tracked
+data/svbox/Rechtstexte/
+
+# Research lane
+ml/.venv/
+ml/data/
+ml/checkpoints/
+ml/**/__pycache__/
+ml/.pytest_cache/
+ml/.ruff_cache/
+paper/build/
