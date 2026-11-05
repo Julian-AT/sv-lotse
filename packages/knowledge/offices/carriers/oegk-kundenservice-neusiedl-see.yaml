@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-neusiedl-see"
+name_de: "Kundenservice Neusiedl/See"
+name_simple: "ÖGK-Büro Neusiedl/See"
+carrier: "oegk"
+region: "Burgenland"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882906&portal=oegkportal"
+address:
+  street: "Gartenweg 26"
+  postal_code: "7100"
+  locality: "Neusiedl/See"
+  country: "AT"
+phone: "+43 5 0766-133200"
+email: "neusiedl@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 12.00 / 13.00 – 16.00
+    Dienstag:07.30 – 12.00 / 13.00 – 16.00
+    Mittwoch:07.30 – 12.00 / 13.00 – 16.00
+    Donnerstag:07.30 – 12.00 / 13.00 – 16.00
+    Freitag:07.30 – 12.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882906&portal=oegkportal"
+    quote: |-
+      Kundenservice Neusiedl/See
+      Gartenweg 26
+      7100 Neusiedl/See
+      Telefon: +43 5 0766-133200
+      E-Mail: neusiedl@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882906&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 12.00 / 13.00 – 16.00
+      Dienstag:07.30 – 12.00 / 13.00 – 16.00
+      Mittwoch:07.30 – 12.00 / 13.00 – 16.00
+      Donnerstag:07.30 – 12.00 / 13.00 – 16.00
+      Freitag:07.30 – 12.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882906&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
