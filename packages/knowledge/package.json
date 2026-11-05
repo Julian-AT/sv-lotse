@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./loaders/eko": "./src/loaders/eko/index.ts",
-    "./ingest": "./src/ingest/index.ts"
+    "./ingest": "./src/ingest/index.ts",
+    "./loaders/fees": "./src/loaders/fees/index.ts"
   },
   "scripts": {
     "typecheck": "../../node_modules/.bin/tsc --noEmit",
@@ -23,6 +24,7 @@
     "ai": "^7",
     "cheerio": "^1.2.0",
     "p-limit": "^7.3.3",
+    "pdfjs-dist": "^6.5.438",
     "robots-parser": "^3.0.1",
     "turndown": "^7.2.5",
     "typescript-compiler": "npm:typescript@^6.0.3",
