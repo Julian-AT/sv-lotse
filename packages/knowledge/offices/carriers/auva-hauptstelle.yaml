@@ -1,0 +1,38 @@
+id: "auva-hauptstelle"
+name_de: "AUVA – Hauptstelle"
+name_simple: "AUVA-Büro in Wien"
+carrier: "auva"
+region: "Wien"
+url: "https://auva.at/servicestellen/hauptstelle"
+address:
+  street: "Wienerbergstraße 11"
+  postal_code: "1100"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 93 93-20000"
+email: "kontakt@auva.at"
+opening_hours:
+  notes: |-
+    Die AUVA-Kundendienststellen sind wochentags (Mo - Fr) von 07:00 bis 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+    Wochentags (Mo - Fr) von 08:00 bis 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+jurisdiction: "Die Hauptstelle in Wien hat zentrale und koordinierende Funktionen in der Unternehmensstrategie, der Datenverarbeitung, der Forschung, im Rechts- und Leistungswesen, im Personal- und Finanzwesen und in der Öffentlichkeitsarbeit."
+sources:
+  - url: "https://auva.at/servicestellen/hauptstelle"
+    quote: |-
+      Allgemeine Unfallversicherungsanstalt (AUVA)
+      +43 5 93 93-20000
+      +43 5 93 93-20606
+      Wienerbergstraße 11, 1100 Wien
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/hauptstelle"
+    quote: "kontakt@auva.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/hauptstelle"
+    quote: |-
+      Die AUVA-Kundendienststellen sind wochentags (Mo - Fr) von 07:00 bis 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+      Wochentags (Mo - Fr) von 08:00 bis 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/hauptstelle"
+    quote: "Die Hauptstelle in Wien hat zentrale und koordinierende Funktionen in der Unternehmensstrategie, der Datenverarbeitung, der Forschung, im Rechts- und Leistungswesen, im Personal- und Finanzwesen und in der Öffentlichkeitsarbeit."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
