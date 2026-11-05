@@ -8,9 +8,13 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --exclude 'test/**/*.db.test.ts'",
+    "test:db": "vitest run test/loader/catalog.db.test.ts --hookTimeout=30000 --testTimeout=15000",
+    "catalog:load": "bun src/loader/cli.ts",
+    "e2:scan": "bun src/e2/cli.ts"
   },
   "dependencies": {
+    "@lotse/brain": "workspace:*",
     "cheerio": "^1.2.0",
     "p-limit": "^7.3.3",
     "robots-parser": "^3.0.1",
