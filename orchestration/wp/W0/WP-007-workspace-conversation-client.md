@@ -4,14 +4,13 @@ title: Workspace conversation client and bridge (web side)
 wave: W0
 lane: workspace
 risk: normal
-depends_on: [WP-006]
+depends_on: [WP-006, WP-181]
 fr: [FR-C9, FR-L4, FR-A2, FR-P3, NFR-6]
 owns:
   - apps/web/src/app/(workspace)/**
   - apps/web/src/conversation/**
   - apps/web/src/bridge/**
   - apps/web/e2e/conversation/**
-  - packages/ui/**
 may_touch:
   - apps/web/AGENTS.md
   - apps/web/package.json
