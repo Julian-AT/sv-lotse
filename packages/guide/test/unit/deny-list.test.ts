@@ -11,6 +11,10 @@ test.each([
   "Submit application",
   "Pay now",
   "Confirm booking",
+  "Confirm appointment",
+  "Confirm reservation",
+  "Confirm your appointment",
+  "Appointment confirmation",
   "Book appointment",
   "Delete record",
 ])("AC4 denies the label %s using validated data", (label) =>

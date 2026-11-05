@@ -35,6 +35,45 @@ export function toCapsulePage(snapshot: PageSnapshot): CapsulePage {
 
 export const normalizeWhitespace = (text: string): string => text.replace(/\s+/gu, " ").trim();
 
+// ARIA roles that support an accessible name derived from descendant content.
+const nameFromContentRoles = new Set([
+  "button",
+  "cell",
+  "checkbox",
+  "columnheader",
+  "gridcell",
+  "heading",
+  "link",
+  "menuitem",
+  "menuitemcheckbox",
+  "menuitemradio",
+  "option",
+  "radio",
+  "row",
+  "rowheader",
+  "switch",
+  "tab",
+  "tooltip",
+  "treeitem",
+]);
+
+function contentName(element: Element, seen: Set<Element>): string {
+  return Array.from(element.childNodes, (child) => {
+    if (child.nodeType === 3) return child.textContent ?? "";
+    if (child.nodeType !== 1) return "";
+    const descendant = child as Element;
+    if (["script", "style", "noscript", "template"].includes(descendant.localName)) return "";
+    if (descendant.localName === "br") return " ";
+    const name = referencedName(descendant, seen);
+    // Alternatives are separate name tokens; ordinary inline text stays contiguous.
+    const alternative = ["aria-label", "aria-labelledby", "alt"].some((attribute) =>
+      descendant.getAttribute(attribute)?.trim(),
+    );
+    const titleOnly = descendant.hasAttribute("title") && !descendant.textContent?.trim();
+    return alternative || titleOnly ? ` ${name} ` : name;
+  }).join("");
+}
+
 function referencedName(element: Element, seen: Set<Element>): string {
   if (seen.has(element)) return "";
   seen.add(element);
@@ -42,11 +81,17 @@ function referencedName(element: Element, seen: Set<Element>): string {
   const names = references
     .map((id) => {
       const label = element.ownerDocument.getElementById(id);
-      return label ? referencedName(label, seen) : "";
+      return label ? normalizeWhitespace(referencedName(label, seen)) : "";
     })
     .filter(Boolean);
   if (names.length) return names.join(" ");
-  return element.getAttribute("aria-label") || element.textContent || "";
+  return (
+    normalizeWhitespace(element.getAttribute("aria-label") ?? "") ||
+    element.getAttribute("alt") ||
+    contentName(element, seen) ||
+    element.getAttribute("title") ||
+    ""
+  );
 }
 
 export function accessibleName(element: Element): string {
@@ -54,7 +99,7 @@ export function accessibleName(element: Element): string {
   const referenced = references
     .map((id) => {
       const label = element.ownerDocument.getElementById(id);
-      return label ? referencedName(label, new Set([element])) : "";
+      return label ? normalizeWhitespace(referencedName(label, new Set([element]))) : "";
     })
     .filter(Boolean)
     .join(" ");
@@ -63,7 +108,9 @@ export function accessibleName(element: Element): string {
   if (ariaLabel?.trim()) return normalizeWhitespace(ariaLabel);
   if ("labels" in element) {
     const labels = Array.from((element as HTMLInputElement).labels ?? []);
-    const label = normalizeWhitespace(labels.map((entry) => entry.textContent ?? "").join(" "));
+    const label = normalizeWhitespace(
+      labels.map((entry) => contentName(entry, new Set([element, entry]))).join(" "),
+    );
     if (label) return label;
   }
   const tag = element.localName;
@@ -76,8 +123,8 @@ export function accessibleName(element: Element): string {
       input.value || (input.type === "submit" ? "Submit" : input.type === "reset" ? "Reset" : ""),
     );
   }
-  if (["button", "a", "summary"].includes(tag) || element.hasAttribute("role")) {
-    const content = normalizeWhitespace(element.textContent ?? "");
+  if (nameFromContentRoles.has(roleOf(element))) {
+    const content = normalizeWhitespace(contentName(element, new Set([element])));
     if (content) return content;
   }
   return normalizeWhitespace(
@@ -243,6 +290,16 @@ function structure(element: Element): string {
   return parts.join("/");
 }
 
+function semanticKey(element: Element, role: string, label: string): string {
+  return JSON.stringify([
+    element.localName,
+    element.getAttribute("type"),
+    element.getAttribute("name"),
+    role,
+    label,
+  ]);
+}
+
 // Ordinals distinguish semantic duplicates only; issued handles are never recycled.
 export function createSnapshotter(
   document: Document,
@@ -269,13 +326,7 @@ export function createSnapshotter(
         .map((element) => {
           const role = roleOf(element);
           const label = accessibleName(element);
-          const key = JSON.stringify([
-            element.localName,
-            element.getAttribute("type"),
-            element.getAttribute("name"),
-            role,
-            label,
-          ]);
+          const key = semanticKey(element, role, label);
           let stable = !!element.getAttribute("name");
           for (let node: Element | null = element; node; node = node.parentElement) {
             if (node.id) {
@@ -345,7 +396,14 @@ export function createSnapshotter(
       return { url: document.location.href, handles };
     },
     element(handle: string): Element | undefined {
-      return elements.get(handle);
+      const element = elements.get(handle);
+      if (!element) return;
+      const identity = identities.get(element);
+      // Page listeners can repurpose a surviving node without another capture.
+      return identity?.handle === handle &&
+        identity.key === semanticKey(element, roleOf(element), accessibleName(element))
+        ? element
+        : undefined;
     },
   };
 }

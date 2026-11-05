@@ -11,6 +11,6 @@
   "labelPatterns": [
     "(?:^|[^\\p{L}])(?:submit|send|pay|purchase|delete|remove|checkout)(?:$|[^\\p{L}])",
     "(?:^|[^\\p{L}])(?:absenden|senden|abschicken|übermitteln|bezahlen|zahlen|zahlungspflichtig|kaufen|bestellen|löschen|entfernen)(?:$|[^\\p{L}])",
-    "(?:^|[^\\p{L}])(?:book|booking|reserve|reservation|buchen|buchung|reservieren|reservierung|bestätigen|bestätigung)(?:$|[^\\p{L}])"
+    "(?:^|[^\\p{L}])(?:book|booking|reserve|reservation|confirm|confirmation|buchen|buchung|reservieren|reservierung|bestätigen|bestätigung)(?:$|[^\\p{L}])"
   ]
 }

@@ -37,6 +37,27 @@ export interface Guide {
   dispose(): void;
 }
 
+const actionableRoles = new Set([
+  "button",
+  "checkbox",
+  "combobox",
+  "link",
+  "listbox",
+  "menuitem",
+  "menuitemcheckbox",
+  "menuitemradio",
+  "option",
+  "radio",
+  "scrollbar",
+  "searchbox",
+  "slider",
+  "spinbutton",
+  "switch",
+  "tab",
+  "textbox",
+  "treeitem",
+]);
+
 export function createGuide(options: GuideOptions): Guide {
   const configuration = GuideConfigurationSchema.parse({
     allowlist: options.allowlist,
@@ -44,7 +65,8 @@ export function createGuide(options: GuideOptions): Guide {
     ghostPreview: options.ghostPreview ?? false,
   });
   const document = options.document ?? globalThis.document;
-  if (!document?.defaultView) throw new Error("A live browser document is required");
+  const view = document?.defaultView;
+  if (!view) throw new Error("A live browser document is required");
   const overlay = createOverlay(document);
   const snapshotter = createSnapshotter(document, overlay.contains, configuration.denyList);
   let disposed = false;
@@ -73,7 +95,11 @@ export function createGuide(options: GuideOptions): Guide {
       // Non-controls (e.g. a form containing a submit button) must not inherit
       // their descendants' labels. Controls nested in denied controls do.
       if (
-        node.matches("input,button,a[href],select,textarea,[role]") &&
+        (node.matches("input,button,a[href],select,textarea,summary,[contenteditable='true']") ||
+          (node === element && node.hasAttribute("role")) ||
+          actionableRoles.has(control.role) ||
+          defaultDenyList.roles.includes(control.role) ||
+          configuration.denyList.roles.includes(control.role)) &&
         (isDeniedControl(control, defaultDenyList) ||
           isDeniedControl(control, configuration.denyList))
       )
@@ -121,7 +147,11 @@ export function createGuide(options: GuideOptions): Guide {
         const guard = () => {
           if (disposed || controller.signal.aborted) return "interrupted";
           if (!originAllowed()) return "origin-not-allowed";
-          if (action.target.kind === "dom" && action.target.url !== document.location.href)
+          if (
+            action.target.kind === "dom" &&
+            (action.target.url !== document.location.href ||
+              snapshotter.element(action.target.handle) !== target.element)
+          )
             return "target-not-found";
           if (!target.element.isConnected || !isVisible(target.element)) return "target-not-found";
           if (denied(target.element)) return "denied";
@@ -167,6 +197,11 @@ export function createGuide(options: GuideOptions): Guide {
               controller.signal,
             );
             if (failure) return result(action.id, failure);
+            // A new task lets the entire input/blur/change microtask checkpoint
+            // finish, including microtasks queued by other microtasks.
+            await new Promise<void>((resolve) => view.setTimeout(resolve, 0));
+            const afterTyping = guard() ?? (field.value !== value ? "value-changed" : undefined);
+            if (afterTyping) return result(action.id, afterTyping);
           }
         }
         return result(action.id, guard());
