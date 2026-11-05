@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Overlay isolation</title>
+<style>body { font: 18px sans-serif; margin: 40px; } input { display: block; width: 240px; }</style>
+</head><body>
+<p id="quote">Read this exact sentence.</p>
+<form><label for="field">Reference</label><input id="field"><input hidden aria-label="Hidden field"></form>
+<script>
+window.inspectOverlay = () => ({
+  foundNodes: document.querySelectorAll('[data-guide-part]').length,
+  firstNode: document.querySelector('.cursor, .highlight, .annotation, .caption, .ghost'),
+  shadow: document.querySelector('[data-lotse-guide]')?.shadowRoot ?? null,
+});
+window.attackOverlay = (selector, declarations) => {
+  const style = document.createElement('style');
+  style.textContent = `${selector} { ${declarations} }`;
+  document.head.append(style);
+};
+</script>
+</body></html>
