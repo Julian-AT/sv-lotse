@@ -1,0 +1,27 @@
+{
+  "name": "@lotse/guide",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./portal": "./src/portal-contract.ts",
+    "./bundle": "./dist-bundle/guide.iife.js"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run test/unit",
+    "e2e": "node --experimental-strip-types test/run-e2e.ts",
+    "build:bundle": "node scripts/build-bundle.mjs",
+    "test:bundle": "bun run build:bundle && node --experimental-strip-types test/run-e2e.ts bundle.spec.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "esbuild": "0.28.2"
+  },
+  "dependencies": {
+    "@lotse/protocol": "workspace:*",
+    "@lotse/ui": "workspace:*",
+    "zod": "^4"
+  }
+}
