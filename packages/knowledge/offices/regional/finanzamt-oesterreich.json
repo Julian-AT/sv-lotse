@@ -1,0 +1,30 @@
+{
+  "id": "finanzamt-oesterreich",
+  "name_de": "Finanzamt Österreich",
+  "name_simple": "Finanzamt für Fragen zur Familienbeihilfe",
+  "region": "Österreich",
+  "phone": "050 233 233",
+  "url": "https://www.bmf.gv.at/services/aemter-behoerden/faoe.html",
+  "jurisdiction": "Familienbeihilfe",
+  "opening_hours": {
+    "notes": "Ihre Fragen beantworten wir gerne von Montag bis Mittwoch von 7.30 bis 15.30 Uhr sowie Donnerstag und Freitag von 7.30 bis 12.00 Uhr. Sie erreichen uns unter folgenden Telefonnummern:"
+  },
+  "sources": [
+    {
+      "url": "https://www.bmf.gv.at/services/aemter-behoerden/faoe.html",
+      "quote": "Privatpersonen: 050 233 233",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+      "quote": "Zuständige Stelle\nFinanzamt Österreich",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.bmf.gv.at/services/aemter-behoerden/faoe.html",
+      "quote": "Ihre Fragen beantworten wir gerne von Montag bis Mittwoch von 7.30 bis 15.30 Uhr sowie Donnerstag und Freitag von 7.30 bis 12.00 Uhr. Sie erreichen uns unter folgenden Telefonnummern:",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
