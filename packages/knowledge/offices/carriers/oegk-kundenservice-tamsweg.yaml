@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-tamsweg"
+name_de: "Kundenservice Tamsweg"
+name_simple: "ÖGK-Büro Tamsweg"
+carrier: "oegk"
+region: "Salzburg"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882987&portal=oegkportal"
+address:
+  street: "Bahnhofstraße 7"
+  postal_code: "5580"
+  locality: "Tamsweg"
+  country: "AT"
+phone: "+43 5 0766-178574"
+email: "tamsweg@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.15 – 12.30 / 13.00 – 15.00
+    Dienstag:07.15 – 12.30 / 13.00 – 15.00
+    Mittwoch:07.15 – 12.30 / 13.00 – 15.00
+    Donnerstag:07.15 – 12.30 / 13.00 – 15.00
+    Freitag:07.15 – 12.15
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882987&portal=oegkportal"
+    quote: |-
+      Kundenservice Tamsweg
+      Bahnhofstraße 7
+      5580 Tamsweg
+      Telefon: +43 5 0766-178574
+      E-Mail: tamsweg@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882987&portal=oegkportal"
+    quote: |-
+      Montag:07.15 – 12.30 / 13.00 – 15.00
+      Dienstag:07.15 – 12.30 / 13.00 – 15.00
+      Mittwoch:07.15 – 12.30 / 13.00 – 15.00
+      Donnerstag:07.15 – 12.30 / 13.00 – 15.00
+      Freitag:07.15 – 12.15
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882987&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
