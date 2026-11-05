@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "jobId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "progress": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "state": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "jobId",
+    "state",
+    "progress",
+    "message"
+  ],
+  "type": "object"
+}

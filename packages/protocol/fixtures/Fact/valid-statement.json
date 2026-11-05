@@ -1,0 +1,13 @@
+{
+  "id": "fact-name",
+  "subjectId": "subject-person",
+  "type": "name",
+  "value": "Anna Berger",
+  "source": {
+    "kind": "statement",
+    "turnId": "turn-name",
+    "quote": "Mein Name ist Anna Berger."
+  },
+  "confidence": 1,
+  "confirmed": true
+}

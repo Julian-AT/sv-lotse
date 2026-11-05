@@ -69,6 +69,7 @@
         "zod": "^4",
       },
       "devDependencies": {
+        "ai": "^7",
         "ajv": "^8.20.0",
         "ajv-formats": "^3.0.1",
         "quicktype": "^26.0.0",

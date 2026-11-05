@@ -1,0 +1,26 @@
+{
+  "text": null,
+  "numbers": [
+    {
+      "label": "Rettung",
+      "number": "144"
+    },
+    {
+      "label": "Euronotruf",
+      "number": "112"
+    },
+    {
+      "label": "Gesundheitsberatung",
+      "number": "1450"
+    },
+    {
+      "label": "Telefonseelsorge",
+      "number": "142"
+    },
+    {
+      "label": "Rat auf Draht",
+      "number": "147"
+    }
+  ],
+  "scopeAfter": "administrative_only"
+}

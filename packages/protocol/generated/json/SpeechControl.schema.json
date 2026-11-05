@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "segmentIndex": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "state": {
+      "enum": [
+        "speaking",
+        "idle"
+      ],
+      "type": "string"
+    },
+    "stop": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "stop",
+    "state",
+    "segmentIndex"
+  ],
+  "type": "object"
+}

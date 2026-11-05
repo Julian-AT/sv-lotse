@@ -1,0 +1,15 @@
+{
+  "id": "action-clear",
+  "kind": "clear",
+  "target": {
+    "kind": "text",
+    "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+    "documentId": "document-discharge",
+    "page": 5
+  },
+  "payload": {
+    "label": "Dokumentierte Empfehlung",
+    "style": "source-quote"
+  },
+  "sentenceIndex": 0
+}

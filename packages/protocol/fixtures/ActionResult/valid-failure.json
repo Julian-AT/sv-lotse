@@ -1,0 +1,7 @@
+{
+  "actionId": "action-highlight",
+  "resolvedBy": "ocr",
+  "confidence": 0.1,
+  "success": false,
+  "failureReason": "Das Zitat ist auf dieser Seite nicht sichtbar."
+}

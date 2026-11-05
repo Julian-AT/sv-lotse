@@ -1,0 +1,23 @@
+{
+  "id": "fact-recommendation",
+  "subjectId": "subject-person",
+  "type": "administrative_metadata",
+  "value": {
+    "pages": [1, 5],
+    "note": null
+  },
+  "source": {
+    "kind": "document",
+    "documentId": "document-discharge",
+    "page": 5,
+    "bbox": {
+      "x": 0.12,
+      "y": 0.25,
+      "width": 0.7,
+      "height": 0.04
+    },
+    "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+  },
+  "confidence": 0.99,
+  "confirmed": false
+}

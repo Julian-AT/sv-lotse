@@ -1,0 +1,13 @@
+{
+  "id": "action-type",
+  "kind": "type",
+  "target": {
+    "kind": "form",
+    "formInstanceId": "form-instance-draft",
+    "fieldId": "person-name"
+  },
+  "payload": {
+    "value": "Anna Berger"
+  },
+  "sentenceIndex": 1
+}

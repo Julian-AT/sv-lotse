@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "numbers": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "number": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "number"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "scopeAfter": {
+      "const": "administrative_only",
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "text",
+    "numbers",
+    "scopeAfter"
+  ],
+  "type": "object"
+}

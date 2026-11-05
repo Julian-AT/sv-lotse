@@ -1,0 +1,736 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "appVersion": {
+              "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-(?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+              "type": "string"
+            },
+            "capabilities": {
+              "additionalProperties": false,
+              "properties": {
+                "accessibility": {
+                  "type": "boolean"
+                },
+                "ocr": {
+                  "type": "boolean"
+                },
+                "onDeviceContextSize": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "onDeviceModel": {
+                  "type": "boolean"
+                },
+                "overlay": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "overlay",
+                "accessibility",
+                "ocr",
+                "onDeviceModel",
+                "onDeviceContextSize"
+              ],
+              "type": "object"
+            },
+            "protocolVersion": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "appVersion",
+            "protocolVersion",
+            "capabilities"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "const": "BridgeHello",
+          "type": "string"
+        },
+        "v": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "id",
+        "payload"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "capsule": {
+              "additionalProperties": false,
+              "properties": {
+                "focusedRegion": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "height": {
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "width": {
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "x": {
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "y": {
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y",
+                    "width",
+                    "height"
+                  ],
+                  "type": "object"
+                },
+                "page": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "handles": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "bbox": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "height": {
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              },
+                              "width": {
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              },
+                              "x": {
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              },
+                              "y": {
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y",
+                              "width",
+                              "height"
+                            ],
+                            "type": "object"
+                          },
+                          "id": {
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "role",
+                          "label",
+                          "value",
+                          "bbox"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "url": {
+                      "format": "uri",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "url",
+                    "handles"
+                  ],
+                  "type": "object"
+                },
+                "screen": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "image": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "ocrLines": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "bbox": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "height": {
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              },
+                              "width": {
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              },
+                              "x": {
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              },
+                              "y": {
+                                "maximum": 1,
+                                "minimum": 0,
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y",
+                              "width",
+                              "height"
+                            ],
+                            "type": "object"
+                          },
+                          "text": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "text",
+                          "bbox"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "screenIndex": {
+                      "maximum": 9007199254740991,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "summary": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "screenIndex",
+                    "summary",
+                    "ocrLines"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "final": {
+              "type": "boolean"
+            },
+            "language": {
+              "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$",
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "text",
+            "final"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "const": "Transcript",
+          "type": "string"
+        },
+        "v": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "id",
+        "payload"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "error": {
+              "type": "string"
+            },
+            "output": {
+              "anyOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "actionId": {
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "confidence": {
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "failureReason": {
+                      "type": "string"
+                    },
+                    "resolvedBy": {
+                      "enum": [
+                        "ui",
+                        "dom",
+                        "ax",
+                        "ocr",
+                        "vision"
+                      ],
+                      "type": "string"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "actionId",
+                    "resolvedBy",
+                    "confidence",
+                    "success"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "focusedRegion": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "height": {
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "width": {
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "x": {
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "y": {
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y",
+                        "width",
+                        "height"
+                      ],
+                      "type": "object"
+                    },
+                    "page": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "handles": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "bbox": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "height": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "width": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "x": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y",
+                                  "width",
+                                  "height"
+                                ],
+                                "type": "object"
+                              },
+                              "id": {
+                                "minLength": 1,
+                                "type": "string"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "role",
+                              "label",
+                              "value",
+                              "bbox"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "url": {
+                          "format": "uri",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "url",
+                        "handles"
+                      ],
+                      "type": "object"
+                    },
+                    "screen": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "image": {
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "ocrLines": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "bbox": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "height": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "width": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "x": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y",
+                                  "width",
+                                  "height"
+                                ],
+                                "type": "object"
+                              },
+                              "text": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "text",
+                              "bbox"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "screenIndex": {
+                          "maximum": 9007199254740991,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "summary": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "screenIndex",
+                        "summary",
+                        "ocrLines"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                }
+              ]
+            },
+            "toolCallId": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "toolCallId",
+            "output"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "const": "ToolOutput",
+          "type": "string"
+        },
+        "v": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "id",
+        "payload"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "approvalId": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "approved": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "via": {
+              "enum": [
+                "voice",
+                "key",
+                "click"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "approvalId",
+            "approved",
+            "via"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "const": "ApprovalDecision",
+          "type": "string"
+        },
+        "v": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "id",
+        "payload"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "actionId": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "confidence": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "failureReason": {
+              "type": "string"
+            },
+            "resolvedBy": {
+              "enum": [
+                "ui",
+                "dom",
+                "ax",
+                "ocr",
+                "vision"
+              ],
+              "type": "string"
+            },
+            "success": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "actionId",
+            "resolvedBy",
+            "confidence",
+            "success"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "const": "ActionResult",
+          "type": "string"
+        },
+        "v": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "id",
+        "payload"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": false,
+          "properties": {
+            "segmentIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "state": {
+              "enum": [
+                "speaking",
+                "idle"
+              ],
+              "type": "string"
+            },
+            "stop": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "stop",
+            "state",
+            "segmentIndex"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "const": "SpeechControl",
+          "type": "string"
+        },
+        "v": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "v",
+        "type",
+        "id",
+        "payload"
+      ],
+      "type": "object"
+    }
+  ]
+}

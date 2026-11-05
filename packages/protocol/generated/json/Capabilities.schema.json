@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accessibility": {
+      "type": "boolean"
+    },
+    "ocr": {
+      "type": "boolean"
+    },
+    "onDeviceContextSize": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "onDeviceModel": {
+      "type": "boolean"
+    },
+    "overlay": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "overlay",
+    "accessibility",
+    "ocr",
+    "onDeviceModel",
+    "onDeviceContextSize"
+  ],
+  "type": "object"
+}

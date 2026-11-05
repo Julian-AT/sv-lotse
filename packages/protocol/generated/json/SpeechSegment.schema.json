@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actionIds": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "citations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "passageId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "quote": {
+            "type": "string"
+          },
+          "url": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "passageId",
+          "url",
+          "quote"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "index": {
+      "maximum": 9007199254740991,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "language": {
+      "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$",
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "turnId": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "turnId",
+    "index",
+    "text",
+    "language",
+    "citations",
+    "actionIds"
+  ],
+  "type": "object"
+}

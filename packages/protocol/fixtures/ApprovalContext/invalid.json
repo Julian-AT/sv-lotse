@@ -1,0 +1,25 @@
+{
+  "approvalId": null,
+  "caseId": "case-application",
+  "toolCallId": "tool-confirm-fields",
+  "toolName": "form.commitGroup",
+  "inputHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "provenance": [
+    {
+      "factId": "fact-recommendation",
+      "source": {
+        "kind": "document",
+        "documentId": "document-discharge",
+        "page": 5,
+        "bbox": {
+          "x": 0.12,
+          "y": 0.25,
+          "width": 0.7,
+          "height": 0.04
+        },
+        "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+      }
+    }
+  ],
+  "summary": "Den angezeigten Namen im Formularentwurf bestätigen."
+}

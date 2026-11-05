@@ -1,0 +1,14 @@
+{
+  "caseId": "case-application",
+  "kind": "step_created",
+  "payload": {
+    "title": "Unterlagen für den Antrag zusammenstellen",
+    "details": {
+      "documentIds": ["document-discharge"],
+      "confirmed": false,
+      "count": 1,
+      "optionalNote": null
+    }
+  },
+  "unexpected": true
+}

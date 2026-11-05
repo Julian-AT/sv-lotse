@@ -1,0 +1,27 @@
+{
+  "text": "Rettung: 144. Euronotruf: 112. Telefonische Gesundheitsberatung: 1450. Telefonseelsorge: 142. Rat auf Draht: 147. Ich kann bei Verwaltungsfragen helfen.",
+  "numbers": [
+    {
+      "label": "Rettung",
+      "number": "144"
+    },
+    {
+      "label": "Euronotruf",
+      "number": "112"
+    },
+    {
+      "label": "Gesundheitsberatung",
+      "number": "1450"
+    },
+    {
+      "label": "Telefonseelsorge",
+      "number": "142"
+    },
+    {
+      "label": "Rat auf Draht",
+      "number": "147"
+    }
+  ],
+  "scopeAfter": "administrative_only",
+  "unexpected": true
+}

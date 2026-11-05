@@ -1,0 +1,1786 @@
+{
+  "$defs": {
+    "Action": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "point",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "sentenceIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "target": {
+              "$ref": "#/$defs/Target"
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "sentenceIndex",
+            "kind",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "highlight",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "sentenceIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "target": {
+              "$ref": "#/$defs/Target"
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "sentenceIndex",
+            "kind",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "annotate",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "sentenceIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "target": {
+              "$ref": "#/$defs/Target"
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "sentenceIndex",
+            "kind",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "caption",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "sentenceIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "target": {
+              "$ref": "#/$defs/Target"
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "sentenceIndex",
+            "kind",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "openResource",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "sentenceIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "target": {
+              "$ref": "#/$defs/Target"
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "sentenceIndex",
+            "kind",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "type",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "pace": {
+                  "exclusiveMinimum": 0,
+                  "type": "number"
+                },
+                "provenance": {
+                  "$ref": "#/$defs/Provenance"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value",
+                "provenance",
+                "pace"
+              ],
+              "type": "object"
+            },
+            "sentenceIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "target": {
+              "$ref": "#/$defs/Target"
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "sentenceIndex",
+            "kind",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "clear",
+              "type": "string"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "style": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "sentenceIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "target": {
+              "$ref": "#/$defs/Target"
+            }
+          },
+          "required": [
+            "id",
+            "target",
+            "sentenceIndex",
+            "kind",
+            "payload"
+          ],
+          "type": "object"
+        }
+      ],
+      "title": "Action"
+    },
+    "ActionResult": {
+      "additionalProperties": false,
+      "properties": {
+        "actionId": {
+          "$ref": "#/$defs/Id"
+        },
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "failureReason": {
+          "type": "string"
+        },
+        "resolvedBy": {
+          "enum": [
+            "ui",
+            "dom",
+            "ax",
+            "ocr",
+            "vision"
+          ],
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "actionId",
+        "resolvedBy",
+        "confidence",
+        "success"
+      ],
+      "title": "ActionResult",
+      "type": "object"
+    },
+    "ApprovalContext": {
+      "additionalProperties": false,
+      "properties": {
+        "approvalId": {
+          "$ref": "#/$defs/Id"
+        },
+        "caseId": {
+          "$ref": "#/$defs/Id"
+        },
+        "inputHash": {
+          "pattern": "^[a-f0-9]{64}$",
+          "type": "string"
+        },
+        "provenance": {
+          "items": {
+            "$ref": "#/$defs/Provenance"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "toolCallId": {
+          "$ref": "#/$defs/Id"
+        },
+        "toolName": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "approvalId",
+        "caseId",
+        "toolCallId",
+        "toolName",
+        "inputHash",
+        "provenance",
+        "summary"
+      ],
+      "title": "ApprovalContext",
+      "type": "object"
+    },
+    "ApprovalDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "approvalId": {
+          "$ref": "#/$defs/Id"
+        },
+        "approved": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "via": {
+          "enum": [
+            "voice",
+            "key",
+            "click"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "approvalId",
+        "approved",
+        "via"
+      ],
+      "title": "ApprovalDecision",
+      "type": "object"
+    },
+    "BoundingBox": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "width": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "x": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "y": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "title": "BoundingBox",
+      "type": "object"
+    },
+    "BridgeHello": {
+      "additionalProperties": false,
+      "properties": {
+        "appVersion": {
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-(?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+          "type": "string"
+        },
+        "capabilities": {
+          "$ref": "#/$defs/Capabilities"
+        },
+        "protocolVersion": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "appVersion",
+        "protocolVersion",
+        "capabilities"
+      ],
+      "title": "BridgeHello",
+      "type": "object"
+    },
+    "BridgeToNative": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/SpeechSegment"
+            },
+            "type": {
+              "const": "SpeechSegment",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/Action"
+            },
+            "type": {
+              "const": "Action",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/TargetRect"
+            },
+            "type": {
+              "const": "TargetRect",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/ToolInvocation"
+            },
+            "type": {
+              "const": "ToolInvocation",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/ApprovalContext"
+            },
+            "type": {
+              "const": "ApprovalContext",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/JobProgress"
+            },
+            "type": {
+              "const": "JobProgress",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/SafetyNotice"
+            },
+            "type": {
+              "const": "SafetyNotice",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/SpeechControl"
+            },
+            "type": {
+              "const": "SpeechControl",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        }
+      ],
+      "title": "BridgeToNative"
+    },
+    "BridgeToWorkspace": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/BridgeHello"
+            },
+            "type": {
+              "const": "BridgeHello",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/Transcript"
+            },
+            "type": {
+              "const": "Transcript",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/ToolOutput"
+            },
+            "type": {
+              "const": "ToolOutput",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/ApprovalDecision"
+            },
+            "type": {
+              "const": "ApprovalDecision",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/ActionResult"
+            },
+            "type": {
+              "const": "ActionResult",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/Id"
+            },
+            "payload": {
+              "$ref": "#/$defs/SpeechControl"
+            },
+            "type": {
+              "const": "SpeechControl",
+              "type": "string"
+            },
+            "v": {
+              "const": "1.0.0",
+              "type": "string"
+            }
+          },
+          "required": [
+            "v",
+            "type",
+            "id",
+            "payload"
+          ],
+          "type": "object"
+        }
+      ],
+      "title": "BridgeToWorkspace"
+    },
+    "Capabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "accessibility": {
+          "type": "boolean"
+        },
+        "ocr": {
+          "type": "boolean"
+        },
+        "onDeviceContextSize": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "onDeviceModel": {
+          "type": "boolean"
+        },
+        "overlay": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "overlay",
+        "accessibility",
+        "ocr",
+        "onDeviceModel",
+        "onDeviceContextSize"
+      ],
+      "title": "Capabilities",
+      "type": "object"
+    },
+    "CaseEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "caseId": {
+          "$ref": "#/$defs/Id"
+        },
+        "kind": {
+          "enum": [
+            "goal_confirmed",
+            "step_created",
+            "step_completed",
+            "reminder_created",
+            "artefact_ready"
+          ],
+          "type": "string"
+        },
+        "payload": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "propertyNames": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "caseId",
+        "kind",
+        "payload"
+      ],
+      "title": "CaseEvent",
+      "type": "object"
+    },
+    "ClientHello": {
+      "additionalProperties": false,
+      "properties": {
+        "appVersion": {
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-(?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+          "type": "string"
+        },
+        "capabilities": {
+          "$ref": "#/$defs/Capabilities"
+        },
+        "clientKind": {
+          "enum": [
+            "web",
+            "mac",
+            "helper"
+          ],
+          "type": "string"
+        },
+        "locale": {
+          "$ref": "#/$defs/LanguageTag"
+        },
+        "protocolVersion": {
+          "const": "1.0.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "clientKind",
+        "appVersion",
+        "protocolVersion",
+        "capabilities",
+        "locale"
+      ],
+      "title": "ClientHello",
+      "type": "object"
+    },
+    "ContextCapsule": {
+      "additionalProperties": false,
+      "properties": {
+        "focusedRegion": {
+          "$ref": "#/$defs/BoundingBox"
+        },
+        "page": {
+          "additionalProperties": false,
+          "properties": {
+            "handles": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "bbox": {
+                    "$ref": "#/$defs/BoundingBox"
+                  },
+                  "id": {
+                    "$ref": "#/$defs/Id"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "role",
+                  "label",
+                  "value",
+                  "bbox"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "url": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          "required": [
+            "url",
+            "handles"
+          ],
+          "type": "object"
+        },
+        "screen": {
+          "additionalProperties": false,
+          "properties": {
+            "image": {
+              "$ref": "#/$defs/Id"
+            },
+            "ocrLines": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "bbox": {
+                    "$ref": "#/$defs/BoundingBox"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "bbox"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "screenIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "summary": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "screenIndex",
+            "summary",
+            "ocrLines"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "ContextCapsule",
+      "type": "object"
+    },
+    "Fact": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "confirmed": {
+          "type": "boolean"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "source": {
+          "$ref": "#/$defs/FactSource"
+        },
+        "subjectId": {
+          "$ref": "#/$defs/Id"
+        },
+        "type": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "id",
+        "subjectId",
+        "type",
+        "value",
+        "source",
+        "confidence",
+        "confirmed"
+      ],
+      "title": "Fact",
+      "type": "object"
+    },
+    "FactSource": {
+      "additionalProperties": false,
+      "properties": {
+        "bbox": {
+          "$ref": "#/$defs/BoundingBox"
+        },
+        "documentId": {
+          "$ref": "#/$defs/Id"
+        },
+        "kind": {
+          "enum": [
+            "document",
+            "statement"
+          ],
+          "type": "string"
+        },
+        "page": {
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991,
+          "type": "integer"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "turnId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "FactSource",
+      "type": "object"
+    },
+    "Id": {
+      "minLength": 1,
+      "title": "Id",
+      "type": "string"
+    },
+    "IsoTimestamp": {
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+      "title": "IsoTimestamp",
+      "type": "string"
+    },
+    "JobProgress": {
+      "additionalProperties": false,
+      "properties": {
+        "jobId": {
+          "$ref": "#/$defs/Id"
+        },
+        "message": {
+          "type": "string"
+        },
+        "progress": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "state": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "jobId",
+        "state",
+        "progress",
+        "message"
+      ],
+      "title": "JobProgress",
+      "type": "object"
+    },
+    "JsonValue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "items": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "type": "array"
+        },
+        {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "propertyNames": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      ],
+      "title": "JsonValue"
+    },
+    "LanguageTag": {
+      "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$",
+      "title": "LanguageTag",
+      "type": "string"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "factId": {
+          "$ref": "#/$defs/Id"
+        },
+        "source": {
+          "$ref": "#/$defs/FactSource"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "SafetyNotice": {
+      "additionalProperties": false,
+      "properties": {
+        "numbers": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "number": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "label",
+              "number"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "scopeAfter": {
+          "const": "administrative_only",
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "numbers",
+        "scopeAfter"
+      ],
+      "title": "SafetyNotice",
+      "type": "object"
+    },
+    "SpeechControl": {
+      "additionalProperties": false,
+      "properties": {
+        "segmentIndex": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "speaking",
+            "idle"
+          ],
+          "type": "string"
+        },
+        "stop": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "stop",
+        "state",
+        "segmentIndex"
+      ],
+      "title": "SpeechControl",
+      "type": "object"
+    },
+    "SpeechSegment": {
+      "additionalProperties": false,
+      "properties": {
+        "actionIds": {
+          "items": {
+            "$ref": "#/$defs/Id"
+          },
+          "type": "array"
+        },
+        "citations": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "passageId": {
+                "$ref": "#/$defs/Id"
+              },
+              "quote": {
+                "type": "string"
+              },
+              "url": {
+                "format": "uri",
+                "type": "string"
+              }
+            },
+            "required": [
+              "passageId",
+              "url",
+              "quote"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "index": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "language": {
+          "$ref": "#/$defs/LanguageTag"
+        },
+        "text": {
+          "type": "string"
+        },
+        "turnId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "turnId",
+        "index",
+        "text",
+        "language",
+        "citations",
+        "actionIds"
+      ],
+      "title": "SpeechSegment",
+      "type": "object"
+    },
+    "Target": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "elementId": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "ui",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "elementId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "fieldId": {
+              "$ref": "#/$defs/Id"
+            },
+            "formInstanceId": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "form",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "formInstanceId",
+            "fieldId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "handle": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "dom",
+              "type": "string"
+            },
+            "url": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "handle",
+            "url"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "appBundleId": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "kind": {
+              "const": "ax",
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "path": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "role": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "role",
+            "label",
+            "path",
+            "appBundleId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "documentId": {
+              "$ref": "#/$defs/Id"
+            },
+            "kind": {
+              "const": "text",
+              "type": "string"
+            },
+            "page": {
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991,
+              "type": "integer"
+            },
+            "quote": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "quote"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "confidence": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "kind": {
+              "const": "point",
+              "type": "string"
+            },
+            "screenIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "x": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "y": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind",
+            "x",
+            "y",
+            "screenIndex",
+            "confidence"
+          ],
+          "type": "object"
+        }
+      ],
+      "title": "Target"
+    },
+    "TargetRect": {
+      "additionalProperties": false,
+      "properties": {
+        "rect": {
+          "$ref": "#/$defs/WindowRect"
+        },
+        "scale": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "targetId": {
+          "$ref": "#/$defs/Id"
+        },
+        "visible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "targetId",
+        "rect",
+        "scale",
+        "visible"
+      ],
+      "title": "TargetRect",
+      "type": "object"
+    },
+    "ToolInvocation": {
+      "additionalProperties": false,
+      "properties": {
+        "input": {
+          "additionalProperties": {
+            "$ref": "#/$defs/JsonValue"
+          },
+          "propertyNames": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "toolCallId": {
+          "$ref": "#/$defs/Id"
+        },
+        "toolName": {
+          "enum": [
+            "ui.fill",
+            "context.readScreen",
+            "calendar.createEvent",
+            "session.shareWithHelper"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "toolCallId",
+        "toolName",
+        "input"
+      ],
+      "title": "ToolInvocation",
+      "type": "object"
+    },
+    "ToolOutput": {
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "output": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ActionResult"
+            },
+            {
+              "$ref": "#/$defs/ContextCapsule"
+            }
+          ]
+        },
+        "toolCallId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "toolCallId",
+        "output"
+      ],
+      "title": "ToolOutput",
+      "type": "object"
+    },
+    "Transcript": {
+      "additionalProperties": false,
+      "properties": {
+        "capsule": {
+          "$ref": "#/$defs/ContextCapsule"
+        },
+        "final": {
+          "type": "boolean"
+        },
+        "language": {
+          "$ref": "#/$defs/LanguageTag"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "final"
+      ],
+      "title": "Transcript",
+      "type": "object"
+    },
+    "TurnRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "actionResults": {
+          "items": {
+            "$ref": "#/$defs/ActionResult"
+          },
+          "type": "array"
+        },
+        "capsule": {
+          "$ref": "#/$defs/ContextCapsule"
+        },
+        "caseId": {
+          "$ref": "#/$defs/Id"
+        },
+        "inputKind": {
+          "enum": [
+            "transcript",
+            "text"
+          ],
+          "type": "string"
+        },
+        "language": {
+          "$ref": "#/$defs/LanguageTag"
+        },
+        "subjectId": {
+          "$ref": "#/$defs/Id"
+        }
+      },
+      "required": [
+        "inputKind",
+        "capsule",
+        "actionResults"
+      ],
+      "title": "TurnRequest",
+      "type": "object"
+    },
+    "WindowRect": {
+      "additionalProperties": false,
+      "properties": {
+        "height": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "width": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "title": "WindowRect",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "Action": {
+      "$ref": "#/$defs/Action"
+    },
+    "ActionResult": {
+      "$ref": "#/$defs/ActionResult"
+    },
+    "ApprovalContext": {
+      "$ref": "#/$defs/ApprovalContext"
+    },
+    "ApprovalDecision": {
+      "$ref": "#/$defs/ApprovalDecision"
+    },
+    "BoundingBox": {
+      "$ref": "#/$defs/BoundingBox"
+    },
+    "BridgeHello": {
+      "$ref": "#/$defs/BridgeHello"
+    },
+    "BridgeToNative": {
+      "$ref": "#/$defs/BridgeToNative"
+    },
+    "BridgeToWorkspace": {
+      "$ref": "#/$defs/BridgeToWorkspace"
+    },
+    "Capabilities": {
+      "$ref": "#/$defs/Capabilities"
+    },
+    "CaseEvent": {
+      "$ref": "#/$defs/CaseEvent"
+    },
+    "ClientHello": {
+      "$ref": "#/$defs/ClientHello"
+    },
+    "ContextCapsule": {
+      "$ref": "#/$defs/ContextCapsule"
+    },
+    "Fact": {
+      "$ref": "#/$defs/Fact"
+    },
+    "FactSource": {
+      "$ref": "#/$defs/FactSource"
+    },
+    "Id": {
+      "$ref": "#/$defs/Id"
+    },
+    "IsoTimestamp": {
+      "$ref": "#/$defs/IsoTimestamp"
+    },
+    "JobProgress": {
+      "$ref": "#/$defs/JobProgress"
+    },
+    "JsonValue": {
+      "$ref": "#/$defs/JsonValue"
+    },
+    "LanguageTag": {
+      "$ref": "#/$defs/LanguageTag"
+    },
+    "Provenance": {
+      "$ref": "#/$defs/Provenance"
+    },
+    "SafetyNotice": {
+      "$ref": "#/$defs/SafetyNotice"
+    },
+    "SpeechControl": {
+      "$ref": "#/$defs/SpeechControl"
+    },
+    "SpeechSegment": {
+      "$ref": "#/$defs/SpeechSegment"
+    },
+    "Target": {
+      "$ref": "#/$defs/Target"
+    },
+    "TargetRect": {
+      "$ref": "#/$defs/TargetRect"
+    },
+    "ToolInvocation": {
+      "$ref": "#/$defs/ToolInvocation"
+    },
+    "ToolOutput": {
+      "$ref": "#/$defs/ToolOutput"
+    },
+    "Transcript": {
+      "$ref": "#/$defs/Transcript"
+    },
+    "TurnRequest": {
+      "$ref": "#/$defs/TurnRequest"
+    },
+    "WindowRect": {
+      "$ref": "#/$defs/WindowRect"
+    }
+  },
+  "required": [
+    "Action",
+    "ActionResult",
+    "ApprovalContext",
+    "ApprovalDecision",
+    "BoundingBox",
+    "BridgeHello",
+    "BridgeToNative",
+    "BridgeToWorkspace",
+    "Capabilities",
+    "CaseEvent",
+    "ClientHello",
+    "ContextCapsule",
+    "Fact",
+    "FactSource",
+    "Id",
+    "IsoTimestamp",
+    "JobProgress",
+    "JsonValue",
+    "LanguageTag",
+    "Provenance",
+    "SafetyNotice",
+    "SpeechControl",
+    "SpeechSegment",
+    "Target",
+    "TargetRect",
+    "ToolInvocation",
+    "ToolOutput",
+    "Transcript",
+    "TurnRequest",
+    "WindowRect"
+  ],
+  "type": "object"
+}
