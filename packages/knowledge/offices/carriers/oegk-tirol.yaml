@@ -1,0 +1,25 @@
+id: "oegk-tirol"
+name_de: "Österreichische Gesundheitskasse Tirol"
+name_simple: "OEGK-Büro in Tirol"
+carrier: "oegk"
+region: "Tirol"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+address:
+  street: "Klara-Pölt-Weg 2"
+  postal_code: "6020"
+  locality: "Innsbruck"
+  country: "AT"
+phone: "+43 5 0766-18"
+email: "office@oegk.at"
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: |-
+      Österreichische Gesundheitskasse Tirol
+      Klara-Pölt-Weg 2
+      6020 Innsbruck
+      Tel. +43 5 0766-18
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: "Österreichische Gesundheitskasse: office@oegk.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
