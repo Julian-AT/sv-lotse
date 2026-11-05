@@ -1,0 +1,11 @@
+{
+  "id": "E11",
+  "name": "Synthetic multilingual administrative slot extraction v1",
+  "gate": {
+    "kind": "informational",
+    "metric": "slotAccuracy",
+    "threshold": 0.95,
+    "direction": "at_least"
+  },
+  "minimumSetSize": 300
+}
