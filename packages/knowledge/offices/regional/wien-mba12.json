@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba12",
+  "name_de": "Bezirksamt Meidling",
+  "name_simple": "Bezirksamt Meidling",
+  "region": "Wien",
+  "address": {
+    "street": "Schönbrunner Straße 259",
+    "postal_code": "1120",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-12000",
+  "email": "post@mba12.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba12",
+  "jurisdiction": "Meldezettel, Reisepass und Parkpickerl; weitere Anliegen nach Zuständigkeit des Bezirksamts",
+  "accessibility": "Barrierefrei\nBarrierefreier Zugang: Schönbrunner Straße 259 und Hufelandgasse 2",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba12",
+      "quote": "Bezirksamt Meidling\nMagistratische Bezirksämter\nMeldezettel\nParkpickerl\nReisepass\n12., Schönbrunner Straße 259\nBarrierefrei\nBarrierefreier Zugang: Schönbrunner Straße 259 und Hufelandgasse 2\n+43 1 4000-12000\npost@mba12.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba12",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
