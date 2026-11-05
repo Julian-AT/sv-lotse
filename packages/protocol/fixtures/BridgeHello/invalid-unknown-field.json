@@ -1,0 +1,12 @@
+{
+  "appVersion": "0.1.0",
+  "protocolVersion": "1.0.0",
+  "capabilities": {
+    "overlay": true,
+    "accessibility": true,
+    "ocr": true,
+    "onDeviceModel": false,
+    "onDeviceContextSize": 0
+  },
+  "unexpected": true
+}
