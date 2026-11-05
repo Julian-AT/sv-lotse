@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-mistelbach"
+name_de: "Kundenservice Mistelbach"
+name_simple: "ÖGK-Büro Mistelbach"
+carrier: "oegk"
+region: "Niederösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882876&portal=oegkportal"
+address:
+  street: "Roseggerstraße 46"
+  postal_code: "2130"
+  locality: "Mistelbach"
+  country: "AT"
+phone: "+43 5 0766-126100"
+email: "mistelbach@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.30
+    Dienstag:07.30 – 14.30
+    Mittwoch:07.30 – 14.30
+    Donnerstag:07.30 – 14.30
+    Freitag:07.30 – 12.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882876&portal=oegkportal"
+    quote: |-
+      Kundenservice Mistelbach
+      Roseggerstraße 46
+      2130 Mistelbach
+      Telefon: +43 5 0766-126100
+      E-Mail: mistelbach@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882876&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.30
+      Dienstag:07.30 – 14.30
+      Mittwoch:07.30 – 14.30
+      Donnerstag:07.30 – 14.30
+      Freitag:07.30 – 12.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882876&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
