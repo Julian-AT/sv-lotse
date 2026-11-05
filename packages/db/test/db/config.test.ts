@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { createDatabase, databaseEnvironment } from "@lotse/brain/db";
-import { storageEnvironment } from "@lotse/brain/storage/s3";
+import { createDatabase, databaseEnvironment } from "@lotse/db";
+import { storageEnvironment } from "@lotse/db/storage/s3";
 
 describe("NFR-15 validates portable storage configuration", () => {
   test("requires a Postgres URL and bounds the pool size", () => {

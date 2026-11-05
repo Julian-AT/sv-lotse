@@ -1,0 +1,31 @@
+{
+  "name": "@lotse/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/db/client.ts",
+    "./schema": "./src/db/schema/index.ts",
+    "./approvals": "./src/db/approvals.ts",
+    "./migrations": "./src/db/migrations.ts",
+    "./storage/s3": "./src/storage/s3.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --exclude 'test/**/*.db.test.ts'",
+    "test:db": "vitest run test/db --hookTimeout=30000 --testTimeout=15000",
+    "test:integration": "bun run test:db",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "bun src/db/migrate.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1162.0",
+    "ai": "^7",
+    "drizzle-orm": "^0.45.4",
+    "postgres": "^4.0.0",
+    "zod": "^4"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11"
+  }
+}

@@ -16,26 +16,21 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests --exclude 'test/**/*.db.test.ts' --exclude 'test/**/*.live.test.ts'",
     "test:live": "node test/forms/detect/live.mjs",
-    "test:db": "vitest run test/db --hookTimeout=30000 --testTimeout=15000",
-    "test:integration": "bun run test:db",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "bun src/db/migrate.ts"
+    "test:db": "bun run --filter @lotse/db test:db",
+    "test:integration": "bun run --filter @lotse/db test:integration",
+    "db:generate": "bun run --filter @lotse/db db:generate",
+    "db:migrate": "bun run --filter @lotse/db db:migrate"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.109",
     "@ai-sdk/otel": "^1.0.163",
-    "@aws-sdk/client-s3": "^3.1162.0",
+    "@lotse/db": "workspace:*",
     "@lotse/protocol": "workspace:*",
     "ai": "^7",
     "canonicalize": "^5.1.0",
-    "drizzle-orm": "^0.45.4",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.5.438",
-    "postgres": "^4.0.0",
     "yaml": "^2.9.1",
     "zod": "^4"
-  },
-  "devDependencies": {
-    "drizzle-kit": "^0.31.11"
   }
 }

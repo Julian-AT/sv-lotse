@@ -27,6 +27,7 @@
         "$TURBO_ROOT$/tsconfig.base.json",
         "$TURBO_ROOT$/vitest.config.ts",
         "vitest.config.*",
+        "drizzle/**",
         "fixtures/**",
         "generated/**"
       ],
