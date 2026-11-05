@@ -12,17 +12,36 @@ Run from the repository root:
 
 - `bun run --filter @lotse/knowledge typecheck` — check source and test types.
 - `bun run --filter @lotse/knowledge test` — run Vitest under Node.js.
+- `bun run --filter @lotse/knowledge test:db` — real Postgres catalog synchronization tests;
+  requires migrated tables from `bun run --filter @lotse/brain db:migrate`.
+- `bun run --filter @lotse/knowledge catalog:load` — validate and synchronize the complete catalog;
+  optionally pass a package root. This prunes absent catalog rows in the configured database.
+- `bun run --filter @lotse/knowledge e2:scan` — validate data and scan production code;
+  optionally pass a repository root.
 - `bun run lint` — lint with Biome.
 - `bun run format:check` — check formatting.
 
-There is no build step: the package exports TypeScript source. No generation, integration or live-test
-script exists yet; add and document one only when its implementation lands. Run TypeScript tooling
+There is no build step: the package exports TypeScript source. No generation or live-service
+script exists. Unit tests exclude `*.db.test.ts`; the database suite uses real Postgres in an isolated
+schema cloned from the migrated public tables, with no product test doubles. Run TypeScript tooling
 scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
 
 ## Invariants
 
 - Nothing without a source quote and `as_of`.
-- YAML validated by schemas.
+- YAML validated by strict Zod schemas; one record per YAML/JSON file, ids unique per kind.
+- All record links resolve before loading. Records stay JSON-compatible; `Knowledge.resolve` accesses
+  frozen targets without introducing cyclic objects. Process evaluation belongs to the brain engine.
+- Data roots: `catalog`, `processes`, `offices`, `facilities`, `forms`; optional root registries are
+  `allowlist.yaml` and `sources.yaml`. The package root must exist; missing data directories are allowed before fan-out. Symlinks are not.
+- The dependency direction is knowledge → `@lotse/brain/db` or `@lotse/brain/db/schema` only.
+  Brain never imports knowledge; it reads catalog records from Postgres. Do not import other brain
+  subpaths, including from tests.
+- Catalog database writes are one transaction with idempotent upserts and pruning by `key`.
+  Form schemas identify existing acquired template versions with `template_id` (UUID); never invent
+  PDF assets or prune form templates/instances.
+- E2 collects all record ids and `life_situations`; literals and identifiers in brain/client sources
+  must not embed them. Stub exceptions are exact paths in `src/e2/config.ts`, initially empty.
 - Allowlist and guard patterns reviewed by a second person.
 - Read original challenge files through `SVBOX_DIR`; never modify `data/svbox/`.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
@@ -31,7 +50,7 @@ scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
 
 ## Evaluation suites
 
-Keep E2, schema validation and applicable retrieval and guard suites green as datasets and loaders land. WP-001 adds no product evaluation suites.
+Keep E2, schema validation and applicable retrieval and guard suites green as datasets and loaders land. Schema/loader/scan tests run without services; `test:db` requires real migrated Postgres.
 
 ## Forbidden paths
 
