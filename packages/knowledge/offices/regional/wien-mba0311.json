@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba0311",
+  "name_de": "Bezirksamt Landstraße/Simmering",
+  "name_simple": "Bezirksamt Landstraße/Simmering",
+  "region": "Wien",
+  "address": {
+    "street": "Karl-Borromäus-Platz 3",
+    "postal_code": "1030",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-03000",
+  "email": "post@mba03.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba0311",
+  "jurisdiction": "Meldezettel, Reisepass und Parkpickerl; weitere Anliegen nach Zuständigkeit des Bezirksamts",
+  "accessibility": "Barrierefrei\nBarrierefreier Zugang: Rochusgasse 14 (Hof-Eingang)",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba0311",
+      "quote": "Bezirksamt Landstraße/Simmering\nMagistratische Bezirksämter\nMeldezettel\nParkpickerl\nReisepass\n3., Karl-Borromäus-Platz 3\nBarrierefrei\nBarrierefreier Zugang: Rochusgasse 14 (Hof-Eingang)\n+43 1 4000-03000\npost@mba03.wien.gv.at\nInformation\nZusätzliche Servicestelle in 11., Enkplatz 2 - barrierefreier Zugang (linke Hofeinfahrt, Aufzug)\nHier stehen Ihnen folgende Services zur Verfügung:\nMelde-, Pass- und Fundservice, Parkpickerl, Religionsaustritte, Lebensbescheinigungen, Unterstützungserklärungen sowie ID Austria\nTelefon: +43 1 4000-11000\nE-Mail: post@mba11.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba0311",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
