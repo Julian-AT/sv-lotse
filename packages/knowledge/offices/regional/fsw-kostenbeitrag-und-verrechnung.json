@@ -1,0 +1,26 @@
+{
+  "id": "fsw-kostenbeitrag-und-verrechnung",
+  "name_de": "Fonds Soziales Wien – Beratung und Service-Center Kostenbeitrag und Verrechnung",
+  "name_simple": "Fragen zu Kosten beim FSW",
+  "region": "Wien",
+  "url": "https://www.fsw.at/standorte",
+  "jurisdiction": "Kostenbeitrag und Verrechnung",
+  "address": {
+    "street": "Guglgasse 7–9",
+    "postal_code": "1030",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "01 24 5 24",
+  "opening_hours": {
+    "notes": "Mo–Fr 8:00–15:00 Uhr\nDo 8:00–17:30 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.fsw.at/standorte",
+      "quote": "Beratung und Service-Center\nKostenbeitrag und Verrechnung\nGuglgasse 7–9\n1030 Wien\nMo–Fr 8:00–15:00 Uhr\nDo 8:00–17:30 Uhr\nTel.: 01 24 5 24",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

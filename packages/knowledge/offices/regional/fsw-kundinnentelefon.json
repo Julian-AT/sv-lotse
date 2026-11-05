@@ -1,0 +1,31 @@
+{
+  "id": "fsw-kundinnentelefon",
+  "name_de": "Fonds Soziales Wien – Kund:innentelefon",
+  "name_simple": "Telefon für Fragen zu Pflege und Hilfe",
+  "region": "Wien",
+  "phone": "01/24 5 24",
+  "email": "post@fsw.at",
+  "url": "https://www.fsw.at/kontakt",
+  "jurisdiction": "Beratung zu Pflege und Betreuung sowie zum FSW-Angebot",
+  "opening_hours": {
+    "notes": "Unsere Mitarbeiter:innen sind täglich von 8:00 bis 20:00 Uhr unter 01/24 5 24 telefonisch für Sie da."
+  },
+  "sources": [
+    {
+      "url": "https://www.fsw.at/kontakt",
+      "quote": "Unsere Mitarbeiter:innen sind täglich von 8:00 bis 20:00 Uhr unter 01/24 5 24 telefonisch für Sie da.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.fsw.at/kontakt",
+      "quote": "Schicken Sie uns ein E-Mail an post@fsw.at oder nutzen Sie das Kontaktformular – wir antworten Ihnen rasch und zuverlässig.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.fsw.at/kontakt",
+      "quote": "Beratung zu Pflege und Betreuung sowie Informationen zum weiteren FSW-Angebot - auch in Ihrer Nähe!",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
