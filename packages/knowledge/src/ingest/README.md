@@ -1,0 +1,98 @@
+# Public-source ingestion
+
+Run from the repository root after `docker compose up -d --wait` and
+`bun run --filter @lotse/brain db:migrate`:
+
+```sh
+bun run --filter @lotse/knowledge ingest --origin www.oegk.at --limit 1 --dry-run
+bun run --filter @lotse/knowledge ingest --origin www.oegk.at --limit 1
+```
+
+`--origin` accepts an exact origin or hostname as listed in `allowlist.yaml`.
+Without it, the CLI processes all explicit seeds in `ingest-sources.yaml`;
+`--limit` is a positive integer. There is no recursive link discovery or scheduler. Refresh
+intervals are registry data for a later job. A dry run still fetches public pages
+politely, but requires neither database credentials nor an OpenAI key.
+
+The allowlist uses the shared knowledge schema: `origins` contains exact origins
+and purposes; `sources`, `as_of` and `verified_at` provide registry provenance.
+Ingestion additionally rejects duplicate origins. Pensionsversicherung seeds and
+provenance use `https://www.pv.at`. The shared loader's `sources.yaml` remains
+independent of ingestion seeds.
+
+Indexing requires `DATABASE_URL` and `OPENAI_API_KEY`. `EMBEDDING_MODEL` defaults
+to `text-embedding-3-large`; the provider must support 1536 dimensions. SDK calls
+batch 32 texts, limit provider parallelism to one and retry transient failures
+(including rate limits) up to four times. The provider boundary is `createEmbedder`.
+The SDK references are [embedMany](https://ai-sdk.dev/docs/reference/ai-sdk-core/embed-many)
+and [OpenAI embeddings](https://ai-sdk.dev/providers/ai-sdk-providers/openai#embedding-models).
+
+Each origin has one serial request queue. Both robots and page redirects are
+checked against exact origins, with at most five redirect hops. Robots 404/410
+means no restrictions; other unsuccessful statuses stop ingestion. Requests have
+a 20-second timeout, a five-MiB body limit, a descriptive crawler User-Agent and
+a one-second delay after the preceding response completes (or a longer published
+crawl delay). ETag and Last-Modified validators are scoped to the final URL.
+Routing metadata or embedding model/dimension changes cause a fresh fetch even
+when validators are available. Legacy records without embedding identity are
+also re-embedded; a 304 cannot bypass this migration.
+
+Normalization selects the main article, removes navigation, cookie controls and
+scripts, and preserves headings, lists, links and Markdown tables. ARIA headings
+become Markdown headings; accordion level-one headings stay beneath the native
+page title. Collapsed accordions retain their prose. Merged table cells expand
+to a grid with shared values repeated across their spans; row spans stop at the
+row-group boundary. Multiple header rows combine into column heading paths.
+Overlapping spans fail explicitly rather than changing facts.
+Only validity metadata in the document head or standalone `Gültig ab/von/bis`
+labels directly in the main page preamble (before subsections) establish global
+validity. Labels within subsections remain quoted text, with global validity
+unset unless page-level dates are also present. Publication/update timestamps
+do not establish validity. Unknown validity remains null. Date-only
+values use midnight UTC; the database interval is stored exactly as stated.
+
+Chunking estimates one token per four JavaScript string characters, targeting
+1600–3200 characters including heading prefixes. Every heading starts a new
+section and each chunk includes its parent heading path. Small sections and
+section remainders carry `size_exception: section_tail`; indivisible tables over
+the upper bound carry `oversized_table`. No chunk crosses a top-level section.
+
+PDFs are explicitly unsupported because the baseline packages have no PDF
+text-layer extractor. The fetcher returns a structured `not_supported` record
+with reason `pdf_text_extraction_unavailable`, and the CLI reports it without
+writing a source or calling the model. A future extractor can replace that branch
+without pretending that pdf-lib extracts text.
+
+The source record stores normalized Markdown in `text` and raw HTML plus HTTP
+validators in `metadata`. Its SHA-256 hash covers normalized content, title,
+publisher, language, routing metadata and validity. Source and chunk metadata
+also store `embedding: { model, dimensions }`, taken from the embedder's immutable
+identity. Only matching hashes AND embedding identities skip writes and calls.
+Changed sources replace all their chunks within one transaction. A model change
+re-embeds incompatible stored chunks across the corpus in batches of 32 within
+that same transaction. Failure rolls back every vector and metadata change;
+readers see either the old or the new vector space. This deliberately makes model
+changes a potentially long, corpus-wide operation. All ingestion writers take a
+global embedding advisory lock before the per-URL lock to serialize migration
+and prevent mixed-model indexes. Retrieval must additionally filter chunk
+`metadata.embedding` by its query embedder's identity, so an older query process
+cannot compare its vectors with a newly migrated index. This provides ingestion upsert
+semantics without changing the frozen schema, which has no unique URL index.
+Ambiguous preexisting duplicate URLs fail explicitly. All writers of ingested
+sources must use this entrypoint to participate in the lock.
+
+Tests:
+
+```sh
+bun run --filter @lotse/knowledge test
+bun run --filter @lotse/knowledge test:db
+RUN_LIVE=1 bun run --filter @lotse/knowledge test:live
+```
+
+Unit tests use a real local HTTP server and an immutable saved ÖGK page. Database
+tests use real Postgres tables cloned from the migrated schema in an isolated,
+temporary schema, and deterministic embeddings confined to the test file.
+The live test fetches one official seed and uses real OpenAI embeddings for both
+indexing and the search query; it retains the indexed official source for reuse.
+No custom German Postgres dictionary is installed: `synonyms.yaml` is validated
+for query-time use by retrieval.

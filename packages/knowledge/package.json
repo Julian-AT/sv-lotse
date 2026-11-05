@@ -5,17 +5,22 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./loaders/eko": "./src/loaders/eko/index.ts"
+    "./loaders/eko": "./src/loaders/eko/index.ts",
+    "./ingest": "./src/ingest/index.ts"
   },
   "scripts": {
     "typecheck": "../../node_modules/.bin/tsc --noEmit",
-    "test": "vitest run --exclude 'test/**/*.db.test.ts'",
-    "test:db": "vitest run test/loader/catalog.db.test.ts --hookTimeout=30000 --testTimeout=15000",
+    "test": "vitest run --passWithNoTests --exclude 'test/**/*.db.test.ts' --exclude 'test/**/*.live.test.ts'",
+    "test:db": "vitest run test/loader/catalog.db.test.ts test/ingest/indexer.db.test.ts --hookTimeout=30000 --testTimeout=30000",
+    "test:live": "vitest run test/ingest/ingestion.live.test.ts",
     "catalog:load": "bun src/loader/cli.ts",
-    "e2:scan": "bun src/e2/cli.ts"
+    "e2:scan": "bun src/e2/cli.ts",
+    "ingest": "node --experimental-strip-types src/ingest/cli.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.109",
     "@lotse/brain": "workspace:*",
+    "ai": "^7",
     "cheerio": "^1.2.0",
     "p-limit": "^7.3.3",
     "robots-parser": "^3.0.1",
@@ -23,5 +28,8 @@
     "typescript-compiler": "npm:typescript@^6.0.3",
     "yaml": "^2.9.1",
     "zod": "^4"
+  },
+  "devDependencies": {
+    "@types/turndown": "^5.0.6"
   }
 }

@@ -96,7 +96,9 @@
       "name": "@lotse/knowledge",
       "version": "0.0.0",
       "dependencies": {
+        "@ai-sdk/openai": "^4.0.109",
         "@lotse/brain": "workspace:*",
+        "ai": "^7",
         "cheerio": "^1.2.0",
         "p-limit": "^7.3.3",
         "robots-parser": "^3.0.1",
@@ -104,6 +106,9 @@
         "typescript-compiler": "npm:typescript@^6.0.3",
         "yaml": "^2.9.1",
         "zod": "^4",
+      },
+      "devDependencies": {
+        "@types/turndown": "^5.0.6",
       },
     },
     "packages/protocol": {
@@ -564,6 +569,8 @@
     "@types/react-dom": ["@types/react-dom@19.3.0", "", { "peerDependencies": { "@types/react": "^19.3.0" } }, "sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q=="],
 
     "@types/readable-stream": ["@types/readable-stream@4.0.10", "", { "dependencies": { "@types/node": "*", "safe-buffer": "~5.1.1" } }, "sha512-AbUKBjcC8SHmImNi4yK2bbjogQlkFSg7shZCcicxPQapniOlajG8GCc39lvXzCWX4lLRRs7DM3VAeSlqmEVZUA=="],
+
+    "@types/turndown": ["@types/turndown@5.0.6", "", {}, "sha512-ru00MoyeeouE5BX4gRL+6m/BsDfbRayOskWqUvh7CLGW+UXxHQItqALa38kKnOiZPqJrtzJUgAC2+F0rL1S4Pg=="],
 
     "@types/urijs": ["@types/urijs@1.19.26", "", {}, "sha512-wkXrVzX5yoqLnndOwFsieJA7oKM8cNkOKJtf/3vVGSUFkWDKZvFHpIl9Pvqb/T9UsawBBFMTTD8xu7sK5MWuvg=="],
 
