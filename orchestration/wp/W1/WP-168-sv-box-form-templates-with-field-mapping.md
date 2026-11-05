@@ -9,7 +9,11 @@ depends_on: [WP-101, WP-176]
 fr: [FR-D5, FR-D6, E7]
 owns:
   - packages/knowledge/forms/svbox-*
-may_touch: []
+  - packages/knowledge/src/loader/**
+  - packages/knowledge/test/loader/**
+may_touch:
+  - packages/knowledge/package.json
+  - bun.lock
 allow_deps: none
 live_services: []
 gates:
@@ -61,6 +65,15 @@ outside the repository or with the loader tests; do not commit scripts.
   criteria describe administrative eligibility only.
 - Simple-language names (`name_simple`) at A2 level.
 - No code changes; no benefit, office or scenario id anywhere in code (E2 scan gate).
+
+## Template registration (decision 2026-11-05)
+
+No `form_template` rows exist yet. Extend `catalog:load` so that each repository form schema with an
+SV-Box `source` path registers its template: upload the original PDF to object storage
+(`@lotse/db/storage/s3`, key `forms/<id>/<sha256>.pdf`), store publisher, title, source path, hash,
+page count, format `acroform`, status and the schema in `form_template`, idempotently by hash. The
+schema files then reference the template by their stable `id`; `template_id` is assigned by the
+loader, not hand-written. Add a database test for registration and idempotency.
 
 ## Acceptance criteria
 
