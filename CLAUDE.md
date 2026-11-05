@@ -37,7 +37,25 @@ sections of both on demand; do not load whole files into context without need.
 8. **Land.** `wp land <WP>` waits for the required CI check, fast-forwards main and cleans up.
 
 While workers run, review finished WPs, write the next briefs, and keep the batch full up to
-`MAX_PARALLEL`. Two WPs with overlapping paths never run at the same time; `wp` refuses that.
+`MAX_PARALLEL`.
+
+### Automatic flow (owner decision, 2026-11-05)
+
+`wp cycle` and `wp rework` continue on their own after verification:
+
+- failing gates (not blocked, no change request, no secret) go back to the worker while attempts
+  remain;
+- the Codex cross-review runs on every verified WP. Only blockers and majors in security, safety,
+  the medical boundary, data integrity or an unmet acceptance criterion block (`VERDICT: REWORK`,
+  reworked automatically while attempts remain). Other findings are listed under `## Follow-ups`,
+  collected in `.orchestration/followups/`, and batched by the orchestrator into follow-up WPs
+  that land before the milestone gate;
+- a normal-risk WP with passing gates and `VERDICT: APPROVE` is committed from the worker's
+  `suggested_commits` (commitlint-checked, owner identity, no AI attribution), pushed and landed.
+
+The orchestrator still handles risk: high WPs, blocked workers, change requests, exhausted attempts,
+incomplete commit splits and failed landings, and reviews auto-landed WPs afterwards in batches.
+Workers default to reasoning effort `high`, and `xhigh` for risk: high WPs. Two WPs with overlapping paths never run at the same time; `wp` refuses that.
 
 ## Commit standard (enforced by hooks, wp and CI)
 
