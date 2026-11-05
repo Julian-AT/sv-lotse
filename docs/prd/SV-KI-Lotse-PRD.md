@@ -409,7 +409,7 @@ flowchart TB
         ENGINE[Process engine<br/>pure TypeScript]
         GUARD[Safety net · rule guard ·<br/>boundary classifier · citation verifier]
         KB[Catalog + retrieval<br/>hybrid search, reranker]
-        GATEWAY[Model router<br/>per-role routing, fallback chains]
+        ROUTER[Model router<br/>per-role routing, fallback chains]
     end
     subgraph Data["Backing services"]
         PG[(Postgres + pgvector<br/>catalog, chunks, cases, steps, messages,<br/>approvals, jobs, facts for all clients, audit)]
@@ -429,7 +429,7 @@ flowchart TB
     API --> AGENT --> ENGINE
     AGENT --> GUARD
     AGENT --> KB
-    AGENT --> GATEWAY --> MODELS
+    AGENT --> ROUTER --> MODELS
     API --> XI
     AGENT --> PG
     KB --> PG
@@ -474,7 +474,7 @@ Every conversation turn goes from the workspace to `/api/turn`. The Mac app call
 | `/api/forms/instances/:id/pdf` | GET | Filled PDF from confirmed values (FR-D6) | Session |
 | `/api/facts` | GET, POST, PATCH, DELETE | Confirmed facts per subject; the single context store for all clients | Session |
 | `/api/jobs/:id` | GET | Background job status and progress (FR-C10) | Session |
-| `/api/jobs/worker` | POST | Worker entry point invoked by the scheduler or the Workflow runtime; processes one job step | Internal secret |
+| `/api/jobs/worker` | POST | Worker entry point invoked by the scheduler or the Workflow runtime; processes one job step | `CRON_SECRET` bearer token |
 | `/api/voice/token` | POST | Mint a single-use ElevenLabs token: `realtime_scribe` for speech to text or `tts_websocket` for text to speech; 15-minute expiry, consumed on first use | Session |
 | `/api/resolve` | POST | Vision fallback for target resolution (ladder method 5): screenshot and target description → point with confidence via the model router; called by the Mac resolver | Session |
 | `/api/relatives/invite` | POST | Create a time-limited invite; returns join URL | Session |
@@ -1252,13 +1252,13 @@ The numbers below are proposed targets for the first pilot; each one is measured
 | NFR-11 | Resource use | Mac app idle CPU under 1% and memory under 200 MB outside active turns (proposal, measured with Instruments on the reference machine) |
 | NFR-12 | Cost | Model cost per turn and per case tracked; a per-case budget alert with a fallback model chain |
 | NFR-13 | Maintainability | Typed contracts end to end; every catalog record and process definition validated in CI; architecture decisions recorded as ADRs |
-| NFR-15 | Portability | The web app and brain build as a standard Node container and run on any host with plain Postgres (pgvector) and S3-compatible storage; model and voice providers are swappable behind the gateway and provider adapters; no Vercel-only dependency in `packages/brain`; verified by a CI container smoke test |
-| NFR-16 | Runtime baseline | Node.js 22 or later, ESM-only packages (AI SDK 7 requirement) |
+| NFR-15 | Portability | The web app and brain build as a standard Node container and run on any host with plain Postgres (pgvector) and S3-compatible storage; model and voice providers are swappable behind the model router and provider adapters; no Vercel-only dependency in `packages/brain`; verified by a CI container smoke test |
+| NFR-16 | Runtime baseline | Node.js 22 or later as the runtime, Bun as package manager and script runner, ESM-only packages (AI SDK 7 requirement) |
 | NFR-17 | No stubs in release | Release builds fail if any tool stub, fixture provider or test-only source is reachable (`BRAIN_ALLOW_STUBS` unset, E2 scan) |
 
 ## 17. Tech stack, repository and engineering standards
 
-One monorepo (pnpm workspaces with Turborepo) holds every TypeScript package and the Xcode project, so a protocol change, its generated Swift types and the code using them land in one pull request.
+One monorepo (Bun workspaces) holds every TypeScript package and the Xcode project, so a protocol change, its generated Swift types and the code using them land in one pull request.
 
 ### Stack
 
@@ -1276,6 +1276,7 @@ One monorepo (pnpm workspaces with Turborepo) holds every TypeScript package and
 | PDF and forms | pdf-lib for filling and adding form fields; pdf.js for viewing, text layers and server-side field detection (text and vector operators); vision model for scanned forms | Commercial form-recognition service |
 | Tracing and evals | OpenTelemetry (`@ai-sdk/otel`), Langfuse, Vitest-based eval runner | Braintrust |
 | Analytics | PostHog | None |
+| Tooling | Bun workspaces and scripts, Biome, Vitest; Node.js 22 as the runtime | pnpm with Turborepo |
 | Windows (later) | Tauri v2 shell reusing the workspace and protocol | Electron |
 
 ### Repository layout
@@ -1498,6 +1499,7 @@ New IDs: FR-D10, FR-D11, E13, OT-13, OT-14. No ID was removed.
 | Native SwiftUI conversation view noted as an optional later view of the same conversation, not a second client | 2, 9 |
 | Model access reduced to the OpenAI API; the internal abstraction is called the model router | 7, 8, 17, 19 |
 | SV-Box files stored unmodified in the private repository under `data/svbox/` | 10, 19 |
+| Bun workspaces replace pnpm and Turborepo; Node.js stays the runtime; the job worker route is authorized with `CRON_SECRET` | 7, 16, 17 |
 
 ### Change log: architecture consolidation
 

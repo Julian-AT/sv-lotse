@@ -140,7 +140,7 @@ flowchart LR
 | WP-003 | Protocol v1, JSON Schema, Swift types | `packages/protocol/**` | 001 | high |
 | WP-004 | Database schema, migrations, Postgres and MinIO | `docker-compose.yml`, `packages/brain/src/{db,storage}/**`, `drizzle/**` | 001 | high |
 | WP-005 | Web shell, anonymous sessions, container | `apps/web/**` (not `api/turn`) | 004 | high |
-| WP-006 | Brain runtime, tool contracts, server-side approvals, `/api/turn` | `packages/brain/src/{agent,tools,approvals,conversation,gateway,config}/**`, `api/turn` | 003, 005 | high |
+| WP-006 | Brain runtime, tool contracts, server-side approvals, `/api/turn` | `packages/brain/src/{agent,tools,approvals,conversation,models,config}/**`, `api/turn` | 003, 005 | high |
 | WP-007 | Workspace conversation client, approval card, web bridge | `apps/web/src/{conversation,bridge}/**`, `(workspace)`, `packages/ui/**` | 006 | normal |
 | WP-008 | Mac shell from Clicky, XcodeGen, LotseKit, native bridge | `apps/mac/**` | 003 | high |
 | WP-009 | Bridge end to end with a live turn | LotseBridge, LotseOverlay, LotseCapture, `apps/mac/{App,E2E}`, web bridge and adapters | 007, 008 | high |
