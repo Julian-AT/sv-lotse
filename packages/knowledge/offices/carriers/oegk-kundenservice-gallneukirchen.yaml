@@ -1,0 +1,36 @@
+id: "oegk-kundenservice-gallneukirchen"
+name_de: "Kundenservice Gallneukirchen"
+name_simple: "ÖGK-Büro Gallneukirchen"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882930&portal=oegkportal"
+address:
+  street: "Reichenauerstraße 1a, 1. OG"
+  postal_code: "4210"
+  locality: "Gallneukirchen"
+  country: "AT"
+phone: "+43 5 0766-14243970"
+email: "urfahr@oegk.at"
+opening_hours:
+  notes: |-
+    Jeden ersten und dritten Dienstag im Monat von 10.00 - 12.00 Uhr.
+    Im August geschlossen!
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882930&portal=oegkportal"
+    quote: |-
+      Kundenservice Gallneukirchen
+      Reichenauerstraße 1a, 1. OG
+      4210 Gallneukirchen
+      Telefon: +43 5 0766-14243970
+      E-Mail: urfahr@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882930&portal=oegkportal"
+    quote: |-
+      Jeden ersten und dritten Dienstag im Monat von 10.00 - 12.00 Uhr.
+      Im August geschlossen!
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882930&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
