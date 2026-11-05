@@ -25,7 +25,7 @@ function visibleQuote(
     text += character;
     positions.push(position);
   }
-  function visit(element: Element) {
+  function visit(element: Element, parentDisplay = "") {
     if (
       excluded(element) ||
       ["script", "style", "noscript", "template", "select", "textarea"].includes(
@@ -34,10 +34,17 @@ function visibleQuote(
       !isRendered(element)
     )
       return;
-    const block = !["inline", "contents"].includes(view.getComputedStyle(element).display);
+    const display = view.getComputedStyle(element).display;
+    // Flex/grid items are blockified in computed style, but do not participate
+    // in block flow. A display:contents wrapper preserves that parent context.
+    const block =
+      display !== "contents" &&
+      !display.startsWith("inline") &&
+      !["flex", "inline-flex", "grid", "inline-grid"].includes(parentDisplay);
     if (block) append(" ");
     for (const child of element.childNodes) {
-      if (child.nodeType === 1) visit(child as Element);
+      if (child.nodeType === 1)
+        visit(child as Element, display === "contents" ? parentDisplay : display);
       else if (child.nodeType === 3) {
         const node = child as Text;
         const range = document.createRange();
@@ -52,19 +59,23 @@ function visibleQuote(
   visit(document.body ?? document.documentElement);
   const needle = normalizeWhitespace(quote);
   if (!needle) return;
-  const index = text.indexOf(needle);
-  // Repeated quotes need a narrower target rather than silently picking one.
-  if (index < 0 || text.indexOf(needle, index + 1) >= 0) return;
-  const start = positions[index];
-  const end = positions[index + needle.length - 1];
-  if (!start || !end) return;
-  const range = document.createRange();
-  range.setStart(start.node, start.offset);
-  range.setEnd(end.node, end.offset + 1);
-  const ancestor = range.commonAncestorContainer;
-  const element = ancestor.nodeType === 1 ? (ancestor as Element) : ancestor.parentElement;
-  const rects = element ? visibleRects(element, Array.from(range.getClientRects()), true) : [];
-  return element && rects.length ? { element, rects } : undefined;
+  let match: ResolvedTarget | undefined;
+  for (let index = text.indexOf(needle); index >= 0; index = text.indexOf(needle, index + 1)) {
+    const start = positions[index];
+    const end = positions[index + needle.length - 1];
+    if (!start || !end) continue;
+    const range = document.createRange();
+    range.setStart(start.node, start.offset);
+    range.setEnd(end.node, end.offset + 1);
+    const ancestor = range.commonAncestorContainer;
+    const element = ancestor.nodeType === 1 ? (ancestor as Element) : ancestor.parentElement;
+    const rects = element ? visibleRects(element, Array.from(range.getClientRects()), true) : [];
+    if (!element || !rects.length) continue;
+    // Only visible occurrences make an exact quote ambiguous.
+    if (match) return;
+    match = { element, rects };
+  }
+  return match;
 }
 
 export function resolveTarget(

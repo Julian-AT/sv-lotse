@@ -26,23 +26,36 @@ Handles derive from structure and semantic identity, distinguish duplicate contr
 identity when unrelated nodes are inserted during the runtime's lifetime. Replacement nodes can reuse
 a handle only through a unique structural identity anchored by an ID or control name. Ambiguous and
 unanchored replacements receive new handles; old actions fail with `target-not-found`.
+Handle lookup also compares the live semantic identity before every write. Repurposing a field
+during pointing, between characters or inside a page event handler stops entry, even without a
+new snapshot.
 
 Accessible names use `aria-labelledby` (including referenced labels), then `aria-label`, associated
-explicit/wrapping labels, button/link/widget text and native button values, then alt/title and finally
-placeholder. Whitespace is normalized. This is a documented subset of accessible-name computation,
+explicit/wrapping labels, content for supporting roles and native button values, then alt/title and
+finally placeholder. Names from content include descendant alternatives such as image alt text;
+ordinary ARIA containers do not inherit descendant text as their names. Whitespace is normalized;
+blank ARIA labels and referenced names do not replace descendant content.
+This is a documented subset of accessible-name computation,
 not a replacement for the browser accessibility tree. Text quotes are case-sensitive after whitespace
-normalization; hidden text is excluded and ambiguous quotes fail instead of guessing.
+normalization. Ambiguity counts visible matching ranges, excluding fully clipped occurrences.
+Adjacent inline-level boxes do not introduce whitespace, including nested flex/grid items whose
+computed display is blockified. Block-flow boundaries and explicit line breaks separate words.
+Ambiguous visible quotes fail instead of guessing.
 
 `execute()` validates protocol actions and returns an `ActionResult` with `resolvedBy: "dom"`.
 Unsupported targets/actions, stale URLs, hidden/missing targets, denied controls and disallowed origins
 fail with an explicit reason. Built-in JSON deny rules are Zod-validated; `denyList` adds caller rules
 without removing the defaults. The runtime never dispatches click or submission events and has no
 network calls. It does not validate approvals: the trusted caller must authorize values before entry.
+Denied native and actionable ARIA ancestors protect nested targets; ordinary form, group and region
+ancestors do not deny an unrelated field because they contain a denied button.
 
 Typing supports text/search/email/url/tel inputs and textareas, uses the native prototype value setter
 and emits keyboard, cancellable `beforeinput`, `input` and blur/change events. Pace is milliseconds
-between Unicode code points. After blur/change handlers run, the final value must still equal the
-approved value or execution returns `value-changed`. Cancellation or changing fields stops further writes; partial values are
+between Unicode code points. After awaiting typing, execution yields to the next task so the complete
+input/blur/change microtask checkpoint runs, including nested microtasks. It then rechecks cancellation,
+target identity, denial and the final value. A value differing from the approved value returns `value-changed`.
+Cancellation or changing fields stops further writes; partial values are
 not rolled back because portals may persist every input event. Overlapping executions return `busy`.
 `clear()` cancels active work and removes the overlay host; a protocol `clear` empties the target field.
 `dispose()` also makes the runtime unusable. No raw CSS payload or HTML is injected into annotations.
@@ -76,6 +89,8 @@ PW_TEST_CONNECT_EXPOSE_NETWORK='<loopback>' \
 bun run --filter @lotse/guide e2e
 ```
 
-The suite validates all four snapshots, 2 px DOM/text overlay alignment, paced plain and controlled
-typing, all denied fixture controls, hostile CSS isolation and origin refusal. The external Chromium
+The suite validates all four original snapshots, 2 px DOM/text overlay alignment, paced plain and
+controlled typing, all denied fixture controls, hostile CSS isolation and origin refusal. Hardening
+fixtures cover changed identities, deferred validation, ARIA containers, image alternatives,
+English confirmation labels, clipped quote occurrences and inline-level text boundaries. The external Chromium
 debugger measures closed-shadow geometry; page scripts retain no access to the overlay nodes.

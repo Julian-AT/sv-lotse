@@ -34,11 +34,21 @@ ESM file and removes it afterward. No live provider or DOM emulator is required.
   Credential values are always empty internally; validated autocomplete tokens supplement password detection.
 - Never recycle issued handles for ambiguous or unanchored replacement nodes. Rebinding requires a
   unique structural identity anchored by an ID or control name; surviving nodes retain their handles.
-- Every action checks its origin; typing rechecks the target and deny list between characters.
+- Every action checks its origin. Handle lookup compares the live semantic identity to the issued
+  identity; typing rechecks it and the deny list before each write, including after page listeners.
+- Names from content apply only to supporting ARIA roles and include descendant alternatives such
+  as image alt text. ARIA labels and referenced names must be nonempty after whitespace normalization
+  before replacing descendant content. Container roles do not inherit descendant labels. Ancestor
+  denial applies to native and actionable ARIA controls or explicitly denied roles, not ordinary ARIA
+  containers.
 - Built-in deny rules cannot be removed by caller configuration. Never dispatch click or submission.
 - `clear()` removes overlays and cancels active typing; the protocol clear action empties a field.
-- Pointing rechecks cancellation before rendering labels; typing verifies the requested value after
-  blur/change handlers have run.
+- Pointing rechecks cancellation before rendering labels. After awaiting typing, execution yields
+  to a new task before rechecking cancellation, identity, denial and the requested value. The completed
+  microtask checkpoint includes nested input/blur/change microtasks.
+- Quote ambiguity counts visible matching ranges, excluding fully clipped occurrences. Inline-level
+  boxes preserve contiguous text; flex/grid items' blockified display does not create block-flow
+  separators. Actual block boundaries and explicit line breaks separate words.
 - AC5 protects against descendant, tag and attribute selectors, including universal opacity/color
   rules. Hiding the document root itself is outside the isolation contract.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.

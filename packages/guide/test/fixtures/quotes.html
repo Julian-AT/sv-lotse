@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Exact visible quotes</title>
+<style>body { font: 18px sans-serif; margin: 24px; }</style>
+</head><body>
+<!-- Constructed text fixtures isolate clipping and CSS display boundaries. -->
+<!-- Both occurrences share one text node; only the first wrapped line is visible. -->
+<p id="clipped-quote" style="font:20px/32px monospace;width:17ch;height:32px;overflow:hidden">Visible sentence. Visible sentence.</p>
+<p id="inline-quote"><span>Hello</span><span>world.</span></p>
+<p>Block<span style="display:block">boundary.</span></p>
+<p>Line<br>break.</p>
+</body></html>
