@@ -43,8 +43,16 @@ loads root `.env.local` without overwriting exported values; without `RUN_LIVE=1
 ## Evaluation suites
 
 Keep runner, statistics, leakage, rubric and persona unit tests green. Live tests prove judge ranking
-and a German persona conversation against OpenAI. Concrete E1–E13 product suites arrive later;
-the arithmetic demonstration reserves E1 only in the standalone demonstration registry.
+and a German persona conversation against OpenAI. The arithmetic demonstration reserves E1 only in
+the standalone demonstration registry. E13 is available in `src/e13/index.ts`: use `registerE13`
+with a WP-111 `Registry`, source-backed fixtures and an abort-aware detection adapter. It has no
+brain dependency and does not modify the demonstration CLI's default registry.
+
+E13 uses one-to-one maximum matching at IoU >= 0.5. Full recall/precision additionally require a
+normalized label match and exact owner match. Box-only recall/precision, label match and owner
+match are separate diagnostics. Both 90% recall and 95% precision are informational targets;
+the minimum set size stays 20. Three flattened SV-Box fixtures run in the brain detection tests
+and must report `insufficient_data` rather than claiming the full gold-set gate.
 
 ## Forbidden paths
 
