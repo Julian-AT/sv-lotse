@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-zell-see"
+name_de: "Kundenservice Zell/See"
+name_simple: "ÖGK-Büro Zell/See"
+carrier: "oegk"
+region: "Salzburg"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882985&portal=oegkportal"
+address:
+  street: "Ebenbergstraße 3"
+  postal_code: "5700"
+  locality: "Zell am See"
+  country: "AT"
+phone: "+43 5 0766-178450"
+email: "zellamsee@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.15 – 15.00
+    Dienstag:07.15 – 15.00
+    Mittwoch:07.15 – 15.00
+    Donnerstag:07.15 – 15.00
+    Freitag:07.15 – 12.15
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882985&portal=oegkportal"
+    quote: |-
+      Kundenservice Zell/See
+      Ebenbergstraße 3
+      5700 Zell am See
+      Telefon: +43 5 0766-178450
+      E-Mail: zellamsee@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882985&portal=oegkportal"
+    quote: |-
+      Montag:07.15 – 15.00
+      Dienstag:07.15 – 15.00
+      Mittwoch:07.15 – 15.00
+      Donnerstag:07.15 – 15.00
+      Freitag:07.15 – 12.15
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882985&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
