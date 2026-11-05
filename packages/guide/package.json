@@ -1,0 +1,16 @@
+{
+  "name": "@lotse/guide",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  }
+}
