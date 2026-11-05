@@ -5,7 +5,7 @@ wave: W1
 lane: evals
 risk: normal
 codex_effort: medium
-depends_on: [WP-111]
+depends_on: [WP-111, WP-101, WP-103]
 fr: [E13, FR-D11]
 owns:
   - packages/evals/sets/e13/**
