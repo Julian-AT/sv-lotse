@@ -12,6 +12,7 @@ owns:
   - packages/knowledge/test/ingest/**
   - packages/knowledge/allowlist.yaml
   - packages/knowledge/sources.yaml
+  - packages/knowledge/ingest-sources.yaml
   - packages/knowledge/synonyms.yaml
 may_touch:
   - packages/knowledge/package.json
