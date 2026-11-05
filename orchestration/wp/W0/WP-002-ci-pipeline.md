@@ -51,7 +51,10 @@ is the single required status check that `wp land` waits for and the branch rule
        no AI attribution, and author and committer equal to the allowed e-mail.
    - **Job `secrets`:** gitleaks over the commit range with the gitleaks CLI or the official container
      image (no paid action).
-   - **Job `integration`:** runs only if `docker-compose.yml` exists (`hashFiles`).
+   - **Job `detect`:** checks out the repository and sets one boolean output per optional job
+     (`hashFiles` or `test -f` in a step). Conditional jobs `needs: detect` and use those outputs in
+     their job-level `if:`; `hashFiles` is not available in job-level conditions.
+   - **Job `integration`:** runs only if `docker-compose.yml` exists.
      `docker compose up -d --wait`, `bun install --frozen-lockfile`, `bun run test:integration`, with
      `DATABASE_URL` and the S3 variables pointing at the compose services.
    - **Job `container`:** runs only if `apps/web/Dockerfile` exists. Runs
@@ -85,7 +88,8 @@ is the single required status check that `wp land` waits for and the branch rule
 
 ## Notes for the implementer
 
-- Use `hashFiles('docker-compose.yml') != ''` style conditions at job level.
+- GitHub does not evaluate `hashFiles` in job-level `if:` (actionlint rejects it). Detect files in
+  a step of the `detect` job and gate conditional jobs on `needs.detect.outputs.*`.
 - After this lands, the orchestrator runs `wp protect` to require `ci-ok` on `main`.
 
 ## Suggested commits
