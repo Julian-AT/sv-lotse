@@ -920,7 +920,24 @@ sync_root_base() {
   fi
 }
 
+# Concurrent landings race on the base branch. When a landing fails because the base moved,
+# rebase through 'wp pr' (re-verifying) and try again; any other failure stops.
 cmd_land() {
+  local id="${1:?usage: wp land <WP>}" attempt=1 wt
+  while :; do
+    ( cmd_land_once "$id" ) && return 0
+    [ "$attempt" -lt "${LAND_RETRIES:-3}" ] || die "$id: landing failed after $attempt attempts"
+    has_remote || die "$id: landing failed"
+    wt="$(require_wt "$id")"
+    git -C "$ROOT" fetch -q "$REMOTE" "$BASE_BRANCH"
+    git -C "$wt" merge-base --is-ancestor "$REMOTE/$BASE_BRANCH" HEAD && die "$id: landing failed"
+    info "$id: $BASE_BRANCH moved during landing; rebasing and retrying ($attempt)"
+    attempt=$((attempt + 1))
+    cmd_pr "$id"
+  done
+}
+
+cmd_land_once() {
   local id="${1:?usage: wp land <WP>}" wt branch head rhead st sha i
   wt="$(require_wt "$id")"
   branch="$(get_state "$id" BRANCH)"
