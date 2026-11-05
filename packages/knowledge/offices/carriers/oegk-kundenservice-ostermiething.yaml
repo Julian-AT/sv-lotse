@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-ostermiething"
+name_de: "Kundenservice Ostermiething"
+name_simple: "ÖGK-Büro Ostermiething"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882956&portal=oegkportal"
+address:
+  street: "Bergstraße 30"
+  postal_code: "5121"
+  locality: "Ostermiething"
+  country: "AT"
+phone: "+43 5 0766-14393970"
+email: "braunau@oegk.at"
+opening_hours:
+  notes: "Jeden zweiten und vierten Donnerstag im Monat von 09.00 - 11.00 Uhr."
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882956&portal=oegkportal"
+    quote: |-
+      Kundenservice Ostermiething
+      Bergstraße 30
+      5121 Ostermiething
+      Telefon: +43 5 0766-14393970
+      E-Mail: braunau@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882956&portal=oegkportal"
+    quote: "Jeden zweiten und vierten Donnerstag im Monat von 09.00 - 11.00 Uhr."
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882956&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
