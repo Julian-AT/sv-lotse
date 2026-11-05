@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-freistadt"
+name_de: "Kundenservice Freistadt"
+name_simple: "ÖGK-Büro Freistadt"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882929&portal=oegkportal"
+address:
+  street: "St. Peter Straße 6"
+  postal_code: "4240"
+  locality: "Freistadt"
+  country: "AT"
+phone: "+43 5 0766-14163900"
+email: "freistadt@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:06.45 – 15.00
+    Dienstag:06.45 – 15.00
+    Mittwoch:06.45 – 15.00
+    Donnerstag:06.45 – 15.00
+    Freitag:06.45 – 15.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882929&portal=oegkportal"
+    quote: |-
+      Kundenservice Freistadt
+      St. Peter Straße 6
+      4240 Freistadt
+      Telefon: +43 5 0766-14163900
+      E-Mail: freistadt@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882929&portal=oegkportal"
+    quote: |-
+      Montag:06.45 – 15.00
+      Dienstag:06.45 – 15.00
+      Mittwoch:06.45 – 15.00
+      Donnerstag:06.45 – 15.00
+      Freitag:06.45 – 15.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882929&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-feldkirchen"
+name_de: "Kundenservice Feldkirchen"
+name_simple: "ÖGK-Büro Feldkirchen"
+carrier: "oegk"
+region: "Kärnten"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882975&portal=oegkportal"
+address:
+  street: "10. Oktober Straße 24"
+  postal_code: "9560"
+  locality: "Feldkirchen"
+  country: "AT"
+phone: "+43 5 0766-164500"
+email: "feldkirchen@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.00
+    Dienstag:07.30 – 14.00
+    Mittwoch:07.30 – 14.00
+    Donnerstag:07.30 – 14.00
+    Freitag:07.30 – 12.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882975&portal=oegkportal"
+    quote: |-
+      Kundenservice Feldkirchen
+      10. Oktober Straße 24
+      9560 Feldkirchen
+      Telefon: +43 5 0766-164500
+      E-Mail: feldkirchen@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882975&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.00
+      Dienstag:07.30 – 14.00
+      Mittwoch:07.30 – 14.00
+      Donnerstag:07.30 – 14.00
+      Freitag:07.30 – 12.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882975&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
