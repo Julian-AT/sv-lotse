@@ -23,6 +23,9 @@ fi
 # normal-risk WPs (gates pass, cross-review APPROVE) without the orchestrator.
 : "${AUTO_REWORK:=1}"
 : "${AUTO_LAND:=1}"
+# Deadline mode: normal-risk WPs land when their gates pass; the cross-review runs after landing
+# and its findings become follow-ups. risk: high WPs are still reviewed before landing.
+: "${REVIEW_AFTER_LAND:=1}"
 : "${XREVIEW_EFFORT:=xhigh}"
 FOLLOWUPS_DIR="${FOLLOWUPS_DIR:-$ROOT/.orchestration/followups}"
 # One Compose project for every worktree: gates and workers share the same Postgres and MinIO on
@@ -798,6 +801,15 @@ auto_flow() {
       continue
     fi
     [ "$st" = verified ] || return 0
+    if [ "$REVIEW_AFTER_LAND" = 1 ] && [ "$AUTO_LAND" = 1 ] && [ "$(fm_get "$b" risk)" != high ]; then
+      auto_commit "$id" "$run" || { warn "$id: automatic commit not possible; waiting for the orchestrator"; return 0; }
+      if cmd_pr "$id" && cmd_land "$id"; then
+        post_land_review "$id" "$run" &
+      else
+        warn "$id: automatic landing failed; waiting for the orchestrator"
+      fi
+      return 0
+    fi
     [ "$AUTO_XREVIEW" = 1 ] || return 0
     [ -s "$run/xreview.md" ] || cmd_xreview "$id" || { warn "$id: cross-review failed"; return 0; }
     verdict="$(grep -Eo 'VERDICT: (APPROVE|REWORK)' "$run/xreview.md" | tail -n 1 | cut -d' ' -f2)"
@@ -832,6 +844,21 @@ gate_rework_findings() {
     echo "weaken tests. Shared Compose services (project \`lotse\`) are running."; echo
     grep -E '	fail	' "$run/verify.tsv" | sed 's/^/- /'; echo
     echo '```'; tail -n 80 "$run/verify.log"; echo '```'; } > "$run/auto-rework.md"
+}
+
+# Review a landed WP against its landed commits and keep every finding as a follow-up.
+post_land_review() {
+  local id="$1" run="$2" out
+  out="$run/xreview-postland.md"
+  [ -s "$run/diff.patch" ] || return 0
+  fill_template "$ORCH/templates/xreview-prompt.md" "WP_ID=$id" "BRIEF=@$(brief_path "$id")" "DIFF=@$run/diff.patch" > "$run/xreview-prompt.md"
+  "$CODEX_BIN" exec -C "$ROOT" -s read-only -o "$out" -c "model_reasoning_effort=$XREVIEW_EFFORT" \
+    ${CODEX_MODEL:+-m "$CODEX_MODEL"} - < "$run/xreview-prompt.md" > "$run/xreview-postland.events.jsonl" 2>&1 || true
+  [ -s "$out" ] || return 0
+  grep -qE '^[0-9]+\. \*\*' "$out" || return 0
+  mkdir -p "$FOLLOWUPS_DIR"
+  { echo "# Post-landing review of $id"; echo; sed '/^`not_run`/,$d' "$out"; } > "$FOLLOWUPS_DIR/$id.md"
+  journal "$id post-landing review: $(grep -Eo 'VERDICT: [A-Z]+' "$out" | tail -n 1)"
 }
 
 save_followups() {
