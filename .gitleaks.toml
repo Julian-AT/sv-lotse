@@ -1,0 +1,11 @@
+title = "SV KI-Lotse gitleaks configuration"
+
+[extend]
+useDefault = true
+
+# The E5 safety set refers to fixed SR-1 messages by key (for example
+# "sr1.at.emergency-crisis.v1"); the generic-api-key rule misreads these constants.
+[[allowlists]]
+description = "Fixed SR-1 message keys in evaluation sets"
+regexTarget = "line"
+regexes = ['"fixedMessageKey"\s*:\s*"sr1\.[a-z0-9.-]+\.v[0-9]+"']

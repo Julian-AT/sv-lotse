@@ -701,7 +701,9 @@ EOF
   pat warn 'console\.log\(' 'console.log'
   pat warn '(try!|as! )' 'Swift force operation'
   if command -v gitleaks >/dev/null 2>&1 && gitleaks stdin --help >/dev/null 2>&1; then
-    if gitleaks stdin --no-banner --redact < "$run/diff.patch" >> "$log" 2>&1; then
+    local gl_config=()
+    [ -f "$ROOT/.gitleaks.toml" ] && gl_config=(--config "$ROOT/.gitleaks.toml")
+    if gitleaks stdin --no-banner --redact ${gl_config[@]+"${gl_config[@]}"} < "$run/diff.patch" >> "$log" 2>&1; then
       record secrets pass gitleaks
     else
       record secrets fail "gitleaks found a secret (see verify.log)"
