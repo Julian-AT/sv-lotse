@@ -17,7 +17,7 @@ gates:
   - bun run --filter @lotse/evals typecheck
   - bun run --filter @lotse/evals test
   - RUN_LIVE=1 bun run --filter @lotse/evals test:live
-pr_title: "feat(evals): add evaluation runner with intervals, judge and persona simulator"
+pr_title: "feat(evals): add evaluation runner, judge and persona simulator"
 ---
 
 # WP-111: Evaluation harness with runner, Wilson intervals, judge and persona simulator

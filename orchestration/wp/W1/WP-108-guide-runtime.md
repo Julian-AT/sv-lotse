@@ -18,7 +18,7 @@ gates:
   - bun run --filter @lotse/guide test
   - bunx playwright install chromium
   - bun run --filter @lotse/guide e2e
-pr_title: "feat(guide): add guide runtime with snapshot, pointing and visible typing"
+pr_title: "feat(guide): add guide runtime with snapshot, pointing and typing"
 ---
 
 # WP-108: Guide runtime with page snapshot, pointing, visible typing and deny list

@@ -25,7 +25,7 @@ gates:
   - bun run --filter @lotse/knowledge test
   - bun run --filter @lotse/knowledge test:db
   - RUN_LIVE=1 bun run --filter @lotse/knowledge test:live
-pr_title: "feat(knowledge): add ingestion pipeline from allowlisted sources to pgvector"
+pr_title: "feat(knowledge): add ingestion pipeline into pgvector"
 ---
 
 # WP-103: Ingestion pipeline with crawl, normalize, chunk, embed and index

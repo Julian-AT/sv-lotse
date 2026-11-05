@@ -21,7 +21,7 @@ gates:
   - bun run --filter @lotse/knowledge typecheck
   - bun run --filter @lotse/knowledge test
   - bun run --filter @lotse/knowledge test:db
-pr_title: "feat(knowledge): add sozdok loader with in-force selection and paragraph chunks"
+pr_title: "feat(knowledge): add sozdok loader with in-force paragraph chunks"
 ---
 
 # WP-166: SozDok XML loader with in-force selection, paragraph chunks and citations
