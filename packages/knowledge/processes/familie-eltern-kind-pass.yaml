@@ -1,0 +1,212 @@
+# Awaiting human review; sources checked for WP-159.
+id: familie-eltern-kind-pass
+benefit: ref:catalog/familie-eltern-kind-pass
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: responsible_carrier
+    type: enum:carrier
+    question_hint: "Bei welcher Krankenkasse haben Sie Wochengeld erhalten? Wenn Sie keines erhalten
+      haben: Wo sind oder waren Sie zuletzt versichert? Ohne bisherige Versicherung ist die ÖGK
+      zuständig."
+    validation:
+      options:
+        - oegk
+        - svs
+        - bvaeb
+  - id: region
+    type: enum:region
+    question_hint: In welchem Bundesland wohnen Sie?
+    validation:
+      options:
+        - Burgenland
+        - Kärnten
+        - Niederösterreich
+        - Oberösterreich
+        - Salzburg
+        - Steiermark
+        - Tirol
+        - Vorarlberg
+        - Wien
+  - id: pregnancy_confirmed
+    type: boolean
+    question_hint: Wurde Ihre Schwangerschaft bereits von einer Ärztin oder einem Arzt bestätigt?
+  - id: residence_austria
+    type: boolean
+    question_hint: Haben Sie einen Wohnsitz in Österreich?
+  - id: pass_available
+    type: boolean
+    question_hint: Haben Sie bereits einen Eltern-Kind-Pass?
+  - id: initial_proof_ready
+    type: boolean
+    question_hint: Sind die fünf Schwangerschaftsuntersuchungen und die erste Kindesuntersuchung bestätigt?
+  - id: electronic_proof_confirmed
+    type: boolean
+    question_hint: Hat Ihre Krankenkasse bestätigt, dass die Nachweise bereits elektronisch vorliegen?
+  - id: later_proof_ready
+    type: boolean
+    question_hint: Liegen die Nachweise der Kindesuntersuchungen 2 bis 5 bereits bei Ihrer Krankenkasse vor?
+  - id: child_birth_date
+    type: date
+    question_hint: Wann wurde Ihr Kind geboren?
+  - id: proof_handed_over
+    type: boolean
+    question_hint: Haben Sie die erforderlichen Nachweise selbst an Ihre Krankenkasse weitergegeben?
+steps:
+  - id: check-pass
+    needs:
+      - pass_available
+    outputs:
+      - id: pass-information
+        type: document
+    transitions:
+      - to: obtain-pass
+        when: pass_available == false
+      - to: prepare-proofs
+        when: pass_available == true
+  - id: obtain-pass
+    needs:
+      - pregnancy_confirmed
+      - residence_austria
+    criteria: ref:catalog/familie-eltern-kind-pass#criteria
+    documents: ref:catalog/familie-eltern-kind-pass#documents
+    outputs:
+      - id: pass-checklist
+        type: document
+    transitions:
+      - to: prepare-proofs
+  - id: prepare-proofs
+    needs:
+      - responsible_carrier
+      - region
+      - initial_proof_ready
+      - electronic_proof_confirmed
+    documents: ref:catalog/familie-eltern-kind-pass#documents
+    action: documents.checklist
+    outputs:
+      - id: proof-checklist
+        type: document
+    transitions:
+      - to: follow-up
+        when: electronic_proof_confirmed == true
+      - to: handover-proofs
+        when: electronic_proof_confirmed == false
+  - id: handover-proofs
+    needs:
+      - proof_handed_over
+    signature: none
+    outputs:
+      - id: proof-handover-record
+        type: document
+    transitions:
+      - to: follow-up
+        when: proof_handed_over == true
+  - id: follow-up
+    needs:
+      - child_birth_date
+      - later_proof_ready
+    outputs:
+      - id: follow-up-plan
+        type: document
+    reminders:
+      - after_days: 0
+        text_de:
+          Nachweise für die Kindesuntersuchungen 2 bis 5 prüfen. Sie müssen grundsätzlich bis zur
+          Vollendung des 15. Lebensmonats bei der Krankenkasse sein. Den Termin anhand des
+          Geburtsdatums festlegen.
+        when: later_proof_ready == false
+    transitions:
+      - to: finish
+        when: later_proof_ready == true
+      - to: clarify-proofs
+        when: later_proof_ready == false
+  - id: clarify-proofs
+    needs: []
+    outputs:
+      - id: insurer-questions
+        type: document
+    reminders:
+      - after_days: 0
+        text_de:
+          Fehlende Nachweise mit Ihrer Krankenkasse klären. Nachreichung und Ausnahmen prüfen lassen;
+          keine Untersuchungsergebnisse bewerten.
+    transitions:
+      - to: follow-up
+  - id: finish
+    needs: []
+    outputs:
+      - id: proof-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+    - document_present
+sources:
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote:
+      Nach Feststellen einer Schwangerschaft erhält jede Schwangere mit Wohnsitz in Österreich von
+      Ihrem betreuenden Arzt/Ihrer betreuenden Ärztin einen Eltern-Kind-Pass.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote:
+      Das neue Untersuchungsprogramm gilt ab 01.10.2026 in ganz Österreich und somit auch für einen
+      bereits ausgestellten Papierpass.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote: Nur Untersuchungen und Beratungen, die im jeweiligen Zeitraum noch nicht gemacht wurden,
+      erfolgen nach dem neuen Untersuchungsprogramm und werden entsprechend dokumentiert.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote:
+      Die Durchführung der Schwangerenuntersuchungen 1-5 sowie die Kindesuntersuchungen 1-5 (bis
+      zum 14. Lebensmonat des Kindes) ist Voraussetzung für den Erhalt des Kinderbetreuungsgeldes in
+      voller Höhe.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote: Bei der Antragstellung müssen die fünf Schwangerschaftsuntersuchungen und die erste
+      Untersuchung des Kindes (in Kopie) nachgewiesen werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote:
+      Die restlichen Untersuchungen müssen bis zum 15. Lebensmonat des Kindes (ebenfalls in Kopie)
+      nachgewiesen werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote: In jenen Fällen, in denen die Nachweise erfolgreich elektronisch durch den eEKP gemäß § 6
+      Abs. 2 EKPG erfolgt sind, entfällt die Nachweispflicht der antragstellenden Elternteile,
+      sofern seitens des Krankenversicherungsträgers keine gegenteilige Information ergeht.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote: die jeweiligen Nachweise bis spätestens zur Vollendung des 18. Lebensmonates des Kindes
+      nachgebracht werden.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote:
+      Wenn beide Elternteile Kinderbetreuungsgeld beziehen, erfolgt der Abzug von 1.300 Euro bei
+      jedem der Elternteile.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/finanzielle-unterstuetzungen/3/2/Seite.080625
+    quote: Fertigen Sie eine Kopie der Nach­weisblätter an, aber belassen Sie die Originalblätter im
+      Eltern-Kind-Pass.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote:
+      Für die Antragstellung und Auszahlung dieser Leistungen ist jener Krankenversicherungsträger
+      zuständig, bei dem Wochengeld bezogen wurde beziehungsweise bei dem man versichert
+      (anspruchsberechtigt) ist beziehungsweise zuletzt versichert (anspruchsberechtigt) war.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.bundeskanzleramt.gv.at/agenda/familie/kinderbetreuungsgeld/antragstellung-formulare-kinderbetreuungsgeld.html
+    quote: Hat bisher keine Versicherung bestanden, ist die Österreichische Gesundheitskasse zuständig.
+    retrieved_at: 2026-11-05T23:52:44.349Z
+  - url: https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20001474
+    quote:
+      die Vornahme oder der Nachweis der Untersuchungen nur aus Gründen, die nicht von den Eltern
+      zu vertreten sind, unterbleibt oder
+    retrieved_at: 2026-11-05T23:54:09.967Z
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html
+    quote: Für die Dokumentation der neuen und zusätzlichen Untersuchungen erhalten Sie, bis zur
+      Umstellung auf den elektronischen Eltern-Kind-Pass (verpflichtende Einführung ab Oktober
+      2027), von Ihrem betreuenden medizinischen Fachpersonal ein Zusatzheft
+    retrieved_at: 2026-11-05T23:55:25.869Z
+as_of: 2026-11-06
