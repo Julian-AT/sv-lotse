@@ -1,0 +1,280 @@
+import {
+  type Action,
+  type ActionResult,
+  ActionSchema,
+  type ToolInvocation,
+  ToolInvocationSchema,
+} from "@lotse/protocol";
+import { bookingFillSchema } from "./booking.ts";
+import { BOOKING_TYPE_PACE_MS } from "./config.ts";
+import { type CursorPreferences, readCursorPreferences } from "./cursor.ts";
+import { createOverlay } from "./overlay/index.ts";
+import {
+  type DenyList,
+  defaultDenyList,
+  GuideConfigurationSchema,
+  isDeniedControl,
+} from "./safety.ts";
+import {
+  accessibleName,
+  createSnapshotter,
+  isVisible,
+  type PageSnapshot,
+  roleOf,
+} from "./snapshot/index.ts";
+import { resolveTarget } from "./targets.ts";
+import { textField, typeVisible } from "./typing.ts";
+
+export type { CursorPreferences } from "./cursor.ts";
+export { readCursorPreferences } from "./cursor.ts";
+export type { DenyList } from "./safety.ts";
+export { DenyListSchema, defaultDenyList } from "./safety.ts";
+export type { CapsulePage, PageHandle, PageSnapshot } from "./snapshot/index.ts";
+export { toCapsulePage } from "./snapshot/index.ts";
+
+export interface GuideOptions {
+  cursorPreferences?: Partial<CursorPreferences>;
+  allowlist: readonly string[];
+  /** Additional rules; built-in safety rules always apply. */
+  denyList?: DenyList;
+  document?: Document;
+  /** L1: show approved values beside fields without focus or input events. */
+  ghostPreview?: boolean;
+  /** Trusted host configuration; never obtain permissions from page content. */
+  autonomyLevel?: "L1" | "L2" | "L3";
+  /** Exact, server-verified booking URLs on allowlisted origins. */
+  bookingPages?: readonly string[];
+}
+
+export interface Guide {
+  snapshot(): PageSnapshot;
+  execute(action: Action): Promise<ActionResult>;
+  /** Call only for server-dispatched ui.fill after approval consumption, never for its preview. */
+  executeApprovedFill(invocation: ToolInvocation): Promise<ActionResult>;
+  clear(): void;
+  dispose(): void;
+}
+
+const actionableRoles = new Set([
+  "button",
+  "checkbox",
+  "combobox",
+  "link",
+  "listbox",
+  "menuitem",
+  "menuitemcheckbox",
+  "menuitemradio",
+  "option",
+  "radio",
+  "scrollbar",
+  "searchbox",
+  "slider",
+  "spinbutton",
+  "switch",
+  "tab",
+  "textbox",
+  "treeitem",
+]);
+
+export function createGuide(options: GuideOptions): Guide {
+  const bookingOnly = options.bookingPages !== undefined;
+  const configuration = GuideConfigurationSchema.parse({
+    allowlist: options.allowlist,
+    denyList: options.denyList ?? defaultDenyList,
+    ghostPreview: options.ghostPreview ?? false,
+    autonomyLevel: options.autonomyLevel ?? "L1",
+    bookingPages: options.bookingPages ?? [],
+  });
+  const document = options.document ?? globalThis.document;
+  const view = document?.defaultView;
+  if (!view) throw new Error("A live browser document is required");
+  const liveView = view;
+  const overlay = createOverlay(document, options.cursorPreferences);
+  const snapshotter = createSnapshotter(document, overlay.contains, configuration.denyList);
+  let disposed = false;
+  let active: AbortController | undefined;
+  const dispatchedFills = new Set<string>();
+  const originAllowed = () => configuration.allowlist.includes(document.location.origin);
+  const result = (actionId: string, failureReason?: string): ActionResult => ({
+    actionId,
+    resolvedBy: "dom",
+    confidence: failureReason ? 0 : 1,
+    success: !failureReason,
+    ...(failureReason ? { failureReason } : {}),
+  });
+  function denied(element: Element): boolean {
+    for (let node: Element | null = element; node; node = node.parentElement) {
+      const control = {
+        role: roleOf(node),
+        inputType:
+          node.localName === "button"
+            ? (node as HTMLButtonElement).type
+            : node.localName === "input"
+              ? (node as HTMLInputElement).type
+              : "",
+        label: accessibleName(node),
+        autocomplete: node.getAttribute("autocomplete"),
+      };
+      // Non-controls (e.g. a form containing a submit button) must not inherit
+      // their descendants' labels. Controls nested in denied controls do.
+      if (
+        (node.matches("input,button,a[href],select,textarea,summary,[contenteditable='true']") ||
+          (node === element && node.hasAttribute("role")) ||
+          actionableRoles.has(control.role) ||
+          defaultDenyList.roles.includes(control.role) ||
+          configuration.denyList.roles.includes(control.role)) &&
+        (isDeniedControl(control, defaultDenyList) ||
+          isDeniedControl(control, configuration.denyList))
+      )
+        return true;
+    }
+    return false;
+  }
+  function clear() {
+    active?.abort();
+    overlay.clear();
+  }
+
+  async function execute(input: Action, approvedBooking = false): Promise<ActionResult> {
+    const parsed = ActionSchema.safeParse(input);
+    if (!parsed.success)
+      return result(
+        typeof input?.id === "string" && input.id ? input.id : "invalid-action",
+        "invalid-action",
+      );
+    const action = parsed.data;
+    if (disposed) return result(action.id, "disposed");
+    if (!originAllowed()) return result(action.id, "origin-not-allowed");
+    if (active) return result(action.id, "busy");
+    if (action.kind === "openResource") return result(action.id, "unsupported-action");
+    if (
+      (action.kind === "type" || action.kind === "clear") &&
+      (action.target.kind === "dom" || action.target.kind === "ui") &&
+      bookingOnly &&
+      !configuration.ghostPreview &&
+      !approvedBooking
+    )
+      return result(action.id, "approval-required");
+    const controller = new AbortController();
+    active = controller;
+    try {
+      // Always refresh: handles stay stable, but nodes, labels and geometry
+      // can have changed since the capsule was captured.
+      snapshotter.capture();
+      const target = resolveTarget(document, action.target, snapshotter.element, overlay.contains);
+      const rect = target?.rects[0];
+      if (!target || !rect) return result(action.id, "target-not-found");
+      const guard = () => {
+        if (disposed || controller.signal.aborted) return "interrupted";
+        if (!originAllowed()) return "origin-not-allowed";
+        if (
+          action.target.kind === "dom" &&
+          (action.target.url !== document.location.href ||
+            snapshotter.element(action.target.handle) !== target.element)
+        )
+          return "target-not-found";
+        if (
+          action.target.kind === "ui" &&
+          document.getElementById(action.target.elementId) !== target.element
+        )
+          return "target-not-found";
+        if (!target.element.isConnected || !isVisible(target.element)) return "target-not-found";
+        if (denied(target.element)) return "denied";
+        return;
+      };
+      const failure = guard();
+      if (failure) return result(action.id, failure);
+      switch (action.kind) {
+        case "point": {
+          await overlay.point(rect);
+          const afterPointing = guard();
+          if (afterPointing) return result(action.id, afterPointing);
+          if (action.payload.label) overlay.annotation(rect, action.payload.label);
+          break;
+        }
+        case "highlight":
+          overlay.highlight(target.rects);
+          break;
+        case "annotate":
+          overlay.annotation(rect, action.payload.label ?? "");
+          break;
+        case "caption":
+          overlay.caption(action.payload.label ?? "");
+          break;
+        case "type":
+        case "clear": {
+          if (action.target.kind !== "dom" && action.target.kind !== "ui")
+            return result(action.id, "unsupported-target");
+          const field = textField(target.element);
+          if (!field) return result(action.id, "unsupported-field");
+          const value = action.kind === "type" ? action.payload.value : "";
+          if (configuration.ghostPreview) {
+            overlay.annotation(rect, value, true);
+            break;
+          }
+          await overlay.point(rect);
+          const beforeTyping = guard();
+          if (beforeTyping) return result(action.id, beforeTyping);
+          const failure = await typeVisible(
+            field,
+            value,
+            readCursorPreferences(document, options.cursorPreferences).reducedMotion
+              ? 0
+              : (action.kind === "type" ? action.payload.pace : 1) /
+                  readCursorPreferences(document, options.cursorPreferences).cursorSpeed,
+            guard,
+            controller.signal,
+          );
+          if (failure) return result(action.id, failure);
+          // A new task lets the entire input/blur/change microtask checkpoint
+          // finish, including microtasks queued by other microtasks.
+          await new Promise<void>((resolve) => liveView.setTimeout(resolve, 0));
+          const afterTyping = guard() ?? (field.value !== value ? "value-changed" : undefined);
+          if (afterTyping) return result(action.id, afterTyping);
+        }
+      }
+      return result(action.id, guard());
+    } catch {
+      return result(action.id, controller.signal.aborted ? "interrupted" : "execution-failed");
+    } finally {
+      if (active === controller) active = undefined;
+    }
+  }
+  return {
+    snapshot() {
+      if (disposed) throw new Error("disposed");
+      if (!originAllowed()) throw new Error("origin-not-allowed");
+      return snapshotter.capture();
+    },
+    execute: (input) => execute(input),
+    async executeApprovedFill(input) {
+      const invocation = ToolInvocationSchema.safeParse(input);
+      if (!invocation.success) return result("invalid-action", "invalid-action");
+      const { toolCallId, toolName } = invocation.data;
+      if (toolName !== "ui.fill") return result(toolCallId, "unsupported-action");
+      const fill = bookingFillSchema.safeParse(invocation.data.input);
+      if (!fill.success) return result(toolCallId, "invalid-action");
+      const { target, value, provenance } = fill.data;
+      if (configuration.autonomyLevel !== "L3") return result(toolCallId, "autonomy-denied");
+      if (target.kind !== "dom" || !configuration.bookingPages.includes(target.url))
+        return result(toolCallId, "booking-page-not-allowed");
+      if (dispatchedFills.has(toolCallId)) return result(toolCallId, "already-dispatched");
+      dispatchedFills.add(toolCallId);
+      return execute(
+        {
+          id: toolCallId,
+          kind: "type",
+          target,
+          sentenceIndex: 0,
+          payload: { value, provenance, pace: BOOKING_TYPE_PACE_MS },
+        },
+        true,
+      );
+    },
+    clear,
+    dispose() {
+      clear();
+      disposed = true;
+    },
+  };
+}
