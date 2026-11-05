@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-grein"
+name_de: "Kundenservice Grein"
+name_simple: "ÖGK-Büro Grein"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882933&portal=oegkportal"
+address:
+  street: "Rathausgasse 1 (Stadtamt)"
+  postal_code: "4360"
+  locality: "Grein"
+  country: "AT"
+phone: "+43 5 0766-14273970"
+email: "perg@oegk.at"
+opening_hours:
+  notes: "Mittwoch:08.00 – 12.00"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882933&portal=oegkportal"
+    quote: |-
+      Kundenservice Grein
+      Rathausgasse 1 (Stadtamt)
+      4360 Grein
+      Telefon: +43 5 0766-14273970
+      E-Mail: perg@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882933&portal=oegkportal"
+    quote: "Mittwoch:08.00 – 12.00"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882933&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

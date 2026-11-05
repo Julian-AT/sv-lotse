@@ -1,0 +1,36 @@
+id: "oegk-kundenservice-fuerstenfeld"
+name_de: "Kundenservice Fürstenfeld"
+name_simple: "ÖGK-Büro Fürstenfeld"
+carrier: "oegk"
+region: "Steiermark"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883154&portal=oegkportal"
+address:
+  street: "Hauptplatz 12"
+  postal_code: "8280"
+  locality: "Fürstenfeld"
+  country: "AT"
+phone: "+43 5 0766-157777"
+email: "fuerstenfeld@oegk.at"
+opening_hours:
+  notes: |-
+    Dienstag:07.00 – 14.00
+    Freitag:07.00 – 13.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883154&portal=oegkportal"
+    quote: |-
+      Kundenservice Fürstenfeld
+      Hauptplatz 12
+      8280 Fürstenfeld
+      Telefon: +43 5 0766-157777
+      E-Mail: fuerstenfeld@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883154&portal=oegkportal"
+    quote: |-
+      Dienstag:07.00 – 14.00
+      Freitag:07.00 – 13.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883154&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

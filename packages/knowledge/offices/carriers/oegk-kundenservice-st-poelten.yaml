@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-st-poelten"
+name_de: "Kundenservice St.Pölten"
+name_simple: "ÖGK-Büro St.Pölten"
+carrier: "oegk"
+region: "Niederösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882879&portal=oegkportal"
+address:
+  street: "Kremser Landstraße 3, Verwaltung im Erdgeschoß der Hauptstelle"
+  postal_code: "3100"
+  locality: "St. Pölten"
+  country: "AT"
+phone: "+43 5 0766-126100"
+email: "stpoelten@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 16.00
+    Dienstag:07.00 – 16.00
+    Mittwoch:07.00 – 16.00
+    Donnerstag:07.00 – 16.00
+    Freitag:07.00 – 16.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882879&portal=oegkportal"
+    quote: |-
+      Kundenservice St.Pölten
+      Kremser Landstraße 3, Verwaltung im Erdgeschoß der Hauptstelle
+      3100 St. Pölten
+      Telefon: +43 5 0766-126100
+      E-Mail: stpoelten@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882879&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 16.00
+      Dienstag:07.00 – 16.00
+      Mittwoch:07.00 – 16.00
+      Donnerstag:07.00 – 16.00
+      Freitag:07.00 – 16.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882879&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

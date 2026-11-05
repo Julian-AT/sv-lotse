@@ -1,0 +1,36 @@
+id: "oegk-kundenservice-mondsee"
+name_de: "Kundenservice Mondsee"
+name_simple: "ÖGK-Büro Mondsee"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882952&portal=oegkportal"
+address:
+  street: "Kirchengasse 16"
+  postal_code: "5310"
+  locality: "Mondsee"
+  country: "AT"
+phone: "+43 5 0766-14363970"
+email: "voecklabruck@oegk.at"
+opening_hours:
+  notes: |-
+    Mittwoch:06.45 – 12.00
+    Freitag:06.45 – 12.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882952&portal=oegkportal"
+    quote: |-
+      Kundenservice Mondsee
+      Kirchengasse 16
+      5310 Mondsee
+      Telefon: +43 5 0766-14363970
+      E-Mail: voecklabruck@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882952&portal=oegkportal"
+    quote: |-
+      Mittwoch:06.45 – 12.00
+      Freitag:06.45 – 12.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882952&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

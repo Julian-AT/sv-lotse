@@ -1,0 +1,44 @@
+id: "pva-wien"
+name_de: "Pensionsversicherung – Landesstelle Wien"
+name_simple: "PVA-Büro in Wien"
+carrier: "pva"
+region: "Wien"
+url: "https://www.pv.at/web/service-und-kontakt/kontakt/wien/kontakt-wien"
+address:
+  street: "Ghegastraße 1"
+  postal_code: "1030"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 (0)5 03 03"
+email: "pva-lsw@pv.at"
+opening_hours:
+  notes: |-
+    Nach telefonischer Terminvereinbarung stehen die Mitarbeiter*innen in unseren Landesstellen für persönliche Vorsprachen gerne zur Verfügung.
+    Auskunfts- und Beratungszeiten:
+    Montag bis Mittwoch und Freitag von 7:00 bis 15:00 Uhr
+    Donnerstag von 7:00 bis 18:00 Uhr
+    Wir sind umgezogen: Während der Generalsanierung der Pensionsversicherung (PV) in der Friedrich-Hillegeist-Straße befindet sich das Kund*innenzentrum in der Ghegastraße 1, 1030 Wien.
+jurisdiction: "Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort, bei Wohnsitz im Ausland ist die Landesstelle Wien zuständig."
+sources:
+  - url: "https://www.pv.at/web/service-und-kontakt/kontakt/wien/kontakt-wien"
+    quote: |-
+      Adresse: Friedrich-Hillegeist-Straße 1,
+      1020 Wien
+      Telefon: +43 (0)5 03 03
+      Fax: +43 (0)5 03 03-28 850
+      E-Mail: pva-lsw@pv.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.pv.at/web/service-und-kontakt/kontakt"
+    quote: |-
+      Nach telefonischer Terminvereinbarung stehen die Mitarbeiter*innen in unseren Landesstellen für persönliche Vorsprachen gerne zur Verfügung.
+      Auskunfts- und Beratungszeiten:
+      Montag bis Mittwoch und Freitag von 7:00 bis 15:00 Uhr
+      Donnerstag von 7:00 bis 18:00 Uhr
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.pv.at/web/service-und-kontakt/kontakt"
+    quote: "Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort, bei Wohnsitz im Ausland ist die Landesstelle Wien zuständig."
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.pv.at/web/service-und-kontakt/kontakt/wien/kontakt-wien"
+    quote: "Wir sind umgezogen: Während der Generalsanierung der Pensionsversicherung (PV) in der Friedrich-Hillegeist-Straße befindet sich das Kund*innenzentrum in der Ghegastraße 1, 1030 Wien."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

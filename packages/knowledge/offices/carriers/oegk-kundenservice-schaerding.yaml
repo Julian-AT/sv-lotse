@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-schaerding"
+name_de: "Kundenservice Schärding"
+name_simple: "ÖGK-Büro Schärding"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882981&portal=oegkportal"
+address:
+  street: "Max-Hirschenauer-Straße 18"
+  postal_code: "4780"
+  locality: "Schärding"
+  country: "AT"
+phone: "+43 5 0766-14313900"
+email: "schaerding@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:06.45 – 15.00
+    Dienstag:06.45 – 15.00
+    Mittwoch:06.45 – 15.00
+    Donnerstag:06.45 – 15.00
+    Freitag:06.45 – 15.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882981&portal=oegkportal"
+    quote: |-
+      Kundenservice Schärding
+      Max-Hirschenauer-Straße 18
+      4780 Schärding
+      Telefon: +43 5 0766-14313900
+      E-Mail: schaerding@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882981&portal=oegkportal"
+    quote: |-
+      Montag:06.45 – 15.00
+      Dienstag:06.45 – 15.00
+      Mittwoch:06.45 – 15.00
+      Donnerstag:06.45 – 15.00
+      Freitag:06.45 – 15.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882981&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

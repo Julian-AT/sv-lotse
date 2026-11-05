@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-imst"
+name_de: "Kundenservice Imst"
+name_simple: "ÖGK-Büro Imst"
+carrier: "oegk"
+region: "Tirol"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883011&portal=oegkportal"
+address:
+  street: "Dr.-Carl-Pfeiffenberger-Straße 24"
+  postal_code: "6460"
+  locality: "Imst"
+  country: "AT"
+phone: "+43 5 0766-183312"
+email: "imst@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.00
+    Dienstag:07.30 – 14.00
+    Mittwoch:07.30 – 14.00
+    Donnerstag:07.30 – 14.00
+    Freitag:07.30 – 14.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883011&portal=oegkportal"
+    quote: |-
+      Kundenservice Imst
+      Dr.-Carl-Pfeiffenberger-Straße 24
+      6460 Imst
+      Telefon: +43 5 0766-183312
+      E-Mail: imst@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883011&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.00
+      Dienstag:07.30 – 14.00
+      Mittwoch:07.30 – 14.00
+      Donnerstag:07.30 – 14.00
+      Freitag:07.30 – 14.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883011&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

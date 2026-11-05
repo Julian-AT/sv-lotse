@@ -1,0 +1,23 @@
+id: "bvaeb-hauptstelle"
+name_de: "BVAEB – Hauptstelle"
+name_simple: "BVAEB-Büro in Wien"
+carrier: "bvaeb"
+region: "Wien"
+url: "https://www.bvaeb.at/cdscontent/?contentid=10007.855051&portal=bvaebbportal"
+address:
+  street: "Josefstädter Straße 80"
+  postal_code: "1080"
+  locality: "Wien"
+  country: "AT"
+phone: "050405"
+email: "postoffice@bvaeb.at"
+sources:
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.855051&portal=bvaebbportal"
+    quote: |-
+      Versicherungsanstalt öffentlich Bediensteter, Eisenbahnen und Bergbau (BVAEB)
+      Josefstädter Straße 80
+      1080 Wien
+      050405
+      postoffice@bvaeb.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

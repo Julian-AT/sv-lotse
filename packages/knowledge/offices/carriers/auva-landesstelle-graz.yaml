@@ -1,0 +1,37 @@
+id: "auva-landesstelle-graz"
+name_de: "AUVA – Landesstelle Graz"
+name_simple: "AUVA-Büro in Graz"
+carrier: "auva"
+region: "Steiermark"
+url: "https://auva.at/servicestellen/landesstelle-graz"
+address:
+  street: "Göstinger Straße 26"
+  postal_code: "8020"
+  locality: "Graz"
+  country: "AT"
+phone: "+43 5 93 93-33000"
+email: "GLD@auva.at"
+opening_hours:
+  notes: |-
+    Die AUVA-Kunden-:Kundinnendienststellen sind wochentags (Mo - Fr) von 07:00 - 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+    Wochentags (Mo - Fr) von 08:00 - 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+jurisdiction: "Die AUVA-Landesstelle Graz ist Steiermark und Kärnten zuständig."
+sources:
+  - url: "https://auva.at/servicestellen/landesstelle-graz"
+    quote: |-
+      Landesstelle Graz
+      Direktion
+      GLD@auva.at
+      +43 5 93 93-33000
+      +43 5 93 93-33609
+      Göstinger Straße 26, 8020 Graz
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/landesstelle-graz"
+    quote: |-
+      Die AUVA-Kunden-:Kundinnendienststellen sind wochentags (Mo - Fr) von 07:00 - 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+      Wochentags (Mo - Fr) von 08:00 - 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/landesstelle-graz"
+    quote: "Die AUVA-Landesstelle Graz ist Steiermark und Kärnten zuständig."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

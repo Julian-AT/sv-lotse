@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-bad-ischl"
+name_de: "Kundenservice Bad Ischl"
+name_simple: "ÖGK-Büro Bad Ischl"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882901&portal=oegkportal"
+address:
+  street: "Bahnhofstraße 12"
+  postal_code: "4820"
+  locality: "Bad Ischl"
+  country: "AT"
+phone: "+43 5 0766-14383900"
+email: "badischl@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:06.45 – 15.00
+    Dienstag:06.45 – 15.00
+    Mittwoch:06.45 – 15.00
+    Donnerstag:06.45 – 15.00
+    Freitag:06.45 – 15.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882901&portal=oegkportal"
+    quote: |-
+      Kundenservice Bad Ischl
+      Bahnhofstraße 12
+      4820 Bad Ischl
+      Telefon: +43 5 0766-14383900
+      E-Mail: badischl@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882901&portal=oegkportal"
+    quote: |-
+      Montag:06.45 – 15.00
+      Dienstag:06.45 – 15.00
+      Mittwoch:06.45 – 15.00
+      Donnerstag:06.45 – 15.00
+      Freitag:06.45 – 15.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882901&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-losenstein"
+name_de: "Kundenservice Losenstein"
+name_simple: "ÖGK-Büro Losenstein"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882948&portal=oegkportal"
+address:
+  street: "Eisenstraße 45, Gemeindeamt"
+  postal_code: "4460"
+  locality: "Losenstein"
+  country: "AT"
+phone: "+43 5 0766-14323970"
+email: "steyr@oegk.at"
+opening_hours:
+  notes: "Jeden ersten Donnerstag im Monat von 10.30 bis 12.30 Uhr."
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882948&portal=oegkportal"
+    quote: |-
+      Kundenservice Losenstein
+      Eisenstraße 45, Gemeindeamt
+      4460 Losenstein
+      Telefon: +43 5 0766-14323970
+      E-Mail: steyr@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882948&portal=oegkportal"
+    quote: "Jeden ersten Donnerstag im Monat von 10.30 bis 12.30 Uhr."
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882948&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

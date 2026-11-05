@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-wien-aspern"
+name_de: "Kundenservice Aspern"
+name_simple: "ÖGK-Büro Aspern"
+carrier: "oegk"
+region: "Wien"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882916&portal=oegkportal"
+address:
+  street: "Erzherzog-Karl-Straße 250"
+  postal_code: "1220"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 0766-118000"
+email: "aspern@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.30
+    Dienstag:07.00 – 14.30
+    Mittwoch:07.00 – 14.30
+    Donnerstag:07.00 – 14.30
+    Freitag:07.00 – 14.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882916&portal=oegkportal"
+    quote: |-
+      Kundenservice Aspern
+      Erzherzog-Karl-Straße 250
+      1220 Wien
+      Telefon: +43 5 0766-118000
+      E-Mail: aspern@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882916&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.30
+      Dienstag:07.00 – 14.30
+      Mittwoch:07.00 – 14.30
+      Donnerstag:07.00 – 14.30
+      Freitag:07.00 – 14.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882916&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

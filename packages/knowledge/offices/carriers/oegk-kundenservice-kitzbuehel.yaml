@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-kitzbuehel"
+name_de: "Kundenservice Kitzbühel"
+name_simple: "ÖGK-Büro Kitzbühel"
+carrier: "oegk"
+region: "Tirol"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882995&portal=oegkportal"
+address:
+  street: "Achenweg 16"
+  postal_code: "6370"
+  locality: "Kitzbühel"
+  country: "AT"
+phone: "+43 5 0766-183812"
+email: "kitzbuehel@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.00
+    Dienstag:07.30 – 14.00
+    Mittwoch:07.30 – 14.00
+    Donnerstag:07.30 – 14.00
+    Freitag:07.30 – 14.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882995&portal=oegkportal"
+    quote: |-
+      Kundenservice Kitzbühel
+      Achenweg 16
+      6370 Kitzbühel
+      Telefon: +43 5 0766-183812
+      E-Mail: kitzbuehel@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882995&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.00
+      Dienstag:07.30 – 14.00
+      Mittwoch:07.30 – 14.00
+      Donnerstag:07.30 – 14.00
+      Freitag:07.30 – 14.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882995&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

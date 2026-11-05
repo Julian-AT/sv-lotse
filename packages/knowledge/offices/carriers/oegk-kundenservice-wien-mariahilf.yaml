@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-wien-mariahilf"
+name_de: "Kundenservice Mariahilf"
+name_simple: "ÖGK-Büro Mariahilf"
+carrier: "oegk"
+region: "Wien"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882911&portal=oegkportal"
+address:
+  street: "Mariahilfer Straße 85-87"
+  postal_code: "1060"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 0766-118000"
+email: "mariahilf@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.30
+    Dienstag:07.00 – 14.30
+    Mittwoch:07.00 – 14.30
+    Donnerstag:07.00 – 14.30
+    Freitag:07.00 – 14.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882911&portal=oegkportal"
+    quote: |-
+      Kundenservice Mariahilf
+      Mariahilfer Straße 85-87
+      1060 Wien
+      Telefon: +43 5 0766-118000
+      E-Mail: mariahilf@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882911&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.30
+      Dienstag:07.00 – 14.30
+      Mittwoch:07.00 – 14.30
+      Donnerstag:07.00 – 14.30
+      Freitag:07.00 – 14.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882911&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

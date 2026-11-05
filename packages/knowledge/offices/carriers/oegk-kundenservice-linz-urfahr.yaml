@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-linz-urfahr"
+name_de: "Kundenservice Linz Urfahr"
+name_simple: "ÖGK-Büro Linz Urfahr"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882943&portal=oegkportal"
+address:
+  street: "Hauptstraße 16-18"
+  postal_code: "4040"
+  locality: "Linz"
+  country: "AT"
+phone: "+43 5 0766-14243900"
+email: "urfahr@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:06.45 – 15.00
+    Dienstag:06.45 – 15.00
+    Mittwoch:06.45 – 15.00
+    Donnerstag:06.45 – 15.00
+    Freitag:06.45 – 15.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882943&portal=oegkportal"
+    quote: |-
+      Kundenservice Linz Urfahr
+      Hauptstraße 16-18
+      4040 Linz
+      Telefon: +43 5 0766-14243900
+      E-Mail: urfahr@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882943&portal=oegkportal"
+    quote: |-
+      Montag:06.45 – 15.00
+      Dienstag:06.45 – 15.00
+      Mittwoch:06.45 – 15.00
+      Donnerstag:06.45 – 15.00
+      Freitag:06.45 – 15.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882943&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

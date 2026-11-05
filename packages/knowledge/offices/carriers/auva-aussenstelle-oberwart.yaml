@@ -1,0 +1,33 @@
+id: "auva-aussenstelle-oberwart"
+name_de: "AUVA – Außenstelle Oberwart"
+name_simple: "AUVA-Büro in Oberwart"
+carrier: "auva"
+region: "Burgenland"
+url: "https://auva.at/servicestellen/landesstelle-wien/aussenstelle-oberwart"
+address:
+  street: "Hauptplatz 11"
+  postal_code: "7400"
+  locality: "Oberwart"
+  country: "AT"
+phone: "+43 5 93 93-31901"
+email: "AO@auva.at"
+opening_hours:
+  notes: |-
+    Die AUVA-Kundendienststellen sind wochentags (Mo - Fr) von 07:00 bis 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+    Wochentags (Mo - Fr) von 08:00 bis 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+sources:
+  - url: "https://auva.at/servicestellen/landesstelle-wien/aussenstelle-oberwart"
+    quote: |-
+      Außenstelle Oberwart
+      Allgemeine Unfallversicherungsanstalt
+      AO@auva.at
+      +43 5 93 93-31901
+      +43 5 93 93-31930
+      Hauptplatz 11, 7400 Oberwart
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/landesstelle-wien/aussenstelle-oberwart"
+    quote: |-
+      Die AUVA-Kundendienststellen sind wochentags (Mo - Fr) von 07:00 bis 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+      Wochentags (Mo - Fr) von 08:00 bis 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

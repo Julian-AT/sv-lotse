@@ -1,0 +1,28 @@
+id: "oegk-kundenservice-trofaiach"
+name_de: "Kundenservice Trofaiach"
+name_simple: "ÖGK-Büro Trofaiach"
+carrier: "oegk"
+region: "Steiermark"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883181&portal=oegkportal"
+address:
+  street: "Luchinettigasse 6"
+  postal_code: "8793"
+  locality: "Trofaiach"
+  country: "AT"
+phone: "+43 5 0766-157777"
+email: "trofaiach@oegk.at"
+opening_hours:
+  notes: "Mittwoch:08.00 – 12.00"
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883181&portal=oegkportal"
+    quote: |-
+      Kundenservice Trofaiach
+      Luchinettigasse 6
+      8793 Trofaiach
+      Telefon: +43 5 0766-157777
+      E-Mail: trofaiach@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883181&portal=oegkportal"
+    quote: "Mittwoch:08.00 – 12.00"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

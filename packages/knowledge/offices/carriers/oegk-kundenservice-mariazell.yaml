@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-mariazell"
+name_de: "Kundenservice Mariazell"
+name_simple: "ÖGK-Büro Mariazell"
+carrier: "oegk"
+region: "Steiermark"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883186&portal=oegkportal"
+address:
+  street: "Hermann-Geist-Platz 1, Stadtamt, Stadtamt"
+  postal_code: "8630"
+  locality: "Mariazell"
+  country: "AT"
+phone: "+43 5 0766-157777"
+email: "bruckmur@oegk.at"
+opening_hours:
+  notes: "Donnerstag:11.00 – 13.00"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883186&portal=oegkportal"
+    quote: |-
+      Kundenservice Mariazell
+      Hermann-Geist-Platz 1, Stadtamt, Stadtamt
+      8630 Mariazell
+      Telefon: +43 5 0766-157777
+      E-Mail: bruckmur@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883186&portal=oegkportal"
+    quote: "Donnerstag:11.00 – 13.00"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883186&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

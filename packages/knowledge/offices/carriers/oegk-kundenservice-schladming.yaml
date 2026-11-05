@@ -1,0 +1,36 @@
+id: "oegk-kundenservice-schladming"
+name_de: "Kundenservice Schladming"
+name_simple: "ÖGK-Büro Schladming"
+carrier: "oegk"
+region: "Steiermark"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883193&portal=oegkportal"
+address:
+  street: "Vorstadtgasse 119"
+  postal_code: "8970"
+  locality: "Schladming"
+  country: "AT"
+phone: "+43 5 0766-157777"
+email: "schladming@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.00
+    Mittwoch:07.00 – 14.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883193&portal=oegkportal"
+    quote: |-
+      Kundenservice Schladming
+      Vorstadtgasse 119
+      8970 Schladming
+      Telefon: +43 5 0766-157777
+      E-Mail: schladming@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883193&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.00
+      Mittwoch:07.00 – 14.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883193&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

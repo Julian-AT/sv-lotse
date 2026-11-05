@@ -1,0 +1,41 @@
+id: "bvaeb-niederoesterreich"
+name_de: "BVAEB – Außenstelle St. Pölten"
+name_simple: "BVAEB-Büro in Niederösterreich"
+carrier: "bvaeb"
+region: "Niederösterreich"
+url: "https://www.bvaeb.at/cdscontent/?contentid=10007.859048&portal=bvaebbportal"
+address:
+  street: "Bahnhofplatz 10"
+  postal_code: "3100"
+  locality: "St.Pölten"
+  country: "AT"
+phone: "050405-23700"
+opening_hours:
+  notes: |-
+    Montag-Donnerstag 8:00-14:00 Uhr
+    Freitag 8:00-13:00 Uhr
+email: "ast.stpoelten@bvaeb.at"
+jurisdiction: "Leistungsauskunft & Bewilligungen"
+sources:
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.859048&portal=bvaebbportal"
+    quote: |-
+      Außenstelle St. Pölten
+      Öffnungszeiten:
+      Montag-Donnerstag 8:00-14:00 Uhr
+      Freitag 8:00-13:00 Uhr
+      Telefonische Erreichbarkeit (Service-Center):
+      Montag-Donnerstag 7:00-16:00 Uhr
+      Freitag 7:00-14:00 Uhr
+      Telefon: 050405-23700
+      e-Mail: Diese finden Sie untenstehend je Fachbereich
+      Standort
+      Bahnhofplatz 10, 3100 St.Pölten
+      Bahnhofplatz 10, 3100 St. Pölten
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.854342&portal=bvaebbportal"
+    quote: "ast.stpoelten@bvaeb.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.859048&portal=bvaebbportal"
+    quote: "Leistungsauskunft & Bewilligungen"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-bregenz"
+name_de: "Kundenservice Bregenz"
+name_simple: "ÖGK-Büro Bregenz"
+carrier: "oegk"
+region: "Vorarlberg"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882999&portal=oegkportal"
+address:
+  street: "Heldendankstraße 10"
+  postal_code: "6900"
+  locality: "Bregenz"
+  country: "AT"
+phone: "+43 5 0766-192420"
+email: "bregenz@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 12.00 / 13.00 – 16.00
+    Dienstag:07.30 – 12.00 / 13.00 – 16.00
+    Mittwoch:07.30 – 12.00 / 13.00 – 16.00
+    Donnerstag:07.30 – 12.00 / 13.00 – 16.00
+    Freitag:07.30 – 12.00 / 13.00 – 16.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882999&portal=oegkportal"
+    quote: |-
+      Kundenservice Bregenz
+      Heldendankstraße 10
+      6900 Bregenz
+      Telefon: +43 5 0766-192420
+      E-Mail: bregenz@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882999&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 12.00 / 13.00 – 16.00
+      Dienstag:07.30 – 12.00 / 13.00 – 16.00
+      Mittwoch:07.30 – 12.00 / 13.00 – 16.00
+      Donnerstag:07.30 – 12.00 / 13.00 – 16.00
+      Freitag:07.30 – 12.00 / 13.00 – 16.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882999&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

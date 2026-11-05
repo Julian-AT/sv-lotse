@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-egg"
+name_de: "Kundenservice Egg"
+name_simple: "ÖGK-Büro Egg"
+carrier: "oegk"
+region: "Vorarlberg"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883002&portal=oegkportal"
+address:
+  street: "Loco 597"
+  postal_code: "6863"
+  locality: "Egg"
+  country: "AT"
+phone: "+43 5 0766-195421"
+email: "egg@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 12.00 / 13.00 – 16.00
+    Dienstag:07.30 – 12.00
+    Mittwoch:07.30 – 12.00
+    Donnerstag:07.30 – 12.00 / 13.00 – 16.00
+    Freitag:07.30 – 12.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883002&portal=oegkportal"
+    quote: |-
+      Kundenservice Egg
+      Loco 597
+      6863 Egg
+      Telefon: +43 5 0766-195421
+      E-Mail: egg@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883002&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 12.00 / 13.00 – 16.00
+      Dienstag:07.30 – 12.00
+      Mittwoch:07.30 – 12.00
+      Donnerstag:07.30 – 12.00 / 13.00 – 16.00
+      Freitag:07.30 – 12.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883002&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

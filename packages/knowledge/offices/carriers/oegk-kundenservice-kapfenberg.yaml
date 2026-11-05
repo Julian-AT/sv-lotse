@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-kapfenberg"
+name_de: "Kundenservice Kapfenberg"
+name_simple: "ÖGK-Büro Kapfenberg"
+carrier: "oegk"
+region: "Steiermark"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883157&portal=oegkportal"
+address:
+  street: "Friedrich-Böhler-Straße 11"
+  postal_code: "8605"
+  locality: "Kapfenberg"
+  country: "AT"
+phone: "+43 5 0766-157777"
+email: "kapfenberg@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.00
+    Dienstag:07.00 – 14.00
+    Mittwoch:07.00 – 14.00
+    Donnerstag:07.00 – 14.00
+    Freitag:07.00 – 13.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883157&portal=oegkportal"
+    quote: |-
+      Kundenservice Kapfenberg
+      Friedrich-Böhler-Straße 11
+      8605 Kapfenberg
+      Telefon: +43 5 0766-157777
+      E-Mail: kapfenberg@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883157&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.00
+      Dienstag:07.00 – 14.00
+      Mittwoch:07.00 – 14.00
+      Donnerstag:07.00 – 14.00
+      Freitag:07.00 – 13.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883157&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

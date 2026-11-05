@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-schwaz"
+name_de: "Kundenservice Schwaz"
+name_simple: "ÖGK-Büro Schwaz"
+carrier: "oegk"
+region: "Tirol"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883013&portal=oegkportal"
+address:
+  street: "Ullreichstraße 1a"
+  postal_code: "6130"
+  locality: "Schwaz"
+  country: "AT"
+phone: "+43 5 0766-183512"
+email: "schwaz@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.00
+    Dienstag:07.30 – 14.00
+    Mittwoch:07.30 – 14.00
+    Donnerstag:07.30 – 14.00
+    Freitag:07.30 – 14.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883013&portal=oegkportal"
+    quote: |-
+      Kundenservice Schwaz
+      Ullreichstraße 1a
+      6130 Schwaz
+      Telefon: +43 5 0766-183512
+      E-Mail: schwaz@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883013&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.00
+      Dienstag:07.30 – 14.00
+      Mittwoch:07.30 – 14.00
+      Donnerstag:07.30 – 14.00
+      Freitag:07.30 – 14.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883013&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

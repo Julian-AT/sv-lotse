@@ -1,0 +1,25 @@
+id: "oegk-kaernten"
+name_de: "Österreichische Gesundheitskasse Kärnten"
+name_simple: "OEGK-Büro in Kärnten"
+carrier: "oegk"
+region: "Kärnten"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+address:
+  street: "Kempfstraße 8"
+  postal_code: "9021"
+  locality: "Klagenfurt am Wörthersee"
+  country: "AT"
+phone: "+43 5 0766-16"
+email: "office@oegk.at"
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: |-
+      Österreichische Gesundheitskasse Kärnten
+      Kempfstraße 8
+      9021 Klagenfurt am Wörthersee
+      Tel. +43 5 0766-16
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: "Österreichische Gesundheitskasse: office@oegk.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

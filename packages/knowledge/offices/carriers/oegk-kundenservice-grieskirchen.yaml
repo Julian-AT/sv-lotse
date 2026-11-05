@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-grieskirchen"
+name_de: "Kundenservice Grieskirchen"
+name_simple: "ÖGK-Büro Grieskirchen"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882934&portal=oegkportal"
+address:
+  street: "Trattnach-Arkade 1"
+  postal_code: "4710"
+  locality: "Grieskirchen"
+  country: "AT"
+phone: "+43 5 0766-14183900"
+email: "grieskirchen@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:06.45 – 15.00
+    Dienstag:06.45 – 15.00
+    Mittwoch:06.45 – 15.00
+    Donnerstag:06.45 – 15.00
+    Freitag:06.45 – 15.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882934&portal=oegkportal"
+    quote: |-
+      Kundenservice Grieskirchen
+      Trattnach-Arkade 1
+      4710 Grieskirchen
+      Telefon: +43 5 0766-14183900
+      E-Mail: grieskirchen@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882934&portal=oegkportal"
+    quote: |-
+      Montag:06.45 – 15.00
+      Dienstag:06.45 – 15.00
+      Mittwoch:06.45 – 15.00
+      Donnerstag:06.45 – 15.00
+      Freitag:06.45 – 15.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882934&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

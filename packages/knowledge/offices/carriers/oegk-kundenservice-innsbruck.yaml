@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-innsbruck"
+name_de: "Kundenservice Innsbruck"
+name_simple: "ÖGK-Büro Innsbruck"
+carrier: "oegk"
+region: "Tirol"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883004&portal=oegkportal"
+address:
+  street: "Klara-Pölt-Weg 2"
+  postal_code: "6020"
+  locality: "Innsbruck"
+  country: "AT"
+phone: "+43 5 0766-18"
+email: "innsbruck@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 16.00
+    Dienstag:07.00 – 16.00
+    Mittwoch:07.00 – 16.00
+    Donnerstag:07.00 – 16.00
+    Freitag:07.00 – 16.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883004&portal=oegkportal"
+    quote: |-
+      Kundenservice Innsbruck
+      Klara-Pölt-Weg 2
+      6020 Innsbruck
+      Telefon: +43 5 0766-18
+      E-Mail: innsbruck@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883004&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 16.00
+      Dienstag:07.00 – 16.00
+      Mittwoch:07.00 – 16.00
+      Donnerstag:07.00 – 16.00
+      Freitag:07.00 – 16.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883004&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

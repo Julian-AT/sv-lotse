@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-wien-doebling"
+name_de: "Kundenservice Döbling"
+name_simple: "ÖGK-Büro Döbling"
+carrier: "oegk"
+region: "Wien"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882910&portal=oegkportal"
+address:
+  street: "Heiligenstädter Straße 31"
+  postal_code: "1190"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 0766-118000"
+email: "doebling@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.30
+    Dienstag:07.00 – 14.30
+    Mittwoch:07.00 – 14.30
+    Donnerstag:07.00 – 14.30
+    Freitag:07.00 – 14.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882910&portal=oegkportal"
+    quote: |-
+      Kundenservice Döbling
+      Heiligenstädter Straße 31
+      1190 Wien
+      Telefon: +43 5 0766-118000
+      E-Mail: doebling@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882910&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.30
+      Dienstag:07.00 – 14.30
+      Mittwoch:07.00 – 14.30
+      Donnerstag:07.00 – 14.30
+      Freitag:07.00 – 14.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882910&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

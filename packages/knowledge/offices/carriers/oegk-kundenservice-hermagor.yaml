@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-hermagor"
+name_de: "Kundenservice Hermagor"
+name_simple: "ÖGK-Büro Hermagor"
+carrier: "oegk"
+region: "Kärnten"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882972&portal=oegkportal"
+address:
+  street: "Egger Straße 7"
+  postal_code: "9620"
+  locality: "Hermagor"
+  country: "AT"
+phone: "+43 5 0766-164300"
+email: "hermagor@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.00
+    Dienstag:07.30 – 14.00
+    Mittwoch:07.30 – 14.00
+    Donnerstag:07.30 – 14.00
+    Freitag:07.30 – 12.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882972&portal=oegkportal"
+    quote: |-
+      Kundenservice Hermagor
+      Egger Straße 7
+      9620 Hermagor
+      Telefon: +43 5 0766-164300
+      E-Mail: hermagor@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882972&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.00
+      Dienstag:07.30 – 14.00
+      Mittwoch:07.30 – 14.00
+      Donnerstag:07.30 – 14.00
+      Freitag:07.30 – 12.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882972&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

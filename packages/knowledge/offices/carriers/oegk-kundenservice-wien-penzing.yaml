@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-wien-penzing"
+name_de: "Kundenservice Penzing"
+name_simple: "ÖGK-Büro Penzing"
+carrier: "oegk"
+region: "Wien"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882917&portal=oegkportal"
+address:
+  street: "Hütteldorfer Straße 112"
+  postal_code: "1140"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 0766-118000"
+email: "penzing@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.30
+    Dienstag:07.00 – 14.30
+    Mittwoch:07.00 – 14.30
+    Donnerstag:07.00 – 14.30
+    Freitag:07.00 – 14.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882917&portal=oegkportal"
+    quote: |-
+      Kundenservice Penzing
+      Hütteldorfer Straße 112
+      1140 Wien
+      Telefon: +43 5 0766-118000
+      E-Mail: penzing@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882917&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.30
+      Dienstag:07.00 – 14.30
+      Mittwoch:07.00 – 14.30
+      Donnerstag:07.00 – 14.30
+      Freitag:07.00 – 14.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882917&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

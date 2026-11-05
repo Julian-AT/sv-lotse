@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-schwanenstadt"
+name_de: "Kundenservice Schwanenstadt"
+name_simple: "ÖGK-Büro Schwanenstadt"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882980&portal=oegkportal"
+address:
+  street: "Stadtplatz 54, Rathaus"
+  postal_code: "4690"
+  locality: "Schwanenstadt"
+  country: "AT"
+phone: "+43 5 0766-14363970"
+email: "voecklabruck@oegk.at"
+opening_hours:
+  notes: "Donnerstag:07.30 – 12.00"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882980&portal=oegkportal"
+    quote: |-
+      Kundenservice Schwanenstadt
+      Stadtplatz 54, Rathaus
+      4690 Schwanenstadt
+      Telefon: +43 5 0766-14363970
+      E-Mail: voecklabruck@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882980&portal=oegkportal"
+    quote: "Donnerstag:07.30 – 12.00"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882980&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

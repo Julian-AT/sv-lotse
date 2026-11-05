@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-steyregg"
+name_de: "Kundenservice Steyregg"
+name_simple: "ÖGK-Büro Steyregg"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882982&portal=oegkportal"
+address:
+  street: "Weissenwolffstraße 3, 1. OG, Kleiner Sitzungssaal"
+  postal_code: "4221"
+  locality: "Steyregg"
+  country: "AT"
+phone: "+43 5 0766-14243970"
+email: "urfahr@oegk.at"
+opening_hours:
+  notes: "Jeden ersten und dritten Dienstag im Monat von 08.00 - 09.00 Uhr."
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882982&portal=oegkportal"
+    quote: |-
+      Kundenservice Steyregg
+      Weissenwolffstraße 3, 1. OG, Kleiner Sitzungssaal
+      4221 Steyregg
+      Telefon: +43 5 0766-14243970
+      E-Mail: urfahr@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882982&portal=oegkportal"
+    quote: "Jeden ersten und dritten Dienstag im Monat von 08.00 - 09.00 Uhr."
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882982&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

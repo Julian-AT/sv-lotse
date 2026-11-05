@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-rohrbach"
+name_de: "Kundenservice Rohrbach"
+name_simple: "ÖGK-Büro Rohrbach"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882978&portal=oegkportal"
+address:
+  street: "Stadtplatz 16"
+  postal_code: "4150"
+  locality: "Rohrbach"
+  country: "AT"
+phone: "+43 5 0766-14303900"
+email: "rohrbach@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:06.45 – 15.00
+    Dienstag:06.45 – 15.00
+    Mittwoch:06.45 – 15.00
+    Donnerstag:06.45 – 15.00
+    Freitag:06.45 – 15.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882978&portal=oegkportal"
+    quote: |-
+      Kundenservice Rohrbach
+      Stadtplatz 16
+      4150 Rohrbach
+      Telefon: +43 5 0766-14303900
+      E-Mail: rohrbach@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882978&portal=oegkportal"
+    quote: |-
+      Montag:06.45 – 15.00
+      Dienstag:06.45 – 15.00
+      Mittwoch:06.45 – 15.00
+      Donnerstag:06.45 – 15.00
+      Freitag:06.45 – 15.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882978&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-bischofshofen"
+name_de: "Kundenservice Bischofshofen"
+name_simple: "ÖGK-Büro Bischofshofen"
+carrier: "oegk"
+region: "Salzburg"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882988&portal=oegkportal"
+address:
+  street: "Gasteinerstraße 29"
+  postal_code: "5500"
+  locality: "Bischofshofen"
+  country: "AT"
+phone: "+43 5 0766-178300"
+email: "bischofshofen@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.15 – 15.00
+    Dienstag:07.15 – 15.00
+    Mittwoch:07.15 – 15.00
+    Donnerstag:07.15 – 15.00
+    Freitag:07.15 – 12.15
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882988&portal=oegkportal"
+    quote: |-
+      Kundenservice Bischofshofen
+      Gasteinerstraße 29
+      5500 Bischofshofen
+      Telefon: +43 5 0766-178300
+      E-Mail: bischofshofen@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882988&portal=oegkportal"
+    quote: |-
+      Montag:07.15 – 15.00
+      Dienstag:07.15 – 15.00
+      Mittwoch:07.15 – 15.00
+      Donnerstag:07.15 – 15.00
+      Freitag:07.15 – 12.15
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882988&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

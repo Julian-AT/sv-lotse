@@ -1,0 +1,42 @@
+id: "bvaeb-vorarlberg"
+name_de: "BVAEB – Landesstelle für Vorarlberg"
+name_simple: "BVAEB-Büro in Vorarlberg"
+carrier: "bvaeb"
+region: "Vorarlberg"
+url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857186&portal=bvaebbportal"
+address:
+  street: "Montfortstraße 11"
+  postal_code: "6900"
+  locality: "Bregenz"
+  country: "AT"
+phone: "050405-29700"
+opening_hours:
+  notes: |-
+    Montag-Donnerstag 8:00-14:00 Uhr
+    Freitag 8:00-13:00 Uhr
+email: "lst.vorarlberg@bvaeb.at"
+jurisdiction: "Leistungsauskunft & Bewilligungen"
+sources:
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857186&portal=bvaebbportal"
+    quote: |-
+      Landesstelle für
+      Vorarlberg
+      Öffnungszeiten:
+      Montag-Donnerstag 8:00-14:00 Uhr
+      Freitag 8:00-13:00 Uhr
+      Telefonische Erreichbarkeit (Service-Center):
+      Montag-Donnerstag 7:00-16:00 Uhr
+      Freitag 7:00-14:00 Uhr
+      Telefon: 050405-29700
+      e-Mail: Diese finden Sie untenstehend je Fachbereich
+      Standort
+      Montfortstraße 11, 6900 Bregenz
+      Montfortstraße 11, 6900 Bregenz
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.854342&portal=bvaebbportal"
+    quote: "lst.vorarlberg@bvaeb.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.bvaeb.at/cdscontent/?contentid=10007.857186&portal=bvaebbportal"
+    quote: "Leistungsauskunft & Bewilligungen"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

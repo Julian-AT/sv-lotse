@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-wien-kagran"
+name_de: "Kundenservice Kagran"
+name_simple: "ÖGK-Büro Kagran"
+carrier: "oegk"
+region: "Wien"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882920&portal=oegkportal"
+address:
+  street: "Kagraner Platz 1, 1. OG"
+  postal_code: "1220"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 0766-118000"
+email: "kagran@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.30
+    Dienstag:07.00 – 14.30
+    Mittwoch:07.00 – 14.30
+    Donnerstag:07.00 – 14.30
+    Freitag:07.00 – 14.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882920&portal=oegkportal"
+    quote: |-
+      Kundenservice Kagran
+      Kagraner Platz 1, 1. OG
+      1220 Wien
+      Telefon: +43 5 0766-118000
+      E-Mail: kagran@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882920&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.30
+      Dienstag:07.00 – 14.30
+      Mittwoch:07.00 – 14.30
+      Donnerstag:07.00 – 14.30
+      Freitag:07.00 – 14.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882920&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

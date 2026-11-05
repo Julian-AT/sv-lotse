@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-bad-leonfelden"
+name_de: "Kundenservice Bad Leonfelden"
+name_simple: "ÖGK-Büro Bad Leonfelden"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882925&portal=oegkportal"
+address:
+  street: "Ringstraße 77, Haus am Ring"
+  postal_code: "4190"
+  locality: "Bad Leonfelden"
+  country: "AT"
+phone: "+43 5 0766-14243970"
+email: "urfahr@oegk.at"
+opening_hours:
+  notes: "Donnerstag:08.00 – 12.00 / 13.00 – 15.00"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882925&portal=oegkportal"
+    quote: |-
+      Kundenservice Bad Leonfelden
+      Ringstraße 77, Haus am Ring
+      4190 Bad Leonfelden
+      Telefon: +43 5 0766-14243970
+      E-Mail: urfahr@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882925&portal=oegkportal"
+    quote: "Donnerstag:08.00 – 12.00 / 13.00 – 15.00"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882925&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

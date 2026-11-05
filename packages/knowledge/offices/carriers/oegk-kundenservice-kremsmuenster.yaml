@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-kremsmuenster"
+name_de: "Kundenservice Kremsmünster"
+name_simple: "ÖGK-Büro Kremsmünster"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882938&portal=oegkportal"
+address:
+  street: "Linzer-Straße 7"
+  postal_code: "4550"
+  locality: "Kremsmünster"
+  country: "AT"
+phone: "+43 5 0766-14193970"
+email: "kirchdorf@oegk.at"
+opening_hours:
+  notes: "Derzeit geschlossen"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882938&portal=oegkportal"
+    quote: |-
+      Kundenservice Kremsmünster
+      Linzer-Straße 7
+      4550 Kremsmünster
+      Telefon: +43 5 0766-14193970
+      E-Mail: kirchdorf@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882938&portal=oegkportal"
+    quote: "Derzeit geschlossen"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882938&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

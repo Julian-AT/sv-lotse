@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-neuhofen-krems"
+name_de: "Kundenservice Neuhofen/Krems"
+name_simple: "ÖGK-Büro Neuhofen/Krems"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882954&portal=oegkportal"
+address:
+  street: "Sportallee 58, Forum Neuhofen"
+  postal_code: "4501"
+  locality: "Neuhofen/Krems"
+  country: "AT"
+phone: "+43 5 0766-14353970"
+email: "traun@oegk.at"
+opening_hours:
+  notes: "Jeden ersten und dritten Dienstag im Monat: 07.00 bis 12.00 Uhr"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882954&portal=oegkportal"
+    quote: |-
+      Kundenservice Neuhofen/Krems
+      Sportallee 58, Forum Neuhofen
+      4501 Neuhofen/Krems
+      Telefon: +43 5 0766-14353970
+      E-Mail: traun@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882954&portal=oegkportal"
+    quote: "Jeden ersten und dritten Dienstag im Monat: 07.00 bis 12.00 Uhr"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882954&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

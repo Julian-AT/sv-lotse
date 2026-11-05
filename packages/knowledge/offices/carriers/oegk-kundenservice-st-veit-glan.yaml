@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-st-veit-glan"
+name_de: "Kundenservice St. Veit/Glan"
+name_simple: "ÖGK-Büro St. Veit/Glan"
+carrier: "oegk"
+region: "Kärnten"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882973&portal=oegkportal"
+address:
+  street: "Platz am Graben 4"
+  postal_code: "9300"
+  locality: "St. Veit/Glan"
+  country: "AT"
+phone: "+43 5 0766-164600"
+email: "stveit@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.00
+    Dienstag:07.30 – 14.00
+    Mittwoch:07.30 – 14.00
+    Donnerstag:07.30 – 14.00
+    Freitag:07.30 – 12.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882973&portal=oegkportal"
+    quote: |-
+      Kundenservice St. Veit/Glan
+      Platz am Graben 4
+      9300 St. Veit/Glan
+      Telefon: +43 5 0766-164600
+      E-Mail: stveit@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882973&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.00
+      Dienstag:07.30 – 14.00
+      Mittwoch:07.30 – 14.00
+      Donnerstag:07.30 – 14.00
+      Freitag:07.30 – 12.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882973&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

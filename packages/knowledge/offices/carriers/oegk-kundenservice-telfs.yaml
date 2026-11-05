@@ -1,0 +1,42 @@
+id: "oegk-kundenservice-telfs"
+name_de: "Kundenservice Telfs"
+name_simple: "ÖGK-Büro Telfs"
+carrier: "oegk"
+region: "Tirol"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883007&portal=oegkportal"
+address:
+  street: "Untermarktstraße 48"
+  postal_code: "6410"
+  locality: "Telfs"
+  country: "AT"
+phone: "+43 5 0766-183132"
+email: "telfs@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.30 – 14.00
+    Dienstag:07.30 – 14.00
+    Mittwoch:07.30 – 14.00
+    Donnerstag:07.30 – 14.00
+    Freitag:07.30 – 14.00
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883007&portal=oegkportal"
+    quote: |-
+      Kundenservice Telfs
+      Untermarktstraße 48
+      6410 Telfs
+      Telefon: +43 5 0766-183132
+      E-Mail: telfs@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883007&portal=oegkportal"
+    quote: |-
+      Montag:07.30 – 14.00
+      Dienstag:07.30 – 14.00
+      Mittwoch:07.30 – 14.00
+      Donnerstag:07.30 – 14.00
+      Freitag:07.30 – 14.00
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883007&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
