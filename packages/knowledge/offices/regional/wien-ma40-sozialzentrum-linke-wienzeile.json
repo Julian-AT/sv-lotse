@@ -1,0 +1,27 @@
+{
+  "id": "wien-ma40-sozialzentrum-linke-wienzeile",
+  "name_de": "Sozialzentrum Linke Wienzeile (MA 40)",
+  "name_simple": "Hilfe bei Geldproblemen – Linke Wienzeile",
+  "region": "Wien",
+  "address": {
+    "street": "Linke Wienzeile 278",
+    "postal_code": "1150",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "01 4000-8040",
+  "email": "post-rg1@ma40.wien.gv.at",
+  "url": "https://www.wien.gv.at/advuew/internet/AdvPrSrv.asp?Layout=stelle_at&Type=K&stellecd=2018071912060469&STELLE=Y",
+  "jurisdiction": "zuständig für die Wiener Mindestsicherung für den 13., 14., 15., 16., 17., 18. und 19. Bezirk",
+  "opening_hours": {
+    "notes": "Montag, Dienstag, Freitag von 8.00 bis 12.00 Uhr\nAnnahme in der Servicezone bis 11.00 Uhr\nDonnerstag von 8.00 bis 12.00 Uhr und 15.30 bis 17.30 Uhr\nAnnahme in der Servicezone bis 11.00 bzw. 17.00 Uhr\nAn gesetzlichen Feiertagen geschlossen; Am Karfreitag, Heiligen Abend (24.12.) und an Silvester (31.12.) von 8.00 bis 12.00 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/advuew/internet/AdvPrSrv.asp?Layout=stelle_at&Type=K&stellecd=2018071912060469&STELLE=Y",
+      "quote": "Region 1 - Sozialzentrum Linke Wienzeile\nzuständig für die Wiener Mindestsicherung für den 13., 14., 15., 16., 17., 18. und 19. Bezirk\n1150 Wien, Linke Wienzeile 278\nEmail\npost-rg1@ma40.wien.gv.at\nMontag, Dienstag, Freitag von 8.00 bis 12.00 Uhr\nAnnahme in der Servicezone bis 11.00 Uhr\nDonnerstag von 8.00 bis 12.00 Uhr und 15.30 bis 17.30 Uhr\nAnnahme in der Servicezone bis 11.00 bzw. 17.00 Uhr\nAn gesetzlichen Feiertagen geschlossen; Am Karfreitag, Heiligen Abend (24.12.) und an Silvester (31.12.) von 8.00 bis 12.00 Uhr\nMA 40 - Servicetelefon: 01 4000-8040",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

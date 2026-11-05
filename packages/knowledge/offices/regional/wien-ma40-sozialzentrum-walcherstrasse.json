@@ -1,0 +1,27 @@
+{
+  "id": "wien-ma40-sozialzentrum-walcherstrasse",
+  "name_de": "Sozialzentrum Walcherstraße (MA 40)",
+  "name_simple": "Hilfe bei Geldproblemen – Walcherstraße",
+  "region": "Wien",
+  "address": {
+    "street": "Walcherstraße 11, 1. Stock",
+    "postal_code": "1020",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "01 4000-8040",
+  "email": "post-rg2@ma40.wien.gv.at",
+  "url": "https://www.wien.gv.at/advuew/internet/AdvPrSrv.asp?Layout=stelle_at&HLayout=&Type=K&STELLECD=2014012911473088",
+  "jurisdiction": "zuständig für die Wiener Mindestsicherung für den 1., 2., 3., 4., 5., 6., 7., 8., 9. und 20. Bezirk",
+  "opening_hours": {
+    "notes": "Montag, Dienstag, Freitag von 8.00 bis 12.00 Uhr\nAnnahme in der Servicezone bis 11.00 Uhr\nDonnerstag von 8.00 bis 12.00 Uhr und 15.30 bis 17.30 Uhr\nAnnahme in der Servicezone bis 11.00 bzw. 17.00 Uhr\nAn gesetzlichen Feiertagen geschlossen; Am Karfreitag, Heiligen Abend (24.12.) und an Silvester (31.12.) von 8.00 bis 12.00 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/advuew/internet/AdvPrSrv.asp?Layout=stelle_at&HLayout=&Type=K&STELLECD=2014012911473088",
+      "quote": "Region 2 - Sozialzentrum Walcherstraße\nzuständig für die Wiener Mindestsicherung für den 1., 2., 3., 4., 5., 6., 7., 8., 9. und 20. Bezirk\n1020 Wien, Walcherstraße 11, 1. Stock\nEmail\npost-rg2@ma40.wien.gv.at\nMontag, Dienstag, Freitag von 8.00 bis 12.00 Uhr\nAnnahme in der Servicezone bis 11.00 Uhr\nDonnerstag von 8.00 bis 12.00 Uhr und 15.30 bis 17.30 Uhr\nAnnahme in der Servicezone bis 11.00 bzw. 17.00 Uhr\nAn gesetzlichen Feiertagen geschlossen; Am Karfreitag, Heiligen Abend (24.12.) und an Silvester (31.12.) von 8.00 bis 12.00 Uhr\nMA 40 - Servicetelefon: 01 4000-8040",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
