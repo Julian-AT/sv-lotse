@@ -1,0 +1,23 @@
+{
+  "id": "bh-liezen-groebming",
+  "name_de": "Politische Expositur Gröbming der Bezirkshauptmannschaft Liezen",
+  "name_simple": "Amt in Gröbming",
+  "region": "Steiermark",
+  "address": {
+    "street": "Hauptstraße 213",
+    "postal_code": "8962",
+    "locality": "Gröbming",
+    "country": "AT"
+  },
+  "phone": "+43 (3612) 2801 - 240",
+  "email": "pegb@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "Politische Expositur der Bezirkshauptmannschaft Liezen\nPE Gröbming\nMag.iur. Michael Schachner\nLeiter der Politischen Expositur Gröbming\nHauptstraße 213\n8962 Gröbming\nTelefon: +43 (3612) 2801 - 240\nFAX: +43 (3612) 2801 - 555\nE-Mail: pegb@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

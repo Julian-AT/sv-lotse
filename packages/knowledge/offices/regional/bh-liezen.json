@@ -1,0 +1,29 @@
+{
+  "id": "bh-liezen",
+  "name_de": "Bezirkshauptmannschaft Liezen",
+  "name_simple": "Amt für den Bezirk Liezen",
+  "region": "Steiermark",
+  "address": {
+    "street": "Hauptplatz 12",
+    "postal_code": "8940",
+    "locality": "Liezen",
+    "country": "AT"
+  },
+  "phone": "+43 (3612) 2801-200",
+  "email": "bhli@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Liezen",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Liezen\nBezirkshauptmann Mag. Nico Groger\nHauptplatz 12\n8940 Liezen\nTelefon: +43 (3612) 2801-200\nFAX: +43 (3612) 2801-550\nE-Mail: bhli@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
