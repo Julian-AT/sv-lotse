@@ -1,0 +1,23 @@
+{
+  "id": "action-type",
+  "kind": "type",
+  "target": {
+    "kind": "form",
+    "formInstanceId": "form-instance-draft",
+    "fieldId": "person-name"
+  },
+  "payload": {
+    "value": "Anna Berger",
+    "provenance": {
+      "factId": "fact-name",
+      "source": {
+        "kind": "statement",
+        "turnId": "turn-name",
+        "quote": "Mein Name ist Anna Berger."
+      }
+    },
+    "pace": 80
+  },
+  "sentenceIndex": 1,
+  "unexpected": true
+}
