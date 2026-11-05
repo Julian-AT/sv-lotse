@@ -638,7 +638,9 @@ cmd_verify() {
   if [ "$kind" != orch ]; then
     if [ -f "$run/report.json" ]; then
       st="$(jq -r '.status // "missing"' "$run/report.json" 2>/dev/null || echo invalid)"
-      if [ "$st" = "done" ]; then record report pass "status=done"; else record report fail "worker status=$st"; fi
+      if [ "$st" = "done" ]; then record report pass "status=done"
+      elif [ -s "$run/report-override.md" ]; then record report warn "worker status=$st, overridden by reviewer (report-override.md)"
+      else record report fail "worker status=$st"; fi
       if [ "$(jq '.contract_change_requests | length' "$run/report.json" 2>/dev/null || echo 0)" -gt 0 ]; then
         record report fail "worker raised contract change requests"
       fi
