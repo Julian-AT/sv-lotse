@@ -11,17 +11,29 @@ Read the repository `AGENTS.md` and the assigned work-package brief before chang
 Run from the repository root:
 
 - `bun run --filter @lotse/evals typecheck` — check source and test types.
-- `bun run --filter @lotse/evals test` — run Vitest under Node.js.
+- `bun run --filter @lotse/evals test` — offline unit tests under Vitest/Node.js.
+- `RUN_LIVE=1 bun run --filter @lotse/evals test:live` — real OpenAI judge/persona tests.
+- `bun run --filter @lotse/evals eval run --suite E1 --out /tmp/evals/summary.json` — arithmetic harness demonstration, not the product E1 gate.
 - `bun run lint` — lint with Biome.
 - `bun run format:check` — check formatting.
 
-There is no build step: the package exports TypeScript source. No generation, integration or live-test
-script exists yet; add and document one only when its implementation lands. Run TypeScript tooling
-scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
+There is no build or generation step: the package exports TypeScript source. Run TypeScript tooling
+scripts with `bun <file>.ts` and use only Node APIs so they also run under Node. The live launcher
+loads root `.env.local` without overwriting exported values; without `RUN_LIVE=1` it makes no calls.
 
 ## Invariants
 
-- Gold data references its source passage.
+- Gold data references its source passage. Run `assertNoLeakage` against catalog records before
+  evaluating a gold set; source quotes are provenance, not question/slot text.
+- Rubrics use the JSON-compatible subset of YAML 1.2 with explicit versions and complete score
+  anchors. Version prompt changes and recalibrate changed judges (PRD §14). Package Biome config
+  preserves these JSON-compatible files: YAML formatting adds trailing commas incompatible with
+  `JSON.parse`. Rubric schema tests validate both files; TypeScript lint/format stay enabled.
+- Execute adapters propagate abort signals and throw `TransportError` only for transient transport
+  failures. Keep SDK retries disabled; the runner owns retries and per-case deadlines.
+- `passRate` is reserved; missing metric coverage and undersized sets must never pass a gate.
+- Results contain synthetic data only, safe error categories, model/rubric/prompt versions and git SHA.
+  Never attach raw provider errors or response bodies to exported errors.
 - Synthetic generators stay inside this package.
 - Test doubles stay in test files; acceptance tests use the real dependency named by their brief.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
@@ -30,7 +42,9 @@ scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
 
 ## Evaluation suites
 
-Keep the runner's tests and applicable E1–E13 suites green as they are introduced. WP-001 adds no product evaluation suites.
+Keep runner, statistics, leakage, rubric and persona unit tests green. Live tests prove judge ranking
+and a German persona conversation against OpenAI. Concrete E1–E13 product suites arrive later;
+the arithmetic demonstration reserves E1 only in the standalone demonstration registry.
 
 ## Forbidden paths
 
