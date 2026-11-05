@@ -1,0 +1,265 @@
+# Immediate task reminders are not statutory deadlines.
+# Branch transitions join at confirm-submission; neither alternative needs the other.
+# Medical sections remain with doctors or the requesting hospital.
+id: medical-rehabilitation
+benefit: ref:catalog/medical-rehabilitation
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: insurance_status
+    type: enum:insurance-status
+    question_hint: Sind Sie berufstätig, in Pension oder mitversichert? Bei mehreren Versicherungen
+      bitte alle nennen.
+    validation:
+      options:
+        - employed
+        - pensioner
+        - dependent
+        - multiple
+        - other
+  - id: contact_carrier
+    type: enum:rehabilitation-carrier
+    question_hint:
+      "Welche Versicherung nennen Ihre Versicherungsunterlagen oder Ihre Anlaufstelle: PVA,
+      SVS, BVAEB, AUVA oder ÖGK? Bei unklarer Zuständigkeit kann diese Stelle den Antrag
+      weiterleiten. Bitte Kranken- und Pensionsversicherung unterscheiden."
+    validation:
+      options:
+        - pva
+        - svs
+        - bvaeb
+        - auva
+        - oegk
+  - id: residence_region
+    type: enum:residence-region
+    question_hint: In welchem Bundesland wohnen Sie? Oder wohnen Sie im Ausland?
+    validation:
+      options:
+        - Wien
+        - Niederösterreich
+        - Burgenland
+        - Oberösterreich
+        - Steiermark
+        - Kärnten
+        - Salzburg
+        - Tirol
+        - Vorarlberg
+        - Ausland
+  - id: hospital_request
+    type: boolean
+    question_hint:
+      Hat das Krankenhaus ein Anschlussheilverfahren vorgesehen? Die Entscheidung trifft
+      die Spitalsärztin oder der Spitalsarzt.
+  - id: doctor_section_ready
+    type: boolean
+    question_hint: "Hat die Ärztin oder der Arzt den medizinischen Teil fertig ausgefüllt? Beim
+      Telefonantrag der PVA: Hat das Krankenhaus die nötigen Angaben übermittelt?"
+  - id: application_ready
+    type: boolean
+    question_hint:
+      "Ist der Antrag vollständig vorbereitet? Bei SVS bitte auch die eigene Unterschrift
+      prüfen. Beim Telefonantrag: Hat das Krankenhaus die Antragstellung bestätigt?"
+  - id: application_submitted
+    type: boolean
+    question_hint: Haben Sie den Antrag selbst eingereicht oder hat das Krankenhaus die Antragstellung bestätigt?
+  - id: decision_received
+    type: boolean
+    question_hint: Haben Sie die schriftliche Entscheidung Ihrer Versicherung erhalten?
+  - id: approval_granted
+    type: boolean
+    question_hint: Steht in der schriftlichen Entscheidung, dass die Reha bewilligt ist?
+  - id: costs_clarified
+    type: boolean
+    question_hint: Sind die Zuzahlung und eine mögliche Befreiung mit der Versicherung geklärt?
+steps:
+  - id: clarify-responsibility
+    needs:
+      - insurance_status
+      - contact_carrier
+      - residence_region
+      - hospital_request
+    criteria: ref:catalog/medical-rehabilitation#criteria
+    action: office.resolve
+    outputs:
+      - id: receiving-office
+        type: office
+    transitions:
+      - to: hospital-application
+        when: hospital_request == true
+      - to: doctor-application
+        when: hospital_request == false
+  - id: hospital-application
+    needs:
+      - clarify-responsibility
+      - doctor_section_ready
+      - application_ready
+    documents: ref:catalog/medical-rehabilitation#documents
+    outputs:
+      - id: hospital-request-checklist
+        type: checklist
+    transitions:
+      - to: confirm-submission
+        when: hospital_request == true and doctor_section_ready == true and application_ready == true
+    reminders:
+      - after_days: 0
+        text_de: Bitte klären Sie die Antragstellung mit dem Krankenhaus. Das Krankenhaus füllt die
+          medizinischen Angaben aus.
+        when: doctor_section_ready == false
+  - id: doctor-application
+    needs:
+      - clarify-responsibility
+      - doctor_section_ready
+      - application_ready
+    documents: ref:catalog/medical-rehabilitation#documents
+    action: documents.checklist
+    outputs:
+      - id: application-checklist
+        type: checklist
+    transitions:
+      - to: confirm-submission
+        when: hospital_request == false and doctor_section_ready == true and application_ready == true
+    reminders:
+      - after_days: 0
+        text_de: Bitte lassen Sie den medizinischen Teil von Ihrer Ärztin oder Ihrem Arzt ausfüllen.
+        when: doctor_section_ready == false
+  - id: confirm-submission
+    needs:
+      - application_submitted
+    outputs:
+      - id: submission-confirmation
+        type: user_statement
+    transitions:
+      - to: await-decision
+        when: application_submitted == true
+  - id: await-decision
+    needs:
+      - confirm-submission
+      - decision_received
+      - approval_granted
+    outputs:
+      - id: written-decision
+        type: document
+    reminders: []
+    transitions:
+      - to: clarify-costs
+        when: decision_received == true and approval_granted == true
+      - to: clarify-rejection
+        when: decision_received == true and approval_granted == false
+  - id: clarify-costs
+    needs:
+      - await-decision
+      - costs_clarified
+    criteria: ref:catalog/medical-rehabilitation#criteria
+    outputs:
+      - id: cost-information
+        type: checklist
+    transitions:
+      - to: finish
+        when: costs_clarified == true
+  - id: clarify-rejection
+    needs:
+      - await-decision
+    outputs:
+      - id: carrier-contact-for-reasons
+        type: checklist
+  - id: finish
+    needs:
+      - clarify-costs
+completion:
+  evidence:
+    - user_statement
+    - document_present
+sources:
+  - url: https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html
+    quote: Maßnahmen der medizinischen Rehabilitation werden nur aufgrund eines Antrages erbracht.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.sozialministerium.gv.at/Themen/Soziales/Sozialversicherung/Medizinische-Rehabilitationsma%C3%9Fnahmen.html
+    quote:
+      Die medizinischen Maßnahmen der Rehabilitation müssen beim Pensionsversicherungsträger oder
+      beim Unfallversicherungsträger beantragt werden. Diese haben den Antrag unverzüglich an den
+      zuständigen Krankenversicherungsträger weiterzuleiten, soweit sie diese Maßnahmen nicht selbst
+      erbringen - oder zu erbringen haben.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html
+    quote:
+      Es besteht die Möglichkeit, Anträge bei jedem Sozialversicherungsträger einzubringen – auch
+      wenn ein anderer Versicherungsträger tatsächlich zuständig ist.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.bvaeb.at/cdscontent/?contentid=10007.841572
+    quote: Für Rehabilitations-Ansuchen von mehrfachversicherten Personen, die in einem aktiven
+      pensionsversicherungspflichtigen Beschäftigungsverhältnis stehen, ist der jeweilige
+      Pensionsversicherungsträger leistungszuständig.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.svs.at/cdscontent/?contentid=10007.816821
+    quote: Medizinische Maßnahmen der Rehabilitation erbringt die SVS ihren Versicherten – je nach
+      Sachverhalt – sowohl aus der Unfall- und Pensionsversicherung als auch aus der
+      Krankenversicherung.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.sozialministerium.gv.at/Themen/Soziales/Sozialversicherung/Medizinische-Rehabilitationsma%C3%9Fnahmen.html
+    quote: Der Antrag für eine medizinische Rehabilitation muss über die behandelnden Ärztinnen und
+      Ärzte, bei Akuterkrankungen über Spitalärztinnen und Spitalsärzte mittels des dafür
+      vorgesehenen (und bei diesen Stellen aufliegenden) Antragsformulars gestellt werden.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html
+    quote:
+      Nach einer Operation bei Akuterkrankungen oder nach einem Unfall kann die Spitalsärztin oder
+      der Spitalsarzt einen Antrag auf Anschlussheilverfahren beim zuständigen Versicherungsträger
+      stellen.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.sozialministerium.gv.at/Themen/Soziales/Sozialversicherung/Medizinische-Rehabilitationsma%C3%9Fnahmen.html
+    quote: Bei Anschlussheilverfahren seitens der Pensionsversicherungsanstalt kann der Antrag auch
+      telefonisch durch das Krankenhaus erfolgen.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.sozialministerium.gv.at/Themen/Soziales/Sozialversicherung/Medizinische-Rehabilitationsma%C3%9Fnahmen.html
+    quote: Heilverfahren (Maßnahmen der Gesundheitsvorsorge Aktiv/Kurheilverfahren) können maximal
+      zweimal in einem Rahmenzeitraum von 5 Jahren bewilligt werden. Maßnahmen der medizinischen
+      Rehabilitation sind von dieser Regelung ausgenommen.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.pv.at/web/reha-und-praevention/vom-antrag-zu-reha-und-kur
+    quote: Bei genehmigten Aufenthalten werden die vertraglich vereinbarten Kosten von der
+      Pensionsversicherung (PV) übernommen. Kosten für Aufenthalte ohne vorherige Bewilligung durch
+      die Pensionsversicherung werden grundsätzlich nicht übernommen.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.pv.at/web/reha-und-praevention/vom-antrag-zu-reha-und-kur
+    quote: Für einen stationären Reha-, Kur- oder GVA-Aufenthalt müssen Sie – abhängig von Ihrem
+      monatlichen Bruttoeinkommen – einen gewissen Geldbetrag dazuzahlen.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.pv.at/web/reha-und-praevention/vom-antrag-zu-reha-und-kur
+    quote:
+      Bei einer ambulanten Reha ist keine Zuzahlung erforderlich. Wenn Sie sehr wenig verdienen,
+      ist eine Befreiung möglich.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.bvaeb.at/cdscontent/?contentid=10007.841572
+    quote: Die Kosten für einen bewilligten Aufenthalt übernimmt die BVAEB. Sie haben lediglich eine
+      tägliche Zuzahlung für die gesamte Aufenthaltsdauer (für Rehabilitationsaufenthalte für
+      maximal 28 Tage pro Kalenderjahr) zu bezahlen.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.svs.at/cdscontent/?contentid=10007.816821
+    quote: Der Antrag muss vom Hausarzt, Facharzt oder vom Spitalsarzt gestellt werden und vom
+      Versicherten unterfertigt werden.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.svs.at/cdscontent/?contentid=10007.816821
+    quote:
+      Schließen Sie dem ausgefüllten Antrag maßgebliche ärztliche Befunde bei um Verzögerungen in
+      der Bearbeitung durch die Anforderung medizinischer Unterlagen zu vermeiden.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html
+    quote:
+      Die Entscheidung über den Antrag wird der Antragstellerin oder dem Antragsteller schriftlich
+      mitgeteilt.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html
+    quote:
+      Der ausgefüllte Antrag kann an den zuständigen Sozialversicherungsträger (Kranken-, Pensions-
+      oder Unfallversicherungsträger) geschickt oder persönlich in einer der Servicestellen
+      abgegeben werden.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.pv.at/web/service-und-kontakt/kontakt
+    quote: Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort, bei
+      Wohnsitz im Ausland ist die Landesstelle Wien zuständig.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+  - url: https://www.svs.at/cdscontent/?contentid=10007.816821
+    quote: Bei sozialer Schutzbedürftigkeit sind Sie von der Zuzahlung befreit.
+    retrieved_at: 2026-11-05T23:49:34.968Z
+as_of: 2026-11-06
