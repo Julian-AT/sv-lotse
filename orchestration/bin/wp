@@ -1,0 +1,991 @@
+#!/usr/bin/env bash
+# wp: the work-package pipeline for SV KI-Lotse.
+#
+# Claude (the orchestrator) drives this CLI; Codex CLI workers do the coding.
+# Every work package (WP) runs in its own git worktree and branch:
+#   start -> run (Codex) -> verify (gates) -> review (Claude) -> commit -> pr -> land
+#
+# Compatible with the macOS system bash (3.2). Requires git, jq; gh for PRs.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/../.." && pwd -P)"
+ORCH="$ROOT/orchestration"
+LOCAL_DIR="$ROOT/.orchestration"
+mkdir -p "$LOCAL_DIR"
+# shellcheck source=/dev/null
+[ -f "$LOCAL_DIR/config.local.env" ] && . "$LOCAL_DIR/config.local.env"
+# shellcheck source=../config.env
+. "$ORCH/config.env"
+# shellcheck source=../../.githooks/lib.sh
+. "$ROOT/.githooks/lib.sh"
+
+: "${WT_ROOT:=$(dirname "$ROOT")/$(basename "$ROOT")-worktrees}"
+if [ -z "$CODEX_ADD_DIRS" ]; then
+  CODEX_ADD_DIRS="$HOME/Library/pnpm:$HOME/Library/Caches:$HOME/Library/org.swift.swiftpm:$HOME/.cache:$HOME/.npm"
+fi
+
+STATE_DIR="$LOCAL_DIR/state"
+RUNS_DIR="$LOCAL_DIR/runs"
+JOURNAL="$LOCAL_DIR/journal.md"
+SCHEMA="$ORCH/schemas/worker-report.schema.json"
+WP_SELF="$ORCH/bin/wp"
+mkdir -p "$STATE_DIR" "$RUNS_DIR"
+
+if [ -t 1 ]; then
+  C_R=$'\033[31m'; C_G=$'\033[32m'; C_Y=$'\033[33m'; C_B=$'\033[1m'; C_0=$'\033[0m'
+else
+  C_R=''; C_G=''; C_Y=''; C_B=''; C_0=''
+fi
+
+die()  { printf '%swp: %s%s\n' "$C_R" "$*" "$C_0" >&2; exit 1; }
+warn() { printf '%swp: warning: %s%s\n' "$C_Y" "$*" "$C_0" >&2; }
+ok()   { printf '%s%s%s\n' "$C_G" "$*" "$C_0"; }
+info() { printf '%s\n' "$*"; }
+now()  { date -u +%Y-%m-%dT%H:%M:%SZ; }
+journal() { printf -- '- %s %s\n' "$(now)" "$*" >> "$JOURNAL"; }
+
+# ---------------------------------------------------------------------------
+# Briefs and front matter
+# ---------------------------------------------------------------------------
+
+brief_path() {
+  local id="$1" f
+  f="$(find "$ORCH/wp" -type f -name "$id-*.md" 2>/dev/null | head -n 1)"
+  [ -n "$f" ] || f="$(find "$ORCH/wp" -type f -name "$id.md" 2>/dev/null | head -n 1)"
+  printf '%s' "$f"
+}
+
+fm() {
+  awk 'NR == 1 { if ($0 != "---") exit; next } $0 == "---" { exit } { print }' "$1"
+}
+
+# Scalar value of a front-matter key.
+fm_get() {
+  fm "$1" | awk -v k="$2" -v q="'" '
+    function unq(x,  a, b) {
+      gsub(/^[ \t]+|[ \t]+$/, "", x)
+      a = substr(x, 1, 1); b = substr(x, length(x), 1)
+      if (length(x) >= 2 && a == b && (a == "\"" || a == q)) x = substr(x, 2, length(x) - 2)
+      return x
+    }
+    index($0, k ":") == 1 { print unq(substr($0, length(k) + 2)); exit }'
+}
+
+# List value of a front-matter key: inline [a, b] or a block of "- item" lines.
+fm_list() {
+  fm "$1" | awk -v k="$2" -v q="'" '
+    function unq(x,  a, b) {
+      gsub(/^[ \t]+|[ \t]+$/, "", x)
+      a = substr(x, 1, 1); b = substr(x, length(x), 1)
+      if (length(x) >= 2 && a == b && (a == "\"" || a == q)) x = substr(x, 2, length(x) - 2)
+      return x
+    }
+    !inl && index($0, k ":") == 1 {
+      v = substr($0, length(k) + 2); gsub(/^[ \t]+|[ \t]+$/, "", v)
+      if (v == "") { inl = 1; next }
+      if (v ~ /^\[.*\]$/) {
+        v = substr(v, 2, length(v) - 2); n = split(v, a, ",")
+        for (i = 1; i <= n; i++) { x = unq(a[i]); if (x != "") print x }
+        exit
+      }
+      print unq(v); exit
+    }
+    inl && /^[ \t]*-[ \t]/ { x = $0; sub(/^[ \t]*-[ \t]+/, "", x); print unq(x); next }
+    inl && /^[^ \t]/ { exit }'
+}
+
+require_brief() {
+  local b
+  b="$(brief_path "$1")"
+  [ -n "$b" ] || die "no brief found for $1 under orchestration/wp/"
+  printf '%s' "$b"
+}
+
+# ---------------------------------------------------------------------------
+# State (one KEY=value file per WP, git-ignored)
+# ---------------------------------------------------------------------------
+
+state_file() { printf '%s/%s.env' "$STATE_DIR" "$1"; }
+
+get_state() {
+  local f
+  f="$(state_file "$1")"
+  [ -f "$f" ] || return 0
+  awk -v k="$2" 'index($0, k "=") == 1 { v = substr($0, length(k) + 2) } END { printf "%s", v }' "$f"
+}
+
+set_state() {
+  local f tmp
+  f="$(state_file "$1")"
+  tmp="$f.tmp.$$"
+  { [ -f "$f" ] && grep -v "^$2=" "$f" || true; printf '%s=%s\n' "$2" "$3"; } > "$tmp"
+  mv "$tmp" "$f"
+}
+
+wp_state() {
+  local s
+  s="$(get_state "$1" STATE)"
+  printf '%s' "${s:-new}"
+}
+
+is_active() {
+  case "$(wp_state "$1")" in
+    started|running|ran|failed|verified|committed|pr_open) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+# Claimed path patterns of a WP (owns + may_touch), one per line.
+claims() {
+  local id="$1" b
+  b="$(brief_path "$id")"
+  if [ -n "$b" ]; then
+    fm_list "$b" owns
+    fm_list "$b" may_touch
+  else
+    get_state "$id" OWNS | tr ' ' '\n'
+  fi
+}
+
+owns_of() {
+  local id="$1" b
+  b="$(brief_path "$id")"
+  if [ -n "$b" ]; then fm_list "$b" owns; else get_state "$id" OWNS | tr ' ' '\n'; fi
+}
+
+# ---------------------------------------------------------------------------
+# Path patterns
+# ---------------------------------------------------------------------------
+
+norm_pat() { printf '%s' "$1" | sed 's#\*\*#*#g'; }
+
+matches_any() {
+  local f="$1" p
+  while IFS= read -r p; do
+    [ -n "$p" ] || continue
+    p="$(norm_pat "$p")"
+    # shellcheck disable=SC2254
+    case "$f" in $p) return 0 ;; esac
+  done <<EOF
+$2
+EOF
+  return 1
+}
+
+pat_base() { printf '%s' "$1" | sed -E 's#[][*?].*$##; s#/+$##'; }
+
+pats_overlap() {
+  local a b
+  a="$(pat_base "$1")"
+  b="$(pat_base "$2")"
+  if [ -z "$a" ] || [ -z "$b" ] || [ "$a" = "$b" ]; then return 0; fi
+  case "$b/" in "$a"/*) return 0 ;; esac
+  case "$a/" in "$b"/*) return 0 ;; esac
+  return 1
+}
+
+claims_overlap() {
+  local x y
+  while IFS= read -r x; do
+    [ -n "$x" ] || continue
+    while IFS= read -r y; do
+      [ -n "$y" ] || continue
+      if pats_overlap "$x" "$y"; then
+        printf '%s <> %s' "$x" "$y"
+        return 0
+      fi
+    done <<EOF
+$2
+EOF
+  done <<EOF
+$1
+EOF
+  return 1
+}
+
+check_overlap_with_active() {
+  local id="$1" mine f other theirs hit
+  mine="$(claims "$id")"
+  for f in "$STATE_DIR"/*.env; do
+    [ -f "$f" ] || continue
+    other="$(basename "$f" .env)"
+    [ "$other" != "$id" ] || continue
+    is_active "$other" || continue
+    theirs="$(claims "$other")"
+    if hit="$(claims_overlap "$mine" "$theirs")"; then
+      die "$id overlaps with active $other ($hit); wait until $other lands"
+    fi
+  done
+}
+
+# ---------------------------------------------------------------------------
+# Git helpers
+# ---------------------------------------------------------------------------
+
+has_remote() { git -C "$ROOT" remote get-url "$REMOTE" >/dev/null 2>&1; }
+
+base_ref() {
+  if has_remote; then
+    git -C "$ROOT" fetch -q "$REMOTE" "$BASE_BRANCH" || die "cannot fetch $REMOTE/$BASE_BRANCH"
+    printf '%s/%s' "$REMOTE" "$BASE_BRANCH"
+  else
+    printf '%s' "$BASE_BRANCH"
+  fi
+}
+
+require_wt() {
+  local wt
+  wt="$(get_state "$1" WT)"
+  [ -n "$wt" ] && [ -d "$wt" ] || die "$1 has no worktree; run 'wp start $1'"
+  printf '%s' "$wt"
+}
+
+ci_required() {
+  case "$REQUIRE_CI" in
+    1|true|yes) return 0 ;;
+    0|false|no) return 1 ;;
+    *) git -C "$ROOT" cat-file -e "$(base_ref):.github/workflows/ci.yml" 2>/dev/null ;;
+  esac
+}
+
+make_patch() {
+  local wt="$1" base="$2" f
+  git -C "$wt" diff --binary "$base" || true
+  git -C "$wt" ls-files --others --exclude-standard | while IFS= read -r f; do
+    git -C "$wt" diff --no-index --binary -- /dev/null "$f" || true
+  done
+}
+
+changed_files() {
+  local wt="$1" base="$2"
+  { git -C "$wt" diff --name-only "$base"; git -C "$wt" ls-files --others --exclude-standard; } | sort -u
+}
+
+# ---------------------------------------------------------------------------
+# Local services
+# ---------------------------------------------------------------------------
+
+wp_db_name() { printf 'lotse_%s' "$(printf '%s' "$1" | tr 'A-Z-' 'a-z_')"; }
+
+compose() { docker compose -f "$ROOT/docker-compose.yml" "$@"; }
+
+db_available() {
+  [ "$DB_PER_WP" = 1 ] && [ -f "$ROOT/docker-compose.yml" ] && command -v docker >/dev/null 2>&1 \
+    && compose exec -T db pg_isready -q >/dev/null 2>&1
+}
+
+setup_wp_db() {
+  local id="$1" wt="$2" db url
+  db_available || return 0
+  db="$(wp_db_name "$id")"
+  url="$(awk -F= '$1 == "DATABASE_URL" { sub(/^[^=]*=/, ""); gsub(/"/, ""); print }' "$wt/.env.local" 2>/dev/null || true)"
+  [ -n "$url" ] || { warn "DATABASE_URL missing in .env.local; no per-WP database"; return 0; }
+  compose exec -T db psql -q -U "$PG_SUPERUSER" -d postgres -c "CREATE DATABASE $db" >/dev/null 2>&1 \
+    || warn "could not create database $db (it may already exist)"
+  grep -v '^DATABASE_URL=' "$wt/.env.local" > "$wt/.env.local.tmp" || true
+  printf 'DATABASE_URL=%s/%s\nS3_PREFIX=%s/\n' "${url%/*}" "$db" "$(printf '%s' "$id" | tr 'A-Z' 'a-z')" >> "$wt/.env.local.tmp"
+  mv "$wt/.env.local.tmp" "$wt/.env.local"
+  set_state "$id" DB "$db"
+}
+
+drop_wp_db() {
+  local id="$1" db
+  db="$(get_state "$id" DB)"
+  [ -n "$db" ] || return 0
+  db_available || return 0
+  compose exec -T db psql -q -U "$PG_SUPERUSER" -d postgres -c "DROP DATABASE IF EXISTS $db WITH (FORCE)" >/dev/null 2>&1 \
+    || warn "could not drop database $db"
+}
+
+# ---------------------------------------------------------------------------
+# Templates
+# ---------------------------------------------------------------------------
+
+# fill_template <template> KEY=value... KEY=@file...
+# Whole-line markers {{KEY}} take file contents; inline markers take scalar values.
+fill_template() {
+  local tpl="$1" kv line key val file handled
+  shift
+  while IFS= read -r line || [ -n "$line" ]; do
+    handled=0
+    for kv in "$@"; do
+      key="${kv%%=*}"
+      val="${kv#*=}"
+      case "$val" in
+        @*)
+          file="${val#@}"
+          if [ "$line" = "{{$key}}" ]; then
+            if [ -n "$file" ] && [ -f "$file" ]; then cat "$file"; fi
+            handled=1
+            break
+          fi
+          ;;
+        *)
+          while :; do
+            case "$line" in
+              *"{{$key}}"*) line="${line%%"{{$key}}"*}$val${line#*"{{$key}}"}" ;;
+              *) break ;;
+            esac
+          done
+          ;;
+      esac
+    done
+    [ "$handled" = 1 ] || printf '%s\n' "$line"
+  done < "$tpl"
+}
+
+# ---------------------------------------------------------------------------
+# Commands
+# ---------------------------------------------------------------------------
+
+cmd_help() {
+  cat <<'EOF'
+wp: work-package pipeline (Claude orchestrates, Codex workers implement)
+
+  wp doctor                     check tools, identity, hooks, Codex flags
+  wp status                     table of all work packages
+  wp ready                      work packages whose dependencies have landed
+  wp start   <WP> [--force]     create worktree + branch (+ per-WP database)
+  wp run     <WP> [--rework F]  run a Codex worker on the brief (rework with findings file F)
+  wp verify  <WP>               ownership, patterns, secrets and gate checks -> verify.json
+  wp cycle   <WP>               start (if needed) + run + verify
+  wp batch   <WP>...            cycle several WPs in parallel (MAX_PARALLEL)
+  wp paths   <WP>               files the reviewer needs (brief, diff, report, verify)
+  wp rework  <WP> <findings.md> run the worker again with review findings
+  wp xreview <WP>               independent read-only Codex review (high-risk WPs)
+  wp pr      <WP>               check commits, rebase, push, open/update the PR
+  wp land    <WP>               wait for CI, fast-forward main, clean up
+  wp abort   <WP>               remove worktree, branch and database; keep run logs
+  wp orch    <slug> [paths...]  worktree for orchestrator-only changes (briefs, config)
+  wp protect                    create the GitHub ruleset for the base branch
+  wp tag     <tag> <message>    annotated milestone tag on the base branch
+EOF
+}
+
+cmd_doctor() {
+  local bad=0 v email name
+  check() { if command -v "$1" >/dev/null 2>&1; then ok "  ok  $1"; else printf '%s  --  %s missing: %s%s\n' "$C_R" "$1" "$2" "$C_0"; bad=1; fi; }
+  opt()   { if command -v "$1" >/dev/null 2>&1; then ok "  ok  $1"; else warn "$1 not installed ($2)"; fi; }
+  info "${C_B}tools${C_0}"
+  check git "brew install git"
+  check jq "brew install jq"
+  check node "install Node.js 22+"
+  check pnpm "corepack enable && corepack prepare pnpm@latest --activate"
+  check "$CODEX_BIN" "npm install -g @openai/codex"
+  check docker "install Docker Desktop or OrbStack"
+  if [ "$USE_GH" = 1 ]; then check gh "brew install gh"; fi
+  opt claude "Claude Code"
+  opt gitleaks "brew install gitleaks (secret scanning in verify)"
+  opt actionlint "brew install actionlint (CI workflow lint)"
+  opt xcodebuild "Xcode (Mac lane)"
+  opt xcodegen "brew install xcodegen (Mac lane)"
+  opt swiftlint "brew install swiftlint (Mac lane)"
+  if command -v node >/dev/null 2>&1; then
+    v="$(node -p 'process.versions.node.split(".")[0]')"
+    [ "$v" -ge 22 ] || { printf '%s  --  Node %s found; need 22+%s\n' "$C_R" "$v" "$C_0"; bad=1; }
+  fi
+  info "${C_B}codex${C_0}"
+  if command -v "$CODEX_BIN" >/dev/null 2>&1; then
+    for v in --output-schema --output-last-message --json --sandbox --add-dir; do
+      if "$CODEX_BIN" exec --help 2>&1 | grep -q -- "$v"; then ok "  ok  codex exec $v"; else warn "codex exec does not list $v; update Codex CLI"; bad=1; fi
+    done
+    [ -n "$CODEX_MODEL" ] && ok "  ok  model $CODEX_MODEL (effort $CODEX_EFFORT)" || warn "CODEX_MODEL is empty; workers use the Codex default model"
+  fi
+  info "${C_B}git${C_0}"
+  name="$(git -C "$ROOT" config user.name || true)"
+  email="$(git -C "$ROOT" config user.email || true)"
+  [ -n "$name" ] && [ -n "$email" ] && ok "  ok  identity $name <$email>" || { printf '%s  --  git user.name/user.email not set%s\n' "$C_R" "$C_0"; bad=1; }
+  [ "$(git -C "$ROOT" config core.hooksPath || true)" = .githooks ] && ok "  ok  hooks (.githooks)" || { printf '%s  --  core.hooksPath is not .githooks; run bootstrap.sh%s\n' "$C_R" "$C_0"; bad=1; }
+  [ "$(lotse_expected_email)" = "$email" ] && ok "  ok  lotse.authorEmail = $email" || { printf '%s  --  lotse.authorEmail differs from user.email%s\n' "$C_R" "$C_0"; bad=1; }
+  if has_remote; then
+    ok "  ok  remote $REMOTE ($(git -C "$ROOT" remote get-url "$REMOTE"))"
+    if [ "$USE_GH" = 1 ] && command -v gh >/dev/null 2>&1; then
+      gh auth status >/dev/null 2>&1 && ok "  ok  gh authenticated" || { printf '%s  --  gh not authenticated: gh auth login%s\n' "$C_R" "$C_0"; bad=1; }
+    fi
+  else
+    warn "no remote '$REMOTE'; landing fast-forwards the local $BASE_BRANCH only"
+  fi
+  info "${C_B}services${C_0}"
+  [ -f "$ROOT/.env.local" ] && ok "  ok  .env.local present" || warn ".env.local missing; cp .env.example .env.local and fill in keys"
+  if [ -f "$ROOT/docker-compose.yml" ]; then
+    db_available && ok "  ok  postgres (docker compose)" || warn "postgres not running: docker compose up -d --wait"
+  fi
+  info "${C_B}pipeline${C_0}"
+  ok "  ok  worktrees in $WT_ROOT, MAX_PARALLEL=$MAX_PARALLEL, CI required: $REQUIRE_CI"
+  [ "$bad" = 0 ] && ok "doctor: all required checks passed" || die "doctor: fix the items above"
+}
+
+cmd_status() {
+  local b id st att tok extra
+  printf '%s%-10s %-10s %-4s %-9s %s%s\n' "$C_B" WP STATE TRY TOKENS DETAIL "$C_0"
+  find "$ORCH/wp" -type f -name '*.md' | sort | while IFS= read -r b; do
+    id="$(fm_get "$b" id)"
+    [ -n "$id" ] || continue
+    st="$(wp_state "$id")"
+    att="$(get_state "$id" ATTEMPT)"
+    tok="$(get_state "$id" TOKENS)"
+    extra="$(get_state "$id" PR_URL)"
+    [ -n "$extra" ] || extra="$(fm_get "$b" title)"
+    printf '%-10s %-10s %-4s %-9s %s\n' "$id" "$st" "${att:-0}" "${tok:-0}" "$extra"
+  done
+  for b in "$STATE_DIR"/orch-*.env; do
+    [ -f "$b" ] || continue
+    id="$(basename "$b" .env)"
+    printf '%-10s %-10s %-4s %-9s %s\n' "$id" "$(wp_state "$id")" - - "$(get_state "$id" BRANCH)"
+  done
+}
+
+cmd_ready() {
+  local b id d okdeps
+  find "$ORCH/wp" -type f -name '*.md' | sort | while IFS= read -r b; do
+    id="$(fm_get "$b" id)"
+    [ -n "$id" ] || continue
+    case "$(wp_state "$id")" in new|aborted) ;; *) continue ;; esac
+    okdeps=1
+    for d in $(fm_list "$b" depends_on); do
+      [ "$(wp_state "$d")" = landed ] || { okdeps=0; break; }
+    done
+    [ "$okdeps" = 1 ] && printf '%-10s %-6s %-12s %s\n' "$id" "$(fm_get "$b" wave)" "$(fm_get "$b" lane)" "$(fm_get "$b" title)"
+  done
+}
+
+cmd_start() {
+  local id="${1:?usage: wp start <WP> [--force]}" force="${2:-}" b branch wt base d
+  b="$(require_brief "$id")"
+  case "$(wp_state "$id")" in new|aborted) ;; *) die "$id is already $(wp_state "$id")" ;; esac
+  [ "$(fm_get "$b" owner)" != orchestrator ] || die "$id is an orchestrator brief; use 'wp orch'"
+  if [ "$force" != --force ]; then
+    for d in $(fm_list "$b" depends_on); do
+      [ "$(wp_state "$d")" = landed ] || die "$id depends on $d ($(wp_state "$d")); use --force to override"
+    done
+  fi
+  check_overlap_with_active "$id"
+  branch="$(fm_get "$b" branch)"
+  [ -n "$branch" ] || branch="wp/$(printf '%s' "$id" | tr 'A-Z' 'a-z')"
+  wt="$WT_ROOT/$id"
+  [ ! -e "$wt" ] || die "worktree already exists: $wt (wp abort $id to reset)"
+  mkdir -p "$WT_ROOT"
+  base="$(base_ref)"
+  git -C "$ROOT" worktree add -q -b "$branch" "$wt" "$base"
+  rm -f "$(state_file "$id")"
+  set_state "$id" STATE started
+  set_state "$id" BRANCH "$branch"
+  set_state "$id" WT "$wt"
+  set_state "$id" ATTEMPT 0
+  set_state "$id" STARTED_AT "$(now)"
+  [ -f "$ROOT/.env.local" ] && cp "$ROOT/.env.local" "$wt/.env.local"
+  setup_wp_db "$id" "$wt"
+  if [ -f "$wt/package.json" ]; then
+    if ! ( cd "$wt" && if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile --prefer-offline; else pnpm install; fi ) > "$RUNS_DIR/$id-install.log" 2>&1; then
+      warn "pnpm install failed in $wt; see .orchestration/runs/$id-install.log"
+    fi
+  fi
+  journal "$id started on $branch from $base"
+  ok "$id started: $wt ($branch)"
+}
+
+build_rework() {
+  local id="$1" findings="$2" prev
+  prev="$(get_state "$id" RUN_DIR)"
+  printf '## Rework request\n\n'
+  printf 'Your previous attempt was rejected by the gates and/or the review. Fix every finding below and nothing else.\n'
+  printf 'Keep everything that was already correct. The worktree still contains your previous changes.\n\n'
+  printf '### Findings\n\n'
+  cat "$findings"
+  printf '\n\n### Your previous report\n\n```json\n'
+  if [ -n "$prev" ] && [ -f "$prev/report.json" ]; then cat "$prev/report.json"; else printf '{}'; fi
+  printf '\n```\n'
+  if [ -n "$prev" ] && [ -f "$prev/verify.log" ]; then
+    printf '\n### Gate output (last 150 lines)\n\n```text\n'
+    tail -n 150 "$prev/verify.log"
+    printf '\n```\n'
+  fi
+}
+
+cmd_run() {
+  local id="${1:?usage: wp run <WP> [--rework findings.md]}" rework="" b wt attempt run rc thread status tokens prev_tokens rw d
+  shift
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --rework) rework="${2:?--rework needs a file}"; shift 2 ;;
+      *) die "unknown option $1" ;;
+    esac
+  done
+  b="$(require_brief "$id")"
+  wt="$(require_wt "$id")"
+  attempt="$(get_state "$id" ATTEMPT)"
+  attempt=$(( ${attempt:-0} + 1 ))
+  [ "$attempt" -le "$MAX_ATTEMPTS" ] || die "$id used all $MAX_ATTEMPTS attempts; split the WP or escalate to the owner"
+  run="$RUNS_DIR/$id/attempt-$attempt"
+  mkdir -p "$run"
+  rw=""
+  if [ -n "$rework" ]; then
+    [ -f "$rework" ] || die "findings file not found: $rework"
+    cp "$rework" "$run/findings.md"
+    rw="$run/rework-section.md"
+    build_rework "$id" "$rework" > "$rw"
+  fi
+  fill_template "$ORCH/templates/worker-prompt.md" \
+    "WP_ID=$id" "ATTEMPT=$attempt" "BRIEF_PATH=${b#"$ROOT"/}" \
+    "BRIEF=@$b" "REWORK=@$rw" > "$run/prompt.md"
+  set_state "$id" STATE running
+  set_state "$id" ATTEMPT "$attempt"
+  set_state "$id" RUN_DIR "$run"
+  journal "$id attempt $attempt running"
+
+  local cmd effort
+  effort="$(fm_get "$b" codex_effort)"
+  [ -n "$effort" ] || effort="$CODEX_EFFORT"
+  cmd=("$CODEX_BIN" exec -C "$wt" --json --output-schema "$SCHEMA" -o "$run/report.json"
+       -s workspace-write -c approval_policy=never -c sandbox_workspace_write.network_access=true
+       -c "model_reasoning_effort=$effort")
+  [ -z "$CODEX_MODEL" ] || cmd+=(-m "$CODEX_MODEL")
+  local IFS=:
+  for d in $CODEX_ADD_DIRS; do
+    [ -n "$d" ] && [ -d "$d" ] && cmd+=(--add-dir "$d")
+  done
+  unset IFS
+  cmd+=(-)
+  printf '%q ' "${cmd[@]}" > "$run/command.txt"
+
+  rc=0
+  "${cmd[@]}" < "$run/prompt.md" > "$run/events.jsonl" 2> "$run/stderr.log" || rc=$?
+
+  thread="$(jq -R -r 'fromjson? | select(.type == "thread.started") | .thread_id' "$run/events.jsonl" 2>/dev/null | head -n 1 || true)"
+  tokens="$(jq -R -s '[split("\n")[] | fromjson? | select(.type == "turn.completed") | ((.usage.input_tokens // 0) + (.usage.output_tokens // 0))] | add // 0' "$run/events.jsonl" 2>/dev/null || echo 0)"
+  prev_tokens="$(get_state "$id" TOKENS)"
+  set_state "$id" TOKENS "$(( ${prev_tokens:-0} + ${tokens:-0} ))"
+  set_state "$id" THREAD_ID "${thread:-}"
+  set_state "$id" LAST_EXIT "$rc"
+  status="$(jq -r '.status // "missing"' "$run/report.json" 2>/dev/null || echo missing)"
+  if [ "$rc" -ne 0 ] || [ "$status" = missing ]; then
+    set_state "$id" STATE failed
+    journal "$id attempt $attempt failed (exit $rc, report $status)"
+    warn "$id attempt $attempt: codex exit $rc, report $status; see $run/stderr.log"
+    return 1
+  fi
+  set_state "$id" STATE ran
+  journal "$id attempt $attempt finished: $status ($tokens tokens)"
+  ok "$id attempt $attempt: $status ($tokens tokens) -> $run/report.json"
+  [ "$status" = "done" ]
+}
+
+cmd_verify() {
+  local id="${1:?usage: wp verify <WP>}" b wt run base changed f p claimset ownset errors=0 res log g t0 kind st added gates
+  b="$(brief_path "$id")"
+  kind="$(get_state "$id" KIND)"
+  [ -n "$b" ] || [ "$kind" = orch ] || die "no brief for $id"
+  wt="$(require_wt "$id")"
+  run="$(get_state "$id" RUN_DIR)"
+  if [ -z "$run" ]; then run="$RUNS_DIR/$id/manual"; mkdir -p "$run"; set_state "$id" RUN_DIR "$run"; fi
+  base="$(git -C "$wt" merge-base HEAD "$(base_ref)")"
+  res="$run/verify.tsv"; log="$run/verify.log"
+  : > "$res"; : > "$log"
+  record() { printf '%s\t%s\t%s\n' "$1" "$2" "$3" >> "$res"; [ "$2" != fail ] || errors=$((errors + 1)); }
+
+  # 1. Worker report
+  if [ "$kind" != orch ]; then
+    if [ -f "$run/report.json" ]; then
+      st="$(jq -r '.status // "missing"' "$run/report.json" 2>/dev/null || echo invalid)"
+      if [ "$st" = "done" ]; then record report pass "status=done"; else record report fail "worker status=$st"; fi
+      if [ "$(jq '.contract_change_requests | length' "$run/report.json" 2>/dev/null || echo 0)" -gt 0 ]; then
+        record report fail "worker raised contract change requests"
+      fi
+    else
+      record report warn "no worker report in $run"
+    fi
+  fi
+
+  # 2. Ownership
+  changed="$(changed_files "$wt" "$base")"
+  [ -n "$changed" ] || record diff fail "no changes against $base"
+  claimset="$(claims "$id")"
+  ownset="$(owns_of "$id")"
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    matches_any "$f" "$claimset" || record ownership fail "$f is outside owns/may_touch"
+    if [ "$kind" != orch ]; then
+      set -f
+      for p in $GLOBAL_FORBIDDEN; do
+        # shellcheck disable=SC2254
+        case "$f" in $p) matches_any "$f" "$ownset" || record forbidden fail "$f is protected ($p)" ;; esac
+      done
+      set +f
+    fi
+    case "$f" in
+      .env|.env.*|*/.env|*/.env.*) case "$f" in *.env.example) ;; *) record secrets fail "$f is an env file" ;; esac ;;
+    esac
+  done <<EOF
+$changed
+EOF
+
+  # 3. Patch patterns and secrets
+  make_patch "$wt" "$base" > "$run/diff.patch"
+  added="$(grep -E '^\+' "$run/diff.patch" | grep -v -E '^\+\+\+ ' || true)"
+  pat() {
+    local level="$1" re="$2" label="$3" hit
+    hit="$(printf '%s\n' "$added" | grep -E -m 1 -- "$re" || true)"
+    [ -z "$hit" ] || record pattern "$level" "$label: $(printf '%s' "$hit" | cut -c1-140)"
+  }
+  pat fail '\.only\(' 'focused test (.only)'
+  pat fail '(describe|it|test|context)\.skip\(|\bxit\(|\bxdescribe\(' 'skipped test'
+  pat fail '@ts-(ignore|nocheck)' 'TypeScript suppression'
+  pat fail '-----BEGIN [A-Z ]*PRIVATE KEY-----' 'private key material'
+  pat fail '(sk-(proj-)?[A-Za-z0-9_-]{24,}|sk_[a-f0-9]{40,})' 'API key-like token'
+  pat fail '[Cc]o-[Aa]uthored-[Bb]y:' 'co-author trailer in content'
+  pat warn '(:[ ]*any([^A-Za-z0-9_]|$)|as any([^A-Za-z0-9_]|$)|<any>)' 'explicit any'
+  pat warn '(TODO|FIXME|XXX)' 'TODO marker'
+  pat warn '(biome-ignore|eslint-disable|swiftlint:disable)' 'lint suppression'
+  pat warn 'console\.log\(' 'console.log'
+  pat warn '(try!|as! )' 'Swift force operation'
+  if command -v gitleaks >/dev/null 2>&1 && gitleaks stdin --help >/dev/null 2>&1; then
+    if gitleaks stdin --no-banner --redact < "$run/diff.patch" >> "$log" 2>&1; then
+      record secrets pass gitleaks
+    else
+      record secrets fail "gitleaks found a secret (see verify.log)"
+    fi
+  else
+    record secrets warn "gitleaks not installed; secret scan skipped"
+  fi
+
+  # 4. Gates (brief gates + global gates), outside the worker sandbox, with .env.local loaded
+  gates="$( { [ -z "$b" ] || fm_list "$b" gates
+              printf '%s\n' "$GLOBAL_GATES" | awk '{ n = split($0, a, ";;"); for (i = 1; i <= n; i++) { g = a[i]; gsub(/^[ \t]+|[ \t]+$/, "", g); if (g != "") print g } }'; } )"
+  while IFS= read -r g; do
+    [ -n "$g" ] || continue
+    printf '\n$ %s\n' "$g" >> "$log"
+    t0="$(date +%s)"
+    if ( cd "$wt" && set -a && { [ ! -f .env.local ] || . ./.env.local; } && set +a && bash -c "$g" ) < /dev/null >> "$log" 2>&1; then
+      record gate pass "$g ($(( $(date +%s) - t0 ))s)"
+    else
+      record gate fail "$g"
+    fi
+  done <<EOF
+$gates
+EOF
+
+  # 5. Gates must not leave new untracked files behind (missing .gitignore entries)
+  local after extra
+  after="$(changed_files "$wt" "$base")"
+  extra="$(comm -13 <(printf '%s\n' "$changed") <(printf '%s\n' "$after") | sed '/^$/d' || true)"
+  [ -z "$extra" ] || record hygiene warn "gates created untracked files: $(printf '%s' "$extra" | tr '\n' ' ' | cut -c1-200)"
+
+  jq -R -s --arg id "$id" --arg at "$(now)" --arg base "$base" '
+    split("\n") | map(select(length > 0) | split("\t") | {check: .[0], result: .[1], detail: .[2]}) as $r
+    | {wp: $id, at: $at, base: $base,
+       errors: ($r | map(select(.result == "fail")) | length),
+       warnings: ($r | map(select(.result == "warn")) | length),
+       results: $r}' < "$res" > "$run/verify.json"
+
+  while IFS="$(printf '\t')" read -r c r d; do
+    case "$r" in
+      pass) printf '  %spass%s %-9s %s\n' "$C_G" "$C_0" "$c" "$d" ;;
+      warn) printf '  %swarn%s %-9s %s\n' "$C_Y" "$C_0" "$c" "$d" ;;
+      fail) printf '  %sFAIL%s %-9s %s\n' "$C_R" "$C_0" "$c" "$d" ;;
+    esac
+  done < "$res"
+
+  if [ "$errors" -gt 0 ]; then
+    set_state "$id" STATE failed
+    journal "$id verify failed ($errors errors)"
+    warn "$id: $errors failing checks -> $run/verify.json"
+    return 1
+  fi
+  set_state "$id" STATE verified
+  journal "$id verified"
+  ok "$id verified -> $run/verify.json"
+}
+
+cmd_cycle() {
+  local id="${1:?usage: wp cycle <WP>}"
+  case "$(wp_state "$id")" in new|aborted) cmd_start "$id" ;; esac
+  cmd_run "$id" || true
+  cmd_verify "$id" || true
+  info "$id: $(wp_state "$id")"
+}
+
+cmd_batch() {
+  [ $# -gt 0 ] || die "usage: wp batch <WP> <WP> ..."
+  local a b hit
+  for a in "$@"; do
+    require_brief "$a" >/dev/null
+    for b in "$@"; do
+      [ "$a" \< "$b" ] || continue
+      if hit="$(claims_overlap "$(claims "$a")" "$(claims "$b")")"; then
+        die "$a and $b claim overlapping paths ($hit); run them in different batches"
+      fi
+    done
+  done
+  printf '%s\n' "$@" | xargs -n 1 -P "$MAX_PARALLEL" "$WP_SELF" cycle
+  cmd_status
+}
+
+cmd_paths() {
+  local id="${1:?usage: wp paths <WP>}" run wt
+  run="$(get_state "$id" RUN_DIR)"
+  wt="$(get_state "$id" WT)"
+  printf 'brief:     %s\n' "$(brief_path "$id")"
+  printf 'worktree:  %s\n' "$wt"
+  printf 'diff:      %s\n' "$run/diff.patch"
+  printf 'report:    %s\n' "$run/report.json"
+  printf 'verify:    %s\n' "$run/verify.json"
+  printf 'gate log:  %s\n' "$run/verify.log"
+  printf 'review ->  %s\n' "$run/review.md"
+}
+
+cmd_rework() {
+  local id="${1:?usage: wp rework <WP> <findings.md>}" findings="${2:?usage: wp rework <WP> <findings.md>}"
+  cmd_run "$id" --rework "$findings" || true
+  cmd_verify "$id"
+}
+
+cmd_xreview() {
+  local id="${1:?usage: wp xreview <WP>}" wt run b out
+  b="$(require_brief "$id")"
+  wt="$(require_wt "$id")"
+  run="$(get_state "$id" RUN_DIR)"
+  out="$run/xreview.md"
+  fill_template "$ORCH/templates/xreview-prompt.md" "WP_ID=$id" "BRIEF=@$b" "DIFF=@$run/diff.patch" > "$run/xreview-prompt.md"
+  local cmd
+  cmd=("$CODEX_BIN" exec -C "$wt" -s read-only -o "$out" -c "model_reasoning_effort=$CODEX_EFFORT")
+  [ -z "$CODEX_MODEL" ] || cmd+=(-m "$CODEX_MODEL")
+  cmd+=(-)
+  "${cmd[@]}" < "$run/xreview-prompt.md" > "$run/xreview.events.jsonl" 2>&1 || warn "codex review exited non-zero"
+  journal "$id cross-review written"
+  ok "$id cross-review -> $out"
+}
+
+render_pr_body() {
+  local id="$1" wt="$2" base="$3" run b tmpd
+  run="$(get_state "$id" RUN_DIR)"
+  b="$(brief_path "$id")"
+  tmpd="$(mktemp -d)"
+  if [ -f "$run/report.json" ]; then jq -r '.summary' "$run/report.json" > "$tmpd/summary"; else printf 'Orchestrator change.\n' > "$tmpd/summary"; fi
+  if [ -f "$run/verify.json" ]; then
+    jq -r '.results[] | select(.check == "gate") | "- " + (if .result == "pass" then "✅" else "❌" end) + " `" + .detail + "`"' "$run/verify.json" > "$tmpd/gates"
+  else
+    printf -- '- not recorded\n' > "$tmpd/gates"
+  fi
+  if [ -f "$run/review.md" ]; then sed -n '1,40p' "$run/review.md" > "$tmpd/review"; else printf 'No review file.\n' > "$tmpd/review"; fi
+  git -C "$wt" log --reverse --format='- `%h` %s' "$base..HEAD" > "$tmpd/commits"
+  fill_template "$ORCH/templates/pr-body.md" \
+    "WP_ID=$id" "TITLE=$( [ -n "$b" ] && fm_get "$b" title || get_state "$id" BRANCH )" \
+    "FR=$( [ -n "$b" ] && fm_list "$b" fr | tr '\n' ' ' || true )" \
+    "BRIEF_PATH=$( [ -n "$b" ] && printf '%s' "${b#"$ROOT"/}" || printf 'n/a' )" \
+    "SUMMARY=@$tmpd/summary" "GATES=@$tmpd/gates" "REVIEW=@$tmpd/review" "COMMITS=@$tmpd/commits"
+  rm -rf "$tmpd"
+}
+
+cmd_pr() {
+  local id="${1:?usage: wp pr <WP>}" b wt branch base n out title old_mb new_mb num url run
+  b="$(brief_path "$id")"
+  wt="$(require_wt "$id")"
+  branch="$(get_state "$id" BRANCH)"
+  [ -z "$(git -C "$wt" status --porcelain)" ] || die "$id has uncommitted changes in $wt; commit or discard them first"
+  base="$(base_ref)"
+  n="$(git -C "$wt" rev-list --count "$base..HEAD")"
+  [ "$n" -gt 0 ] || die "$id has no commits ahead of $base"
+  if ! out="$(cd "$wt" && lotse_check_range "$(lotse_expected_email)" "$base..HEAD")"; then
+    printf '%s\n' "$out" >&2
+    die "$id: commit policy violations; fix with 'git rebase -i' in $wt"
+  fi
+  old_mb="$(git -C "$wt" merge-base HEAD "$base")"
+  if ! git -C "$wt" rebase -q "$base"; then
+    git -C "$wt" rebase --abort || true
+    die "$id: rebase onto $base conflicts; resolve in $wt with 'git rebase $base', then 'wp pr $id' again"
+  fi
+  new_mb="$(git -C "$wt" merge-base HEAD "$base")"
+  if [ "$old_mb" != "$new_mb" ]; then
+    info "$id: base moved; re-running verification on the rebased branch"
+    cmd_verify "$id" || die "$id: gates fail after rebase"
+  fi
+  if [ -n "$COMMIT_GATE" ] && [ "$n" -gt 1 ]; then
+    if ! git -C "$wt" rebase -q --exec "$COMMIT_GATE" "$base"; then
+      git -C "$wt" rebase --abort || true
+      die "$id: a commit does not pass COMMIT_GATE ($COMMIT_GATE)"
+    fi
+  fi
+  if [ -n "$b" ] && [ -n "$(fm_get "$b" pr_title)" ]; then
+    title="$(fm_get "$b" pr_title)"
+  else
+    title="$(git -C "$wt" log -1 --format=%s "$(git -C "$wt" rev-list --reverse "$base..HEAD" | head -n 1)")"
+  fi
+  [ "$n" -eq 1 ] && title="$(git -C "$wt" log -1 --format=%s HEAD)"
+  printf '%s\n' "$title" > "$LOCAL_DIR/.title.$$"
+  if ! out="$(lotse_validate_message "$LOCAL_DIR/.title.$$")"; then rm -f "$LOCAL_DIR/.title.$$"; die "PR title '$title' is not a Conventional Commit header: $out"; fi
+  rm -f "$LOCAL_DIR/.title.$$"
+  run="$(get_state "$id" RUN_DIR)"
+  [ -n "$run" ] || { run="$RUNS_DIR/$id/manual"; mkdir -p "$run"; set_state "$id" RUN_DIR "$run"; }
+  render_pr_body "$id" "$wt" "$base" > "$run/pr-body.md"
+  if has_remote; then
+    git -C "$wt" push -q --force-with-lease -u "$REMOTE" "$branch"
+    if [ "$USE_GH" = 1 ]; then
+      num="$(cd "$wt" && gh pr list --head "$branch" --state open --json number -q '.[0].number' 2>/dev/null || true)"
+      if [ -z "$num" ]; then
+        url="$(cd "$wt" && gh pr create --base "$BASE_BRANCH" --head "$branch" --title "$title" --body-file "$run/pr-body.md")"
+      else
+        (cd "$wt" && gh pr edit "$num" --title "$title" --body-file "$run/pr-body.md" >/dev/null)
+        url="$(cd "$wt" && gh pr view "$num" --json url -q .url)"
+      fi
+      set_state "$id" PR_URL "$url"
+    fi
+  fi
+  set_state "$id" STATE pr_open
+  journal "$id PR ready ($n commits) ${url:-local}"
+  ok "$id: PR ready (${url:-local branch $branch})"
+}
+
+cleanup_wp() {
+  local id="$1" wt branch
+  wt="$(get_state "$id" WT)"
+  branch="$(get_state "$id" BRANCH)"
+  drop_wp_db "$id"
+  [ -z "$wt" ] || [ ! -d "$wt" ] || git -C "$ROOT" worktree remove --force "$wt"
+  git -C "$ROOT" worktree prune
+  [ -z "$branch" ] || git -C "$ROOT" branch -q -D "$branch" 2>/dev/null || true
+}
+
+sync_root_base() {
+  local cur
+  cur="$(git -C "$ROOT" rev-parse --abbrev-ref HEAD)"
+  if has_remote; then
+    git -C "$ROOT" fetch -q "$REMOTE" "$BASE_BRANCH"
+    if [ "$cur" = "$BASE_BRANCH" ] && [ -z "$(git -C "$ROOT" status --porcelain --untracked-files=no)" ]; then
+      git -C "$ROOT" merge -q --ff-only "$REMOTE/$BASE_BRANCH" || warn "could not fast-forward the root checkout"
+    fi
+  fi
+}
+
+cmd_land() {
+  local id="${1:?usage: wp land <WP>}" wt branch head rhead st sha i
+  wt="$(require_wt "$id")"
+  branch="$(get_state "$id" BRANCH)"
+  st="$(wp_state "$id")"
+  [ "$st" = pr_open ] || die "$id is $st; run 'wp pr $id' first"
+  head="$(git -C "$wt" rev-parse HEAD)"
+  if has_remote; then
+    git -C "$ROOT" fetch -q "$REMOTE" "$BASE_BRANCH"
+    git -C "$wt" merge-base --is-ancestor "$REMOTE/$BASE_BRANCH" HEAD \
+      || die "$BASE_BRANCH moved since the PR was prepared; run 'wp pr $id' again"
+    rhead="$(git -C "$ROOT" ls-remote "$REMOTE" "refs/heads/$branch" | cut -f1)"
+    [ "$rhead" = "$head" ] || die "remote $branch ($rhead) differs from local HEAD ($head); run 'wp pr $id'"
+    if [ "$USE_GH" = 1 ] && ci_required; then
+      info "$id: waiting for required checks"
+      (cd "$wt" && gh pr checks "$branch" --watch --fail-fast --required) || die "$id: required checks failed or are missing"
+    fi
+    (cd "$wt" && WP_LANDING=1 git push -q "$REMOTE" "HEAD:refs/heads/$BASE_BRANCH") || die "$id: fast-forward push to $BASE_BRANCH rejected"
+    if [ "$USE_GH" = 1 ]; then
+      i=0
+      while [ $i -lt 10 ]; do
+        [ "$(cd "$wt" && gh pr view "$branch" --json state -q .state 2>/dev/null || true)" = MERGED ] && break
+        sleep 3; i=$((i + 1))
+      done
+      [ $i -lt 10 ] || warn "$id: GitHub has not marked the PR as merged yet"
+    fi
+    git -C "$wt" push -q "$REMOTE" --delete "$branch" 2>/dev/null || true
+  else
+    if [ "$(git -C "$ROOT" rev-parse --abbrev-ref HEAD)" = "$BASE_BRANCH" ]; then
+      git -C "$ROOT" merge -q --ff-only "$branch" || die "$id: cannot fast-forward $BASE_BRANCH; run 'wp pr $id' again"
+    else
+      git -C "$ROOT" fetch -q . "$branch:$BASE_BRANCH" || die "$id: cannot fast-forward $BASE_BRANCH"
+    fi
+  fi
+  sha="$head"
+  cleanup_wp "$id"
+  sync_root_base
+  set_state "$id" STATE landed
+  set_state "$id" LANDED_SHA "$sha"
+  set_state "$id" LANDED_AT "$(now)"
+  journal "$id landed at ${sha:0:12}"
+  ok "$id landed on $BASE_BRANCH at ${sha:0:12}"
+}
+
+cmd_abort() {
+  local id="${1:?usage: wp abort <WP>}"
+  cleanup_wp "$id"
+  set_state "$id" STATE aborted
+  set_state "$id" ATTEMPT 0
+  journal "$id aborted"
+  ok "$id aborted (run logs kept in .orchestration/runs/$id)"
+}
+
+cmd_orch() {
+  local slug="${1:?usage: wp orch <slug> [path patterns...]}" id wt branch base owns
+  shift
+  id="orch-$slug"
+  case "$(wp_state "$id")" in new|aborted|landed) ;; *) die "$id is already $(wp_state "$id")" ;; esac
+  owns="$*"
+  [ -n "$owns" ] || owns="orchestration/wp/** orchestration/templates/** orchestration/config.env ORCHESTRATION.md CLAUDE.md AGENTS.md docs/adr/** .claude/**"
+  branch="chore/$id"
+  wt="$WT_ROOT/$id"
+  [ ! -e "$wt" ] || die "worktree already exists: $wt"
+  mkdir -p "$WT_ROOT"
+  base="$(base_ref)"
+  git -C "$ROOT" worktree add -q -b "$branch" "$wt" "$base"
+  rm -f "$(state_file "$id")"
+  set_state "$id" KIND orch
+  set_state "$id" STATE started
+  set_state "$id" BRANCH "$branch"
+  set_state "$id" WT "$wt"
+  set_state "$id" OWNS "$owns"
+  set_state "$id" RUN_DIR "$RUNS_DIR/$id/manual"
+  mkdir -p "$RUNS_DIR/$id/manual"
+  journal "$id started on $branch"
+  ok "$id: edit files in $wt, commit, then 'wp verify $id', 'wp pr $id', 'wp land $id'"
+}
+
+cmd_protect() {
+  local repo
+  command -v gh >/dev/null 2>&1 || die "gh is required"
+  repo="$(cd "$ROOT" && gh repo view --json nameWithOwner -q .nameWithOwner)"
+  jq -n --arg base "$BASE_BRANCH" --arg check "$CI_CHECK_NAME" '{
+      name: ("protect-" + $base), target: "branch", enforcement: "active",
+      conditions: { ref_name: { include: ["refs/heads/" + $base], exclude: [] } },
+      rules: [
+        { type: "deletion" },
+        { type: "non_fast_forward" },
+        { type: "required_linear_history" },
+        { type: "required_status_checks", parameters: {
+            strict_required_status_checks_policy: true,
+            required_status_checks: [ { context: $check } ] } }
+      ] }' | (cd "$ROOT" && gh api -X POST "repos/$repo/rulesets" --input -) >/dev/null \
+    || die "creating the ruleset failed (private repositories need GitHub Pro/Team for rulesets; the local hooks still enforce the policy)"
+  ok "ruleset active on $repo:$BASE_BRANCH (required check: $CI_CHECK_NAME)"
+}
+
+cmd_tag() {
+  local tag="${1:?usage: wp tag <tag> <message>}" msg="${2:?usage: wp tag <tag> <message>}" target
+  target="$(base_ref)"
+  git -C "$ROOT" tag -a "$tag" -m "$msg" "$target"
+  if has_remote; then git -C "$ROOT" push -q "$REMOTE" "refs/tags/$tag"; fi
+  journal "tagged $tag at $(git -C "$ROOT" rev-parse --short "$target")"
+  ok "tagged $tag"
+}
+
+main() {
+  local c="${1:-help}"
+  shift || true
+  case "$c" in
+    help|-h|--help) cmd_help ;;
+    doctor) cmd_doctor ;;
+    status) cmd_status ;;
+    ready) cmd_ready ;;
+    start) cmd_start "$@" ;;
+    run) cmd_run "$@" ;;
+    verify) cmd_verify "$@" ;;
+    cycle) cmd_cycle "$@" ;;
+    batch) cmd_batch "$@" ;;
+    paths) cmd_paths "$@" ;;
+    rework) cmd_rework "$@" ;;
+    xreview) cmd_xreview "$@" ;;
+    pr) cmd_pr "$@" ;;
+    land) cmd_land "$@" ;;
+    abort) cmd_abort "$@" ;;
+    orch) cmd_orch "$@" ;;
+    protect) cmd_protect ;;
+    tag) cmd_tag "$@" ;;
+    *) cmd_help; die "unknown command: $c" ;;
+  esac
+}
+
+main "$@"

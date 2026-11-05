@@ -1,0 +1,94 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "wp_id",
+    "status",
+    "summary",
+    "acceptance",
+    "gates",
+    "not_run",
+    "files_changed",
+    "decisions",
+    "contract_change_requests",
+    "follow_ups",
+    "suggested_commits"
+  ],
+  "properties": {
+    "wp_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["done", "partial", "blocked"] },
+    "summary": { "type": "string" },
+    "acceptance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["criterion", "met", "evidence"],
+        "properties": {
+          "criterion": { "type": "string" },
+          "met": { "type": "boolean" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command", "exit_code", "note"],
+        "properties": {
+          "command": { "type": "string" },
+          "exit_code": { "type": "integer" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "not_run": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["command", "reason"],
+        "properties": {
+          "command": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "files_changed": { "type": "array", "items": { "type": "string" } },
+    "decisions": { "type": "array", "items": { "type": "string" } },
+    "contract_change_requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["contract", "change", "reason"],
+        "properties": {
+          "contract": { "type": "string" },
+          "change": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "follow_ups": { "type": "array", "items": { "type": "string" } },
+    "suggested_commits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "scope", "subject", "body", "files"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["feat", "fix", "perf", "refactor", "revert", "docs", "test", "build", "ci", "chore", "style"]
+          },
+          "scope": { "type": "string" },
+          "subject": { "type": "string" },
+          "body": { "type": "string" },
+          "files": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
