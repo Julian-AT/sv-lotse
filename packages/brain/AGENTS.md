@@ -11,13 +11,21 @@ Read the repository `AGENTS.md` and the assigned work-package brief before chang
 Run from the repository root:
 
 - `bun run --filter @lotse/brain typecheck` — check source and test types.
-- `bun run --filter @lotse/brain test` — run Vitest under Node.js.
+- `bun run --filter @lotse/brain test` — run Vitest under Node.js, excluding `test/**/*.db.test.ts`.
+- `bun run --filter @lotse/brain test:db` — run persistence tests against real Postgres and MinIO.
+- `bun run --filter @lotse/brain test:integration` — run `test:db` for the CI integration job.
+- `bun run --filter @lotse/brain db:generate` — generate SQL and snapshots from the Drizzle schema.
+- `bun run --filter @lotse/brain db:migrate` — apply committed migrations to `DATABASE_URL`.
 - `bun run lint` — lint with Biome.
 - `bun run format:check` — check formatting.
 
-There is no build step: the package exports TypeScript source. No generation, integration or live-test
-script exists yet; add and document one only when its implementation lands. Run TypeScript tooling
-scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
+There is no build step: the package exports TypeScript source. Run TypeScript tooling scripts with
+`bun <file>.ts` and use only Node APIs so they also run under Node. Start local dependencies with
+`docker compose up -d --wait`. The migration CLI and database tests load the root `.env.local` without
+overwriting supplied environment variables. Database tests create and drop a unique temporary database
+using the configured connection; the local `lotse` role needs `CREATEDB`. Storage tests use a unique
+object prefix and delete their objects. `test:db` and `test:integration` require the real services;
+neither skips service tests when dependencies are unavailable. `test` runs without these services.
 
 ## Invariants
 
@@ -29,6 +37,23 @@ scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
 - Export only implemented symbols from `src/index.ts`; no placeholder business logic.
 - Preserve the medical boundary in PRD §4 in user-facing text and fixtures.
+- Persistence entrypoints are `src/db/client.ts`, `src/db/schema/index.ts`,
+  `src/db/migrations.ts`, `src/db/approvals.ts` and `src/storage/s3.ts`. Client factories validate
+  environment variables at creation and expose explicit cleanup; reuse one pool per brain process.
+- Run migrations once as a deployment/container-start step before serving requests. Do not run
+  concurrent migration runners against one database. Never use `drizzle-kit push` for deployments.
+- Generate schema migrations; author extension/trigger SQL only in `db:generate --custom --name=...`
+  migration slots. Never edit existing committed migrations or generated snapshots.
+- Facts reference exactly one source document, turn or fact. Their foreign keys cascade transitively.
+  Subject deletion cascades through cases and context; object deletion is a storage-service concern.
+- `consumeApproval` is an atomic persistence primitive, called only after cryptographic and actor
+  authorization checks in the approval service. A zero-row result must reject execution.
+- Form instance `fields` are a JSONB map of field ids to value, provenance, state and approval id.
+  Validate writes and reads with `formFields`; confirmed fields require an approval id.
+- Audit records contain only opaque identifiers and action names, never user content. They have no
+  cascading foreign keys; the database rejects UPDATE, DELETE and TRUNCATE.
+- Only `vector` and `pgcrypto` extensions are installed. Embeddings have 1536 dimensions; changing
+  this requires a migration and re-embedding. Austrian synonyms expand at query time.
 
 ## Evaluation suites
 
