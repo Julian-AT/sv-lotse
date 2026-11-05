@@ -17,6 +17,9 @@ if [ -z "$CODEX_ADD_DIRS" ]; then
 fi
 
 : "${SHARED_FILES:=bun.lock}"
+# One Compose project for every worktree: gates and workers share the same Postgres and MinIO on
+# the fixed host ports; each WP gets its own database and S3 prefix (prepare_db).
+export COMPOSE_PROJECT_NAME="${COMPOSE_PROJECT_NAME:-lotse}"
 # Package manifests merge cleanly across WPs; overlap checks skip them and 'wp pr' stops on a
 # real conflict.
 : "${MERGE_FILES:=package.json packages/*/package.json apps/*/package.json}"
@@ -141,6 +144,20 @@ owns_of() {
 
 norm_pat() { printf '%s' "$1" | sed 's#\*\*#*#g'; }
 
+# A WP may update the AGENTS.md and README.md of any package or app in which it owns paths.
+package_doc_allowed() {
+  local f="$1" dir p base
+  case "$f" in */AGENTS.md|*/README.md) ;; *) return 1 ;; esac
+  dir="${f%/*}"
+  set -f
+  for p in $2; do
+    base="$(pat_base "$p")"
+    case "$base" in "$dir"|"$dir"/*) set +f; return 0 ;; esac
+  done
+  set +f
+  return 1
+}
+
 matches_any() {
   local f="$1" p
   while IFS= read -r p; do
@@ -175,6 +192,7 @@ is_shared_file() {
 overlap_exempt() {
   local f
   is_shared_file "$1" && return 0
+  case "$1" in */AGENTS.md|*/README.md) return 0 ;; esac
   set -f
   for f in $MERGE_FILES; do
     # shellcheck disable=SC2254
@@ -626,7 +644,7 @@ cmd_verify() {
   ownset="$(owns_of "$id")"
   while IFS= read -r f; do
     [ -n "$f" ] || continue
-    matches_any "$f" "$claimset" || record ownership fail "$f is outside owns/may_touch"
+    matches_any "$f" "$claimset" || package_doc_allowed "$f" "$ownset" || record ownership fail "$f is outside owns/may_touch"
     if [ "$kind" != orch ]; then
       set -f
       for p in $GLOBAL_FORBIDDEN; do
