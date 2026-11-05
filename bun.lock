@@ -48,6 +48,10 @@
     "packages/guide": {
       "name": "@lotse/guide",
       "version": "0.0.0",
+      "dependencies": {
+        "@lotse/protocol": "workspace:*",
+        "zod": "^4",
+      },
       "devDependencies": {
         "@playwright/test": "1.64.1",
       },

@@ -8,9 +8,14 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run test/unit",
+    "e2e": "node --experimental-strip-types test/run-e2e.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1"
+  },
+  "dependencies": {
+    "@lotse/protocol": "workspace:*",
+    "zod": "^4"
   }
 }

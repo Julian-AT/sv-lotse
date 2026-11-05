@@ -1,0 +1,16 @@
+{
+  "roles": ["submit"],
+  "inputTypes": ["submit", "image", "reset", "password", "file"],
+  "credentialAutocompleteTokens": [
+    "username",
+    "current-password",
+    "new-password",
+    "one-time-code",
+    "webauthn"
+  ],
+  "labelPatterns": [
+    "(?:^|[^\\p{L}])(?:submit|send|pay|purchase|delete|remove|checkout)(?:$|[^\\p{L}])",
+    "(?:^|[^\\p{L}])(?:absenden|senden|abschicken|übermitteln|bezahlen|zahlen|zahlungspflichtig|kaufen|bestellen|löschen|entfernen)(?:$|[^\\p{L}])",
+    "(?:^|[^\\p{L}])(?:book|booking|reserve|reservation|buchen|buchung|reservieren|reservierung|bestätigen|bestätigung)(?:$|[^\\p{L}])"
+  ]
+}
