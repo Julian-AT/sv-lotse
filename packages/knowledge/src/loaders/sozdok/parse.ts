@@ -32,6 +32,13 @@ export interface SozdokRecord {
   absatz: string[];
   /** Preferred table row groups, with exclusive end offsets into absatz. */
   table_rows?: { start: number; end: number }[];
+  /** Legal provisions within a multi-provision file; offsets into absatz, end exclusive. */
+  provision_ranges?: {
+    start: number;
+    end: number;
+    gldart: string;
+    paragraph: SozdokRecord["paragraph"];
+  }[];
   published_at: string | null;
   in_force_from: string;
   decided_at: string | null;
@@ -117,7 +124,12 @@ const blocks = new Set([
   "fntext",
   "unterschrift",
 ]);
-function render(node: Element | string, boundaries = false, atomic = false): string {
+function render(
+  node: Element | string,
+  boundaries = false,
+  atomic = false,
+  provisionSymbols?: string[],
+): string {
   if (typeof node === "string") return node.replace(/[\r\n\t ]+/g, " ");
   if (Object.hasOwn(literals, node.name)) return literals[node.name] ?? "";
   // Binary payloads and their source paths are not legal text.
@@ -131,9 +143,14 @@ function render(node: Element | string, boundaries = false, atomic = false): str
         node.name === "table"
           ? false
           : atomic || isAbsatz || node.name === "liste" || node.name === "fntext",
+        provisionSymbols,
       ),
     )
     .join("");
+  if (boundaries && node.name === "gldsym" && provisionSymbols) {
+    provisionSymbols.push(clean(content));
+    return `\u0003${content}`;
+  }
   if (node.name === "fnzeichen") return `[${clean(content)}]`;
   if (node.name === "fntext") {
     const body = clean(content);
@@ -155,9 +172,15 @@ function clean(text: string): string {
     .replace(/^[ \t\n]+|[ \t\n]+$/g, "");
 }
 
-function textUnits(content: Element): Required<Pick<SozdokRecord, "absatz" | "table_rows">> {
+function textUnits(
+  content: Element,
+): Required<Pick<SozdokRecord, "absatz" | "table_rows" | "provision_ranges">> {
   const absatz: string[] = [];
   const table_rows: { start: number; end: number }[] = [];
+  const provision_ranges: NonNullable<SozdokRecord["provision_ranges"]> = [];
+  const provisionSymbols: string[] = [];
+  let symbolIndex = 0;
+  let provision: (typeof provision_ranges)[number] | undefined;
   const rowStarts: number[] = [];
   let pending = "";
   let firstBoundary = true;
@@ -166,8 +189,27 @@ function textUnits(content: Element): Required<Pick<SozdokRecord, "absatz" | "ta
     if (text) absatz.push(text);
     pending = "";
   };
-  for (const character of render(content, true)) {
-    if (character === "\u0000") {
+  for (const character of render(content, true, false, provisionSymbols)) {
+    if (character === "\u0003") {
+      const symbol = provisionSymbols[symbolIndex++] ?? "";
+      const match = /^(§|Art\.|Artikel)\s*(\d+[a-z]*|[IVXLCDM]+)\.?$/iu.exec(symbol);
+      if (!match) continue;
+      const gldart = match[1] === "§" ? "PARA" : "ART";
+      const gldnr = required.parse(match[2]);
+      if (provision?.gldart === gldart && provision.paragraph.gldnr === gldnr) continue;
+      if (provision) {
+        flush();
+        provision.end = absatz.length;
+      }
+      provision = {
+        // Keep an unnumbered preamble with the first provision.
+        start: provision ? absatz.length : 0,
+        end: 0,
+        gldart,
+        paragraph: { gldnr, gldsym: symbol },
+      };
+      provision_ranges.push(provision);
+    } else if (character === "\u0000") {
       // Keep a leading heading/footnote block with the first absatz.
       if (!firstBoundary) flush();
     } else if (character === "\u0001") {
@@ -185,7 +227,8 @@ function textUnits(content: Element): Required<Pick<SozdokRecord, "absatz" | "ta
     firstBoundary = false;
   }
   flush();
-  return { absatz, table_rows };
+  if (provision) provision.end = absatz.length;
+  return { absatz, table_rows, provision_ranges };
 }
 
 export class SozdokParseError extends Error {
@@ -213,7 +256,7 @@ export function parseSozdok(xml: string, file: string): SozdokRecord {
     const metadata = one(rvo, "metadaten");
     const data = metadataSchema.parse(metadata.attributes);
     const content = one(rvo, "nutzdaten");
-    const { absatz, table_rows } = textUnits(content);
+    const { absatz, table_rows, provision_ranges } = textUnits(content);
     const text = absatz.join("\n\n");
     required.parse(text);
     return {
@@ -240,6 +283,7 @@ export function parseSozdok(xml: string, file: string): SozdokRecord {
       text,
       absatz,
       table_rows,
+      ...(provision_ranges.length > 1 ? { provision_ranges } : {}),
       published_at: data.pubdat ?? null,
       in_force_from: data.ikra,
       decided_at: data.beschdat ?? null,

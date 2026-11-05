@@ -291,6 +291,123 @@ test("older-only reload preserves a known end when the successor was never inser
   });
 });
 
+test("WP-174 intermediate-only reload retains a successor known only through a persisted end date", async () => {
+  await withSubset([file], async (subset) => {
+    const intermediateId = `${testId}=PARA=2=2005-01-01`;
+    const intermediateUrl = `sozdok://${intermediateId}`;
+    try {
+      await database.sql`DELETE FROM source WHERE url IN (${url}, ${laterUrl})`;
+      await loadSozdok(database, { directory, on: "2000-01-01", embed: regressionEmbed });
+      const initial = await database.sql<
+        { url: string; metadata: Record<string, unknown> }[]
+      >`SELECT url, metadata FROM source WHERE url IN (${url}, ${laterUrl})`;
+      expect(initial).toHaveLength(1);
+      expect(initial[0]?.url).toBe(url);
+      expect(initial[0]?.metadata).toMatchObject({ in_force_to: "2010-01-01" });
+
+      // The real snapshot has no history; derive an intermediate version from its text.
+      const path = join(subset, file);
+      const xml = await readFile(path, "utf8");
+      await writeFile(
+        path,
+        xml
+          .replaceAll(url.slice("sozdok://".length), intermediateId)
+          .replace('ikra="1996-07-01"', 'ikra="2005-01-01"')
+          .replace("</absatz>", " Zwischenfassung.</absatz>"),
+      );
+      expect(await loadSozdok(database, { directory: subset, embed: regressionEmbed })).toEqual({
+        sources: 1,
+        chunks: 1,
+      });
+      const rows = await database.sql<
+        { url: string; valid_to: string; metadata: Record<string, unknown> }[]
+      >`SELECT url, valid_to, metadata FROM source
+        WHERE url IN (${url}, ${intermediateUrl}, ${laterUrl}) ORDER BY valid_from`;
+      expect(rows).toHaveLength(2);
+      expect(rows[0]?.url).toBe(url);
+      expect(new Date(rows[0]?.valid_to ?? "").toISOString()).toBe("2005-01-01T00:00:00.000Z");
+      expect(rows[0]?.metadata).toMatchObject({ in_force_to: "2005-01-01" });
+      expect(rows[1]?.url).toBe(intermediateUrl);
+      expect(new Date(rows[1]?.valid_to ?? "").toISOString()).toBe("2010-01-01T00:00:00.000Z");
+      expect(rows[1]?.metadata).toMatchObject({ in_force_to: "2010-01-01" });
+      expect(
+        await database.sql`SELECT id FROM kb_chunk WHERE source_id IN
+          (SELECT id FROM source WHERE url = ${url})`,
+      ).toHaveLength(0);
+      const chunks = await database.sql<
+        { valid_to: string; metadata: Record<string, unknown> }[]
+      >`SELECT valid_to, metadata FROM kb_chunk WHERE source_id IN
+        (SELECT id FROM source WHERE url = ${intermediateUrl})`;
+      expect(chunks).toHaveLength(1);
+      expect(new Date(chunks[0]?.valid_to ?? "").toISOString()).toBe("2010-01-01T00:00:00.000Z");
+      expect(chunks[0]?.metadata).toMatchObject({ in_force_to: "2010-01-01" });
+      expect(
+        await database.sql`SELECT id FROM source WHERE url IN (${url}, ${intermediateUrl})
+          AND valid_from <= '2010-01-01'::timestamptz
+          AND (valid_to IS NULL OR valid_to > '2010-01-01'::timestamptz)`,
+      ).toHaveLength(0);
+      expect(await loadSozdok(database, { directory: subset, on: "2015-01-01" })).toEqual({
+        sources: 0,
+        chunks: 0,
+      });
+    } finally {
+      await database.sql`DELETE FROM source WHERE url = ${intermediateUrl}`;
+    }
+  });
+});
+
+test("WP-174 persists paragraph-specific chunks and invalidates indexes without provision boundaries", async () => {
+  const subset = await mkdtemp(join(root, "agreement-"));
+  const name = "FamHospKarVertrag_AMS=PARA=1-4==2002-12-09=2003-01-01.xml";
+  const xml = await readFile(join(sozdokDirectory(), name), "utf8");
+  const originalId = /dokid="([^"]+)"/.exec(xml)?.[1];
+  if (!originalId) throw new Error("Missing real agreement document ID");
+  const dokid = `${testId}-agreement=PARA=1-4=2003-01-01`;
+  const agreementUrl = `sozdok://${dokid}`;
+  try {
+    // Preserve the real agreement text; isolate both document and provision identities.
+    await writeFile(
+      join(subset, name),
+      xml.replaceAll(originalId, dokid).replace(/abkrvo="[^"]*"/, `abkrvo="${testId}-agreement"`),
+    );
+    expect(await loadSozdok(database, { directory: subset, embed: regressionEmbed })).toEqual({
+      sources: 1,
+      chunks: 4,
+    });
+    const chunks = await database.sql<
+      {
+        text: string;
+        metadata: { paragraph: { gldnr: string }; citation: string; index: number };
+      }[]
+    >`SELECT text, metadata FROM kb_chunk WHERE source_id IN
+      (SELECT id FROM source WHERE url = ${agreementUrl}) ORDER BY (metadata->>'index')::int`;
+    expect(chunks.map((chunk) => chunk.metadata.paragraph.gldnr)).toEqual(["1", "2", "3", "4"]);
+    for (const chunk of chunks) {
+      const number = chunk.metadata.paragraph.gldnr;
+      expect([...chunk.text.matchAll(/§\s*(\d+)\./g)].map((match) => match[1])).toEqual([number]);
+      expect(chunk.metadata.citation).toBe(
+        `§ ${number} ${testId}-agreement (SozDok, in Kraft seit 01.01.2003)`,
+      );
+    }
+    await loadSozdok(database, { directory: subset });
+    expect(
+      await database.sql`SELECT id FROM kb_chunk WHERE source_id IN
+        (SELECT id FROM source WHERE url = ${agreementUrl})`,
+    ).toHaveLength(4);
+    // Pre-hardening sources carry the same text and file-level citation, but no boundaries.
+    await database.sql`UPDATE source SET metadata = metadata - 'provision_ranges'
+      WHERE url = ${agreementUrl}`;
+    await loadSozdok(database, { directory: subset });
+    expect(
+      await database.sql`SELECT id FROM kb_chunk WHERE source_id IN
+        (SELECT id FROM source WHERE url = ${agreementUrl})`,
+    ).toHaveLength(0);
+  } finally {
+    await database.sql`DELETE FROM source WHERE url = ${agreementUrl}`;
+    await rm(subset, { recursive: true, force: true });
+  }
+});
+
 test("metadata-only correction updates citations and invalidates stale chunk metadata", async () => {
   await withSubset([file], async (subset) => {
     await loadSozdok(database, { directory: subset, embed: regressionEmbed });

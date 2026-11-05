@@ -55,10 +55,6 @@ const storedVersionSchema = z.object({
   in_force_to: sozdokDate.nullable(),
 });
 
-function earliestEnd(...ends: (string | null | undefined)[]): string | null {
-  return ends.filter((end): end is string => end != null).sort()[0] ?? null;
-}
-
 export async function loadSozdok(
   database: Database,
   options: SozdokLoadOptions = {},
@@ -84,21 +80,28 @@ export async function loadSozdok(
     }
     const combined = new Map(existing);
     for (const record of history) combined.set(record.dokid, record);
+    const knownEnds = new Map<string, Set<string>>();
+    for (const record of [...existing.values(), ...history]) {
+      if (!record.in_force_to) continue;
+      const key = provisionKey(record);
+      const dates = knownEnds.get(key) ?? new Set<string>();
+      dates.add(record.in_force_to);
+      knownEnds.set(key, dates);
+    }
     const ends = new Map<string, string | null>();
-    for (const versions of groupVersions(
+    for (const [key, versions] of groupVersions(
       [...combined.values()].filter((record) => affected.has(provisionKey(record))),
-    ).values()) {
+    )) {
+      // A persisted end is a transition even when --on excluded its successor.
+      // Transfer it to newly discovered intermediate versions of this provision.
+      const transitions = [
+        ...new Set([
+          ...versions.map((record) => record.in_force_from),
+          ...(knownEnds.get(key) ?? []),
+        ]),
+      ].sort();
       for (const record of versions) {
-        // A partial directory cannot disprove an already known successor, even if
-        // that successor was only seen by an earlier date-filtered load.
-        ends.set(
-          record.dokid,
-          earliestEnd(
-            record.in_force_to,
-            incoming.get(record.dokid)?.in_force_to,
-            existing.get(record.dokid)?.in_force_to,
-          ),
-        );
+        ends.set(record.dokid, transitions.find((date) => date > record.in_force_from) ?? null);
       }
     }
     const resolved = history.map((record) => ({
@@ -143,9 +146,13 @@ export async function loadSozdok(
       const id = stableId(url);
       const validFrom = `${record.in_force_from}T00:00:00.000Z`;
       const validTo = record.in_force_to ? `${record.in_force_to}T00:00:00.000Z` : null;
-      const metadata = {
+      const chunkMetadata = {
         ...sozdokMetadata(record),
         citation: sozdokCitation(record),
+        provision_ranges: record.provision_ranges ?? [],
+      };
+      const metadata = {
+        ...chunkMetadata,
         law_title: record.law_title,
         doc_type: record.doc_type,
         heading: record.heading,
@@ -161,7 +168,7 @@ export async function loadSozdok(
         SELECT 1 FROM source WHERE id = ${id} AND
         (text IS DISTINCT FROM ${record.text} OR valid_from IS DISTINCT FROM ${validFrom}::timestamptz
           OR valid_to IS DISTINCT FROM ${validTo}::timestamptz
-          OR NOT (metadata @> ${JSON.stringify({ ...sozdokMetadata(record), citation: sozdokCitation(record) })}::jsonb)))`;
+          OR NOT (metadata @> ${JSON.stringify(chunkMetadata)}::jsonb)))`;
       // The shared Drizzle client disables Postgres.js JSON serializers.
       await sql`INSERT INTO source (id, url, title, publisher, text, metadata, valid_from, valid_to)
         VALUES (${id}, ${url}, ${sozdokCitation(record)}, ${record.publisher ?? "SozDok"},

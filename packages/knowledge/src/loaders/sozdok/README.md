@@ -27,8 +27,10 @@ version in force on that date; provisions with no earlier version contribute not
 derived from incoming and persisted history before filtering. End dates are exclusive, so the
 older version stops being valid on the day the next one begins. Partial directories also reconcile
 persisted predecessors and preserve known end dates, including successors seen in previous input
-but excluded from insertion by `--on`. Validity changes invalidate affected chunks in the same
-transaction. Existing historical sources remain in the database. The snapshot cannot reveal
+but excluded from insertion by `--on`. Each provision's known start and end dates are reconciled
+together, so a newly discovered intermediate version inherits the next known transition even
+when that successor exists only as a persisted end date. Validity changes invalidate affected chunks
+in the same transaction. Existing historical sources remain in the database. The snapshot cannot reveal
 repeals or versions absent from its files; versions with no known successor have an open end.
 
 ## Library use
@@ -55,8 +57,12 @@ ones only before a complete `absatz`. Following lists stay with their preceding 
 expose their inner absatz boundaries and preferred row ranges (`table_rows`); chunking keeps a row
 together when it fits the budget, otherwise splits at its absatz boundaries. The approximate default
 budget is 1,500 tokens at four Unicode characters per token. An individual oversized absatz stays whole even when
-it exceeds the budget. Chunks never combine provisions. Their text joins back to the record text
-without loss. Footnote references use `[<number>]`, and their bodies retain the same numbered
+it exceeds the budget. Multi-provision files retain `provision_ranges` with exclusive offsets into
+`absatz`, derived from XML `gldsym` paragraph and article markers. Chunking flushes at these boundaries,
+including inside tables, and uses each provision's number, symbol and kind in metadata and citations.
+An unnumbered preamble stays with the first provision; trailing material stays with the last.
+Single-provision records retain their original file-level identity. Chunks never combine provisions.
+Their text joins back to the record text without loss. Footnote references use `[<number>]`, and their bodies retain the same numbered
 labels so reference numbers cannot merge with dates or other legal text. Embedded body markers
 take precedence over `fntext.nr`; bodies without a marker use `nr` as their label. Paragraph citations use
 `§ <number> <law> (SozDok, in Kraft seit DD.MM.YYYY)`; articles use `Art.` and other provision kinds
@@ -73,8 +79,9 @@ consume `sozdokChunks(options)` independently, or supply an `embed(chunk)` callb
 Supplied vectors must have the schema's dimension (currently 1,536), finite values and a nonzero
 component. They are all validated before writes begin. Supplied embeddings replace that source's
 chunks atomically. Source-only reloads preserve unchanged chunks and delete stale chunks if text or
-validity, citation or chunk metadata changes, ready for reindexing. No fabricated or zero embeddings
-are used in product code.
+validity, citation or chunk metadata changes, ready for reindexing. Source metadata includes the
+provision ranges so source-only reloads also invalidate chunks indexed before boundary tracking.
+No fabricated or zero embeddings are used in product code.
 
 ## Verification
 
@@ -83,6 +90,8 @@ provision's single-version resolution, reconstructs all text from chunks and che
 citations. Its version-history fixture changes only a real file's in-force date and text because
 the snapshot contains no history. Real-file regressions cover the large contract table and the
 Canada agreement's dates and numbered footnotes, plus Israel Article 3's embedded footnote labels.
+The multi-paragraph family hospice agreement is checked independently against its XML markers:
+§§ 1–4 remain separate with their own citations at both default and smaller token budgets.
 The database suite copies a real file into a
 temporary folder, adds a derived version, invokes the actual CLI, and checks repeated/concurrent loads, date
 filtering (including superseded-version validity), source updates and chunk invalidation against
@@ -91,7 +100,9 @@ that test run's sources. A full-corpus database regression namespaces document I
 abbreviations in temporary copies of all 14,244 files, then loads and date-filtered reloads them
 with Compose's default lock settings. Subset regressions cover older-only reloads, newer-only
 additions and metadata-only citation corrections. Embedding persistence tests supply constructed
-vectors; no embedding provider belongs to this WP.
+vectors; no embedding provider belongs to this WP. A three-version regression first date-filters
+the 1996/2010 history, then loads only the intermediate 2005 version and verifies its retained 2010
+end in sources, indexed chunks and date-filtered queries.
 
 Parser behavior follows the official
 [fast-xml-parser options](https://github.com/NaturalIntelligence/fast-xml-parser/blob/master/docs/v4%2C%20v5/2.XMLparseOptions.md),

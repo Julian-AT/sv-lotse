@@ -73,16 +73,40 @@ test("AC3 chunks all real versions without crossing provisions or losing text", 
     for (const version of versions) {
       const chunks = chunkSozdok(version);
       expect(chunks.map((chunk) => chunk.text).join("\n\n")).toBe(version.text);
+      const ranges = (
+        version.provision_ranges ?? [
+          {
+            start: 0,
+            end: version.absatz.length,
+            gldart: version.gldart,
+            paragraph: version.paragraph,
+          },
+        ]
+      ).map((range) => ({
+        ...range,
+        textStart:
+          version.absatz.slice(0, range.start).join("\n\n").length + (range.start > 0 ? 2 : 0),
+        textEnd: version.absatz.slice(0, range.end).join("\n\n").length,
+      }));
+      let textOffset = 0;
       for (const chunk of chunks) {
+        const range = ranges.find(
+          (range) =>
+            range.textStart <= textOffset && textOffset + chunk.text.length <= range.textEnd,
+        );
+        expect(range, version.file).toBeDefined();
+        if (!range) throw new Error(`Chunk crosses a provision in ${version.file}`);
+        const context = { ...version, gldart: range.gldart, paragraph: range.paragraph };
         expect(chunk.metadata).toMatchObject({
           kind: "legal",
           dokid: version.dokid,
           file: version.file,
           law_abbr: version.law_abbr,
-          paragraph: version.paragraph,
-          gldart: version.gldart,
+          paragraph: context.paragraph,
+          gldart: context.gldart,
         });
-        expect(chunk.citation).toBe(sozdokCitation(version));
+        expect(chunk.citation).toBe(sozdokCitation(context));
+        textOffset += chunk.text.length + 2;
       }
     }
   }
@@ -110,6 +134,39 @@ test("AC3 matches the PRD citation format for five real sampled paragraphs", () 
     expect(sozdokCitation(record)).toBe(citation);
   }
 });
+
+test.each([1500, 100])(
+  "WP-174 keeps the real multi-paragraph agreement within §§ 1–4 at a %i-token budget",
+  async (maxTokens) => {
+    const file = "FamHospKarVertrag_AMS=PARA=1-4==2002-12-09=2003-01-01.xml";
+    const xml = await readFile(join(sozdokDirectory(), file), "utf8");
+    // Read the legal boundaries directly from the original XML, independently of the parser.
+    const numbers = [...xml.matchAll(/<gldsym>§\s*(\d+)\.<\/gldsym>/g)].map((match) => match[1]);
+    expect(numbers).toEqual(["1", "2", "3", "4"]);
+    const record = parseSozdok(xml, file);
+    const chunks = chunkSozdok({ ...record, in_force_to: null }, maxTokens);
+    expect(chunks.map((chunk) => chunk.text).join("\n\n")).toBe(record.text);
+    expect([...new Set(chunks.map((chunk) => chunk.metadata.paragraph.gldnr))]).toEqual(numbers);
+    for (const chunk of chunks) {
+      const number = chunk.metadata.paragraph.gldnr;
+      expect(numbers).toContain(number);
+      expect(chunk.metadata.paragraph.gldsym).toBe(`§\u00a0${number}.`);
+      expect(chunk.citation).toBe(
+        `§ ${number} FamHospKarVertrag AMS (SozDok, in Kraft seit 01.01.2003)`,
+      );
+      const markers = [...chunk.text.matchAll(/§\s*(\d+)\./g)].map((match) => match[1]);
+      expect(markers.every((marker) => marker === number)).toBe(true);
+    }
+    if (maxTokens === 1500) {
+      expect(chunks).toHaveLength(4);
+      expect(chunks.map((chunk) => [...chunk.text.matchAll(/§\s*(\d+)\./g)].length)).toEqual([
+        1, 1, 1, 1,
+      ]);
+      expect(chunks[0]?.text).toContain("Gebührenfrei gemäß §\u00a0110 ASVG");
+      expect(chunks[3]?.text).toContain("Wien, am 9. Dezember 2002");
+    }
+  },
+);
 
 test("preserves mixed XML order, numbering, lists, tables, umlauts and non-breaking spaces", async () => {
   const file = "ABVO_1996=PARA=1=301=1996-06-28=1996-07-01.xml";
