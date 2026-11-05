@@ -1,0 +1,26 @@
+{
+  "id": "fsw-pflege-und-betreuung-1190",
+  "name_de": "Fonds Soziales Wien – Beratung und Service-Center Pflege und Betreuung – Heiligenstädter Straße 31",
+  "name_simple": "Beratung zu Pflege in 1190",
+  "region": "Wien",
+  "url": "https://www.fsw.at/standorte",
+  "jurisdiction": "Pflege und Betreuung",
+  "address": {
+    "street": "Heiligenstädter Straße 31/Stiege 3/1. Stock",
+    "postal_code": "1190",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "01 24 5 24",
+  "opening_hours": {
+    "notes": "Mo–Fr 8:00–15:00 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.fsw.at/standorte",
+      "quote": "Beratung und Service-Center\nPflege und Betreuung\nHeiligenstädter Straße 31/Stiege 3/1. Stock\n1190 Wien\nMo–Fr 8:00–15:00 Uhr\nTel.: 01 24 5 24",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
