@@ -6,7 +6,7 @@ Technical PRD for the Dachverband KI Challenge, Use Case 1. This document descri
 
 SV KI-Lotse is a voice-first, screen-aware personal guide through Austria's health and social insurance system. It understands a person's situation and goal, identifies the relevant benefits inside and outside social insurance, explains them in that person's language and carries them through to concrete next steps: prepared forms, required documents, the responsible office, a suitable facility and a prepared appointment.
 
-The product builds on the open-source Clicky interaction model (MIT): hold a key, speak, and a companion that sees the screen answers out loud and points at what matters. SV KI-Lotse keeps that model and adds what a benefits pilot needs: a deterministic benefit and process backbone, a user context built during use from what the person says and shows, a form copilot with provenance, case tracking and a relatives mode. New benefits are added as data, not code. Every v1 feature works against real services and real pages; there are no mock providers or simulated sources in the product.
+The product builds on the open-source Clicky interaction model (MIT): hold a key, speak, and a companion that sees the screen answers out loud and points at what matters. SV KI-Lotse keeps that model and adds what a benefits pilot needs: a deterministic benefit and process backbone, a user context built during use from what the person says and shows, a live form copilot that types into official forms in front of the user (including forms it finds and analyses on demand) with a source for every value, case tracking and a relatives mode. New benefits are added as data, not code. Every v1 feature works against real services and real pages; there are no mock providers or simulated sources in the product.
 
 ### Goals
 
@@ -22,6 +22,8 @@ The product builds on the open-source Clicky interaction model (MIT): hold a key
 
 - No diagnoses, interpretation of medical findings, risk assessment, therapy or medication recommendations.
 - No autonomous submission of applications, bookings or messages, no outbound calls, and no handling of user credentials.
+- No user accounts or login in v1: the pilot runs on anonymous sessions (section 11). Real sign-in is a later phase behind the same session interface.
+- No filling of forms inside third-party desktop applications: forms are opened and filled in the pilot's own document viewer or in the guided portal window.
 - No automated scraping of authenticated portals.
 - No general-purpose desktop agent outside the health and social domain.
 - No replacement for case workers: handing over to a human is a feature, not a failure.
@@ -38,6 +40,7 @@ Targets are proposed release gates, measured by the evaluation suites in section
 | Citation validity | Cited passage exists in the source registry and supports the claim. Denominator: all citations in E3 and E4 runs. | E6 | 98% or more |
 | Excess questions | Clarifying questions asked minus the minimum the process engine needs for the same run. Denominator: E4 runs. | E4 | Median 0, p90 2 or fewer |
 | Form prefill accuracy | Correctly pre-filled fields against gold forms. Denominator: fillable fields. | E7 | 95% or more |
+| Form field detection | Detected fields matching gold boxes, labels and owner sections on flat official forms. Denominator: gold fields. | E13 | Recall 90% or more, precision 95% or more |
 | Document extraction | Precision and recall of documented recommendations and administrative facts against the gold set. | E12 | Precision 98% or more, recall 90% or more |
 | Voice turn latency | End of speech to first audio, measured in the Mac app. | E9 | p50 1.6 s, p95 3 s |
 
@@ -56,9 +59,16 @@ The real work happens in portals, PDF forms and official letters, not in a chat 
 ### Constraints
 
 - **Medical boundary.** The pilot never diagnoses, interprets findings, assesses risk or recommends therapy or medication. It may use information and explicitly documented recommendations already contained in a document. Exact wording from the brief in section 4.
-- **Data available.** The SV-Box provides the reimbursement code for medicines (EKO), realistic anonymized findings and data from ELGA as sample documents, the legal bases of SozDok, sample fee schedules and sample forms. Each dataset has a defined use in section 10. The brief also lists public sources (ÖGK, SVS, BVAEB, SozDok, gesundheit.gv.at, oesterreich.gv.at, FSW forms, medical chamber pages).
+- **Data available.** The SV-Box (inventory in `docs/svbox-inventory.md`) contains:
+  - seven official application forms as fillable PDFs (ÖGK, PVA, FSW);
+  - five fictional ELGA-style findings as text PDFs, among them a discharge letter written for scenario 3;
+  - the medicine reimbursement code (EKO) as fixed-width text exports;
+  - three catalogues: the ÖGK service guide 2026, a contract-doctor fee schedule for Styria and the dental fee schedule 2026;
+  - 14,244 SozDok legal paragraphs as versioned XML.
+
+  Each dataset has a defined use in section 10. The brief also lists public sources (ÖGK, SVS, BVAEB, SozDok, gesundheit.gv.at, oesterreich.gv.at, FSW forms, medical chamber pages).
 - **No health-record integration.** No programmatic access to a person's health records is part of v1. The user's context is built during use from what the person says, uploads and shows on screen (section 11).
-- **Platforms.** macOS is the primary client, the web app is the second. Windows, a browser extension and a phone channel follow later.
+- **Platforms.** macOS is the primary client, the web app is the second. Windows, a browser extension and a phone channel follow later. A native SwiftUI conversation view is an optional later addition (section 9).
 - **Portability.** The brain and workspace run as a standard Node container with plain Postgres on any host; Vercel is the pilot host (NFR-15).
 
 ### How the evaluation criteria map to the product
@@ -67,15 +77,15 @@ Each criterion names one proof point that the scenario 3 demo or an artefact mus
 
 | Jury criterion (from the brief) | How SV KI-Lotse addresses it | Proof point |
 | --- | --- | --- |
-| Technical implementation and concrete benefit | Native companion plus agentic brain; every scenario ends in a prepared, concrete next step | Scenario 3 end to end on an anonymized sample discharge letter |
+| Technical implementation and concrete benefit | Native companion plus agentic brain; every scenario ends in a prepared, concrete next step | Scenario 3 end to end on the SV-Box discharge letter, with the rehabilitation application filled live in front of the user |
 | Autonomy and thoughtful design | Autonomy levels, approval records bound to tool inputs, deterministic process engine, documented decisions | L3 guided booking form fill with the user's final click |
 | Flexible, intelligent handling of different tasks | One agent across areas A–F; new benefit = data, not code | Add a benefit as YAML during the demo and use it |
 | Use and linking of data and knowledge sources | Every SV-Box dataset has a feature; source registry with verification dates; SozDok citations | EKO cost-coverage lookup and SozDok citation in the Why panel |
 | Comprehensibility and user orientation | Voice, simple language, pointing on the real screen, accessibility | Scenario 3 completed in simple-language mode by voice and captions alone |
 | Quality of proposed support and next steps | Process definitions per benefit, office resolution, document checklist, application packages, initiated next steps | Journey map after scenario 3 with the next step prepared |
 | Responsible handling of uncertainty, transparency, limits | Why panel, citations, provenance per field, five-layer boundary enforcement, safety net, human handoff | E5 zero violations; a boundary case answered with a handoff |
-| Realistic path from prototype to production | Portable container, plain Postgres, swappable model gateway, eval gates | Brain running as a plain container outside Vercel |
-| Innovative features | Relatives mode with a second cursor, circle-to-ask, screen-capture import, autonomy levels, bundles with a map | Circle-to-ask on the discharge letter |
+| Realistic path from prototype to production | Portable container, plain Postgres, swappable model router, eval gates | Brain running as a plain container outside Vercel |
+| Innovative features | Live form filling with a source for every value, forms found and analysed on demand, relatives mode with a second cursor, circle-to-ask, screen-capture import, autonomy levels, bundles with a map | A flat official form acquired during the demo and filled live |
 
 ## 3. Users, personas and scenarios
 
@@ -108,9 +118,20 @@ The four scenarios come from the brief and double as evaluation scenarios. The b
 | --- | --- | --- | --- |
 | S1 Care for a parent | "My mother is chronically ill and can't manage alone. What can I do?" | Care allowance (Pflegegeld) application at the carrier paying her pension, care counseling, mobile services, Pflegekarenz information for Daniel, support for 24-hour care, follow-up and rehabilitation support from documented orders | Intake, goal capture, subject/actor model, process engine, form copilot, facility search, relatives |
 | S2 Health promotion | "I want to do something for my health." | Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search | Bundles, regional map, explanations with sources |
-| S3 After hospital | "I got a discharge letter. What do I have to do now?" | Document → relevant information → process → office → application → documents → facility → appointment, in that order | Document import, quote extraction with highlight, process, office resolution, form copilot, document checklist, facility search, appointment preparation, journey map |
+| S3 After hospital | "I got a discharge letter. What do I have to do now?" | Document → relevant information → process → office → application → documents → facility → appointment, in that order (demo below) | Document import, quote extraction with highlight, process, office resolution, live form filling, dynamic form acquisition, document checklist, facility search, appointment preparation, journey map |
 | S4 Child | "I have a child and want to know which offers exist." | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |
 | S5 Remote help | Daniel joins Maria's session to help with the care allowance form | Shared view, second cursor, voice, approved actions, signature flags | Relatives mode, approvals, audit |
+
+**Scenario 3 demo.** It runs on the SV-Box discharge letter (fictional patient Anna Berger):
+
+- Its documented recommendation for oncological rehabilitation leads to the rehabilitation application. This is the SV-Box form "Antrag auf Rehabilitations-, Kur- bzw. Erholungsaufenthalt", filled live.
+- Its open-task list adds:
+  - Pflegegeld (PVA form PAL 080);
+  - mobile home care (FSW funding application);
+  - the travel-cost subsidy (ÖGK form);
+  - the prescription-fee exemption, whose form is acquired live from the carrier's site (FR-D10).
+- The discharge medication is checked against the EKO (FR-M1).
+- The hospital form for Anschlussheilverfahren is explained and handed to the hospital, never filled by the pilot.
 
 Scenario 3 sets the boundary the brief defines: the pilot may say "Your discharge letter recommends rehabilitation" and help with the process, but never "Because of your diagnosis you need rehabilitation".
 
@@ -121,7 +142,7 @@ flowchart LR
     A[Document<br/>discharge letter imported:<br/>upload, scan or screen capture] --> B[Relevant information<br/>docs.extractStatements:<br/>verbatim recommendation + admin facts]
     B --> C[Process<br/>catalog.findBenefits → medical rehabilitation<br/>process.start, goal confirmed]
     C --> D[Office<br/>office.resolve:<br/>pension or accident carrier by subject status and region]
-    D --> E[Application<br/>form.prefill with provenance<br/>approval per field group]
+    D --> E[Application<br/>form.fillLive: cursor types each field<br/>with its source, user confirms per group]
     E --> F[Documents<br/>documents.checklist:<br/>have / missing / where to obtain]
     F --> G[Facility<br/>facility.search:<br/>rehabilitation facilities on the map]
     G --> H[Appointment<br/>appointment.search + appointment.prepare:<br/>options, call sheet, e-mail draft, calendar hold]
@@ -199,8 +220,8 @@ Separate from the medical boundary. SR-1 is not a risk assessment; it is a fixed
 | Level | Name | What the pilot does | Confirmation |
 | --- | --- | --- | --- |
 | L1 | Show me | Explains and points; the user does every click and keystroke | None needed, nothing is changed |
-| L2 | Do it with me | Pre-fills fields and documents step by step | Per field group, by voice, key or click |
-| L3 | Prepare it for me | Assembles the full package: filled form, attachments, cover letter, appointment draft; may fill a real online booking form on an allowlisted page in the guided window after explicit approval (FR-O6) | One review of the whole package; the user performs the final confirming click on any booking or submission page |
+| L2 | Do it with me | Fills forms live in front of the user, field group by field group, as drafts | Per field group after it is typed, by voice, key or click; a value counts only once confirmed |
+| L3 | Prepare it for me | Assembles the full package: form typed in full as a draft, attachments, cover letter, appointment draft; may fill a real online booking form on an allowlisted page in the guided window after explicit approval (FR-O6) | One review of the whole package; the user performs the final confirming click on any booking or submission page |
 
 Across all levels the pilot never submits forms, sends messages, places calls, books paid services or enters credentials. These actions do not exist as tools. L1 is the default for new users; a level change requires an explicit confirmation and is shown in the panel. Outbound AI phone calls are a later-phase option and are not part of v1.
 
@@ -243,11 +264,13 @@ All requirements below are in scope for v1. Priority orders the build: **P0** is
 | FR-D2 | OCR and structure extraction | German text in scans and screen captures is recognized on-device with positions per line (Vision, accurate mode, de-DE) | P0 |
 | FR-D3 | Documented-statement extraction | Output is a list of verbatim quotes with page and bounding box, typed as documented recommendation or administrative fact (date, institution, care level, carrier, case number, named medicine); no paraphrased medical content; diagnoses are not extracted as facts | P0 |
 | FR-D4 | Highlight in the source | The pilot highlights the exact quoted sentence on screen or in the document viewer while speaking it | P0 |
-| FR-D5 | Form copilot with provenance | Each pre-filled field shows its source fact and quote; missing and invalid fields are marked; fields that require the subject's signature are flagged | P0 |
-| FR-D6 | Application package | One action produces the filled PDF, an attachment checklist and a cover letter; nothing is sent | P1 |
-| FR-D7 | Guided filling on external portals | In the guided portal window the pilot points at each field and proposes values; values are written only after approval | P1 |
+| FR-D5 | Live form filling with provenance | The pilot fills the form in front of the user. The companion cursor moves to each field in the document viewer (Mac and web) or on the page (guided window), clicks into it and types the value at a readable pace, while the caption or voice says what it enters and where it comes from. Each value carries its provenance (fact and quote, or user statement). Values go into a draft form instance and count only after the user confirms the field group (L2) or the whole form (L3). Missing and invalid fields are marked and asked for. Fields reserved for doctors, hospitals or offices, and signature fields, are skipped and flagged. The user can stop the pilot at any moment by voice, key or click and correct a field by voice or keyboard; corrections are saved as user-statement facts | P0 |
+| FR-D6 | Application package | One action produces the filled PDF from confirmed values only (form fields filled, or added and filled for flat forms), an attachment checklist and a cover letter; nothing is sent | P1 |
+| FR-D7 | Guided filling on external portals | In the guided portal window the cursor moves to each field and types the approved values visibly. Values for a field group are approved before they are typed, because a site may store input as it is typed | P1 |
 | FR-D8 | Letter explanation | For administrative letters (decisions, requests) the pilot states in plain words what is asked, by when and what happens next | P1 |
 | FR-D9 | Required-document identification | For each benefit the pilot lists the required documents from the catalog with status have (in context), missing, or obtainable, and for missing ones names where to get them (office, portal, doctor) with source; the list is shown before any form is filled | P0 |
+| FR-D10 | Dynamic form acquisition | When a process step needs a form that is not in the form registry, the pilot searches the catalog and allowlisted official sites (carriers, ministries, federal states, FSW). It shows the candidate with publisher, title and date, downloads the official file once the user agrees, and registers it as a versioned template (source URL, hash, retrieval date). Known templates are reused and re-checked for newer versions before use. Only allowlisted origins; nothing behind a login | P0 |
+| FR-D11 | Forms without fillable fields | For flat or scanned PDFs, and PDFs with incomplete fields, the pilot detects the fields: label, box, type (text, date, number, checkbox, choice, signature) and owner section (for example "vom Arzt auszufüllen"). Detection uses the text layer and vector graphics, plus OCR and the vision model where needed. Detected fields are shown as an overlay before filling; the user can confirm, move or add a field by voice or click. The template is marked `auto` until reviewed and `verified` after review. The filled output is a real PDF: detected fields are added as form fields and filled, with text placed in the boxes as fallback. Quality is measured by E13 | P0 |
 
 ### D. Offices, facilities and appointments
 
@@ -307,8 +330,8 @@ Both requirements use SV-Box datasets and are bounded by the medical boundary ta
 
 | ID | Requirement | Acceptance criteria | Priority |
 | --- | --- | --- | --- |
-| FR-M1 | Medicine cost-coverage lookup (EKO) | For a medicine named verbatim on the user's own prescription or discharge letter, or typed by the user, the pilot answers only: whether it is listed in the EKO; which box applies (green, yellow RE1 with prior approval, yellow RE2 with subsequent control, red); whether chief or control physician approval (chef- und kontrollärztliche Bewilligung) is required and who requests it; the current prescription fee, the 2% income cap and exemption rules with sources. Lookup is exact-match on the name; the tool returns coverage fields only; the pilot never names, compares or suggests another medicine and never comments on suitability or dosage; such questions are answered with a handoff to doctor or pharmacist | P1 |
-| FR-M2 | Private-doctor (Wahlarzt) reimbursement explainer | Using the sample fee schedules, the pilot explains the reimbursement rule (80% of the amount a contract partner would receive for the same service, not 80% of the invoice), the documents required (paid invoice, proof of payment, referral where applicable), the submission channels (carrier portal, post) and prepares the submission package. Amounts from sample schedules are labelled illustrative and non-binding; the as-of date is shown | P1 |
+| FR-M1 | Medicine cost-coverage lookup (EKO) | For a medicine named verbatim on the user's own prescription or discharge letter, or typed by the user, the pilot answers only: whether it is listed in the EKO; which box applies (green, yellow RE1 with prior approval, yellow RE2 with subsequent control, red); whether chief or control physician approval (chef- und kontrollärztliche Bewilligung) is required and who requests it; the current prescription fee, the 2% income cap and exemption rules with sources. Lookup matches product names exactly. When the document names only a substance (for example "Amlodipin"), the lookup works at substance level: the answer states the coverage status shared by the listed packs, or that it differs between packs and the prescription decides, without naming any product. The tool returns coverage fields only; the pilot never names, compares or suggests another medicine and never comments on suitability or dosage; such questions are answered with a handoff to doctor or pharmacist | P1 |
+| FR-M2 | Private-doctor (Wahlarzt) reimbursement explainer | Using the SV-Box fee schedules (contract-doctor fee schedule for Styria, as of 1 January 2025; dental fee schedule 2026), the pilot explains the reimbursement rule (80% of the amount a contract partner would receive for the same service, not 80% of the invoice), the documents required (paid invoice, proof of payment, referral where applicable), the submission channels (carrier portal, post) and prepares the submission package. Amounts from sample schedules are labelled illustrative and non-binding; the as-of date is shown | P1 |
 
 ## 6. Experience design
 
@@ -319,7 +342,7 @@ The experience has three surfaces: a native companion that lives on top of every
 | Surface | Built with | Contains |
 | --- | --- | --- |
 | Companion | SwiftUI and AppKit, from Clicky | Menu-bar panel, flying cursor, speech bubble, voice indicator, annotation layer, helper cursor, background task status |
-| Workspace | Next.js with AI SDK UI; the only conversation client, shown in a native window on Mac and in the browser on web | Conversation, journey map, documents and context, form copilot, document checklist, offers and map, appointment options, Why panel, settings, subject and actor view |
+| Workspace | Next.js with AI SDK UI; the only conversation client, shown in a native window on Mac and in the browser on web | Conversation, journey map, documents and context, document and form viewer with the live-fill layer, document checklist, offers and map, appointment options, Why panel, settings, subject and actor view |
 | Guided portal window | WebKit window with the guide runtime, no message handler and no bridge to the workspace; driven by the Mac app | Allowlisted real pages (carrier sites, FSW forms, booking pages) with pointing, highlighting and download capture |
 
 ### The interaction loop
@@ -329,7 +352,7 @@ The experience has three surfaces: a native companion that lives on top of every
 3. Early in a case the pilot states the goal it understood and asks for confirmation (FR-G7).
 4. The answer streams back sentence by sentence; speech starts with the first sentence.
 5. Each sentence carries its actions; the cursor flies, highlights or annotates in sync with the words.
-6. Anything that changes data appears as a confirmation card stating exactly what will be written and where it came from. The user confirms by voice ("ja"), key or click.
+6. Forms are filled live. The cursor clicks into each field and types while the caption says what it enters and where the value comes from. A field group turns from draft to confirmed when the user says "ja", presses the key or clicks. Anything else that changes data appears as a confirmation card stating exactly what will be written and where it came from.
 7. The journey map updates; the companion says what is done, what it has prepared and what comes next.
 
 ### Autonomy in the interface
@@ -356,7 +379,7 @@ The autonomy level (section 4) is always visible in the panel and can be changed
 
 1. Language and voice choice, with a spoken sample.
 2. Permissions (microphone, screen recording, accessibility), each requested just in time with a one-sentence reason. A helper-assisted setup path lets a relative walk the person through permissions by phone using a printable one-page guide; the web workspace works without the Mac app so a case can start before permissions are granted.
-3. A short guided tutorial on a sample discharge letter from the SV-Box: hold the key, ask, watch the highlight, confirm a pre-filled field.
+3. A short guided tutorial on a sample discharge letter from the SV-Box: hold the key, ask, watch the highlight, watch the cursor type into a form, confirm the field group.
 
 ### Visual language
 
@@ -381,17 +404,17 @@ flowchart TB
         HELPER[Helper browser<br/>relatives mode]
     end
     subgraph Brain["Next.js app (apps/web) hosting packages/brain"]
-        API[Route handlers<br/>/api/turn, /api/cases, /api/documents,<br/>/api/facts, /api/jobs, /api/voice/token,<br/>/api/resolve, /api/relatives]
+        API[Route handlers<br/>/api/turn, /api/session, /api/cases,<br/>/api/documents, /api/forms, /api/facts,<br/>/api/jobs, /api/voice/token, /api/resolve,<br/>/api/relatives]
         AGENT[Lotse agent<br/>ToolLoopAgent + toolApproval<br/>WorkflowAgent optional on Vercel]
         ENGINE[Process engine<br/>pure TypeScript]
         GUARD[Safety net · rule guard ·<br/>boundary classifier · citation verifier]
         KB[Catalog + retrieval<br/>hybrid search, reranker]
-        GATEWAY[Model gateway<br/>per-role routing, fallback chains]
+        GATEWAY[Model router<br/>per-role routing, fallback chains]
     end
     subgraph Data["Backing services"]
         PG[(Postgres + pgvector<br/>catalog, chunks, cases, steps, messages,<br/>approvals, jobs, facts for all clients, audit)]
         S3[(Object storage<br/>S3-compatible: documents for all clients,<br/>generated packages)]
-        MODELS[Hosted models<br/>Vercel AI Gateway / OpenAI<br/>or EU/self-hosted]
+        MODELS[OpenAI API<br/>more providers can be<br/>added behind the router]
         XI[ElevenLabs<br/>Scribe v2 Realtime, TTS]
         RTC[WebRTC service<br/>LiveKit]
         OBS[OpenTelemetry → Langfuse<br/>PostHog events]
@@ -421,14 +444,15 @@ Every conversation turn goes from the workspace to `/api/turn`. The Mac app call
 | Component | Technology | Responsibility |
 | --- | --- | --- |
 | Brain (`packages/brain`) | TypeScript (Node 22+, ESM), AI SDK 7 | Agent orchestration, process engine, catalog access, retrieval, context assembly, approvals, guards, model routing, persistence |
-| Web app (`apps/web`) | Next.js App Router with AI SDK UI; pilot host Vercel (`fra1`); builds as a standard Node container | Workspace UI and the only conversation client (`useChat` with client tools and tool approvals), API route handlers that host the brain, authentication (passkeys, e-mail), ElevenLabs token minting |
+| Web app (`apps/web`) | Next.js App Router with AI SDK UI; pilot host Vercel (`fra1`); builds as a standard Node container | Workspace UI and the only conversation client (`useChat` with client tools and tool approvals), API route handlers that host the brain, anonymous sessions, ElevenLabs token minting |
 | Mac app (`apps/mac`) | SwiftUI and AppKit, derived from Clicky (macOS 14.2+; on-device model features need macOS 26 with Apple Intelligence) | Capability provider for the embedded workspace: companion overlay, push-to-talk, screen capture, on-device OCR, target resolution (Accessibility, OCR), speech capture and TTS playback, encrypted upload queue, native bridge, guided portal windows. No conversation logic and no fact store |
-| Guide runtime (`packages/guide`) | TypeScript injected into web pages | Page snapshot, pointing, highlighting, fill preview inside the workspace and guided portal windows |
+| Guide runtime (`packages/guide`) | TypeScript injected into web pages | Page snapshot, pointing, highlighting, visible typing into fields inside the workspace and guided portal windows |
+| Form engine (`packages/brain/src/forms`) | TypeScript, pdf.js (server side), pdf-lib, vision model through the model router | Form registry and acquisition, field detection for flat PDFs, prefill, draft form instances, PDF output |
 | Protocol (`packages/protocol`) | Zod, JSON Schema, generated Swift types (quicktype) | The single contract between brain and every client |
 | Knowledge (`packages/knowledge`) | TypeScript pipeline, YAML catalog | Crawling, extraction, catalog curation, process and form definitions, office directory, guard patterns, embeddings |
 | Database | Plain Postgres with pgvector and the `german` text-search configuration; no provider-specific extensions | Catalog, knowledge chunks, cases, steps, persisted UI messages, approvals, jobs, context facts for all clients, audit log |
 | Object storage | S3-compatible API, encrypted at rest | Context documents from all clients (originals and OCR pages) and generated packages |
-| Model access | Model gateway abstraction; pilot providers Vercel AI Gateway and OpenAI API | Hosted models for orchestration, extraction, guard and embeddings; swappable to EU-hosted or self-hosted models |
+| Model access | Model router over the OpenAI API (`@ai-sdk/openai`), one model per role with fallbacks | Hosted models for orchestration, extraction, guard and embeddings; further providers can be added behind the router |
 | Voice | ElevenLabs Scribe v2 Realtime (`scribe_v2_realtime`), ElevenLabs streaming TTS; technical fallbacks Apple Speech and AVSpeechSynthesizer | Speech in and out |
 | Realtime sessions | WebRTC (LiveKit Cloud or self-hosted LiveKit) | Relatives mode: screen share, voice, helper cursor events |
 | Observability | OpenTelemetry via `@ai-sdk/otel`, Langfuse, PostHog | LLM traces, evals, product analytics events |
@@ -437,6 +461,7 @@ Every conversation turn goes from the workspace to `/api/turn`. The Mac app call
 
 | Route | Method | Purpose | Auth |
 | --- | --- | --- | --- |
+| `/api/session` | POST, DELETE | Create an anonymous session on first visit (signed httpOnly cookie); DELETE starts a fresh session for a clean demo | None (creates the session) |
 | `/api/turn` | POST (UI message stream) | The `useChat` endpoint and the only conversation route. Request: the latest UI message plus `TurnRequest` (case id, input kind, `ContextCapsule`, `ActionResult`s). Response: UI message stream with text, `data-speech-segment`, `data-action`, `data-case-event`, `data-safety-notice`, `data-job-progress`, `data-approval-context` and tool parts, including the SDK's `tool-approval-request`. Client tool outputs (`addToolOutput`) and approval responses (`addToolApprovalResponse`) arrive as the next request to this route | Session |
 | `/api/cases` | GET, POST | List cases; create a case with subject and goal | Session |
 | `/api/cases/:id` | GET, PATCH | Case file, journey map, steps, persisted messages (loaded into `useChat` on open); update goal or autonomy level | Session |
@@ -444,11 +469,14 @@ Every conversation turn goes from the workspace to `/api/turn`. The Mac app call
 | `/api/cases/:id/handoff` | POST | Build the case summary for a counselor (FR-K3) | Session |
 | `/api/documents` | POST (multipart) | Upload a document from any client: the original, plus on-device OCR pages with line boxes when it comes from the Mac; web uploads are OCR'd in the brain; returns document id and OCR status | Session |
 | `/api/documents/:id/extract` | POST | Run `docs.extractStatements` on the stored OCR pages; returns typed quotes with positions for confirmation | Session |
+| `/api/forms/templates` | GET, POST | Search registered form templates; register a template from an allowlisted URL (FR-D10) | Session |
+| `/api/forms/instances/:id` | GET, PATCH | Draft form instance with value, provenance and state per field; user corrections (FR-D5) | Session |
+| `/api/forms/instances/:id/pdf` | GET | Filled PDF from confirmed values (FR-D6) | Session |
 | `/api/facts` | GET, POST, PATCH, DELETE | Confirmed facts per subject; the single context store for all clients | Session |
 | `/api/jobs/:id` | GET | Background job status and progress (FR-C10) | Session |
 | `/api/jobs/worker` | POST | Worker entry point invoked by the scheduler or the Workflow runtime; processes one job step | Internal secret |
 | `/api/voice/token` | POST | Mint a single-use ElevenLabs token: `realtime_scribe` for speech to text or `tts_websocket` for text to speech; 15-minute expiry, consumed on first use | Session |
-| `/api/resolve` | POST | Vision fallback for target resolution (ladder method 5): screenshot and target description → point with confidence via the model gateway; called by the Mac resolver | Session |
+| `/api/resolve` | POST | Vision fallback for target resolution (ladder method 5): screenshot and target description → point with confidence via the model router; called by the Mac resolver | Session |
 | `/api/relatives/invite` | POST | Create a time-limited invite; returns join URL | Session |
 | `/api/relatives/join` | POST | Helper joins; returns WebRTC credentials after the person approves | Invite token |
 | `/api/catalog/benefits` | GET | Public read of catalog records for the workspace (Why panel, bundles) | Session |
@@ -469,16 +497,22 @@ All route handlers import `packages/brain` directly; no logic lives in the route
    - `ActionResult`s return over the bridge and travel with the next request.
 2. **Voice turn (web).** The same loop runs inside the page: browser microphone and TTS with single-use tokens, and actions resolved by the guide runtime.
 3. **Document import.**
-   - The Mac reads the document on-device (OCR with line boxes) and uploads the original and the OCR pages to `/api/documents`; a web upload is OCR'd in the brain.
+   - The Mac reads the document on-device (OCR with line boxes) and uploads the original and the OCR pages to `/api/documents`; a web upload uses the PDF text layer when present and is OCR'd in the brain otherwise.
    - `docs.extractStatements` returns typed quotes with positions.
    - Each quote is saved as a fact in Postgres only after the user confirms it (FR-P3).
    - The Mac keeps originals only in its encrypted upload queue, until the upload is confirmed.
-4. **Guided fill.**
+4. **Live form fill.**
+   - The brain finds or acquires the template (`form.find`, `form.acquire`) and analyses it if it has no usable fields (`form.analyze`). It then creates a draft form instance and computes values with provenance (`form.prefill`).
+   - `form.fillLive` emits one `type` action per field, bound to the sentence that announces it.
+   - The workspace opens the form in its document viewer and reports each field's rectangle (`TargetRect`). On the Mac the companion cursor flies there, clicks and types; in the browser the in-page cursor does the same. Every typed value is stored as a draft on the form instance.
+   - At the end of a field group the pilot asks "Passt das so?". `form.commitGroup` is approval-gated, so the confirmation is an approval record (FR-A2). Corrections by voice or keyboard update the draft and are saved as facts.
+   - `package.build` renders the PDF from confirmed values only.
+5. **Guided fill on external portals.**
    - The brain reads values from the form schema and the subject's facts and proposes them with provenance through `ui.fill`, an approval-gated client tool.
    - The workspace renders the SDK's approval request as a confirmation card. On the Mac the card is also shown in the companion panel and spoken, and "ja", the hotkey or a click answers it.
    - After `addToolApprovalResponse` the brain verifies the approval record (FR-A2), and the workspace executes the tool. In a workspace form, the guide runtime writes the values. In a guided portal window, the workspace forwards the tool to Swift over the bridge, and Swift drives the guide runtime in that window.
-5. **Relatives session.** The person's Mac publishes a screen-share track and receives the helper's cursor and annotation events. Approvals stay with the person: only the subject's or case owner's workspace session can answer an approval request.
-6. **Background job.** Long tasks are persisted as `job` rows with their step state and processed by `/api/jobs/worker`; progress is streamed or polled; no job depends on a single open request surviving.
+6. **Relatives session.** The person's Mac publishes a screen-share track and receives the helper's cursor and annotation events. Approvals stay with the person: only the subject's or case owner's workspace session can answer an approval request.
+7. **Background job.** Long tasks are persisted as `job` rows with their step state and processed by `/api/jobs/worker`; progress is streamed or polled; no job depends on a single open request surviving.
 
 ### Deployment
 
@@ -551,10 +585,15 @@ Every tool has a Zod input and output schema in `packages/brain/tools/`. Tools r
 | `facility.search` | Server | `{ type, near: { lat, lon } or place, radiusKm, filters }` | `Facility[]` with distance, opening times, source | No |
 | `appointment.search` | Server | `{ facilityIds or type, preferences: { timeWindow, maxDistanceKm, language, accessibility } }` | `AppointmentOption[]` with channel (online URL, phone, e-mail), source, retrievedAt | No |
 | `appointment.prepare` | Server | `{ caseId, option, subjectFacts }` | Call cheat sheet, e-mail draft, `.ics` calendar hold, pre-filled booking form values where a booking page exists | No |
-| `form.getSchema` | Server | `{ formId }` | `FormSchema` (fields, labels, validation, factType, acroField, signature flag) | No |
-| `form.prefill` | Server | `{ formId, subjectId }` | `FieldProposal[]` with value, provenance (fact id, quote), missing fields | No |
+| `form.find` | Server | `{ need: benefitId or description, region?, carrier? }` | `FormCandidate[]` (title, publisher, URL, format, version date, registered template id if any) from the registry and allowlisted official sites | No |
+| `form.acquire` | Server | `{ url }` on an allowlisted origin | `FormTemplate` (id, format: acroform, flat, scanned, xfa or html; pages, hash, retrievedAt, status auto or verified) | No |
+| `form.analyze` | Server | `{ templateId }` | `FormSchema` with fields (label, type, box or acroField, page, owner section, signature flag), detection method and confidence per field | No |
+| `form.getSchema` | Server | `{ templateId }` | `FormSchema` (fields, labels, validation, factType, acroField or box, owner, signature flag) | No |
+| `form.prefill` | Server | `{ templateId, caseId, subjectId }` | Draft `FormInstance` id and `FieldProposal[]` with value, provenance (fact id, quote), missing fields | No |
+| `form.fillLive` | Display | `{ formInstanceId, fieldIds[], pace? }` | `{ actionIds[] }`; emits one `type` action per field and stores each value as a draft | No |
+| `form.commitGroup` | Server | `{ formInstanceId, fieldIds[], values }` | Confirmed values with the approval id | Yes |
 | `documents.checklist` | Server | `{ benefitId, subjectId }` | `DocumentStatus[]` have / missing / obtainable with where-to-obtain and source | No |
-| `package.build` | Server | `{ caseId, formId, approvedValues }` | Filled PDF key, attachment checklist, cover letter | No (values already approved) |
+| `package.build` | Server | `{ caseId, formInstanceId }` | Filled PDF key (confirmed values only), attachment checklist, cover letter | No (values already confirmed) |
 | `docs.extractStatements` | Server | `{ documentId, pageRange? }`; reads the OCR pages (`{ text, lines: [{ text, bbox }] }[]`) stored with the document | `Statement[]` typed `documented_recommendation` or `administrative_fact`, verbatim quote, page, bbox | No |
 | `eko.lookupCoverage` | Server | `{ medicineNameExact }` | `{ listed, box, approvalRequired, approvalRequestedBy, conditionsFlag, prescriptionFee, capRule, exemptionRule, sources[] }` | No |
 | `fees.explainReimbursement` | Server | `{ serviceDescription?, tariffPositionId? }` | Rule text, required documents, channels, illustrative amount with as-of and "illustrative" flag | No |
@@ -568,7 +607,7 @@ Every tool has a Zod input and output schema in `packages/brain/tools/`. Tools r
 | `calendar.createEvent` | Client | `{ ics }` | `ActionResult` | Yes |
 | `session.shareWithHelper` | Client | `{ caseId, scope }` | `ActionResult` | Yes |
 
-The autonomy level filters this list per turn: L1 removes every approval-gated tool, L2 allows them per field group, L3 allows batch approval of a prepared package and `ui.fill` on allowlisted booking pages. The filter is computed server-side from stored state; page or document content can never change it. There is no tool that submits, sends, calls or enters credentials. During the build, tools may be implemented as contract-tested stubs that return fixture data behind the same schemas; a stub never ships in a release build (CI asserts `BRAIN_ALLOW_STUBS` is unset).
+The autonomy level filters this list per turn: L1 removes every approval-gated tool and `form.fillLive` (the pilot points and the user types), L2 allows them per field group, L3 allows batch approval of a prepared package and `ui.fill` on allowlisted booking pages. The filter is computed server-side from stored state; page or document content can never change it. There is no tool that submits, sends, calls or enters credentials. During the build, tools may be implemented as contract-tested stubs that return fixture data behind the same schemas; a stub never ships in a release build (CI asserts `BRAIN_ALLOW_STUBS` is unset).
 
 ### Process engine
 
@@ -652,10 +691,10 @@ Budget shares are proposals and are tuned against E4. The static policy prefix i
 
 | Role | Requirements | Source |
 | --- | --- | --- |
-| Orchestrator | Strong tool use, vision, German, long context | Model gateway (pilot: Vercel AI Gateway or OpenAI) |
-| Fast classifier and extractor | Low latency, structured output | Model gateway |
-| Boundary guard | Consistent classification, low latency, calibrated threshold | Model gateway |
-| Embeddings | Multilingual, strong on German | Model gateway |
+| Orchestrator | Strong tool use, vision, German, long context | OpenAI API through the model router |
+| Fast classifier and extractor | Low latency, structured output | Model router |
+| Boundary guard | Consistent classification, low latency, calibrated threshold | Model router |
+| Embeddings | Multilingual, strong on German | Model router |
 | On-device | Document classification on the Mac | Apple Foundation Models where available (4,096-token context, German supported, Apple silicon, macOS 26 with Apple Intelligence); availability and `contextSize` read at runtime; else rules |
 
 Models are assigned per role in `packages/brain/config/models.ts` with a fallback chain per role; every role has at least one EU-hosted or self-hosted candidate slot. Every candidate is run through the evaluation suites, so model choice is a measured decision (E10).
@@ -692,7 +731,8 @@ The protocol has two channels and no third path:
 | `TurnRequest` | Stream, workspace → brain (request body next to the latest UI message) | `caseId?`, `subjectId?`, `inputKind` (transcript or text), `language?`, `capsule: ContextCapsule`, `actionResults[]: ActionResult`. The autonomy level is never sent; the brain reads it from the case (FR-A1) |
 | `ContextCapsule` | Bridge, Mac → workspace; stream, workspace → brain | `screen?` { screenIndex, summary, ocrLines[] { text, bbox }, image? (downscaled, attached as a file part) }, `page?` { url, handles[] { id, role, label, value, bbox } }, `focusedRegion?`. Carries no facts: the brain reads facts from the store |
 | `SpeechSegment` | Stream, brain → workspace (`data-speech-segment`); bridge, workspace → Mac | `turnId`, `index`, `text`, `language`, `citations[]` { passageId, url, quote }, `actionIds[]` |
-| `Action` | Stream, brain → workspace (`data-action`); bridge, workspace → Mac | `id`, `kind` (point, highlight, annotate, caption, openResource), `target: Target`, `payload` (label, style), `sentenceIndex` |
+| `Action` | Stream, brain → workspace (`data-action`); bridge, workspace → Mac | `id`, `kind` (point, highlight, annotate, caption, openResource, type, clear), `target: Target`, `payload` (label, style; for `type`: value, provenance, pace), `sentenceIndex` |
+| `TargetRect` | Bridge, workspace → Mac | `targetId` (form field or UI element), `rect` in window coordinates, `scale`, `visible`; lets the companion cursor fly to elements inside the workspace window |
 | `ToolInvocation` | Bridge, workspace → Mac | `toolCallId`, `toolName` (`ui.fill`, `context.readScreen`, `calendar.createEvent`, `session.shareWithHelper`), `input`; forwarded from `onToolCall` when the tool needs the OS |
 | `ToolOutput` | Bridge, Mac → workspace | `toolCallId`, `output` (`ActionResult` or `ContextCapsule` fragment), `error?`; the workspace returns it with `addToolOutput` |
 | `ApprovalContext` | Stream, brain → workspace (`data-approval-context`, next to the SDK's `tool-approval-request` part); bridge, workspace → Mac | `approvalId`, `caseId`, `toolCallId`, `toolName`, `inputHash`, `provenance[]`, `summary` (plain text of what will change) |
@@ -711,6 +751,7 @@ The SDK's own approval parts carry the decision (`tool-approval-request` with `a
 | Variant | Fields | Resolved by |
 | --- | --- | --- |
 | `ui` | `elementId` | Workspace component registry |
+| `form` | `formInstanceId`, `fieldId` | Workspace document viewer (field overlay) or guide runtime (portal field) |
 | `dom` | `handle`, `url` | Guide runtime page snapshot |
 | `ax` | `role`, `label`, `path[]`, `appBundleId` | macOS Accessibility tree |
 | `text` | `quote`, `documentId?`, `page?` | On-device OCR line boxes or document viewer text layer |
@@ -763,14 +804,19 @@ Removed from Clicky: the Cloudflare Worker proxy (`worker/`, the brain replaces 
 - The workspace is the only conversation client: AI SDK UI (`useChat`) with client tools and tool approvals, in the browser and inside the Mac app. On the web, actions resolve inside the page through the guide runtime because there is no OS-level overlay.
 - Inside the Mac app the same workspace runs in a `WKWebView` that stays alive when its window is hidden. Transcripts and capsules arrive from Swift over the bridge. Actions, speech segments and client tools that need the OS (overlay, screen capture, OCR, guided portal windows, calendar) go to Swift over the bridge; results come back the same way.
 - A transport adapter switches by `clientKind`: in the browser it uses browser voice and the guide runtime; embedded, it delegates voice, overlay and capture to Swift. The conversation code is identical.
+- The document and form viewer renders PDFs with pdf.js and adds a field overlay: one element per field with a stable id, draft and confirmed states, a source chip per value, and an in-page typing animation. It reports field rectangles (`TargetRect`) so the Mac cursor can fly to them.
 - The workspace keeps nothing locally beyond UI preferences; cases, messages, facts and documents load from the brain, so a case started in the browser continues on the Mac.
 - The workspace is usable without the Mac app, so a case can start in the browser before permissions are granted on the Mac.
+
+### Native conversation view (optional, later)
+
+If time allows, a SwiftUI conversation panel can show the conversation natively. It is a view, not a second client: it renders the conversation state that the embedded workspace mirrors over the bridge, and sends input back as `Transcript` or text. The workspace stays the only `useChat` client, so approvals, tools and history behave identically.
 
 ### Guide runtime
 
 - Builds a page snapshot of interactive elements with stable handles, labels, roles, current values and visibility.
 - Renders cursor, highlights and annotations in a shadow DOM so pages cannot restyle or read them.
-- Fill preview shows ghost values; after approval it sets values and dispatches the input events frameworks expect.
+- Typing is visible: the cursor moves to the field, focuses it and enters the approved value character by character, with the input events frameworks expect. At L1 a ghost preview shows the value and the user types it.
 - Never clicks submit, send, pay, book-confirm or delete controls; such controls are on a deny list by role, type and label (German and English labels); at L3 on a booking page the final confirming control stays on the deny list (FR-O6).
 - Runs only on allowlisted origins; the allowlist lives in `packages/knowledge/allowlist.yaml` and is versioned.
 
@@ -780,24 +826,27 @@ Knowledge has two layers: a structured benefit catalog that the process engine r
 
 ### SV-Box datasets and their use
 
-| Dataset | Use in the product | Boundary note |
-| --- | --- | --- |
-| EKO (Erstattungskodex) | `eko.lookupCoverage` for FR-M1: listed yes/no, box (green, yellow RE1, yellow RE2, red), approval requirement, conditions flag; joined with prescription-fee rules | Exact-name lookup only; no therapeutic fields are exposed to the model |
-| Anonymized ELGA findings and data | Sample documents: demo inputs imported through the real import pipeline (upload, scan or screen capture); the document-extraction gold set (E12); red-team inputs for E5; OCR test material | Processed like any user document; no special source or UI |
-| SozDok legal bases | Legal basis per catalog criterion; Why panel citation in the format `§ <Paragraph> <Gesetz> (SozDok, Fassung vom <date>, <URL>)`; knowledge-base chunks at paragraph level with version dates | — |
-| Sample fee schedules (Honorarordnungen) | `fees.explainReimbursement` for FR-M2: illustrative reimbursement examples; catalog entry for Wahlarzt reimbursement | Amounts labelled illustrative and non-binding |
-| Sample forms | Form schemas; gold set for prefill accuracy (E7); field-level signature flags | — |
+The full inventory is in `docs/svbox-inventory.md`. The original files live in the private repository under `data/svbox/` (licensed for the KI Challenge 2026 only); loaders read them from `SVBOX_DIR`, which defaults to that folder.
+
+| Dataset (SV-Box folder) | Content and format | Use in the product | Boundary note |
+| --- | --- | --- | --- |
+| Medikamenten Erstattungskodex | `medikament.txt`: fixed-width, Windows-1252, about 7,000 packs with pharma number, name, box, pack size, price and codes such as IND or L3. `regeltext.txt` and `indtext.txt`: pipe-delimited rule and indication texts per pharma number (the `_v2` files are UTF-8 with HTML entities). Also `atccode.txt` and a legend PDF | `eko.lookupCoverage` (FR-M1): listed, box, approval requirement, rule text quoted verbatim, prescription-fee rules | Product or substance lookup only; ATC codes and indication texts never reach the model |
+| Befunde (ELGA-style) | 5 text PDFs. The discharge letter (7 pages, written for the challenge) has sections for discharge medication, further care, a rehabilitation recommendation, social-insurance hints and open tasks. Also two X-ray reports, an ultrasound report and an e-vaccination pass | Scenario 3 demo input through the real import pipeline; E12 gold set (augmented with synthetic documents in `packages/evals`); E5 boundary inputs (findings are never interpreted); the vaccination pass feeds FR-G6 | Processed like any user document |
+| Rechtstexte (SozDok) | 14,244 XML files, one per paragraph and version (ASVG, GSVG, BSVG, B-KUVG, e-MVB, Krankenordnungen and more). Metadata per `Sozdok.xsd`: in-force date, publication, area tags, cross-references | Legal basis per catalog criterion; Why panel citation `§ <Paragraph> <Gesetz> (SozDok, in Kraft seit <date>)`; paragraph-level knowledge-base chunks. The loader selects the version in force on the query date | — |
+| Leistungskataloge | ÖGK "Leistungen und Services 2026" (59 pages); ÖGK fee schedule for contract doctors in Styria (147 pages, positions with € amounts, as of 1 January 2025); dental fee schedule 2026 | The service guide seeds ÖGK catalog records with quotes; fee positions feed `fees.explainReimbursement` (FR-M2) | Amounts labelled illustrative, with region and as-of date |
+| Anträge und Formulare | 7 fillable PDFs: rehabilitation and Kur application (96 fields); Anschlussheilverfahren or rehabilitation after an accident (59 fields, a hospital form); PVA Pflegegeld application PAL 080 (102); ÖGK travel-cost subsidy Wien (13, incl. IBAN); FSW funding application (122, incl. 3 signature fields); FSW facility wish (13); FSW senior shared-flat notice (21) | Seed templates of the form registry; field-to-fact mappings reviewed by a person; E7 gold set; live-fill demo | Field names are often abbreviations, so mapping uses label positions. IBAN only from the user's own statement; hospital and doctor sections are never filled |
 
 ### Source registry
 
 | Source | Content | Access | Refresh |
 | --- | --- | --- | --- |
-| SV-Box (challenge data) | EKO, anonymized ELGA sample documents, SozDok legal bases, sample fee schedules, sample forms | Provided download | On new delivery |
+| SV-Box (challenge data, `data/svbox/`) | See the table above; licensed for the KI Challenge 2026 only; the repository stays private | Local loaders | On new delivery |
+| Official form downloads | Blank application forms from allowlisted carrier, ministry, federal state and FSW pages | On demand (FR-D10), cached as versioned templates | Re-checked before use |
 | oegk.at | ÖGK benefits, forms, offices, Gesamtverträge, Vertragspartner forms | Public crawl | Weekly |
 | svs.at, bvaeb.at | SVS and BVAEB benefits and forms | Public crawl | Weekly |
 | pva.at | Pension insurance: Pflegegeld, rehabilitation, offices | Public crawl | Weekly |
 | sozialversicherung.at, sozialversicherung.gv.at | Dachverband information: EKO explanations, Wahlarzt reimbursement, Vorsorgeuntersuchung | Public crawl | Weekly |
-| sozdok.at | Legal bases | Public crawl and SV-Box | Weekly |
+| sozdok.at | Legal bases beyond the SV-Box snapshot | SV-Box XML first; public pages for newer versions | Weekly |
 | gesundheit.gv.at | Health information, prevention programs, Eltern-Kind-Pass, emergency numbers | Public crawl | Weekly |
 | oesterreich.gv.at | Official procedures and responsible offices ("Zuständige Stelle") | Public crawl | Weekly |
 | sozialministerium.gv.at, sozialministeriumservice.gv.at | Pflegegeld, 24-hour care support, Pflegekarenz, screening programs | Public crawl | Weekly |
@@ -811,12 +860,12 @@ Crawling respects robots rules and rate limits, and stores the raw page and a co
 
 ### Ingestion pipeline
 
-1. **Fetch** allowlisted pages and documents.
+1. **Fetch** allowlisted pages and documents. The SV-Box datasets come in through dedicated loaders: the EKO fixed-width export, SozDok XML with version selection, fee schedule tables and forms.
 2. **Normalize** to Markdown, keeping headings, lists, tables and links.
 3. **Chunk** along headings (roughly 400 to 800 tokens) with a parent section reference; legal texts are chunked per paragraph (§) with the version date, never across paragraphs.
 4. **Enrich** with metadata: carrier, federal state, life situation, benefit ids, language, valid-from and valid-to dates, URL, content hash.
 5. **Embed** with a multilingual model strong in German; the model choice is an eval result (E3).
-6. **Index** in Postgres: pgvector (HNSW) plus a `german` full-text index with an Austrian synonym dictionary (for example Spital/Krankenhaus, Chefarzt/kontrollärztlicher Dienst, e-card, Rezeptgebühr).
+6. **Index** in Postgres: pgvector (HNSW) plus a `german` full-text index; queries are expanded with an Austrian synonym list (for example Spital/Krankenhaus, Chefarzt/kontrollärztlicher Dienst, e-card, Rezeptgebühr), so no custom Postgres dictionary files are needed (NFR-15).
 7. **Detect change** by hash; changed pages re-enter extraction and catalog review.
 
 ### Retrieval
@@ -838,7 +887,7 @@ The catalog is the backbone: structured records extracted from sources by LLM ex
 | `carriers[]` | enum[] | Which carriers handle it |
 | `office_rules[]` | `{ when: condition, office: ref:offices/<id> }` | How the office is chosen by subject status and region |
 | `documents[]` | `{ id, name_de, required, obtain_from, source }` | Required and optional attachments with where to obtain them |
-| `forms[]` | `ref:forms/<id>[]` | Form references with their schemas and signature requirements |
+| `forms[]` | `ref:forms/<templateId>[]` or `{ search, publisher }` | Registered form templates, or a search hint for dynamic acquisition (FR-D10) |
 | `process` | `ref:processes/<id>` | Process definition |
 | `appointment_channels[]` | `{ kind: online, phone, email; url?, number?, verified_at }` | Booking channels where known; `online` entries are real booking pages on the allowlist |
 | `sources[]`, `as_of`, `verified_at` | — | URLs, quotes, retrieval date, human verification date |
@@ -879,15 +928,41 @@ All entries were checked against official sources before inclusion; the scenario
 
 Numbers above are as of their source's retrieval date and are refreshed by the pipeline; they are never hardcoded in code.
 
-### Form schemas
+### Form registry and schemas
 
-Each supported form has a JSON schema (`packages/knowledge/forms/<id>.json`) per field: `id`, `label_de`, `labels` (translations), `type`, `validation`, `fact_type` (the context fact it is filled from), `acro_field` (PDF AcroForm field name), `help_text`, `signature` (`subject` or `none`). The same schema drives the workspace form, the PDF filler (pdf-lib) and guided filling on portals.
+Forms are templates in a registry, not code.
+
+- **Template.** One record per official form version:
+  - publisher, title, source URL or SV-Box path, file hash, retrieval date;
+  - format (`acroform`, `flat`, `scanned`, `xfa`, `html`) and page count;
+  - status: `auto` after detection, `verified` after review;
+  - the stored original.
+
+  Seed templates come from the SV-Box and the catalog; further templates are acquired on demand (FR-D10).
+- **Schema.** Verified templates have a file in `packages/knowledge/forms/<id>.json`; `auto` ones live in the database. Per field:
+  - `id`, `label_de`, `labels` (translations), `help_text`;
+  - `type`: text, date, number, checkbox, choice or signature;
+  - `validation` and `fact_type`;
+  - `acro_field` for fillable PDFs, or `box` (page and rectangle) for flat PDFs;
+  - `owner`: `applicant`, `doctor`, `hospital` or `office`;
+  - `signature`: `subject` or `none`.
+- **Field detection** (FR-D11) for flat and scanned PDFs:
+  - the text layer and vector graphics (lines, boxes, check squares) give candidate boxes and their labels;
+  - OCR and the vision model fill gaps on scanned pages;
+  - every field gets a confidence;
+  - section headers such as "Vom Arzt auszufüllen" set the owner.
+
+  Detection runs once per template version and is cached.
+- **Fill output.** For fillable PDFs, pdf-lib fills the AcroForm fields. For flat PDFs, the detected fields are added as form fields and filled, so the output stays editable; drawn text is the fallback.
+
+The same schema drives the live-fill viewer, the PDF writer and guided filling on portals.
 
 ### Data model
 
 | Entity | Key fields | Notes |
 | --- | --- | --- |
-| `user` | id, auth method (passkey credentials, e-mail) | Account; no facts on this record |
+| `user` | id, kind (`anonymous`; `account` in a later phase), created at, last seen | Created on first visit; no facts on this record |
+| `session` | id, user, client kind, created at, expires at | Signed httpOnly cookie; DELETE starts a fresh session (demo reset) |
 | `subject` | id, display name, relation to user, created by | The person a case is for; `self` for the user |
 | `case_actor` | case, user, role (`subject`, `helper`), share scope | FR-P7 |
 | `profile` | language, register, detail level, autonomy level, carrier, region, age band | Preferences and routing facts |
@@ -898,7 +973,9 @@ Each supported form has a JSON schema (`packages/knowledge/forms/<id>.json`) per
 | `turn` | case, message ids, capsule digest, segments, tool calls, action results, model ids, timings | Resume point for interrupted turns; E8 and E9 data |
 | `fact` | subject, type, value, source (document, page, bbox, quote, or turn id), confidence, confirmed | The single context store for all clients |
 | `document` | subject, type, storage key, hash, pages (OCR text and line boxes), ocr status, origin client | All clients; originals in object storage, encrypted at rest |
-| `benefit`, `office`, `facility`, `form`, `process` | Catalog entities | Loaded from the repository |
+| `benefit`, `office`, `facility`, `process` | Catalog entities | Loaded from the repository; catalog `forms[]` reference form templates |
+| `form_template` | id, publisher, title, source URL or SV-Box path, hash, version date, format, pages, status (`auto`, `verified`), schema, storage key | Form registry (FR-D10, FR-D11) |
+| `form_instance` | case, subject, template, per field: value, provenance, state (`draft`, `confirmed`), approval id; output key | Live-fill drafts and confirmed values (FR-D5, FR-D6) |
 | `kb_chunk`, `source` | Text, embedding, metadata, valid-from, valid-to | Knowledge base |
 | `reminder` | case, due date, source | Deadline guard |
 | `job` | case, type, step state, status, attempts | Background work (FR-C10), runtime-independent |
@@ -907,9 +984,9 @@ Each supported form has a JSON schema (`packages/knowledge/forms/<id>.json`) per
 
 ### Test and demo data
 
-- SV-Box anonymized findings are sample documents: imported through the real pipeline for demos, annotated as the extraction gold set (E12), and used as red-team inputs (E5).
+- SV-Box findings are sample documents. They are imported through the real pipeline for demos, annotated as the extraction gold set (E12, augmented with synthetic letters and reports from `packages/evals`), and used as red-team inputs (E5).
 - A synthetic persona and document generator exists only inside `packages/evals` for the scenario suites; it is not part of the product.
-- SV-Box sample forms are the gold set for form prefill accuracy (E7).
+- SV-Box forms are the gold set for form prefill accuracy (E7). Flat official forms acquired from allowlisted sites, with hand-drawn gold boxes, are the gold set for field detection (E13).
 - Gold questions for retrieval (E3) are written from sources, not from catalog entries, and tagged with their source passage so leakage between catalog authoring and evaluation is detectable.
 
 ## 11. User context
@@ -962,7 +1039,15 @@ The pilot never asks for information already in the context and never imports fr
 
 ### Identity
 
-The web workspace authenticates with passkeys or e-mail magic links. The Mac app has no identity of its own: its few native calls (voice tokens, uploads, vision fallback) reuse the session of its embedded workspace. Approval records are created and verified server-side (FR-A2); no client holds a signing key. Identity fields in forms are filled from context facts the user confirmed. No external identity provider is part of v1.
+The pilot has no login in v1.
+
+- On the first visit, the brain creates an anonymous user and a session and sets a signed, httpOnly, SameSite=Lax cookie. Every route resolves the session through `requireSession`.
+- A helper joins through a time-limited invite (FR-R1) and receives a helper session bound to the case and share scope.
+- The Mac app has no identity of its own. Its embedded workspace receives the cookie on first load, and its few native calls (voice tokens, uploads, vision fallback) reuse it.
+- "Neue Sitzung" starts a fresh session for a clean demo; the previous data stays exportable until it is deleted (FR-P5).
+- Approval records are created and verified server-side (FR-A2); no client holds a signing key.
+- Identity fields in forms are filled from context facts the user confirmed.
+- Real sign-in (accounts, recovery across devices) is a later phase behind the same `requireSession` interface.
 
 ## 12. Voice pipeline
 
@@ -1029,7 +1114,9 @@ Security here means the controls that make the system behave correctly: secrets 
 | Deny lists | The guide runtime never clicks controls matching submit, send, pay, book-confirm or delete by role, type or label (German and English); the list is versioned and tested with Playwright fixtures |
 | No credential handling | No tool types into password or one-time-code fields; such fields are excluded from page snapshots and screen capture summaries |
 | Relatives mode limits | Join approval, time-limited invites, visible session indicator, share scope, rate-limited approval requests, pause word, approvals stay with the person, sessions not recorded (FR-R4, FR-R5) |
-| Account security | Passkeys or e-mail magic links; short sessions; the Mac app's native calls reuse the embedded workspace session and carry no credential of their own |
+| Sessions | Anonymous sessions with signed, httpOnly, SameSite=Lax cookies and rotation; helper sessions bound to one case and share scope; the Mac app's native calls reuse the embedded workspace session and carry no credential of their own |
+| Form downloads | Only allowlisted origins; files are type-checked (PDF signature, size limit), never executed, and stored as templates; scripts and embedded files in PDFs are stripped before display |
+| Sensitive form fields | IBAN, insurance number and similar fields are filled only from the user's own confirmed facts or statements, and are masked in logs, traces and analytics |
 | Signed builds and updates | Hardened runtime, notarization, Sparkle updates signed with the project key; dependency review and lockfiles in CI; pinned dependencies |
 | Schema validation | Zod on every HTTP body, tool input and output, protocol message and YAML file |
 | Audit log | Every proposal, approval, executed action and context read by a turn or job is written to an append-only `audit_event` table, visible to the user and, for shared cases, to the subject |
@@ -1054,7 +1141,7 @@ Security here means the controls that make the system behave correctly: secrets 
 
 ## 14. Quality: evaluation and testing
 
-Quality is measured, not asserted: twelve suites cover the deterministic core, retrieval, full scenarios, safety, citations, forms, pointing, voice, model benchmarks, slot extraction and document extraction. Gates are **blocking** (release stops) or **informational** (reported, trend tracked). Blocking gates: E1 and E2 at 100%, E5 zero violations, E6 citation validity 98% or more, E12 extraction precision 98% or more. The same suites rank candidate models. All thresholds are proposals until the first measured baseline exists.
+Quality is measured, not asserted: thirteen suites cover the deterministic core, retrieval, full scenarios, safety, citations, form prefill, pointing, voice, model benchmarks, slot extraction, document extraction and form field detection. Gates are **blocking** (release stops) or **informational** (reported, trend tracked). Blocking gates: E1 and E2 at 100%, E5 zero violations, E6 citation validity 98% or more, and E12 extraction precision 98% or more once its set has at least 30 documents. The same suites rank candidate models. All thresholds are proposals until the first measured baseline exists.
 
 ### Evaluation suites
 
@@ -1069,9 +1156,10 @@ Quality is measured, not asserted: twelve suites cover the deterministic core, r
 | E7 Form prefill | Pre-filled values against gold forms from the SV-Box | Field-level exact and normalized match | 95% or more, informational | All sample forms |
 | E8 Pointing | Resolver hits the right element on fixture screens and pages; share of pixel fallbacks | Playwright for the guide runtime; fixture screenshots for Accessibility and OCR; distance thresholds | 95% or more within tolerance, informational | 200 fixtures |
 | E9 Voice | German domain word error rate; turn latency per stage | Recorded and synthesized test sets; traced timings | Latency budget met at p50, informational | 200 utterances incl. domain terms |
-| E10 Model benchmark | Quality, latency and cost per role across candidate models | E3 to E7 run per model via the gateway | Informs routing config | — |
+| E10 Model benchmark | Quality, latency and cost per role across candidate models | E3 to E7 run per model via the model router | Informs routing config | — |
 | E11 Slot extraction | Structured-output accuracy of slot values from colloquial German and other languages | Gold slot sets per process | 95% or more, informational | 300 utterances |
-| E12 Document extraction | Precision and recall of documented recommendations and administrative facts, with correct positions, on the SV-Box sample documents; zero paraphrased medical content | Gold annotations per document | Precision 98% or more blocking; recall 90% or more informational | All SV-Box documents, annotated |
+| E12 Document extraction | Precision and recall of documented recommendations and administrative facts, with correct positions, on the SV-Box sample documents; zero paraphrased medical content | Gold annotations per document | Precision 98% or more (blocking from 30 documents on); recall 90% or more informational | The 5 SV-Box documents, annotated, plus synthetic discharge letters and reports from `packages/evals` |
+| E13 Form field detection | Detected fields against gold boxes, labels and owner sections on flat official forms | Box IoU 0.5 or more, label match, owner match | Field recall 90% or more, precision 95% or more, informational | 20 flat official forms acquired from allowlisted sites |
 
 ### Scenario rubric
 
@@ -1084,7 +1172,7 @@ A human-labelled subset of runs (200 runs, two raters) measures judge agreement;
 ### Test data
 
 - Synthetic personas and documents from `packages/evals`, varied by language, age, carrier, region and document set; used only inside the suites.
-- SV-Box anonymized sample documents (annotated for E12) and sample forms.
+- SV-Box sample documents (annotated for E12) and forms (E7); flat official forms with gold boxes (E13).
 - Red-team prompts written by the team and extended with adversarial generations, reviewed by hand.
 - Leakage rule: gold questions and gold slots reference their source passage; a check fails if a gold item quotes a catalog record verbatim.
 
@@ -1179,13 +1267,13 @@ One monorepo (pnpm workspaces with Turborepo) holds every TypeScript package and
 | Mac client | Swift 6, SwiftUI and AppKit, from Clicky | Tauri with a Swift plugin: more workarounds for overlay, click-through and full-screen apps |
 | Web and API | Next.js App Router; pilot on Vercel `fra1`; standalone Node container for other hosts | Vite single-page app plus a separate Hono server |
 | Agent | AI SDK 7: `ToolLoopAgent` with `toolApproval` (default), `WorkflowAgent` optional on Vercel, AI SDK UI | Mastra, LangGraph, OpenAI Agents SDK |
-| Models | Model gateway abstraction; pilot: Vercel AI Gateway and OpenAI API, routed per role; EU-hosted or self-hosted candidates configurable | OpenRouter as alternative gateway |
+| Models | OpenAI API through the model router, routed per role with fallbacks; models set by environment | Further providers behind the same router (later) |
 | On-device AI | Apple Vision OCR, Apple Foundation Models with rule fallback | Local open-weight model via Ollama or MLX (option) |
 | Database | Plain Postgres with pgvector and `german` full-text search; Drizzle ORM and SQL migrations | Dedicated vector database |
-| Auth | Passkeys and e-mail magic links; the Mac app reuses its embedded workspace session; approvals are server-side records | Hosted identity provider |
+| Sessions | Anonymous sessions (signed cookies) behind `requireSession`; helper sessions through invites; approvals are server-side records | Passkeys or a hosted identity provider (later phase) |
 | Voice | ElevenLabs Scribe v2 Realtime and streaming TTS; Apple Speech and AVSpeechSynthesizer fallbacks | ElevenLabs Agents platform (planned for the phone channel) |
 | Realtime | WebRTC via LiveKit (cloud or self-hosted) | Custom signalling |
-| PDF | pdf-lib for AcroForm filling; pdf.js for viewing with text layers | Server-side rendering service |
+| PDF and forms | pdf-lib for filling and adding form fields; pdf.js for viewing, text layers and server-side field detection (text and vector operators); vision model for scanned forms | Commercial form-recognition service |
 | Tracing and evals | OpenTelemetry (`@ai-sdk/otel`), Langfuse, Vitest-based eval runner | Braintrust |
 | Analytics | PostHog | None |
 | Windows (later) | Tauri v2 shell reusing the workspace and protocol | Electron |
@@ -1194,15 +1282,15 @@ One monorepo (pnpm workspaces with Turborepo) holds every TypeScript package and
 
 ```
 apps/
-  web/            Next.js: workspace UI, API routes hosting the brain, auth, token minting, Dockerfile
+  web/            Next.js: workspace UI, form viewer, API routes hosting the brain, sessions, token minting, Dockerfile
   mac/            Xcode project: companion, voice, resolver, upload queue, bridge, portal windows
   win/            Tauri shell (later phase)
 packages/
-  brain/          agent, tools, process engine, context assembler, guards, model gateway, persistence
+  brain/          agent, tools, process engine, context assembler, guards, model router, persistence
   protocol/       Zod schemas, generated JSON Schema and Swift types, fixtures
   guide/          page runtime: snapshot, pointing, highlighting, fill preview, deny list
   knowledge/      crawler, extractors, catalog YAML, process YAML, form schemas, offices, allowlist, guard patterns, embeddings
-  evals/          suites E1 to E12, personas, rubrics, red-team sets, dashboard export
+  evals/          suites E1 to E13, personas, rubrics, red-team sets, dashboard export
   ui/             shared React components for the workspace
 docs/
   adr/            architecture decision records
@@ -1244,21 +1332,22 @@ Every package and app has an `AGENTS.md` with: scope (what the package owns), co
 
 ## 18. Delivery
 
-Work splits into ten workstreams that build in parallel once the contracts are frozen; gate-based milestones order the build, and no milestone passes until its gate is met. The first-value slice is scenario 3 end to end.
+Work splits into eleven workstreams that build in parallel once the contracts are frozen; gate-based milestones order the build, and no milestone passes until its gate is met. The first-value slice is scenario 3 end to end.
 
 ### Workstreams
 
 | Workstream | Scope | Key deliverables | Depends on |
 | --- | --- | --- | --- |
-| WS1 Contracts and platform | Protocol (stream data parts and bridge messages), repository, CI, auth, database schema (incl. subject, case_actor, message, approval, turn, job), container build | `packages/protocol` v1, generated Swift types, CI pipeline, migrations | None |
-| WS2 Brain | Agent, tools, process engine, context assembler, guards, safety net, model gateway, persistence | Lotse agent; tools land as contract-tested stubs first and are replaced by real implementations before M1 (internal build order only, never shipped) | WS1 |
-| WS3 Knowledge | Crawler, extraction, catalog, process definitions, form schemas, office directory, EKO and fee-schedule loaders, guard patterns | Catalog core set, retrieval index | WS1 |
+| WS1 Contracts and platform | Protocol (stream data parts and bridge messages), repository, CI, sessions, database schema (incl. subject, case_actor, message, approval, turn, job), container build | `packages/protocol` v1, generated Swift types, CI pipeline, migrations | None |
+| WS2 Brain | Agent, tools, process engine, context assembler, guards, safety net, model router, persistence | Lotse agent; tools land as contract-tested stubs first and are replaced by real implementations before M1 (internal build order only, never shipped) | WS1 |
+| WS3 Knowledge | Crawler, extraction, catalog, process definitions, office directory, SV-Box loaders (EKO, SozDok XML, fee schedules, service guide), guard patterns | Catalog core set, retrieval index | WS1 |
 | WS4 Mac app | Clicky port, overlay, resolver, bridge to the embedded workspace, upload queue, portal windows, Continuity Camera import | Signed app with onboarding and approval flow; capability provider only | WS1 |
 | WS5 Web workspace | Next.js UI and the only conversation client: `useChat` with client tools and tool approvals, transport adapter for browser and Mac, journey map, documents, document checklist, form copilot, offers map, appointments, Why panel | Workspace usable standalone and inside the Mac app with identical conversation code | WS1, WS2 |
 | WS6 Guide runtime | Snapshot, pointing, highlighting, fill preview, deny list | Package used by workspace and portal windows | WS1 |
 | WS7 Voice | Scribe provider, TTS player (Mac and browser), fallbacks, token minting (`realtime_scribe`, `tts_websocket`), pronunciation dictionary | Voice turn within the latency budget | WS1, WS4 |
 | WS8 Relatives mode | WebRTC session, helper web client, second cursor, roles, share scope | Helper joins, points and proposes; person approves | WS4, WS5 |
-| WS9 Quality | Suites E1 to E12, personas, judge calibration, dashboard | Evaluation gates wired into CI | WS1, then all |
+| WS9 Quality | Suites E1 to E13, personas, judge calibration, dashboard | Evaluation gates wired into CI | WS1, then all |
+| WS11 Forms | Form registry, acquisition, field detection, prefill, live fill in the viewer and on portals, PDF output | SV-Box forms and an acquired flat form filled live with sources | WS1, WS2, WS5, WS6 |
 | WS10 Security engineering | Server-side approval records, server-owned history, bridge isolation, deny lists, injection handling, audit log, threat review | Controls passing E5, the approval rejection tests and the Playwright deny-list fixtures | WS1, WS2, WS4 |
 
 ### Milestones and gates
@@ -1267,7 +1356,7 @@ Work splits into ten workstreams that build in parallel once the contracts are f
 | --- | --- | --- |
 | M0 Contracts | Protocol v1 (stream data parts and bridge messages), schema and migrations, CI, container build | Contract tests and Swift round-trip pass; a bridge echo test passes with the workspace in a `WKWebView`; container smoke test passes against Postgres |
 | M1 Brain core | Engine, catalog loader, safety net, guards, retrieval; scenario 3 benefits in the catalog; all tools real | E1 and E2 at 100%; E5 subset zero violations; no stub reachable (NFR-17) |
-| M2 First-value slice: scenario 3 end to end | Document import (SV-Box sample letter via upload, scan or screen capture) → quoted recommendation → process → office → application with provenance → document checklist → facility → appointment preparation, in the Mac app with voice | E12 precision gate; E4 scenario 3 variants at target; demo script runs without manual intervention; latency p50 within budget on the reference machine |
+| M2 First-value slice: scenario 3 end to end | Document import (SV-Box sample letter via upload, scan or screen capture) → quoted recommendation → process → office → application filled live with provenance → document checklist → facility → appointment preparation, in the Mac app with voice | E12 precision gate; E4 scenario 3 variants at target; demo script runs without manual intervention; latency p50 within budget on the reference machine |
 | M3 Breadth | Catalog core set across A–F; S1, S2, S4 bundles; FR-M1, FR-M2; appointment search; subject/actor model; helper starts a case | E2 generalization scan passes; E4 for S1–S4 at target; E11 at target |
 | M4 Advanced features | Relatives mode with second cursor, circle-to-ask, L3 guided booking fill on verified booking pages, deadline guard, background jobs | E5 full set zero violations; E8 target; WCAG 2.2 AA audit of the workspace; deny-list fixtures pass |
 | M5 Pilot readiness | Portability proof on a non-Vercel host, judge calibration, dashboards, resume-after-crash test | All blocking gates; container deployment demonstrated with the `ToolLoopAgent` runtime on a non-Vercel host and, separately, `WorkflowAgent` on Vercel; NFR-4 resume test passes |
@@ -1308,19 +1397,23 @@ The largest risks are wrong eligibility statements and imprecise pointing; both 
 | Helper misuse of relatives mode | Low | High | Share scope, rate limits, pause word, audit, approvals with the person (FR-R5) |
 | Guard over-blocks legitimate administrative answers | Medium | Medium | Rule guard with tested patterns; FPR tracked in E5; rewrite instead of refuse |
 | Elderly users fail the macOS permission setup | High | Medium | Helper-assisted setup, web-first start, just-in-time permission prompts |
+| Field detection on flat forms misses or misplaces fields | Medium | High | Overlay shown before filling, user corrections, `auto` and `verified` templates, E13 |
+| Official form URLs change or forms get new versions | High | Medium | Hash and date per template, re-check before use, search fallback (FR-D10) |
+| Anonymous sessions lose a case when cookies are cleared | Medium | Low | Export and handoff before reset; accounts later behind `requireSession` |
 | Hidden workspace `WKWebView` suspended or throttled by WebKit | Medium | High | `inactiveSchedulingPolicy = .none`; the window is hidden, never closed; E9 measures turn latency with the window hidden |
 | AI SDK approval-signing option is experimental and may change | Medium | Low | Our server-side `approval` record check is authoritative; SDK signing is defense in depth; approval rejection tests pin the behaviour |
 | Bridge round trips add latency to pointing and speech | Low | Medium | Display actions are fire-and-forget data parts, never blocking tool calls; bridge hand-off budgeted and traced in E9 |
 
 ### Assumptions
 
-- Vercel AI Gateway is the primary model access for the pilot, with the OpenAI API alongside; EU-hosted candidates are configured but not yet benchmarked.
+- The OpenAI API is the only model provider for the pilot; the model router keeps other providers possible.
 - Postgres runs at a provider with pgvector support; no provider-specific features are used.
 - WebRTC for relatives mode uses LiveKit (cloud or self-hosted).
 - German and English are launch languages; further languages are validated before their flag is enabled.
 - All user context lives server-side; the Mac app needs network access for every turn and queues document uploads while offline (NFR-3).
 - Windows, the browser extension and the phone channel are later phases.
-- The SV-Box data may be used for development, evaluation and demonstration.
+- The SV-Box data may be used for development, evaluation and demonstration in the KI Challenge 2026; it is kept unmodified in the private repository under `data/svbox/`.
+- The pilot needs no login; anonymous sessions suffice for the demo and the evaluation.
 - The user's context is built only from what the user says, uploads and shows; no health-record or insurance-portal integration exists in v1.
 
 ## 20. Appendix
@@ -1348,6 +1441,8 @@ The largest risks are wrong eligibility statements and imprecise pointing; both 
 | Wahlarzt | Doctor without a contract with the carrier; costs are partly reimbursed |
 | Anschlussheilverfahren | Rehabilitation directly following a hospital stay |
 | AcroForm | Fillable PDF form standard |
+| Form template | One official form version in the registry, with its schema |
+| Live fill | Filling a form visibly in front of the user: cursor, click, typing, a source per value, then confirmation |
 | Accessibility tree (AX) | macOS interface structure used to locate elements exactly |
 | RRF | Reciprocal rank fusion, used to merge full-text and vector results |
 | World (Workflow DevKit) | The backend that stores and runs durable workflow steps; Vercel World on Vercel |
@@ -1361,8 +1456,8 @@ The largest risks are wrong eligibility statements and imprecise pointing; both 
 | # | Question | Default until answered |
 | --- | --- | --- |
 | OT-1 | Which facilities and offices in the core set have real online booking pages that can go on the allowlist for FR-O6? | None assumed; FR-O6 ends with prepared artefacts until a page is verified and added to `appointment_channels` |
-| OT-2 | Does the SV-Box contain fee-schedule tariff positions that allow illustrative amounts for FR-M2, or only summaries? | Explain the rule and documents; show amounts only where a position exists |
-| OT-3 | Do the SV-Box sample documents include discharge letters with explicit rehabilitation recommendations for the scenario 3 demo and E12? | Assumed yes; otherwise the demo uses the closest available sample |
+| OT-2 | Resolved: the SV-Box fee schedules contain tariff positions with € amounts (Styria, as of 1 January 2025; dental 2026) | Show illustrative amounts with region and as-of date |
+| OT-3 | Resolved: the SV-Box discharge letter contains an explicit rehabilitation recommendation, social-insurance hints and an open-task list | Scenario 3 demo uses it |
 | OT-4 | Is there a machine-readable source for carrier Landesstellen and customer service centres, or does the office directory stay manually curated? | Manual curation with `verified_at` |
 | OT-5 | Which embedding model and reranker win E3 and E10 for German legal and administrative text? | Candidates benchmarked in E10; routing config holds the winner |
 | OT-6 | Which orchestrator model meets the 600 ms first-token budget with tool use and German? | Measured in E9 and E10 |
@@ -1371,11 +1466,14 @@ The largest risks are wrong eligibility statements and imprecise pointing; both 
 | OT-9 | Does LiveKit's screen-share track from ScreenCaptureKit meet the second-cursor latency needed for pointing in relatives mode? | Measured in M4 |
 | OT-10 | Final-jury criteria: unknown (brief section empty); working assumption pitch clarity, demo impact, feasibility | Scenario 3 demo as the pitch spine |
 | OT-11 | Does one ElevenLabs TTS WebSocket per turn (one `tts_websocket` token) hold up for long multi-segment answers, or is a socket per segment needed? | One socket per turn; fall back to one per segment with a fresh token if a turn exceeds the socket's limits |
+| OT-13 | How reliable is field detection on typical flat Austrian forms (ruled lines, boxed characters for insurance numbers, multi-column layouts)? | Measured in E13; vision fallback and user correction until it is reliable |
+| OT-14 | Are relevant official forms offered only as Word files or online forms? | Online forms through the guided window (FR-D7); converting Word files to PDF is a later option |
 | OT-12 | How do `toolApproval` with `experimental_toolApprovalSecret` and client tools without `execute` behave together in one step with `sendAutomaticallyWhen` combining both completion helpers? | Covered by an integration test in M0; if they conflict, approval-gated tools run server-side and only their effect is sent to the client |
 
 ### Sources
 
 - KI Challenge Aufgabenstellung, Use Case 1: SV KI-Lotse (Dachverband der österreichischen Sozialversicherungen), provided as PDF
+- SV-Box challenge data (Dachverband): forms, findings, EKO, catalogues, SozDok XML; inventory in docs/svbox-inventory.md
 - Clicky: https://github.com/farzaa/clicky
 - AI SDK 7: https://vercel.com/blog/ai-sdk-7 ; https://ai-sdk.dev/docs/agents/workflow-agent ; https://ai-sdk.dev/docs/agents/tool-approvals ; https://ai-sdk.dev/docs/ai-sdk-core/runtime-and-tool-context ; https://ai-sdk.dev/docs/ai-sdk-core/tools-and-tool-calling ; https://ai-sdk.dev/docs/ai-sdk-ui/chatbot-tool-usage ; https://ai-sdk.dev/docs/ai-sdk-core/telemetry
 - Workflow DevKit: https://workflow-sdk.dev/docs/deploying ; https://workflow-sdk.dev/docs/configuration/worlds ; https://workflow-sdk.dev/worlds/postgres
@@ -1385,7 +1483,23 @@ The largest risks are wrong eligibility statements and imprecise pointing; both 
 - Infrastructure: https://www.postgresql.org/docs/current/textsearch-configuration.html ; https://github.com/pgvector/pgvector ; https://quicktype.io/swift ; https://docs.livekit.io ; https://langfuse.com/docs ; https://posthog.com/docs
 - Austrian domain: https://www.oesterreich.gv.at (Pflegegeld, Rezeptgebühr, Familienbeihilfe, Notrufnummern) ; https://www.sozialministerium.gv.at (Pflegegeld, Medizinische Rehabilitation, Brustkrebs-Früherkennung, 24-Stunden-Betreuung) ; https://www.sozialministeriumservice.gv.at (Pflegekarenz) ; https://www.oegk.at (Vorsorgeuntersuchung, Heilbehelfe und Hilfsmittel, Gesamtverträge, Formulare) ; https://www.sozialversicherung.at (Erstattungskodex) ; https://www.sozialversicherung.gv.at (Wahlarzt) ; https://www.gesundheit.gv.at (Vorsorge, Eltern-Kind-Pass, Notruf) ; https://www.bka.gv.at (Familienbeihilfe, Sozialhilfe) ; https://www.fsw.at ; https://www.bewegt-im-park.at ; https://www.bmwkms.gv.at
 
-### Change log: architecture consolidation (this revision)
+### Change log: SV-Box inventory, sessions and live forms (this revision)
+
+New IDs: FR-D10, FR-D11, E13, OT-13, OT-14. No ID was removed.
+
+| Change | Sections |
+| --- | --- |
+| **SV-Box inventoried.** Real contents and formats replace the assumptions: 7 fillable forms, 5 text PDFs, EKO fixed-width exports, 3 catalogues and 14,244 SozDok XML paragraphs. The dataset table, source registry and ingestion are updated, and OT-2 and OT-3 are resolved | 2, 10, 20 |
+| **Scenario 3 demo** built on the SV-Box discharge letter: rehabilitation application filled live; Pflegegeld, home care, travel costs and the prescription-fee exemption from its task list; EKO check of the discharge medication; hospital-only form handed to the hospital | 2, 3 |
+| **Live form filling** (FR-D5 rewritten). The cursor clicks into each field and types the value with its source; values are drafts until the user confirms the group. New tools `form.fillLive` and `form.commitGroup`, `Action` kind `type`, `Target` variant `form`, bridge message `TargetRect`, flow 4, form viewer | 4, 5, 6, 7, 8, 9 |
+| **Dynamic forms** (FR-D10, FR-D11): acquisition from allowlisted official sites, versioned templates, field detection for flat and scanned PDFs, `form_template` and `form_instance` entities, E13, WS11 | 5, 7, 8, 10, 14, 18 |
+| **Anonymous sessions replace passkeys and magic links**: `requireSession` stays the seam; `/api/session`; helper sessions through invites; real sign-in is a later phase | 2, 7, 10, 11, 13, 17 |
+| FR-M1 substance-level EKO lookup without naming products; FR-M2 uses the SV-Box fee schedules; E12 augmented with synthetic documents and blocking from 30 documents on; synonyms expanded at query time | 5, 10, 14 |
+| Native SwiftUI conversation view noted as an optional later view of the same conversation, not a second client | 2, 9 |
+| Model access reduced to the OpenAI API; the internal abstraction is called the model router | 7, 8, 17, 19 |
+| SV-Box files stored unmodified in the private repository under `data/svbox/` | 10, 19 |
+
+### Change log: architecture consolidation
 
 Requirement IDs are unchanged; no ID was added or removed.
 
