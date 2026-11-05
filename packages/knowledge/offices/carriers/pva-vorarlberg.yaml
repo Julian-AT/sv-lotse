@@ -1,0 +1,40 @@
+id: "pva-vorarlberg"
+name_de: "Pensionsversicherung – Landesstelle Vorarlberg"
+name_simple: "PVA-Büro in Vorarlberg"
+carrier: "pva"
+region: "Vorarlberg"
+url: "https://www.pv.at/web/service-und-kontakt/kontakt/vorarlberg/kontakt-vorarlberg"
+address:
+  street: "Zollgasse 6"
+  postal_code: "6850"
+  locality: "Dornbirn"
+  country: "AT"
+phone: "+43 (0)5 03 03"
+email: "pva-lsv@pv.at"
+opening_hours:
+  notes: |-
+    Nach telefonischer Terminvereinbarung stehen die Mitarbeiter*innen in unseren Landesstellen für persönliche Vorsprachen gerne zur Verfügung.
+    Auskunfts- und Beratungszeiten:
+    Montag bis Mittwoch und Freitag von 7:00 bis 15:00 Uhr
+    Donnerstag von 7:00 bis 18:00 Uhr
+jurisdiction: "Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort, bei Wohnsitz im Ausland ist die Landesstelle Wien zuständig."
+sources:
+  - url: "https://www.pv.at/web/service-und-kontakt/kontakt/vorarlberg/kontakt-vorarlberg"
+    quote: |-
+      Adresse: Zollgasse 6,
+      6850 Dornbirn
+      Telefon: +43 (0)5 03 03
+      Fax: +43 (0)5 03 03-39 850
+      E-Mail: pva-lsv@pv.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.pv.at/web/service-und-kontakt/kontakt"
+    quote: |-
+      Nach telefonischer Terminvereinbarung stehen die Mitarbeiter*innen in unseren Landesstellen für persönliche Vorsprachen gerne zur Verfügung.
+      Auskunfts- und Beratungszeiten:
+      Montag bis Mittwoch und Freitag von 7:00 bis 15:00 Uhr
+      Donnerstag von 7:00 bis 18:00 Uhr
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.pv.at/web/service-und-kontakt/kontakt"
+    quote: "Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort, bei Wohnsitz im Ausland ist die Landesstelle Wien zuständig."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
