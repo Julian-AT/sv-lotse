@@ -1,0 +1,279 @@
+.skipLink {
+  position: fixed;
+  z-index: 10;
+  top: 0.5rem;
+  left: 1rem;
+  padding: 0.75rem;
+  background: var(--lotse-surface);
+  transform: translateY(-160%);
+}
+.skipLink:focus {
+  transform: translateY(0);
+}
+/* The header is sticky glass. The material lives on a pseudo-element: backdrop-filter on the header
+   itself would become the containing block of the fixed settings sheet and clip it. */
+.siteHeader {
+  max-width: 78rem;
+  margin: 1rem auto 0;
+  width: calc(100% - 2rem);
+  position: sticky;
+  top: 0.75rem;
+  z-index: 30;
+  isolation: isolate;
+  padding: 0.75rem clamp(1rem, 2.5vw, 1.75rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+.siteHeader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: var(--lotse-radius-large);
+  background: var(--lotse-glass-background);
+  border: 1px solid var(--lotse-glass-edge);
+  box-shadow: var(--lotse-glass-shadow);
+  -webkit-backdrop-filter: var(--lotse-glass-filter);
+  backdrop-filter: var(--lotse-glass-filter);
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--lotse-target-size);
+  margin-right: auto;
+  color: var(--lotse-color-brand-text);
+  font-size: 1.25rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+.wordmark:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--lotse-color-brand-hover);
+}
+.wordmark:active {
+  text-decoration-color: var(--lotse-color-brand-pressed);
+}
+.siteHeader nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+.siteHeader nav [aria-current] {
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+}
+.siteHeader details {
+  position: relative;
+}
+.siteHeader summary {
+  padding: 0.5rem;
+}
+.settingsPanel {
+  position: absolute;
+  color: var(--lotse-text);
+  background: var(--lotse-glass-background);
+  border: 1px solid var(--lotse-glass-edge);
+  -webkit-backdrop-filter: var(--lotse-glass-filter);
+  backdrop-filter: var(--lotse-glass-filter);
+  z-index: 2;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  border-radius: var(--lotse-radius-medium);
+  box-shadow: var(--lotse-glass-shadow), var(--lotse-elevation-dialog);
+  width: min(29rem, 85vw);
+  max-height: min(75dvh, 50rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1.25rem;
+}
+.settingsPanel p {
+  margin-top: 0;
+}
+.settingsPanel fieldset {
+  display: grid;
+  gap: 0.75rem;
+  border: 0;
+  padding: 0;
+  margin: 0 0 1.25rem;
+}
+.settingsPanel label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 44px;
+}
+.settingsPanel select {
+  width: 100%;
+  min-height: 44px;
+  font: inherit;
+}
+.settingsPanel [role="status"] {
+  margin: 0.75rem 0 0;
+}
+.main {
+  max-width: 78rem;
+  margin: auto;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 4rem);
+  min-height: 65vh;
+}
+.welcome {
+  display: grid;
+  gap: 1rem clamp(2rem, 5vw, 4rem);
+  max-width: 48rem;
+}
+.welcomeIntro,
+.welcomeTools {
+  min-width: 0;
+}
+.welcomeTools {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+.welcomeTools > * {
+  margin-block: 0;
+}
+.welcomeLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+/* Wide screens: the introduction stays beside the working tools instead of one long column. */
+@media (min-width: 72rem) {
+  .welcome {
+    max-width: none;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    align-items: start;
+  }
+  .welcomeIntro {
+    position: sticky;
+    top: 7rem;
+  }
+  .welcome h1 {
+    font-size: clamp(2.5rem, 4.4vw, 4rem);
+  }
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+.welcome h1 {
+  max-width: 15ch;
+  margin: 1rem 0 1.5rem;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.introduction {
+  max-width: 47ch;
+  font-size: 1.2rem;
+}
+.sessionNote {
+  margin: 2rem 0;
+  padding: 0.5rem 1.25rem;
+  border-left: 3px solid var(--lotse-success);
+  border-radius: 0 var(--lotse-radius-small) var(--lotse-radius-small) 0;
+  background: color-mix(in srgb, var(--lotse-subtle) 80%, transparent);
+}
+.boundary {
+  max-width: 60ch;
+  color: var(--lotse-muted);
+}
+.footer {
+  max-width: 78rem;
+  margin: auto;
+  padding: 1rem clamp(1rem, 4vw, 4rem);
+  border-top: 1px solid var(--lotse-border);
+  color: var(--lotse-muted);
+  font-size: 0.9rem;
+}
+@media (max-width: 36rem) {
+  .wordmark {
+    width: 100%;
+  }
+}
+.level {
+  margin: 0;
+  white-space: nowrap;
+}
+.fields {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--lotse-border);
+  border-radius: 0.5rem;
+}
+.fields legend {
+  font-weight: 700;
+  padding: 0 0.25rem;
+}
+.unstyledFieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.field {
+  display: grid;
+  gap: 0.25rem;
+}
+.choice {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+}
+.choice input {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 1.5rem;
+  margin: 0;
+  accent-color: var(--lotse-accent);
+}
+.onboarding {
+  composes: lotse-glass from global;
+  max-width: 48rem;
+  margin-top: 2rem;
+  padding: clamp(0.75rem, 3vw, 2rem);
+}
+.steps {
+  padding-left: 1.5rem;
+}
+.steps [aria-current="step"] {
+  font-weight: 700;
+  text-decoration: underline;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.guide {
+  max-width: 48rem;
+}
+.guide li {
+  margin-bottom: 1rem;
+}
+@media print {
+  .siteHeader,
+  .skipLink,
+  .footer,
+  .guide button {
+    display: none;
+  }
+  .main {
+    padding: 0;
+  }
+}
