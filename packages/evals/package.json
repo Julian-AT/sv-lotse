@@ -1,0 +1,32 @@
+{
+  "name": "@lotse/evals",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./e4": "./src/e4/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --exclude \"**/live/**\"",
+    "test:live": "node scripts/live.mjs",
+    "eval": "bun src/cli.ts",
+    "eval:e5": "bun src/e5/cli.ts",
+    "eval:baseline": "node --experimental-transform-types src/baseline/cli.ts",
+    "audit:e3": "node --experimental-strip-types src/baseline/e3-audit.ts",
+    "eval:e4": "node --experimental-transform-types src/e4/cli.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^4.0.109",
+    "ai": "^7",
+    "zod": "^4",
+    "@lotse/brain": "workspace:*",
+    "@lotse/db": "workspace:*",
+    "@lotse/knowledge": "workspace:*",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {
+    "pdfjs-dist": "^6.5.438"
+  }
+}
