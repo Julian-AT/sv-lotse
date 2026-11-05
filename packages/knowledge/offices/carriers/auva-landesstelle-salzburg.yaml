@@ -1,0 +1,37 @@
+id: "auva-landesstelle-salzburg"
+name_de: "AUVA – Landesstelle Salzburg"
+name_simple: "AUVA-Büro in Salzburg"
+carrier: "auva"
+region: "Salzburg"
+url: "https://auva.at/servicestellen/landesstelle-salzburg"
+address:
+  street: "Dr.-Franz-Rehrl-Platz 5"
+  postal_code: "5010"
+  locality: "Salzburg"
+  country: "AT"
+phone: "+43 5 93 93-34000"
+email: "SLD@auva.at"
+opening_hours:
+  notes: |-
+    Die AUVA-Kunden-:Kundinnendienststellen sind wochentags (Mo - Fr) von 07:00 - 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+    Wochentags (Mo - Fr) von 08:00 - 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+jurisdiction: "Die AUVA-Landesstelle Salzburg ist für die Länder Salzburg, Tirol und Vorarlberg zuständig."
+sources:
+  - url: "https://auva.at/servicestellen/landesstelle-salzburg"
+    quote: |-
+      Landesstelle Salzburg
+      Direktion
+      SLD@auva.at
+      +43 5 93 93-34000
+      +43 5 93 93-34615
+      Dr.-Franz-Rehrl-Platz 5, 5010 Salzburg
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/landesstelle-salzburg"
+    quote: |-
+      Die AUVA-Kunden-:Kundinnendienststellen sind wochentags (Mo - Fr) von 07:00 - 18:00 Uhr geöffnet. Bitte vereinbaren Sie vorab einen Termin - siehe oben stehende Telefonnummer.
+      Wochentags (Mo - Fr) von 08:00 - 15:00 Uhr sind wir auch ohne Terminvereinbarung persönlich erreichbar.
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://auva.at/servicestellen/landesstelle-salzburg"
+    quote: "Die AUVA-Landesstelle Salzburg ist für die Länder Salzburg, Tirol und Vorarlberg zuständig."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
