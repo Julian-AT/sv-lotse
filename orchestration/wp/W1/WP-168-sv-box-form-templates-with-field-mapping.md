@@ -10,6 +10,8 @@ fr: [FR-D5, FR-D6, E7]
 owns:
   - packages/knowledge/forms/svbox-*
   - packages/knowledge/src/loader/**
+  - packages/knowledge/src/schemas/form.ts
+  - packages/knowledge/test/schemas/**
   - packages/knowledge/test/loader/**
 may_touch:
   - packages/knowledge/package.json
@@ -74,6 +76,12 @@ SV-Box `source` path registers its template: upload the original PDF to object s
 page count, format `acroform`, status and the schema in `form_template`, idempotently by hash. The
 schema files then reference the template by their stable `id`; `template_id` is assigned by the
 loader, not hand-written. Add a database test for registration and idempotency.
+
+## Schema change (decision 2026-11-06)
+
+Extend `FormSchema` in `packages/knowledge/src/schemas/form.ts`: `template_id` becomes optional
+(assigned by the loader on registration; a UUID when present), and add `source` (SV-Box path or
+allowlisted URL), `publisher` and `title`. Keep every other rule. Update the schema tests.
 
 ## Acceptance criteria
 
