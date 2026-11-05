@@ -1,6 +1,7 @@
 # ADR 0001: Monorepo toolchain and TypeScript source packages
 
 - Status: accepted for WP-001
+  Task running superseded by ADR 0010.
 - Date: 2026-11-05
 - Requirements: PRD §17, NFR-13, NFR-16
 
