@@ -18,6 +18,7 @@ owns:
   - packages/knowledge/processes/README.md
   - packages/knowledge/offices/README.md
   - packages/knowledge/forms/README.md
+  - packages/knowledge/facilities/README.md
   - packages/knowledge/src/index.ts
   - packages/knowledge/AGENTS.md
   - packages/knowledge/README.md
