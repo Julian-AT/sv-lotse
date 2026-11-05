@@ -44,6 +44,8 @@ jobs:
             ${{ runner.os }}-turbo-${{ hashFiles('bun.lock') }}-
             ${{ runner.os }}-turbo-
       - run: bun run lint
+      - name: Check repository quality and baseline regressions
+        run: bun run quality && bun run quality:test
       - name: Check affected packages
         if: github.event_name == 'pull_request'
         env:
