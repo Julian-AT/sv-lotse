@@ -1,0 +1,1792 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E12",
+    "name": "Documented recommendations and administrative facts",
+    "gate": {
+      "kind": "blocking",
+      "metric": "precision",
+      "threshold": 0.98,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 30
+  },
+  "cases": [
+    {
+      "id": "e12-svbox-discharge",
+      "kind": "gold",
+      "tags": ["pr", "nightly", "weekly", "discharge", "multicolumn", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "svbox",
+          "path": "Befunde/Entlassungsbefund.pdf",
+          "sha256": "9994b167616cf43b7a107a5659fbe8ee2ea3ee652067ac0f76e8310114fbfd57",
+          "pageCount": 7
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-svbox-discharge-a001",
+            "factType": "institution",
+            "quote": "Abteilung für Innere Medizin und Onkologie – Entlassungsmanagement",
+            "page": 1,
+            "position": {
+              "start": 30,
+              "end": 96
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a002",
+            "factType": "carrier",
+            "quote": "Gesetzlich krankenversichert, ÖGK (fiktive Angabe)",
+            "page": 1,
+            "position": {
+              "start": 407,
+              "end": 457
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a003",
+            "factType": "discharge_date",
+            "quote": "29.10.2026",
+            "page": 1,
+            "position": {
+              "start": 561,
+              "end": 571
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a004",
+            "factType": "follow_up",
+            "quote": "Hausärztin, onkologische Ambulanz, mobile Hauskrankenpflege",
+            "page": 1,
+            "position": {
+              "start": 590,
+              "end": 649
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a005",
+            "factType": "named_medicine",
+            "quote": "Amlodipin",
+            "page": 3,
+            "position": {
+              "start": 727,
+              "end": 736
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a006",
+            "factType": "named_medicine",
+            "quote": "Ondansetron",
+            "page": 3,
+            "position": {
+              "start": 824,
+              "end": 835
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a007",
+            "factType": "named_medicine",
+            "quote": "Macrogol",
+            "page": 3,
+            "position": {
+              "start": 938,
+              "end": 946
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a008",
+            "factType": "named_medicine",
+            "quote": "Pantoprazol",
+            "page": 3,
+            "position": {
+              "start": 1027,
+              "end": 1038
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a009",
+            "factType": "open_task",
+            "quote": "Der vollständige, aktuelle Medikationsplan ist bei Hausärztin, Onkologie und\nApotheke vorzulegen.",
+            "page": 3,
+            "position": {
+              "start": 1274,
+              "end": 1371
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a010",
+            "factType": "follow_up",
+            "quote": "Regelmäßige Vorstellung in der onkologischen Ambulanz.",
+            "page": 4,
+            "position": {
+              "start": 318,
+              "end": 372
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a011",
+            "factType": "follow_up",
+            "quote": "Zeitnahe Kontrolle nach der Entlassung.",
+            "page": 4,
+            "position": {
+              "start": 668,
+              "end": 707
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a012",
+            "factType": "documented_recommendation",
+            "quote": "Mobile Hauskrankenpflege zur Unterstützung bei pflegerischen Aufgaben und zur\nBeobachtung des Allgemeinzustands.",
+            "page": 4,
+            "position": {
+              "start": 1197,
+              "end": 1309
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a013",
+            "factType": "documented_recommendation",
+            "quote": "Unterstützung bei Körperpflege, Einkäufen, Haushaltsführung und\ngegebenenfalls Essensversorgung.",
+            "page": 4,
+            "position": {
+              "start": 1314,
+              "end": 1410
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a014",
+            "factType": "open_task",
+            "quote": "Hilfe bei der Organisation und Wahrnehmung regelmäßiger Bestrahlungstermine.",
+            "page": 4,
+            "position": {
+              "start": 1415,
+              "end": 1491
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a015",
+            "factType": "documented_recommendation",
+            "quote": "Einbindung einer Vertrauensperson zur Unterstützung bei organisatorischen\nAufgaben, sofern von der Patientin gewünscht.",
+            "page": 4,
+            "position": {
+              "start": 1552,
+              "end": 1671
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a016",
+            "factType": "documented_recommendation",
+            "quote": "Empfehlung:   Prüfung einer stationären onkologischen Rehabilitation nach Abschluss\nder geplanten Strahlentherapie.",
+            "page": 5,
+            "position": {
+              "start": 216,
+              "end": 331
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a017",
+            "factType": "open_task",
+            "quote": "Der Antrag soll rechtzeitig mit dem behandelnden onkologischen Team bzw. der\nHausärztin vorbereitet werden.",
+            "page": 5,
+            "position": {
+              "start": 1060,
+              "end": 1167
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a018",
+            "factType": "open_task",
+            "quote": "Dabei sind die medizinische Begründung, der\nvoraussichtliche Rehabilitationsbeginn und die zuständige Sozialversicherung zu klären.",
+            "page": 5,
+            "position": {
+              "start": 1168,
+              "end": 1299
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a019",
+            "factType": "insurance_hint",
+            "quote": "Die endgültige Entscheidung über die Bewilligung und die geeignete Einrichtung trifft der\nzuständige Kostenträger.",
+            "page": 5,
+            "position": {
+              "start": 1300,
+              "end": 1414
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a020",
+            "factType": "insurance_hint",
+            "quote": "Prüfung der Voraussetzungen für einen stationären onkologischen\nRehabilitationsaufenthalt.",
+            "page": 5,
+            "position": {
+              "start": 1590,
+              "end": 1680
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a021",
+            "factType": "open_task",
+            "quote": "Unterstützung bei der Antragstellung und Zusammenstellung der erforderlichen\nmedizinischen Unterlagen.",
+            "page": 5,
+            "position": {
+              "start": 1685,
+              "end": 1787
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a022",
+            "factType": "open_task",
+            "quote": "Klärung der Zuständigkeit des zuständigen Sozialversicherungsträgers.",
+            "page": 5,
+            "position": {
+              "start": 1792,
+              "end": 1861
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a023",
+            "factType": "open_task",
+            "quote": "Informationen zur Antragstellung und zum zuständigen Entscheidungsträger\nsollen eingeholt werden.",
+            "page": 6,
+            "position": {
+              "start": 334,
+              "end": 431
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a024",
+            "factType": "open_task",
+            "quote": "Kontaktaufnahme mit den zuständigen Wiener Beratungs- und Servicestellen zur\nOrganisation mobiler Pflege und gegebenenfalls weiterer Alltagshilfen.",
+            "page": 6,
+            "position": {
+              "start": 470,
+              "end": 617
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a025",
+            "factType": "insurance_hint",
+            "quote": "Prüfung möglicher Kostenbeiträge, Förderungen und regionaler\nUnterstützungsangebote.",
+            "page": 6,
+            "position": {
+              "start": 622,
+              "end": 706
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a026",
+            "factType": "insurance_hint",
+            "quote": "Bei entsprechender finanzieller Situation Information über die Voraussetzungen\neiner Rezeptgebührenbefreiung.",
+            "page": 6,
+            "position": {
+              "start": 733,
+              "end": 842
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a027",
+            "factType": "insurance_hint",
+            "quote": "Klärung möglicher Unterstützungsleistungen für Fahrten zu notwendigen\nBehandlungsterminen.",
+            "page": 6,
+            "position": {
+              "start": 847,
+              "end": 937
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a028",
+            "factType": "open_task",
+            "quote": "Gegebenenfalls ärztliche Bestätigung und vorherige Abstimmung mit dem\nKostenträger.",
+            "page": 6,
+            "position": {
+              "start": 1163,
+              "end": 1246
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a029",
+            "factType": "insurance_hint",
+            "quote": "Hinweis:   Ob und in welchem Umfang die genannten Leistungen gewährt werden, hängt\nvon den individuellen Voraussetzungen, den geltenden Regelungen und gegebenenfalls\neiner gesonderten Antragstellung ab.",
+            "page": 6,
+            "position": {
+              "start": 1247,
+              "end": 1449
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a030",
+            "factType": "open_task",
+            "quote": "Termin zur hausärztlichen Kontrolle Patientin bzw. unterstützende\nvereinbaren Vertrauensperson",
+            "page": 6,
+            "position": {
+              "start": 1532,
+              "end": 1626
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a031",
+            "factType": "open_task",
+            "quote": "Weitere Bestrahlungstermine koordinieren   Onkologische Ambulanz und Patientin",
+            "page": 6,
+            "position": {
+              "start": 1627,
+              "end": 1705
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a032",
+            "factType": "open_task",
+            "quote": "Aktuellen Medikationsplan abstimmen   Hausärztin und Onkologie",
+            "page": 6,
+            "position": {
+              "start": 1706,
+              "end": 1768
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a033",
+            "factType": "open_task",
+            "quote": "Entlassungsmanagement und soziale\nMobile Hauskrankenpflege organisieren  \nDienste",
+            "page": 7,
+            "position": {
+              "start": 0,
+              "end": 81
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a034",
+            "factType": "open_task",
+            "quote": "Rehabilitationsantrag vorbereiten   Behandelnde Ärztin bzw. behandelnder Arzt",
+            "page": 7,
+            "position": {
+              "start": 82,
+              "end": 159
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a035",
+            "factType": "open_task",
+            "quote": "Patientin mit Unterstützung der\nPflegegeldanspruch prüfen  \nSozialberatung",
+            "page": 7,
+            "position": {
+              "start": 160,
+              "end": 234
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a036",
+            "factType": "open_task",
+            "quote": "Fahrtmöglichkeiten zu Patientin, Sozialberatung und zuständiger\nBehandlungsterminen klären Kostenträger",
+            "page": 7,
+            "position": {
+              "start": 235,
+              "end": 338
+            }
+          },
+          {
+            "id": "e12-svbox-discharge-a037",
+            "factType": "open_task",
+            "quote": "Patientin bzw. zuständiger\nRezeptgebührenbefreiung prüfen  \nSozialversicherungsträger",
+            "page": 7,
+            "position": {
+              "start": 339,
+              "end": 424
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+        "passage": "Abteilung für Innere Medizin und Onkologie – Entlassungsmanagement"
+      }
+    },
+    {
+      "id": "e12-svbox-radiology-1",
+      "kind": "gold",
+      "tags": ["pr", "nightly", "weekly", "report", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "svbox",
+          "path": "Befunde/Röntgen Befund.pdf",
+          "sha256": "bba492babb1af3afea9572d383fa50cf827be87e9d08f08d1689d32dedf32041",
+          "pageCount": 3
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-svbox-radiology-1-a001",
+            "factType": "document_date",
+            "quote": "vom 2. August 2025 um 15:47 Uhr | Version: 1",
+            "page": 1,
+            "position": {
+              "start": 30,
+              "end": 74
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-1-a002",
+            "factType": "institution",
+            "quote": "Besuch:   OEG",
+            "page": 1,
+            "position": {
+              "start": 144,
+              "end": 157
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-1-a003",
+            "factType": "case_number",
+            "quote": "FZ: 4012452",
+            "page": 1,
+            "position": {
+              "start": 158,
+              "end": 169
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-1-a004",
+            "factType": "visit_date",
+            "quote": "Ambulant am 2. August 2025 von 09:43 Uhr bis 10:56 Uhr",
+            "page": 2,
+            "position": {
+              "start": 195,
+              "end": 249
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-1-a005",
+            "factType": "case_number",
+            "quote": "Fallzahl: 12354",
+            "page": 2,
+            "position": {
+              "start": 250,
+              "end": 265
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-1-a006",
+            "factType": "institution",
+            "quote": "Dokumentenverfasser:in   OEG",
+            "page": 2,
+            "position": {
+              "start": 548,
+              "end": 576
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-1-a007",
+            "factType": "document_date",
+            "quote": "OEG am 2. August 2025",
+            "page": 2,
+            "position": {
+              "start": 437,
+              "end": 458
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "svbox:///Befunde/R%C3%B6ntgen%20Befund.pdf",
+        "passage": "vom 2. August 2025 um 15:47 Uhr | Version: 1"
+      }
+    },
+    {
+      "id": "e12-svbox-radiology-2",
+      "kind": "gold",
+      "tags": ["pr", "nightly", "weekly", "report", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "svbox",
+          "path": "Befunde/Röntgen Befund2.pdf",
+          "sha256": "28a37c1ec340904a0b5f49f13069f182121e8e20bcf9e014fd5818c9822fd294",
+          "pageCount": 3
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-svbox-radiology-2-a001",
+            "factType": "document_date",
+            "quote": "vom 22. März 2026 um 18:21 Uhr | Version: 1",
+            "page": 1,
+            "position": {
+              "start": 30,
+              "end": 73
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-2-a002",
+            "factType": "institution",
+            "quote": "Besuch:   OEG",
+            "page": 1,
+            "position": {
+              "start": 144,
+              "end": 157
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-2-a003",
+            "factType": "case_number",
+            "quote": "FZ: 123456",
+            "page": 1,
+            "position": {
+              "start": 158,
+              "end": 168
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-2-a004",
+            "factType": "visit_date",
+            "quote": "Ambulant am 22. März 2026 von 17:57 Uhr bis 23:59 Uhr",
+            "page": 2,
+            "position": {
+              "start": 116,
+              "end": 169
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-2-a005",
+            "factType": "case_number",
+            "quote": "Fallzahl: 123456",
+            "page": 2,
+            "position": {
+              "start": 170,
+              "end": 186
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-2-a006",
+            "factType": "institution",
+            "quote": "Dokumentenverfasser:in   OEG",
+            "page": 2,
+            "position": {
+              "start": 459,
+              "end": 487
+            }
+          },
+          {
+            "id": "e12-svbox-radiology-2-a007",
+            "factType": "document_date",
+            "quote": "OEG am 22. März 2026",
+            "page": 2,
+            "position": {
+              "start": 355,
+              "end": 375
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "svbox:///Befunde/R%C3%B6ntgen%20Befund2.pdf",
+        "passage": "vom 22. März 2026 um 18:21 Uhr | Version: 1"
+      }
+    },
+    {
+      "id": "e12-svbox-ultrasound",
+      "kind": "gold",
+      "tags": ["pr", "nightly", "weekly", "report", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "svbox",
+          "path": "Befunde/Befund bildgebende Diagnostik.pdf",
+          "sha256": "115b0bc12d8798aab6979f6a835ee1b009ec33029a72bba20917182ff084d4aa",
+          "pageCount": 1
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-svbox-ultrasound-a001",
+            "factType": "document_date",
+            "quote": "vom 6. August 2023 um 04:46 Uhr | Version: 1",
+            "page": 1,
+            "position": {
+              "start": 10,
+              "end": 54
+            }
+          },
+          {
+            "id": "e12-svbox-ultrasound-a002",
+            "factType": "institution",
+            "quote": "Universitätsklinikum AKH - Neurorad. u. Muskulosk. Rad.",
+            "page": 1,
+            "position": {
+              "start": 139,
+              "end": 194
+            }
+          },
+          {
+            "id": "e12-svbox-ultrasound-a003",
+            "factType": "case_number",
+            "quote": "FZ: 123",
+            "page": 1,
+            "position": {
+              "start": 195,
+              "end": 202
+            }
+          },
+          {
+            "id": "e12-svbox-ultrasound-a004",
+            "factType": "visit_date",
+            "quote": "Ambulant am 2. August 2023",
+            "page": 1,
+            "position": {
+              "start": 203,
+              "end": 229
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "svbox:///Befunde/Befund%20bildgebende%20Diagnostik.pdf",
+        "passage": "vom 6. August 2023 um 04:46 Uhr | Version: 1"
+      }
+    },
+    {
+      "id": "e12-svbox-vaccinations",
+      "kind": "gold",
+      "tags": [
+        "pr",
+        "nightly",
+        "weekly",
+        "vaccinations",
+        "multicolumn",
+        "conflicting-demographics"
+      ],
+      "input": {
+        "document": {
+          "origin": "svbox",
+          "path": "Befunde/Impfpass.pdf",
+          "sha256": "da2002c80f2941836191fbaafc0c32af0f54216d6ae730fdf0a4095a1ebc3bbf",
+          "pageCount": 2
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-svbox-vaccinations-a001",
+            "factType": "document_date",
+            "quote": "vom 15. Oktober 2026 um 09:29 Uhr | Version: 8",
+            "page": 1,
+            "position": {
+              "start": 24,
+              "end": 70
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a002",
+            "factType": "vaccination_record",
+            "quote": "3. Nov. 2025   Impfstoff: COMIRNATY LP.8.1 INJ30 10x6 Auffrischung   Impfort: Heinestraße 11/12\nCh.-Nr.: MT0705 1020 Wien, Wien\nPZN: 6062367 Med. verantwortl. Person: DR. HANNES\nRIEDL\nImpfsetting: Ordination DR. HANNES RIEDL\nImpfdatum: 3. November 2025 Heinestraße 11/12\n1020 Wien, Wien\nEingetragen am: 3. November 2025 um 14:02 Uhr",
+            "page": 1,
+            "position": {
+              "start": 184,
+              "end": 516
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a003",
+            "factType": "vaccination_record",
+            "quote": "4. Dez. 2022   Impfstoff: COMIRNATY COV19 BA4/5 10x6 Auffrischung   Impfort: Bruno-Kreisky-Platz 1\nCh.-Nr.: GH9722 1220 Wien\nPZN: 5516866 Med. verantwortl. Person: Dr. Philipp SA-\nBANAS\nImpfdatum: 4. Dezember 2022 um 18:25 Uhr (UTC+1) Impfzentrum ACV\nEingetragen am: 4. Dezember 2022 um 18:25 Uhr Bruno-Kreisky-Platz 1",
+            "page": 1,
+            "position": {
+              "start": 517,
+              "end": 835
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a004",
+            "factType": "vaccination_record",
+            "quote": "9. Dez. 2021   Impfstoff: PFIZER-BION COV19 KONZ30 1x6 Dosis 3   Impfort: Bruno-Kreisky-Platz 1\nCh.-Nr.: 31134TB 1220 Wien\nPZN: 5424472 Med. verantwortl. Person: Dr. Ferdinand\nWALDENBERGER\nImpfdatum: 9. Dezember 2021 um 09:29 Uhr (UTC+1) Covid19 - Impfzentrum ACV\nEingetragen am: 9. Dezember 2021 um 09:32 Uhr Bruno-Kreisky-Platz 1",
+            "page": 1,
+            "position": {
+              "start": 846,
+              "end": 1177
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a005",
+            "factType": "vaccination_record",
+            "quote": "8. Juli 2021   Impfstoff: PFIZER-BION COV19 KONZ30 1x6 Dosis 2   Impfort: Theresiengasse 53-55/1/1\nCh.-Nr.: FD6840 1180 Wien, Wien\nPZN: 5424472 Med. verantwortl. Person: Dr. Harald Heinz\nManfreda\nImpfdatum: 8. Juli 2021 um 15:33 Uhr (UTC+2) Dr. med. YVETTA ZAKARIAN\nEingetragen am: 8. Juli 2021 um 16:37 Uhr Theresiengasse 53-55/1/1",
+            "page": 1,
+            "position": {
+              "start": 1188,
+              "end": 1520
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a006",
+            "factType": "vaccination_record",
+            "quote": "3. Juni 2021   Impfstoff: PFIZER-BION COV19 KONZ30 1x6 Dosis 1   Impfort: Theresiengasse 53-55/1/1\nCh.-Nr.: FC2473 1180 Wien, Wien\nPZN: 5424472 Med. verantwortl. Person: Dr. Harald Heinz\nManfreda\nImpfdatum: 3. Juni 2021 um 15:30 Uhr (UTC+2) Dr. med. YVETTA ZAKARIAN\nEingetragen am: 3. Juni 2021 um 23:19 Uhr Theresiengasse 53-55/1/1",
+            "page": 1,
+            "position": {
+              "start": 1537,
+              "end": 1869
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a007",
+            "factType": "vaccination_record",
+            "quote": "3. Nov. 2025   Impfstoff: INFLUVAC TRI FSPR 0,5ML O.K. Auffrischung   Impfort: Heinestraße 11/12\nCh.-Nr.: L34 1020 Wien, Wien\nPZN: 6052771 Med. verantwortl. Person: DR. HANNES\nRIEDL\nImpfsetting: Ordination DR. HANNES RIEDL\nImpfdatum: 3. November 2025 Heinestraße 11/12\n1020 Wien, Wien\nEingetragen am: 3. November 2025 um 14:03 Uhr",
+            "page": 1,
+            "position": {
+              "start": 1913,
+              "end": 2243
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a008",
+            "factType": "vaccination_record",
+            "quote": "6. Nov. 2024   Impfstoff: INFLUVAC TETRA FSPR0,5ML O.K Auffrischung   Impfort: St.-Veit-Gasse 68\nCh.-Nr.: J08 1130 Wien, 00\nPZN: 5534491 Med. verantwortl. Person: Dr. Claudia Kap-\npel\nImpfsetting: Arbeitsplatz/Betrieb Dr. Claudia Kappel\nImpfprogramm: Öffentliches Impfprogramm (ÖIP) Influenza St.-Veit-Gasse 68\n1130 Wien, 00\nImpfdatum: 6. November 2024 um 14:15 Uhr (UTC+1)\nEingetragen am: 6. November 2024 um 14:16 Uhr",
+            "page": 1,
+            "position": {
+              "start": 2244,
+              "end": 2663
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a009",
+            "factType": "vaccination_record",
+            "quote": "22. Nov. 2023   Impfstoff: VAXIGRIP TETRA FSPR O.K Auffrischung   Impfort: Triesterstraße 29/1/7\nCh.-Nr.: X3E681V 2620 Neunkirchen, 00\nPZN: 4467858 Med. verantwortl. Person: Dr. Claudia Kap-\npel\nImpfsetting: Arbeitsplatz/Betrieb Dr. Claudia Kappel\nImpfdatum: 22. November 2023 um 14:13 Uhr (UTC+1) Triesterstraße 29/1/7\n2620 Neunkirchen, 00\nEingetragen am: 22. November 2023 um 14:13 Uhr",
+            "page": 1,
+            "position": {
+              "start": 2664,
+              "end": 3051
+            }
+          },
+          {
+            "id": "e12-svbox-vaccinations-a010",
+            "factType": "vaccination_record",
+            "quote": "17. Nov. 2021   Impfstoff: VAXIGRIP TETRA FSPR 0,5ML Dosis 1   Impfort: Thaliastraße 88\nCh.-Nr.: V3H731V 1160 Wien, 00\nPZN: 4467841 Med. verantwortl. Person: Dr. GEORG KU-\nBALEK\nImpfsetting: Arbeitsplatz/Betrieb Dr. GEORG KUBALEK\nImpfdatum: 17. November 2021 um 13:43 Uhr (UTC+1) Thaliastraße 88\n1160 Wien, 00\nEingetragen am: 17. November 2021 um 13:44 Uhr",
+            "page": 2,
+            "position": {
+              "start": 54,
+              "end": 410
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "svbox:///Befunde/Impfpass.pdf",
+        "passage": "vom 15. Oktober 2026 um 09:29 Uhr | Version: 8"
+      }
+    },
+    {
+      "id": "e12-synthetic-01",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "discharge", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH – keine reale Person, fiktive Einrichtung\nENTLASSUNGSBRIEF | Fall SYN-01\nAusgestellt: 02.10.2026\nMusterklinik Nord (fiktiv)\nEntlassung: 01.10.2026\nBefund: Die Lungenfelder sind frei.\nWeiteres Vorgehen\nEine Rehabilitation soll mit der behandelnden Ordination besprochen werden.\nBitte den Rehabilitationsantrag beim Entlassungsmanagement abholen.\nKontrolltermin: 12.10.2026, 09:00 Uhr, Ambulanz A.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-01-a001",
+            "factType": "institution",
+            "quote": "Musterklinik Nord (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 109,
+              "end": 135
+            }
+          },
+          {
+            "id": "e12-synthetic-01-a002",
+            "factType": "case_number",
+            "quote": "Fall SYN-01",
+            "page": 1,
+            "position": {
+              "start": 73,
+              "end": 84
+            }
+          },
+          {
+            "id": "e12-synthetic-01-a003",
+            "factType": "document_date",
+            "quote": "Ausgestellt: 02.10.2026",
+            "page": 1,
+            "position": {
+              "start": 85,
+              "end": 108
+            }
+          },
+          {
+            "id": "e12-synthetic-01-a004",
+            "factType": "discharge_date",
+            "quote": "Entlassung: 01.10.2026",
+            "page": 1,
+            "position": {
+              "start": 136,
+              "end": 158
+            }
+          },
+          {
+            "id": "e12-synthetic-01-a005",
+            "factType": "documented_recommendation",
+            "quote": "Eine Rehabilitation soll mit der behandelnden Ordination besprochen werden.",
+            "page": 1,
+            "position": {
+              "start": 213,
+              "end": 288
+            }
+          },
+          {
+            "id": "e12-synthetic-01-a006",
+            "factType": "open_task",
+            "quote": "Bitte den Rehabilitationsantrag beim Entlassungsmanagement abholen.",
+            "page": 1,
+            "position": {
+              "start": 289,
+              "end": 356
+            }
+          },
+          {
+            "id": "e12-synthetic-01-a007",
+            "factType": "follow_up",
+            "quote": "Kontrolltermin: 12.10.2026, 09:00 Uhr, Ambulanz A.",
+            "page": 1,
+            "position": {
+              "start": 357,
+              "end": 407
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-01",
+        "passage": "Musterklinik Nord (fiktiv)"
+      }
+    },
+    {
+      "id": "e12-synthetic-02",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "report", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH – fiktiver Bericht ohne reale Person\nMusterinstitut West (fiktiv)\nBerichtsdatum    03.10.2026\nAktenzeichen    SYN-02\nBefund          Regelrechte Darstellung der Gelenkflächen.\nVerwaltung      Die Kopie des Berichts wurde zur Abholung hinterlegt.\nRückfrage       Für eine Befundkopie bitte das Sekretariat kontaktieren.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-02-a001",
+            "factType": "institution",
+            "quote": "Musterinstitut West (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 49,
+              "end": 77
+            }
+          },
+          {
+            "id": "e12-synthetic-02-a002",
+            "factType": "document_date",
+            "quote": "Berichtsdatum    03.10.2026",
+            "page": 1,
+            "position": {
+              "start": 78,
+              "end": 105
+            }
+          },
+          {
+            "id": "e12-synthetic-02-a003",
+            "factType": "case_number",
+            "quote": "Aktenzeichen    SYN-02",
+            "page": 1,
+            "position": {
+              "start": 106,
+              "end": 128
+            }
+          },
+          {
+            "id": "e12-synthetic-02-a004",
+            "factType": "open_task",
+            "quote": "Die Kopie des Berichts wurde zur Abholung hinterlegt.",
+            "page": 1,
+            "position": {
+              "start": 204,
+              "end": 257
+            }
+          },
+          {
+            "id": "e12-synthetic-02-a005",
+            "factType": "open_task",
+            "quote": "Für eine Befundkopie bitte das Sekretariat kontaktieren.",
+            "page": 1,
+            "position": {
+              "start": 274,
+              "end": 330
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-02",
+        "passage": "Musterinstitut West (fiktiv)"
+      }
+    },
+    {
+      "id": "e12-synthetic-03",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "discharge", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH | fiktiver Entlassungsbrief | SYN-03\nBeispielspital Ost (fiktiv)\nDatum: 04.10.2026\nBefund: Die Herztöne sind rein.\nOrganisation zu Hause:\n- Mobile Pflege ist zur Unterstützung im Alltag empfohlen.\n- Den Beratungsdienst wegen möglicher Kostenbeiträge kontaktieren.\n",
+            "SYNTHETISCH | Fortsetzung SYN-03\nNoch offen:\nUnterlagen zur Pflegegeldantragstellung bei der Sozialberatung anfordern.\nDer zuständige Träger entscheidet über einen Antrag gesondert.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-03-a001",
+            "factType": "institution",
+            "quote": "Beispielspital Ost (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 49,
+              "end": 76
+            }
+          },
+          {
+            "id": "e12-synthetic-03-a002",
+            "factType": "document_date",
+            "quote": "Datum: 04.10.2026",
+            "page": 1,
+            "position": {
+              "start": 77,
+              "end": 94
+            }
+          },
+          {
+            "id": "e12-synthetic-03-a003",
+            "factType": "documented_recommendation",
+            "quote": "Mobile Pflege ist zur Unterstützung im Alltag empfohlen.",
+            "page": 1,
+            "position": {
+              "start": 152,
+              "end": 208
+            }
+          },
+          {
+            "id": "e12-synthetic-03-a004",
+            "factType": "open_task",
+            "quote": "Den Beratungsdienst wegen möglicher Kostenbeiträge kontaktieren.",
+            "page": 1,
+            "position": {
+              "start": 211,
+              "end": 275
+            }
+          },
+          {
+            "id": "e12-synthetic-03-a005",
+            "factType": "open_task",
+            "quote": "Unterlagen zur Pflegegeldantragstellung bei der Sozialberatung anfordern.",
+            "page": 2,
+            "position": {
+              "start": 45,
+              "end": 118
+            }
+          },
+          {
+            "id": "e12-synthetic-03-a006",
+            "factType": "insurance_hint",
+            "quote": "Der zuständige Träger entscheidet über einen Antrag gesondert.",
+            "page": 2,
+            "position": {
+              "start": 119,
+              "end": 181
+            }
+          },
+          {
+            "id": "e12-synthetic-03-a007",
+            "factType": "case_number",
+            "quote": "SYN-03",
+            "page": 1,
+            "position": {
+              "start": 42,
+              "end": 48
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-03",
+        "passage": "Beispielspital Ost (fiktiv)"
+      }
+    },
+    {
+      "id": "e12-synthetic-04",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "report", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH – keine reale Person\nAMBULANZBERICHT; Institut Beispiel Süd (fiktiv)\nFallnummer: SYN-04; Besuch: 05.10.2026\nBefund: Kein Erguss nachweisbar.\nNächste Vorstellung ist am 19.10.2026 um 14:30 Uhr vorgemerkt.\nFür die Terminbestätigung ist ein Anruf im Sekretariat erforderlich.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-04-a001",
+            "factType": "institution",
+            "quote": "Institut Beispiel Süd (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 50,
+              "end": 80
+            }
+          },
+          {
+            "id": "e12-synthetic-04-a002",
+            "factType": "case_number",
+            "quote": "Fallnummer: SYN-04",
+            "page": 1,
+            "position": {
+              "start": 81,
+              "end": 99
+            }
+          },
+          {
+            "id": "e12-synthetic-04-a003",
+            "factType": "visit_date",
+            "quote": "Besuch: 05.10.2026",
+            "page": 1,
+            "position": {
+              "start": 101,
+              "end": 119
+            }
+          },
+          {
+            "id": "e12-synthetic-04-a004",
+            "factType": "follow_up",
+            "quote": "Nächste Vorstellung ist am 19.10.2026 um 14:30 Uhr vorgemerkt.",
+            "page": 1,
+            "position": {
+              "start": 153,
+              "end": 215
+            }
+          },
+          {
+            "id": "e12-synthetic-04-a005",
+            "factType": "open_task",
+            "quote": "Für die Terminbestätigung ist ein Anruf im Sekretariat erforderlich.",
+            "page": 1,
+            "position": {
+              "start": 216,
+              "end": 284
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-04",
+        "passage": "Institut Beispiel Süd (fiktiv)"
+      }
+    },
+    {
+      "id": "e12-synthetic-05",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "discharge", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH – Entlassungsbrief für Fall SYN-05, keine reale Person\nFiktive Klinik Mitte\nEntlassen am 06.10.2026\nBefund: Die Schleimhäute sind reizlos.\nSozialberatung:\nEin Antrag auf Rezeptgebührenbefreiung kann beim Versicherungsträger erfragt werden.\nDie Leistungszusage steht noch aus.\nOffen: Einkommensnachweise für den Beratungstermin zusammenstellen.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-05-a001",
+            "factType": "institution",
+            "quote": "Fiktive Klinik Mitte",
+            "page": 1,
+            "position": {
+              "start": 67,
+              "end": 87
+            }
+          },
+          {
+            "id": "e12-synthetic-05-a002",
+            "factType": "discharge_date",
+            "quote": "Entlassen am 06.10.2026",
+            "page": 1,
+            "position": {
+              "start": 88,
+              "end": 111
+            }
+          },
+          {
+            "id": "e12-synthetic-05-a003",
+            "factType": "insurance_hint",
+            "quote": "Ein Antrag auf Rezeptgebührenbefreiung kann beim Versicherungsträger erfragt werden.",
+            "page": 1,
+            "position": {
+              "start": 167,
+              "end": 251
+            }
+          },
+          {
+            "id": "e12-synthetic-05-a004",
+            "factType": "insurance_hint",
+            "quote": "Die Leistungszusage steht noch aus.",
+            "page": 1,
+            "position": {
+              "start": 252,
+              "end": 287
+            }
+          },
+          {
+            "id": "e12-synthetic-05-a005",
+            "factType": "open_task",
+            "quote": "Offen: Einkommensnachweise für den Beratungstermin zusammenstellen.",
+            "page": 1,
+            "position": {
+              "start": 288,
+              "end": 355
+            }
+          },
+          {
+            "id": "e12-synthetic-05-a006",
+            "factType": "case_number",
+            "quote": "SYN-05",
+            "page": 1,
+            "position": {
+              "start": 40,
+              "end": 46
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-05",
+        "passage": "Fiktive Klinik Mitte"
+      }
+    },
+    {
+      "id": "e12-synthetic-06",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "discharge", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH / fiktiver Entlassungsbericht / SYN-06\nBeispielhaus am Park (fiktiv)\nDokumentdatum: 07.10.2026\nBefund: Symmetrische Belüftung.\nEmpfehlung zur Organisation:\nBeratung über mobile Alltagshilfen wird empfohlen; die Person wünscht zunächst nur Information.\nAufgabe | Zuständig\nBeratungsunterlagen abholen | Entlassungsmanagement\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-06-a001",
+            "factType": "institution",
+            "quote": "Beispielhaus am Park (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 51,
+              "end": 80
+            }
+          },
+          {
+            "id": "e12-synthetic-06-a002",
+            "factType": "document_date",
+            "quote": "Dokumentdatum: 07.10.2026",
+            "page": 1,
+            "position": {
+              "start": 81,
+              "end": 106
+            }
+          },
+          {
+            "id": "e12-synthetic-06-a003",
+            "factType": "documented_recommendation",
+            "quote": "Beratung über mobile Alltagshilfen wird empfohlen; die Person wünscht zunächst nur Information.",
+            "page": 1,
+            "position": {
+              "start": 168,
+              "end": 263
+            }
+          },
+          {
+            "id": "e12-synthetic-06-a004",
+            "factType": "open_task",
+            "quote": "Beratungsunterlagen abholen | Entlassungsmanagement",
+            "page": 1,
+            "position": {
+              "start": 284,
+              "end": 335
+            }
+          },
+          {
+            "id": "e12-synthetic-06-a005",
+            "factType": "case_number",
+            "quote": "SYN-06",
+            "page": 1,
+            "position": {
+              "start": 44,
+              "end": 50
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-06",
+        "passage": "Beispielhaus am Park (fiktiv)"
+      }
+    },
+    {
+      "id": "e12-synthetic-07",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "report", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH – fiktiver Untersuchungsbericht, keine reale Person\nInstitut am Musterplatz (fiktiv) / SYN-07\nUntersuchungsdatum: 08.10.2026\nBefund: Glatte Konturen.\nAdministrative Nachricht:\nDie Bestätigung für Fahrtkosten ist bei der Anmeldung hinterlegt.\nBitte die Voraussetzungen einer Fahrtkostenübernahme beim Kostenträger erfragen.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-07-a001",
+            "factType": "institution",
+            "quote": "Institut am Musterplatz (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 64,
+              "end": 96
+            }
+          },
+          {
+            "id": "e12-synthetic-07-a002",
+            "factType": "visit_date",
+            "quote": "Untersuchungsdatum: 08.10.2026",
+            "page": 1,
+            "position": {
+              "start": 106,
+              "end": 136
+            }
+          },
+          {
+            "id": "e12-synthetic-07-a003",
+            "factType": "open_task",
+            "quote": "Die Bestätigung für Fahrtkosten ist bei der Anmeldung hinterlegt.",
+            "page": 1,
+            "position": {
+              "start": 188,
+              "end": 253
+            }
+          },
+          {
+            "id": "e12-synthetic-07-a004",
+            "factType": "insurance_hint",
+            "quote": "Bitte die Voraussetzungen einer Fahrtkostenübernahme beim Kostenträger erfragen.",
+            "page": 1,
+            "position": {
+              "start": 254,
+              "end": 334
+            }
+          },
+          {
+            "id": "e12-synthetic-07-a005",
+            "factType": "case_number",
+            "quote": "SYN-07",
+            "page": 1,
+            "position": {
+              "start": 99,
+              "end": 105
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-07",
+        "passage": "Institut am Musterplatz (fiktiv)"
+      }
+    },
+    {
+      "id": "e12-synthetic-08",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "discharge", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH – fiktiver Entlassungsbrief SYN-08\nMusterkrankenhaus Tal (fiktiv)\nDatum 09.10.2026\nBefund: Seitengleiche Atemgeräusche.\nDie Rehabilitation ist nicht bewilligt; ein Antrag wurde noch nicht gestellt.\nEmpfohlen wird zunächst ein Gespräch mit der Sozialberatung zur Antragstellung.\n",
+            "SYNTHETISCH – Fortsetzung SYN-08\nTermin Sozialberatung: 14.10.2026, 11:15 Uhr.\nBitte vorhandene Versicherungsunterlagen zum Gespräch mitbringen.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-08-a001",
+            "factType": "institution",
+            "quote": "Musterkrankenhaus Tal (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 47,
+              "end": 77
+            }
+          },
+          {
+            "id": "e12-synthetic-08-a002",
+            "factType": "document_date",
+            "quote": "Datum 09.10.2026",
+            "page": 1,
+            "position": {
+              "start": 78,
+              "end": 94
+            }
+          },
+          {
+            "id": "e12-synthetic-08-a003",
+            "factType": "insurance_hint",
+            "quote": "Die Rehabilitation ist nicht bewilligt; ein Antrag wurde noch nicht gestellt.",
+            "page": 1,
+            "position": {
+              "start": 132,
+              "end": 209
+            }
+          },
+          {
+            "id": "e12-synthetic-08-a004",
+            "factType": "documented_recommendation",
+            "quote": "Empfohlen wird zunächst ein Gespräch mit der Sozialberatung zur Antragstellung.",
+            "page": 1,
+            "position": {
+              "start": 210,
+              "end": 289
+            }
+          },
+          {
+            "id": "e12-synthetic-08-a005",
+            "factType": "follow_up",
+            "quote": "Termin Sozialberatung: 14.10.2026, 11:15 Uhr.",
+            "page": 2,
+            "position": {
+              "start": 33,
+              "end": 78
+            }
+          },
+          {
+            "id": "e12-synthetic-08-a006",
+            "factType": "open_task",
+            "quote": "Bitte vorhandene Versicherungsunterlagen zum Gespräch mitbringen.",
+            "page": 2,
+            "position": {
+              "start": 79,
+              "end": 144
+            }
+          },
+          {
+            "id": "e12-synthetic-08-a007",
+            "factType": "case_number",
+            "quote": "SYN-08",
+            "page": 1,
+            "position": {
+              "start": 40,
+              "end": 46
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-08",
+        "passage": "Musterkrankenhaus Tal (fiktiv)"
+      }
+    },
+    {
+      "id": "e12-synthetic-09",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "report", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH – fiktiver Kurzbericht für Fall SYN-09\nMusterambulanz See (fiktiv)\nErstellt am: 10.10.2026\nBefund: Keine freie Flüssigkeit sichtbar.\nTerminstatus: Der Termin am 15.10.2026 entfällt.\nNeuer Termin: 22.10.2026 um 08:45 Uhr, Schalter B.\nOffene Aufgabe: Neue Terminbestätigung abholen.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-09-a001",
+            "factType": "institution",
+            "quote": "Musterambulanz See (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 51,
+              "end": 78
+            }
+          },
+          {
+            "id": "e12-synthetic-09-a002",
+            "factType": "document_date",
+            "quote": "Erstellt am: 10.10.2026",
+            "page": 1,
+            "position": {
+              "start": 79,
+              "end": 102
+            }
+          },
+          {
+            "id": "e12-synthetic-09-a003",
+            "factType": "follow_up",
+            "quote": "Terminstatus: Der Termin am 15.10.2026 entfällt.",
+            "page": 1,
+            "position": {
+              "start": 145,
+              "end": 193
+            }
+          },
+          {
+            "id": "e12-synthetic-09-a004",
+            "factType": "follow_up",
+            "quote": "Neuer Termin: 22.10.2026 um 08:45 Uhr, Schalter B.",
+            "page": 1,
+            "position": {
+              "start": 194,
+              "end": 244
+            }
+          },
+          {
+            "id": "e12-synthetic-09-a005",
+            "factType": "open_task",
+            "quote": "Offene Aufgabe: Neue Terminbestätigung abholen.",
+            "page": 1,
+            "position": {
+              "start": 245,
+              "end": 292
+            }
+          },
+          {
+            "id": "e12-synthetic-09-a006",
+            "factType": "case_number",
+            "quote": "SYN-09",
+            "page": 1,
+            "position": {
+              "start": 44,
+              "end": 50
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-09",
+        "passage": "Musterambulanz See (fiktiv)"
+      }
+    },
+    {
+      "id": "e12-synthetic-10",
+      "kind": "synthetic",
+      "tags": ["pr", "nightly", "weekly", "synthetic", "discharge", "medical-distractors"],
+      "input": {
+        "document": {
+          "origin": "synthetic",
+          "pages": [
+            "SYNTHETISCH – fiktiver Entlassungsbericht ohne reale Person\nBeispielklinik Brücke (fiktiv); Referenz SYN-10\nEntlassungsdatum: 11.10.2026\nBefund: Regelmäßiger Herzrhythmus.\nWeiterbetreuung: Termin in der Hausordination bitte selbst vereinbaren.\nVersicherungszuständigkeit: noch ungeklärt.\nDie Sozialberatung soll die zuständige Stelle klären, bevor Unterlagen versandt werden.\nEine Einreichung ist durch diesen Bericht nicht erfolgt.\n"
+          ]
+        }
+      },
+      "expected": {
+        "annotations": [
+          {
+            "id": "e12-synthetic-10-a001",
+            "factType": "institution",
+            "quote": "Beispielklinik Brücke (fiktiv)",
+            "page": 1,
+            "position": {
+              "start": 60,
+              "end": 90
+            }
+          },
+          {
+            "id": "e12-synthetic-10-a002",
+            "factType": "case_number",
+            "quote": "Referenz SYN-10",
+            "page": 1,
+            "position": {
+              "start": 92,
+              "end": 107
+            }
+          },
+          {
+            "id": "e12-synthetic-10-a003",
+            "factType": "discharge_date",
+            "quote": "Entlassungsdatum: 11.10.2026",
+            "page": 1,
+            "position": {
+              "start": 108,
+              "end": 136
+            }
+          },
+          {
+            "id": "e12-synthetic-10-a004",
+            "factType": "follow_up",
+            "quote": "Weiterbetreuung: Termin in der Hausordination bitte selbst vereinbaren.",
+            "page": 1,
+            "position": {
+              "start": 172,
+              "end": 243
+            }
+          },
+          {
+            "id": "e12-synthetic-10-a005",
+            "factType": "insurance_hint",
+            "quote": "Versicherungszuständigkeit: noch ungeklärt.",
+            "page": 1,
+            "position": {
+              "start": 244,
+              "end": 287
+            }
+          },
+          {
+            "id": "e12-synthetic-10-a006",
+            "factType": "open_task",
+            "quote": "Die Sozialberatung soll die zuständige Stelle klären, bevor Unterlagen versandt werden.",
+            "page": 1,
+            "position": {
+              "start": 288,
+              "end": 375
+            }
+          },
+          {
+            "id": "e12-synthetic-10-a007",
+            "factType": "insurance_hint",
+            "quote": "Eine Einreichung ist durch diesen Bericht nicht erfolgt.",
+            "page": 1,
+            "position": {
+              "start": 376,
+              "end": 432
+            }
+          }
+        ]
+      },
+      "source": {
+        "uri": "synthetic:///e12/e12-synthetic-10",
+        "passage": "Beispielklinik Brücke (fiktiv)"
+      }
+    }
+  ],
+  "exclusions": [
+    {
+      "caseId": "e12-svbox-discharge",
+      "reason": "clinical_content",
+      "quote": "2. Aufnahmediagnosen und medizinische Vorgeschichte\nHauptdiagnose:   Lokal fortgeschrittenes Rektumkarzinom mit regionalem\nLymphknotenbefall.\nDie Patientin befindet sich aufgrund einer schweren bösartigen Tumorerkrankung in\nonkologischer Behandlung. Nach Abschluss der operativen Erstbehandlung wurde eine\nergänzende kombinierte Strahlen- und Chemotherapie eingeleitet. Die Bestrahlung\nerfolgt ambulant an mehreren Tagen pro Woche. Der Abschluss der geplanten Therapie\nist für Mitte November 2026 vorgesehen.\nNebendiagnosen:\n•   Arterielle Hypertonie, medikamentös behandelt.\n•   Ausgeprägte therapiebedingte Fatigue mit reduzierter körperlicher Belastbarkeit.\n•   Wiederkehrende Übelkeit und zeitweise verminderter Appetit.\n•   Wechselnde Stuhlfrequenz mit zeitweiligen Durchfällen im Zusammenhang mit\nder onkologischen Therapie.\n•   Erhöhtes Sturzrisiko bei allgemeiner Schwäche und eingeschränkter Gehstrecke.",
+      "page": 1,
+      "position": {
+        "start": 650,
+        "end": 1562
+      }
+    },
+    {
+      "caseId": "e12-svbox-discharge",
+      "reason": "clinical_content",
+      "quote": "•   Unterstützungsbedarf bei einzelnen Aktivitäten des täglichen Lebens.\nRelevante Vorerkrankungen:   Seit mehreren Jahren bestehender Bluthochdruck. Keine\nbekannten schwerwiegenden Arzneimittelallergien laut vorliegenden Unterlagen.\n3. Anlass und Verlauf des stationären Aufenthalts\nDie Aufnahme erfolgte aufgrund einer zunehmenden allgemeinen Schwäche,\nwiederkehrender Übelkeit, verminderter Flüssigkeits- und Nahrungsaufnahme sowie\neiner vorübergehenden Verschlechterung der Blutdruckeinstellung während der\nlaufenden onkologischen Behandlung.\nIm stationären Verlauf erfolgten:\n•   Klinische Überwachung und Kontrolle der Vitalparameter, insbesondere des\nBlutdrucks.\n•   Laborkontrollen einschließlich Blutbild, Elektrolyten und\nNierenfunktionsparametern.\n•   Flüssigkeitssubstitution nach klinischem Bedarf.\n•   Symptomatische Behandlung von Übelkeit und gastrointestinalen Beschwerden.\n•   Überprüfung der bestehenden Dauermedikation.\n•   Mobilisation unter physiotherapeutischer Anleitung.\n•   Beratung hinsichtlich Ernährung, Flüssigkeitszufuhr und Umgang mit\ntherapiebedingter Erschöpfung.\nUnter den durchgeführten Maßnahmen kam es zu einer klinischen Stabilisierung. Die\nPatientin ist zum Entlassungszeitpunkt kreislaufstabil und kann mit Unterstützung kurze\nStrecken gehen. Eine vollständige Wiederherstellung der körperlichen Belastbarkeit ist\nnoch nicht erreicht.\nDie ambulante onkologische Behandlung soll nach Rücksprache mit dem\nbehandelnden onkologischen Team fortgesetzt werden.\n4. Befund bei Entlassung\nAllgemeinzustand:   Reduziert, aber stabil.\nBewusstseinslage:   Wach, zeitlich, örtlich und situativ orientiert.\nKardiovaskulär:   Kreislaufstabil. Arterielle Hypertonie unter bestehender Medikation.\nWeiterhin regelmäßige Blutdruckkontrollen erforderlich.\nGastrointestinal:   Zeitweise Übelkeit und wechselnde Stuhlfrequenz. Orale Nahrungs-\nund Flüssigkeitsaufnahme möglich, jedoch weiterhin unterstützungsbedürftig.",
+      "page": 2,
+      "position": {
+        "start": 0,
+        "end": 1937
+      }
+    },
+    {
+      "caseId": "e12-svbox-discharge",
+      "reason": "clinical_content",
+      "quote": "Mobilität:   Selbstständiges Aufstehen mit gelegentlicher Unterstützung. Kurze\nGehstrecken mit Rollator möglich. Erhöhtes Sturzrisiko.\nPflegebedarf:   Unterstützung beim Duschen, bei der Haushaltsführung und bei\neinzelnen Alltagstätigkeiten. Medikamenteneinnahme grundsätzlich selbstständig\nmöglich, eine strukturierte Unterstützung und Kontrolle werden empfohlen.\nPsychosoziale Situation:   Die Patientin ist durch die Krebserkrankung und die\nregelmäßigen Behandlungstermine belastet. Sie äußert den Wunsch, möglichst lange in\nihrer eigenen Wohnung zu bleiben. Eine Überforderung der vorhandenen familiären\nUnterstützung soll vermieden werden.",
+      "page": 3,
+      "position": {
+        "start": 0,
+        "end": 644
+      }
+    },
+    {
+      "caseId": "e12-svbox-discharge",
+      "reason": "clinical_content",
+      "quote": "Fortführung der geplanten ambulanten Bestrahlung gemäß onkologischem\nTherapieplan.",
+      "page": 4,
+      "position": {
+        "start": 231,
+        "end": 313
+      }
+    },
+    {
+      "caseId": "e12-svbox-discharge",
+      "reason": "clinical_content",
+      "quote": "Aufgrund der ausgeprägten Fatigue, der reduzierten körperlichen Belastbarkeit und des\nbestehenden Unterstützungsbedarfs erscheint eine rehabilitative Maßnahme sinnvoll,\nsofern die medizinischen Voraussetzungen erfüllt sind.",
+      "page": 5,
+      "position": {
+        "start": 332,
+        "end": 555
+      }
+    },
+    {
+      "caseId": "e12-svbox-discharge",
+      "reason": "clinical_content",
+      "quote": "10. Zusammenfassende Beurteilung\nDie Patientin kann nach klinischer Stabilisierung in ihre häusliche Umgebung entlassen\nwerden. Aufgrund der schweren onkologischen Erkrankung, der noch laufenden\nBestrahlung, der therapiebedingten Nebenwirkungen, der bestehenden Hypertonie und\nder eingeschränkten Mobilität besteht ein erhöhter Bedarf an koordinierter\nmedizinischer und sozialer Betreuung.\nBesondere Bedeutung haben die zuverlässige Organisation der weiteren onkologischen\nBehandlung, die sichere Medikamenteneinnahme, die regelmäßige Kontrolle des\nBlutdrucks und die Sicherstellung einer ausreichenden Unterstützung im häuslichen\nUmfeld.\nNach Abschluss der Bestrahlung soll eine onkologische Rehabilitation geprüft und bei\nentsprechender medizinischer Eignung beantragt werden. Parallel sind mögliche\nsozialversicherungsrechtliche Leistungen und Unterstützungsangebote abzuklären, um\ndie Selbstständigkeit der Patientin möglichst lange zu erhalten und die Versorgung zu\nHause sicherzustellen.\nEntlassungsmodus:   Entlassung nach Hause mit organisierter ambulanter\nWeiterbetreuung und empfohlenem sozialmedizinischem Unterstützungsbedarf.",
+      "page": 7,
+      "position": {
+        "start": 425,
+        "end": 1563
+      }
+    },
+    {
+      "caseId": "e12-svbox-radiology-1",
+      "reason": "clinical_content",
+      "quote": "Zusammenfassung / Ergebnis\nEs zeigt sich eine regelrechte achsengerechte Stellung, keine Subluxation bei intakter kortikale Begrenzung.\nAltersentsprechender Mineralsalzgehalt.\nAbgeflachte Talusrolle vor allem rechts im Sinne eines Pes planus.\nTalonavicularekalzifikation links.\nDer Kalkaneus zeigt beidseits eine dorsale Spornbildung bei unauffälliger plantarer Abgrenzung.\nIntakte Malleolusgabel\nRegelrechter Weichteilschatten.",
+      "page": 1,
+      "position": {
+        "start": 663,
+        "end": 1091
+      }
+    },
+    {
+      "caseId": "e12-svbox-radiology-2",
+      "reason": "clinical_content",
+      "quote": "Linker Oberschenkel: Typisches, spindeliges, 2,9 x 0,8 cm im sagittalen Durchmesser haltendes subkutanes\nLipom\nRechte Flanke: Ebenfalls typisches, 4,1 x 1 Zentimeter messendes, glatt begrenztes subkutanes Lipom.\nGesamte Wirbelsäule a.p. und seitlich\nFlachbogige rechtsgerichtete skoliotische Biegung der mittleren und unteren BWS und oberen LWS, Scheitel\netwa in Höhe Th11/Th12. Linksrotationsskoliose der oberen Lendenwirbelsäule mit Scheitel in Höhe L2/L3.\nStreckfehlhaltung der Halswirbelsäule. Streckfehlhaltung der Brustwirbelsäule. Durchwegs normale Höhe der\nBandscheibenräume. Keine wesentlichen Osteochondrosen. Einzelne Schmorl'sche Knorpelknötchen an der\nBWS und LWS.",
+      "page": 1,
+      "position": {
+        "start": 599,
+        "end": 1276
+      }
+    },
+    {
+      "caseId": "e12-svbox-ultrasound",
+      "reason": "clinical_content",
+      "quote": "Indikation: V.a. Läsion nervus cutaneus femoris lateralis sin.\nUltraschall\nDer N.cut.fem.lat. links ist asymmetrisch verdickt, reitet knapp an der Spina iliaca anterior superior und\nverläuft transligamentär. Max. Querschnittsfläche von 9mm². Die Kontinuität ist erhalten. Kein Hämatom, kein\nerkennbarer Muskelfaserriss, keine erkennbare Bandruptur.\nZusammenfassung / Ergebnis\nSonographisches Bild einer mäßig ausgeprägten Kompression und Irritation des N.cutaneus femoris lateralis\nlinks amLeistenband. Aufgrund der ausbleibenden Schmerzen und reinen Gefühlslosigkeit wird derzeit auf eine\nInfiltration verzichtet.",
+      "page": 1,
+      "position": {
+        "start": 348,
+        "end": 962
+      }
+    },
+    {
+      "caseId": "e12-svbox-vaccinations",
+      "reason": "conflicting_demographics",
+      "quote": "Patient: Stefan Testpatient geboren am: 22. März 1987",
+      "page": 2,
+      "position": {
+        "start": 0,
+        "end": 53
+      }
+    },
+    {
+      "caseId": "e12-synthetic-01",
+      "reason": "clinical_content",
+      "quote": "Befund: Die Lungenfelder sind frei.",
+      "page": 1,
+      "position": {
+        "start": 159,
+        "end": 194
+      }
+    },
+    {
+      "caseId": "e12-synthetic-02",
+      "reason": "clinical_content",
+      "quote": "Befund          Regelrechte Darstellung der Gelenkflächen.",
+      "page": 1,
+      "position": {
+        "start": 129,
+        "end": 187
+      }
+    },
+    {
+      "caseId": "e12-synthetic-03",
+      "reason": "clinical_content",
+      "quote": "Befund: Die Herztöne sind rein.",
+      "page": 1,
+      "position": {
+        "start": 95,
+        "end": 126
+      }
+    },
+    {
+      "caseId": "e12-synthetic-04",
+      "reason": "clinical_content",
+      "quote": "Befund: Kein Erguss nachweisbar.",
+      "page": 1,
+      "position": {
+        "start": 120,
+        "end": 152
+      }
+    },
+    {
+      "caseId": "e12-synthetic-05",
+      "reason": "clinical_content",
+      "quote": "Befund: Die Schleimhäute sind reizlos.",
+      "page": 1,
+      "position": {
+        "start": 112,
+        "end": 150
+      }
+    },
+    {
+      "caseId": "e12-synthetic-06",
+      "reason": "clinical_content",
+      "quote": "Befund: Symmetrische Belüftung.",
+      "page": 1,
+      "position": {
+        "start": 107,
+        "end": 138
+      }
+    },
+    {
+      "caseId": "e12-synthetic-07",
+      "reason": "clinical_content",
+      "quote": "Befund: Glatte Konturen.",
+      "page": 1,
+      "position": {
+        "start": 137,
+        "end": 161
+      }
+    },
+    {
+      "caseId": "e12-synthetic-08",
+      "reason": "clinical_content",
+      "quote": "Befund: Seitengleiche Atemgeräusche.",
+      "page": 1,
+      "position": {
+        "start": 95,
+        "end": 131
+      }
+    },
+    {
+      "caseId": "e12-synthetic-09",
+      "reason": "clinical_content",
+      "quote": "Befund: Keine freie Flüssigkeit sichtbar.",
+      "page": 1,
+      "position": {
+        "start": 103,
+        "end": 144
+      }
+    },
+    {
+      "caseId": "e12-synthetic-10",
+      "reason": "clinical_content",
+      "quote": "Befund: Regelmäßiger Herzrhythmus.",
+      "page": 1,
+      "position": {
+        "start": 137,
+        "end": 171
+      }
+    }
+  ]
+}
