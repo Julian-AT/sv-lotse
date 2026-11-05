@@ -49,6 +49,26 @@ for newer versions before use.
 - Medical boundary (PRD §4) in every prompt, string and fixture.
 
 
+
+## Deadline mode: build the core now, register tools in WP-180 (decision 2026-11-06)
+
+WP-006 (agent runtime, tool contracts, registry, approvals, model router) is still running. Do not
+wait for it and do not touch `packages/brain/src/tools/**`, `src/agent/**`, `src/approvals/**` or
+`src/models/**`:
+
+- Implement the logic as a typed module in your owned area with a small public API (pure functions or
+  a service taking its dependencies as parameters: database client, model, clock). Export it from a
+  subpath export of `@lotse/brain` (for example `./engine`), added to `packages/brain/package.json`.
+- Define the tool input and output shapes you need as Zod schemas in your module, named after the PRD
+  §8 tool (for example `ProcessNextStepInput`). WP-180 maps them onto the WP-006 contracts and
+  registers the tools; keep them faithful to the PRD §8 table.
+- Models: accept an AI SDK `LanguageModel` / `EmbeddingModel` parameter; for live tests create it
+  with `@ai-sdk/openai` from an environment variable with a documented default. WP-180 switches to
+  the model router.
+- Approval-gated operations (for example `form.commitGroup`) take a verified approval as a parameter
+  (`{ approvalId, inputHash }`) and must call `consumeApproval` from `@lotse/db/approvals`; WP-180
+  wires the HMAC verification from WP-006.
+
 ## Context
 
 - PRD sections for the requirement IDs above (§8 agent design and tools, §10 data, §14 evaluation,

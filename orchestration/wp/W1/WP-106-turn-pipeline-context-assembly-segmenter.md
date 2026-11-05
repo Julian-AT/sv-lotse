@@ -5,7 +5,7 @@ wave: W1
 lane: pipeline
 risk: high
 codex_effort: xhigh
-depends_on: [WP-102, WP-104, WP-105]
+depends_on: [WP-102, WP-104, WP-105, WP-180]
 fr: [FR-G7, NFR-1]
 owns:
   - packages/brain/src/pipeline/**
