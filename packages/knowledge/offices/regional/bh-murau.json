@@ -1,0 +1,29 @@
+{
+  "id": "bh-murau",
+  "name_de": "Bezirkshauptmannschaft Murau",
+  "name_simple": "Amt für den Bezirk Murau",
+  "region": "Steiermark",
+  "address": {
+    "street": "Bahnhofviertel 7",
+    "postal_code": "8850",
+    "locality": "Murau",
+    "country": "AT"
+  },
+  "phone": "+43 (3532) 2101-0",
+  "email": "bhmu@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Murau",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Murau\nBezirkshauptmann Mag. Peter PLÖBST\nBahnhofviertel 7\n8850 Murau\nTelefon: +43 (3532) 2101-0\nFAX: +43 (3532) 2101-550\nE-Mail: bhmu@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

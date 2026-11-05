@@ -1,0 +1,41 @@
+{
+  "id": "finanzamt-zwettl-niederoesterreich-hamerlingstrasse-2a",
+  "name_de": "Finanzamt Österreich – Standort Zwettl-Niederösterreich, Hamerlingstraße 2a",
+  "name_simple": "Finanzamt in Zwettl-Niederösterreich",
+  "region": "Österreich",
+  "address": {
+    "street": "Hamerlingstraße 2a",
+    "postal_code": "3910",
+    "locality": "Zwettl-Niederösterreich",
+    "country": "AT"
+  },
+  "phone": "050 233 233",
+  "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+  "jurisdiction": "Familienbeihilfe",
+  "opening_hours": {
+    "notes": "Für einen persönlichen Kontakt im Finanzamt ist eine vorhergehende Terminvereinbarung unbedingt notwendig."
+  },
+  "sources": [
+    {
+      "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+      "quote": "Zwettl-Niederösterreich (3910 Zwettl-Niederösterreich, Hamerlingstraße 2a)",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+      "quote": "Für einen persönlichen Kontakt im Finanzamt ist eine vorhergehende Terminvereinbarung unbedingt notwendig.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.bmf.gv.at/services/aemter-behoerden/faoe.html",
+      "quote": "Privatpersonen: 050 233 233",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+      "quote": "Zuständige Stelle\nFinanzamt Österreich",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "wien-ma40-erdbergstrasse",
+  "name_de": "Zielgruppenzentrum Erdbergstraße",
+  "name_simple": "Hilfe bei Geldproblemen",
+  "region": "Wien",
+  "address": {
+    "street": "Erdbergstraße 228",
+    "postal_code": "1110",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-8040",
+  "email": "post-rg4@ma40.wien.gv.at",
+  "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+  "jurisdiction": "Obdachlose Personen, Dauerleistungen und drohender Wohnungsverlust",
+  "opening_hours": {
+    "notes": "Öffnungszeiten:\nMontag, Dienstag, Freitag: von 8 bis 12 Uhr (Annahmeschluss 11 Uhr)\nDonnerstag: von 8 bis 12 Uhr (Annahmeschluss 11 Uhr) und von 15.30 bis 17.30 Uhr (Annahmeschluss 17 Uhr)\nAn gesetzlichen Feiertagen geschlossen, am Karfreitag sowie am 24. und 31. Dezember von 8 bis 12 Uhr geöffnet"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+      "quote": "Wohnungsverlust, Obdachlose\nDas Zielgruppenzentrum Erdbergstraße ist zuständig für obdachlose Personen, Dauerleistungen und bei drohendem Wohnungsverlust.\nAdresse: 11., Erdbergstraße 228\nE-Mail: post-rg4@ma40.wien.gv.at\nÖffnungszeiten:\nMontag, Dienstag, Freitag: von 8 bis 12 Uhr (Annahmeschluss 11 Uhr)\nDonnerstag: von 8 bis 12 Uhr (Annahmeschluss 11 Uhr) und von 15.30 bis 17.30 Uhr (Annahmeschluss 17 Uhr)\nAn gesetzlichen Feiertagen geschlossen, am Karfreitag sowie am 24. und 31. Dezember von 8 bis 12 Uhr geöffnet",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/advuew/internet/AdvPrSrv.asp?Layout=stelle_at&Type=K&stellecd=2017060209334398&STELLE=Y",
+      "quote": "Magistratsabteilung 40\nRegion 4 - Zielgruppenzentrum Erdbergstraße\nzuständig für die Wiener Mindestsicherung für obdachlose Personen, Wohnungssicherung, Energieunterstützung und Dauerleistungen\n1110 Wien, Erdbergstraße 228\nEmail\npost-rg4@ma40.wien.gv.at\nMontag, Dienstag, Freitag von 8.00 bis 12.00 Uhr\nAnnahmeschluss 11.00 Uhr\nDonnerstag von 8.00 bis 12.00 Uhr und 15.30 bis 17.30 Uhr\nAnnahmeschluss 11.00 bzw. 17.00 Uhr\nAn gesetzlichen Feiertagen geschlossen; Am Karfreitag, Heiligen Abend (24.12.) und an Silvester (31.12.) von 8.00 bis 12.00 Uhr\nMA 40 - Servicetelefon: 01 4000-8040",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+      "quote": "Servicetelefon +43 1 4000-8040",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

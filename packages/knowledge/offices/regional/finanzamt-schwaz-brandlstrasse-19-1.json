@@ -1,0 +1,41 @@
+{
+  "id": "finanzamt-schwaz-brandlstrasse-19-1",
+  "name_de": "Finanzamt Österreich – Standort Schwaz, Brandlstraße 19/1",
+  "name_simple": "Finanzamt in Schwaz",
+  "region": "Österreich",
+  "address": {
+    "street": "Brandlstraße 19/1",
+    "postal_code": "6130",
+    "locality": "Schwaz",
+    "country": "AT"
+  },
+  "phone": "050 233 233",
+  "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+  "jurisdiction": "Familienbeihilfe",
+  "opening_hours": {
+    "notes": "Für einen persönlichen Kontakt im Finanzamt ist eine vorhergehende Terminvereinbarung unbedingt notwendig."
+  },
+  "sources": [
+    {
+      "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+      "quote": "Schwaz (6130 Schwaz, Brandlstraße 19/1)",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+      "quote": "Für einen persönlichen Kontakt im Finanzamt ist eine vorhergehende Terminvereinbarung unbedingt notwendig.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.bmf.gv.at/services/aemter-behoerden/faoe.html",
+      "quote": "Privatpersonen: 050 233 233",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+      "quote": "Zuständige Stelle\nFinanzamt Österreich",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

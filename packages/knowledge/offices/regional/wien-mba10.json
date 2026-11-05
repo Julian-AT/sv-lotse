@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba10",
+  "name_de": "Bezirksamt Favoriten",
+  "name_simple": "Bezirksamt Favoriten",
+  "region": "Wien",
+  "address": {
+    "street": "Laxenburger Straße 43-45",
+    "postal_code": "1100",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-10000",
+  "email": "post@mba10.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba10",
+  "jurisdiction": "Meldezettel, Reisepass und Parkpickerl; weitere Anliegen nach Zuständigkeit des Bezirksamts",
+  "accessibility": "Barrierefrei\nBarrierefreier Zugang: Laxenburger Straße 43-45 (Haupteingang)",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba10",
+      "quote": "Bezirksamt Favoriten\nMagistratische Bezirksämter\nMeldezettel\nParkpickerl\nReisepass\n10., Laxenburger Straße 43-45\nBarrierefrei\nBarrierefreier Zugang: Laxenburger Straße 43-45 (Haupteingang)\n+43 1 4000-10000\npost@mba10.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba10",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

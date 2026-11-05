@@ -1,0 +1,26 @@
+{
+  "id": "fsw-pflege-und-betreuung-1220",
+  "name_de": "Fonds Soziales Wien – Beratung und Service-Center Pflege und Betreuung – Rudolf-Köppl-Gasse 2 (Zugang: Donaufelder Straße 185)",
+  "name_simple": "Beratung zu Pflege in 1220",
+  "region": "Wien",
+  "url": "https://www.fsw.at/standorte",
+  "jurisdiction": "Pflege und Betreuung",
+  "address": {
+    "street": "Rudolf-Köppl-Gasse 2 (Zugang: Donaufelder Straße 185)",
+    "postal_code": "1220",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "01 24 5 24",
+  "opening_hours": {
+    "notes": "Mo–Fr 8:00–15:00 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.fsw.at/standorte",
+      "quote": "Beratung und Service-Center\nPflege und Betreuung\nRudolf-Köppl-Gasse 2\n(Zugang: Donaufelder Straße 185)\n1220 Wien\nMo–Fr 8:00–15:00 Uhr\nTel.: 01 24 5 24",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

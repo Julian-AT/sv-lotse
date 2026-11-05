@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba0108",
+  "name_de": "Bezirksamt Innere Stadt/Josefstadt",
+  "name_simple": "Bezirksamt Innere Stadt/Josefstadt",
+  "region": "Wien",
+  "address": {
+    "street": "Wipplingerstraße 6-8",
+    "postal_code": "1010",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-01000",
+  "email": "post@mba01.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba0108",
+  "jurisdiction": "Meldezettel, Reisepass und Parkpickerl; weitere Anliegen nach Zuständigkeit des Bezirksamts",
+  "accessibility": "Barrierefrei\nBarrierefreier Zugang: Wipplingerstraße 6 und 8, Salvatorgasse 7",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba0108",
+      "quote": "Bezirksamt Innere Stadt/Josefstadt\nMagistratische Bezirksämter\nMeldezettel\nParkpickerl\nReisepass\n1., Wipplingerstraße 6-8\nBarrierefrei\nBarrierefreier Zugang: Wipplingerstraße 6 und 8, Salvatorgasse 7\n+43 1 4000-01000\npost@mba01.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba0108",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

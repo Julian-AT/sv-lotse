@@ -1,0 +1,25 @@
+{
+  "id": "fsw-grundversorgung-fuer-vertriebene",
+  "name_de": "Fonds Soziales Wien – Grundversorgung für Vertriebene",
+  "name_simple": "Hilfe für vertriebene Menschen",
+  "region": "Wien",
+  "url": "https://www.fsw.at/standorte",
+  "jurisdiction": "Grundversorgung für Vertriebene",
+  "address": {
+    "street": "Inzersdorfer Straße 127",
+    "postal_code": "1100",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "opening_hours": {
+    "notes": "Antragstellung (nach Terminvereinbarung)\nAsylzentrum der Caritas\nInzersdorfer Straße 127\n1100 Wien\nMo–Fr 8:00–16:00 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.fsw.at/standorte",
+      "quote": "Grundversorgung für Vertriebene\nAntragstellung (nach Terminvereinbarung)\nAsylzentrum der Caritas\nInzersdorfer Straße 127\n1100 Wien\nMo–Fr 8:00–16:00 Uhr\nTerminvereinbarung: gvs-termin.fsw.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

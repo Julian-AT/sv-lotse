@@ -1,0 +1,27 @@
+{
+  "id": "wien-ma40-sozialzentrum-lemboeckgasse",
+  "name_de": "Sozialzentrum Lemböckgasse (MA 40)",
+  "name_simple": "Hilfe bei Geldproblemen – Lemböckgasse",
+  "region": "Wien",
+  "address": {
+    "street": "Lemböckgasse 61, 1. Stock",
+    "postal_code": "1230",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "01 4000-8040",
+  "email": "post-rg3@ma40.wien.gv.at",
+  "url": "https://www.wien.gv.at/advuew/internet/AdvPrSrv.asp?Layout=stelle_at&Type=K&stellecd=2015030909330444&STELLE=Y",
+  "jurisdiction": "zuständig für die Wiener Mindestsicherung für den 10., 12. und 23. Bezirk",
+  "opening_hours": {
+    "notes": "Montag, Dienstag, Freitag von 8.00 bis 12.00 Uhr\nAnnahme in der Servicezone bis 11.00 Uhr\nDonnerstag von 8.00 bis 12.00 Uhr und 15.30 bis 17.30 Uhr\nAnnahme in der Servicezone bis 11.00 bzw. 17.00 Uhr\nAn gesetzlichen Feiertagen geschlossen; Am Karfreitag, Heiligen Abend (24.12.) und an Silvester (31.12.) von 8.00 bis 12.00 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/advuew/internet/AdvPrSrv.asp?Layout=stelle_at&Type=K&stellecd=2015030909330444&STELLE=Y",
+      "quote": "Region 3 - Sozialzentrum Lemböckgasse\nzuständig für die Wiener Mindestsicherung für den 10., 12. und 23. Bezirk\n1230 Wien, Lemböckgasse 61, 1. Stock\nEmail\npost-rg3@ma40.wien.gv.at\nMontag, Dienstag, Freitag von 8.00 bis 12.00 Uhr\nAnnahme in der Servicezone bis 11.00 Uhr\nDonnerstag von 8.00 bis 12.00 Uhr und 15.30 bis 17.30 Uhr\nAnnahme in der Servicezone bis 11.00 bzw. 17.00 Uhr\nAn gesetzlichen Feiertagen geschlossen; Am Karfreitag, Heiligen Abend (24.12.) und an Silvester (31.12.) von 8.00 bis 12.00 Uhr\nMA 40 - Servicetelefon: 01 4000-8040",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

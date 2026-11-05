@@ -1,0 +1,29 @@
+{
+  "id": "bh-graz-umgebung",
+  "name_de": "Bezirkshauptmannschaft Graz-Umgebung",
+  "name_simple": "Amt für den Bezirk Graz-Umgebung",
+  "region": "Steiermark",
+  "address": {
+    "street": "Bahnhofgürtel 85",
+    "postal_code": "8021",
+    "locality": "Graz",
+    "country": "AT"
+  },
+  "phone": "+43 (316) 7075-0",
+  "email": "bhgu@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Graz-Umgebung",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Graz-Umgebung\nBezirkshauptmann Hofrat Mag. Andreas Weitlaner\nBahnhofgürtel 85\n8021 Graz\nTelefon: +43 (316) 7075-0\nFAX: +43 (316) 7075-333\nE-Mail: bhgu@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

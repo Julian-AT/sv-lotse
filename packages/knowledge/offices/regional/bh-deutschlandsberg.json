@@ -1,0 +1,29 @@
+{
+  "id": "bh-deutschlandsberg",
+  "name_de": "Bezirkshauptmannschaft Deutschlandsberg",
+  "name_simple": "Amt für den Bezirk Deutschlandsberg",
+  "region": "Steiermark",
+  "address": {
+    "street": "Kirchengasse 12",
+    "postal_code": "8530",
+    "locality": "Deutschlandsberg",
+    "country": "AT"
+  },
+  "phone": "+43 (3462) 2606-201",
+  "email": "bhdl@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Deutschlandsberg",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Deutschlandsberg\nBezirkshauptfrau Mag.a Doris Bund\nKirchengasse 12\n8530 Deutschlandsberg\nTelefon: +43 (3462) 2606-201\nFAX: +43 (3462) 2606-550\nE-Mail: bhdl@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

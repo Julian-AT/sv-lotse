@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba0405",
+  "name_de": "Bezirksamt Wieden/Margareten",
+  "name_simple": "Bezirksamt Wieden/Margareten",
+  "region": "Wien",
+  "address": {
+    "street": "Rechte Wienzeile 105",
+    "postal_code": "1050",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-04000",
+  "email": "post@mba04.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba0405",
+  "jurisdiction": "Meldezettel, Reisepass und Parkpickerl; weitere Anliegen nach Zuständigkeit des Bezirksamts",
+  "accessibility": "Barrierefrei\nBarrierefreier Zugang: Rechte Wienzeile 105 und Ramperstorffergasse 67-69",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba0405",
+      "quote": "Bezirksamt Wieden/Margareten\nMagistratische Bezirksämter\nMeldezettel\nParkpickerl\nReisepass\n5., Rechte Wienzeile 105\nBarrierefrei\nBarrierefreier Zugang: Rechte Wienzeile 105 und Ramperstorffergasse 67-69\n+43 1 4000-04000\npost@mba04.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba0405",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

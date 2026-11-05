@@ -1,0 +1,29 @@
+{
+  "id": "bh-hartberg-fuerstenfeld",
+  "name_de": "Bezirkshauptmannschaft Hartberg-Fürstenfeld",
+  "name_simple": "Amt für den Bezirk Hartberg-Fürstenfeld",
+  "region": "Steiermark",
+  "address": {
+    "street": "Rochusplatz 2",
+    "postal_code": "8230",
+    "locality": "Hartberg",
+    "country": "AT"
+  },
+  "phone": "+43 (3332) 606-200",
+  "email": "bhhf@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Hartberg-Fürstenfeld",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Hartberg-Fürstenfeld\nBezirkshauptfrau Mag. Kerstin Raith-Schweighofer\nRochusplatz 2\n8230 Hartberg\nTelefon: +43 (3332) 606-200\nFAX: +43 (3332) 606-233\nE-Mail: bhhf@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

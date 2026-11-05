@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba1516-servicestelle-16",
+  "name_de": "Bezirksamt Rudolfsheim-Fünfhaus/Ottakring – Servicestelle Richard-Wagner-Platz 19",
+  "name_simple": "Bezirksamt im 16. Bezirk",
+  "region": "Wien",
+  "address": {
+    "street": "Richard-Wagner-Platz 19",
+    "postal_code": "1160",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-16000",
+  "email": "post@mba16.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba1516",
+  "jurisdiction": "Melde-, Pass- und Fundservice, Parkpickerl, Religionsaustritte, Lebensbescheinigungen, Unterstützungserklärungen sowie ID Austria",
+  "accessibility": "Zusätzliche Servicestelle in 16., Richard-Wagner-Platz 19 (barrierefreier Zugang)",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba1516",
+      "quote": "Zusätzliche Servicestelle in 16., Richard-Wagner-Platz 19 (barrierefreier Zugang)\nHier stehen Ihnen folgende Services zur Verfügung:\nMelde-, Pass- und Fundservice, Parkpickerl, Religionsaustritte, Lebensbescheinigungen, Unterstützungserklärungen sowie ID Austria\nTelefon: +43 1 4000-16000\nE-Mail: post@mba16.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba1516",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

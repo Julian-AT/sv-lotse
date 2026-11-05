@@ -1,0 +1,29 @@
+{
+  "id": "bh-murtal",
+  "name_de": "Bezirkshauptmannschaft Murtal",
+  "name_simple": "Amt für den Bezirk Murtal",
+  "region": "Steiermark",
+  "address": {
+    "street": "Kapellenweg 11-13",
+    "postal_code": "8750",
+    "locality": "Judenburg",
+    "country": "AT"
+  },
+  "phone": "+43 (3572) 83201-0",
+  "email": "bhmt@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Murtal",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Murtal\nBezirkshauptfrau Mag.a Nina K. Pölzl MA\nKapellenweg 11-13\n8750 Judenburg\nTelefon: +43 (3572) 83201-0\nFAX: +43 (3572) 83201-550\nE-Mail: bhmt@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

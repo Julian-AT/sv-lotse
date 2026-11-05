@@ -1,0 +1,41 @@
+{
+  "id": "finanzamt-rohrbach-in-oberoesterreich-linzer-strasse-15",
+  "name_de": "Finanzamt Österreich – Standort Rohrbach in Oberösterreich, Linzer Straße 15",
+  "name_simple": "Finanzamt in Rohrbach in Oberösterreich",
+  "region": "Österreich",
+  "address": {
+    "street": "Linzer Straße 15",
+    "postal_code": "4150",
+    "locality": "Rohrbach in Oberösterreich",
+    "country": "AT"
+  },
+  "phone": "050 233 233",
+  "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+  "jurisdiction": "Familienbeihilfe",
+  "opening_hours": {
+    "notes": "Für einen persönlichen Kontakt im Finanzamt ist eine vorhergehende Terminvereinbarung unbedingt notwendig."
+  },
+  "sources": [
+    {
+      "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+      "quote": "Rohrbach in Oberösterreich (4150 Rohrbach in Oberösterreich, Linzer Straße 15)",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+      "quote": "Für einen persönlichen Kontakt im Finanzamt ist eine vorhergehende Terminvereinbarung unbedingt notwendig.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.bmf.gv.at/services/aemter-behoerden/faoe.html",
+      "quote": "Privatpersonen: 050 233 233",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+      "quote": "Zuständige Stelle\nFinanzamt Österreich",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}

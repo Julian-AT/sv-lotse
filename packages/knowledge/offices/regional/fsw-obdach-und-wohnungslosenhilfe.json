@@ -1,0 +1,26 @@
+{
+  "id": "fsw-obdach-und-wohnungslosenhilfe",
+  "name_de": "Fonds Soziales Wien – Beratung und Service-Center Obdach- und Wohnungslosenhilfe",
+  "name_simple": "Hilfe ohne Wohnung",
+  "region": "Wien",
+  "url": "https://www.fsw.at/standorte",
+  "jurisdiction": "Obdach- und Wohnungslosenhilfe",
+  "address": {
+    "street": "Lederergasse 25",
+    "postal_code": "1080",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "email": "obdach-wohnungslosenhilfe@fsw.at",
+  "opening_hours": {
+    "notes": "Mo–Fr 8:00–15:00 Uhr"
+  },
+  "sources": [
+    {
+      "url": "https://www.fsw.at/standorte",
+      "quote": "Beratung und Service-Center\nObdach- und Wohnungslosenhilfe\nLederergasse 25\n1080 Wien\nMail: obdach-wohnungslosenhilfe@fsw.at\nMo–Fr 8:00–15:00 Uhr",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
