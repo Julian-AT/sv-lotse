@@ -1,0 +1,11 @@
+{
+  "id": "E3",
+  "name": "Source-derived retrieval gold questions",
+  "minimumSetSize": 200,
+  "gate": {
+    "kind": "informational",
+    "metric": "recall@10",
+    "threshold": 0.9,
+    "direction": "at_least"
+  }
+}
