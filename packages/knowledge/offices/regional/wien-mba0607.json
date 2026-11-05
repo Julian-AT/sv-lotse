@@ -1,0 +1,33 @@
+{
+  "id": "wien-mba0607",
+  "name_de": "Bezirksamt Mariahilf/Neubau",
+  "name_simple": "Bezirksamt Mariahilf/Neubau",
+  "region": "Wien",
+  "address": {
+    "street": "Hermanngasse 24-26",
+    "postal_code": "1070",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-06000",
+  "email": "post@mba06.wien.gv.at",
+  "url": "https://www.wien.gv.at/kontakt/mba0607",
+  "jurisdiction": "Meldezettel, Reisepass und Parkpickerl; weitere Anliegen nach Zuständigkeit des Bezirksamts",
+  "accessibility": "Barrierefrei\nBarrierefreier Zugang: Hermanngasse 24-26 (Eingang über Hof)",
+  "opening_hours": {
+    "notes": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba0607",
+      "quote": "Bezirksamt Mariahilf/Neubau\nMagistratische Bezirksämter\nMeldezettel\nParkpickerl\nReisepass\n7., Hermanngasse 24-26\nBarrierefrei\nBarrierefreier Zugang: Hermanngasse 24-26 (Eingang über Hof)\n+43 1 4000-06000\npost@mba06.wien.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/kontakt/mba0607",
+      "quote": "Persönliche Beratung, Auskunft, Akteneinsicht\nWährend der Parteienverkehrszeiten stehen Ihnen die Mitarbeiter*innen persönlich für Beratungsgespräche, Auskünfte und Akteneinsichten zur Verfügung.\nMontag bis Freitag von 8 bis 11.30 Uhr ohne Terminreservierung\nMontag bis Freitag von 12 bis 15.30 Uhr, Donnerstag bis 17.30 Uhr, nur mit Terminreservierung\nKarfreitag und Silvester (31. Dezember) von 8 bis 11.30 Uhr\nAn gesetzlichen Feiertagen und am Heiligen Abend (24. Dezember) geschlossen",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
