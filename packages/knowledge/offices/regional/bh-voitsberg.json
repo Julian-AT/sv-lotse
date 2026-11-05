@@ -1,0 +1,29 @@
+{
+  "id": "bh-voitsberg",
+  "name_de": "Bezirkshauptmannschaft Voitsberg",
+  "name_simple": "Amt für den Bezirk Voitsberg",
+  "region": "Steiermark",
+  "address": {
+    "street": "Schillerstraße 10",
+    "postal_code": "8570",
+    "locality": "Voitsberg",
+    "country": "AT"
+  },
+  "phone": "+43 (3142) 21520-0",
+  "email": "bhvo@stmk.gv.at",
+  "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+  "jurisdiction": "Sozialunterstützung im Bezirk Voitsberg",
+  "sources": [
+    {
+      "url": "https://www.bezirkshauptmannschaften.steiermark.at/cms/beitrag/10085331/106195/",
+      "quote": "BH Voitsberg\nBezirkshauptfrau Mag. Elisabeth Kladiva\nSchillerstraße 10\n8570 Voitsberg\nTelefon: +43 (3142) 21520-0\nFAX: +43 (3142) 21520-550\nE-Mail: bhvo@stmk.gv.at",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.soziales.steiermark.at/cms/ziel/108519437/DE/",
+      "quote": "Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
