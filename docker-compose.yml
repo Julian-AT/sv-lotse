@@ -1,0 +1,67 @@
+services:
+  livekit:
+    image: livekit/livekit-server
+    command: ["--dev", "--bind", "0.0.0.0", "--node-ip", "127.0.0.1"]
+    # Dev mode uses devkey / secret. Bind published ports to loopback only.
+    ports:
+      - "127.0.0.1:7880:7880"
+      - "127.0.0.1:7881:7881"
+      - "127.0.0.1:7882:7882/udp"
+
+  db:
+    image: pgvector/pgvector:pg17
+    # Makes --wait treat minio-init as a completed job, including its exit code.
+    depends_on:
+      minio-init:
+        condition: service_completed_successfully
+    environment:
+      POSTGRES_USER: lotse
+      POSTGRES_PASSWORD: lotse
+      POSTGRES_DB: lotse
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "lotse", "-d", "lotse"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+
+  minio:
+    image: bitnamilegacy/minio:2025.7.23-debian-12-r5
+    environment:
+      MINIO_ROOT_USER: lotse
+      MINIO_ROOT_PASSWORD: lotse-dev-secret
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - minio-data:/bitnami/minio/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/ready"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+
+  minio-init:
+    image: bitnamilegacy/minio-client:2025.7.21-debian-12-r3
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MC_CONFIG_DIR: /tmp/.mc
+      MINIO_ROOT_USER: lotse
+      MINIO_ROOT_PASSWORD: lotse-dev-secret
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        mc alias set local http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD" >/dev/null
+        mc mb --ignore-existing local/lotse
+    restart: "no"
+
+volumes:
+  postgres-data:
+  minio-data:
