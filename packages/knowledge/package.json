@@ -1,0 +1,50 @@
+{
+  "name": "@lotse/knowledge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./portal-policy": "./src/portal-policy.ts",
+    "./turn-controls": "./src/turn-controls.ts",
+    "./form-owner-declarations": "./data/form-owner-declarations.json",
+    "./document-policy": "./src/document-policy.ts",
+    "./form-policy": "./data/form-policy.json",
+    "./ingest": "./src/ingest/index.ts",
+    "./loaders/*": "./src/loaders/*/index.ts",
+    "./form-detection": "./src/form-detection.ts",
+    "./life-situations": "./src/schemas/life-situation.ts",
+    "./voice-vocabulary": "./src/voice-vocabulary.ts",
+    "./demo/onboarding-letter": "./demo/onboarding-letter.json"
+  },
+  "scripts": {
+    "typecheck": "../../node_modules/.bin/tsc --noEmit",
+    "test": "vitest run --passWithNoTests --exclude 'test/**/*.db.test.ts' --exclude 'test/**/*.live.test.ts'",
+    "test:db": "vitest run db.test --hookTimeout=30000 --testTimeout=30000",
+    "test:live": "vitest run live.test",
+    "catalog:load": "bun src/loader/cli.ts",
+    "e2:scan": "bun src/e2/cli.ts",
+    "ingest": "node --experimental-strip-types src/ingest/cli.ts",
+    "sozdok:load": "bun src/loaders/sozdok/cli.ts",
+    "ingest:pilot": "node --experimental-strip-types src/ingest/pilot-cli.ts",
+    "ingest:e3": "node --experimental-strip-types src/ingest/e3-cli.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^4.0.109",
+    "@lotse/db": "workspace:*",
+    "ai": "^7",
+    "cheerio": "^1.2.0",
+    "fast-xml-parser": "^5.12.0",
+    "ignore": "^7.0.14",
+    "p-limit": "^7.3.3",
+    "pdfjs-dist": "^6.5.438",
+    "robots-parser": "^3.0.1",
+    "turndown": "^7.2.5",
+    "typescript-compiler": "npm:typescript@^6.0.3",
+    "yaml": "^2.9.1",
+    "zod": "^4"
+  },
+  "devDependencies": {
+    "@types/turndown": "^5.0.6"
+  }
+}
