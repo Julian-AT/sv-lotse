@@ -55,6 +55,12 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
     (say so in the test and the report).
   Stop only for real conflicts: a frozen contract (protocol, database schema, tool schemas), a path
   another WP owns, a new paid service, or a requirement that contradicts the PRD.
+- **Deadline mode (until the hackathon deadline): do not stop for details.** When the brief, the PRD
+  and a frozen contract disagree on a detail, choose the least invasive reading that keeps the
+  contract and the safety rules (security, approvals, medical boundary, no secrets), implement it,
+  and list it under `deviations` in your report. When data cannot support a requirement fully,
+  implement what the data supports and document the gap. Raise a contract change request only when
+  the work is impossible without changing a frozen contract or another WP's paths.
 - Never delete, move or edit `KI-Challenge_UseCase.yaml` (required by the challenge).
 - `data/svbox/` holds the original challenge files: read them, never modify them. Resolve the folder
   from `SVBOX_DIR` when set, otherwise from the repository root derived from `import.meta.url`;
