@@ -39,6 +39,14 @@ sections of both on demand; do not load whole files into context without need.
 While workers run, review finished WPs, write the next briefs, and keep the batch full up to
 `MAX_PARALLEL`.
 
+### Deadline mode (owner decision, 2026-11-05, 12 hours before the deadline)
+
+Work lands directly on `main`: the `protect-main` ruleset is disabled, `REQUIRE_CI=0`, and
+`MAX_PARALLEL=24`. Gates run locally before every landing; CI still runs on `main` as a signal.
+Normal-risk WPs land as soon as their gates pass and are cross-reviewed after landing (findings go
+to `.orchestration/followups/`). risk: high WPs are still cross-reviewed before landing. After the
+deadline, run `orchestration/bin/wp protect` and set `REQUIRE_CI=auto` again.
+
 ### Automatic flow (owner decision, 2026-11-05)
 
 `wp cycle` and `wp rework` continue on their own after verification:
