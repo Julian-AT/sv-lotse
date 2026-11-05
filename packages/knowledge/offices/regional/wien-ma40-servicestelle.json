@@ -1,0 +1,37 @@
+{
+  "id": "wien-ma40-servicestelle",
+  "name_de": "Servicestelle der MA 40",
+  "name_simple": "Hilfe bei Geldproblemen",
+  "region": "Wien",
+  "address": {
+    "street": "Thomas-Klestil-Platz 8",
+    "postal_code": "1030",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-8040",
+  "email": "servicestelle@ma40.wien.gv.at",
+  "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+  "jurisdiction": "Auskünfte und Beratung zu den Leistungsangeboten der MA 40",
+  "opening_hours": {
+    "notes": "Öffnungszeiten:\nMontag, Dienstag, Mittwoch und Freitag von 8 bis 12 Uhr\nDonnerstag von 13 bis 17.30 Uhr\nAn gesetzlichen Feiertagen geschlossen, am Karfreitag sowie am 24. und 31. Dezember von 8 bis 12 Uhr geöffnet\nBitte um Anmeldung im Frontoffice Thomas-Klestil-Platz 8/2 EG"
+  },
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+      "quote": "Servicestelle\nAdresse: Town Town, 3., Thomas-Klestil-Platz 8\nE-Mail: servicestelle@ma40.wien.gv.at\nÖffnungszeiten:\nMontag, Dienstag, Mittwoch und Freitag von 8 bis 12 Uhr\nDonnerstag von 13 bis 17.30 Uhr\nAn gesetzlichen Feiertagen geschlossen, am Karfreitag sowie am 24. und 31. Dezember von 8 bis 12 Uhr geöffnet\nBitte um Anmeldung im Frontoffice Thomas-Klestil-Platz 8/2 EG",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/advuew/internet/AdvPrSrv.asp?Layout=stelle_at&Type=K&stellecd=2007011213093153&STELLE=Y",
+      "quote": "Magistratsabteilung 40\nMA 40 - Servicestelle\nTown Town\n1030 Wien, Thomas-Klestil-Platz 8\nEmail\nservicestelle@ma40.wien.gv.at\nFax +43 1 4000 9940579\nMontag, Dienstag, Mittwoch und Freitag von 8.00 bis 12.00 Uhr, Donnerstag 13.00 bis 17.30 Uhr\nAn gesetzlichen Feiertagen geschlossen; Am Karfreitag, Heiligen Abend (24.12.) und an Silvester (31.12.) von 8.00 bis 12.00 Uhr",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten",
+      "quote": "Servicetelefon +43 1 4000-8040",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
