@@ -16,6 +16,8 @@ if [ -z "$CODEX_ADD_DIRS" ]; then
   CODEX_ADD_DIRS="$HOME/.bun:$HOME/Library/Caches:$HOME/Library/org.swift.swiftpm:$HOME/.cache"
 fi
 
+: "${SHARED_FILES:=bun.lock}"
+
 STATE_DIR="$LOCAL_DIR/state"
 RUNS_DIR="$LOCAL_DIR/runs"
 JOURNAL="$LOCAL_DIR/journal.md"
@@ -161,12 +163,21 @@ pats_overlap() {
   return 1
 }
 
+is_shared_file() {
+  local f
+  for f in $SHARED_FILES; do [ "$1" = "$f" ] && return 0; done
+  return 1
+}
+
+# Shared generated files (lockfiles) never block parallel WPs; 'wp pr' regenerates them on rebase.
 claims_overlap() {
   local x y
   while IFS= read -r x; do
     [ -n "$x" ] || continue
+    is_shared_file "$x" && continue
     while IFS= read -r y; do
       [ -n "$y" ] || continue
+      is_shared_file "$y" && continue
       if pats_overlap "$x" "$y"; then
         printf '%s <> %s' "$x" "$y"
         return 0
@@ -193,6 +204,23 @@ check_overlap_with_active() {
       die "$id overlaps with active $other ($hit); wait until $other lands"
     fi
   done
+}
+
+# Continue a stopped rebase while every conflict is in SHARED_FILES: take the base version and
+# regenerate it from the rebased manifests (CLAUDE.md: lockfiles are regenerated, never hand-merged).
+rebase_shared_files() {
+  local wt="$1" conflicted f
+  while [ -d "$(git -C "$wt" rev-parse --git-path rebase-merge)" ] || [ -d "$(git -C "$wt" rev-parse --git-path rebase-apply)" ]; do
+    conflicted="$(git -C "$wt" diff --name-only --diff-filter=U)"
+    [ -n "$conflicted" ] || return 1
+    for f in $conflicted; do is_shared_file "$f" || return 1; done
+    for f in $conflicted; do git -C "$wt" checkout -q --ours -- "$f"; done
+    ( cd "$wt" && HUSKY=0 bun install >/dev/null 2>&1 ) || return 1
+    for f in $conflicted; do git -C "$wt" add -- "$f"; done
+    info "regenerated $conflicted during rebase"
+    GIT_EDITOR=true git -C "$wt" rebase --continue >/dev/null 2>&1 || true
+  done
+  return 0
 }
 
 has_remote() { git -C "$ROOT" remote get-url "$REMOTE" >/dev/null 2>&1; }
@@ -351,6 +379,10 @@ cmd_doctor() {
   check bun "curl -fsSL https://bun.sh/install | bash"
   check "$CODEX_BIN" "npm install -g @openai/codex"
   check docker "install Docker Desktop or OrbStack"
+  if command -v docker >/dev/null 2>&1; then
+    docker info >/dev/null 2>&1 && ok "  ok  docker daemon" \
+      || { printf '%s  --  docker daemon not running: open -a Docker%s\n' "$C_R" "$C_0"; bad=1; }
+  fi
   if [ "$USE_GH" = 1 ]; then check gh "brew install gh"; fi
   opt claude "Claude Code"
   opt gitleaks "brew install gitleaks (secret scanning in verify)"
@@ -760,7 +792,7 @@ cmd_pr() {
   [ "$n" -gt 0 ] || die "$id has no commits ahead of $base"
   check_commits "$wt" "$base" || die "$id: commit policy violations; fix them with 'git rebase -i' in $wt"
   old_mb="$(git -C "$wt" merge-base HEAD "$base")"
-  if ! git -C "$wt" rebase -q "$base"; then
+  if ! git -C "$wt" rebase -q "$base" && ! rebase_shared_files "$wt"; then
     git -C "$wt" rebase --abort || true
     die "$id: rebase onto $base conflicts; resolve in $wt with 'git rebase $base', then 'wp pr $id' again"
   fi
@@ -890,6 +922,11 @@ cmd_orch() {
   mkdir -p "$WT_ROOT"
   base="$(base_ref)"
   git -C "$ROOT" worktree add -q -b "$branch" "$wt" "$base"
+  mkdir -p "$RUNS_DIR"
+  if [ -f "$wt/bun.lock" ]; then
+    ( cd "$wt" && HUSKY=0 bun install --frozen-lockfile ) > "$RUNS_DIR/$id-install.log" 2>&1 \
+      || warn "bun install failed in $wt; see .orchestration/runs/$id-install.log"
+  fi
   rm -f "$(state_file "$id")"
   set_state "$id" KIND orch
   set_state "$id" STATE started
