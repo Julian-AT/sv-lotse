@@ -5,7 +5,7 @@ wave: W0
 lane: brain
 risk: high
 codex_effort: xhigh
-depends_on: [WP-003, WP-005]
+depends_on: [WP-003, WP-005, WP-013]
 fr: [FR-A1, FR-A2, FR-C9, FR-P1, FR-P7, NFR-4, NFR-17]
 owns:
   - packages/brain/src/index.ts
@@ -145,6 +145,11 @@ Later waves implement the tools; this WP fixes their shape.
 - [ ] AC6: Server-owned history: messages the client sends beyond the latest one are ignored (test).
 - [ ] AC7 (live): A real model turn through the route handler streams a German answer to a German
   question, and the turn is persisted.
+
+## Notes for the implementer
+
+- Database access goes through `@lotse/db` (WP-013), not `@lotse/brain/db`; add it as a
+  `workspace:*` dependency.
 
 ## Suggested commits
 
