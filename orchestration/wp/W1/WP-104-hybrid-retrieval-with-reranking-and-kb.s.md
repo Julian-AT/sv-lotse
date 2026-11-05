@@ -5,7 +5,7 @@ wave: W1
 lane: retrieval
 risk: normal
 codex_effort: high
-depends_on: [WP-006, WP-103, WP-014]
+depends_on: [WP-006, WP-103, WP-014, WP-173]
 fr: [FR-G2, FR-G4, E3]
 owns:
   - packages/brain/src/retrieval/**
