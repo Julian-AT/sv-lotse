@@ -1,0 +1,74 @@
+[
+  {
+    "name": "insurance_status",
+    "passage": "insurance_status: insured means explicitly insured without a stated subtype; uninsured means explicitly not insured; co_insured means explicitly covered through another person; self_insured means explicitly voluntarily self-insured. Employment alone does not establish insurance status.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  },
+  {
+    "name": "carrier",
+    "passage": "carrier: normalize explicit health insurer names to OEGK (ÖGK, Österreichische Gesundheitskasse, former Gebietskrankenkasse/GKK), SVS (Sozialversicherung der Selbständigen), or BVAEB (Versicherungsanstalt öffentlich Bediensteter, Eisenbahnen und Bergbau). Do not infer a carrier from employment.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  },
+  {
+    "name": "federal_state",
+    "passage": "federal_state: normalize the stated Austrian state of residence to Burgenland, Kaernten, Niederoesterreich, Oberoesterreich, Salzburg, Steiermark, Tirol, Vorarlberg, or Wien. An explicitly stated city of residence may identify its state; workplace and travel destinations do not.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  },
+  {
+    "name": "age_band",
+    "passage": "age_band: map explicitly stated completed years to under_18 (0–17), 18_to_39 (18–39), 40_to_44 (40–44), 45_to_74 (45–74), or 75_plus (75 and above). These are evaluation partitions, not eligibility rules. Do not infer age from school, work or retirement.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  },
+  {
+    "name": "care_need",
+    "passage": "care_need: help_reported means the subject explicitly reports needing help with daily activities; no_help_reported means the subject explicitly reports managing daily activities without help. Do not infer a care level, diagnosis or entitlement.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  },
+  {
+    "name": "hospital_discharge_date",
+    "passage": "hospital_discharge_date: the explicitly stated actual date of leaving hospital, normalized to YYYY-MM-DD. Admission, planned discharge and dates belonging to another person are excluded. Relative dates require input.reference_date; without it omit the slot.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  },
+  {
+    "name": "helper_relation",
+    "passage": "helper_relation: the speaker’s relationship to the subject, normalized to self, child, parent, partner, sibling, grandchild, friend, or neighbor. A daughter helping her mother is child; a mother helping her daughter is parent. Gender is not encoded.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  },
+  {
+    "name": "income_band",
+    "passage": "income_band: explicitly stated monthly net personal income in EUR maps to no_income (0), under_1000 (greater than 0 and below 1000), 1000_to_under_2000 (1000 inclusive to 2000 exclusive), or 2000_plus (2000 and above). These synthetic evaluation bands are not benefit thresholds. Omit gross, household, annual or unspecified-period amounts.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  },
+  {
+    "name": "child_birth_date",
+    "passage": "child_birth_date: the explicitly stated actual birth date of the subject’s child, normalized to YYYY-MM-DD. A due date, another person’s birth date and a date without a year do not establish this slot.",
+    "basis": {
+      "uri": "file:///repo/packages/evals/sets/e11/definition-source.md",
+      "passage": "Each item: utterance, expected slots with values and the source of the slot definition."
+    }
+  }
+]
