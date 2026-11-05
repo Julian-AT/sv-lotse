@@ -1,0 +1,26 @@
+id: "oegk-oberoesterreich"
+name_de: "Österreichische Gesundheitskasse Oberösterreich"
+name_simple: "OEGK-Büro in Oberösterreich"
+carrier: "oegk"
+region: "Oberösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+address:
+  street: "Gruberstraße 77"
+  postal_code: "4021"
+  locality: "Linz"
+  country: "AT"
+phone: "+43 5 0766-14"
+email: "office@oegk.at"
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: |-
+      Österreichische Gesundheitskasse Oberösterreich
+      Gruberstraße 77
+      Postfach 61
+      4021 Linz
+      Tel. +43 5 0766-14
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: "Österreichische Gesundheitskasse: office@oegk.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

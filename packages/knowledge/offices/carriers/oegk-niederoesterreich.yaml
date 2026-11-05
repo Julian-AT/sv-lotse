@@ -1,0 +1,25 @@
+id: "oegk-niederoesterreich"
+name_de: "Österreichische Gesundheitskasse Niederösterreich"
+name_simple: "OEGK-Büro in Niederösterreich"
+carrier: "oegk"
+region: "Niederösterreich"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+address:
+  street: "Kremser Landstraße 3"
+  postal_code: "3100"
+  locality: "St. Pölten"
+  country: "AT"
+phone: "+43 5 0766-12"
+email: "office@oegk.at"
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: |-
+      Österreichische Gesundheitskasse Niederösterreich
+      Kremser Landstraße 3
+      3100 St. Pölten
+      Tel. +43 5 0766-12
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: "Österreichische Gesundheitskasse: office@oegk.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"

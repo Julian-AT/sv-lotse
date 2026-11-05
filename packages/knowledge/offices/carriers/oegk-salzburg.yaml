@@ -1,0 +1,25 @@
+id: "oegk-salzburg"
+name_de: "Österreichische Gesundheitskasse Salzburg"
+name_simple: "OEGK-Büro in Salzburg"
+carrier: "oegk"
+region: "Salzburg"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+address:
+  street: "Engelbert-Weiß-Weg 10"
+  postal_code: "5020"
+  locality: "Salzburg"
+  country: "AT"
+phone: "+43 5 0766-17"
+email: "office@oegk.at"
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: |-
+      Österreichische Gesundheitskasse Salzburg
+      Engelbert-Weiß-Weg 10
+      5020 Salzburg
+      Tel. +43 5 0766-17
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+    quote: "Österreichische Gesundheitskasse: office@oegk.at"
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
