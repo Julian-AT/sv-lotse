@@ -1,0 +1,50 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# builds and caches
+.next/
+out/
+dist/
+build/
+.turbo/
+.vercel/
+*.tsbuildinfo
+.cache/
+.eslintcache
+
+# tests
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# environment
+.env
+.env.*
+!.env.example
+
+# swift and xcode
+apps/mac/*.xcodeproj/
+.build/
+DerivedData/
+.swiftpm/
+xcuserdata/
+*.xcuserstate
+
+# local orchestration state
+.orchestration/
+.claude/settings.local.json
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# os and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
