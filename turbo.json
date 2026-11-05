@@ -1,0 +1,73 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "cacheDir": ".turbo/cache",
+  "envMode": "strict",
+  "globalDependencies": ["tsconfig.base.json", "biome.json", "bun.lock"],
+  "tasks": {
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "inputs": [
+        "src/**",
+        "test/**",
+        "scripts/**",
+        "tsconfig*.json",
+        "package.json",
+        "$TURBO_ROOT$/tsconfig.base.json"
+      ],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^test"],
+      "inputs": [
+        "src/**",
+        "test/**",
+        "scripts/**",
+        "tsconfig*.json",
+        "package.json",
+        "$TURBO_ROOT$/tsconfig.base.json",
+        "$TURBO_ROOT$/vitest.config.ts",
+        "vitest.config.*",
+        "fixtures/**",
+        "generated/**"
+      ],
+      "outputs": []
+    },
+    "generate": {
+      "inputs": [
+        "src/**",
+        "test/**",
+        "scripts/**",
+        "tsconfig*.json",
+        "package.json",
+        "$TURBO_ROOT$/tsconfig.base.json"
+      ],
+      "outputs": ["generated/**", "swift/Sources/**"]
+    },
+    "check:generated": {
+      "dependsOn": [],
+      "inputs": [
+        "src/**",
+        "test/**",
+        "scripts/**",
+        "tsconfig*.json",
+        "package.json",
+        "$TURBO_ROOT$/tsconfig.base.json",
+        "generated/**",
+        "swift/Sources/**"
+      ],
+      "outputs": []
+    },
+    "test:integration": {
+      "cache": false,
+      "passThroughEnv": ["*"]
+    },
+    "test:live": {
+      "cache": false,
+      "passThroughEnv": ["*"]
+    },
+    "test:db": {
+      "cache": false,
+      "passThroughEnv": ["*"]
+    }
+  }
+}

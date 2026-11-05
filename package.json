@@ -16,12 +16,12 @@
     "lint": "biome lint .",
     "format": "biome format --write .",
     "format:check": "biome format .",
-    "typecheck": "bun run --filter '*' typecheck",
-    "test": "bun run --filter '*' test",
-    "test:integration": "bun run --filter '*' test:integration",
-    "test:live": "bun run --filter '*' test:live",
-    "generate": "bun run --filter '*' generate",
-    "verify": "bun run lint && bun run typecheck && bun run test"
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:integration": "turbo run test:integration",
+    "test:live": "turbo run test:live",
+    "generate": "turbo run generate",
+    "verify": "bun run lint && turbo run typecheck test"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.5",
@@ -30,6 +30,7 @@
     "@types/node": "^26.6.6",
     "@vitest/coverage-v8": "^5.1.0",
     "husky": "^9.1.7",
+    "turbo": "^2.11.10",
     "typescript": "^7.0.2",
     "vitest": "^5.1.0"
   }
