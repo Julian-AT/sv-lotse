@@ -1,0 +1,41 @@
+{
+  "id": "finanzamt-st-poelten-daniel-gran-strasse-8",
+  "name_de": "Finanzamt Österreich – Standort St. Pölten, Daniel Gran-Straße 8",
+  "name_simple": "Finanzamt in St. Pölten",
+  "region": "Österreich",
+  "address": {
+    "street": "Daniel Gran-Straße 8",
+    "postal_code": "3100",
+    "locality": "St. Pölten",
+    "country": "AT"
+  },
+  "phone": "050 233 233",
+  "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+  "jurisdiction": "Familienbeihilfe",
+  "opening_hours": {
+    "notes": "Für einen persönlichen Kontakt im Finanzamt ist eine vorhergehende Terminvereinbarung unbedingt notwendig."
+  },
+  "sources": [
+    {
+      "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+      "quote": "St. Pölten (3100 St. Pölten, Daniel Gran-Straße 8)",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://service.bmf.gv.at/service/anwend/behoerden/",
+      "quote": "Für einen persönlichen Kontakt im Finanzamt ist eine vorhergehende Terminvereinbarung unbedingt notwendig.",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.bmf.gv.at/services/aemter-behoerden/faoe.html",
+      "quote": "Privatpersonen: 050 233 233",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    },
+    {
+      "url": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+      "quote": "Zuständige Stelle\nFinanzamt Österreich",
+      "retrieved_at": "2026-11-05T22:38:55Z"
+    }
+  ],
+  "as_of": "2026-11-05"
+}
