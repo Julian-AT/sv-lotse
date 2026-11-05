@@ -1,0 +1,3802 @@
+[
+  {
+    "id": "e9-001",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Wo kann ich die Befreiung von der Rezeptgebühr beantragen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wo kann ich die Befreiung von der Rezeptgebühr beantragen?",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-002",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I zahl die Rezeptgebühr jedes Mal selber, wo frag i wegen einer Befreiung nach?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I zahl die Rezeptgebühr jedes Mal selber, wo frag i wegen einer Befreiung nach?",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "i"]
+      }
+    }
+  },
+  {
+    "id": "e9-003",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Auf dem Beleg steht eine Rezeptgebühr von sieben Euro fünfzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf dem Beleg steht eine Rezeptgebühr von sieben Euro fünfzig.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": ["sieben Euro fünfzig"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-004",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Die Rezeptgebühr wurde mir am dritten März zweitausendsechsundzwanzig verrechnet.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Rezeptgebühr wurde mir am dritten März zweitausendsechsundzwanzig verrechnet.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": ["dritten März zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-005",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Meine Mutter Maria Huber hat eine Frage zur Rezeptgebühr.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Meine Mutter Maria Huber hat eine Frage zur Rezeptgebühr.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Maria Huber"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-006",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Brauche ich für den Antrag zur Rezeptgebühr noch einen Einkommensnachweis?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Brauche ich für den Antrag zur Rezeptgebühr noch einen Einkommensnachweis?",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-007",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Na, i mein die Rezeptgebühr, ned die Rechnung vom Arzt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Na, i mein die Rezeptgebühr, ned die Rechnung vom Arzt.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["i", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-008",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Ich habe wegen der Rezeptgebühr schon zweimal angerufen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe wegen der Rezeptgebühr schon zweimal angerufen.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": ["zweimal"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-009",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Kannst du mir das Formular zur Rezeptgebühr größer anzeigen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kannst du mir das Formular zur Rezeptgebühr größer anzeigen?",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-010",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Der Brief zur Rezeptgebühr ist vom vierzehnten Februar zweitausendsechsundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Brief zur Rezeptgebühr ist vom vierzehnten Februar zweitausendsechsundzwanzig.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": ["vierzehnten Februar zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-011",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Herr Özdemir hat mir gesagt, ich soll wegen der Rezeptgebühr schriftlich nachfragen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Herr Özdemir hat mir gesagt, ich soll wegen der Rezeptgebühr schriftlich nachfragen.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Özdemir"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-012",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I find den Bescheid zur Rezeptgebühr nimmer.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I find den Bescheid zur Rezeptgebühr nimmer.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "nimmer"]
+      }
+    }
+  },
+  {
+    "id": "e9-013",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Bei der Rezeptgebühr geht es um meine Frau, nicht um mich.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bei der Rezeptgebühr geht es um meine Frau, nicht um mich.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-014",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number", "dialect"],
+    "input": {
+      "utterance": "Für die Rezeptgebühr hab i drei Belege da.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Für die Rezeptgebühr hab i drei Belege da.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": ["drei"],
+        "dates": [],
+        "names": [],
+        "dialect": ["i"]
+      }
+    }
+  },
+  {
+    "id": "e9-015",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Bitte lies mir nur den Betreff von dem Schreiben zur Rezeptgebühr vor.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte lies mir nur den Betreff von dem Schreiben zur Rezeptgebühr vor.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-016",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Meine e-card ist weg, wie melde ich den Verlust?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Meine e-card ist weg, wie melde ich den Verlust?",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-017",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I hab die e-card daheim liegen lassen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I hab die e-card daheim liegen lassen.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "daheim"]
+      }
+    }
+  },
+  {
+    "id": "e9-018",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Auf meiner e-card steht der Name Anna Gruber.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf meiner e-card steht der Name Anna Gruber.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Anna Gruber"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-019",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Die neue e-card ist am achten Jänner zweitausendsechsundzwanzig angekommen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die neue e-card ist am achten Jänner zweitausendsechsundzwanzig angekommen.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": ["achten Jänner zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-020",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Ich habe seit zwei Wochen keine e-card mehr.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe seit zwei Wochen keine e-card mehr.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": ["zwei Wochen"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-021",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Geh, wo kann i eine neue e-card bestellen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Geh, wo kann i eine neue e-card bestellen?",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Geh", "i"]
+      }
+    }
+  },
+  {
+    "id": "e9-022",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Muss ich die alte e-card zurückschicken?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Muss ich die alte e-card zurückschicken?",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-023",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Meine Tochter Lena Berger hat noch keine e-card bekommen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Meine Tochter Lena Berger hat noch keine e-card bekommen.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Lena Berger"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-024",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Kannst du mir zeigen, wo ich wegen der e-card nachfragen kann?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kannst du mir zeigen, wo ich wegen der e-card nachfragen kann?",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-025",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Die e-card ist seit dem ersten April zweitausendsechsundzwanzig nicht auffindbar.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die e-card ist seit dem ersten April zweitausendsechsundzwanzig nicht auffindbar.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": ["ersten April zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-026",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Auf der e-card ist mein alter Nachname, Steiner.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf der e-card ist mein alter Nachname, Steiner.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Steiner"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-027",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I such die Nummer auf der e-card, kannst ma die Stelle zeigen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I such die Nummer auf der e-card, kannst ma die Stelle zeigen?",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "ma"]
+      }
+    }
+  },
+  {
+    "id": "e9-028",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Für mein Kind brauche ich eine Auskunft zur e-card.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Für mein Kind brauche ich eine Auskunft zur e-card.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-029",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Im Brief zur e-card steht, ich soll innerhalb von vier Wochen antworten.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Im Brief zur e-card steht, ich soll innerhalb von vier Wochen antworten.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": ["vier Wochen"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-030",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Ah so, du meinst die e-card, die hab i eh mit.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ah so, du meinst die e-card, die hab i eh mit.",
+      "annotations": {
+        "domainTerms": ["e-card"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["i", "eh"]
+      }
+    }
+  },
+  {
+    "id": "e9-031",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Wer nimmt den Antrag auf ein Anschlussheilverfahren entgegen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wer nimmt den Antrag auf ein Anschlussheilverfahren entgegen?",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-032",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I brauch Hilfe beim Antrag fürs Anschlussheilverfahren.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I brauch Hilfe beim Antrag fürs Anschlussheilverfahren.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I"]
+      }
+    }
+  },
+  {
+    "id": "e9-033",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Auf dem Schreiben zum Anschlussheilverfahren steht das Datum zwölfter Mai zweitausendsechsundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf dem Schreiben zum Anschlussheilverfahren steht das Datum zwölfter Mai zweitausendsechsundzwanzig.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": ["zwölfter Mai zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-034",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Frau Aigner ist meine Kontaktperson zum Anschlussheilverfahren.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Frau Aigner ist meine Kontaktperson zum Anschlussheilverfahren.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Aigner"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-035",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Ich habe zum Anschlussheilverfahren zwei Briefe erhalten.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe zum Anschlussheilverfahren zwei Briefe erhalten.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": ["zwei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-036",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Bitte zeig mir beim Anschlussheilverfahren nur, welche Unterlagen verlangt werden.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte zeig mir beim Anschlussheilverfahren nur, welche Unterlagen verlangt werden.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-037",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Des Wort Anschlussheilverfahren kann i kaum aussprechen, wo gehört der Antrag hin?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Des Wort Anschlussheilverfahren kann i kaum aussprechen, wo gehört der Antrag hin?",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Des", "i"]
+      }
+    }
+  },
+  {
+    "id": "e9-038",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Der Antrag auf Anschlussheilverfahren liegt noch bei mir.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Antrag auf Anschlussheilverfahren liegt noch bei mir.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-039",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Ich habe am neunundzwanzigsten Juni zweitausendsechsundzwanzig wegen dem Anschlussheilverfahren angerufen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe am neunundzwanzigsten Juni zweitausendsechsundzwanzig wegen dem Anschlussheilverfahren angerufen.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": ["neunundzwanzigsten Juni zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-040",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Mein Vater Franz Leitner wartet auf Post zum Anschlussheilverfahren.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Vater Franz Leitner wartet auf Post zum Anschlussheilverfahren.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Franz Leitner"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-041",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Beim Anschlussheilverfahren fehlt mir die zweite Seite vom Formular.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Beim Anschlussheilverfahren fehlt mir die zweite Seite vom Formular.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": ["zweite"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-042",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Na wart, der Brief zum Anschlussheilverfahren is im anderen Kuvert.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Na wart, der Brief zum Anschlussheilverfahren is im anderen Kuvert.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Na wart", "is"]
+      }
+    }
+  },
+  {
+    "id": "e9-043",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Kannst du das Feld für die Unterschrift beim Anschlussheilverfahren markieren?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kannst du das Feld für die Unterschrift beim Anschlussheilverfahren markieren?",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-044",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Zum Anschlussheilverfahren habe ich eine Rückfrage von Herrn Hofer bekommen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Zum Anschlussheilverfahren habe ich eine Rückfrage von Herrn Hofer bekommen.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Hofer"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-045",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I will den Antrag aufs Anschlussheilverfahren erst durchlesen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I will den Antrag aufs Anschlussheilverfahren erst durchlesen.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I"]
+      }
+    }
+  },
+  {
+    "id": "e9-046",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Wo stelle ich den Antrag auf Pflegegeld?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wo stelle ich den Antrag auf Pflegegeld?",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-047",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I frag wegen dem Pflegegeld für meine Mama.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I frag wegen dem Pflegegeld für meine Mama.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I"]
+      }
+    }
+  },
+  {
+    "id": "e9-048",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Im Bescheid zum Pflegegeld steht Stufe drei.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Im Bescheid zum Pflegegeld steht Stufe drei.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": ["drei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-049",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Der Brief zum Pflegegeld ist am siebten Juli zweitausendsechsundzwanzig gekommen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Brief zum Pflegegeld ist am siebten Juli zweitausendsechsundzwanzig gekommen.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": ["siebten Juli zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-050",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Meine Oma heißt Theresia Moser, es geht um ihr Pflegegeld.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Meine Oma heißt Theresia Moser, es geht um ihr Pflegegeld.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Theresia Moser"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-051",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Ich möchte die Unterlagen zum Pflegegeld gemeinsam durchgehen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich möchte die Unterlagen zum Pflegegeld gemeinsam durchgehen.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-052",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Des Pflegegeld betrifft meinen Vater, ned mich.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Des Pflegegeld betrifft meinen Vater, ned mich.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Des", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-053",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Ich habe vier Seiten zum Pflegegeld eingescannt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe vier Seiten zum Pflegegeld eingescannt.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": ["vier"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-054",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Kann ich die fehlende Unterschrift zum Pflegegeld auf Papier nachreichen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kann ich die fehlende Unterschrift zum Pflegegeld auf Papier nachreichen?",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-055",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Für den Termin wegen dem Pflegegeld wurde der zwanzigste August zweitausendsechsundzwanzig genannt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Für den Termin wegen dem Pflegegeld wurde der zwanzigste August zweitausendsechsundzwanzig genannt.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": ["zwanzigste August zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-056",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Herr Wolfgang Pichler hat den Brief zum Pflegegeld bekommen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Herr Wolfgang Pichler hat den Brief zum Pflegegeld bekommen.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Wolfgang Pichler"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-057",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I hab beim Pflegegeld die Geschäftszahl grad ned zur Hand.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I hab beim Pflegegeld die Geschäftszahl grad ned zur Hand.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "grad ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-058",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Bitte speichere beim Pflegegeld noch nichts, ich will das zuerst lesen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte speichere beim Pflegegeld noch nichts, ich will das zuerst lesen.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-059",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Am Telefon zum Pflegegeld hat Frau Özlem Yılmaz ihren Namen buchstabiert.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Am Telefon zum Pflegegeld hat Frau Özlem Yılmaz ihren Namen buchstabiert.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Özlem Yılmaz"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-060",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number", "dialect"],
+    "input": {
+      "utterance": "Zum Pflegegeld hab i drei Fragen, fang ma mit dem Formular an.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Zum Pflegegeld hab i drei Fragen, fang ma mit dem Formular an.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld"],
+        "numbers": ["drei"],
+        "dates": [],
+        "names": [],
+        "dialect": ["i", "fang ma"]
+      }
+    }
+  },
+  {
+    "id": "e9-061",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Welche Landesstelle ist für meine Anfrage zuständig?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Welche Landesstelle ist für meine Anfrage zuständig?",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-062",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I soll zur Landesstelle, aber i weiß ned wohin.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I soll zur Landesstelle, aber i weiß ned wohin.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "i", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-063",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Die Landesstelle hat mir zwei Schreiben geschickt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Landesstelle hat mir zwei Schreiben geschickt.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": ["zwei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-064",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Mein Termin bei der Landesstelle ist am sechzehnten September zweitausendsechsundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Termin bei der Landesstelle ist am sechzehnten September zweitausendsechsundzwanzig.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": ["sechzehnten September zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-065",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Bei der Landesstelle hat sich Frau Sabine Fuchs gemeldet.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bei der Landesstelle hat sich Frau Sabine Fuchs gemeldet.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Sabine Fuchs"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-066",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Kann ich die Landesstelle auch schriftlich kontaktieren?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kann ich die Landesstelle auch schriftlich kontaktieren?",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-067",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Die Landesstelle braucht noch eine Kopie vom Brief.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Landesstelle braucht noch eine Kopie vom Brief.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-068",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I hab bei der Landesstelle angerufen, da war grad besetzt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I hab bei der Landesstelle angerufen, da war grad besetzt.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "grad"]
+      }
+    }
+  },
+  {
+    "id": "e9-069",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Die Landesstelle nennt im Brief die Zimmernummer einundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Landesstelle nennt im Brief die Zimmernummer einundzwanzig.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": ["einundzwanzig"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-070",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Das Schreiben der Landesstelle trägt das Datum dreißigster Oktober zweitausendsechsundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Das Schreiben der Landesstelle trägt das Datum dreißigster Oktober zweitausendsechsundzwanzig.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": ["dreißigster Oktober zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-071",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Mein Ansprechpartner bei der Landesstelle heißt Georg Winkler.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Ansprechpartner bei der Landesstelle heißt Georg Winkler.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Georg Winkler"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-072",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Zeig ma bitte die Adresse von der Landesstelle größer.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Zeig ma bitte die Adresse von der Landesstelle größer.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["ma"]
+      }
+    }
+  },
+  {
+    "id": "e9-073",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Kann ich zur Landesstelle jemanden mitnehmen, der mir beim Lesen hilft?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kann ich zur Landesstelle jemanden mitnehmen, der mir beim Lesen hilft?",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-074",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Ich warte seit drei Wochen auf eine Antwort der Landesstelle.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich warte seit drei Wochen auf eine Antwort der Landesstelle.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": ["drei Wochen"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-075",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Na, i such die Landesstelle in meinem Bundesland.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Na, i such die Landesstelle in meinem Bundesland.",
+      "annotations": {
+        "domainTerms": ["Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["i"]
+      }
+    }
+  },
+  {
+    "id": "e9-076",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Wie reiche ich die Rechnung vom Wahlarzt ein?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wie reiche ich die Rechnung vom Wahlarzt ein?",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-077",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I war beim Wahlarzt und hab die Rechnung schon bezahlt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I war beim Wahlarzt und hab die Rechnung schon bezahlt.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I"]
+      }
+    }
+  },
+  {
+    "id": "e9-078",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Auf der Rechnung vom Wahlarzt stehen hundertzwanzig Euro.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf der Rechnung vom Wahlarzt stehen hundertzwanzig Euro.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": ["hundertzwanzig Euro"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-079",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Der Besuch beim Wahlarzt war am elften November zweitausendsechsundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Besuch beim Wahlarzt war am elften November zweitausendsechsundzwanzig.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": ["elften November zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-080",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Mein Wahlarzt heißt Doktor Markus Eder.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Wahlarzt heißt Doktor Markus Eder.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Markus Eder"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-081",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Welche Belege brauche ich für die Einreichung nach dem Besuch beim Wahlarzt?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Welche Belege brauche ich für die Einreichung nach dem Besuch beim Wahlarzt?",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-082",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Na, des war ein Wahlarzt, kein Kassenarzt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Na, des war ein Wahlarzt, kein Kassenarzt.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["des"]
+      }
+    }
+  },
+  {
+    "id": "e9-083",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Ich habe vom Wahlarzt drei Rechnungen, die möchte ich getrennt hochladen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe vom Wahlarzt drei Rechnungen, die möchte ich getrennt hochladen.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": ["drei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-084",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Die Rechnung vom Wahlarzt ist für meinen Mann.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Rechnung vom Wahlarzt ist für meinen Mann.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-085",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Beim Wahlarzt habe ich am zweiundzwanzigsten Dezember zweitausendfünfundzwanzig bezahlt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Beim Wahlarzt habe ich am zweiundzwanzigsten Dezember zweitausendfünfundzwanzig bezahlt.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": ["zweiundzwanzigsten Dezember zweitausendfünfundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-086",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Die Rechnung vom Wahlarzt lautet auf Veronika Schmid.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Rechnung vom Wahlarzt lautet auf Veronika Schmid.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Veronika Schmid"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-087",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I find den Zahlungsbeleg vom Wahlarzt nimmer.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I find den Zahlungsbeleg vom Wahlarzt nimmer.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "nimmer"]
+      }
+    }
+  },
+  {
+    "id": "e9-088",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Bitte zeige mir vor dem Hochladen die Rechnung vom Wahlarzt noch einmal.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte zeige mir vor dem Hochladen die Rechnung vom Wahlarzt noch einmal.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-089",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Der Wahlarzt hat mir eine Rechnung über achtundneunzig Euro vierzig gegeben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Wahlarzt hat mir eine Rechnung über achtundneunzig Euro vierzig gegeben.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": ["achtundneunzig Euro vierzig"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-090",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Vom Wahlarzt hab i nur das Original auf Papier.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Vom Wahlarzt hab i nur das Original auf Papier.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["i"]
+      }
+    }
+  },
+  {
+    "id": "e9-091",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Wo kann ich nach dem Stand meiner Bewilligung fragen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wo kann ich nach dem Stand meiner Bewilligung fragen?",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-092",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I wart noch auf die Bewilligung.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I wart noch auf die Bewilligung.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I"]
+      }
+    }
+  },
+  {
+    "id": "e9-093",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Für die Bewilligung habe ich zwei Beilagen nachgereicht.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Für die Bewilligung habe ich zwei Beilagen nachgereicht.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": ["zwei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-094",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Die Bewilligung ist mit dem fünften März zweitausendsechsundzwanzig datiert.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Bewilligung ist mit dem fünften März zweitausendsechsundzwanzig datiert.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": ["fünften März zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-095",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Frau Renate Haider hat mir wegen der Bewilligung geschrieben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Frau Renate Haider hat mir wegen der Bewilligung geschrieben.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Renate Haider"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-096",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Kannst du mir die Geschäftszahl auf der Bewilligung zeigen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kannst du mir die Geschäftszahl auf der Bewilligung zeigen?",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-097",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Die Bewilligung liegt als PDF vor, ich möchte sie zuerst öffnen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Bewilligung liegt als PDF vor, ich möchte sie zuerst öffnen.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-098",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Na, i hab noch ka Bewilligung bekommen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Na, i hab noch ka Bewilligung bekommen.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["i", "ka"]
+      }
+    }
+  },
+  {
+    "id": "e9-099",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Im Brief zur Bewilligung steht eine Frist von vierzehn Tagen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Im Brief zur Bewilligung steht eine Frist von vierzehn Tagen.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": ["vierzehn Tagen"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-100",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Ich habe die Bewilligung am achtzehnten April zweitausendsechsundzwanzig erhalten.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe die Bewilligung am achtzehnten April zweitausendsechsundzwanzig erhalten.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": ["achtzehnten April zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-101",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Die Bewilligung ist auf meinen Sohn Elias Wagner ausgestellt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Bewilligung ist auf meinen Sohn Elias Wagner ausgestellt.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Elias Wagner"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-102",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I glaub, die Bewilligung liegt noch im Kuvert daheim.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I glaub, die Bewilligung liegt noch im Kuvert daheim.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "daheim"]
+      }
+    }
+  },
+  {
+    "id": "e9-103",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Bitte lies mir bei der Bewilligung nur die angeführten Unterlagen vor.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte lies mir bei der Bewilligung nur die angeführten Unterlagen vor.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-104",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Zur Bewilligung habe ich dreimal eine Nachricht bekommen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Zur Bewilligung habe ich dreimal eine Nachricht bekommen.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": ["dreimal"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-105",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Für die Bewilligung fehlt laut Frau Sonja Reiter meine Unterschrift.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Für die Bewilligung fehlt laut Frau Sonja Reiter meine Unterschrift.",
+      "annotations": {
+        "domainTerms": ["Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Sonja Reiter"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-106",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Wo reiche ich die Unterlagen für einen Heilbehelf ein?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wo reiche ich die Unterlagen für einen Heilbehelf ein?",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-107",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I hab eine Verordnung für einen Heilbehelf dabei.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I hab eine Verordnung für einen Heilbehelf dabei.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I"]
+      }
+    }
+  },
+  {
+    "id": "e9-108",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Für den Heilbehelf liegt ein Kostenvoranschlag über zweihundert Euro vor.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Für den Heilbehelf liegt ein Kostenvoranschlag über zweihundert Euro vor.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": ["zweihundert Euro"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-109",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Die Rechnung für den Heilbehelf ist vom neunten Mai zweitausendsechsundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Rechnung für den Heilbehelf ist vom neunten Mai zweitausendsechsundzwanzig.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": ["neunten Mai zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-110",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Der Heilbehelf ist für meinen Vater Josef Bauer.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Heilbehelf ist für meinen Vater Josef Bauer.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Josef Bauer"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-111",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Ich möchte beim Heilbehelf nur wissen, an wen ich die Rechnung schicke.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich möchte beim Heilbehelf nur wissen, an wen ich die Rechnung schicke.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-112",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Des ist die Rechnung für den Heilbehelf, der andere Zettel gehört ned dazu.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Des ist die Rechnung für den Heilbehelf, der andere Zettel gehört ned dazu.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Des", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-113",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Zum Heilbehelf habe ich zwei Dokumente hochgeladen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Zum Heilbehelf habe ich zwei Dokumente hochgeladen.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": ["zwei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-114",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Kannst du mir beim Heilbehelf das Feld für den Rechnungsbetrag zeigen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kannst du mir beim Heilbehelf das Feld für den Rechnungsbetrag zeigen?",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-115",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Die Unterlagen für den Heilbehelf habe ich am einundzwanzigsten Juni zweitausendsechsundzwanzig abgegeben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Unterlagen für den Heilbehelf habe ich am einundzwanzigsten Juni zweitausendsechsundzwanzig abgegeben.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": ["einundzwanzigsten Juni zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-116",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Auf der Rechnung für den Heilbehelf steht der Name Fatima Demir.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf der Rechnung für den Heilbehelf steht der Name Fatima Demir.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Fatima Demir"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-117",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I such beim Heilbehelf nur die Adresse fürs Einreichen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I such beim Heilbehelf nur die Adresse fürs Einreichen.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I"]
+      }
+    }
+  },
+  {
+    "id": "e9-118",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Für den Heilbehelf habe ich den Zahlungsnachweis noch nicht eingescannt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Für den Heilbehelf habe ich den Zahlungsnachweis noch nicht eingescannt.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-119",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Die Anfrage zum Heilbehelf hat Frau Ingrid Schuster unterschrieben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Anfrage zum Heilbehelf hat Frau Ingrid Schuster unterschrieben.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Ingrid Schuster"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-120",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Beim Heilbehelf fehlen auf der Kopie die letzten zwei Zeilen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Beim Heilbehelf fehlen auf der Kopie die letzten zwei Zeilen.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf"],
+        "numbers": ["zwei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-121",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Wie beantrage ich einen Kostenzuschuss?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wie beantrage ich einen Kostenzuschuss?",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-122",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I möcht wegen einem Kostenzuschuss nachfragen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I möcht wegen einem Kostenzuschuss nachfragen.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "möcht"]
+      }
+    }
+  },
+  {
+    "id": "e9-123",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Ich habe einen Kostenzuschuss von fünfzig Euro auf meinem Konto gesehen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe einen Kostenzuschuss von fünfzig Euro auf meinem Konto gesehen.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": ["fünfzig Euro"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-124",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Der Antrag auf Kostenzuschuss wurde am dreizehnten Juli zweitausendsechsundzwanzig verschickt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Antrag auf Kostenzuschuss wurde am dreizehnten Juli zweitausendsechsundzwanzig verschickt.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": ["dreizehnten Juli zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-125",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Mein Bruder Lukas Mayr wartet auf den Kostenzuschuss.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Bruder Lukas Mayr wartet auf den Kostenzuschuss.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Lukas Mayr"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-126",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Welche Unterlagen fehlen bei meinem Antrag auf Kostenzuschuss?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Welche Unterlagen fehlen bei meinem Antrag auf Kostenzuschuss?",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-127",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Na, i mein den Kostenzuschuss zu der Rechnung.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Na, i mein den Kostenzuschuss zu der Rechnung.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["i"]
+      }
+    }
+  },
+  {
+    "id": "e9-128",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Zum Kostenzuschuss habe ich schon zwei Nachfragen geschickt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Zum Kostenzuschuss habe ich schon zwei Nachfragen geschickt.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": ["zwei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-129",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Bitte zeige mir die Zusammenfassung, bevor ich den Antrag auf Kostenzuschuss ausdrucke.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte zeige mir die Zusammenfassung, bevor ich den Antrag auf Kostenzuschuss ausdrucke.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-130",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Der Bescheid zum Kostenzuschuss ist vom fünfundzwanzigsten August zweitausendsechsundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Bescheid zum Kostenzuschuss ist vom fünfundzwanzigsten August zweitausendsechsundzwanzig.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": ["fünfundzwanzigsten August zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-131",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Die Rückfrage zum Kostenzuschuss kam von Herrn Stefan Koch.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Rückfrage zum Kostenzuschuss kam von Herrn Stefan Koch.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Stefan Koch"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-132",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "Den Kostenzuschuss hab i noch ned am Konto.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Den Kostenzuschuss hab i noch ned am Konto.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["i", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-133",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Ich möchte den Kostenzuschuss für meine Tochter erfragen, nicht für mich.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich möchte den Kostenzuschuss für meine Tochter erfragen, nicht für mich.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-134",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Beim Kostenzuschuss wurde mir die Durchwahl vier zwei null genannt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Beim Kostenzuschuss wurde mir die Durchwahl vier zwei null genannt.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": ["vier zwei null"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-135",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Frau Eva Novak hat den Antrag auf Kostenzuschuss mit mir ausgefüllt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Frau Eva Novak hat den Antrag auf Kostenzuschuss mit mir ausgefüllt.",
+      "annotations": {
+        "domainTerms": ["Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Eva Novak"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-136",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Brauche ich für den Heilbehelf eine Bewilligung, und wo kann ich das nachfragen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Brauche ich für den Heilbehelf eine Bewilligung, und wo kann ich das nachfragen?",
+      "annotations": {
+        "domainTerms": ["Bewilligung", "Heilbehelf"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-137",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I hab die e-card und den Bescheid zum Pflegegeld mit.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I hab die e-card und den Bescheid zum Pflegegeld mit.",
+      "annotations": {
+        "domainTerms": ["e-card", "Pflegegeld"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I"]
+      }
+    }
+  },
+  {
+    "id": "e9-138",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Den Kostenzuschuss zur Rechnung vom Wahlarzt habe ich am zweiten September zweitausendsechsundzwanzig beantragt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Den Kostenzuschuss zur Rechnung vom Wahlarzt habe ich am zweiten September zweitausendsechsundzwanzig beantragt.",
+      "annotations": {
+        "domainTerms": ["Wahlarzt", "Kostenzuschuss"],
+        "numbers": [],
+        "dates": ["zweiten September zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-139",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Frau Claudia Höller von der Landesstelle fragt nach der Bewilligung.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Frau Claudia Höller von der Landesstelle fragt nach der Bewilligung.",
+      "annotations": {
+        "domainTerms": ["Landesstelle", "Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Claudia Höller"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-140",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Auf meiner Liste stehen drei Punkte, Rezeptgebühr, e-card und Pflegegeld.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf meiner Liste stehen drei Punkte, Rezeptgebühr, e-card und Pflegegeld.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr", "e-card", "Pflegegeld"],
+        "numbers": ["drei"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-141",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Zum Anschlussheilverfahren hat die Landesstelle noch eine Rückfrage.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Zum Anschlussheilverfahren hat die Landesstelle noch eine Rückfrage.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren", "Landesstelle"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-142",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "dialect"],
+    "input": {
+      "utterance": "I weiß ned, ob des Schreiben zum Kostenzuschuss oder zur Bewilligung gehört.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I weiß ned, ob des Schreiben zum Kostenzuschuss oder zur Bewilligung gehört.",
+      "annotations": {
+        "domainTerms": ["Bewilligung", "Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "ned", "des"]
+      }
+    }
+  },
+  {
+    "id": "e9-143",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Bitte öffne zuerst die Rechnung für den Heilbehelf und dann den Brief zum Kostenzuschuss.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte öffne zuerst die Rechnung für den Heilbehelf und dann den Brief zum Kostenzuschuss.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf", "Kostenzuschuss"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-144",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "date"],
+    "input": {
+      "utterance": "Die Landesstelle hat mir am vierundzwanzigsten Oktober zweitausendsechsundzwanzig wegen dem Pflegegeld geschrieben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Landesstelle hat mir am vierundzwanzigsten Oktober zweitausendsechsundzwanzig wegen dem Pflegegeld geschrieben.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld", "Landesstelle"],
+        "numbers": [],
+        "dates": ["vierundzwanzigsten Oktober zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-145",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number", "name"],
+    "input": {
+      "utterance": "Herr Erich Brunner hat zwei Briefe, einen zur Rezeptgebühr und einen zur e-card.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Herr Erich Brunner hat zwei Briefe, einen zur Rezeptgebühr und einen zur e-card.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr", "e-card"],
+        "numbers": ["zwei"],
+        "dates": [],
+        "names": ["Erich Brunner"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-146",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term"],
+    "input": {
+      "utterance": "Beim Wahlarzt wurde nach meiner e-card gefragt, ich möchte das bei der Kasse klären.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Beim Wahlarzt wurde nach meiner e-card gefragt, ich möchte das bei der Kasse klären.",
+      "annotations": {
+        "domainTerms": ["e-card", "Wahlarzt"],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-147",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "name"],
+    "input": {
+      "utterance": "Die Bewilligung für das Anschlussheilverfahren ist an meine Mutter Helga Winter adressiert.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Bewilligung für das Anschlussheilverfahren ist an meine Mutter Helga Winter adressiert.",
+      "annotations": {
+        "domainTerms": ["Anschlussheilverfahren", "Bewilligung"],
+        "numbers": [],
+        "dates": [],
+        "names": ["Helga Winter"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-148",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number", "dialect"],
+    "input": {
+      "utterance": "Für den Kostenzuschuss zum Heilbehelf hab i hundertfünf Euro vorgestreckt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Für den Kostenzuschuss zum Heilbehelf hab i hundertfünf Euro vorgestreckt.",
+      "annotations": {
+        "domainTerms": ["Heilbehelf", "Kostenzuschuss"],
+        "numbers": ["hundertfünf Euro"],
+        "dates": [],
+        "names": [],
+        "dialect": ["i"]
+      }
+    }
+  },
+  {
+    "id": "e9-149",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number"],
+    "input": {
+      "utterance": "Ich habe die Landesstelle wegen der Rezeptgebühr schon dreimal kontaktiert.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe die Landesstelle wegen der Rezeptgebühr schon dreimal kontaktiert.",
+      "annotations": {
+        "domainTerms": ["Rezeptgebühr", "Landesstelle"],
+        "numbers": ["dreimal"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-150",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "domain-term", "number", "dialect"],
+    "input": {
+      "utterance": "Na wart, des mit dem Pflegegeld und der Bewilligung waren zwei verschiedene Briefe.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Na wart, des mit dem Pflegegeld und der Bewilligung waren zwei verschiedene Briefe.",
+      "annotations": {
+        "domainTerms": ["Pflegegeld", "Bewilligung"],
+        "numbers": ["zwei"],
+        "dates": [],
+        "names": [],
+        "dialect": ["Na wart", "des"]
+      }
+    }
+  },
+  {
+    "id": "e9-151",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Bitte lies den letzten Satz noch einmal vor.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte lies den letzten Satz noch einmal vor.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-152",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Ich möchte das Formular gemeinsam mit meiner Tochter ausfüllen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich möchte das Formular gemeinsam mit meiner Tochter ausfüllen.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-153",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "I seh die kleine Schrift ned, mach sie bitte größer.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I seh die kleine Schrift ned, mach sie bitte größer.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-154",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Die Rechnung beträgt sechsundachtzig Euro zwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Rechnung beträgt sechsundachtzig Euro zwanzig.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["sechsundachtzig Euro zwanzig"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-155",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Mein Termin ist am ersten Februar zweitausendsiebenundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Termin ist am ersten Februar zweitausendsiebenundzwanzig.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["ersten Februar zweitausendsiebenundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-156",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Mein Name ist Elisabeth Weiß.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Name ist Elisabeth Weiß.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Elisabeth Weiß"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-157",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Bitte geh noch einen Schritt zurück.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte geh noch einen Schritt zurück.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-158",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "I hab den Brief daheim vergessen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I hab den Brief daheim vergessen.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "daheim"]
+      }
+    }
+  },
+  {
+    "id": "e9-159",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Die Nummer lautet eins null vier acht.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Nummer lautet eins null vier acht.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["eins null vier acht"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-160",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Als Geburtsdatum habe ich den sechsten Dezember neunzehnhundertsechzig angegeben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Als Geburtsdatum habe ich den sechsten Dezember neunzehnhundertsechzig angegeben.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["sechsten Dezember neunzehnhundertsechzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-161",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Das Schreiben ist an Frau Marija Petrović adressiert.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Das Schreiben ist an Frau Marija Petrović adressiert.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Marija Petrović"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-162",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Bitte verwende das Dokument links, das rechts ist veraltet.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte verwende das Dokument links, das rechts ist veraltet.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-163",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "Na, des Feld lass ma noch leer.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Na, des Feld lass ma noch leer.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Na", "des", "ma"]
+      }
+    }
+  },
+  {
+    "id": "e9-164",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Ich habe monatlich eintausendvierhundertdreißig Euro zur Verfügung.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe monatlich eintausendvierhundertdreißig Euro zur Verfügung.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["eintausendvierhundertdreißig Euro"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-165",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Am einunddreißigsten Jänner zweitausendsiebenundzwanzig bin ich nicht da.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Am einunddreißigsten Jänner zweitausendsiebenundzwanzig bin ich nicht da.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["einunddreißigsten Jänner zweitausendsiebenundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-166",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Meine Tochter heißt Sophie Kern, mit ph.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Meine Tochter heißt Sophie Kern, mit ph.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Sophie Kern"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-167",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Kannst du mir zeigen, wo ich die Sprache umstelle?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kannst du mir zeigen, wo ich die Sprache umstelle?",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-168",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "Wart a bissl, i hol den Zettel.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wart a bissl, i hol den Zettel.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Wart a bissl", "i"]
+      }
+    }
+  },
+  {
+    "id": "e9-169",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Die Postleitzahl ist acht null eins null.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Postleitzahl ist acht null eins null.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["acht null eins null"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-170",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Ich habe das am achtundzwanzigsten Februar zweitausendsechsundzwanzig abgeschickt.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich habe das am achtundzwanzigsten Februar zweitausendsechsundzwanzig abgeschickt.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["achtundzwanzigsten Februar zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-171",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Der Nachname ist Groß, mit scharfem S.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Nachname ist Groß, mit scharfem S.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Groß"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-172",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Ich möchte vor dem Speichern noch einmal alles lesen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich möchte vor dem Speichern noch einmal alles lesen.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-173",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "Geh bitte zurück, i bin noch ned fertig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Geh bitte zurück, i bin noch ned fertig.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["i", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-174",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Es fehlen noch siebzehn Euro auf dem Beleg.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Es fehlen noch siebzehn Euro auf dem Beleg.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["siebzehn Euro"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-175",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Die Unterschrift ist vom dritten Oktober neunzehnhundertneunundneunzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Unterschrift ist vom dritten Oktober neunzehnhundertneunundneunzig.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["dritten Oktober neunzehnhundertneunundneunzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-176",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Ich heiße Cem Özdemir, bitte mit Umlaut schreiben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich heiße Cem Özdemir, bitte mit Umlaut schreiben.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Cem Özdemir"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-177",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Können wir bei der Adresse weitermachen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Können wir bei der Adresse weitermachen?",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-178",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "Des gehört meiner Mama, ned mir.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Des gehört meiner Mama, ned mir.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Des", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-179",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Die Hausnummer ist zwölf, Stiege zwei, Tür sieben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Hausnummer ist zwölf, Stiege zwei, Tür sieben.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["zwölf", "zwei", "sieben"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-180",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Der Zeitraum geht vom ersten bis zum fünfzehnten März zweitausendsechsundzwanzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Zeitraum geht vom ersten bis zum fünfzehnten März zweitausendsechsundzwanzig.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["ersten bis zum fünfzehnten März zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-181",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Auf dem Kuvert steht Frau Christine Löffler.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf dem Kuvert steht Frau Christine Löffler.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Christine Löffler"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-182",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Ich möchte eine Kopie für meine Unterlagen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich möchte eine Kopie für meine Unterlagen.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-183",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "I hab mich vertan, bitte des letzte Wort ändern.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I hab mich vertan, bitte des letzte Wort ändern.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "des"]
+      }
+    }
+  },
+  {
+    "id": "e9-184",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Auf Seite vier fehlt der untere Rand.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Auf Seite vier fehlt der untere Rand.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["vier"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-185",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Wir haben den Termin auf den neunzehnten November zweitausendsechsundzwanzig verschoben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Wir haben den Termin auf den neunzehnten November zweitausendsechsundzwanzig verschoben.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["neunzehnten November zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-186",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Mein Vater Karl Heinz Sailer möchte selbst unterschreiben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Vater Karl Heinz Sailer möchte selbst unterschreiben.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Karl Heinz Sailer"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-187",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Bitte zeige mir, wo ich die Datei wieder löschen kann.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte zeige mir, wo ich die Datei wieder löschen kann.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-188",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "I komm mit dem Knopf da ned weiter.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "I komm mit dem Knopf da ned weiter.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["I", "ned"]
+      }
+    }
+  },
+  {
+    "id": "e9-189",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Äh, es waren fünfundsiebzig Euro, nein, fünfundachtzig Euro.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Äh, es waren fünfundsiebzig Euro, nein, fünfundachtzig Euro.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["fünfundsiebzig Euro", "fünfundachtzig Euro"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-190",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Mein Geburtstag ist am dreiundzwanzigsten April neunzehnhundertachtundsiebzig.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Mein Geburtstag ist am dreiundzwanzigsten April neunzehnhundertachtundsiebzig.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["dreiundzwanzigsten April neunzehnhundertachtundsiebzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-191",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Frau Ana Kovač hilft mir beim Ausfüllen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Frau Ana Kovač hilft mir beim Ausfüllen.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Ana Kovač"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-192",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Ich möchte die Angaben meiner Frau getrennt von meinen sehen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ich möchte die Angaben meiner Frau getrennt von meinen sehen.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-193",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "Kannst ma des bitte langsamer vorlesen?",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Kannst ma des bitte langsamer vorlesen?",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["ma", "des"]
+      }
+    }
+  },
+  {
+    "id": "e9-194",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Die Geschäftszahl beginnt mit null null sieben.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Geschäftszahl beginnt mit null null sieben.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["null null sieben"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-195",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Der Brief ist am neunundzwanzigsten Februar zweitausendvierundzwanzig angekommen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Der Brief ist am neunundzwanzigsten Februar zweitausendvierundzwanzig angekommen.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["neunundzwanzigsten Februar zweitausendvierundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-196",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "name"],
+    "input": {
+      "utterance": "Im Formular steht irrtümlich Peter statt Petra Huber.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Im Formular steht irrtümlich Peter statt Petra Huber.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": ["Peter", "Petra Huber"],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-197",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly"],
+    "input": {
+      "utterance": "Bitte frag mich noch einmal nach der fehlenden Angabe.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Bitte frag mich noch einmal nach der fehlenden Angabe.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-198",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "dialect"],
+    "input": {
+      "utterance": "Ja eh, aber speichern möcht i es erst nach dem Durchlesen.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Ja eh, aber speichern möcht i es erst nach dem Durchlesen.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": [],
+        "names": [],
+        "dialect": ["Ja eh", "möcht", "i"]
+      }
+    }
+  },
+  {
+    "id": "e9-199",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "number"],
+    "input": {
+      "utterance": "Die Summe ist eintausendzweihundert Euro und fünf Cent.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Die Summe ist eintausendzweihundert Euro und fünf Cent.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": ["eintausendzweihundert Euro und fünf Cent"],
+        "dates": [],
+        "names": [],
+        "dialect": []
+      }
+    }
+  },
+  {
+    "id": "e9-200",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "date"],
+    "input": {
+      "utterance": "Am einunddreißigsten Dezember zweitausendsechsundzwanzig läuft der angegebene Zeitraum aus.",
+      "language": "de-AT"
+    },
+    "expected": {
+      "transcript": "Am einunddreißigsten Dezember zweitausendsechsundzwanzig läuft der angegebene Zeitraum aus.",
+      "annotations": {
+        "domainTerms": [],
+        "numbers": [],
+        "dates": ["einunddreißigsten Dezember zweitausendsechsundzwanzig"],
+        "names": [],
+        "dialect": []
+      }
+    }
+  }
+]

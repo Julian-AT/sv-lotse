@@ -1,0 +1,38 @@
+[
+  {
+    "term": "Rezeptgebühr",
+    "forms": ["Rezeptgebühr"]
+  },
+  {
+    "term": "e-card",
+    "forms": ["e-card"]
+  },
+  {
+    "term": "Anschlussheilverfahren",
+    "forms": ["Anschlussheilverfahren"]
+  },
+  {
+    "term": "Pflegegeld",
+    "forms": ["Pflegegeld"]
+  },
+  {
+    "term": "Landesstelle",
+    "forms": ["Landesstelle"]
+  },
+  {
+    "term": "Wahlarzt",
+    "forms": ["Wahlarzt"]
+  },
+  {
+    "term": "Bewilligung",
+    "forms": ["Bewilligung"]
+  },
+  {
+    "term": "Heilbehelf",
+    "forms": ["Heilbehelf"]
+  },
+  {
+    "term": "Kostenzuschuss",
+    "forms": ["Kostenzuschuss"]
+  }
+]
