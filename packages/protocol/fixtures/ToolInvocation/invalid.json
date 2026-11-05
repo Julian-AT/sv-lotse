@@ -1,0 +1,13 @@
+{
+  "toolCallId": null,
+  "toolName": "context.readScreen",
+  "input": {
+    "allScreens": false,
+    "region": {
+      "x": 0.12,
+      "y": 0.25,
+      "width": 0.7,
+      "height": 0.04
+    }
+  }
+}
