@@ -1,0 +1,56 @@
+{
+  "caseId": "case-application",
+  "subjectId": "subject-person",
+  "inputKind": "transcript",
+  "language": "de-AT",
+  "capsule": {
+    "screen": {
+      "screenIndex": 0,
+      "summary": "Entlassungsbrief, Seite 5",
+      "ocrLines": [
+        {
+          "text": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie.",
+          "bbox": {
+            "x": 0.12,
+            "y": 0.25,
+            "width": 0.7,
+            "height": 0.04
+          }
+        }
+      ],
+      "image": "discharge-page-image"
+    },
+    "page": {
+      "url": "https://www.sozialversicherung.at/",
+      "handles": [
+        {
+          "id": "field-person-name",
+          "role": "textbox",
+          "label": "Name",
+          "value": "",
+          "bbox": {
+            "x": 0.12,
+            "y": 0.25,
+            "width": 0.7,
+            "height": 0.04
+          }
+        }
+      ]
+    },
+    "focusedRegion": {
+      "x": 0.12,
+      "y": 0.25,
+      "width": 0.7,
+      "height": 0.04
+    }
+  },
+  "actionResults": [
+    {
+      "actionId": "action-highlight",
+      "resolvedBy": "ocr",
+      "confidence": 0.99,
+      "success": true
+    }
+  ],
+  "unexpected": true
+}
