@@ -330,9 +330,16 @@ wp_db_name() { printf 'lotse_%s' "$(printf '%s' "$1" | tr 'A-Z-' 'a-z_')"; }
 
 compose() { docker compose -f "$ROOT/docker-compose.yml" "$@"; }
 
+# Postgres and MinIO may run natively (Homebrew) when Docker Desktop is unavailable.
+native_services() { nc -z localhost 5432 >/dev/null 2>&1 && nc -z localhost 9000 >/dev/null 2>&1; }
+docker_up() { perl -e 'alarm 5; exec @ARGV' docker info >/dev/null 2>&1; }
+pg_psql() {
+  if docker_up; then compose exec -T db psql "$@"; else PGPASSWORD="${PGPASSWORD:-lotse}" psql -h localhost "$@"; fi
+}
+
 db_available() {
-  [ "$DB_PER_WP" = 1 ] && [ -f "$ROOT/docker-compose.yml" ] && command -v docker >/dev/null 2>&1 \
-    && compose exec -T db pg_isready -q >/dev/null 2>&1
+  [ "$DB_PER_WP" = 1 ] && [ -f "$ROOT/docker-compose.yml" ] || return 1
+  if docker_up; then compose exec -T db pg_isready -q >/dev/null 2>&1; else native_services; fi
 }
 
 setup_wp_db() {
@@ -341,7 +348,7 @@ setup_wp_db() {
   db="$(wp_db_name "$id")"
   url="$(awk -F= '$1 == "DATABASE_URL" { sub(/^[^=]*=/, ""); gsub(/"/, ""); print }' "$wt/.env.local" 2>/dev/null || true)"
   [ -n "$url" ] || { warn "DATABASE_URL missing in .env.local; no per-WP database"; return 0; }
-  compose exec -T db psql -q -U "$PG_SUPERUSER" -d postgres -c "CREATE DATABASE $db" >/dev/null 2>&1 \
+  pg_psql -q -U "$PG_SUPERUSER" -d postgres -c "CREATE DATABASE $db" >/dev/null 2>&1 \
     || warn "could not create database $db (it may already exist)"
   grep -v '^DATABASE_URL=' "$wt/.env.local" > "$wt/.env.local.tmp" || true
   printf 'DATABASE_URL=%s/%s\nS3_PREFIX=%s/\n' "${url%/*}" "$db" "$(printf '%s' "$id" | tr 'A-Z' 'a-z')" >> "$wt/.env.local.tmp"
@@ -354,7 +361,7 @@ drop_wp_db() {
   db="$(get_state "$id" DB)"
   [ -n "$db" ] || return 0
   db_available || return 0
-  compose exec -T db psql -q -U "$PG_SUPERUSER" -d postgres -c "DROP DATABASE IF EXISTS $db WITH (FORCE)" >/dev/null 2>&1 \
+  pg_psql -q -U "$PG_SUPERUSER" -d postgres -c "DROP DATABASE IF EXISTS $db WITH (FORCE)" >/dev/null 2>&1 \
     || warn "could not drop database $db"
 }
 
@@ -731,6 +738,10 @@ EOF
     [ -n "$g" ] || continue
     printf '\n$ %s\n' "$g" >> "$log"
     t0="$(date +%s)"
+    if [ "$g" = "docker compose up -d --wait" ] && ! docker_up && native_services; then
+      record gate pass "$g (native Postgres and MinIO already running)"
+      continue
+    fi
     if ( cd "$wt" && set -a && { [ ! -f .env.local ] || . ./.env.local; } && set +a && bash -c "$g" ) < /dev/null >> "$log" 2>&1; then
       record gate pass "$g ($(( $(date +%s) - t0 ))s)"
     else
