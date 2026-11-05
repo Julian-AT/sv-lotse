@@ -20,16 +20,19 @@ Their provenance URI is `synthetic:///e12/<case id>`.
 
 Every expected annotation has a stable ID, fact type, verbatim quote, one-based
 page, and page-local half-open `[start, end)` text offsets measured in JavaScript
-UTF-16 code units. Original offsets address the unmodified output of:
+UTF-16 code units. Original offsets address text extracted with the declared
+`pdfjs-dist` legacy Node build. `pageText` in the loader test defines the text
+layer serialization: retain nonempty text items, sort top to bottom by baseline,
+group baselines within 5 PDF points of the row's highest baseline, then sort
+items left to right within each row. Join item strings with one space and rows
+with one newline. This preserves visual row order across table columns whose
+baselines differ slightly. Item strings retain their original Unicode and
+whitespace; no content is paraphrased. Synthetic offsets address the stored page
+strings directly.
 
-```sh
-pdftotext -layout -enc UTF-8 "$SVBOX_DIR/Befunde/<filename>.pdf" -
-```
-
-Split output on form feed (`\f`) and discard only the empty final element.
-Do not trim pages, normalize spaces, join lines, or normalize Unicode. Synthetic
-offsets use the same convention directly on the stored page strings. Quotes
-retain table columns and line breaks even when PDF text order is awkward.
+The earlier Poppler positions have been migrated to this serialization. Only
+whitespace and offsets changed in the original-document spans; their words,
+pages, fact types and coverage are unchanged.
 A source passage on each case is its first annotated quote; every annotation
 inherits that case's document URI. No paraphrased value is supplied.
 
@@ -63,8 +66,9 @@ for negative overlap checks. It is not an exhaustive clinical classifier.
 
 ## Validation
 
-Run from the repository root (requires Poppler's `pdftotext` on PATH and the
-original SV-Box files; missing sources fail rather than skip):
+Run from the repository root (requires the original SV-Box files; missing
+sources fail rather than skip). PDF text extraction uses the package's declared
+JavaScript dependency and requires no system tools:
 
 ```sh
 bun run --filter @lotse/evals typecheck

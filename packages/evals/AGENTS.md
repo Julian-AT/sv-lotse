@@ -41,6 +41,10 @@ loads root `.env.local` without overwriting exported values; without `RUN_LIVE=1
   Never attach raw provider errors or response bodies to exported errors.
 - Synthetic generators stay inside this package.
 - Test doubles stay in test files; acceptance tests use the real dependency named by their brief.
+- E12 PDF text validation uses the declared `pdfjs-dist` legacy Node build, never
+  system executables. `test/sets/e12/loader.test.ts` defines the visual-row text
+  serialization used by gold quotes and page-local UTF-16 offsets; keep its
+  convention documented in `sets/e12/README.md`.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
 - Export only implemented symbols from `src/index.ts`; no placeholder business logic.
 - Preserve the medical boundary in PRD §4 in user-facing text and fixtures.

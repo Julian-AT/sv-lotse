@@ -16,5 +16,8 @@
     "@ai-sdk/openai": "^4.0.109",
     "ai": "^7",
     "zod": "^4"
+  },
+  "devDependencies": {
+    "pdfjs-dist": "^6.5.438"
   }
 }

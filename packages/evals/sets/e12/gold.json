@@ -32,8 +32,8 @@
             "quote": "Abteilung für Innere Medizin und Onkologie – Entlassungsmanagement",
             "page": 1,
             "position": {
-              "start": 31,
-              "end": 97
+              "start": 30,
+              "end": 96
             }
           },
           {
@@ -42,8 +42,8 @@
             "quote": "Gesetzlich krankenversichert, ÖGK (fiktive Angabe)",
             "page": 1,
             "position": {
-              "start": 460,
-              "end": 510
+              "start": 407,
+              "end": 457
             }
           },
           {
@@ -52,8 +52,8 @@
             "quote": "29.10.2026",
             "page": 1,
             "position": {
-              "start": 623,
-              "end": 633
+              "start": 561,
+              "end": 571
             }
           },
           {
@@ -62,8 +62,8 @@
             "quote": "Hausärztin, onkologische Ambulanz, mobile Hauskrankenpflege",
             "page": 1,
             "position": {
-              "start": 655,
-              "end": 714
+              "start": 590,
+              "end": 649
             }
           },
           {
@@ -72,8 +72,8 @@
             "quote": "Amlodipin",
             "page": 3,
             "position": {
-              "start": 789,
-              "end": 798
+              "start": 727,
+              "end": 736
             }
           },
           {
@@ -82,8 +82,8 @@
             "quote": "Ondansetron",
             "page": 3,
             "position": {
-              "start": 993,
-              "end": 1004
+              "start": 824,
+              "end": 835
             }
           },
           {
@@ -92,8 +92,8 @@
             "quote": "Macrogol",
             "page": 3,
             "position": {
-              "start": 1234,
-              "end": 1242
+              "start": 938,
+              "end": 946
             }
           },
           {
@@ -102,18 +102,18 @@
             "quote": "Pantoprazol",
             "page": 3,
             "position": {
-              "start": 1455,
-              "end": 1466
+              "start": 1027,
+              "end": 1038
             }
           },
           {
             "id": "e12-svbox-discharge-a009",
             "factType": "open_task",
-            "quote": "Der vollständige, aktuelle Medikationsplan ist bei Hausärztin, Onkologie und\n       Apotheke vorzulegen.",
+            "quote": "Der vollständige, aktuelle Medikationsplan ist bei Hausärztin, Onkologie und\nApotheke vorzulegen.",
             "page": 3,
             "position": {
-              "start": 1880,
-              "end": 1984
+              "start": 1274,
+              "end": 1371
             }
           },
           {
@@ -122,8 +122,8 @@
             "quote": "Regelmäßige Vorstellung in der onkologischen Ambulanz.",
             "page": 4,
             "position": {
-              "start": 345,
-              "end": 399
+              "start": 318,
+              "end": 372
             }
           },
           {
@@ -132,28 +132,28 @@
             "quote": "Zeitnahe Kontrolle nach der Entlassung.",
             "page": 4,
             "position": {
-              "start": 726,
-              "end": 765
+              "start": 668,
+              "end": 707
             }
           },
           {
             "id": "e12-svbox-discharge-a012",
             "factType": "documented_recommendation",
-            "quote": "Mobile Hauskrankenpflege zur Unterstützung bei pflegerischen Aufgaben und zur\n       Beobachtung des Allgemeinzustands.",
+            "quote": "Mobile Hauskrankenpflege zur Unterstützung bei pflegerischen Aufgaben und zur\nBeobachtung des Allgemeinzustands.",
             "page": 4,
             "position": {
-              "start": 1299,
-              "end": 1418
+              "start": 1197,
+              "end": 1309
             }
           },
           {
             "id": "e12-svbox-discharge-a013",
             "factType": "documented_recommendation",
-            "quote": "Unterstützung bei Körperpflege, Einkäufen, Haushaltsführung und\n       gegebenenfalls Essensversorgung.",
+            "quote": "Unterstützung bei Körperpflege, Einkäufen, Haushaltsführung und\ngegebenenfalls Essensversorgung.",
             "page": 4,
             "position": {
-              "start": 1427,
-              "end": 1530
+              "start": 1314,
+              "end": 1410
             }
           },
           {
@@ -162,27 +162,27 @@
             "quote": "Hilfe bei der Organisation und Wahrnehmung regelmäßiger Bestrahlungstermine.",
             "page": 4,
             "position": {
-              "start": 1539,
-              "end": 1615
+              "start": 1415,
+              "end": 1491
             }
           },
           {
             "id": "e12-svbox-discharge-a015",
             "factType": "documented_recommendation",
-            "quote": "Einbindung einer Vertrauensperson zur Unterstützung bei organisatorischen\n       Aufgaben, sofern von der Patientin gewünscht.",
+            "quote": "Einbindung einer Vertrauensperson zur Unterstützung bei organisatorischen\nAufgaben, sofern von der Patientin gewünscht.",
             "page": 4,
             "position": {
-              "start": 1684,
-              "end": 1810
+              "start": 1552,
+              "end": 1671
             }
           },
           {
             "id": "e12-svbox-discharge-a016",
             "factType": "documented_recommendation",
-            "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss\nder geplanten Strahlentherapie.",
+            "quote": "Empfehlung:   Prüfung einer stationären onkologischen Rehabilitation nach Abschluss\nder geplanten Strahlentherapie.",
             "page": 5,
             "position": {
-              "start": 218,
+              "start": 216,
               "end": 331
             }
           },
@@ -192,8 +192,8 @@
             "quote": "Der Antrag soll rechtzeitig mit dem behandelnden onkologischen Team bzw. der\nHausärztin vorbereitet werden.",
             "page": 5,
             "position": {
-              "start": 1088,
-              "end": 1195
+              "start": 1060,
+              "end": 1167
             }
           },
           {
@@ -202,8 +202,8 @@
             "quote": "Dabei sind die medizinische Begründung, der\nvoraussichtliche Rehabilitationsbeginn und die zuständige Sozialversicherung zu klären.",
             "page": 5,
             "position": {
-              "start": 1196,
-              "end": 1327
+              "start": 1168,
+              "end": 1299
             }
           },
           {
@@ -212,28 +212,28 @@
             "quote": "Die endgültige Entscheidung über die Bewilligung und die geeignete Einrichtung trifft der\nzuständige Kostenträger.",
             "page": 5,
             "position": {
-              "start": 1328,
-              "end": 1442
+              "start": 1300,
+              "end": 1414
             }
           },
           {
             "id": "e12-svbox-discharge-a020",
             "factType": "insurance_hint",
-            "quote": "Prüfung der Voraussetzungen für einen stationären onkologischen\n       Rehabilitationsaufenthalt.",
+            "quote": "Prüfung der Voraussetzungen für einen stationären onkologischen\nRehabilitationsaufenthalt.",
             "page": 5,
             "position": {
-              "start": 1625,
-              "end": 1722
+              "start": 1590,
+              "end": 1680
             }
           },
           {
             "id": "e12-svbox-discharge-a021",
             "factType": "open_task",
-            "quote": "Unterstützung bei der Antragstellung und Zusammenstellung der erforderlichen\n       medizinischen Unterlagen.",
+            "quote": "Unterstützung bei der Antragstellung und Zusammenstellung der erforderlichen\nmedizinischen Unterlagen.",
             "page": 5,
             "position": {
-              "start": 1731,
-              "end": 1840
+              "start": 1685,
+              "end": 1787
             }
           },
           {
@@ -242,158 +242,158 @@
             "quote": "Klärung der Zuständigkeit des zuständigen Sozialversicherungsträgers.",
             "page": 5,
             "position": {
-              "start": 1849,
-              "end": 1918
+              "start": 1792,
+              "end": 1861
             }
           },
           {
             "id": "e12-svbox-discharge-a023",
             "factType": "open_task",
-            "quote": "Informationen zur Antragstellung und zum zuständigen Entscheidungsträger\n       sollen eingeholt werden.",
+            "quote": "Informationen zur Antragstellung und zum zuständigen Entscheidungsträger\nsollen eingeholt werden.",
             "page": 6,
             "position": {
-              "start": 366,
-              "end": 470
+              "start": 334,
+              "end": 431
             }
           },
           {
             "id": "e12-svbox-discharge-a024",
             "factType": "open_task",
-            "quote": "Kontaktaufnahme mit den zuständigen Wiener Beratungs- und Servicestellen zur\n       Organisation mobiler Pflege und gegebenenfalls weiterer Alltagshilfen.",
+            "quote": "Kontaktaufnahme mit den zuständigen Wiener Beratungs- und Servicestellen zur\nOrganisation mobiler Pflege und gegebenenfalls weiterer Alltagshilfen.",
             "page": 6,
             "position": {
-              "start": 514,
-              "end": 668
+              "start": 470,
+              "end": 617
             }
           },
           {
             "id": "e12-svbox-discharge-a025",
             "factType": "insurance_hint",
-            "quote": "Prüfung möglicher Kostenbeiträge, Förderungen und regionaler\n       Unterstützungsangebote.",
+            "quote": "Prüfung möglicher Kostenbeiträge, Förderungen und regionaler\nUnterstützungsangebote.",
             "page": 6,
             "position": {
-              "start": 677,
-              "end": 768
+              "start": 622,
+              "end": 706
             }
           },
           {
             "id": "e12-svbox-discharge-a026",
             "factType": "insurance_hint",
-            "quote": "Bei entsprechender finanzieller Situation Information über die Voraussetzungen\n       einer Rezeptgebührenbefreiung.",
+            "quote": "Bei entsprechender finanzieller Situation Information über die Voraussetzungen\neiner Rezeptgebührenbefreiung.",
             "page": 6,
             "position": {
-              "start": 800,
-              "end": 916
+              "start": 733,
+              "end": 842
             }
           },
           {
             "id": "e12-svbox-discharge-a027",
             "factType": "insurance_hint",
-            "quote": "Klärung möglicher Unterstützungsleistungen für Fahrten zu notwendigen\n       Behandlungsterminen.",
+            "quote": "Klärung möglicher Unterstützungsleistungen für Fahrten zu notwendigen\nBehandlungsterminen.",
             "page": 6,
             "position": {
-              "start": 925,
-              "end": 1022
+              "start": 847,
+              "end": 937
             }
           },
           {
             "id": "e12-svbox-discharge-a028",
             "factType": "open_task",
-            "quote": "Gegebenenfalls ärztliche Bestätigung und vorherige Abstimmung mit dem\n       Kostenträger.",
+            "quote": "Gegebenenfalls ärztliche Bestätigung und vorherige Abstimmung mit dem\nKostenträger.",
             "page": 6,
             "position": {
-              "start": 1271,
-              "end": 1361
+              "start": 1163,
+              "end": 1246
             }
           },
           {
             "id": "e12-svbox-discharge-a029",
             "factType": "insurance_hint",
-            "quote": "Hinweis: Ob und in welchem Umfang die genannten Leistungen gewährt werden, hängt\nvon den individuellen Voraussetzungen, den geltenden Regelungen und gegebenenfalls\neiner gesonderten Antragstellung ab.",
+            "quote": "Hinweis:   Ob und in welchem Umfang die genannten Leistungen gewährt werden, hängt\nvon den individuellen Voraussetzungen, den geltenden Regelungen und gegebenenfalls\neiner gesonderten Antragstellung ab.",
             "page": 6,
             "position": {
-              "start": 1363,
-              "end": 1563
+              "start": 1247,
+              "end": 1449
             }
           },
           {
             "id": "e12-svbox-discharge-a030",
             "factType": "open_task",
-            "quote": "Termin zur hausärztlichen Kontrolle        Patientin bzw. unterstützende\nvereinbaren                                Vertrauensperson",
+            "quote": "Termin zur hausärztlichen Kontrolle Patientin bzw. unterstützende\nvereinbaren Vertrauensperson",
             "page": 6,
             "position": {
-              "start": 1682,
-              "end": 1814
+              "start": 1532,
+              "end": 1626
             }
           },
           {
             "id": "e12-svbox-discharge-a031",
             "factType": "open_task",
-            "quote": "Weitere Bestrahlungstermine koordinieren Onkologische Ambulanz und Patientin",
+            "quote": "Weitere Bestrahlungstermine koordinieren   Onkologische Ambulanz und Patientin",
             "page": 6,
             "position": {
-              "start": 1816,
-              "end": 1892
+              "start": 1627,
+              "end": 1705
             }
           },
           {
             "id": "e12-svbox-discharge-a032",
             "factType": "open_task",
-            "quote": "Aktuellen Medikationsplan abstimmen        Hausärztin und Onkologie",
+            "quote": "Aktuellen Medikationsplan abstimmen   Hausärztin und Onkologie",
             "page": 6,
             "position": {
-              "start": 1894,
-              "end": 1961
+              "start": 1706,
+              "end": 1768
             }
           },
           {
             "id": "e12-svbox-discharge-a033",
             "factType": "open_task",
-            "quote": "Entlassungsmanagement und soziale\nMobile Hauskrankenpflege organisieren\n                                          Dienste",
+            "quote": "Entlassungsmanagement und soziale\nMobile Hauskrankenpflege organisieren  \nDienste",
             "page": 7,
             "position": {
-              "start": 42,
-              "end": 163
+              "start": 0,
+              "end": 81
             }
           },
           {
             "id": "e12-svbox-discharge-a034",
             "factType": "open_task",
-            "quote": "Rehabilitationsantrag vorbereiten         Behandelnde Ärztin bzw. behandelnder Arzt",
+            "quote": "Rehabilitationsantrag vorbereiten   Behandelnde Ärztin bzw. behandelnder Arzt",
             "page": 7,
             "position": {
-              "start": 165,
-              "end": 248
+              "start": 82,
+              "end": 159
             }
           },
           {
             "id": "e12-svbox-discharge-a035",
             "factType": "open_task",
-            "quote": "Patientin mit Unterstützung der\nPflegegeldanspruch prüfen\n                                          Sozialberatung",
+            "quote": "Patientin mit Unterstützung der\nPflegegeldanspruch prüfen  \nSozialberatung",
             "page": 7,
             "position": {
-              "start": 292,
-              "end": 406
+              "start": 160,
+              "end": 234
             }
           },
           {
             "id": "e12-svbox-discharge-a036",
             "factType": "open_task",
-            "quote": "Fahrtmöglichkeiten zu                     Patientin, Sozialberatung und zuständiger\nBehandlungsterminen klären                Kostenträger",
+            "quote": "Fahrtmöglichkeiten zu Patientin, Sozialberatung und zuständiger\nBehandlungsterminen klären Kostenträger",
             "page": 7,
             "position": {
-              "start": 408,
-              "end": 546
+              "start": 235,
+              "end": 338
             }
           },
           {
             "id": "e12-svbox-discharge-a037",
             "factType": "open_task",
-            "quote": "Patientin bzw. zuständiger\nRezeptgebührenbefreiung prüfen\n                                          Sozialversicherungsträger",
+            "quote": "Patientin bzw. zuständiger\nRezeptgebührenbefreiung prüfen  \nSozialversicherungsträger",
             "page": 7,
             "position": {
-              "start": 590,
-              "end": 715
+              "start": 339,
+              "end": 424
             }
           }
         ]
@@ -430,11 +430,11 @@
           {
             "id": "e12-svbox-radiology-1-a002",
             "factType": "institution",
-            "quote": "Besuch:       OEG",
+            "quote": "Besuch:   OEG",
             "page": 1,
             "position": {
-              "start": 150,
-              "end": 167
+              "start": 144,
+              "end": 157
             }
           },
           {
@@ -443,8 +443,8 @@
             "quote": "FZ: 4012452",
             "page": 1,
             "position": {
-              "start": 268,
-              "end": 279
+              "start": 158,
+              "end": 169
             }
           },
           {
@@ -453,8 +453,8 @@
             "quote": "Ambulant am 2. August 2025 von 09:43 Uhr bis 10:56 Uhr",
             "page": 2,
             "position": {
-              "start": 428,
-              "end": 482
+              "start": 195,
+              "end": 249
             }
           },
           {
@@ -463,18 +463,18 @@
             "quote": "Fallzahl: 12354",
             "page": 2,
             "position": {
-              "start": 486,
-              "end": 501
+              "start": 250,
+              "end": 265
             }
           },
           {
             "id": "e12-svbox-radiology-1-a006",
             "factType": "institution",
-            "quote": "Dokumentenverfasser:in                              OEG",
+            "quote": "Dokumentenverfasser:in   OEG",
             "page": 2,
             "position": {
-              "start": 1200,
-              "end": 1255
+              "start": 548,
+              "end": 576
             }
           },
           {
@@ -483,8 +483,8 @@
             "quote": "OEG am 2. August 2025",
             "page": 2,
             "position": {
-              "start": 949,
-              "end": 970
+              "start": 437,
+              "end": 458
             }
           }
         ]
@@ -521,11 +521,11 @@
           {
             "id": "e12-svbox-radiology-2-a002",
             "factType": "institution",
-            "quote": "Besuch:       OEG",
+            "quote": "Besuch:   OEG",
             "page": 1,
             "position": {
-              "start": 150,
-              "end": 167
+              "start": 144,
+              "end": 157
             }
           },
           {
@@ -534,8 +534,8 @@
             "quote": "FZ: 123456",
             "page": 1,
             "position": {
-              "start": 268,
-              "end": 278
+              "start": 158,
+              "end": 168
             }
           },
           {
@@ -544,8 +544,8 @@
             "quote": "Ambulant am 22. März 2026 von 17:57 Uhr bis 23:59 Uhr",
             "page": 2,
             "position": {
-              "start": 222,
-              "end": 275
+              "start": 116,
+              "end": 169
             }
           },
           {
@@ -554,18 +554,18 @@
             "quote": "Fallzahl: 123456",
             "page": 2,
             "position": {
-              "start": 279,
-              "end": 295
+              "start": 170,
+              "end": 186
             }
           },
           {
             "id": "e12-svbox-radiology-2-a006",
             "factType": "institution",
-            "quote": "Dokumentenverfasser:in                             OEG",
+            "quote": "Dokumentenverfasser:in   OEG",
             "page": 2,
             "position": {
-              "start": 983,
-              "end": 1037
+              "start": 459,
+              "end": 487
             }
           },
           {
@@ -574,8 +574,8 @@
             "quote": "OEG am 22. März 2026",
             "page": 2,
             "position": {
-              "start": 736,
-              "end": 756
+              "start": 355,
+              "end": 375
             }
           }
         ]
@@ -605,8 +605,8 @@
             "quote": "vom 6. August 2023 um 04:46 Uhr | Version: 1",
             "page": 1,
             "position": {
-              "start": 12,
-              "end": 56
+              "start": 10,
+              "end": 54
             }
           },
           {
@@ -615,8 +615,8 @@
             "quote": "Universitätsklinikum AKH - Neurorad. u. Muskulosk. Rad.",
             "page": 1,
             "position": {
-              "start": 158,
-              "end": 213
+              "start": 139,
+              "end": 194
             }
           },
           {
@@ -625,8 +625,8 @@
             "quote": "FZ: 123",
             "page": 1,
             "position": {
-              "start": 311,
-              "end": 318
+              "start": 195,
+              "end": 202
             }
           },
           {
@@ -635,8 +635,8 @@
             "quote": "Ambulant am 2. August 2023",
             "page": 1,
             "position": {
-              "start": 338,
-              "end": 364
+              "start": 203,
+              "end": 229
             }
           }
         ]
@@ -680,91 +680,91 @@
           {
             "id": "e12-svbox-vaccinations-a002",
             "factType": "vaccination_record",
-            "quote": "3. Nov. 2025     Impfstoff: COMIRNATY LP.8.1 INJ30 10x6                Auffrischung     Impfort: Heinestraße 11/12\n                 Ch.-Nr.: MT0705                                                        1020 Wien, Wien\n\n                 PZN: 6062367                                                           Med. verantwortl. Person: DR. HANNES\n                                                                                        RIEDL\n                 Impfsetting: Ordination                                                DR. HANNES RIEDL\n                 Impfdatum: 3. November 2025                                            Heinestraße 11/12\n                                                                                        1020 Wien, Wien\n                 Eingetragen am: 3. November 2025 um 14:02 Uhr",
+            "quote": "3. Nov. 2025   Impfstoff: COMIRNATY LP.8.1 INJ30 10x6 Auffrischung   Impfort: Heinestraße 11/12\nCh.-Nr.: MT0705 1020 Wien, Wien\nPZN: 6062367 Med. verantwortl. Person: DR. HANNES\nRIEDL\nImpfsetting: Ordination DR. HANNES RIEDL\nImpfdatum: 3. November 2025 Heinestraße 11/12\n1020 Wien, Wien\nEingetragen am: 3. November 2025 um 14:02 Uhr",
             "page": 1,
             "position": {
-              "start": 352,
-              "end": 1168
+              "start": 184,
+              "end": 516
             }
           },
           {
             "id": "e12-svbox-vaccinations-a003",
             "factType": "vaccination_record",
-            "quote": "4. Dez. 2022     Impfstoff: COMIRNATY COV19 BA4/5 10x6                 Auffrischung     Impfort: Bruno-Kreisky-Platz 1\n                 Ch.-Nr.: GH9722                                                        1220 Wien\n\n                 PZN: 5516866                                                           Med. verantwortl. Person: Dr. Philipp SA-\n                                                                                        BANAS\n                 Impfdatum: 4. Dezember 2022 um 18:25 Uhr (UTC+1)                       Impfzentrum ACV\n                 Eingetragen am: 4. Dezember 2022 um 18:25 Uhr                          Bruno-Kreisky-Platz 1",
+            "quote": "4. Dez. 2022   Impfstoff: COMIRNATY COV19 BA4/5 10x6 Auffrischung   Impfort: Bruno-Kreisky-Platz 1\nCh.-Nr.: GH9722 1220 Wien\nPZN: 5516866 Med. verantwortl. Person: Dr. Philipp SA-\nBANAS\nImpfdatum: 4. Dezember 2022 um 18:25 Uhr (UTC+1) Impfzentrum ACV\nEingetragen am: 4. Dezember 2022 um 18:25 Uhr Bruno-Kreisky-Platz 1",
             "page": 1,
             "position": {
-              "start": 1169,
-              "end": 1824
+              "start": 517,
+              "end": 835
             }
           },
           {
             "id": "e12-svbox-vaccinations-a004",
             "factType": "vaccination_record",
-            "quote": "9. Dez. 2021     Impfstoff: PFIZER-BION COV19 KONZ30 1x6               Dosis 3          Impfort: Bruno-Kreisky-Platz 1\n                 Ch.-Nr.: 31134TB                                                       1220 Wien\n\n                 PZN: 5424472                                                           Med. verantwortl. Person: Dr. Ferdinand\n                                                                                        WALDENBERGER\n                 Impfdatum: 9. Dezember 2021 um 09:29 Uhr (UTC+1)                       Covid19 - Impfzentrum ACV\n                 Eingetragen am: 9. Dezember 2021 um 09:32 Uhr                          Bruno-Kreisky-Platz 1",
+            "quote": "9. Dez. 2021   Impfstoff: PFIZER-BION COV19 KONZ30 1x6 Dosis 3   Impfort: Bruno-Kreisky-Platz 1\nCh.-Nr.: 31134TB 1220 Wien\nPZN: 5424472 Med. verantwortl. Person: Dr. Ferdinand\nWALDENBERGER\nImpfdatum: 9. Dezember 2021 um 09:29 Uhr (UTC+1) Covid19 - Impfzentrum ACV\nEingetragen am: 9. Dezember 2021 um 09:32 Uhr Bruno-Kreisky-Platz 1",
             "page": 1,
             "position": {
-              "start": 1923,
-              "end": 2593
+              "start": 846,
+              "end": 1177
             }
           },
           {
             "id": "e12-svbox-vaccinations-a005",
             "factType": "vaccination_record",
-            "quote": "8. Juli 2021     Impfstoff: PFIZER-BION COV19 KONZ30 1x6               Dosis 2          Impfort: Theresiengasse 53-55/1/1\n                 Ch.-Nr.: FD6840                                                        1180 Wien, Wien\n\n                 PZN: 5424472                                                           Med. verantwortl. Person: Dr. Harald Heinz\n                                                                                        Manfreda\n                 Impfdatum: 8. Juli 2021 um 15:33 Uhr (UTC+2)                           Dr. med. YVETTA ZAKARIAN\n                 Eingetragen am: 8. Juli 2021 um 16:37 Uhr                              Theresiengasse 53-55/1/1",
+            "quote": "8. Juli 2021   Impfstoff: PFIZER-BION COV19 KONZ30 1x6 Dosis 2   Impfort: Theresiengasse 53-55/1/1\nCh.-Nr.: FD6840 1180 Wien, Wien\nPZN: 5424472 Med. verantwortl. Person: Dr. Harald Heinz\nManfreda\nImpfdatum: 8. Juli 2021 um 15:33 Uhr (UTC+2) Dr. med. YVETTA ZAKARIAN\nEingetragen am: 8. Juli 2021 um 16:37 Uhr Theresiengasse 53-55/1/1",
             "page": 1,
             "position": {
-              "start": 2692,
-              "end": 3372
+              "start": 1188,
+              "end": 1520
             }
           },
           {
             "id": "e12-svbox-vaccinations-a006",
             "factType": "vaccination_record",
-            "quote": "3. Juni 2021     Impfstoff: PFIZER-BION COV19 KONZ30 1x6               Dosis 1          Impfort: Theresiengasse 53-55/1/1\n                 Ch.-Nr.: FC2473                                                        1180 Wien, Wien\n\n                 PZN: 5424472                                                           Med. verantwortl. Person: Dr. Harald Heinz\n                                                                                        Manfreda\n                 Impfdatum: 3. Juni 2021 um 15:30 Uhr (UTC+2)                           Dr. med. YVETTA ZAKARIAN\n                 Eingetragen am: 3. Juni 2021 um 23:19 Uhr                              Theresiengasse 53-55/1/1",
+            "quote": "3. Juni 2021   Impfstoff: PFIZER-BION COV19 KONZ30 1x6 Dosis 1   Impfort: Theresiengasse 53-55/1/1\nCh.-Nr.: FC2473 1180 Wien, Wien\nPZN: 5424472 Med. verantwortl. Person: Dr. Harald Heinz\nManfreda\nImpfdatum: 3. Juni 2021 um 15:30 Uhr (UTC+2) Dr. med. YVETTA ZAKARIAN\nEingetragen am: 3. Juni 2021 um 23:19 Uhr Theresiengasse 53-55/1/1",
             "page": 1,
             "position": {
-              "start": 3477,
-              "end": 4157
+              "start": 1537,
+              "end": 1869
             }
           },
           {
             "id": "e12-svbox-vaccinations-a007",
             "factType": "vaccination_record",
-            "quote": "3. Nov. 2025     Impfstoff: INFLUVAC TRI FSPR 0,5ML O.K.               Auffrischung     Impfort: Heinestraße 11/12\n                 Ch.-Nr.: L34                                                           1020 Wien, Wien\n\n                 PZN: 6052771                                                           Med. verantwortl. Person: DR. HANNES\n                                                                                        RIEDL\n                 Impfsetting: Ordination                                                DR. HANNES RIEDL\n                 Impfdatum: 3. November 2025                                            Heinestraße 11/12\n                                                                                        1020 Wien, Wien\n                 Eingetragen am: 3. November 2025 um 14:03 Uhr",
+            "quote": "3. Nov. 2025   Impfstoff: INFLUVAC TRI FSPR 0,5ML O.K. Auffrischung   Impfort: Heinestraße 11/12\nCh.-Nr.: L34 1020 Wien, Wien\nPZN: 6052771 Med. verantwortl. Person: DR. HANNES\nRIEDL\nImpfsetting: Ordination DR. HANNES RIEDL\nImpfdatum: 3. November 2025 Heinestraße 11/12\n1020 Wien, Wien\nEingetragen am: 3. November 2025 um 14:03 Uhr",
             "page": 1,
             "position": {
-              "start": 4291,
-              "end": 5107
+              "start": 1913,
+              "end": 2243
             }
           },
           {
             "id": "e12-svbox-vaccinations-a008",
             "factType": "vaccination_record",
-            "quote": "6. Nov. 2024     Impfstoff: INFLUVAC TETRA FSPR0,5ML O.K               Auffrischung     Impfort: St.-Veit-Gasse 68\n                 Ch.-Nr.: J08                                                           1130 Wien, 00\n\n                 PZN: 5534491                                                           Med. verantwortl. Person: Dr. Claudia Kap-\n                                                                                        pel\n                 Impfsetting: Arbeitsplatz/Betrieb                                      Dr. Claudia Kappel\n                 Impfprogramm: Öffentliches Impfprogramm (ÖIP) Influenza                St.-Veit-Gasse 68\n                                                                                        1130 Wien, 00\n                 Impfdatum: 6. November 2024 um 14:15 Uhr (UTC+1)\n                 Eingetragen am: 6. November 2024 um 14:16 Uhr",
+            "quote": "6. Nov. 2024   Impfstoff: INFLUVAC TETRA FSPR0,5ML O.K Auffrischung   Impfort: St.-Veit-Gasse 68\nCh.-Nr.: J08 1130 Wien, 00\nPZN: 5534491 Med. verantwortl. Person: Dr. Claudia Kap-\npel\nImpfsetting: Arbeitsplatz/Betrieb Dr. Claudia Kappel\nImpfprogramm: Öffentliches Impfprogramm (ÖIP) Influenza St.-Veit-Gasse 68\n1130 Wien, 00\nImpfdatum: 6. November 2024 um 14:15 Uhr (UTC+1)\nEingetragen am: 6. November 2024 um 14:16 Uhr",
             "page": 1,
             "position": {
-              "start": 5108,
-              "end": 5992
+              "start": 2244,
+              "end": 2663
             }
           },
           {
             "id": "e12-svbox-vaccinations-a009",
             "factType": "vaccination_record",
-            "quote": "22. Nov. 2023    Impfstoff: VAXIGRIP TETRA FSPR O.K                    Auffrischung     Impfort: Triesterstraße 29/1/7\n                 Ch.-Nr.: X3E681V                                                       2620 Neunkirchen, 00\n\n                 PZN: 4467858                                                           Med. verantwortl. Person: Dr. Claudia Kap-\n                                                                                        pel\n                 Impfsetting: Arbeitsplatz/Betrieb                                      Dr. Claudia Kappel\n                 Impfdatum: 22. November 2023 um 14:13 Uhr (UTC+1)                      Triesterstraße 29/1/7\n                                                                                        2620 Neunkirchen, 00\n                 Eingetragen am: 22. November 2023 um 14:13 Uhr",
+            "quote": "22. Nov. 2023   Impfstoff: VAXIGRIP TETRA FSPR O.K Auffrischung   Impfort: Triesterstraße 29/1/7\nCh.-Nr.: X3E681V 2620 Neunkirchen, 00\nPZN: 4467858 Med. verantwortl. Person: Dr. Claudia Kap-\npel\nImpfsetting: Arbeitsplatz/Betrieb Dr. Claudia Kappel\nImpfdatum: 22. November 2023 um 14:13 Uhr (UTC+1) Triesterstraße 29/1/7\n2620 Neunkirchen, 00\nEingetragen am: 22. November 2023 um 14:13 Uhr",
             "page": 1,
             "position": {
-              "start": 5993,
-              "end": 6834
+              "start": 2664,
+              "end": 3051
             }
           },
           {
             "id": "e12-svbox-vaccinations-a010",
             "factType": "vaccination_record",
-            "quote": "17. Nov. 2021   Impfstoff: VAXIGRIP TETRA FSPR 0,5ML                Dosis 1   Impfort: Thaliastraße 88\n                Ch.-Nr.: V3H731V                                              1160 Wien, 00\n\n                PZN: 4467841                                                  Med. verantwortl. Person: Dr. GEORG KU-\n                                                                              BALEK\n                Impfsetting: Arbeitsplatz/Betrieb                             Dr. GEORG KUBALEK\n                Impfdatum: 17. November 2021 um 13:43 Uhr (UTC+1)             Thaliastraße 88\n                                                                              1160 Wien, 00\n                Eingetragen am: 17. November 2021 um 13:44 Uhr",
+            "quote": "17. Nov. 2021   Impfstoff: VAXIGRIP TETRA FSPR 0,5ML Dosis 1   Impfort: Thaliastraße 88\nCh.-Nr.: V3H731V 1160 Wien, 00\nPZN: 4467841 Med. verantwortl. Person: Dr. GEORG KU-\nBALEK\nImpfsetting: Arbeitsplatz/Betrieb Dr. GEORG KUBALEK\nImpfdatum: 17. November 2021 um 13:43 Uhr (UTC+1) Thaliastraße 88\n1160 Wien, 00\nEingetragen am: 17. November 2021 um 13:44 Uhr",
             "page": 2,
             "position": {
-              "start": 55,
-              "end": 797
+              "start": 54,
+              "end": 410
             }
           }
         ]
@@ -1591,41 +1591,41 @@
     {
       "caseId": "e12-svbox-discharge",
       "reason": "clinical_content",
-      "quote": "2. Aufnahmediagnosen und medizinische Vorgeschichte\n\nHauptdiagnose: Lokal fortgeschrittenes Rektumkarzinom mit regionalem\nLymphknotenbefall.\n\nDie Patientin befindet sich aufgrund einer schweren bösartigen Tumorerkrankung in\nonkologischer Behandlung. Nach Abschluss der operativen Erstbehandlung wurde eine\nergänzende kombinierte Strahlen- und Chemotherapie eingeleitet. Die Bestrahlung\nerfolgt ambulant an mehreren Tagen pro Woche. Der Abschluss der geplanten Therapie\nist für Mitte November 2026 vorgesehen.\n\nNebendiagnosen:\n\n   •    Arterielle Hypertonie, medikamentös behandelt.\n\n   •    Ausgeprägte therapiebedingte Fatigue mit reduzierter körperlicher Belastbarkeit.\n\n   •    Wiederkehrende Übelkeit und zeitweise verminderter Appetit.\n\n   •    Wechselnde Stuhlfrequenz mit zeitweiligen Durchfällen im Zusammenhang mit\n        der onkologischen Therapie.\n\n   •    Erhöhtes Sturzrisiko bei allgemeiner Schwäche und eingeschränkter Gehstrecke.",
+      "quote": "2. Aufnahmediagnosen und medizinische Vorgeschichte\nHauptdiagnose:   Lokal fortgeschrittenes Rektumkarzinom mit regionalem\nLymphknotenbefall.\nDie Patientin befindet sich aufgrund einer schweren bösartigen Tumorerkrankung in\nonkologischer Behandlung. Nach Abschluss der operativen Erstbehandlung wurde eine\nergänzende kombinierte Strahlen- und Chemotherapie eingeleitet. Die Bestrahlung\nerfolgt ambulant an mehreren Tagen pro Woche. Der Abschluss der geplanten Therapie\nist für Mitte November 2026 vorgesehen.\nNebendiagnosen:\n•   Arterielle Hypertonie, medikamentös behandelt.\n•   Ausgeprägte therapiebedingte Fatigue mit reduzierter körperlicher Belastbarkeit.\n•   Wiederkehrende Übelkeit und zeitweise verminderter Appetit.\n•   Wechselnde Stuhlfrequenz mit zeitweiligen Durchfällen im Zusammenhang mit\nder onkologischen Therapie.\n•   Erhöhtes Sturzrisiko bei allgemeiner Schwäche und eingeschränkter Gehstrecke.",
       "page": 1,
       "position": {
-        "start": 716,
-        "end": 1662
+        "start": 650,
+        "end": 1562
       }
     },
     {
       "caseId": "e12-svbox-discharge",
       "reason": "clinical_content",
-      "quote": "•   Unterstützungsbedarf bei einzelnen Aktivitäten des täglichen Lebens.\n\nRelevante Vorerkrankungen: Seit mehreren Jahren bestehender Bluthochdruck. Keine\nbekannten schwerwiegenden Arzneimittelallergien laut vorliegenden Unterlagen.\n\n3. Anlass und Verlauf des stationären Aufenthalts\n\nDie Aufnahme erfolgte aufgrund einer zunehmenden allgemeinen Schwäche,\nwiederkehrender Übelkeit, verminderter Flüssigkeits- und Nahrungsaufnahme sowie\neiner vorübergehenden Verschlechterung der Blutdruckeinstellung während der\nlaufenden onkologischen Behandlung.\n\nIm stationären Verlauf erfolgten:\n\n   •   Klinische Überwachung und Kontrolle der Vitalparameter, insbesondere des\n       Blutdrucks.\n\n   •   Laborkontrollen einschließlich Blutbild, Elektrolyten und\n       Nierenfunktionsparametern.\n\n   •   Flüssigkeitssubstitution nach klinischem Bedarf.\n\n   •   Symptomatische Behandlung von Übelkeit und gastrointestinalen Beschwerden.\n\n   •   Überprüfung der bestehenden Dauermedikation.\n\n   •   Mobilisation unter physiotherapeutischer Anleitung.\n\n   •   Beratung hinsichtlich Ernährung, Flüssigkeitszufuhr und Umgang mit\n       therapiebedingter Erschöpfung.\n\nUnter den durchgeführten Maßnahmen kam es zu einer klinischen Stabilisierung. Die\nPatientin ist zum Entlassungszeitpunkt kreislaufstabil und kann mit Unterstützung kurze\nStrecken gehen. Eine vollständige Wiederherstellung der körperlichen Belastbarkeit ist\nnoch nicht erreicht.\n\nDie ambulante onkologische Behandlung soll nach Rücksprache mit dem\nbehandelnden onkologischen Team fortgesetzt werden.\n\n4. Befund bei Entlassung\n\nAllgemeinzustand: Reduziert, aber stabil.\n\nBewusstseinslage: Wach, zeitlich, örtlich und situativ orientiert.\n\nKardiovaskulär: Kreislaufstabil. Arterielle Hypertonie unter bestehender Medikation.\nWeiterhin regelmäßige Blutdruckkontrollen erforderlich.\n\nGastrointestinal: Zeitweise Übelkeit und wechselnde Stuhlfrequenz. Orale Nahrungs-\nund Flüssigkeitsaufnahme möglich, jedoch weiterhin unterstützungsbedürftig.",
+      "quote": "•   Unterstützungsbedarf bei einzelnen Aktivitäten des täglichen Lebens.\nRelevante Vorerkrankungen:   Seit mehreren Jahren bestehender Bluthochdruck. Keine\nbekannten schwerwiegenden Arzneimittelallergien laut vorliegenden Unterlagen.\n3. Anlass und Verlauf des stationären Aufenthalts\nDie Aufnahme erfolgte aufgrund einer zunehmenden allgemeinen Schwäche,\nwiederkehrender Übelkeit, verminderter Flüssigkeits- und Nahrungsaufnahme sowie\neiner vorübergehenden Verschlechterung der Blutdruckeinstellung während der\nlaufenden onkologischen Behandlung.\nIm stationären Verlauf erfolgten:\n•   Klinische Überwachung und Kontrolle der Vitalparameter, insbesondere des\nBlutdrucks.\n•   Laborkontrollen einschließlich Blutbild, Elektrolyten und\nNierenfunktionsparametern.\n•   Flüssigkeitssubstitution nach klinischem Bedarf.\n•   Symptomatische Behandlung von Übelkeit und gastrointestinalen Beschwerden.\n•   Überprüfung der bestehenden Dauermedikation.\n•   Mobilisation unter physiotherapeutischer Anleitung.\n•   Beratung hinsichtlich Ernährung, Flüssigkeitszufuhr und Umgang mit\ntherapiebedingter Erschöpfung.\nUnter den durchgeführten Maßnahmen kam es zu einer klinischen Stabilisierung. Die\nPatientin ist zum Entlassungszeitpunkt kreislaufstabil und kann mit Unterstützung kurze\nStrecken gehen. Eine vollständige Wiederherstellung der körperlichen Belastbarkeit ist\nnoch nicht erreicht.\nDie ambulante onkologische Behandlung soll nach Rücksprache mit dem\nbehandelnden onkologischen Team fortgesetzt werden.\n4. Befund bei Entlassung\nAllgemeinzustand:   Reduziert, aber stabil.\nBewusstseinslage:   Wach, zeitlich, örtlich und situativ orientiert.\nKardiovaskulär:   Kreislaufstabil. Arterielle Hypertonie unter bestehender Medikation.\nWeiterhin regelmäßige Blutdruckkontrollen erforderlich.\nGastrointestinal:   Zeitweise Übelkeit und wechselnde Stuhlfrequenz. Orale Nahrungs-\nund Flüssigkeitsaufnahme möglich, jedoch weiterhin unterstützungsbedürftig.",
       "page": 2,
       "position": {
-        "start": 3,
-        "end": 1990
+        "start": 0,
+        "end": 1937
       }
     },
     {
       "caseId": "e12-svbox-discharge",
       "reason": "clinical_content",
-      "quote": "Mobilität: Selbstständiges Aufstehen mit gelegentlicher Unterstützung. Kurze\nGehstrecken mit Rollator möglich. Erhöhtes Sturzrisiko.\n\nPflegebedarf: Unterstützung beim Duschen, bei der Haushaltsführung und bei\neinzelnen Alltagstätigkeiten. Medikamenteneinnahme grundsätzlich selbstständig\nmöglich, eine strukturierte Unterstützung und Kontrolle werden empfohlen.\n\nPsychosoziale Situation: Die Patientin ist durch die Krebserkrankung und die\nregelmäßigen Behandlungstermine belastet. Sie äußert den Wunsch, möglichst lange in\nihrer eigenen Wohnung zu bleiben. Eine Überforderung der vorhandenen familiären\nUnterstützung soll vermieden werden.",
+      "quote": "Mobilität:   Selbstständiges Aufstehen mit gelegentlicher Unterstützung. Kurze\nGehstrecken mit Rollator möglich. Erhöhtes Sturzrisiko.\nPflegebedarf:   Unterstützung beim Duschen, bei der Haushaltsführung und bei\neinzelnen Alltagstätigkeiten. Medikamenteneinnahme grundsätzlich selbstständig\nmöglich, eine strukturierte Unterstützung und Kontrolle werden empfohlen.\nPsychosoziale Situation:   Die Patientin ist durch die Krebserkrankung und die\nregelmäßigen Behandlungstermine belastet. Sie äußert den Wunsch, möglichst lange in\nihrer eigenen Wohnung zu bleiben. Eine Überforderung der vorhandenen familiären\nUnterstützung soll vermieden werden.",
       "page": 3,
       "position": {
         "start": 0,
-        "end": 640
+        "end": 644
       }
     },
     {
       "caseId": "e12-svbox-discharge",
       "reason": "clinical_content",
-      "quote": "Fortführung der geplanten ambulanten Bestrahlung gemäß onkologischem\n       Therapieplan.",
+      "quote": "Fortführung der geplanten ambulanten Bestrahlung gemäß onkologischem\nTherapieplan.",
       "page": 4,
       "position": {
-        "start": 247,
-        "end": 336
+        "start": 231,
+        "end": 313
       }
     },
     {
@@ -1634,48 +1634,48 @@
       "quote": "Aufgrund der ausgeprägten Fatigue, der reduzierten körperlichen Belastbarkeit und des\nbestehenden Unterstützungsbedarfs erscheint eine rehabilitative Maßnahme sinnvoll,\nsofern die medizinischen Voraussetzungen erfüllt sind.",
       "page": 5,
       "position": {
-        "start": 333,
-        "end": 556
+        "start": 332,
+        "end": 555
       }
     },
     {
       "caseId": "e12-svbox-discharge",
       "reason": "clinical_content",
-      "quote": "10. Zusammenfassende Beurteilung\n\nDie Patientin kann nach klinischer Stabilisierung in ihre häusliche Umgebung entlassen\nwerden. Aufgrund der schweren onkologischen Erkrankung, der noch laufenden\nBestrahlung, der therapiebedingten Nebenwirkungen, der bestehenden Hypertonie und\nder eingeschränkten Mobilität besteht ein erhöhter Bedarf an koordinierter\nmedizinischer und sozialer Betreuung.\n\nBesondere Bedeutung haben die zuverlässige Organisation der weiteren onkologischen\nBehandlung, die sichere Medikamenteneinnahme, die regelmäßige Kontrolle des\nBlutdrucks und die Sicherstellung einer ausreichenden Unterstützung im häuslichen\nUmfeld.\n\nNach Abschluss der Bestrahlung soll eine onkologische Rehabilitation geprüft und bei\nentsprechender medizinischer Eignung beantragt werden. Parallel sind mögliche\nsozialversicherungsrechtliche Leistungen und Unterstützungsangebote abzuklären, um\ndie Selbstständigkeit der Patientin möglichst lange zu erhalten und die Versorgung zu\nHause sicherzustellen.\n\nEntlassungsmodus: Entlassung nach Hause mit organisierter ambulanter\nWeiterbetreuung und empfohlenem sozialmedizinischem Unterstützungsbedarf.",
+      "quote": "10. Zusammenfassende Beurteilung\nDie Patientin kann nach klinischer Stabilisierung in ihre häusliche Umgebung entlassen\nwerden. Aufgrund der schweren onkologischen Erkrankung, der noch laufenden\nBestrahlung, der therapiebedingten Nebenwirkungen, der bestehenden Hypertonie und\nder eingeschränkten Mobilität besteht ein erhöhter Bedarf an koordinierter\nmedizinischer und sozialer Betreuung.\nBesondere Bedeutung haben die zuverlässige Organisation der weiteren onkologischen\nBehandlung, die sichere Medikamenteneinnahme, die regelmäßige Kontrolle des\nBlutdrucks und die Sicherstellung einer ausreichenden Unterstützung im häuslichen\nUmfeld.\nNach Abschluss der Bestrahlung soll eine onkologische Rehabilitation geprüft und bei\nentsprechender medizinischer Eignung beantragt werden. Parallel sind mögliche\nsozialversicherungsrechtliche Leistungen und Unterstützungsangebote abzuklären, um\ndie Selbstständigkeit der Patientin möglichst lange zu erhalten und die Versorgung zu\nHause sicherzustellen.\nEntlassungsmodus:   Entlassung nach Hause mit organisierter ambulanter\nWeiterbetreuung und empfohlenem sozialmedizinischem Unterstützungsbedarf.",
       "page": 7,
       "position": {
-        "start": 717,
-        "end": 1857
+        "start": 425,
+        "end": 1563
       }
     },
     {
       "caseId": "e12-svbox-radiology-1",
       "reason": "clinical_content",
-      "quote": "Zusammenfassung / Ergebnis\n\n Es zeigt sich eine regelrechte achsengerechte Stellung, keine Subluxation bei intakter kortikale Begrenzung.\n\n Altersentsprechender Mineralsalzgehalt.\n\n Abgeflachte Talusrolle vor allem rechts im Sinne eines Pes planus.\n\n Talonavicularekalzifikation links.\n\n Der Kalkaneus zeigt beidseits eine dorsale Spornbildung bei unauffälliger plantarer Abgrenzung.\n\n Intakte Malleolusgabel\n\n Regelrechter Weichteilschatten.",
+      "quote": "Zusammenfassung / Ergebnis\nEs zeigt sich eine regelrechte achsengerechte Stellung, keine Subluxation bei intakter kortikale Begrenzung.\nAltersentsprechender Mineralsalzgehalt.\nAbgeflachte Talusrolle vor allem rechts im Sinne eines Pes planus.\nTalonavicularekalzifikation links.\nDer Kalkaneus zeigt beidseits eine dorsale Spornbildung bei unauffälliger plantarer Abgrenzung.\nIntakte Malleolusgabel\nRegelrechter Weichteilschatten.",
       "page": 1,
       "position": {
-        "start": 817,
-        "end": 1259
+        "start": 663,
+        "end": 1091
       }
     },
     {
       "caseId": "e12-svbox-radiology-2",
       "reason": "clinical_content",
-      "quote": "Linker Oberschenkel: Typisches, spindeliges, 2,9 x 0,8 cm im sagittalen Durchmesser haltendes subkutanes\n Lipom\n\n Rechte Flanke: Ebenfalls typisches, 4,1 x 1 Zentimeter messendes, glatt begrenztes subkutanes Lipom.\n\n Gesamte Wirbelsäule a.p. und seitlich\n\n\n Flachbogige rechtsgerichtete skoliotische Biegung der mittleren und unteren BWS und oberen LWS, Scheitel\n etwa in Höhe Th11/Th12. Linksrotationsskoliose der oberen Lendenwirbelsäule mit Scheitel in Höhe L2/L3.\n Streckfehlhaltung der Halswirbelsäule. Streckfehlhaltung der Brustwirbelsäule. Durchwegs normale Höhe der\n Bandscheibenräume. Keine wesentlichen Osteochondrosen. Einzelne Schmorl'sche Knorpelknötchen an der\n BWS und LWS.",
+      "quote": "Linker Oberschenkel: Typisches, spindeliges, 2,9 x 0,8 cm im sagittalen Durchmesser haltendes subkutanes\nLipom\nRechte Flanke: Ebenfalls typisches, 4,1 x 1 Zentimeter messendes, glatt begrenztes subkutanes Lipom.\nGesamte Wirbelsäule a.p. und seitlich\nFlachbogige rechtsgerichtete skoliotische Biegung der mittleren und unteren BWS und oberen LWS, Scheitel\netwa in Höhe Th11/Th12. Linksrotationsskoliose der oberen Lendenwirbelsäule mit Scheitel in Höhe L2/L3.\nStreckfehlhaltung der Halswirbelsäule. Streckfehlhaltung der Brustwirbelsäule. Durchwegs normale Höhe der\nBandscheibenräume. Keine wesentlichen Osteochondrosen. Einzelne Schmorl'sche Knorpelknötchen an der\nBWS und LWS.",
       "page": 1,
       "position": {
-        "start": 746,
-        "end": 1435
+        "start": 599,
+        "end": 1276
       }
     },
     {
       "caseId": "e12-svbox-ultrasound",
       "reason": "clinical_content",
-      "quote": "Indikation: V.a. Läsion nervus cutaneus femoris lateralis sin.\n\n  Ultraschall\n  Der N.cut.fem.lat. links ist asymmetrisch verdickt, reitet knapp an der Spina iliaca anterior superior und\n  verläuft transligamentär. Max. Querschnittsfläche von 9mm². Die Kontinuität ist erhalten. Kein Hämatom, kein\n  erkennbarer Muskelfaserriss, keine erkennbare Bandruptur.\n\n\n  Zusammenfassung / Ergebnis\n\n  Sonographisches Bild einer mäßig ausgeprägten Kompression und Irritation des N.cutaneus femoris lateralis\n  links amLeistenband. Aufgrund der ausbleibenden Schmerzen und reinen Gefühlslosigkeit wird derzeit auf eine\n  Infiltration verzichtet.",
+      "quote": "Indikation: V.a. Läsion nervus cutaneus femoris lateralis sin.\nUltraschall\nDer N.cut.fem.lat. links ist asymmetrisch verdickt, reitet knapp an der Spina iliaca anterior superior und\nverläuft transligamentär. Max. Querschnittsfläche von 9mm². Die Kontinuität ist erhalten. Kein Hämatom, kein\nerkennbarer Muskelfaserriss, keine erkennbare Bandruptur.\nZusammenfassung / Ergebnis\nSonographisches Bild einer mäßig ausgeprägten Kompression und Irritation des N.cutaneus femoris lateralis\nlinks amLeistenband. Aufgrund der ausbleibenden Schmerzen und reinen Gefühlslosigkeit wird derzeit auf eine\nInfiltration verzichtet.",
       "page": 1,
       "position": {
-        "start": 508,
-        "end": 1142
+        "start": 348,
+        "end": 962
       }
     },
     {

@@ -77,6 +77,9 @@
         "ai": "^7",
         "zod": "^4",
       },
+      "devDependencies": {
+        "pdfjs-dist": "^6.5.438",
+      },
     },
     "packages/guide": {
       "name": "@lotse/guide",
