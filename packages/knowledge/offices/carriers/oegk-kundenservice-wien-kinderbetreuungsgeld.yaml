@@ -1,0 +1,43 @@
+id: "oegk-kundenservice-wien-kinderbetreuungsgeld"
+name_de: "Kundenservice Kinderbetreuungsgeld Wien"
+name_simple: "ÖGK-Büro Kinderbetreuungsgeld Wien"
+carrier: "oegk"
+region: "Wien"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.882921&portal=oegkportal"
+address:
+  street: "Kagraner Platz 1, 1. OG"
+  postal_code: "1220"
+  locality: "Wien"
+  country: "AT"
+phone: "+43 5 0766-1114070"
+email: "kckbg@oegk.at"
+opening_hours:
+  notes: |-
+    Montag:07.00 – 14.30
+    Dienstag:07.00 – 14.30
+    Mittwoch:07.00 – 14.30
+    Donnerstag:07.00 – 14.30
+    Freitag:07.00 – 14.30
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+jurisdiction: "Kinderbetreuungsgeld"
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882921&portal=oegkportal"
+    quote: |-
+      Kundenservice Kinderbetreuungsgeld Wien
+      Kagraner Platz 1, 1. OG
+      1220 Wien
+      Telefon: +43 5 0766-1114070
+      E-Mail: kckbg@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882921&portal=oegkportal"
+    quote: |-
+      Montag:07.00 – 14.30
+      Dienstag:07.00 – 14.30
+      Mittwoch:07.00 – 14.30
+      Donnerstag:07.00 – 14.30
+      Freitag:07.00 – 14.30
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.882921&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
