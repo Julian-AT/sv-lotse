@@ -1,0 +1,15 @@
+{
+  "turnId": "turn-document",
+  "index": 0,
+  "text": "Hier steht die dokumentierte Empfehlung.",
+  "language": "de-AT",
+  "citations": [
+    {
+      "passageId": "passage-recommendation",
+      "url": "https://lotse.example/api/documents/document-discharge",
+      "quote": "Empfehlung: Prüfung einer stationären onkologischen Rehabilitation nach Abschluss der geplanten Strahlentherapie."
+    }
+  ],
+  "actionIds": ["action-highlight"],
+  "unexpected": true
+}
