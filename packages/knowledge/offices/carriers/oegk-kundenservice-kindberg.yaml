@@ -1,0 +1,32 @@
+id: "oegk-kundenservice-kindberg"
+name_de: "Kundenservice Kindberg"
+name_simple: "ÖGK-Büro Kindberg"
+carrier: "oegk"
+region: "Steiermark"
+url: "https://www.oegk.at/cdscontent/?contentid=10007.883158&portal=oegkportal"
+address:
+  street: "Vösendorfplatz 1"
+  postal_code: "8650"
+  locality: "Kindberg"
+  country: "AT"
+phone: "+43 5 0766-157777"
+email: "kindberg@oegk.at"
+opening_hours:
+  notes: "Donnerstag:08.00 – 12.00"
+accessibility: "Unser Standort ist barrierefrei zugänglich."
+sources:
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883158&portal=oegkportal"
+    quote: |-
+      Kundenservice Kindberg
+      Vösendorfplatz 1
+      8650 Kindberg
+      Telefon: +43 5 0766-157777
+      E-Mail: kindberg@oegk.at
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883158&portal=oegkportal"
+    quote: "Donnerstag:08.00 – 12.00"
+    retrieved_at: "2026-11-05T22:41:30Z"
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.883158&portal=oegkportal"
+    quote: "Unser Standort ist barrierefrei zugänglich."
+    retrieved_at: "2026-11-05T22:41:30Z"
+as_of: "2026-11-05"
