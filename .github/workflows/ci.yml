@@ -1,0 +1,178 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  COMMIT_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+  COMMIT_HEAD: ${{ github.event.pull_request.head.sha || github.event.after }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - run: bun install --frozen-lockfile
+      - run: bun run verify
+      - run: bun run format:check
+
+  commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - run: bun install --frozen-lockfile
+      - name: Test the commit checker
+        run: bash scripts/ci/test-check-commits.sh
+      - name: Check the event's commit range
+        env:
+          ALLOWED_AUTHOR_EMAIL: ${{ vars.ALLOWED_AUTHOR_EMAIL }}
+        run: bash scripts/ci/check-commits.sh "$COMMIT_BASE" "$COMMIT_HEAD"
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Scan the event's commit range
+        run: |
+          if [[ "$COMMIT_BASE" =~ ^0{40}$|^0{64}$ ]]; then
+            log_opts="-1 $COMMIT_HEAD"
+          else
+            log_opts="$COMMIT_BASE..$COMMIT_HEAD"
+          fi
+          docker run --rm --volume "$GITHUB_WORKSPACE:/repo:ro" \
+            ghcr.io/gitleaks/gitleaks:v8.30.1 \
+            git --redact --no-banner --log-opts="$log_opts" /repo
+
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      integration: ${{ steps.files.outputs.integration }}
+      container: ${{ steps.files.outputs.container }}
+      protocol-swift: ${{ steps.files.outputs.protocol-swift }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Detect optional job inputs
+        id: files
+        run: |
+          for entry in \
+            integration:docker-compose.yml \
+            container:apps/web/Dockerfile \
+            protocol-swift:packages/protocol/swift/Package.swift; do
+            job="${entry%%:*}"
+            path="${entry#*:}"
+            present=false
+            if [[ -f "$path" ]]; then
+              present=true
+            fi
+            printf '%s=%s\n' "$job" "$present" >> "$GITHUB_OUTPUT"
+          done
+
+  integration:
+    needs: detect
+    if: needs.detect.outputs.integration == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: Load the public compose defaults
+        run: |
+          node --input-type=module <<'JS'
+          import { appendFileSync, readFileSync } from 'node:fs';
+          const lines = readFileSync('.env.example', 'utf8').split(/\r?\n/);
+          const keys = [
+            'DATABASE_URL', 'S3_ENDPOINT', 'S3_REGION', 'S3_BUCKET',
+            'S3_ACCESS_KEY_ID', 'S3_SECRET_ACCESS_KEY', 'S3_FORCE_PATH_STYLE',
+          ];
+          const values = keys.map((key) => {
+            const line = lines.find((entry) => entry.startsWith(`${key}=`));
+            if (!line || line === `${key}=`) {
+              throw new Error(`Missing compose default for ${key}`);
+            }
+            return line;
+          });
+          appendFileSync(process.env.GITHUB_ENV, `${values.join('\n')}\n`);
+          JS
+      - run: docker compose up -d --wait
+      - run: bun install --frozen-lockfile
+      - run: bun run test:integration
+      - name: Stop local services
+        if: always()
+        run: docker compose down --volumes
+
+  container:
+    needs: detect
+    if: needs.detect.outputs.container == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: bash apps/web/scripts/container-smoke.sh
+
+  protocol-swift:
+    needs: detect
+    if: needs.detect.outputs.protocol-swift == 'true'
+    # macOS supplies the Apple Swift toolchain used by the Mac client, without
+    # another setup action or a separately maintained Linux toolchain version.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: swift test --package-path packages/protocol/swift
+
+  ci-ok:
+    needs: [verify, commits, secrets, detect, integration, container, protocol-swift]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require successful or intentionally skipped jobs
+        env:
+          JOB_RESULTS: ${{ toJSON(needs) }}
+        run: |
+          printf '%s\n' "$JOB_RESULTS" | jq -e \
+            'all(.[]; .result == "success" or .result == "skipped")'
