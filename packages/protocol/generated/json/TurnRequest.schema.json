@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actionResults": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "actionId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "failureReason": {
+            "type": "string"
+          },
+          "resolvedBy": {
+            "enum": [
+              "ui",
+              "dom",
+              "ax",
+              "ocr",
+              "vision"
+            ],
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "actionId",
+          "resolvedBy",
+          "confidence",
+          "success"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "capsule": {
+      "additionalProperties": false,
+      "properties": {
+        "focusedRegion": {
+          "additionalProperties": false,
+          "properties": {
+            "height": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "width": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "x": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "y": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "width",
+            "height"
+          ],
+          "type": "object"
+        },
+        "page": {
+          "additionalProperties": false,
+          "properties": {
+            "handles": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "bbox": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "height": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "width": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "x": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "y": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "width",
+                      "height"
+                    ],
+                    "type": "object"
+                  },
+                  "id": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "role",
+                  "label",
+                  "value",
+                  "bbox"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "url": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          "required": [
+            "url",
+            "handles"
+          ],
+          "type": "object"
+        },
+        "screen": {
+          "additionalProperties": false,
+          "properties": {
+            "image": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "ocrLines": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "bbox": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "height": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "width": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "x": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "y": {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y",
+                      "width",
+                      "height"
+                    ],
+                    "type": "object"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "text",
+                  "bbox"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "screenIndex": {
+              "maximum": 9007199254740991,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "summary": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "screenIndex",
+            "summary",
+            "ocrLines"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "caseId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "inputKind": {
+      "enum": [
+        "transcript",
+        "text"
+      ],
+      "type": "string"
+    },
+    "language": {
+      "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$",
+      "type": "string"
+    },
+    "subjectId": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "inputKind",
+    "capsule",
+    "actionResults"
+  ],
+  "type": "object"
+}
