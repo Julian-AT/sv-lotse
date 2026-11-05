@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "elementId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kind": {
+          "const": "ui",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "elementId"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "fieldId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "formInstanceId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kind": {
+          "const": "form",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "formInstanceId",
+        "fieldId"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "handle": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kind": {
+          "const": "dom",
+          "type": "string"
+        },
+        "url": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "handle",
+        "url"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "appBundleId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kind": {
+          "const": "ax",
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "path": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "role": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "role",
+        "label",
+        "path",
+        "appBundleId"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "documentId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kind": {
+          "const": "text",
+          "type": "string"
+        },
+        "page": {
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991,
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "quote"
+      ],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "kind": {
+          "const": "point",
+          "type": "string"
+        },
+        "screenIndex": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "x": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "y": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind",
+        "x",
+        "y",
+        "screenIndex",
+        "confidence"
+      ],
+      "type": "object"
+    }
+  ]
+}
