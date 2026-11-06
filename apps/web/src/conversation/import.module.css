@@ -1,0 +1,90 @@
+.dropZone {
+  position: relative;
+  min-width: 0;
+  border-radius: var(--lotse-radius-medium);
+}
+.dropZone[data-dragging="true"] {
+  outline: 3px dashed var(--lotse-accent);
+  outline-offset: 4px;
+}
+.dropOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: var(--lotse-space-large);
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--lotse-surface) 88%, transparent);
+  backdrop-filter: blur(var(--lotse-glass-blur, 12px));
+  color: var(--lotse-text);
+  font-size: var(--lotse-text-large);
+  font-weight: 600;
+  text-align: center;
+  /* Drag events keep reaching the content underneath, so leaving the zone is detected reliably. */
+  pointer-events: none;
+}
+.upload {
+  display: grid;
+  gap: var(--lotse-space-small);
+  justify-items: start;
+}
+.hint {
+  margin: 0;
+  color: var(--lotse-muted);
+  font-size: var(--lotse-text-small);
+}
+.preview {
+  display: grid;
+  grid-template-columns: min(15rem, 40%) minmax(0, 1fr);
+  gap: var(--lotse-space-medium);
+  align-items: start;
+}
+.thumbnail {
+  display: grid;
+  gap: var(--lotse-space-small);
+  margin: 0;
+}
+.thumbnail canvas,
+.thumbnail img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-small);
+  background: #fff;
+}
+.thumbnail p {
+  margin: 0;
+  color: var(--lotse-muted);
+}
+.details {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--lotse-space-small) var(--lotse-space-medium);
+  margin: 0;
+}
+.details dt {
+  font-weight: 600;
+}
+.details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.stored ul {
+  margin: 0;
+  padding-inline-start: 1.25rem;
+}
+.actions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-block-start: var(--lotse-space-medium);
+}
+@media (max-width: 600px) {
+  .preview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .thumbnail {
+    max-width: 15rem;
+  }
+}
