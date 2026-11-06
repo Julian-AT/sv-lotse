@@ -115,7 +115,7 @@ export function WhyPanel({
                 {...(href && /^https?:/u.test(href)
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
-                className="w-fit text-xs font-medium text-brand-text underline-offset-2 hover:underline"
+                className="w-fit text-xs font-medium text-brand-text! underline-offset-2 hover:underline"
               >
                 {source.title}
               </a>

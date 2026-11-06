@@ -54,8 +54,8 @@ function Channel({
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className={
         primary
-          ? "inline-flex h-8 items-center gap-1.5 rounded-full bg-primary px-3 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          : "inline-flex h-8 items-center gap-1.5 rounded-full border border-border bg-background px-3 text-xs font-medium transition-colors hover:bg-muted"
+          ? "inline-flex h-8 items-center gap-1.5 rounded-full bg-primary px-3 text-xs font-medium text-primary-foreground! transition-colors hover:bg-primary/90"
+          : "inline-flex h-8 items-center gap-1.5 rounded-full border border-border bg-background px-3 text-xs font-medium text-foreground! transition-colors hover:bg-muted"
       }
     >
       <Icon aria-hidden="true" className="size-3.5" />
@@ -64,18 +64,13 @@ function Channel({
   );
 }
 
-/** Contact card for the sourced server result, independently of generated conversational prose. */
-export function OfficeResults({
-  message,
-  language,
-}: {
-  message: LotseMessage;
-  language: "de" | "en";
-}): JSX.Element | null {
-  if (message.role !== "assistant") return null;
-  const offices = message.parts.flatMap((part) => {
+/** Validated office results in stream order; invalid or unsourced records are withheld. */
+export function officeResults(message: LotseMessage, callId?: string) {
+  if (message.role !== "assistant") return [];
+  return message.parts.flatMap((part) => {
     if (
       !isToolUIPart(part) ||
+      (callId !== undefined && part.toolCallId !== callId) ||
       part.state !== "output-available" ||
       getToolName(part) !== "office.resolve"
     )
@@ -83,6 +78,21 @@ export function OfficeResults({
     const parsed = officeSchema.safeParse(part.output);
     return parsed.success ? [{ ...parsed.data, callId: part.toolCallId }] : [];
   });
+}
+
+/** Contact card for the sourced server result, independently of generated conversational prose. */
+export function OfficeResults({
+  message,
+  language,
+  callId,
+}: {
+  message: LotseMessage;
+  language: "de" | "en";
+  /** Only the office of this tool call (cards render inline at their tool part). */
+  callId?: string;
+}): JSX.Element | null {
+  const offices = officeResults(message, callId);
+  if (!offices.length) return null;
   const copy = resultCopy[language];
   const labels = { ...uiDe, ...(language === "en" ? en : {}) };
   return (

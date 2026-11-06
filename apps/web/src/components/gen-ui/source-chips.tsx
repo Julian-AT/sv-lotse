@@ -44,7 +44,7 @@ export function SourceChip({
           href={href}
           {...(external(href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           className={cn(
-            "inline-flex h-6 max-w-[15rem] items-center gap-1 rounded-full border border-border bg-background px-2 text-[11px] font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+            "inline-flex h-6 max-w-[15rem] items-center gap-1 rounded-full border border-border bg-background px-2 text-[11px] font-medium text-muted-foreground! transition-colors hover:border-foreground/20 hover:text-foreground! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
             className,
           )}
         >

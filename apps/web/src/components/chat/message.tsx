@@ -10,7 +10,7 @@ import { getToolName, isToolUIPart } from "ai";
 import type { ReactNode } from "react";
 import { ApprovalPanel } from "@/conversation/approval-card.tsx";
 import { workspaceLabels } from "@/conversation/copy.ts";
-import { OfficeResults } from "@/conversation/office.tsx";
+import { OfficeResults, officeResults } from "@/conversation/office.tsx";
 import { ToolResultCards } from "@/conversation/results.tsx";
 import {
   messageCitations,
@@ -18,6 +18,7 @@ import {
   provenanceCitations,
 } from "@/conversation/sources.ts";
 import { toolLabel } from "@/conversation/tool-labels.ts";
+import { toolResults } from "@/conversation/tool-results.ts";
 import { pendingApprovals } from "@/conversation/use-conversation.ts";
 import { AutonomyConfirmation } from "@/features/autonomy/confirmation.tsx";
 import { formApprovalAnchorId } from "@/features/form-viewer/approval.tsx";
@@ -131,6 +132,14 @@ export const PreviewMessage = ({
 
   const citations = isAssistant ? messageCitations(message, passageDates) : [];
   const approvals = pendingApprovals(message);
+  const resultIds = new Set(
+    isAssistant
+      ? [
+          ...toolResults(message).map((result) => result.callId),
+          ...officeResults(message).map((office) => office.callId),
+        ]
+      : [],
+  );
 
   const approvalFor = (toolCallId: string): ReactNode => {
     const approval = approvals.find((entry) => entry.toolCallId === toolCallId);
@@ -206,6 +215,27 @@ export const PreviewMessage = ({
     if (isToolUIPart(part)) {
       const toolPart = part as ToolUIPart;
       const approval = approvalFor(toolPart.toolCallId);
+      const name = getToolName(toolPart);
+      // A sourced result replaces its step line with its card, at the tool's place in the answer.
+      const card = resultIds.has(toolPart.toolCallId) ? (
+        name === "office.resolve" ? (
+          <OfficeResults
+            key="office"
+            message={message}
+            language={language}
+            callId={toolPart.toolCallId}
+          />
+        ) : (
+          <ToolResultCards
+            key="result"
+            message={message}
+            language={language}
+            subjectId={subjectId}
+            labels={labels}
+            callId={toolPart.toolCallId}
+          />
+        )
+      ) : null;
       return (
         <div
           className="w-[min(100%,560px)]"
@@ -213,13 +243,15 @@ export const PreviewMessage = ({
           key={toolPart.toolCallId}
           id={workspaceTargets.toolRow(toolPart.toolCallId)}
         >
-          <ToolStep
-            state={toolPart.state}
-            title={toolLabel(getToolName(toolPart), language)}
-            language={language}
-            errorText={toolPart.errorText}
-            skeleton={RESULT_TOOLS.has(getToolName(toolPart))}
-          />
+          {card ?? (
+            <ToolStep
+              state={toolPart.state}
+              title={toolLabel(name, language)}
+              language={language}
+              errorText={toolPart.errorText}
+              skeleton={RESULT_TOOLS.has(name)}
+            />
+          )}
           {approval && <div className="mt-2">{approval}</div>}
         </div>
       );
@@ -283,13 +315,6 @@ export const PreviewMessage = ({
 
   const cards = isAssistant && (
     <div className="grid w-[min(100%,560px)] min-w-0 gap-3">
-      <OfficeResults message={message} language={language} />
-      <ToolResultCards
-        message={message}
-        language={language}
-        subjectId={subjectId}
-        labels={labels}
-      />
       <AutonomyConfirmation
         message={message}
         language={language}

@@ -426,7 +426,7 @@ function ReimbursementCard({
               href={online}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-7 items-center gap-1.5 rounded-full bg-primary px-3 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              className="inline-flex h-7 items-center gap-1.5 rounded-full bg-primary px-3 text-xs font-medium text-primary-foreground! transition-colors hover:bg-primary/90"
             >
               {copy.submitOnline}
               <ExternalLinkIcon aria-hidden="true" className="size-3" />
@@ -515,13 +515,16 @@ export function ToolResultCards({
   language,
   subjectId,
   labels,
+  callId,
 }: {
   message: LotseMessage;
   language: Language;
   subjectId?: string;
   labels?: Partial<Labels>;
+  /** Only the result of this tool call (cards render inline at their tool part). */
+  callId?: string;
 }): JSX.Element | null {
-  const results = toolResults(message);
+  const results = toolResults(message).filter((result) => !callId || result.callId === callId);
   if (!results.length) return null;
   const context: Context = {
     language,
