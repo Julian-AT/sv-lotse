@@ -6,7 +6,7 @@ Next.js App Router shell and HTTP host for `packages/brain`. Read the root `AGEN
 assigned brief before changing this app. Do not add conversation logic to this app.
 
 - Route handlers contain no business logic; server helpers import the brain's public subpaths.
-  Never import the brain root until its owning WP implements it.
+  `/api/turn` uses the brain root public runtime adapter implemented by WP-006.
 - `requireSession(request)` in `src/server/session.ts` is the only way to identify a caller. It
   returns `{ userId, sessionId, kind }` or throws `SessionUnauthorized` (`status: 401`,
   `code: SESSION_REQUIRED`). API adapters must map this typed error to a 401 response. Never trust
@@ -43,7 +43,11 @@ assigned brief before changing this app. Do not add conversation logic to this a
 - Production deployment runs the brain migrator once before serving, serialized by deployment
   orchestration. `scripts/build-migrator.mjs` bundles the public brain migrator for Node and keeps
   its relative migration-folder layout. Bun is build tooling only; the runtime is Node 22.
-- No `src/app/api/turn` implementation in WP-005. Original challenge data and other packages are
+- `/api/turn` identifies the caller with `requireSession`, validates the protocol-plus-latest-message
+  body through the public brain adapter and returns the SDK UI stream. Map typed session/turn errors
+  to their HTTP status, pass cancellation, and keep all conversation/approval logic in brain. Clients
+  must retain `x-lotse-case-id` for the next request.
+- Original challenge data and other packages are
   read-only. Generated `next-env.d.ts` comes from Next.js; never hand-edit it.
 
 ## Commands

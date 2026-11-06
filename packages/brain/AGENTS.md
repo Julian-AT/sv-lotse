@@ -15,10 +15,12 @@ Run from the repository root:
 - `bun run --filter @lotse/brain typecheck` — check source and test types.
 - `bun run --filter @lotse/brain test` — run Vitest under Node.js, excluding `test/**/*.db.test.ts`.
 - `bun run --filter @lotse/brain test -- test/forms/detect` — real SV-Box AcroForm/flattened tests and E13 fixture harness; no provider calls.
+- `RUN_LIVE=1 bun run --filter @lotse/brain test:live -- test/runtime` — authenticated `/api/turn` handler with real OpenAI and persisted messages. Requires the Compose services and runtime environment; no keys or response content are logged.
+- `RUN_LIVE=1 bun run --filter @lotse/brain test:live` — all live tests, including the existing form vision test. Optional positional filters match test paths.
 - `RUN_LIVE=1 bun run --filter @lotse/brain test:live -- test/forms/detect` — rasterize an original SV-Box page and detect fields through real OpenAI. Requires `OPENAI_API_KEY`; `FORM_VISION_MODEL` defaults to `gpt-4.1-mini` and can be overridden. Loads root `.env.local` without overwriting exported values.
 - `bun run --filter @lotse/brain test:deadlines:integration` — deadline guard acceptance tests against real Postgres; creates and drops a unique migrated database. Loads root `.env.local` without overriding exported values.
 - `bun run --filter @lotse/brain test:db` — deprecated delegate to `@lotse/db test:db`.
-- `bun run --filter @lotse/brain test:integration` — deprecated delegate to `@lotse/db test:integration`.
+- `bun run --filter @lotse/brain test:integration` — existing database/MinIO suite, then runtime approval and persistence tests in disposable real Postgres databases.
 - `bun run --filter @lotse/brain db:generate` — deprecated delegate to `@lotse/db db:generate`.
 - `bun run --filter @lotse/brain db:migrate` — deprecated delegate to `@lotse/db db:migrate`.
 - `bun run lint` — lint with Biome.
@@ -38,7 +40,39 @@ and knowledge must never depend on brain. Db remains a leaf workspace package.
 - No benefit, scenario or office id in code.
 - Every tool has Zod input and output.
 - Approval record, HMAC and input hash checked before approval-gated tools.
-- History loaded from Postgres, never trusted from the client.
+- History loaded from Postgres, never trusted from the client. `/api/turn` bodies contain protocol
+  `TurnRequest` fields plus `message`; only the last item of a legacy `messages` array is accepted.
+  Only server-issued tool decisions and client outputs can update an assistant message.
+- `createLotseAgent` uses `prepareStep`/`activeTools`, `toolApproval` and
+  `experimental_toolApprovalSecret`. L1 excludes approval tools and `form.fillLive`; helpers cannot
+  approve or mutate cases/reminders. Read autonomy from the self subject owner's profile, default L1.
+- Client tools have no `execute`. Gated client previews use input-start/delta; input-available is
+  emitted only after the approval transaction consumes the record. Never expose an early
+  input-available event that could trigger `onToolCall` before approval. Do not await `addToolOutput`
+  inside `onToolCall`; OT-12 exercises the real SDK auto-send loop against Postgres.
+- Helper conversation access requires `shareScope.case === true`. Fact scope is
+  `shareScope.facts === true` or a list of allowed fact types; absent scope denies access.
+  Until history has an authorized projection, `/api/turn` also requires full fact scope
+  (`facts === true`) for helpers: owner history may repeat unshared facts in prose or tool results.
+- Keep PRD dotted tool names in all contracts/history/approvals. OpenAI model middleware translates
+  only provider-facing names to reversible aliases. It maps both historical and newly streamed calls.
+- The agent step-end callback waits for its UI message's database checkpoint before the next model
+  call. Turn claims serialize requests per case; model timeout is shorter than the crash lease.
+  Every checkpoint and finalization locks the case and verifies the running turn claim before
+  writing messages or status. A superseded writer fails with `TURN_SUPERSEDED`.
+  Resumed server approvals have no SDK step-end boundary: `onToolExecutionEnd` persists their
+  results/errors before the next model call. SDK callback errors are swallowed, so `prepareStep`
+  must explicitly reject continuation after a failed result checkpoint.
+  Interrupted-turn recovery resolves consumed approvals without results as `TOOL_INTERRUPTED`.
+  Never redispatch or re-execute them; retries require a new call and approval. Preserve pending
+  unconsumed approvals. A fresh user message resumes recovery; replayed approvals remain rejected.
+- Brain config is Zod-validated on runtime initialization. Optional model overrides and fallback
+  overrides stay out of `.env.example`; blank overrides mean absent. Stubs need explicit
+  `BRAIN_ALLOW_STUBS=1` and otherwise throw `ToolNotImplementedError`; fixtures never run implicitly.
+- Group implementations live under `tools/impl/<group>/index.ts`. Replace one group's factory in
+  later WPs without modifying the registry; `package.build` is in the form group.
+- Override the SDK's default error logger: it includes provider requests and response headers.
+  Expose fixed error codes and keep telemetry input/output recording disabled.
 - No import from `apps/*`.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
 - Export only implemented symbols from `src/index.ts`; no placeholder business logic.
