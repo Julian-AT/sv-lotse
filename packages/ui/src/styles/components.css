@@ -1,0 +1,531 @@
+/* Component rules are the source for the single published stylesheet. */
+:where([class*="lotse-"]) {
+  box-sizing: border-box;
+  font-family: var(--lotse-font-body);
+  font-size: var(--lotse-text-body);
+  line-height: var(--lotse-line-height);
+  overflow-wrap: anywhere;
+}
+:where(
+  .lotse-card,
+  .lotse-panel,
+  .lotse-navigation,
+  .lotse-toast,
+  .lotse-dialog,
+  .lotse-bubble,
+  .lotse-why-panel,
+  .lotse-field,
+  .lotse-tabs,
+  .lotse-disclosure,
+  .lotse-tooltip,
+  .lotse-journey,
+  .lotse-checklist,
+  .lotse-overlay,
+  .lotse-stack,
+  .lotse-inline,
+  .lotse-text,
+  .lotse-heading,
+  .lotse-tag
+) {
+  color: var(--lotse-text);
+}
+:where([class*="lotse-"]):focus-visible,
+.lotse-choice input:focus-visible,
+.lotse-disclosure summary:focus-visible {
+  outline: var(--lotse-focus-width) solid var(--lotse-focus);
+  outline-offset: var(--lotse-focus-offset);
+}
+.lotse-button,
+.lotse-link,
+.lotse-tab,
+.lotse-input,
+.lotse-select,
+.lotse-choice,
+.lotse-disclosure summary {
+  min-width: var(--lotse-target-size);
+  min-height: var(--lotse-target-size);
+}
+.lotse-button,
+.lotse-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lotse-space-small);
+  padding: var(--lotse-space-small) var(--lotse-space-medium);
+  border: 1px solid var(--lotse-accent);
+  border-radius: var(--lotse-radius-small);
+  background: var(--lotse-accent);
+  color: var(--lotse-on-accent);
+  cursor: pointer;
+  font-weight: 650;
+  text-align: center;
+  transition: box-shadow var(--lotse-motion-fast) var(--lotse-motion-easing);
+}
+.lotse-button[data-variant="secondary"],
+.lotse-tab {
+  background: var(--lotse-surface);
+  color: var(--lotse-accent);
+}
+.lotse-button[data-variant="ghost"] {
+  background: transparent;
+  border-color: transparent;
+  color: var(--lotse-accent);
+}
+.lotse-button[data-variant="danger"] {
+  background: var(--lotse-danger);
+  border-color: var(--lotse-danger);
+  color: var(--lotse-on-danger);
+}
+.lotse-button:enabled:hover,
+.lotse-tab:enabled:hover {
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+.lotse-button:disabled,
+.lotse-tab:disabled {
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.lotse-icon-button {
+  padding: var(--lotse-space-small);
+}
+.lotse-link {
+  display: inline-flex;
+  align-items: center;
+  padding-block: var(--lotse-space-small);
+  color: var(--lotse-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.lotse-link:hover {
+  text-decoration-thickness: 0.15em;
+}
+.lotse-card {
+  padding: var(--lotse-space-large);
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-medium);
+  background: var(--lotse-surface);
+  box-shadow: var(--lotse-elevation-card);
+}
+.lotse-panel,
+.lotse-navigation,
+.lotse-toast {
+  padding: var(--lotse-space-large);
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-large);
+  background: var(--lotse-surface);
+}
+.lotse-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lotse-space-small);
+  padding: var(--lotse-space-small);
+}
+.lotse-toast {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--lotse-space-medium);
+  border-inline-start: 4px solid var(--lotse-accent);
+}
+.lotse-toast-label {
+  display: block;
+  margin-block-end: var(--lotse-space-small);
+}
+.lotse-toast[data-tone="error"] {
+  border-inline-start-color: var(--lotse-danger);
+}
+.lotse-toast[data-tone="success"] {
+  border-inline-start-color: var(--lotse-success);
+}
+.lotse-toast[data-tone="warning"] {
+  border-inline-start-color: var(--lotse-warning);
+}
+.lotse-stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.lotse-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.lotse-heading {
+  margin: 0 0 var(--lotse-space-medium);
+  font-family: var(--lotse-font-heading);
+  font-size: var(--lotse-text-title);
+  line-height: 1.25;
+  font-weight: 700;
+}
+h1.lotse-heading {
+  font-size: var(--lotse-text-display);
+}
+:is(h3, h4, h5, h6).lotse-heading {
+  font-size: var(--lotse-text-large);
+}
+.lotse-text {
+  margin: 0 0 var(--lotse-space-medium);
+}
+.lotse-text[data-tone="muted"],
+.lotse-hint {
+  color: var(--lotse-muted);
+}
+.lotse-badge {
+  display: inline-block;
+  padding: 0.125rem var(--lotse-space-small);
+  border-radius: var(--lotse-radius-small);
+  font-size: var(--lotse-text-small);
+  font-weight: 650;
+}
+:is(.lotse-badge, .lotse-alert)[data-tone="info"] {
+  color: var(--lotse-accent);
+  background: var(--lotse-subtle);
+}
+:is(.lotse-badge, .lotse-alert)[data-tone="success"] {
+  color: var(--lotse-success);
+  background: var(--lotse-success-surface);
+}
+:is(.lotse-badge, .lotse-alert)[data-tone="warning"] {
+  color: var(--lotse-warning);
+  background: var(--lotse-warning-surface);
+}
+:is(.lotse-badge, .lotse-alert)[data-tone="error"] {
+  color: var(--lotse-danger);
+  background: var(--lotse-danger-surface);
+}
+.lotse-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lotse-space-small);
+  padding-inline: var(--lotse-space-small);
+  background: var(--lotse-subtle);
+  border-radius: var(--lotse-radius-pill);
+}
+.lotse-remove-mark {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  background: currentColor;
+  clip-path: polygon(
+    10% 0%,
+    50% 40%,
+    90% 0%,
+    100% 10%,
+    60% 50%,
+    100% 90%,
+    90% 100%,
+    50% 60%,
+    10% 100%,
+    0% 90%,
+    40% 50%,
+    0% 10%
+  );
+}
+.lotse-alert {
+  padding: var(--lotse-space-large);
+  border: 1px solid currentColor;
+  border-radius: var(--lotse-radius-medium);
+}
+.lotse-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: var(--lotse-space-medium);
+  background: rgb(0 0 0 / 0.6);
+}
+.lotse-dialog {
+  width: min(100%, 40rem);
+  max-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--lotse-space-large);
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-medium);
+  background: var(--lotse-surface);
+  box-shadow: var(--lotse-elevation-dialog);
+}
+.lotse-dialog > .lotse-button:first-child {
+  display: flex;
+  margin-inline-start: auto;
+  margin-block-end: var(--lotse-space-medium);
+}
+.lotse-tooltip {
+  position: relative;
+  display: inline-block;
+}
+.lotse-tooltip-content {
+  position: absolute;
+  z-index: 10;
+  inset-inline-start: 0;
+  top: 100%;
+  width: max-content;
+  max-width: min(18rem, 80vw);
+  padding: var(--lotse-space-small);
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-small);
+  color: var(--lotse-text);
+  background: var(--lotse-surface);
+  box-shadow: var(--lotse-elevation-card);
+}
+.lotse-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lotse-space-small);
+}
+.lotse-tab[aria-selected="true"] {
+  color: var(--lotse-on-accent);
+  background: var(--lotse-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.lotse-tabpanel {
+  padding-block: var(--lotse-space-medium);
+}
+.lotse-tabpanel[hidden] {
+  display: none;
+}
+.lotse-disclosure summary {
+  cursor: pointer;
+  padding: var(--lotse-space-small);
+  font-weight: 650;
+}
+.lotse-disclosure > div {
+  padding: var(--lotse-space-medium);
+}
+.lotse-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lotse-space-small);
+}
+.lotse-field > label {
+  font-weight: 650;
+}
+.lotse-hint,
+.lotse-field-error {
+  margin: 0;
+}
+.lotse-field-error {
+  color: var(--lotse-danger);
+}
+.lotse-input,
+.lotse-select {
+  width: 100%;
+  padding: var(--lotse-space-small);
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-small);
+  background: var(--lotse-surface);
+  color: var(--lotse-text);
+}
+.lotse-input[aria-invalid="true"],
+.lotse-select[aria-invalid="true"] {
+  border: 2px solid var(--lotse-danger);
+}
+.lotse-input::placeholder {
+  color: var(--lotse-muted);
+  opacity: 1;
+}
+.lotse-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lotse-space-small);
+  cursor: pointer;
+  padding: var(--lotse-space-small);
+}
+.lotse-choice input {
+  margin: 0;
+  width: var(--lotse-target-size);
+  height: var(--lotse-target-size);
+  flex-shrink: 0;
+  accent-color: var(--lotse-accent);
+  cursor: inherit;
+}
+.lotse-spinner {
+  display: inline-flex;
+}
+.lotse-spinner-mark {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  border: 3px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: lotse-spin var(--lotse-motion-slow) linear infinite;
+}
+.lotse-skeleton {
+  min-height: var(--lotse-text-title);
+  width: 100%;
+  border-radius: var(--lotse-radius-small);
+  background: var(--lotse-subtle);
+  animation: lotse-pulse var(--lotse-motion-slow) ease-in-out infinite alternate;
+}
+.lotse-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.lotse-bubble {
+  padding: var(--lotse-space-large);
+  background: var(--lotse-surface);
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-medium);
+}
+.lotse-bubble[data-speaker="user"] {
+  background: var(--lotse-subtle);
+  margin-inline-start: var(--lotse-space-large);
+}
+.lotse-bubble[data-speaker="assistant"] {
+  border-inline-start: 4px solid var(--lotse-accent);
+}
+.lotse-streaming-text {
+  white-space: pre-wrap;
+}
+.lotse-source-list,
+.lotse-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lotse-space-small);
+  padding: 0;
+  margin-block: var(--lotse-space-medium);
+  list-style: none;
+}
+.lotse-citation {
+  padding-inline: var(--lotse-space-small);
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-small);
+  background: var(--lotse-surface);
+  font-size: var(--lotse-text-small);
+}
+.lotse-quote {
+  color: var(--lotse-text);
+  border-inline-start: 3px solid var(--lotse-border);
+  padding-inline-start: var(--lotse-space-medium);
+  margin: var(--lotse-space-medium) 0;
+  white-space: pre-wrap;
+}
+.lotse-decision > * + * {
+  margin-block-start: var(--lotse-space-medium);
+}
+.lotse-journey {
+  padding-inline-start: var(--lotse-space-large);
+}
+.lotse-journey > li {
+  padding: var(--lotse-space-medium);
+  border-inline-start: 3px solid var(--lotse-border);
+}
+.lotse-journey > li[aria-current="step"] {
+  border-inline-start-width: 6px;
+  border-color: var(--lotse-accent);
+}
+.lotse-metadata {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--lotse-space-small) var(--lotse-space-medium);
+}
+.lotse-metadata dd {
+  margin: 0;
+}
+.lotse-checklist {
+  padding-inline-start: var(--lotse-space-large);
+}
+.lotse-checklist > li {
+  padding-block: var(--lotse-space-medium);
+}
+.lotse-safety .lotse-link {
+  font-size: var(--lotse-text-large);
+  padding: var(--lotse-space-medium);
+  border: 1px solid var(--lotse-border);
+  border-radius: var(--lotse-radius-small);
+  background: var(--lotse-surface);
+}
+.lotse-safety .lotse-heading,
+.lotse-safety .lotse-text {
+  color: inherit;
+}
+.lotse-overlay {
+  position: absolute;
+  padding: var(--lotse-space-small);
+  border: 2px dashed var(--lotse-warning);
+  border-radius: var(--lotse-radius-small);
+  background: var(--lotse-surface);
+  overflow: visible;
+}
+.lotse-overlay[data-state="confirmed"] {
+  border-style: solid;
+  border-color: var(--lotse-success);
+}
+/* Shared class also lets CSS modules consume the same material without copying rules. */
+.lotse-glass,
+[data-material="glass"] {
+  color: var(--lotse-text);
+  background: var(--lotse-glass-background);
+  border: 1px solid var(--lotse-glass-edge);
+  border-radius: var(--lotse-radius-large);
+  box-shadow: var(--lotse-glass-shadow);
+  -webkit-backdrop-filter: var(--lotse-glass-filter);
+  backdrop-filter: var(--lotse-glass-filter);
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root,
+  [data-lotse-theme] {
+    --lotse-glass-background: var(--lotse-glass-tint);
+    --lotse-glass-filter: blur(var(--lotse-glass-blur)) saturate(1.15);
+    --lotse-glass-edge: color-mix(in srgb, var(--lotse-border) 35%, transparent);
+    --lotse-glass-shadow: var(--lotse-glass-elevation);
+  }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active),
+  print {
+  :root,
+  [data-lotse-theme] {
+    --lotse-glass-background: var(--lotse-surface);
+    --lotse-glass-filter: none;
+    --lotse-glass-edge: var(--lotse-border);
+    --lotse-glass-shadow: none;
+    --lotse-canvas-decoration: none;
+  }
+}
+:root[data-high-contrast="true"],
+[data-high-contrast="true"] [data-lotse-theme] {
+  --lotse-glass-background: var(--lotse-surface);
+  --lotse-glass-filter: none;
+  --lotse-glass-edge: var(--lotse-border);
+  --lotse-glass-shadow: none;
+  --lotse-canvas-decoration: none;
+}
+@keyframes lotse-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes lotse-pulse {
+  to {
+    opacity: 0.5;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :where([class*="lotse-"]) {
+    animation: none;
+    transition: none;
+    scroll-behavior: auto;
+  }
+}
+@media (forced-colors: active) {
+  :where([class*="lotse-"]):focus-visible {
+    outline-color: Highlight;
+  }
+  .lotse-badge {
+    border: 1px solid CanvasText;
+  }
+  .lotse-tab[aria-selected="true"] {
+    border-bottom: 4px solid Highlight;
+  }
+}
