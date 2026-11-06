@@ -1,0 +1,151 @@
+# Task reminders are immediate prompts, not calculated statutory deadlines.
+id: "pflegegeld"
+benefit: "ref:catalog/pflegegeld"
+actor_roles:
+  - "subject"
+  - "helper"
+slots:
+  - id: "residence_region"
+    type: "enum:residence-region"
+    question_hint: "In welchem Bundesland wohnt die Person, für die Sie Hilfe suchen?"
+    validation:
+      options:
+        - "Wien"
+        - "Niederösterreich"
+        - "Burgenland"
+        - "Oberösterreich"
+        - "Steiermark"
+        - "Kärnten"
+        - "Salzburg"
+        - "Tirol"
+        - "Vorarlberg"
+        - "Ausland"
+  - id: "pension_source"
+    type: "enum:pension-source"
+    question_hint: "Aus welchem Bereich kommt Ihre Pension oder Rente laut Bescheid? Bitte nicht die Krankenversicherung nennen. Bei mehreren Bezügen die Zuständigkeit mit dem Träger klären."
+    validation:
+      options:
+        - "asvg"
+        - "public-rail-mining"
+        - "gsvg-bsvg"
+        - "none"
+        - "other"
+        - "multiple"
+  - id: "application_ready"
+    type: "boolean"
+    question_hint: "Ist der Pflegegeldantrag vorbereitet?"
+  - id: "application_submitted"
+    type: "boolean"
+    question_hint: "Haben Sie oder Ihre berechtigte Vertretung den Antrag selbst eingereicht?"
+  - id: "assessment_done"
+    type: "boolean"
+    question_hint: "Hat die angekündigte Begutachtung stattgefunden?"
+  - id: "decision_received"
+    type: "boolean"
+    question_hint: "Haben Sie die Entscheidung über das Pflegegeld erhalten?"
+  - id: "awarded_level"
+    type: "number"
+    question_hint: "Welche Pflegegeldstufe von 1 bis 7 steht im Bescheid? Bei Ablehnung bitte 0 angeben."
+    validation:
+      min: 0
+      max: 7
+steps:
+  - id: "clarify"
+    needs:
+      - "pension_source"
+      - "residence_region"
+    criteria: "ref:catalog/pflegegeld#criteria"
+    action: "office.resolve"
+    outputs:
+      - id: "responsible-office"
+        type: "office"
+    transitions:
+      - to: "prepare"
+        when: 'pension_source == "asvg" or pension_source == "public-rail-mining" or pension_source == "gsvg-bsvg" or pension_source == "none"'
+      - to: "clarify-special"
+        when: 'pension_source == "other" or pension_source == "multiple"'
+  - id: "clarify-special"
+    needs: []
+    outputs:
+      - id: "jurisdiction-question"
+        type: "checklist"
+    reminders:
+      - after_days: 0
+        text_de: "Bitte lassen Sie die Zuständigkeit anhand Ihrer Renten- oder Pensionsbescheide von der auszahlenden Stelle klären."
+        when: "true"
+  - id: "prepare"
+    needs:
+      - "application_ready"
+    documents: "ref:catalog/pflegegeld#documents"
+    action: "documents.checklist"
+    signature: "subject"
+    outputs:
+      - id: "application-checklist"
+        type: "checklist"
+    reminders:
+      - after_days: 0
+        text_de: "Bitte prüfen Sie die Unterlagen mit der zuständigen Stelle. Sie reichen den Antrag selbst ein."
+        when: "application_ready == false"
+    transitions:
+      - to: "confirm-submission"
+        when: "application_ready == true"
+  - id: "confirm-submission"
+    needs:
+      - "application_submitted"
+    transitions:
+      - to: "assessment"
+        when: "application_submitted == true"
+  - id: "assessment"
+    needs:
+      - "confirm-submission"
+      - "assessment_done"
+    outputs:
+      - id: "assessment-status"
+        type: "checklist"
+    reminders:
+      - after_days: 0
+        text_de: "Der Träger kündigt den Besuch an. Auf Wunsch kann eine Vertrauensperson dabei sein."
+        when: "assessment_done == false"
+    transitions:
+      - to: "decision"
+        when: "assessment_done == true"
+  - id: "decision"
+    needs:
+      - "assessment"
+      - "decision_received"
+      - "awarded_level"
+    outputs:
+      - id: "recorded-decision"
+        type: "decision"
+    transitions:
+      - to: "finish"
+        when: "decision_received == true"
+  - id: "finish"
+    needs:
+      - "decision"
+completion:
+  evidence:
+    - "user_statement"
+sources:
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Die Betroffenen werden zu Hause, im Pflegeheim oder, falls unumgänglich, im Krankenhaus von einer Ärztin/einem Arzt oder von einer diplomierten Gesundheits-und Krankenpflegeperson aufgesucht. Dieser Hausbesuch ist vorher anzukündigen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Auf persönlichen Wunsch ist bei der ärztlichen Untersuchung auch die Anwesenheit und Anhörung einer Vertrauensperson (z.B. die Pflegeperson) zu ermöglichen, um Angaben zur konkreten Pflegesituation zu machen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Die Entscheidung über die gebührende Pflegestufe ist eine Rechtsfrage und trifft der Sozialversicherungsträger oder das Gericht."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Bezieherinnen und Bezieher einer Pension oder Rente bringen den Antrag auf Pflegegeld beim zuständigen Versicherungsträger ein. Das ist jene Stelle, die auch die Pension bzw. Rente auszahlt, zum Beispiel"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Berufstätige Personen, mitversicherte Angehörige (zum Beispiel als Hausfrau oder Kind) und Bezieherinnen und Bezieher einer Mindestsicherung oder eines Rehabilitationsgeldes können das Pflegegeld bei der Pensionsversicherungsanstalt beantragen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Antragsformulare für Zuerkennung oder Erhöhung des Pflegegeldes erhalten Sie beim jeweiligen Pensionsversicherungsträger oder auf oesterreich.gv.at ."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Pflegegeld wird – je nach Ausmaß des erforderlichen Pflegebedarfes und unabhängig von Alter und Ursache der Pflegebedürftigkeit – in sieben Stufen gewährt."
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"
