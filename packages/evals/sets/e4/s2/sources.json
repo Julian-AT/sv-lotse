@@ -1,0 +1,184 @@
+[
+  {
+    "id": "scenario",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+    "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search",
+    "verifiedAt": "2026-11-06",
+    "section": "3-users-personas-and-scenarios"
+  },
+  {
+    "id": "minimum",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#4-principles-and-hard-boundaries",
+    "passage": "Ask only what the next step needs.** The process engine decides which information is missing; the model phrases the question.",
+    "verifiedAt": "2026-11-06",
+    "section": "4-principles-and-hard-boundaries"
+  },
+  {
+    "id": "goal",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#5-functional-requirements",
+    "passage": "Within the first turns the pilot states the goal it understood (\"You want to apply for care allowance for your mother\") and asks for confirmation; the confirmed goal is stored on the case and selects the process; a changed goal re-plans without losing facts",
+    "verifiedAt": "2026-11-06",
+    "section": "5-functional-requirements"
+  },
+  {
+    "id": "medical",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#4-principles-and-hard-boundaries",
+    "passage": "No personal risk, probability or urgency statement. Prevention explanations use program target groups and the program's published rationale (FR-G6). The safety net SR-1 is rule-based and non-diagnostic.",
+    "verifiedAt": "2026-11-06",
+    "section": "4-principles-and-hard-boundaries"
+  },
+  {
+    "id": "actions",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#4-principles-and-hard-boundaries",
+    "passage": "Across all levels the pilot never submits forms, sends messages, places calls, books paid services or enters credentials.",
+    "verifiedAt": "2026-11-06",
+    "section": "4-principles-and-hard-boundaries"
+  },
+  {
+    "id": "appointments",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#5-functional-requirements",
+    "passage": "The pilot captures preferences (near me or a place, morning or afternoon, language, accessibility needs such as step-free access) through follow-up questions and finds options: facility or doctor, distance, opening hours, booking channel (online form, phone, e-mail, 1450 for advice); options carry a source and a retrieval date",
+    "verifiedAt": "2026-11-06",
+    "section": "5-functional-requirements"
+  },
+  {
+    "id": "prevention",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#5-functional-requirements",
+    "passage": "The pilot names the program, says which published criterion the person meets, and explains in plain language why the program exists, quoting or paraphrasing the official rationale with citation. It never computes or states a personal risk, probability or urgency.",
+    "verifiedAt": "2026-11-06",
+    "section": "5-functional-requirements"
+  },
+  {
+    "id": "language",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#5-functional-requirements",
+    "passage": "Spoken language detected automatically; answers in that language; forms stay in German with translated labels; German and English are enabled at launch",
+    "verifiedAt": "2026-11-06",
+    "section": "5-functional-requirements"
+  },
+  {
+    "id": "simple",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#5-functional-requirements",
+    "passage": "\"Einfache Sprache\" (about CEFR B1): short sentences, everyday words, one instruction at a time; toggle by voice; measured by a readability check in E4",
+    "verifiedAt": "2026-11-06",
+    "section": "5-functional-requirements"
+  },
+  {
+    "id": "captions",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#5-functional-requirements",
+    "passage": "Captions for all speech, keyboard-only operation, screen-reader labels, adjustable cursor size and speed, reduced motion",
+    "verifiedAt": "2026-11-06",
+    "section": "5-functional-requirements"
+  },
+  {
+    "id": "helper",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#5-functional-requirements",
+    "passage": "Every case has a subject (the person the benefit is for) and actors (the user, helpers) with roles. Facts belong to the subject.",
+    "verifiedAt": "2026-11-06",
+    "section": "5-functional-requirements"
+  },
+  {
+    "id": "citations",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#4-principles-and-hard-boundaries",
+    "passage": "Transparent by default.** Every claim carries a source, every pre-filled value a provenance, every uncertainty a plain statement.",
+    "verifiedAt": "2026-11-06",
+    "section": "4-principles-and-hard-boundaries"
+  },
+  {
+    "id": "documents",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#14-quality-evaluation-and-testing",
+    "passage": "goal correctly confirmed, correct benefits identified, correct office, complete document list, number of questions against the minimum the engine allows, correct next action, tone and language level, citations present and boundary respected.",
+    "verifiedAt": "2026-11-06",
+    "section": "14-quality-evaluation-and-testing"
+  },
+  {
+    "id": "checkup-access",
+    "uri": "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html",
+    "section": "Wer hat Anspruch auf die Vorsorgeuntersuchung?",
+    "passage": "Die Vorsorgeuntersuchung kann von allen Personen ab dem vollendeten 18. Lebensjahr mit Wohnsitz in Österreich einmal jährlich kostenlos in Anspruch genommen werden. Auch nicht krankenversicherte Personen können die Vorsorgeuntersuchung in Anspruch nehmen, wenn sie sich bei der für ihren Wohnsitz zuständigen Landesstelle der Österreichischen Gesundheitskasse einen Ersatzkrankenschein für die Untersuchung ausstellen lassen.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "checkup-provider",
+    "uri": "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html",
+    "section": "Wohin kann ich mich wenden?",
+    "passage": "Die Vorsorgeuntersuchung kann ausschließlich bei niedergelassenen Ärztinnen/Ärzten mit einem eigenen Kassenvertrag für die Vorsorgeuntersuchung oder bei Vertragseinrichtungen bzw. Gesundheitszentren der Krankenkassen in Anspruch genommen werden.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "checkup-documents",
+    "uri": "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html",
+    "section": "Was soll zur Untersuchung mitgebracht werden?",
+    "passage": "Als Anspruchsnachweis ist Ihre e-card oder der Ersatzkrankenschein erforderlich. Zusätzlich empfiehlt es sich, alte Befunde von vorausgegangenen Untersuchungen mitzubringen. Haben Sie schon einmal eine Vorsorgeuntersuchung in Anspruch genommen, nehmen Sie den Arztbrief mit, den Sie damals erhalten haben. So kann Ihre Ärztin oder Ihr Arzt feststellen, ob sich Werte verändert haben. Nehmen Sie eine Liste all jener Medikamente mit, die Sie regelmäßig einnehmen.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "breast-access",
+    "uri": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.843994",
+    "section": "Das Österreichische Brustkrebs-Früherkennungsprogramm",
+    "passage": "Frauen im Alter von 45 bis 74 Jahren können alle 24 Monate mit ihrer e-card zur Früherkennungsmammografie gehen; eine Einladung oder Zuweisung zur Untersuchung ist nicht notwendig.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "breast-optin",
+    "uri": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.843994",
+    "section": "Anmeldung und Freischaltung",
+    "passage": "Frauen im Alter von 40 bis 44 Jahren bzw. ab 75 Jahren können sich bei der Telefon-Serviceline unter 0800 500 181 oder online auf www.frueh-erkennen.at zum Programm anmelden. Nach der Freischaltung ihrer e-card können sie ebenfalls alle 2 Jahre mit dieser zur Früherkennungsmammografie gehen.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "colon-access",
+    "uri": "https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html",
+    "section": "Welche Vorsorgeuntersuchungen des Darms gibt es?",
+    "passage": "In Österreich können Personen ab 45 Jahren diese beiden Früherkennungsuntersuchungen gratis durchführen lassen: Im Rahmen der Vorsorgeuntersuchung wird alle zwei Jahre ein Test auf nicht sichtbares Blut im Stuhl oder alle zehn Jahre eine Darmspiegelung angeboten.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "colon-provider",
+    "uri": "https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html",
+    "section": "Wohin kann ich mich wenden?",
+    "passage": "Erste Anlaufstelle für eine Vorsorgeuntersuchung ist die Ärztin oder der Arzt für Allgemeinmedizin bzw. die Hausärztin oder der Hausarzt.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "park",
+    "uri": "https://www.bewegt-im-park.at/wie-funktioniert-bewegt-im-park/",
+    "section": "Wie funktioniert BEWEGT IM PARK?",
+    "passage": "BEWEGT IM PARK bietet dir ein vielfältiges Bewegungsprogramm in öffentlichen Parkanlagen – kostenlos und unverbindlich. […] Deshalb findet jeder Kurs auch ohne Anmeldung statt.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "nutrition",
+    "uri": "https://www.tirol.gv.at/gesundheit-vorsorge/oeffentliche-gesundheit/ernaehrungs-und-diaetberatung/",
+    "section": "Ernährungs- und Diätberatung / Beratungsstellen in den Bezirken",
+    "passage": "Jede/r Interessierte kann sich direkt an die Beratungsstelle wenden, um sich über gesunde Ernährung zu informieren. […] Kosten: Die Beratung ist für alle Personen kostenlos. […] Die Anmeldung erfolgt ausschließlich nach telefonischer Vereinbarung in den Beratungsstellen:",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "vaccination-record",
+    "uri": "https://www.gesundheit.gv.at/gesundheitsleistungen/elga/elektronischer-impfpass.html",
+    "section": "Elektronischer Impfpass (eImpfpass)",
+    "passage": "Man kann seine Impfungen über Mein Gesundheitsportal im eImpfpass einsehen und ausdrucken.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "vaccination-clinician",
+    "uri": "https://www.gesundheit.gv.at/gesundheitsleistungen/elga/elektronischer-impfpass.html",
+    "section": "Kann ich den eImpfpass auch ausdrucken lassen?",
+    "passage": "Die ELGA-Ombudsstelle erteilt keine inhaltlichen Auskünfte über dargestellte Immunisierungsdaten. Diese sind ausschließlich qualifizierten Stellen, wie z.B. einer Ärztin oder einem Arzt, vorbehalten.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "breast-provider",
+    "uri": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.843994",
+    "section": "Das Österreichische Brustkrebs-Früherkennungsprogramm / Qualitätskriterien",
+    "passage": "verbindliche Zertifizierungen für die am Früherkennungsprogramm teilnehmenden Radiologinnen und Radiologen sichern die hohe Qualität des Programms.",
+    "verifiedAt": "2026-11-06"
+  },
+  {
+    "id": "office-record",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/oegk-tirol.yaml",
+    "section": "Office identity and sourced contact record",
+    "passage": "name_de: \"Österreichische Gesundheitskasse Tirol\"",
+    "verifiedAt": "2026-11-06"
+  }
+]
