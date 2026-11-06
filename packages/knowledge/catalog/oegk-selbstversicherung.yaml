@@ -1,0 +1,148 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 11 (1-basiert), Druckseiten 20.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Die ÖGK prüft Vorversicherung, Versicherungsbeginn und Ausnahmen. Einkommensnachweise betreffen nur die optionale Beitragsherabsetzung.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-selbstversicherung
+name_de: Selbstversicherung in der Krankenversicherung
+name_simple: Sich selbst krankenversichern
+area: C
+life_situations:
+  - uninsured
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: no-compulsory-cover
+    text_de: Keine gesetzliche Pflichtversicherung; Wohnsitz im Inland.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+      quote:
+        Personen, die nicht in einer gesetzlichen Krankenversicherung pflichtversichert sind, können
+        sich auf Antrag selbst versichern – solange sich ihr Wohnsitz im Inland befindet. Das ist
+        die „Freiwillige Krankenversicherung nach § 16 ASVG”.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: compulsory_cover == false and domestic_residence == true
+    legal_basis: § 16 ASVG (SozDok)
+  - id: waiting-period
+    text_de:
+      Leistungsanspruch sofort bei erforderlicher Vorversicherung, sonst nach sechs Monaten. Die
+      ÖGK prüft die Vorversicherung.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+      quote:
+        Bei Vorliegen der erforderlichen Vorversicherungszeiten haben die Versicherten für sich und
+        ihre anspruchsberechtigten Angehörigen sofort Anspruch auf Leistungen aus der
+        Krankenversicherung, sonst nach einer Wartezeit von sechs Monaten.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: contribution
+    text_de: "Monatsbeitrag 2026: 565,25 Euro; Herabsetzung kann beantragt werden."
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+      quote:
+        Der Monatsbeitrag beträgt derzeit 565,25 Euro. Sie können einen Antrag auf Herabsetzung der
+        Beitragsgrundlage stellen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: application
+    name_de: Ausgefüllter und unterschriebener Antrag
+    required: true
+    obtain_from: Formular der ÖGK; selbst ausfüllen und unterschreiben
+    source:
+      url: https://www.oegk.at/cdscontent/?contentid=10007.867315&portal=oegkportal
+      quote:
+        "Für die Anmeldung der Selbstversicherung in der Krankenversicherung benötigen wir folgende
+        Dokumente: vollständig ausgefülltes und unterschriebenes Antragsformular Lichtbildausweis
+        Meldebestätigung"
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: identity
+    name_de: Lichtbildausweis
+    required: true
+    obtain_from: Eigene Ausweis-Unterlagen; ausstellende Behörde
+    source:
+      url: https://www.oegk.at/cdscontent/?contentid=10007.867315&portal=oegkportal
+      quote:
+        "Für die Anmeldung der Selbstversicherung in der Krankenversicherung benötigen wir folgende
+        Dokumente: vollständig ausgefülltes und unterschriebenes Antragsformular Lichtbildausweis
+        Meldebestätigung"
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: residence
+    name_de: Meldebestätigung
+    required: true
+    obtain_from: Meldebehörde
+    source:
+      url: https://www.oegk.at/cdscontent/?contentid=10007.867315&portal=oegkportal
+      quote:
+        "Für die Anmeldung der Selbstversicherung in der Krankenversicherung benötigen wir folgende
+        Dokumente: vollständig ausgefülltes und unterschriebenes Antragsformular Lichtbildausweis
+        Meldebestätigung"
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: income
+    name_de: Einkommensnachweise für eine beantragte Herabsetzung
+    required: false
+    obtain_from: Arbeitgeber, Pensionsstelle oder auszahlende Stelle
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+      quote:
+        Sie können einen Antrag auf Herabsetzung der Beitragsgrundlage stellen. Legen Sie dem Antrag
+        sämtliche Einkommensnachweise bei.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Selbstversicherung in der Krankenversicherung nach § 16 ASVG
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+  - search: Herabsetzung der Beitragsgrundlage
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-selbstversicherung
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+    quote:
+      Personen, die nicht in einer gesetzlichen Krankenversicherung pflichtversichert sind, können
+      sich auf Antrag selbst versichern – solange sich ihr Wohnsitz im Inland befindet. Das ist die
+      „Freiwillige Krankenversicherung nach § 16 ASVG”.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+    quote:
+      Bei Vorliegen der erforderlichen Vorversicherungszeiten haben die Versicherten für sich und
+      ihre anspruchsberechtigten Angehörigen sofort Anspruch auf Leistungen aus der
+      Krankenversicherung, sonst nach einer Wartezeit von sechs Monaten.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+    quote:
+      Der Monatsbeitrag beträgt derzeit 565,25 Euro. Sie können einen Antrag auf Herabsetzung der
+      Beitragsgrundlage stellen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.867315&portal=oegkportal
+    quote:
+      "Für die Anmeldung der Selbstversicherung in der Krankenversicherung benötigen wir folgende
+      Dokumente: vollständig ausgefülltes und unterschriebenes Antragsformular Lichtbildausweis
+      Meldebestätigung"
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+    quote:
+      Sie können einen Antrag auf Herabsetzung der Beitragsgrundlage stellen. Legen Sie dem Antrag
+      sämtliche Einkommensnachweise bei.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.867315&portal=oegkportal
+    quote: Ihr Wohnsitz ist im Inland.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
