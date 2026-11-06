@@ -1,0 +1,22 @@
+# Coordinates are published as data-lat/data-lng on the official location entry.
+# Awaiting human review; do not infer availability from these opening hours.
+id: fsw-care-guglgasse
+name_de: FSW Beratung und Service-Center Pflege und Betreuung – Guglgasse
+type: Pflegeberatung
+region: Wien
+address:
+  street: Guglgasse 7–9
+  postal_code: "1030"
+  locality: Wien
+  country: AT
+location:
+  latitude: 48.1861406
+  longitude: 16.417604
+phone: "01 24 5 24"
+url: https://www.fsw.at/standorte
+opening_hours: "Mo–Fr 8:00–15:00 Uhr; Do 8:00–17:30 Uhr"
+sources:
+  - url: https://www.fsw.at/standorte
+    quote: "Guglgasse 7–9 1030 Wien Mo–Fr 8:00–15:00 Uhr Do 8:00–17:30 Uhr Tel.: 01 24 5 24"
+    retrieved_at: "2026-11-06T01:35:29Z"
+as_of: "2026-11-06"
