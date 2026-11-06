@@ -1,0 +1,115 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 19 (1-basiert), Druckseiten 36–38.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Keine automatische Zusage einer Kostenübernahme; Privatbehandlungen und Drittstaaten werden nach Einreichen der Unterlagen auf Kostenerstattung geprüft (PDF S. 37–38).
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+# Abschluss bestätigt die Verwaltungshilfe bzw. Rückfrage, keinen Leistungsanspruch.
+# Erinnerungen nach 0 Tagen sind Aufgabenhinweise, keine gesetzlichen Fristen.
+id: oegk-geplante-auslandsbehandlung
+benefit: ref:catalog/oegk-geplante-auslandsbehandlung
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: contact_region
+    type: enum:oegk-region
+    question_hint: In welchem Bundesland befindet sich Ihre zuständige ÖGK-Stelle laut
+      Versicherungsunterlagen? Bei Selbstversicherung mit geringfügiger Beschäftigung nennen Sie das
+      Beschäftigungsbundesland.
+    validation:
+      options:
+        - Wien
+        - Niederösterreich
+        - Burgenland
+        - Oberösterreich
+        - Steiermark
+        - Kärnten
+        - Salzburg
+        - Tirol
+        - Vorarlberg
+  - id: documents_ready
+    type: boolean
+    question_hint: Sind die genannten Unterlagen vollständig vorbereitet?
+  - id: contact_done
+    type: boolean
+    question_hint:
+      Haben Sie die Unterlagen selbst übermittelt oder die Abwicklung mit der zuständigen
+      Stelle geklärt?
+  - id: decision_received
+    type: boolean
+    question_hint:
+      Haben Sie die Entscheidung der ÖGK erhalten? Beginnen Sie eine bewilligungspflichtige
+      Leistung erst nach Klärung der Bewilligung.
+steps:
+  - id: check-requirements
+    needs:
+      - contact_region
+    criteria: ref:catalog/oegk-geplante-auslandsbehandlung#criteria
+    action: office.resolve
+    outputs:
+      - id: contact-office
+        type: office
+    transitions:
+      - to: prepare
+  - id: prepare
+    needs:
+      - check-requirements
+      - documents_ready
+    documents: ref:catalog/oegk-geplante-auslandsbehandlung#documents
+    action: documents.checklist
+    outputs:
+      - id: administrative-checklist
+        type: checklist
+    transitions:
+      - to: confirm-contact
+        when: documents_ready == true
+    reminders:
+      - after_days: 0
+        text_de:
+          Bitte besorgen Sie die fehlenden Unterlagen bei den genannten Stellen. Medizinische Angaben
+          bleiben bei den behandelnden Fachpersonen.
+        when: documents_ready == false
+  - id: confirm-contact
+    needs:
+      - prepare
+      - contact_done
+    outputs:
+      - id: contact-confirmation
+        type: confirmation
+    transitions:
+      - to: await-decision
+        when: contact_done == true
+  - id: await-decision
+    needs:
+      - confirm-contact
+      - decision_received
+    outputs:
+      - id: carrier-decision
+        type: document
+    transitions:
+      - to: finish
+        when: decision_received == true
+  - id: finish
+    needs:
+      - await-decision
+    outputs:
+      - id: navigation-complete
+        type: confirmation
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19
+    quote:
+      Für eine Kostenübernahme einer geplanten Behandlung im Ausland muss vorab eine Bewilligung
+      nach medizinischer Prüfung vorliegen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19
+    quote: Übermitteln Sie uns das von einem österreichischen Schwerpunkt- bzw. Zentralkrankenhaus
+      ausgefüllte Formular. Sie finden das Formular auf unserer Homepage.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870660&portal=oegkportal
+    quote: Bitte nehmen Sie mindestens zwei Wochen vor dem geplanten Antritt einer Behandlung oder
+      Untersuchung im Ausland mit uns Kontakt auf.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
