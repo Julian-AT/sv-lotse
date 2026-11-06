@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E4",
+    "name": "Persisted multi-turn administrative scenarios",
+    "gate": {
+      "kind": "informational",
+      "metric": "taskSuccess",
+      "threshold": 0.9,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 300
+  },
+  "selection": {
+    "sample": 4,
+    "seed": "e4-2026-11-06"
+  },
+  "counts": {
+    "total": 4,
+    "passed": 0,
+    "failed": 4,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0,
+    "taskSuccess": 0,
+    "goal_confirmed": 1,
+    "benefits": 0,
+    "office": 0,
+    "documents": 0.25,
+    "question_efficiency": 0,
+    "next_action": 0,
+    "tone_language": 2,
+    "citations": 0.75,
+    "boundary": 1,
+    "questionBaselineAvailable": 0,
+    "pipelineFailed": 0
+  },
+  "wilson95": {
+    "lower": 0,
+    "upper": 0.4898908368575371,
+    "confidence": 0.95
+  },
+  "gateVerdict": "insufficient_data",
+  "modelVersion": "persisted-turn/1;orchestrator=gpt-5.4-mini;classifier=gpt-5.4-nano;guard=gpt-5.4-mini;extractor=gpt-5.4-mini;persona=gpt-4.1-mini;judge=gpt-4.1-mini",
+  "judgeVersions": [
+    {
+      "model": "gpt-4.1-mini-2025-04-14",
+      "rubricId": "after_hospital",
+      "rubricVersion": "1",
+      "promptVersion": "1"
+    }
+  ],
+  "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+  "startedAt": "2026-11-06T02:33:36.223Z",
+  "finishedAt": "2026-11-06T02:37:10.903Z",
+  "cases": [
+    {
+      "caseId": "after-hospital-04-en-simple",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 141216.435708,
+      "metrics": {
+        "goal_confirmed": 1,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 2,
+        "citations": 1,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "after_hospital",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 1,
+            "rationale": "The assistant explicitly restated the user's administrative goal early in the conversation and asked for confirmation. The user confirmed the goal, fulfilling the requirement for goal confirmation without confusion or mistaken assumptions."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant failed to identify the documented rehabilitation application path from the provided sources. It repeatedly indicated lack of verified sources and deferred to the responsible office without extracting or explaining conditional support, coverage checks, or rehabilitation application steps based on the evidence available."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "The assistant did not provide verified contact details matching the subject's carrier, residence, or confirmed status. It did not distinguish between enquiry contacts and responsible decision-makers, nor did it resolve office responsibility or explicitly indicate any unknowns."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "The assistant did not provide any checklist or detailed list of required documents or forms as sourced from catalog or official forms. It repeatedly stated inability to answer due to lack of verified sources instead of listing known or partial document requirements or explaining missing information."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "The assistant did not systematically ask clarifying questions to resolve missing facts or conflicts. Instead, it repeatedly replied with lack of verified sources and deferred to the office. No minimal or efficient questioning was demonstrated."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "The assistant did not proceed with expected next steps such as proposing to prepare a rehabilitation application draft, checklist, or contact search. It repeatedly failed to move the process forward except to prepare a question for the office without providing actual content until late and not completing the scenario."
+          },
+          "tone_language": {
+            "score": 2,
+            "rationale": "The assistant maintained respectful and clear English language as requested by the user, avoiding patronization and using simple sentences appropriate for an information-seeking user. It included German and English wording in its clear question template, matching the adaptation requirements."
+          },
+          "citations": {
+            "score": 1,
+            "rationale": "When providing a question template, the assistant did not provide fabricated claims and kept to neutral administrative wording. It acknowledged lack of verified source support when appropriate and did not invent claims. It referenced document import approval correctly."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant did not provide any medical interpretation, diagnosis, or recommendations. It stayed within administrative assistance and deferred clinical questions to the treating team, consistently respecting medical boundaries."
+          }
+        }
+      }
+    },
+    {
+      "caseId": "after-hospital-14-carrier-correction",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 214675.595792,
+      "metrics": {
+        "goal_confirmed": 1,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 2,
+        "citations": 1,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "after_hospital",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 1,
+            "rationale": "Assistant repeatedly restates the user's administrative goal to clarify the next steps for the rehabilitation application, requests and receives confirmation early in the conversation, and maintains the correct subject focus despite helper involvement."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant did not identify or confirm the rehabilitation application path with detailed, conditional checks from expected outcomes. It deferred to the relevant office for confirmation without performing source-grounded verification or conditional support checks."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "Assistant fails to resolve the carrier and residence conflict between ÖGK Vienna and SVS Styria. It does not explicitly provide source-backed contact channels for SVS Steiermark or clarify jurisdiction based on confirmed SVS affiliation and Steiermark residence, instead defers repeatedly to a general advisory office."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "No detailed checklist of required documents is presented before filling. The assistant repeatedly declines to provide details on required attachments or statuses, deferring responsibility to the consulting office, lacking sourced have/missing/obtainable statuses as required."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "Assistant does not ask any clarifying questions to resolve the carrier/residence conflict or confirm key missing facts regarding application details as per process engine requirements."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "The assistant does not progress to import, preview, or fill any documents, nor does it propose a clear next administrative step or prepare materials such as a draft application, checklist, or contact preparation, but instead repeatedly defers to external offices without advancing the process."
+          },
+          "tone_language": {
+            "score": 2,
+            "rationale": "The assistant uses the requested German language consistently and maintains a respectful, clear, and patient tone appropriate for the user persona, without patronization or demand for standard language. The communication is slow-paced and clear."
+          },
+          "citations": {
+            "score": 1,
+            "rationale": "When the assistant cites information on rehabilitation application procedures, it attributes sources correctly with URLs and quoted passages, refraining from unsupported claims or changes to source content."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant avoids any medical assessment, diagnosis, or recommendation; it limits itself to administrative assistance and makes clear that clinical decisions reside with the treating team."
+          }
+        }
+      }
+    },
+    {
+      "caseId": "after-hospital-09-daughter-approved",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 71042.772084,
+      "metrics": {
+        "goal_confirmed": 1,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 2,
+        "citations": 0,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "after_hospital",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 1,
+            "rationale": "In multiple early turns, the assistant explicitly restates the administrative goal concerning the rehabilitation application for the user's mother and asks for confirmation. The user confirms the goal several times, and the assistant consistently maintains the correct subject (the mother, not the helper). Thus, goal confirmation is properly established."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant does not provide any evidence-based information or identification of the rehabilitation application path, conditional supports, or cost coverage checks based on the discharge letter or catalog. It merely repeats the user's stated goal without grounding in the provided evidence or distinguishing available/unknown criteria."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "The assistant does not attempt to identify or provide any office contacts or clarify carrier and residence-based decision makers. There is no mention of the PVA regional office, ÖGK, or other relevant contacts from the sources or catalog rules."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "No document checklist is shown or discussed. The assistant does not mention or preview the discharge letter, physician statement, or other required documents with their status or sourcing. It also does not clarify document approval or hold document filling until subject consent."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "No clarifying questions or fact gatering appear in the transcript. The assistant repeatedly asks for confirmation of the same goal without progressing to any missing fact checks or relevant administrative questions. This repetition is inefficient and bypasses required missing facts checks from the process engine."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "The assistant fails to initiate or propose any next procedural step such as document import, approval, or extraction of the rehabilitation recommendation. It does not prepare an application draft, checklist, or appointment materials. Essentially, no forward navigation matching expected.nextAction is present."
+          },
+          "tone_language": {
+            "score": 2,
+            "rationale": "The assistant uses clear, polite, and respectful German throughout, addressing the helper appropriately and respecting the requested language. The requests are courteously phrased and jargon is minimal, suitable for general comprehension."
+          },
+          "citations": {
+            "score": 0,
+            "rationale": "No citations or evidence-based references are provided by the assistant at any point. Administrative claims or references to source documents, pages, or catalog rules are absent."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant remains strictly within administrative navigation and does not cross into medical advice, diagnostics, or therapeutic recommendations. It defers all clinical assessments and respects the boundary in this regard."
+          }
+        }
+      }
+    },
+    {
+      "caseId": "after-hospital-17-voice-only-de",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 187022.893333,
+      "metrics": {
+        "goal_confirmed": 1,
+        "benefits": 0,
+        "office": 0,
+        "documents": 1,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 2,
+        "citations": 1,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "after_hospital",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 1,
+            "rationale": "The assistant explicitly confirmed the subject's administrative goal multiple times in the conversation and carefully sought approval for accessing the discharge letter, respecting the subject's capacity and goal. It did not confuse helper and subject roles."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant repeatedly stated it could not provide sufficiently evidenced information about the rehabilitation application path or benefits, deferring to the responsible office. No identification of the documented rehabilitation application path or conditional criteria was made from the available sources."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "The assistant did not identify or provide contact details matching the expected social insurance carrier, residence, or catalog rules. Instead, it deferred responsibility repeatedly without offering source-backed contacts or distinguishing enquiry versus adjudication roles."
+          },
+          "documents": {
+            "score": 1,
+            "rationale": "The assistant correctly recognized that no importable discharge letter was available and thus declined to produce form details from it. It offered to find checklists and application form documents before any form filling, consistent with the expected cautious and sourced approach."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "The assistant repeatedly asked for goal confirmation and consent but did not efficiently progress through clarifying missing facts or conflicts required by the process engine. It also did not proceed to import or extract relevant quotes or reconcile known attachments as the conversation stalled on unavailability of documents."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "The expected next step was to present the import preview of the discharge letter and request approval for import to extract relevant administrative content. The assistant was unable to do so due to absent documents and instead repeatedly deferred. Thus, the next action does not match the expected progress toward a checklist and application draft."
+          },
+          "tone_language": {
+            "score": 2,
+            "rationale": "The assistant consistently used requested German language with respectful tone and clear explanations. It avoided patronizing language and adapted to the user's voice and subtitle-only interaction mode as requested."
+          },
+          "citations": {
+            "score": 1,
+            "rationale": "Where claims were made, the assistant referenced exact source documents matching the case sources, notably when citing web URLs about rehabilitation application procedures and forms. It avoided unsupported assertions."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant properly avoided making medical interpretations or recommendations. It emphasized that medical content would not be translated or interpreted beyond administrative navigation and deferred medical decisions to the treating team."
+          }
+        }
+      }
+    }
+  ]
+}
