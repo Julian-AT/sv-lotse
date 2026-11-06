@@ -5,6 +5,7 @@ import WebKit
 
 @MainActor
 public final class WorkspaceWindowController: NSWindowController, NSWindowDelegate, WKNavigationDelegate {
+    private var pendingDownloads: [ObjectIdentifier: URL] = [:]
     public let webView: WKWebView
     public let configuration: WorkspaceConfiguration
     public var onDocumentImport: ((NSPasteboard) -> Bool)? {
@@ -108,6 +109,12 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+        if navigationAction.shouldPerformDownload,
+            let url = navigationAction.request.url, let origin = try? WorkspaceOrigin(url: url),
+            origin == configuration.origin
+        {
+            return .download
+        }
         guard navigationAction.targetFrame?.isMainFrame == true else {
             return navigationAction.targetFrame == nil ? .cancel : .allow
         }
@@ -202,6 +209,43 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
     public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
         resetNavigation()
         webView.reload()
+    }
+}
+
+extension WorkspaceWindowController: WKDownloadDelegate {
+    public func webView(_ webView: WKWebView, navigationAction: WKNavigationAction, didBecome download: WKDownload) {
+        download.delegate = self
+    }
+
+    public func webView(_ webView: WKWebView, navigationResponse: WKNavigationResponse, didBecome download: WKDownload) {
+        download.delegate = self
+    }
+
+    /// Workspace downloads (the prepared form PDF) land in ~/Downloads and are shown in Finder.
+    public func download(
+        _ download: WKDownload, decideDestinationUsing response: URLResponse, suggestedFilename: String
+    ) async -> URL? {
+        let folder = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
+        let name = suggestedFilename.isEmpty ? "lotse-form.pdf" : suggestedFilename
+        var target = folder.appendingPathComponent(name)
+        var counter = 1
+        while FileManager.default.fileExists(atPath: target.path) {
+            let base = (name as NSString).deletingPathExtension
+            let ext = (name as NSString).pathExtension
+            target = folder.appendingPathComponent("\(base)-\(counter).\(ext.isEmpty ? "pdf" : ext)")
+            counter += 1
+        }
+        pendingDownloads[ObjectIdentifier(download)] = target
+        return target
+    }
+
+    public func downloadDidFinish(_ download: WKDownload) {
+        guard let target = pendingDownloads.removeValue(forKey: ObjectIdentifier(download)) else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([target])
+    }
+
+    public func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
+        pendingDownloads.removeValue(forKey: ObjectIdentifier(download))
     }
 }
 
