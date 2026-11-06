@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { useWorkspacePreferences } from "../settings/speech-preferences.ts";
 import {
   type ApprovalResponder,
@@ -228,11 +229,11 @@ function FormViewerSession({
     );
   return (
     <TooltipProvider delayDuration={200}>
-      <section className="flex min-h-0 flex-1 flex-col" aria-label={copy.title}>
+      <section className="flex min-h-0 min-w-0 flex-1 flex-col" aria-label={copy.title}>
         <header className="flex items-start gap-3 border-b border-border px-5 pt-4 pb-3">
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="m-0 text-base leading-tight font-semibold">
+              <h2 className="m-0 min-w-0 text-base leading-tight font-semibold [overflow-wrap:anywhere]">
                 {instance?.title ?? copy.title}
               </h2>
               <Badge variant="secondary">{copy.draftBadge}</Badge>
@@ -251,6 +252,7 @@ function FormViewerSession({
               type="button"
               variant="ghost"
               size="icon-sm"
+              className="shrink-0"
               aria-label={copy.close}
               onClick={props.onClose}
             >
@@ -346,7 +348,12 @@ function FormViewerSession({
             )}
           </div>
         </div>
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+        <div
+          className={cn(
+            "min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-contain",
+            view === "fields" && "overflow-x-hidden",
+          )}
+        >
           <div className="flex flex-col gap-4 px-4 py-4">
             {props.approval && props.onApprovalDecision && instance && (
               <div className="lotse-legacy">

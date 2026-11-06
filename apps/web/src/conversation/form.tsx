@@ -23,8 +23,20 @@ import { OPEN_RESOURCE_CONFIG } from "./open-resource.ts";
 const instanceOutput = z.object({ formInstanceId: z.uuid() });
 const DIALOG_MARGIN_PX = 12;
 const DIALOG_MIN_HEIGHT_PX = 220;
-/** From this chat width on, the form docks beside the chat instead of floating over it. */
-const DOCK_MIN_WIDTH_PX = 900;
+/** From this chat width on, the form docks beside the chat; narrower, it floats as a capped popup. */
+const DOCK_MIN_WIDTH_PX = 1100;
+/**
+ * Sizing that must hold even if a hot-reloaded page misses generated classes (the Mac app's web
+ * view did): without it the panel took its content's width and pushed the close button off-screen.
+ */
+const DOCKED_STYLE = {
+  flex: "0 0 56%",
+  width: "56%",
+  maxWidth: "56%",
+  minWidth: 0,
+  height: "100%",
+};
+const POPUP_STYLE = { width: "calc(100% - 2rem)", maxWidth: "42rem", minWidth: 0 };
 /** Share of the space above the reply area the narrow popup may take; the rest shows the chat. */
 const POPUP_SHARE = 0.6;
 
@@ -240,12 +252,16 @@ export function ConversationForm({
               data-docked={docked || undefined}
               onInteractOutside={(event) => event.preventDefault()}
               onOpenAutoFocus={(event) => event.preventDefault()}
-              style={docked ? undefined : { top: DIALOG_MARGIN_PX, maxHeight }}
+              style={{
+                ...(docked ? DOCKED_STYLE : { ...POPUP_STYLE, top: DIALOG_MARGIN_PX, maxHeight }),
+                overflow: "hidden",
+                ...(open ? {} : { display: "none" }),
+              }}
               className={cn(
-                "chatbot-root flex flex-col overflow-hidden bg-background text-foreground data-[state=closed]:hidden data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200",
+                "chatbot-root flex min-w-0 flex-col overflow-hidden bg-background text-foreground data-[state=closed]:hidden data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200",
                 docked
-                  ? "relative h-full w-[56%] max-w-[56rem] min-w-[26rem] shrink-0 border-l border-border data-[state=open]:slide-in-from-right-4"
-                  : "fixed left-1/2 z-50 max-h-[calc(100dvh-1.5rem)] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 rounded-xl border border-border shadow-2xl data-[state=open]:slide-in-from-top-2",
+                  ? "relative h-full shrink-0 border-l border-border data-[state=open]:slide-in-from-right-4"
+                  : "fixed left-1/2 z-50 max-h-[calc(100dvh-1.5rem)] -translate-x-1/2 rounded-xl border border-border shadow-2xl data-[state=open]:slide-in-from-top-2",
               )}
             >
               <DialogPrimitive.Title className="sr-only">{copy.title}</DialogPrimitive.Title>
