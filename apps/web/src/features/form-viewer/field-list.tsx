@@ -253,6 +253,7 @@ function FormField(props: FieldProps): JSX.Element {
       className={cn(
         "min-w-0 scroll-my-16 rounded-lg px-1.5 py-1 transition-[background-color,box-shadow] duration-200",
         "data-active:bg-primary/5 data-active:ring-2 data-active:ring-primary/50",
+        "data-pointed:bg-primary/5 data-pointed:ring-2 data-pointed:ring-primary/60",
         field.type === "checkbox" ? "sm:col-span-2" : "flex flex-col gap-1",
         long && "sm:col-span-2",
       )}

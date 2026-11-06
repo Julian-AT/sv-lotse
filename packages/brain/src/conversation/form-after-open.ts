@@ -5,17 +5,10 @@ import { fileURLToPath } from "node:url";
 import type { DatabaseClient } from "@lotse/db";
 import { cases, formInstances, formTemplates } from "@lotse/db/schema";
 import { createObjectStorage } from "@lotse/db/storage/s3";
-import {
-  type Action,
-  ActionSchema,
-  JsonObjectSchema,
-  ProvenanceSchema,
-  type Target,
-} from "@lotse/protocol";
+import { JsonObjectSchema, ProvenanceSchema, type Target } from "@lotse/protocol";
 import type { LanguageModel, UIMessageStreamWriter } from "ai";
 import { and, desc, eq, sql } from "drizzle-orm";
 import type { RuntimeContext } from "../agent/context.ts";
-import { FORM_TYPE_PACE_MS } from "../config/index.ts";
 import { acquireForm } from "../forms/acquire/index.ts";
 import { prefillForm } from "../forms/instances/index.ts";
 import { getTemplate } from "../forms/registry/index.ts";
@@ -27,6 +20,7 @@ import {
   applicantOf,
   askable,
   type FormAnswer,
+  fieldActions,
   fieldQuestion,
 } from "./form-answers.ts";
 
@@ -432,19 +426,15 @@ export async function formQuestion(input: {
   if (!instance) return;
   const template = await getTemplate(input.db, instance.templateId);
   const asked = askedField(templateSchema(template).fields, prepared.missingFields);
-  const actions = prepared.proposals.map((proposal) =>
-    ActionSchema.parse({
-      id: randomUUID(),
-      kind: "type",
-      sentenceIndex: 0,
-      target: { kind: "form", formInstanceId: prepared.formInstanceId, fieldId: proposal.fieldId },
-      payload: {
+  const actions = [
+    ...prepared.proposals.flatMap((proposal) =>
+      fieldActions(prepared.formInstanceId, proposal.fieldId, {
         value: String(proposal.value),
         provenance: ProvenanceSchema.parse(proposal.provenance),
-        pace: FORM_TYPE_PACE_MS,
-      },
-    }),
-  );
+      }),
+    ),
+    ...(asked ? fieldActions(prepared.formInstanceId, asked.id) : []),
+  ];
   const english = input.language.startsWith("en");
   const strings = english ? copy.en : copy.de;
   const question = asked

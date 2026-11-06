@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import {
   applicantOf,
+  fieldActions,
   fieldQuestion,
   fieldValue,
   pendingFormQuestion,
@@ -127,4 +128,42 @@ it("reads the answered value back in the streamed text and the spoken segment", 
   expect(chunks.find((chunk) => chunk.type === "data-speech-segment")?.data?.text).toBe(
     "Danke, eingetragen: 12.03.1948.",
   );
+});
+
+it("moves the cursor to each field just before its value is typed", () => {
+  const chunks: { type: string; data?: { kind?: string; target?: { fieldId?: string } } }[] = [];
+  const output = createSegmentWriter({
+    writer: { write: (chunk) => void chunks.push(chunk as never) },
+    context: {
+      caseId: randomUUID(),
+      subjectId: randomUUID(),
+      actorId: randomUUID(),
+      userId: randomUUID(),
+      sessionId: randomUUID(),
+      actorRole: "subject",
+      autonomyLevel: "L3",
+      shareScope: {},
+      sentenceIndex: 0,
+    },
+    turnId: randomUUID(),
+    language: "de-AT",
+    config,
+    passages: new Map(),
+  });
+  const form = randomUUID();
+  const provenance = {
+    factId: randomUUID(),
+    source: { kind: "statement" as const, quote: "Maria Müller" },
+  };
+  const actions = [
+    ...fieldActions(form, "f001", { value: "Müller", provenance }),
+    ...fieldActions(form, "f002", { value: "Maria", provenance }),
+    ...fieldActions(form, "f005"),
+  ];
+  for (const action of actions) output.action(action);
+  output.emit(randomUUID(), "Danke, eingetragen: Müller, Maria. Wie lautet das Geburtsdatum?");
+  const emitted = chunks
+    .filter((chunk) => chunk.type === "data-action")
+    .map((chunk) => `${chunk.data?.kind}:${chunk.data?.target?.fieldId}`);
+  expect(emitted).toEqual(["point:f001", "type:f001", "point:f002", "type:f002", "point:f005"]);
 });

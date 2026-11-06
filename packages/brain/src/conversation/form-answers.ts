@@ -101,15 +101,26 @@ export function emptyValue(entry: { value: unknown } | undefined): boolean {
   );
 }
 
-/** Live typing of one field in the viewer. */
+/**
+ * The cursor moves to a field (pointer and ring) just before its value is typed live, so the
+ * person can follow along in the form; without a value it only points at the field.
+ */
 export function fieldActions(
   formInstanceId: string,
   fieldId: string,
   typed?: { value: string; provenance: Provenance },
 ): Action[] {
   const target = { kind: "form" as const, formInstanceId, fieldId };
+  const point = ActionSchema.parse({
+    id: randomUUID(),
+    kind: "point",
+    sentenceIndex: 0,
+    target,
+    payload: {},
+  });
   return typed
     ? [
+        point,
         ActionSchema.parse({
           id: randomUUID(),
           kind: "type",
@@ -118,7 +129,7 @@ export function fieldActions(
           payload: { ...typed, pace: FORM_TYPE_PACE_MS },
         }),
       ]
-    : [];
+    : [point];
 }
 
 export function fieldQuestion(field: FormField, applicant: string, english: boolean): string {
@@ -373,6 +384,7 @@ export async function answerFormQuestion(input: {
     (candidate, position) =>
       position > index && askable(candidate) && emptyValue(values[candidate.id]),
   );
+  if (next) actions.push(...fieldActions(instance.id, next.id));
   return {
     text: `${lead} ${next ? fieldQuestion(next, applicant, english) : strings.done}`,
     actions,
@@ -574,6 +586,7 @@ export async function answerManyFields(input: {
   const strings = english ? copy.en : copy.de;
   const applicant = applicantOf(input.topics, english);
   const lead = strings.filledMany(written.map(({ parsed }) => parsed.readBack).join(", "));
+  if (next) actions.push(...fieldActions(instance.id, next.id));
   return {
     text: `${lead} ${next ? fieldQuestion(next, applicant, english) : strings.done}`,
     actions,

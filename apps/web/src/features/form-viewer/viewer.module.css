@@ -101,7 +101,8 @@
   background: color-mix(in srgb, var(--lotse-color-brand, #008e5c) 8%, transparent);
   outline: 3px solid var(--lotse-color-brand, #008e5c);
 }
-.field[data-active] {
+.field[data-active],
+.field[data-pointed] {
   z-index: 2;
   outline: 3px solid var(--lotse-color-brand, #008e5c);
 }

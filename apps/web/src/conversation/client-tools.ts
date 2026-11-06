@@ -52,6 +52,56 @@ export type ClientRuntime = {
   dispose: () => void;
 };
 
+let pointedField: { element: HTMLElement; timer: ReturnType<typeof setTimeout> } | undefined;
+/** Rings the field in the form popup (the live fill keeps its own ring while typing). */
+function ringField(element: HTMLElement): void {
+  if (pointedField) {
+    clearTimeout(pointedField.timer);
+    pointedField.element.removeAttribute("data-pointed");
+  }
+  element.setAttribute("data-pointed", "");
+  pointedField = {
+    element,
+    timer: setTimeout(() => {
+      element.removeAttribute("data-pointed");
+      pointedField = undefined;
+    }, WORKSPACE_CONFIG.formPointerRingMs),
+  };
+}
+
+/**
+ * The cursor moves to a field in the form popup before its value is typed: the dialog body
+ * scrolls to it, it gets the ring, the cursor (native overlay in the Mac app, page guide in the
+ * browser) points at it, and the next action waits a short, natural moment.
+ */
+async function pointFormField(
+  action: Action,
+  pageGuide: () => Guide,
+): Promise<ActionResult | undefined> {
+  const element = workspaceElement(action.target);
+  if (!element)
+    return {
+      actionId: action.id,
+      resolvedBy: "ui",
+      confidence: 0,
+      success: false,
+      failureReason: "FORM_VIEWER_CLOSED",
+    };
+  element.scrollIntoView({ block: "center", inline: "nearest", behavior: "smooth" });
+  ringField(element);
+  let result: ActionResult | undefined;
+  if (!(await pointNatively(action).catch(() => false))) {
+    const formField = formFieldUiTarget(action.target);
+    result = formField
+      ? await pageGuide()
+          .execute({ ...action, target: formField } as Action)
+          .catch(() => undefined)
+      : undefined;
+  }
+  await new Promise((resolve) => setTimeout(resolve, WORKSPACE_CONFIG.formPointerDwellMs));
+  return result;
+}
+
 /** Only the workspace page is allowed. External portals have their own guide runtime. */
 export function createClientRuntime(
   options: { openDocumentHighlight?: ((action: Action) => void) | undefined } = {},
@@ -113,6 +163,8 @@ export function createClientRuntime(
     async action(action) {
       if (action.kind === "type" && action.target.kind === "form")
         return dispatchFormAction(action);
+      if ((action.kind === "point" || action.kind === "highlight") && action.target.kind === "form")
+        return pointFormField(action, pageGuide);
       if (
         action.kind === "highlight" &&
         action.target.kind === "text" &&
