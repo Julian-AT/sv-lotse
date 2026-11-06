@@ -138,6 +138,15 @@ describe("resolveFields", () => {
     expect(knownMeaning("die Telefonnummer")).toBe(true);
     expect(knownMeaning("Lieblingsfarbe")).toBe(false);
     expect(cleanLabel("Telefon Nr.:")).toBe("Telefon Nr");
+    // A name field mislabelled "Anschrift" is never the address.
+    const mislabelled = [
+      field("p590", "Anschrift", "person.name"),
+      field("p591", "Anschrift:", "form.field.y.p591"),
+      field("p592", "Telefon Nr.:", "person.phone"),
+    ];
+    expect(ids("Adresse", mislabelled)).toEqual(["p591"]);
+    expect(ids("Name", mislabelled)).toEqual(["p590"]);
+    expect(ids("Telefonnummer", mislabelled)).toEqual(["p592"]);
   });
 });
 

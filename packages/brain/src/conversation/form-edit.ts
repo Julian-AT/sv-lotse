@@ -160,8 +160,8 @@ const SYNONYMS: readonly [RegExp, readonly (string | readonly string[])[]][] = [
     /versicherungsnummer|sv-? ?nummer|^svnr|^vsnr|e-? ?card|insurance number|social security/u,
     ["person.insurance_number", "insured.insurance_number"],
   ],
-  [/^e-? ?mail|mailadresse|^email address/u, ["contact.email"]],
-  [/telefon|handy|mobilnummer|rufnummer|phone|mobile|^nummer$/u, ["contact.phone"]],
+  [/^e-? ?mail|mailadresse|^email address/u, ["contact.email", "person.email"]],
+  [/telefon|handy|mobilnummer|rufnummer|phone|mobile|^nummer$/u, ["contact.phone", "person.phone"]],
   [/^(?:strasse|gasse|street)/u, ["address.street"]],
   [/hausnummer|stiege|^tuer|house number|^door/u, ["address.building_unit"]],
   [/postleitzahl|^plz|postcode|post code|^zip/u, ["address.postcode"]],
@@ -170,15 +170,28 @@ const SYNONYMS: readonly [RegExp, readonly (string | readonly string[])[]][] = [
     /adresse|anschrift|^address|wohnsitz/u,
     [
       "address.full",
+      "person.address",
       ["address.street", "address.building_unit", "address.postcode", "address.city"],
       "insured.address",
     ],
   ],
   [
     /^(?:(?:voller|vollstaendiger|ganzer) )?name$|^full name$|^patient/u,
-    ["person.name", ["person.family_name", "person.given_name"], "insured.name"],
+    [
+      "person.name",
+      "person.full_name",
+      ["person.family_name", "person.given_name"],
+      "insured.name",
+    ],
   ],
 ];
+
+/** A registry meaning of the field (person.name, contact.phone …), not a generic form.field id. */
+function semanticType(field: FormField): string | undefined {
+  return field.fact_type && !field.fact_type.startsWith("form.field.")
+    ? field.fact_type
+    : undefined;
+}
 
 function fieldKeys(field: FormField): string[] {
   return [field.fact_type ?? "", questionKey(field) ?? ""].filter(Boolean);
@@ -209,8 +222,11 @@ export function resolveFields(fields: readonly FormField[], spoken: string): For
     }
     // Known meaning, unknown field ids (detected forms): the label must say the same, and a
     // contact person's or facility's block never stands in for the person's own field.
+    // A field whose fact type already has another meaning (a name field labelled "Anschrift")
+    // never matches by label.
     const labelled = fields.filter(
       (field) =>
+        !semanticType(field) &&
         !OTHER_PARTY.test(field.label_de) &&
         labelsOf(field).some((label) => pattern.test(cleanLabel(label))),
     );
@@ -460,6 +476,16 @@ export async function answerFormEdit(input: {
   };
   if (command.kind === "set") {
     const [field] = changeable as [FormField];
+    // Never an address or number into a name field, never a bare name into an address field.
+    const meaning = `${semanticType(field) ?? ""} ${questionKey(field) ?? ""}`;
+    if (
+      (/name\b/u.test(meaning) && /\d/u.test(command.value)) ||
+      (/\b(?:address\.full|address\.street|address\.postcode|person\.address|insured\.address)\b/u.test(
+        meaning,
+      ) &&
+        !/\d/u.test(command.value))
+    )
+      return;
     const parsed = parsedValue(field, command.value, english);
     if (!parsed)
       return {
@@ -493,6 +519,7 @@ export async function answerFormEdit(input: {
     const answer = ask(
       `${strings.changed(spokenLabel(field, english), parsed.readBack)} ${lockedLead}`.trim(),
       fields.indexOf(field),
+      new Set([field.id]),
     );
     return {
       ...answer,
