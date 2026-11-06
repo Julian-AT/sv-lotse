@@ -1,0 +1,11 @@
+{
+  "id": "E4",
+  "name": "Remote help: person-controlled care allowance form support",
+  "gate": {
+    "kind": "informational",
+    "metric": "passRate",
+    "threshold": 0.9,
+    "direction": "at_least"
+  },
+  "minimumSetSize": 300
+}
