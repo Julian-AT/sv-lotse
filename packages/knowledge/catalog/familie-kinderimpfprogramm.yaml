@@ -1,0 +1,44 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: familie-kinderimpfprogramm
+name_de: Kostenfreies Kinderimpfprogramm
+name_simple: Impfangebote für Kinder und regionale Impfstellen finden
+area: A
+life_situations:
+  - family-with-child
+scope: federal
+criteria:
+  - id: published-access
+    text_de: Die jeweilige Altersgruppe und Kostenübernahme richten sich nach dem
+      einzelnen Programm im offiziellen Impfplan. Die Umsetzung erfolgt durch
+      die Bundesländer. Impfstelle und Verfügbarkeit regional klären;
+      persönliche Impfentscheidungen mit der Ärztin oder dem Arzt besprechen.
+    source: &a1
+      url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Impfen/Kostenfreies-Kinderimpfprogramm.html
+      quote: Die Umsetzung des Nationalen Kinderimpfprogramms liegt in der
+        Zuständigkeit der einzelnen Bundesländer.
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers: []
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents: []
+forms: []
+process: ref:processes/familie-kinderimpfprogramm
+appointment_channels: []
+sources:
+  - *a1
+  - &a2
+    url: https://www.gesundheit.gv.at/linkresolution/link/65399
+    quote: Das kostenfreie Impfprogramm soll daher allen in Österreich lebenden
+      Kindern in der jeweiligen Altersgruppe Zugang zu den für die öffentliche
+      Gesundheit wichtigen Impfungen ermöglichen, ohne dass dafür den
+      Erziehungsberechtigten Kosten entstehen.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
+target_group:
+  sex: all
+  rationale_text: Das kostenfreie Impfprogramm soll daher allen in Österreich
+    lebenden Kindern in der jeweiligen Altersgruppe Zugang zu den für die
+    öffentliche Gesundheit wichtigen Impfungen ermöglichen, ohne dass dafür den
+    Erziehungsberechtigten Kosten entstehen.
+  rationale_source: *a2

@@ -1,0 +1,52 @@
+# Awaiting human review; administrative access only.
+id: familie-kinderimpfprogramm
+benefit: ref:catalog/familie-kinderimpfprogramm
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: region
+    type: string
+    question_hint: In welchem Bundesland suchen Sie ein Angebot?
+  - id: documented-entries
+    type: fact:vaccination_record
+    from_context: vaccination_record
+    question_hint: Möchten Sie Ihren Impfpass importieren und die dokumentierten
+      Impfeinträge bestätigen?
+steps:
+  - id: programme-information
+    needs: []
+    criteria: ref:catalog/familie-kinderimpfprogramm#criteria
+    outputs:
+      - id: published-programme
+        type: document
+    transitions:
+      - to: prepare-access
+  - id: prepare-access
+    needs:
+      - region
+    outputs:
+      - id: official-access
+        type: document
+    transitions:
+      - to: finish
+  - id: finish
+    needs: []
+    outputs:
+      - id: access-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.sozialministerium.gv.at/Themen/Gesundheit/Impfen/Kostenfreies-Kinderimpfprogramm.html
+    quote: Die Umsetzung des Nationalen Kinderimpfprogramms liegt in der
+      Zuständigkeit der einzelnen Bundesländer.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.gesundheit.gv.at/linkresolution/link/65399
+    quote: Das kostenfreie Impfprogramm soll daher allen in Österreich lebenden
+      Kindern in der jeweiligen Altersgruppe Zugang zu den für die öffentliche
+      Gesundheit wichtigen Impfungen ermöglichen, ohne dass dafür den
+      Erziehungsberechtigten Kosten entstehen.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
