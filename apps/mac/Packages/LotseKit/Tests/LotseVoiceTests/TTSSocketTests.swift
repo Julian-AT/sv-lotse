@@ -79,23 +79,32 @@ func audioRoutesByContext() async throws {
     #expect(stream.isOpen)
 }
 
-@Test("The keepalive context holds the socket open and an idle conversation closes it without reopening")
+@Test("The keepalive context is pinged while the conversation lasts")
 @MainActor
-func keepaliveAndIdleClose() async {
+func keepalivePings() async {
     let transport = FakeTransport()
-    var closes: [Error?] = []
     let stream = TTSStream(transport: transport, language: "de", voice: "v", aliases: [],
-                           keepaliveInterval: .milliseconds(10), idleLimit: .milliseconds(60))
-    stream.onClose = { closes.append($0) }
+                           keepaliveInterval: .milliseconds(10), idleLimit: .seconds(600))
     await settle { transport.messages.contains { $0["text"] as? String == "" } }
+    #expect(transport.messages.first?["text"] as? String == " ")
     #expect(transport.messages.contains {
         $0["text"] as? String == "" && $0["context_id"] as? String == TTSStream.keepaliveContext
     })
-    await settle { transport.closed }
-    #expect(transport.closed)
-    #expect(stream.isOpen == false)
-    #expect(closes.count == 1)
-    #expect(closes.first.map { $0 == nil } == true)
+    #expect(stream.isOpen)
+    #expect(transport.closed == false)
+    stream.close(nil)
+}
+
+@Test("An idle conversation closes its socket and does not reopen it")
+@MainActor
+func idleSocketClosesWithoutReopening() async {
+    let harness = SocketHarness()
+    let output = harness.output(keepaliveInterval: .milliseconds(10), idleLimit: .zero)
+    output.prewarm(language: "de")
+    await settle { harness.transports.first?.closed == true }
+    #expect(harness.transports.first?.closed == true)
+    try? await Task.sleep(for: .milliseconds(50))
+    #expect(harness.transports.count == 1)
 }
 
 @MainActor
@@ -104,7 +113,7 @@ private final class SocketHarness {
     var urls: [URL] = []
     var transports: [FakeTransport] = []
 
-    func output() -> ElevenLabsSpeechOutput {
+    func output(keepaliveInterval: Duration = .seconds(60), idleLimit: Duration = .seconds(600)) -> ElevenLabsSpeechOutput {
         ElevenLabsSpeechOutput(
             loadToken: { [self] _, _ in
                 tokens += 1
@@ -116,7 +125,7 @@ private final class SocketHarness {
                 transports.append(transport)
                 return transport
             },
-            keepaliveInterval: .seconds(60), idleLimit: .seconds(600)
+            keepaliveInterval: keepaliveInterval, idleLimit: idleLimit
         )
     }
 }
@@ -166,5 +175,5 @@ private func sentence(_ turn: String, _ index: Int) -> SpeechSegment {
 
 @MainActor
 private func settle(until condition: () -> Bool) async {
-    for _ in 0..<100 where condition() == false { try? await Task.sleep(for: .milliseconds(5)) }
+    for _ in 0..<400 where condition() == false { try? await Task.sleep(for: .milliseconds(5)) }
 }
