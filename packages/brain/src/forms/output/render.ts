@@ -119,8 +119,8 @@ export async function renderFormPdf(
     if (
       (entry?.state !== "confirmed" && !sourced) ||
       !entry ||
-      !(writableField(field) || identityField(field)) ||
-      (field.acro_field && restricted.has(field.acro_field))
+      !(writableField(field) || identityField(field) || sourced) ||
+      (!sourced && field.acro_field && restricted.has(field.acro_field))
     )
       continue;
     if (sourced && (!validFieldValue(field, entry.value) || typeof entry.value === "object"))

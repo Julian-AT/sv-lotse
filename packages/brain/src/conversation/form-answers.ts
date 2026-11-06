@@ -358,7 +358,12 @@ const CORRECTION = /(?:ändere|änder|ersetze|korrigier|statt|replace|change)/iu
 const DOCUMENT = /brief|dokument|entlassung|befund|bescheid|unterlage|letter|document|daraus/iu;
 const extraction = z.object({
   values: z.array(
-    z.object({ fieldId: z.string(), value: z.string(), factId: z.string().nullable() }),
+    z.object({
+      fieldId: z.string(),
+      value: z.string(),
+      quote: z.string(),
+      factId: z.string().nullable(),
+    }),
   ),
 });
 
@@ -395,11 +400,13 @@ export async function answerManyFields(input: {
   const values = formFields.parse(instance.fields);
   // Empty fields and the person's own drafts can be (re)filled; confirmed values stay untouched.
   // Every applicant-writable field; doctor and hospital sections are excluded by writableField.
+  // The owner allows every non-signature field, including the doctor's part, as long as each
+  // value is quoted from the person's text or document with its source.
   const open = fields.filter(
     (field) =>
-      (field.type === "checkbox"
-        ? identityField(field)
-        : writableField(field) || identityField(field)) && values[field.id]?.state !== "confirmed",
+      field.signature === "none" &&
+      field.type !== "signature" &&
+      values[field.id]?.state !== "confirmed",
   );
   if (!open.length) return;
   const english = input.language.startsWith("en");
@@ -424,8 +431,12 @@ export async function answerManyFields(input: {
       "date of birth as DD.MM.YYYY, insurance number as 10 digits without spaces, the patient's own " +
       "address and phone only if stated as theirs. Copy values as written; never guess. Never use " +
       "names, addresses or phone numbers of hospitals, clinics, doctors or nurses. " +
-      "Skip anything medical. For a birth year field return only the year. For the sex checkboxes " +
-      "(männlich/weiblich) return true only for the one the text states (e.g. Patientin = weiblich). " +
+      "Medical fields (diagnosis, findings, proposed measure, justification) may be filled, but only " +
+      "with statements taken from the text, copied or minimally shortened, never invented or " +
+      "interpreted beyond it. Tick a checkbox (value true) only when the text explicitly supports it " +
+      "(e.g. Patientin = weiblich; a hip fracture = Bewegungs-/Stützapparat; recommended inpatient " +
+      "rehabilitation = Stationäre). For a birth year field return only the year. For every value " +
+      "return quote: the exact sentence of the text that supports it. " +
       "Set factId to the document fact's id when the value comes from it.",
     prompt: JSON.stringify({
       fields: open.map((field) => ({
@@ -446,16 +457,19 @@ export async function answerManyFields(input: {
   if (!result) return;
   const filled = result.output.values.flatMap((item) => {
     const field = open.find((candidate) => candidate.id === item.fieldId);
+    const text = item.value.trim();
     const parsed =
       field?.type === "checkbox"
-        ? /^(?:true|ja|yes|x|1)$/iu.test(item.value.trim()) && validFieldValue(field, true)
+        ? /^(?:true|ja|yes|x|1)$/iu.test(text) && validFieldValue(field, true)
           ? { value: true, readBack: field.label_de }
           : undefined
-        : field
-          ? fieldValue(field, item.value, english)
-          : undefined;
+        : field && (questionKey(field) || identityField(field))
+          ? fieldValue(field, text, english)
+          : field && text && validFieldValue(field, text)
+            ? { value: text, readBack: field.label_de }
+            : undefined;
     const documentFact = documentFacts.find((fact) => fact.id === item.factId);
-    return field && parsed ? [{ field, parsed, documentFact }] : [];
+    return field && parsed ? [{ field, parsed, documentFact, quote: item.quote }] : [];
   });
   console.info(
     JSON.stringify({
@@ -474,7 +488,10 @@ export async function answerManyFields(input: {
     ...item,
     provenance: item.documentFact
       ? { factId: item.documentFact.id, source: item.documentFact.source as typeof source }
-      : { factId: randomUUID(), source },
+      : {
+          factId: randomUUID(),
+          source: { ...source, quote: item.quote.slice(0, 500) || source.quote },
+        },
   }));
   await db.transaction(async (tx) => {
     for (const { field, parsed, provenance, documentFact } of written) {
