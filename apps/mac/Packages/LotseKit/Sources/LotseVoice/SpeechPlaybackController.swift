@@ -27,9 +27,16 @@ public final class SpeechPlaybackController {
 
     public init(loadToken: @escaping VoiceTokenLoader) { primary = ElevenLabsSpeechOutput(loadToken: loadToken) }
 
-    /// A spoken question was sent: its answer (and follow-up steps) may speak.
-    public func allowSpeechForVoiceTurn() { gate.voiceQuestionSent() }
-    public func silenceUntilNextVoiceQuestion() { gate.closed() }
+    /// A spoken question was sent: its answer may speak, and the TTS socket opens while the brain thinks.
+    public func allowSpeechForVoiceTurn(language: String? = nil) {
+        gate.voiceQuestionSent()
+        if let language { primary.prewarm(language: language) }
+    }
+
+    public func silenceUntilNextVoiceQuestion() {
+        gate.closed()
+        primary.discardWarm()
+    }
 
     public func enqueue(_ segment: SpeechSegment) {
         guard gate.isOpen else { return }
@@ -47,7 +54,7 @@ public final class SpeechPlaybackController {
     public func handle(_ control: SpeechControl) {
         guard control.stop else { return }
         // The workspace stops speech when the user types or presses stop: stay silent until the next voice question.
-        gate.closed()
+        silenceUntilNextVoiceQuestion()
         stop(notify: false)
         onControl?(.init(segmentIndex: control.segmentIndex, state: .idle, stop: false))
     }

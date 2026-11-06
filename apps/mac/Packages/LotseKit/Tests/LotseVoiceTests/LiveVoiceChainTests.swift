@@ -10,6 +10,8 @@ import Testing
 /// and report transcript quality and latency. Skipped unless the variable is set.
 enum LiveVoice {
     static let base = ProcessInfo.processInfo.environment["LOTSE_LIVE_VOICE_URL"].flatMap(URL.init(string:))
+    /// The TTS check plays through the speakers; it also needs `LOTSE_LIVE_AUDIO=1`.
+    static let audible = ProcessInfo.processInfo.environment["LOTSE_LIVE_AUDIO"] == "1"
 
     /// An anonymous workspace session, then the same token route the app calls through the WebView.
     static func loader(base: URL) -> VoiceTokenLoader {
@@ -87,18 +89,21 @@ func liveScribeTranscript(sentence: String) async throws {
 }
 
 @Test("Live: ElevenLabs speaks the first sentence with the account voice, no system fallback",
-      .enabled(if: LiveVoice.base != nil), arguments: ["de", "en"])
+      .enabled(if: LiveVoice.base != nil && LiveVoice.audible), arguments: ["de", "en"])
 @MainActor
 func liveElevenLabsSpeech(language: String) async throws {
     let base = try #require(LiveVoice.base)
     let output = ElevenLabsSpeechOutput(loadToken: LiveVoice.loader(base: base))
     let text = language == "de" ? "Pflegegeld beantragen Sie bei Ihrer Pensionsversicherung." : "You apply for care allowance online."
     let segment = SpeechSegment(actionIDS: [], citations: [], index: 0, language: language, text: text, turnID: UUID().uuidString)
+    // The app opens the socket when the question is sent; the brain then thinks for a moment.
+    output.prewarm(language: language)
+    try await Task.sleep(for: .seconds(2))
     let begin = ContinuousClock.now
     var firstAudio: Duration?
     try await output.speak(segment, speed: 1, onStart: { firstAudio = ContinuousClock.now - begin })
     output.stop()
     let latency = try #require(firstAudio)
-    print("LIVE TTS \(language): first audio after \(ScribeRealtimeTranscriptionProvider.milliseconds(latency)) ms")
-    #expect(latency < .seconds(3))
+    print("LIVE TTS \(language): first audio after \(ScribeRealtimeTranscriptionProvider.milliseconds(latency)) ms (\(output.lastTimings))")
+    #expect(latency < .milliseconds(1500))
 }

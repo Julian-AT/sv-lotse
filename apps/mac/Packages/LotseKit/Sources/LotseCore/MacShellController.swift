@@ -25,7 +25,7 @@ public final class MacShellController {
         controller.session.onStatusChanged = { [weak self] status in self?.menu.setSharingActive(status == .sharing) }
         return controller
     }()
-    private lazy var sourceHighlights = SourceHighlightCoordinator(overlay: overlay,
+    lazy var sourceHighlights = SourceHighlightCoordinator(overlay: overlay,
         enqueueSpeech: { [weak self] in self?.speech.enqueue($0) })
     let shortcut = GlobalPushToTalkShortcutMonitor()
     let dictationShortcut = GlobalPushToTalkShortcutMonitor(shortcut: VoiceConfiguration.dictationShortcut, name: "dictation")
@@ -43,7 +43,7 @@ public final class MacShellController {
         })
     )
     lazy var speech = SpeechPlaybackController(loadToken: tokenLoader)
-    private let sentenceActions = SentenceActionScheduler()
+    let sentenceActions = SentenceActionScheduler()
     private var speechTurnID: String?
     /// Other context capabilities can contribute a real capsule at the final-transcript boundary.
     public var onSentenceAction: ((Action) -> Void)?
@@ -269,29 +269,6 @@ public final class MacShellController {
         menu.updateStatus(workspace: status, voiceEnabled: voiceEnabled,
                           voiceAvailable: shortcutRunning && audioGranted, recording: recording)
     }
-    func handleShortcut(_ transition: ShortcutTransition, toggled: Bool = false) {
-        if toggled == false { endVoiceToggle() }
-        pauseWakeWord(for: transition)
-        switch transition {
-        case .pressed:
-            dictation.cancel()
-            recording = true
-            speech.stop()
-            sourceHighlights.stop(notify: false)
-            sentenceActions.reset()
-            showListening()
-        case .released:
-            recording = false
-            overlay.state.listening.release()
-            hideListening(after: .seconds(4))
-        case .cancelled:
-            recording = false
-            hideListening(after: .zero)
-        case .none: break
-        }
-        pushToTalk.handle(transition)
-        refreshMenuStatus()
-    }
     private func handleDictationShortcut(_ transition: ShortcutTransition) {
         pauseWakeWord(for: transition)
         if transition == .pressed {
@@ -353,7 +330,7 @@ extension MacShellController {
     }
     func sendTranscript(_ text: String, final: Bool) {
         if final, text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false {
-            speech.allowSpeechForVoiceTurn()
+            speech.allowSpeechForVoiceTurn(language: settings.language.providerLanguage)
         }
         if final {
             overlay.cancelDrawing()

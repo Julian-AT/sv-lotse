@@ -98,4 +98,28 @@ extension MacShellController {
         voiceToggle?.cancel()
         voiceToggle = nil
     }
+
+    func handleShortcut(_ transition: ShortcutTransition, toggled: Bool = false) {
+        if toggled == false { endVoiceToggle() }
+        pauseWakeWord(for: transition)
+        switch transition {
+        case .pressed:
+            dictation.cancel()
+            recording = true
+            speech.stop()
+            sourceHighlights.stop(notify: false)
+            sentenceActions.reset()
+            showListening()
+        case .released:
+            recording = false
+            overlay.state.listening.release()
+            hideListening(after: .seconds(4))
+        case .cancelled:
+            recording = false
+            hideListening(after: .zero)
+        case .none: break
+        }
+        pushToTalk.handle(transition)
+        refreshMenuStatus()
+    }
 }
