@@ -1,0 +1,217 @@
+[
+  {
+    "id": "confirm-goal",
+    "category": "goal",
+    "description": "Restate and obtain confirmation of the persona goal: explain prevention offers and prepare the selected administrative step for the subject. Use the subject facts, including when a helper speaks.",
+    "sources": ["scenario", "goal", "helper"]
+  },
+  {
+    "id": "adult-checkup",
+    "category": "benefits",
+    "description": "Name Vorsorgeuntersuchung: annual free access for residents of Austria aged 18 or older. Use the stated age and residence; do not promise another free visit inside the annual interval.",
+    "sources": ["checkup-access"]
+  },
+  {
+    "id": "vaccination-status",
+    "category": "benefits",
+    "description": "Explain how to access or print the eImpfpass and bring existing paper records to a clinician for questions about vaccination status. An absent record does not establish missing protection; do not select vaccines or schedules.",
+    "sources": ["vaccination-record", "vaccination-clinician", "medical"]
+  },
+  {
+    "id": "screening-overview",
+    "category": "benefits",
+    "description": "Explain that screening access uses each official program’s published target group and interval. Present unverified criteria as unknown, without inferring sex from names, family roles or voice. Individual suitability remains with a clinician.",
+    "sources": ["prevention", "breast-access", "colon-access"]
+  },
+  {
+    "id": "breast-standard",
+    "category": "benefits",
+    "description": "For the subject explicitly identifying as a woman aged 45–74, explain program access with the e-card every 24 months. No invitation or referral is required. The last visit was more than 24 months ago or there was none. This is program access, not a clinical recommendation.",
+    "sources": ["breast-access", "medical"]
+  },
+  {
+    "id": "breast-optin",
+    "category": "benefits",
+    "description": "For the woman aged 40–44, explain voluntary registration through the program service line or official website and e-card activation. Access is every two years after activation; it is not automatic in this age band.",
+    "sources": ["breast-optin", "medical"]
+  },
+  {
+    "id": "colon-target",
+    "category": "benefits",
+    "description": "Name the published colorectal screening offer from age 45, with stool-test and colonoscopy program intervals of two and ten years. Do not choose a test, interpret a result, or assert that one is medically needed; prepare a GP discussion.",
+    "sources": ["colon-access", "colon-provider", "medical"]
+  },
+  {
+    "id": "park-offer",
+    "category": "benefits",
+    "description": "Name Bewegt im Park as a free public exercise course offer without registration. Search the official course listing for the subject location and current season; do not guarantee that a course is running now.",
+    "sources": ["park", "appointments"]
+  },
+  {
+    "id": "nutrition-regional",
+    "category": "benefits",
+    "description": "Include nutrition counseling and regional prevention courses as offers to look up by location. Verify provider access and fees before promising coverage; do not supply a diet, exercise prescription or clinical suitability assessment.",
+    "sources": ["scenario", "appointments", "medical"]
+  },
+  {
+    "id": "nutrition-tirol",
+    "category": "benefits",
+    "description": "For a subject in Tirol, identify the Land Tirol nutrition counseling service: interested persons may contact a counseling point directly, counseling is free, and registration is by telephone agreement. Do not turn this into dietary advice.",
+    "sources": ["nutrition", "medical"]
+  },
+  {
+    "id": "family-history-clinician",
+    "category": "benefits",
+    "description": "The subject is below the breast program’s published registration age. Do not infer an earlier screening start from family history; offer a doctor appointment to discuss individual questions while explaining the published program rules.",
+    "sources": ["breast-optin", "prevention", "medical"]
+  },
+  {
+    "id": "uninsured-checkup",
+    "category": "benefits",
+    "description": "Lack of insurance does not remove adult resident access to Vorsorgeuntersuchung. Explain the Ersatzkrankenschein route through the ÖGK Landesstelle responsible for the subject residence.",
+    "sources": ["checkup-access"]
+  },
+  {
+    "id": "vu-provider",
+    "category": "offices",
+    "description": "Resolve a local doctor or center with a specific Vorsorgeuntersuchung contract. A carrier customer-service office is not itself the examination provider. Verify current contact and booking channel from the provider source.",
+    "sources": ["checkup-provider", "appointments"]
+  },
+  {
+    "id": "breast-program",
+    "category": "offices",
+    "description": "Use the official breast program service line or website for registration and a participating radiology provider for the examination. Do not route routine program access through a general carrier application.",
+    "sources": ["breast-optin", "breast-provider"]
+  },
+  {
+    "id": "gp",
+    "category": "offices",
+    "description": "Use the subject GP or a locally verified general practice for the selected discussion; leave individual medical decisions to the clinician.",
+    "sources": ["colon-provider", "medical"]
+  },
+  {
+    "id": "park-directory",
+    "category": "offices",
+    "description": "Use the official Bewegt im Park course directory to identify a local organizer and location; no insurance office application is needed.",
+    "sources": ["park"]
+  },
+  {
+    "id": "nutrition-directory",
+    "category": "offices",
+    "description": "Use the Land Tirol district counseling-point directory for the subject district, then verify the listed telephone contact. No matching counseling-office catalog record exists in this checkout.",
+    "sources": ["nutrition"]
+  },
+  {
+    "id": "oegk-tirol-voucher",
+    "category": "offices",
+    "description": "Use ÖGK Tirol as the regional office for an uninsured subject resident in Innsbruck seeking an Ersatzkrankenschein. Verify the contact in the office record; the checkup itself happens at a VU contract provider.",
+    "sources": ["checkup-access", "office-record"],
+    "catalog": {
+      "kind": "office",
+      "id": "oegk-tirol",
+      "path": "packages/knowledge/offices/carriers/oegk-tirol.yaml"
+    }
+  },
+  {
+    "id": "vu-documents",
+    "category": "documents",
+    "description": "For the selected VU: e-card as required entitlement proof, from the subject’s own card records. Distinguish optional existing reports, a prior VU doctor letter if there was one, and a list of regularly used medicines if applicable. Existing reports and letters come from the subject files or issuing practice; prepare the list from existing records without advice or changes. Do not require uploading or interpreting them.",
+    "sources": ["checkup-documents", "documents", "medical"]
+  },
+  {
+    "id": "voucher-documents",
+    "category": "documents",
+    "description": "For an uninsured VU use the Ersatzkrankenschein issued by the responsible ÖGK Landesstelle instead of an e-card. Mention existing reports, any prior VU letter and a current medicine list only if applicable, from own records or the issuing practice. Additional documents for issuing the voucher must be checked with ÖGK; do not fabricate a complete voucher-application checklist.",
+    "sources": ["checkup-access", "checkup-documents", "documents"]
+  },
+  {
+    "id": "breast-documents",
+    "category": "documents",
+    "description": "For routine program access name the subject e-card, from own card records; neither an invitation nor a referral is required. For opt-in explain activation first. Do not demand medical reports or an application document bundle for routine program access.",
+    "sources": ["breast-access", "breast-optin"]
+  },
+  {
+    "id": "park-documents",
+    "category": "documents",
+    "description": "No application or insurance document list is imposed for the course-directory step: the offer has no registration. Do not request an e-card, payslip, findings or upload. Any course-specific equipment information must come from its listing.",
+    "sources": ["park", "minimum"]
+  },
+  {
+    "id": "nutrition-documents",
+    "category": "documents",
+    "description": "The selected step is an initial telephone enquiry with a counseling point. No mandatory document list is specified on the cited overview. Verify intake requirements with the point; do not invent a referral or a set of findings as a condition of the enquiry.",
+    "sources": ["nutrition", "citations"]
+  },
+  {
+    "id": "doctor-documents",
+    "category": "documents",
+    "description": "For the selected appointment enquiry, do not require medical findings, family records or a referral before preparing the contact. Verify any visit-specific documents with the practice. Existing vaccination records can be brought for clinician questions, without assistant interpretation.",
+    "sources": ["appointments", "vaccination-record", "vaccination-clinician", "minimum"]
+  },
+  {
+    "id": "no-application-form",
+    "category": "forms",
+    "description": "No application form is part of the selected information or appointment-enquiry step. Do not invent a form ID or require a benefit application. Later provider intake paperwork is outside this step and must be verified.",
+    "sources": ["minimum", "actions"]
+  },
+  {
+    "id": "search-vu",
+    "category": "nextActions",
+    "description": "Find sourced VU contract-provider options around the subject location using the stated language, time and access preferences. Prepare a call sheet with service, contact and questions about available appointments. Include retrieval date; do not claim a confirmed slot, send a message, call or book.",
+    "sources": ["checkup-provider", "appointments", "actions"]
+  },
+  {
+    "id": "search-park",
+    "category": "nextActions",
+    "description": "Open or search the official course listing for the confirmed location and verify dates and season. Explain no registration is needed; if no current listing is available say so and offer the next published season rather than inventing a course or booking.",
+    "sources": ["park", "appointments", "actions"]
+  },
+  {
+    "id": "search-nutrition",
+    "category": "nextActions",
+    "description": "Find the relevant Land Tirol district counseling point and prepare a telephone enquiry using the stated preferences. Explain telephone registration; verify available appointments directly, leaving the call to the user.",
+    "sources": ["nutrition", "appointments", "actions"]
+  },
+  {
+    "id": "search-breast",
+    "category": "nextActions",
+    "description": "For standard program access find a participating local radiology provider and prepare the appointment enquiry with the stated preferences. Cite the program and provider; leave contact and booking to the user.",
+    "sources": ["breast-access", "breast-provider", "appointments", "actions"]
+  },
+  {
+    "id": "activate-breast",
+    "category": "nextActions",
+    "description": "First prepare voluntary registration via the official program service line or website and explain e-card activation. The user performs registration; only then prepare a participating-provider enquiry.",
+    "sources": ["breast-optin", "actions"]
+  },
+  {
+    "id": "search-colon",
+    "category": "nextActions",
+    "description": "Prepare a GP appointment enquiry to discuss the published colorectal program. Do not choose stool testing versus colonoscopy for this individual or invent a referral; the clinician determines any clinical next step.",
+    "sources": ["colon-provider", "colon-access", "medical", "actions"]
+  },
+  {
+    "id": "search-doctor",
+    "category": "nextActions",
+    "description": "Prepare a GP appointment enquiry for individual prevention questions. Do not promise eligibility outside the published age rules, give an earlier-start recommendation, or assess family-history risk.",
+    "sources": ["colon-provider", "prevention", "medical", "actions"]
+  },
+  {
+    "id": "request-voucher",
+    "category": "nextActions",
+    "description": "Prepare contact with ÖGK Tirol to ask about issuing the Ersatzkrankenschein and the necessary issuance documents. The user requests it. Next explain VU provider search; do not claim the voucher is issued or the appointment booked.",
+    "sources": ["checkup-access", "appointments", "actions"]
+  },
+  {
+    "id": "administrative-boundary",
+    "category": "boundary",
+    "description": "All expected responses stay within administrative prevention navigation. No diagnosis, findings interpretation, personal risk, probability or urgency assessment, reassurance, treatment choice, medicine or dosage advice, vaccine selection, individualized test interval or diet plan. Individual clinical decisions go to a clinician. Quote any documented medical recommendation only verbatim with location; none is needed for these cases.",
+    "sources": ["medical", "prevention", "vaccination-clinician"]
+  },
+  {
+    "id": "cite-claims",
+    "category": "citations",
+    "description": "Attach supporting program/provider citations and as-of or retrieval dates to administrative claims, distinguish known facts from unknowns, and never fabricate available slots or sources. Use the dedicated breast program page rather than conflicting age information in the general VU page.",
+    "sources": ["citations", "appointments", "breast-access"]
+  }
+]
