@@ -1,0 +1,14 @@
+{
+  "gitSha": "6859462bb239946e4950ddabcc1c024fb6c5492b",
+  "requested": [
+    "E13"
+  ],
+  "importedFrom": null,
+  "gaps": [],
+  "notes": {
+    "E1": "Existing test coverage, not exhaustive enumeration of every process path or persistence integration.",
+    "E11": "Evaluation-only model probe; provisional vocabulary is not wired into production process slots.",
+    "E12": "Strict full-quote/page/type matching; synthetic line geometry; physical gold bounding boxes unavailable.",
+    "E13": "Auto text/vector/vision production detection; exact normalized label and owner required."
+  }
+}
