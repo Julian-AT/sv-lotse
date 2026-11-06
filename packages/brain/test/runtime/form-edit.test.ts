@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { formMode, handsOverData, modeRequest } from "../../src/conversation/form-answers.ts";
 import { parseFormEdit, resolveFields } from "../../src/conversation/form-edit.ts";
 import type { FormField } from "../../src/forms/schema.ts";
 
@@ -119,5 +120,40 @@ describe("resolveFields", () => {
     expect(ids("Telefonnummer", reha)).toEqual(["f008"]);
     expect(ids("Geburtsjahr", reha)).toEqual(["f041"]);
     expect(ids("Lieblingsfarbe")).toEqual([]);
+  });
+});
+
+describe("fill modes", () => {
+  const letter =
+    "Bitte füll den Reha-Antrag aus.\nEntlassungsbrief\nPatientin: Maria Beispiel, geb. 12.03.1948\n" +
+    "Diagnose: Schenkelhalsfraktur rechts. Empfehlung: stationäre Rehabilitation.";
+
+  it("defaults to step mode and switches on request", () => {
+    expect(formMode(["Ich möchte Pflegegeld für meine Mutter beantragen."])).toBe("step");
+    expect(formMode(["Pflegegeld beantragen", "Füll alles automatisch aus"])).toBe("fast");
+    expect(formMode(["Pflegegeld beantragen", "schneller bitte"])).toBe("fast");
+    expect(formMode(["alles auf einmal", "Maria", "lieber Schritt für Schritt"])).toBe("step");
+    expect(formMode(["Schritt für Schritt", "mach den Rest automatisch"])).toBe("fast");
+    expect(formMode(["fill it all at once please"])).toBe("fast");
+    expect(formMode(["let's go step by step"])).toBe("step");
+  });
+
+  it("treats a letter pasted with the fill request as fast mode", () => {
+    expect(handsOverData(letter)).toBe(true);
+    expect(formMode([letter])).toBe("fast");
+    expect(formMode([letter, "Schritt für Schritt bitte"])).toBe("step");
+    expect(handsOverData("Wie lange dauert der Antrag?")).toBe(false);
+  });
+
+  it("does not read questions as a mode wish", () => {
+    expect(modeRequest("Wie schnell geht das?")).toBeUndefined();
+    expect(modeRequest("Maria Beispiel")).toBeUndefined();
+  });
+
+  it("parses mode switches and a bare yes as commands", () => {
+    expect(parseFormEdit("Schritt für Schritt")).toEqual({ kind: "mode", mode: "step" });
+    expect(parseFormEdit("mach den Rest automatisch")).toEqual({ kind: "mode", mode: "fast" });
+    expect(parseFormEdit("schneller")).toEqual({ kind: "mode", mode: "fast" });
+    expect(parseFormEdit("Ja, gerne")).toEqual({ kind: "continue" });
   });
 });

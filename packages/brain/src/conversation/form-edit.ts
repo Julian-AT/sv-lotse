@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import type { DatabaseClient } from "@lotse/db";
 import { facts, formFields, formInstances } from "@lotse/db/schema";
 import type { JsonValue } from "@lotse/protocol";
+import type { LanguageModel } from "ai";
 import { and, desc, eq } from "drizzle-orm";
 import type { RuntimeContext } from "../agent/context.ts";
 import { identityField, validFieldValue } from "../forms/policy.ts";
@@ -13,12 +14,17 @@ import {
   askable,
   emptyValue,
   type FormAnswer,
+  type FormMode,
   fieldActions,
   fieldNoun,
   fieldQuestion,
   fieldValue,
+  fillOpenedForm,
+  handsOverData,
+  modeRequest,
   pendingFormQuestion,
   questionKey,
+  userTexts,
 } from "./form-answers.ts";
 
 /** A deterministic edit of the open form, spoken or typed. */
@@ -27,7 +33,9 @@ export type FormEditCommand =
   | { kind: "clear"; field: string; force: boolean }
   | { kind: "next" }
   | { kind: "missing" }
-  | { kind: "read" };
+  | { kind: "read" }
+  | { kind: "continue" }
+  | { kind: "mode"; mode: FormMode };
 
 // Explicit permission to change a field the person already confirmed.
 const FORCE =
@@ -53,6 +61,9 @@ const MISSING = [
 ];
 const NEXT =
   /^(?:(?:zum|das)\s+)?(?:nächste[ns]?|naechste[ns]?)(?:\s+feld)?$|^weiter(?:\s+(?:zum|mit dem)\s+nächsten(?:\s+feld)?)?$|^(?:the\s+)?next(?:\s+(?:field|one|question))?$|^(?:skip|überspringen|überspring\w*)(?:\s+(?:this|das|dieses feld|it))?$/iu;
+// A bare yes to "gehen wir das Schritt für Schritt durch?" is never a field value.
+const CONTINUE =
+  /^(?:ja|jawohl|gerne|gern|ok(?:ay)?|passt|los|yes|sure|go on|ja,? (?:bitte|gerne))$/iu;
 const CLEAR = [
   /^(?:lösch(?:e|en)?|loesch(?:e|en)?|entfern(?:e|en)?|leere?|streich(?:e|en)?|clear|delete|remove|erase|empty)\s+(?:mir\s+)?(.+)$/iu,
   /^mach(?:e|en)?\s+(.+?)\s+leer$/iu,
@@ -98,6 +109,9 @@ export function parseFormEdit(text: string): FormEditCommand | undefined {
       .replace(/\?+$/u, ""),
   );
   if (NEXT.test(plain)) return { kind: "next" };
+  if (CONTINUE.test(plain)) return { kind: "continue" };
+  const mode = modeRequest(raw);
+  if (mode && (raw.length <= 80 || !handsOverData(raw))) return { kind: "mode", mode };
   if (raw.includes("?")) return;
   for (const pattern of CLEAR) {
     const match = plain.match(pattern);
@@ -209,6 +223,8 @@ const copy = {
     more: (count: number) =>
       `Außerdem ${count === 1 ? "ist 1 weiteres Feld" : `sind ${count} weitere Felder`} leer.`,
     complete: "Alle Felder, die ich erfragen kann, sind ausgefüllt. Abgeschickt wird nichts.",
+    stepMode: "Gut, wir gehen Feld für Feld durch.",
+    fastNothing: "Aus Ihren bisherigen Angaben kann ich nichts weiter eintragen.",
     empty: "Im Formular steht noch nichts.",
     reads: (entries: string) => `Im Formular steht: ${entries}.`,
     andMore: (count: number) => `Dazu ${count} weitere Einträge.`,
@@ -226,6 +242,8 @@ const copy = {
     missing: (names: string) => `Still missing: ${names}.`,
     more: (count: number) => `${count} more ${count === 1 ? "field is" : "fields are"} empty.`,
     complete: "All fields I can ask for are filled in. Nothing is submitted.",
+    stepMode: "Fine, we go through it field by field.",
+    fastNothing: "I cannot fill in anything else from what you told me so far.",
     empty: "The form is still empty.",
     reads: (entries: string) => `The form says: ${entries}.`,
     andMore: (count: number) => `Plus ${count} more entries.`,
@@ -305,6 +323,7 @@ export async function answerFormEdit(input: {
   turnId: string;
   language: string;
   topics: readonly string[];
+  model?: LanguageModel;
 }): Promise<FormAnswer | undefined> {
   const { db, context } = input;
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
@@ -341,6 +360,25 @@ export async function answerFormEdit(input: {
   };
 
   if (command.kind === "next") return ask("", pendingIndex);
+  if (command.kind === "continue") return ask("", pendingIndex - 1);
+  if (command.kind === "mode" && command.mode === "step") return ask(strings.stepMode, -1);
+  if (command.kind === "mode") {
+    // "Mach den Rest automatisch": everything the person provided so far, mapped at once.
+    const filled = input.model
+      ? await fillOpenedForm({
+          db,
+          context,
+          formInstanceId: instance.id,
+          mode: "fast",
+          text: userTexts(input.history).slice(-8).join("\n\n").slice(-8_000),
+          turnId: input.turnId,
+          language: input.language,
+          topics: input.topics,
+          model: input.model,
+        })
+      : undefined;
+    return filled ?? ask(strings.fastNothing, -1);
+  }
   if (command.kind === "missing") {
     const missing = fields.filter((field) => askable(field) && emptyValue(values[field.id]));
     const others = fields.filter(

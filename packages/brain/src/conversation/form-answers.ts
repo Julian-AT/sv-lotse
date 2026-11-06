@@ -1,7 +1,13 @@
 import { randomUUID } from "node:crypto";
 import type { DatabaseClient } from "@lotse/db";
 import { facts, formFields, formInstances } from "@lotse/db/schema";
-import { type Action, ActionSchema, type JsonValue, type Provenance } from "@lotse/protocol";
+import {
+  type Action,
+  ActionSchema,
+  type JsonValue,
+  type Provenance,
+  ProvenanceSchema,
+} from "@lotse/protocol";
 import { generateText, type LanguageModel, Output } from "ai";
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
@@ -126,7 +132,14 @@ export function fieldActions(
           kind: "type",
           sentenceIndex: 0,
           target,
-          payload: { ...typed, pace: FORM_TYPE_PACE_MS },
+          // Long entries (medical text) are typed faster, so each field takes about two seconds.
+          payload: {
+            ...typed,
+            pace: Math.max(
+              5,
+              Math.min(FORM_TYPE_PACE_MS, Math.round(2_400 / Math.max(1, typed.value.length))),
+            ),
+          },
         }),
       ]
     : [point];
@@ -229,6 +242,54 @@ export function fieldValue(
   return { value, readBack: value };
 }
 
+/**
+ * How the open form is filled. Step mode (default) asks one field after the other; fast mode
+ * fills everything possible at once and then names what is still missing. The person switches
+ * any time; the newest wish in the conversation counts.
+ */
+export type FormMode = "step" | "fast";
+const FAST_PHRASE =
+  /\b(?:alles auf einmal|(?:alles|den rest|rest|restlichen? felder) (?:\p{L}+ ){0,2}automatisch|automatisch aus|ohne (?:viele )?(?:rück)?fragen|fast mode|all at once|(?:fill|do) (?:\p{L}+ ){0,2}automatically|the rest automatically)\b/iu;
+const FAST_WORD = /\b(?:schnell(?:er)?|zügig|fast(?:er)?|quick(?:ly|er)?)\b/iu;
+const STEP_PHRASE =
+  /\b(?:schritt für schritt|feld für feld|einzeln|eins nach dem anderen|langsam(?:er)?|step by step|one by one|field by field|slow(?:er|ly)?)\b/iu;
+const FILL_REQUEST = /ausf(?:ü|ue)ll|f(?:ü|ue)ll|eintrag|antrag|\bfill\b|apply/iu;
+
+/** The mode a message asks for, if it asks for one. */
+export function modeRequest(text: string): FormMode | undefined {
+  const trimmed = text.trim();
+  if (STEP_PHRASE.test(trimmed) && trimmed.length <= 160) return "step";
+  if (FAST_PHRASE.test(trimmed)) return "fast";
+  if (FAST_WORD.test(trimmed) && trimmed.length <= 60 && !trimmed.includes("?")) return "fast";
+  return;
+}
+
+/** A message that hands over data (a pasted letter or several values), not a question. */
+export function handsOverData(text: string): boolean {
+  const trimmed = text.trim();
+  if (trimmed.length > 160 && (/\n/u.test(trimmed) || !/\?\s*$/u.test(trimmed))) return true;
+  return MANY.test(trimmed) && /\d/u.test(trimmed) && !/\?\s*$/u.test(trimmed);
+}
+
+/** The person's current fill mode: the newest explicit wish, or a letter pasted with the request. */
+export function formMode(userTexts: readonly string[]): FormMode {
+  for (const text of [...userTexts].reverse()) {
+    const requested = modeRequest(text);
+    if (requested) return requested;
+    if (handsOverData(text) && FILL_REQUEST.test(text)) return "fast";
+  }
+  return "step";
+}
+
+/** User texts of the conversation, oldest first. */
+export function userTexts(history: readonly LotseMessage[]): string[] {
+  return history.flatMap((message) =>
+    message.role === "user"
+      ? [message.parts.flatMap((part) => (part.type === "text" ? [part.text] : [])).join("\n")]
+      : [],
+  );
+}
+
 const QuestionMetadata = z.object({
   formQuestion: z.object({ formInstanceId: z.uuid(), fieldId: z.string().min(1) }),
 });
@@ -250,6 +311,18 @@ const copy = {
     unclear: "Das habe ich nicht sicher verstanden.",
     skipped: "Gut, das lasse ich leer.",
     done: "Die Felder, die ich erfragen kann, sind eingetragen. Bitte prüfen Sie den Entwurf; abgeschickt wird nichts.",
+    invite:
+      "Das Formular ist offen, abgeschickt wird nichts. Haben Sie Unterlagen oder Angaben dazu, etwa einen Brief vom Spital? Sie können mir alles auf einmal sagen, einen Brief einfügen oder hochladen – oder wir gehen Feld für Feld durch.",
+    first: (question: string) => `Zuerst: ${question}`,
+    openedFilled: (count: number) =>
+      `Das Formular ist offen. Ich habe ${count} ${count === 1 ? "Feld" : "Felder"} aus Ihren Angaben eingetragen; abgeschickt wird nichts.`,
+    stillMissing: (names: string) => `Es fehlen noch: ${names}.`,
+    stepOffer: (question: string) =>
+      `Wenn Sie möchten, gehen wir das Schritt für Schritt durch – zuerst: ${question}`,
+    stepMode: "Gut, wir gehen Feld für Feld durch.",
+    fastNothing:
+      "Aus Ihren bisherigen Angaben kann ich nichts weiter eintragen. Sagen Sie mir einfach alles auf einmal oder fügen Sie einen Brief ein.",
+    and: "und",
   },
   en: {
     filled: (value: string) => `Thanks, filled in: ${value}.`,
@@ -257,6 +330,18 @@ const copy = {
     unclear: "I did not catch that for sure.",
     skipped: "Fine, I will leave that empty.",
     done: "The fields I can ask for are filled in. Please review the draft; nothing is submitted.",
+    invite:
+      "The form is open; nothing is submitted. Do you have any documents or details for it, such as a letter from the hospital? You can tell me everything at once, paste or upload a letter – or we go through it field by field.",
+    first: (question: string) => `First: ${question}`,
+    openedFilled: (count: number) =>
+      `The form is open. I filled in ${count} ${count === 1 ? "field" : "fields"} from your details; nothing is submitted.`,
+    stillMissing: (names: string) => `Still missing: ${names}.`,
+    stepOffer: (question: string) =>
+      `If you like, we go through them step by step – first: ${question}`,
+    stepMode: "Fine, we go through it field by field.",
+    fastNothing:
+      "I cannot fill in anything else from what you told me so far. Just tell me everything at once or paste a letter.",
+    and: "and",
   },
 } as const;
 
@@ -310,6 +395,7 @@ export async function answerFormQuestion(input: {
       pending: { formInstanceId: latest.id, fieldId: "" },
       answer,
       fromDocuments,
+      mode: formMode(userTexts(input.history)),
     });
   }
   if (
@@ -319,7 +405,13 @@ export async function answerFormQuestion(input: {
     CORRECTION.test(answer) ||
     FIELD_HINT.test(answer)
   )
-    return answerManyFields({ ...input, pending, answer, fromDocuments });
+    return answerManyFields({
+      ...input,
+      pending,
+      answer,
+      fromDocuments,
+      mode: formMode(userTexts(input.history)),
+    });
   if (answer.includes("?")) return;
   const [instance] = await db
     .select()
@@ -425,6 +517,8 @@ export async function answerManyFields(input: {
   pending: { formInstanceId: string; fieldId: string };
   answer: string;
   fromDocuments?: boolean;
+  /** Fast mode names everything still missing at once instead of asking only the next field. */
+  mode?: FormMode;
 }): Promise<FormAnswer | undefined> {
   const { db, context, pending, answer } = input;
   if (!input.model) return;
@@ -587,9 +681,129 @@ export async function answerManyFields(input: {
   const applicant = applicantOf(input.topics, english);
   const lead = strings.filledMany(written.map(({ parsed }) => parsed.readBack).join(", "));
   if (next) actions.push(...fieldActions(instance.id, next.id));
+  const question = next ? fieldQuestion(next, applicant, english) : strings.done;
+  const missing = fields.filter(
+    (field) => askable(field) && emptyValue(values[field.id]) && !done.has(field.id),
+  );
   return {
-    text: `${lead} ${next ? fieldQuestion(next, applicant, english) : strings.done}`,
+    text:
+      input.mode === "fast" && next
+        ? `${lead} ${missingSentence(missing, english)} ${strings.stepOffer(question)}`
+        : `${lead} ${question}`,
     actions,
     ...(next ? { next: { formInstanceId: instance.id, fieldId: next.id } } : {}),
   };
+}
+
+function missingSentence(missing: readonly FormField[], english: boolean): string {
+  const strings = english ? copy.en : copy.de;
+  const names = missing.slice(0, 6).map((field) => fieldNoun(field, english));
+  const rest = missing.length - names.length;
+  const named =
+    rest > 0
+      ? `${names.join(", ")} ${strings.and} ${rest} ${english ? "more" : "weitere"}`
+      : names.length < 2
+        ? (names[0] ?? "")
+        : `${names.slice(0, -1).join(", ")} ${strings.and} ${names.at(-1)}`;
+  return strings.stillMissing(named);
+}
+
+/**
+ * Fills a just-opened form from everything the person provided (the text handed over with the
+ * request, earlier statements and document facts). Both modes prefill what is known; the mode
+ * decides how the opened form is presented (see openedFormTurn).
+ */
+export async function fillOpenedForm(input: {
+  db: DatabaseClient;
+  context: RuntimeContext;
+  formInstanceId: string;
+  mode: FormMode;
+  text: string;
+  turnId: string;
+  language: string;
+  topics: readonly string[];
+  model: LanguageModel;
+}): Promise<FormAnswer | undefined> {
+  return answerManyFields({
+    db: input.db,
+    context: input.context,
+    turnId: input.turnId,
+    language: input.language,
+    topics: input.topics,
+    model: input.model,
+    pending: { formInstanceId: input.formInstanceId, fieldId: "" },
+    answer: input.text,
+    fromDocuments: true,
+    mode: input.mode,
+  });
+}
+
+/**
+ * The first turn once the form popup is open. Without handed-over data (step mode) one short
+ * sentence invites the person to tell everything or go field by field, and the cursor moves to
+ * the first missing field. With data or in fast mode every filled field is typed live with the
+ * cursor, and what is still missing is named in one sentence.
+ */
+export async function openedFormTurn(input: {
+  db: DatabaseClient;
+  context: RuntimeContext;
+  formInstanceId: string;
+  history: readonly LotseMessage[];
+  topics: readonly string[];
+  language: string;
+}): Promise<FormAnswer | undefined> {
+  const [instance] = await input.db
+    .select()
+    .from(formInstances)
+    .where(
+      and(
+        eq(formInstances.id, input.formInstanceId),
+        eq(formInstances.caseId, input.context.caseId),
+      ),
+    );
+  if (!instance) return;
+  const fields = templateSchema(await getTemplate(input.db, instance.templateId)).fields;
+  const values = formFields.parse(instance.fields);
+  const english = input.language.startsWith("en");
+  const strings = english ? copy.en : copy.de;
+  const applicant = applicantOf(input.topics, english);
+  const texts = userTexts(input.history);
+  const mode = formMode(texts);
+  const handedOver = handsOverData(texts.at(-1) ?? "");
+  const missing = fields.filter((field) => askable(field) && emptyValue(values[field.id]));
+  const next = missing[0];
+  const question = next ? fieldQuestion(next, applicant, english) : strings.done;
+  const pointNext = next ? fieldActions(instance.id, next.id) : [];
+  const filled = fields.filter(
+    (field) =>
+      !emptyValue(values[field.id]) &&
+      values[field.id]?.value !== false &&
+      values[field.id]?.state === "draft",
+  );
+  const result = (text: string, actions: Action[]): FormAnswer => ({
+    text,
+    actions,
+    ...(next ? { next: { formInstanceId: instance.id, fieldId: next.id } } : {}),
+  });
+  if (mode === "step" && !handedOver)
+    return result(`${strings.invite} ${strings.first(question)}`, pointNext);
+  const typed = filled.flatMap((field) => {
+    const entry = values[field.id];
+    const provenance = ProvenanceSchema.safeParse(entry?.provenance);
+    return entry && provenance.success
+      ? fieldActions(instance.id, field.id, {
+          value: String(entry.value),
+          provenance: provenance.data,
+        })
+      : [];
+  });
+  if (!filled.length) return result(`${strings.invite} ${strings.first(question)}`, pointNext);
+  const lead = strings.openedFilled(filled.length);
+  if (!next) return result(`${lead} ${strings.done}`, typed);
+  return result(
+    mode === "fast"
+      ? `${lead} ${missingSentence(missing, english)} ${strings.stepOffer(question)}`
+      : `${lead} ${question}`,
+    [...typed, ...pointNext],
+  );
 }

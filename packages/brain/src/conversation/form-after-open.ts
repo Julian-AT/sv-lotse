@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import type { DatabaseClient } from "@lotse/db";
 import { cases, formInstances, formTemplates } from "@lotse/db/schema";
 import { createObjectStorage } from "@lotse/db/storage/s3";
-import { JsonObjectSchema, ProvenanceSchema, type Target } from "@lotse/protocol";
+import { JsonObjectSchema, type Target } from "@lotse/protocol";
 import type { LanguageModel, UIMessageStreamWriter } from "ai";
 import { and, desc, eq, sql } from "drizzle-orm";
 import type { RuntimeContext } from "../agent/context.ts";
@@ -27,12 +27,12 @@ import {
   requestHead,
 } from "./apply-page.ts";
 import {
-  answerManyFields,
-  applicantOf,
   askable,
   type FormAnswer,
-  fieldActions,
-  fieldQuestion,
+  fillOpenedForm,
+  formMode,
+  openedFormTurn,
+  userTexts,
 } from "./form-answers.ts";
 
 export interface BenefitForm {
@@ -289,23 +289,6 @@ export async function registeredTemplate(db: DatabaseClient, formId: string) {
   return findTemplate(db, formId, source);
 }
 
-const copy = {
-  de: {
-    opened: (title: string, filled: number) =>
-      filled > 0
-        ? `Ich habe das Formular „${title}“ geöffnet und ${filled} ${filled === 1 ? "Feld" : "Felder"} aus Ihren bestätigten Angaben eingetragen. Abgeschickt wird nichts.`
-        : `Ich habe das Formular „${title}“ geöffnet. Abgeschickt wird nichts.`,
-    done: "Die Felder, die ich aus Ihren Angaben kenne, sind eingetragen. Bitte prüfen Sie den Entwurf.",
-  },
-  en: {
-    opened: (title: string, filled: number) =>
-      filled > 0
-        ? `I opened the form “${title}” and filled ${filled} ${filled === 1 ? "field" : "fields"} from your confirmed details. Nothing is submitted.`
-        : `I opened the form “${title}”. Nothing is submitted.`,
-    done: "The fields I know from your details are filled in. Please review the draft.",
-  },
-} as const;
-
 type Proposal = FormToolResult<"form.prefill">["proposals"][number];
 
 /**
@@ -427,16 +410,16 @@ export async function prepareFormAfterOpen(input: {
   const prefilled = await prefillForm(db, prefillInput, context, input.signal);
   const fill = input.data ?? input.fill;
   if (fill)
-    await answerManyFields({
+    await fillOpenedForm({
       db,
       context,
+      formInstanceId: prefilled.formInstanceId,
+      mode: formMode(userTexts(input.history)),
+      text: input.data?.text ?? lastUserText(input.history),
       turnId: fill.turnId,
       language: fill.language,
       topics: topicTexts(input.history),
       model: fill.model,
-      pending: { formInstanceId: prefilled.formInstanceId, fieldId: "" },
-      answer: input.data?.text ?? lastUserText(input.history),
-      fromDocuments: true,
     });
   const schema = templateSchema(await getTemplate(db, template.id));
   const firstField =
@@ -473,7 +456,7 @@ function askedField(fields: readonly FormField[], missingFields: readonly string
   return fields.find((field) => missing.has(field.id) && askable(field));
 }
 
-/** Once the viewer is open: type the prefilled fields and ask for exactly one missing field. */
+/** Once the viewer is open: the mode-aware first turn (invitation or live fill, next field). */
 export async function formQuestion(input: {
   db: DatabaseClient;
   context: RuntimeContext;
@@ -482,37 +465,14 @@ export async function formQuestion(input: {
 }): Promise<FormAnswer | undefined> {
   const prepared = preparedFormAwaitingQuestion(input.history);
   if (!prepared) return;
-  const [instance] = await input.db
-    .select({ templateId: formInstances.templateId })
-    .from(formInstances)
-    .where(
-      and(
-        eq(formInstances.id, prepared.formInstanceId),
-        eq(formInstances.caseId, input.context.caseId),
-      ),
-    );
-  if (!instance) return;
-  const template = await getTemplate(input.db, instance.templateId);
-  const asked = askedField(templateSchema(template).fields, prepared.missingFields);
-  const actions = [
-    ...prepared.proposals.flatMap((proposal) =>
-      fieldActions(prepared.formInstanceId, proposal.fieldId, {
-        value: String(proposal.value),
-        provenance: ProvenanceSchema.parse(proposal.provenance),
-      }),
-    ),
-    ...(asked ? fieldActions(prepared.formInstanceId, asked.id) : []),
-  ];
-  const english = input.language.startsWith("en");
-  const strings = english ? copy.en : copy.de;
-  const question = asked
-    ? fieldQuestion(asked, applicantOf(topicTexts(input.history), english), english)
-    : strings.done;
-  return {
-    text: `${strings.opened(template.title, prepared.proposals.length)} ${question}`,
-    actions,
-    ...(asked ? { next: { formInstanceId: prepared.formInstanceId, fieldId: asked.id } } : {}),
-  };
+  return openedFormTurn({
+    db: input.db,
+    context: input.context,
+    formInstanceId: prepared.formInstanceId,
+    history: input.history,
+    topics: topicTexts(input.history),
+    language: input.language,
+  });
 }
 
 function pageOpenedBefore(history: readonly LotseMessage[]): boolean {
