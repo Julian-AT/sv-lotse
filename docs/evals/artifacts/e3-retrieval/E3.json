@@ -1,0 +1,2041 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E3",
+    "name": "Source-derived retrieval gold questions",
+    "gate": {
+      "kind": "informational",
+      "metric": "recall@10",
+      "threshold": 0.9,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 200
+  },
+  "selection": {
+    "seed": "baseline-2026-11-06"
+  },
+  "counts": {
+    "total": 200,
+    "passed": 192,
+    "failed": 8,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0.96,
+    "recall@10": 0.9600000000000007,
+    "ndcg@10": 0.7469831927021217
+  },
+  "wilson95": {
+    "lower": 0.9230679317608927,
+    "upper": 0.9795943679445931,
+    "confidence": 0.95
+  },
+  "gateVerdict": "passed",
+  "modelVersion": "hybrid/text-embedding-3-small;rrf=60;weights=0.5,1;query=original;reranker=none",
+  "judgeVersions": [],
+  "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+  "startedAt": "2026-11-06T02:28:59.568Z",
+  "finishedAt": "2026-11-06T02:29:02.993Z",
+  "cases": [
+    {
+      "caseId": "e3-a-001",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 349.568,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-002",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 347.73679100000004,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-a-003",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 349.50133299999993,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3010299956639812
+      }
+    },
+    {
+      "caseId": "e3-a-004",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 386.08945900000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-a-005",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 350.91729199999986,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-006",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 373.102625,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-007",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 369.8201660000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.31546487678572877
+      }
+    },
+    {
+      "caseId": "e3-a-008",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 349.6149580000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-009",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 402.23900000000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-010",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 386.31562499999995,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-011",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 349.8595409999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-a-012",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 362.760125,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-a-013",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 189.43708300000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-014",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 160.29720799999996,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-015",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 229.67116699999997,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-016",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 176.84562500000015,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-017",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 176.746709,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-018",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 170.60620900000004,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-019",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 173.24783300000013,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-020",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 202.57270799999992,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-021",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 177.255083,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-022",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 172.47616700000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-023",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 174.5988339999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-a-024",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 294.76604199999997,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-025",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 157.02666599999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-026",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 176.71299999999997,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-a-027",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 330.0474590000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-028",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 208.30841699999996,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-029",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 154.34633400000007,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-a-030",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 158.597125,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-031",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 229.87300000000005,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-a-032",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 212.98295800000005,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-033",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 229.0858330000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-034",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 238.331459,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3010299956639812
+      }
+    },
+    {
+      "caseId": "e3-a-035",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 185.4112090000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-036",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 164.520041,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.2890648263178879
+      }
+    },
+    {
+      "caseId": "e3-a-037",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 176.0780420000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-038",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 239.5754589999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-039",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 166.36908300000005,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-a-040",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 208.27462500000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.38685280723454163
+      }
+    },
+    {
+      "caseId": "e3-b-001",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 162.1299160000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-002",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 172.75937499999986,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-003",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 181.8126249999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.31546487678572877
+      }
+    },
+    {
+      "caseId": "e3-b-004",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 185.14004199999977,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-b-005",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 156.38570800000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-b-006",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 176.37158399999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-007",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 168.7389999999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-b-008",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 185.94299999999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-009",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 161.52104199999985,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-010",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 189.58924999999977,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-011",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 165.6727910000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3562071871080222
+      }
+    },
+    {
+      "caseId": "e3-b-012",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 164.782917,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-013",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 251.32025000000021,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-014",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 190.1864169999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-015",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 182.18229199999996,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-016",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 168.15995900000007,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-017",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 185.72500000000036,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-018",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 153.68479200000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-019",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 151.12212499999987,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-b-020",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 212.51625000000013,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-021",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 155.56779099999994,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-022",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 163.79241599999978,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-023",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 148.05466699999988,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-024",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 197.4622919999997,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-025",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 200.7931249999997,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-b-026",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 149.7122919999997,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    },
+    {
+      "caseId": "e3-b-027",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 249.6455420000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-028",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 238.16004199999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-029",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 150.66370800000004,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-b-030",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 189.67241699999977,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-c-001",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 198.567,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3333333333333333
+      }
+    },
+    {
+      "caseId": "e3-c-002",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 164.9898750000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.31546487678572877
+      }
+    },
+    {
+      "caseId": "e3-c-003",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 153.8262920000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-004",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 165.333208,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-005",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 164.50241700000015,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3562071871080222
+      }
+    },
+    {
+      "caseId": "e3-c-006",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 188.46370799999977,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.38685280723454163
+      }
+    },
+    {
+      "caseId": "e3-c-007",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 179.55979099999968,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-c-008",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 231.387792,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-c-009",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 219.26783299999988,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-c-010",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 178.78895799999964,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3562071871080222
+      }
+    },
+    {
+      "caseId": "e3-c-011",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 176.41604099999995,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-012",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 215.915708,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-013",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 251.63870799999995,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-014",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 214.33775000000014,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-c-015",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 194.8480000000004,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-016",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 164.94095799999968,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-017",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 196.01762499999995,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-018",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 166.57658400000037,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-c-019",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 225.2875829999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-c-020",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 176.9826250000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.2890648263178879
+      }
+    },
+    {
+      "caseId": "e3-c-021",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 180.05774999999994,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-022",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 187.24679100000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-023",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 225.77274999999963,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-024",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 162.642875,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-025",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 211.88574999999992,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-026",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 252.6719579999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-027",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 197.75529099999994,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-028",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 211.5074169999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.31546487678572877
+      }
+    },
+    {
+      "caseId": "e3-c-029",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 234.38020899999992,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-c-030",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 179.8977500000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-031",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 156.69562499999984,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.31546487678572877
+      }
+    },
+    {
+      "caseId": "e3-c-032",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 152.1082919999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-033",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 153.96062500000016,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-c-034",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 182.90425000000005,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-c-035",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 168.72241699999995,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-036",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 170.4347499999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-037",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 160.55091700000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-038",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 190.2586250000004,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-039",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 204.67037500000015,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-c-040",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 195.56220799999983,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-001",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 363.0903330000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-002",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 240.61808299999984,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-003",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 185.68274999999994,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-004",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 177.33741699999973,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-005",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 205.47745799999984,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-006",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 159.60812499999975,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-007",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 176.5356670000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-008",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 236.72704199999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-009",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 159.67245799999955,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-010",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 166.47337500000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-011",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 152.39420800000016,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    },
+    {
+      "caseId": "e3-d-012",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 393.34375,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    },
+    {
+      "caseId": "e3-d-013",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 162.69116600000007,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-014",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 169.9659999999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-015",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 145.25608299999976,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.38685280723454163
+      }
+    },
+    {
+      "caseId": "e3-d-016",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 167.55712499999981,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-d-017",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 164.2961250000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-018",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 171.77045799999996,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-019",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 209.65737499999977,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-020",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 177.08837500000027,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-021",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 187.67720899999995,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-022",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 244.24404099999992,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    },
+    {
+      "caseId": "e3-d-023",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 172.005083,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-d-024",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 214.34175000000005,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-d-025",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 227.54554099999996,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    },
+    {
+      "caseId": "e3-d-026",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 144.95666600000004,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-027",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 205.145125,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-028",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 156.7423749999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-029",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 160.37845900000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-d-030",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 212.5920000000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-031",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 160.3722499999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-032",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 178.78554099999974,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-033",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 178.30391700000018,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-034",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 159.8941249999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-035",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 171.75395799999978,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.31546487678572877
+      }
+    },
+    {
+      "caseId": "e3-d-036",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 221.88137499999993,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-037",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 211.82833300000038,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-038",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 218.0250000000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-039",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 159.6579160000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-040",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 180.88425000000007,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-001",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 186.09587499999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-e-002",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 159.91458299999977,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    },
+    {
+      "caseId": "e3-e-003",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 185.84412500000008,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-e-004",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 166.51633399999992,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-005",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 207.67533400000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-e-006",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 198.56345899999997,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3333333333333333
+      }
+    },
+    {
+      "caseId": "e3-e-007",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 163.60912499999995,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-e-008",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 205.6711250000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-009",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 144.3736670000003,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-e-010",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 192.74329100000023,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-011",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 184.77387499999986,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-e-012",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 224.12374999999975,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-e-013",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 154.568667,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-e-014",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 191.1058750000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-015",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 167.0797910000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-016",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 146.3762499999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-e-017",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 164.08687499999996,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-018",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 160.01754200000005,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-e-019",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 170.1964170000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    },
+    {
+      "caseId": "e3-e-020",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 154.92399999999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-021",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 231.96050000000014,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-022",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 156.56520799999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-023",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 166.4421250000005,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-024",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 158.95116700000017,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-025",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 149.67012499999964,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-026",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 173.4810419999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-027",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 143.79633400000012,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.38685280723454163
+      }
+    },
+    {
+      "caseId": "e3-e-028",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 153.8654590000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-029",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 164.8673749999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-e-030",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 168.86241700000028,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-f-001",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 202.6745839999994,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-f-002",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 163.56212499999992,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3333333333333333
+      }
+    },
+    {
+      "caseId": "e3-f-003",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 161.10137499999973,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.3562071871080222
+      }
+    },
+    {
+      "caseId": "e3-f-004",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 235.95966699999917,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-005",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 177.34962499999983,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-006",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 147.62891599999966,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-007",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 166.43045800000073,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-f-008",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 199.48549999999977,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-009",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 178.88329200000044,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-010",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 165.8735829999996,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-011",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 154.32529199999954,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-f-012",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 146.48412499999995,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-f-013",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 211.3503329999994,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-f-014",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 181.02850000000035,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-f-015",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 193.6527500000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-016",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 182.43133299999954,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-017",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 160.5932499999999,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-f-018",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 181.21812500000033,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-019",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 155.0478750000002,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    },
+    {
+      "caseId": "e3-f-020",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 228.42712500000016,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.43067655807339306
+      }
+    }
+  ]
+}
