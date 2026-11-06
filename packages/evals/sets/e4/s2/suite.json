@@ -1,0 +1,11 @@
+{
+  "id": "E4",
+  "name": "Health promotion persona variants v1",
+  "gate": {
+    "kind": "informational",
+    "metric": "passRate",
+    "threshold": 0.9,
+    "direction": "at_least"
+  },
+  "minimumSetSize": 300
+}

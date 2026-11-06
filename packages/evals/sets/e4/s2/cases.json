@@ -1,0 +1,1607 @@
+[
+  {
+    "id": "e4-s2-01",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "pr"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 38, wohne in Innsbruck, bin bei der ÖGK und war im letzten Jahr nicht bei der Vorsorgeuntersuchung. Bitte zuerst eine Praxis mit VU-Vertrag suchen, deutschsprachig, vormittags und stufenlos.",
+      "dimensions": ["german"],
+      "persona": {
+        "language": "de-AT",
+        "age": 38,
+        "carrier": "ÖGK",
+        "region": "Innsbruck, Tirol",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: VU-Praxissuche und eine Gesprächsnotiz für den eigenen Anruf.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 38, wohne in Innsbruck, bin bei der ÖGK und war im letzten Jahr nicht bei der Vorsorgeuntersuchung. Bitte zuerst eine Praxis mit VU-Vertrag suchen, deutschsprachig, vormittags und stufenlos.",
+          "subject": {
+            "age": 38,
+            "carrier": "ÖGK",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "man",
+            "vuUsedInLastYear": false,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "checkup",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "nutrition-tirol"
+      ],
+      "offices": ["vu-provider"],
+      "documents": ["vu-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-vu"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-02",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "english"],
+    "input": {
+      "openingUtterance": "I want to do something for my health. I am 38, live in Vienna and have BVAEB insurance. No check-up in the last year. First help me find a check-up provider, English-speaking, mornings, with step-free access.",
+      "dimensions": ["english"],
+      "persona": {
+        "language": "en",
+        "age": 38,
+        "carrier": "BVAEB",
+        "region": "Wien",
+        "goal": "I want a sourced overview of prevention offers and preparation of the next administrative step, first: VU provider search and call sheet",
+        "facts": {
+          "openingUtterance": "I want to do something for my health. I am 38, live in Vienna and have BVAEB insurance. No check-up in the last year. First help me find a check-up provider, English-speaking, mornings, with step-free access.",
+          "subject": {
+            "age": 38,
+            "carrier": "BVAEB",
+            "region": "Wien",
+            "residentInAustria": true,
+            "sexForProgram": "man",
+            "vuUsedInLastYear": false,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "checkup",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional"
+      ],
+      "offices": ["vu-provider"],
+      "documents": ["vu-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-vu"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "en",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-03",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "simple_language"],
+    "input": {
+      "openingUtterance": "Ich will etwas für meine Gesundheit tun. Bitte einfache Wörter. Ich bin ein Mann, 60 Jahre. Ich wohne in Graz. Ich bin bei der ÖGK. Im letzten Jahr hatte ich keinen Gesundheits-Check. Ich möchte zuerst eine Praxis dafür finden. Am Vormittag. Deutsch. Ohne Stufen.",
+      "dimensions": ["german", "simple_language"],
+      "persona": {
+        "language": "de-AT",
+        "age": 60,
+        "carrier": "ÖGK",
+        "region": "Graz, Steiermark",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: VU-Praxissuche und eine Gesprächsnotiz für den eigenen Anruf.",
+        "facts": {
+          "openingUtterance": "Ich will etwas für meine Gesundheit tun. Bitte einfache Wörter. Ich bin ein Mann, 60 Jahre. Ich wohne in Graz. Ich bin bei der ÖGK. Im letzten Jahr hatte ich keinen Gesundheits-Check. Ich möchte zuerst eine Praxis dafür finden. Am Vormittag. Deutsch. Ohne Stufen.",
+          "subject": {
+            "age": 60,
+            "carrier": "ÖGK",
+            "region": "Graz, Steiermark",
+            "residentInAustria": true,
+            "sexForProgram": "man",
+            "vuUsedInLastYear": false,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "simple",
+          "channel": "workspace",
+          "selectedStep": "checkup",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: simple."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "colon-target"
+      ],
+      "offices": ["vu-provider"],
+      "documents": ["vu-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-vu"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "simple",
+        "channel": "workspace",
+        "sources": ["language", "simple"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-04",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "english", "simple_language", "pr"],
+    "input": {
+      "openingUtterance": "I want to do something for my health. Please use simple words. I am 26. I live in Innsbruck. I have SVS insurance. I want to find free nutrition counseling first. Mornings. English if available. Step-free access.",
+      "dimensions": ["english", "simple_language"],
+      "persona": {
+        "language": "en",
+        "age": 26,
+        "carrier": "SVS",
+        "region": "Innsbruck, Tirol",
+        "goal": "I want a sourced overview of prevention offers and preparation of the next administrative step, first: nutrition counseling telephone enquiry",
+        "facts": {
+          "openingUtterance": "I want to do something for my health. Please use simple words. I am 26. I live in Innsbruck. I have SVS insurance. I want to find free nutrition counseling first. Mornings. English if available. Step-free access.",
+          "subject": {
+            "age": 26,
+            "carrier": "SVS",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "woman"
+          },
+          "actor": "self",
+          "register": "simple",
+          "channel": "workspace",
+          "selectedStep": "nutrition",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: simple."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "nutrition-tirol"
+      ],
+      "offices": ["nutrition-directory"],
+      "documents": ["nutrition-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-nutrition"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "en",
+        "register": "simple",
+        "channel": "workspace",
+        "sources": ["language", "simple"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-05",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "dialect"],
+    "input": {
+      "openingUtterance": "I möcht a bissl wos für mei Gsundheit tua. Bin vierzig, bei da ÖGK und wohn in Innsbruck. Zuerst hätt i gern an gratis Bewegungskurs im Park, ohne Anmeldung. Nachmittags und auf Deutsch, ohne Stiagn.",
+      "dimensions": ["german", "dialect"],
+      "persona": {
+        "language": "de-AT",
+        "age": 40,
+        "carrier": "ÖGK",
+        "region": "Innsbruck, Tirol",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: Suche nach einem lokalen Parkkurs.",
+        "facts": {
+          "openingUtterance": "I möcht a bissl wos für mei Gsundheit tua. Bin vierzig, bei da ÖGK und wohn in Innsbruck. Zuerst hätt i gern an gratis Bewegungskurs im Park, ohne Anmeldung. Nachmittags und auf Deutsch, ohne Stiagn.",
+          "subject": {
+            "age": 40,
+            "carrier": "ÖGK",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "man"
+          },
+          "actor": "self",
+          "register": "dialect",
+          "channel": "workspace",
+          "selectedStep": "park",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: dialect."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "nutrition-tirol"
+      ],
+      "offices": ["park-directory"],
+      "documents": ["park-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-park"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "dialect",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-06",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "colloquial"],
+    "input": {
+      "openingUtterance": "Ich will mal was für meine Gesundheit tun, ganz ohne Fachchinesisch. Bin 32, ÖGK, Linz. Seit über einem Jahr kein Check. Such mir bitte zuerst eine VU-Praxis zum selber Anrufen: nachmittags, Deutsch, ebener Zugang.",
+      "dimensions": ["german", "colloquial"],
+      "persona": {
+        "language": "de-AT",
+        "age": 32,
+        "carrier": "ÖGK",
+        "region": "Linz, Oberösterreich",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: VU-Praxissuche und eine Gesprächsnotiz für den eigenen Anruf.",
+        "facts": {
+          "openingUtterance": "Ich will mal was für meine Gesundheit tun, ganz ohne Fachchinesisch. Bin 32, ÖGK, Linz. Seit über einem Jahr kein Check. Such mir bitte zuerst eine VU-Praxis zum selber Anrufen: nachmittags, Deutsch, ebener Zugang.",
+          "subject": {
+            "age": 32,
+            "carrier": "ÖGK",
+            "region": "Linz, Oberösterreich",
+            "residentInAustria": true,
+            "sexForProgram": "man",
+            "vuUsedInLastYear": false,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "colloquial",
+          "channel": "workspace",
+          "selectedStep": "checkup",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: colloquial."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional"
+      ],
+      "offices": ["vu-provider"],
+      "documents": ["vu-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-vu"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "colloquial",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-07",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "helper", "pr"],
+    "input": {
+      "openingUtterance": "Mein Vater möchte etwas für seine Gesundheit tun, ich helfe ihm beim Organisieren. Er ist 68, wohnt in Innsbruck und ist bei der ÖGK. Seine letzte VU war vor zwei Jahren. Ich bin 45 und wohne in Wien, bin bei der BVAEB. Bitte zuerst eine VU-Praxis für ihn: vormittags, Deutsch und stufenlos. Ich rufe selbst an.",
+      "dimensions": ["german", "helper"],
+      "persona": {
+        "language": "de-AT",
+        "age": 45,
+        "carrier": "BVAEB",
+        "region": "Wien",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: VU-Praxissuche und eine Gesprächsnotiz für den eigenen Anruf.",
+        "facts": {
+          "openingUtterance": "Mein Vater möchte etwas für seine Gesundheit tun, ich helfe ihm beim Organisieren. Er ist 68, wohnt in Innsbruck und ist bei der ÖGK. Seine letzte VU war vor zwei Jahren. Ich bin 45 und wohne in Wien, bin bei der BVAEB. Bitte zuerst eine VU-Praxis für ihn: vormittags, Deutsch und stufenlos. Ich rufe selbst an.",
+          "subject": {
+            "age": 68,
+            "carrier": "ÖGK",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "man",
+            "vuUsedInLastYear": false,
+            "ecardAvailable": true
+          },
+          "actor": "helper",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "checkup",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "colon-target",
+        "nutrition-tirol"
+      ],
+      "offices": ["vu-provider"],
+      "documents": ["vu-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-vu"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-08",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "english", "helper"],
+    "input": {
+      "openingUtterance": "My mother wants to do something for her health. I am helping her organize it. She is a woman aged 52, lives in Salzburg, has ÖGK insurance and has never used the breast screening program. I am 36, live in Innsbruck and have SVS insurance. First prepare her breast screening enquiry: mornings, English if available, step-free.",
+      "dimensions": ["english", "helper"],
+      "persona": {
+        "language": "en",
+        "age": 36,
+        "carrier": "SVS",
+        "region": "Innsbruck, Tirol",
+        "goal": "I want a sourced overview of prevention offers and preparation of the next administrative step, first: breast screening program access",
+        "facts": {
+          "openingUtterance": "My mother wants to do something for her health. I am helping her organize it. She is a woman aged 52, lives in Salzburg, has ÖGK insurance and has never used the breast screening program. I am 36, live in Innsbruck and have SVS insurance. First prepare her breast screening enquiry: mornings, English if available, step-free.",
+          "subject": {
+            "age": 52,
+            "carrier": "ÖGK",
+            "region": "Salzburg",
+            "residentInAustria": true,
+            "sexForProgram": "woman",
+            "breastScreeningWithin24Months": false,
+            "breastProgramActivated": true,
+            "ecardAvailable": true
+          },
+          "actor": "helper",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "breast",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "colon-target",
+        "breast-standard"
+      ],
+      "offices": ["breast-program"],
+      "documents": ["breast-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-breast"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "en",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-09",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "missing_information"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich wohne in Innsbruck und bin bei der ÖGK. Seit über einem Jahr keine VU. Bitte zuerst Zugang und Praxissuche für den Gesundheits-Check klären: vormittags, Deutsch und stufenlos.",
+      "dimensions": ["german", "missing_information"],
+      "persona": {
+        "language": "de-AT",
+        "age": 38,
+        "carrier": "ÖGK",
+        "region": "Innsbruck, Tirol",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: VU-Praxissuche und eine Gesprächsnotiz für den eigenen Anruf.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich wohne in Innsbruck und bin bei der ÖGK. Seit über einem Jahr keine VU. Bitte zuerst Zugang und Praxissuche für den Gesundheits-Check klären: vormittags, Deutsch und stufenlos.",
+          "subject": {
+            "age": 38,
+            "carrier": "ÖGK",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "man",
+            "vuUsedInLastYear": false,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "checkup",
+          "initiallyDisclosed": [
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {
+            "subject.age": "Ich bin 38 Jahre alt."
+          },
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "nutrition-tirol"
+      ],
+      "offices": ["vu-provider"],
+      "documents": ["vu-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-vu"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 1,
+        "requiredSlots": ["subject.age"],
+        "rationale": "Clarify each listed unresolved subject fact once before the selected location-dependent or age-dependent step. Count required slot questions, not conversational turns; confirming the goal is separate.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-10",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "missing_information", "pr"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 38 und bei der ÖGK. Ich will zuerst einen kostenlosen Bewegungskurs im Park finden: am Nachmittag, Deutsch und stufenlos. Meinen Wohnort habe ich noch nicht gesagt.",
+      "dimensions": ["german", "missing_information"],
+      "persona": {
+        "language": "de-AT",
+        "age": 38,
+        "carrier": "ÖGK",
+        "region": "Innsbruck, Tirol",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: Suche nach einem lokalen Parkkurs.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 38 und bei der ÖGK. Ich will zuerst einen kostenlosen Bewegungskurs im Park finden: am Nachmittag, Deutsch und stufenlos. Meinen Wohnort habe ich noch nicht gesagt.",
+          "subject": {
+            "age": 38,
+            "carrier": "ÖGK",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "man"
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "park",
+          "initiallyDisclosed": ["subject.age", "subject.carrier", "selectedStep", "preferences"],
+          "followUpAnswers": {
+            "subject.region": "Ich wohne in Innsbruck in Tirol, bitte dort suchen."
+          },
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "nutrition-tirol"
+      ],
+      "offices": ["park-directory"],
+      "documents": ["park-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-park"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 1,
+        "requiredSlots": ["subject.region"],
+        "rationale": "Clarify each listed unresolved subject fact once before the selected location-dependent or age-dependent step. Count required slot questions, not conversational turns; confirming the goal is separate.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-11",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "missing_information"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 38 und wohne in Graz. Meine Krankenkasse weiß ich gerade nicht. Zuerst will ich einen kostenlosen Parkkurs ohne Anmeldung suchen, nachmittags, auf Deutsch und stufenlos.",
+      "dimensions": ["german", "missing_information"],
+      "persona": {
+        "language": "de-AT",
+        "age": 38,
+        "carrier": "unknown",
+        "region": "Graz, Steiermark",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: Suche nach einem lokalen Parkkurs.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 38 und wohne in Graz. Meine Krankenkasse weiß ich gerade nicht. Zuerst will ich einen kostenlosen Parkkurs ohne Anmeldung suchen, nachmittags, auf Deutsch und stufenlos.",
+          "subject": {
+            "age": 38,
+            "carrier": "unknown",
+            "region": "Graz, Steiermark",
+            "residentInAustria": true,
+            "sexForProgram": "not_stated"
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "park",
+          "initiallyDisclosed": ["subject.age", "subject.region", "selectedStep", "preferences"],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional"
+      ],
+      "offices": ["park-directory"],
+      "documents": ["park-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-park"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "The unknown carrier is irrelevant to the selected free course-directory step. Do not ask about insurance before searching; program-specific eligibility can remain unknown in the wider overview.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-12",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "contradictory_information", "pr"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin eine Frau. In meinen Angaben steht einmal 44 und einmal 54 Jahre. ÖGK, Wien. Noch nie bei der Brustkrebs-Früherkennung. Bitte erst den Programmzugang klären und eine Radiologie suchen: vormittags, Deutsch, stufenlos.",
+      "dimensions": ["german", "contradictory_information"],
+      "persona": {
+        "language": "de-AT",
+        "age": 54,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: Zugang zum Brustkrebs-Früherkennungsprogramm.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin eine Frau. In meinen Angaben steht einmal 44 und einmal 54 Jahre. ÖGK, Wien. Noch nie bei der Brustkrebs-Früherkennung. Bitte erst den Programmzugang klären und eine Radiologie suchen: vormittags, Deutsch, stufenlos.",
+          "subject": {
+            "age": 54,
+            "carrier": "ÖGK",
+            "region": "Wien",
+            "residentInAustria": true,
+            "sexForProgram": "woman",
+            "breastScreeningWithin24Months": false,
+            "breastProgramActivated": true,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "breast",
+          "initiallyDisclosed": [
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {
+            "subject.age": "54 ist richtig, nicht 44."
+          },
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history.",
+          "conflictingStatements": [
+            {
+              "slot": "subject.age",
+              "values": [44, 54]
+            }
+          ]
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "colon-target",
+        "breast-standard"
+      ],
+      "offices": ["breast-program"],
+      "documents": ["breast-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-breast"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 1,
+        "requiredSlots": ["subject.age"],
+        "rationale": "Clarify each listed unresolved subject fact once before the selected location-dependent or age-dependent step. Count required slot questions, not conversational turns; confirming the goal is separate.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-13",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "contradictory_information"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 30 und bei der ÖGK. Als Wohnort habe ich Graz und Innsbruck genannt. Das war durcheinander. Ich möchte zuerst eine Ernährungsberatung vor Ort finden: vormittags, Deutsch, stufenlos.",
+      "dimensions": ["german", "contradictory_information"],
+      "persona": {
+        "language": "de-AT",
+        "age": 30,
+        "carrier": "ÖGK",
+        "region": "Innsbruck, Tirol",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: Vorbereitung einer telefonischen Anfrage zur Ernährungsberatung.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 30 und bei der ÖGK. Als Wohnort habe ich Graz und Innsbruck genannt. Das war durcheinander. Ich möchte zuerst eine Ernährungsberatung vor Ort finden: vormittags, Deutsch, stufenlos.",
+          "subject": {
+            "age": 30,
+            "carrier": "ÖGK",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "not_stated"
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "nutrition",
+          "initiallyDisclosed": ["subject.age", "subject.carrier", "selectedStep", "preferences"],
+          "followUpAnswers": {
+            "subject.region": "Innsbruck ist mein aktueller Wohnort. Graz war früher."
+          },
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history.",
+          "conflictingStatements": [
+            {
+              "slot": "subject.region",
+              "values": ["Graz, Steiermark", "Innsbruck, Tirol"]
+            }
+          ]
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "nutrition-tirol"
+      ],
+      "offices": ["nutrition-directory"],
+      "documents": ["nutrition-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-nutrition"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 1,
+        "requiredSlots": ["subject.region"],
+        "rationale": "Clarify each listed unresolved subject fact once before the selected location-dependent or age-dependent step. Count required slot questions, not conversational turns; confirming the goal is separate.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-14",
+    "kind": "gold",
+    "tags": [
+      "synthetic-persona",
+      "nightly",
+      "weekly",
+      "german",
+      "simple_language",
+      "voice_captions_only",
+      "pr"
+    ],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin eine Frau, 74. Ich wohne in Graz. ÖGK. Seit zwei Jahren keine VU. Noch nie Brust- oder Darm-Früherkennung. Ich nutze nur Stimme und Untertitel. Bitte ein Schritt nach dem anderen. Zuerst eine VU-Praxis: vormittags, Deutsch, ohne Stufen.",
+      "dimensions": ["german", "simple_language", "voice_captions_only"],
+      "persona": {
+        "language": "de-AT",
+        "age": 74,
+        "carrier": "ÖGK",
+        "region": "Graz, Steiermark",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: VU-Praxissuche und eine Gesprächsnotiz für den eigenen Anruf.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin eine Frau, 74. Ich wohne in Graz. ÖGK. Seit zwei Jahren keine VU. Noch nie Brust- oder Darm-Früherkennung. Ich nutze nur Stimme und Untertitel. Bitte ein Schritt nach dem anderen. Zuerst eine VU-Praxis: vormittags, Deutsch, ohne Stufen.",
+          "subject": {
+            "age": 74,
+            "carrier": "ÖGK",
+            "region": "Graz, Steiermark",
+            "residentInAustria": true,
+            "sexForProgram": "woman",
+            "vuUsedInLastYear": false,
+            "ecardAvailable": true,
+            "breastScreeningWithin24Months": false,
+            "breastProgramActivated": true
+          },
+          "actor": "self",
+          "register": "simple",
+          "channel": "voice_captions_only",
+          "selectedStep": "checkup",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: simple. Use voice and captions only. Ask for spoken, captioned instructions without map pointing or visual-only controls."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "colon-target",
+        "breast-standard"
+      ],
+      "offices": ["vu-provider"],
+      "documents": ["vu-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-vu"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "simple",
+        "channel": "voice_captions_only",
+        "sources": ["language", "simple", "captions"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-15",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "english", "voice_captions_only"],
+    "input": {
+      "openingUtterance": "I want to do something for my health. I am a woman aged 41, live in Vienna and have ÖGK insurance. I have never joined breast screening. I use voice and captions only. Please explain how to join first, then help prepare a provider enquiry: mornings, English, step-free.",
+      "dimensions": ["english", "voice_captions_only"],
+      "persona": {
+        "language": "en",
+        "age": 41,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "I want a sourced overview of prevention offers and preparation of the next administrative step, first: breast screening program access",
+        "facts": {
+          "openingUtterance": "I want to do something for my health. I am a woman aged 41, live in Vienna and have ÖGK insurance. I have never joined breast screening. I use voice and captions only. Please explain how to join first, then help prepare a provider enquiry: mornings, English, step-free.",
+          "subject": {
+            "age": 41,
+            "carrier": "ÖGK",
+            "region": "Wien",
+            "residentInAustria": true,
+            "sexForProgram": "woman",
+            "breastScreeningWithin24Months": false,
+            "breastProgramActivated": false,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "voice_captions_only",
+          "selectedStep": "breast",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard. Use voice and captions only. Ask for spoken, captioned instructions without map pointing or visual-only controls."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "breast-optin"
+      ],
+      "offices": ["breast-program"],
+      "documents": ["breast-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["activate-breast"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "en",
+        "register": "standard",
+        "channel": "voice_captions_only",
+        "sources": ["language", "captions"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-16",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german", "pr"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 29, wohne in Innsbruck und bin nicht krankenversichert. Ich habe keine e-card und war noch nie bei der VU. Bitte zuerst erklären, wie ich den Anspruchsnachweis bekomme. Später suche ich eine Praxis: vormittags, Deutsch, stufenlos.",
+      "dimensions": ["german"],
+      "persona": {
+        "language": "de-AT",
+        "age": 29,
+        "carrier": "uninsured",
+        "region": "Innsbruck, Tirol",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: Anfrage bei der ÖGK zum Ersatzkrankenschein.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin 29, wohne in Innsbruck und bin nicht krankenversichert. Ich habe keine e-card und war noch nie bei der VU. Bitte zuerst erklären, wie ich den Anspruchsnachweis bekomme. Später suche ich eine Praxis: vormittags, Deutsch, stufenlos.",
+          "subject": {
+            "age": 29,
+            "carrier": "uninsured",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "not_stated",
+            "vuUsedInLastYear": false,
+            "ecardAvailable": false
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "voucher",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "nutrition-tirol",
+        "uninsured-checkup"
+      ],
+      "offices": ["oegk-tirol-voucher", "vu-provider"],
+      "documents": ["voucher-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["request-voucher"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-17",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "english"],
+    "input": {
+      "openingUtterance": "I want to do something for my health. I am a woman aged 50 living in Vienna, with ÖGK insurance. My last breast screening was three years ago. First help prepare a program appointment enquiry: afternoons, English if possible, step-free. I have my e-card but no invitation or referral.",
+      "dimensions": ["english"],
+      "persona": {
+        "language": "en",
+        "age": 50,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "I want a sourced overview of prevention offers and preparation of the next administrative step, first: breast screening program access",
+        "facts": {
+          "openingUtterance": "I want to do something for my health. I am a woman aged 50 living in Vienna, with ÖGK insurance. My last breast screening was three years ago. First help prepare a program appointment enquiry: afternoons, English if possible, step-free. I have my e-card but no invitation or referral.",
+          "subject": {
+            "age": 50,
+            "carrier": "ÖGK",
+            "region": "Wien",
+            "residentInAustria": true,
+            "sexForProgram": "woman",
+            "breastScreeningWithin24Months": false,
+            "breastProgramActivated": true,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "breast",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "colon-target",
+        "breast-standard"
+      ],
+      "offices": ["breast-program"],
+      "documents": ["breast-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-breast"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "en",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-18",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin eine Frau mit 42, BVAEB-versichert und wohne in Linz. Noch nie im Brustkrebs-Früherkennungsprogramm, e-card vorhanden. Bitte zuerst den freiwilligen Zugang erklären, später eine Praxis suchen: nachmittags, Deutsch, stufenlos.",
+      "dimensions": ["german"],
+      "persona": {
+        "language": "de-AT",
+        "age": 42,
+        "carrier": "BVAEB",
+        "region": "Linz, Oberösterreich",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: Zugang zum Brustkrebs-Früherkennungsprogramm.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin eine Frau mit 42, BVAEB-versichert und wohne in Linz. Noch nie im Brustkrebs-Früherkennungsprogramm, e-card vorhanden. Bitte zuerst den freiwilligen Zugang erklären, später eine Praxis suchen: nachmittags, Deutsch, stufenlos.",
+          "subject": {
+            "age": 42,
+            "carrier": "BVAEB",
+            "region": "Linz, Oberösterreich",
+            "residentInAustria": true,
+            "sexForProgram": "woman",
+            "breastScreeningWithin24Months": false,
+            "breastProgramActivated": false,
+            "ecardAvailable": true
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "breast",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "breast-optin"
+      ],
+      "offices": ["breast-program"],
+      "documents": ["breast-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["activate-breast"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-19",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "german"],
+    "input": {
+      "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin ein Mann, gerade 45, wohne in Wien und bin bei der SVS. Noch nie Darm-Früherkennung. Ich will die veröffentlichten Angebote kennen und zuerst ein Hausarztgespräch vorbereiten, nicht selbst einen Test auswählen. Vormittags, Deutsch, stufenlos.",
+      "dimensions": ["german"],
+      "persona": {
+        "language": "de-AT",
+        "age": 45,
+        "carrier": "SVS",
+        "region": "Wien",
+        "goal": "Ich möchte die belegten Vorsorgeangebote verstehen und den nächsten Verwaltungsschritt vorbereiten, zuerst: Vorbereitung einer Hausarztanfrage zum veröffentlichten Darmkrebs-Früherkennungsangebot.",
+        "facts": {
+          "openingUtterance": "Ich möchte etwas für meine Gesundheit tun. Ich bin ein Mann, gerade 45, wohne in Wien und bin bei der SVS. Noch nie Darm-Früherkennung. Ich will die veröffentlichten Angebote kennen und zuerst ein Hausarztgespräch vorbereiten, nicht selbst einen Test auswählen. Vormittags, Deutsch, stufenlos.",
+          "subject": {
+            "age": 45,
+            "carrier": "SVS",
+            "region": "Wien",
+            "residentInAustria": true,
+            "sexForProgram": "man"
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "colon",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "colon-target"
+      ],
+      "offices": ["gp"],
+      "documents": ["doctor-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-colon"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "de-AT",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  },
+  {
+    "id": "e4-s2-20",
+    "kind": "gold",
+    "tags": ["synthetic-persona", "nightly", "weekly", "english", "pr"],
+    "input": {
+      "openingUtterance": "I want to do something for my health. I am a woman aged 38, live in Innsbruck and have ÖGK insurance. My mother had breast cancer. I want to understand the published program access and prepare a doctor appointment to discuss my individual questions. Mornings, English if available, step-free. I do not have a documented recommendation.",
+      "dimensions": ["english"],
+      "persona": {
+        "language": "en",
+        "age": 38,
+        "carrier": "ÖGK",
+        "region": "Innsbruck, Tirol",
+        "goal": "I want a sourced overview of prevention offers and preparation of the next administrative step, first: GP enquiry for individual prevention questions",
+        "facts": {
+          "openingUtterance": "I want to do something for my health. I am a woman aged 38, live in Innsbruck and have ÖGK insurance. My mother had breast cancer. I want to understand the published program access and prepare a doctor appointment to discuss my individual questions. Mornings, English if available, step-free. I do not have a documented recommendation.",
+          "subject": {
+            "age": 38,
+            "carrier": "ÖGK",
+            "region": "Innsbruck, Tirol",
+            "residentInAustria": true,
+            "sexForProgram": "woman"
+          },
+          "actor": "self",
+          "register": "standard",
+          "channel": "workspace",
+          "selectedStep": "doctor",
+          "initiallyDisclosed": [
+            "subject.age",
+            "subject.carrier",
+            "subject.region",
+            "selectedStep",
+            "preferences"
+          ],
+          "followUpAnswers": {},
+          "preferences": {
+            "timeOfDay": "as stated in openingUtterance",
+            "providerLanguage": "as stated in openingUtterance",
+            "accessibility": "step-free"
+          },
+          "documentsKnown": "No findings or medical recommendations are supplied. Do not invent documents or medical history."
+        },
+        "style": "Begin with facts.openingUtterance exactly. Then answer only what is asked using facts.followUpAnswers; do not volunteer initially missing or conflicting facts before clarification. Accept a correct restatement of the goal. Do not invent facts. Your age/carrier/region describe the actor; use facts.subject for the person receiving help. Stop only after the overview and the selected sourced administrative next step are explained, without requiring a real booking. Requested register: standard."
+      }
+    },
+    "expected": {
+      "goal": ["confirm-goal"],
+      "benefits": [
+        "adult-checkup",
+        "vaccination-status",
+        "screening-overview",
+        "park-offer",
+        "nutrition-regional",
+        "nutrition-tirol",
+        "family-history-clinician"
+      ],
+      "offices": ["gp"],
+      "documents": ["doctor-documents"],
+      "forms": ["no-application-form"],
+      "nextActions": ["search-doctor"],
+      "boundary": ["administrative-boundary"],
+      "citations": ["cite-claims"],
+      "questions": {
+        "minimum": 0,
+        "requiredSlots": [],
+        "rationale": "No missing intake slots for the selected step; use the stated facts and preferences. Do not require a clinical history or other intake fields before this step.",
+        "sources": ["minimum", "appointments"]
+      },
+      "presentation": {
+        "language": "en",
+        "register": "standard",
+        "channel": "workspace",
+        "sources": ["language"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+      "passage": "Preventive check-up (Vorsorgeuntersuchung), vaccination status, screening programs by target group, Bewegt im Park, nutrition counseling, courses, regional prevention offers, appointment search"
+    }
+  }
+]
