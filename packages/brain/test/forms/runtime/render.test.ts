@@ -53,7 +53,7 @@ describe("FR-D6 real PDF output", () => {
     );
     expect(result.getForm().getTextField("shared").getText()).toBeUndefined();
   });
-  it("fills confirmed AcroForm values and clears pre-existing values and drafts", async () => {
+  it("fills confirmed and sourced draft values and clears unsourced drafts", async () => {
     const bytes = await original();
     const detected = await detectFields(bytes, { mode: "acroform", vision: "disabled" });
     const applicant = detected.fields.find(
@@ -73,8 +73,9 @@ describe("FR-D6 real PDF output", () => {
         approvalId: null,
       },
     };
+    // A draft from the person's own statement goes into the prepared PDF.
     const draft = await PDFDocument.load(await renderFormPdf(bytes, schema, fields));
-    expect(draft.getForm().getTextField(applicant.acro_field).getText()).toBeUndefined();
+    expect(draft.getForm().getTextField(applicant.acro_field).getText()).toBe("Ada Beispiel");
     const confirmed = await PDFDocument.load(
       await renderFormPdf(bytes, schema, {
         [applicant.id]: {

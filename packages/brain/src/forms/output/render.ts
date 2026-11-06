@@ -102,11 +102,17 @@ export async function renderFormPdf(
   );
   for (const field of schema.fields) {
     const entry = fields[field.id];
+    // Drafts filled from the person's own statements or confirmed facts carry provenance and are
+    // part of the prepared PDF; drafts without provenance are not.
+    const sourced = entry?.state === "draft" && Boolean(entry.provenance);
     if (
-      entry?.state !== "confirmed" ||
+      (entry?.state !== "confirmed" && !sourced) ||
+      !entry ||
       !writableField(field) ||
       (field.acro_field && restricted.has(field.acro_field))
     )
+      continue;
+    if (sourced && (!validFieldValue(field, entry.value) || typeof entry.value === "object"))
       continue;
     if (
       !validFieldValue(field, entry.value) ||
