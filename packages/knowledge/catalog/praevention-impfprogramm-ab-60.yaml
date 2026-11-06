@@ -1,0 +1,38 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: praevention-impfprogramm-ab-60
+name_de: Öffentliches Impfprogramm – Pneumokokken und Gürtelrose ab 60
+name_simple: Information zu kostenfreien Impfangeboten ab 60
+area: A
+life_situations:
+  - prevention
+scope: federal
+criteria:
+  - id: published-access
+    text_de: Kostenloser Programmzugang ab dem vollendeten 60. Lebensjahr bei
+      Krankenversicherung oder Wohnsitz in Österreich. Unter 60 prüft die Ärztin
+      oder der Arzt eine allfällige medizinische Indikation. Verfügbarkeit vorab
+      klären; keine Bewertung durch den Lotsen.
+    source: &a1
+      url: https://www.gesundheitskasse.at/cdscontent/load?contentid=10008.798702&version=1759924855
+      quote: Personen ab dem vollendeten 60. Lebensjahr
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers: []
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents: []
+forms: []
+process: ref:processes/praevention-impfprogramm-ab-60
+appointment_channels: []
+sources:
+  - *a1
+  - &a2
+    url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.890481&filter-preselect=%22Vorsorgen%22&portal=oegkportal
+    quote: Impfen ist ein wirksamer Schutz gegen bestimmte Infektionskrankheiten.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
+target_group:
+  age_min: 60
+  sex: all
+  rationale_text: Impfen ist ein wirksamer Schutz gegen bestimmte Infektionskrankheiten.
+  rationale_source: *a2

@@ -1,0 +1,43 @@
+# Awaiting human review; administrative access only.
+id: praevention-impfprogramm-ab-60
+benefit: ref:catalog/praevention-impfprogramm-ab-60
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: region
+    type: string
+    question_hint: In welchem Bundesland suchen Sie ein Angebot?
+steps:
+  - id: programme-information
+    needs: []
+    criteria: ref:catalog/praevention-impfprogramm-ab-60#criteria
+    outputs:
+      - id: published-programme
+        type: document
+    transitions:
+      - to: prepare-access
+  - id: prepare-access
+    needs:
+      - region
+    outputs:
+      - id: official-access
+        type: document
+    transitions:
+      - to: finish
+  - id: finish
+    needs: []
+    outputs:
+      - id: access-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.gesundheitskasse.at/cdscontent/load?contentid=10008.798702&version=1759924855
+    quote: Personen ab dem vollendeten 60. Lebensjahr
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.890481&filter-preselect=%22Vorsorgen%22&portal=oegkportal
+    quote: Impfen ist ein wirksamer Schutz gegen bestimmte Infektionskrankheiten.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
