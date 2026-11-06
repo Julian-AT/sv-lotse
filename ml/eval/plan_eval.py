@@ -10,6 +10,8 @@ numbers (T1) only from the multi-turn gym.
 
     uv run --extra train python -m eval.plan_eval --model Qwen/Qwen3-8B \
         [--adapter checkpoints/sft-qwen3-8b] --personas data/personas --split test --n 200
+    # personas from the published dataset (JulianAT/at-benefits, config `situations`):
+    uv run --extra train python -m eval.plan_eval --model Qwen/Qwen3-8B --personas hf --n 200
 """
 
 from __future__ import annotations
@@ -23,7 +25,7 @@ from pathlib import Path
 from typing import Any
 
 from eval.scoring import parse_plan, score_plan
-from sft.data import load_personas, plan_prompt
+from sft.data import load_hf_personas, load_personas, plan_prompt
 from sft.results import ML_ROOT, file_hash, write_result
 
 
@@ -130,7 +132,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--adapter", help="LoRA adapter dir from sft.train (fine-tuned model)")
-    ap.add_argument("--personas", type=Path, default=ML_ROOT / "data/personas")
+    ap.add_argument(
+        "--personas",
+        type=Path,
+        default=ML_ROOT / "data/personas",
+        help="persona dir/file, or 'hf' for JulianAT/at-benefits situations",
+    )
     ap.add_argument("--split", default="test")
     ap.add_argument("--n", type=int, default=200)
     ap.add_argument("--backend", choices=["transformers", "vllm"], default="transformers")
@@ -141,7 +148,13 @@ def main() -> None:
     ap.add_argument("--samples-out", type=Path, help="write per-persona rows as jsonl")
     args = ap.parse_args()
 
-    personas = load_personas(args.personas, [args.split])
+    hf_revision = None
+    if str(args.personas) == "hf":
+        personas, files, src = load_hf_personas(args.split, args.n)
+        data_hash, hf_revision = file_hash(*files), src.revision
+    else:
+        personas = load_personas(args.personas, [args.split])
+        data_hash = file_hash(args.personas)
     personas.sort(key=lambda p: str(p.get("id")))
     personas = personas[: args.n]
     kwargs = {"enable_thinking": False} if args.no_thinking else {}
@@ -163,7 +176,9 @@ def main() -> None:
         "model": args.model,
         "adapter": args.adapter,
         "split": args.split,
-        "data_hash": file_hash(args.personas),
+        "data_hash": data_hash,
+        "personas_source": str(args.personas),
+        "hf_revision": hf_revision,
         "persona_ids": [p.get("id") for p in personas],
         "metrics": summary,
     }

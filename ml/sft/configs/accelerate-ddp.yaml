@@ -1,0 +1,12 @@
+# 3×H100 data parallel (one full bf16 copy of the base per GPU + LoRA): the simplest layout that
+# works with PEFT for dense bases up to ~14B. Used by qwen3-8b-sft.yaml via ml/remote/run.sh.
+compute_environment: LOCAL_MACHINE
+distributed_type: MULTI_GPU
+num_processes: 3
+num_machines: 1
+machine_rank: 0
+mixed_precision: bf16
+gpu_ids: all
+main_training_function: main
+same_network: true
+use_cpu: false

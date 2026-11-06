@@ -1,0 +1,42 @@
+# Qwen3-8B LoRA SFT on the published AT-Benefits dialogues (HF JulianAT/at-benefits, config
+# `dialogues`, tiers O+A+B) plus single-turn plan examples from `situations`. 3×H100 with DDP:
+#   accelerate launch --config_file sft/configs/accelerate-ddp.yaml -m sft.train \
+#       --config sft/configs/qwen3-8b-sft.yaml
+# Driven end to end by ml/remote/run.sh; published with `python -m publish.model`.
+run: sv-lotse-qwen3-8b-sft
+hub_repo: sv-lotse-qwen3-8b-sft
+model: Qwen/Qwen3-8B
+licence: apache-2.0
+seed: 0
+num_gpus: 3
+max_length: 8192
+gradient_checkpointing: true
+attn_implementation: flash_attention_2 # falls back to sdpa when flash_attn is not installed
+chat_template_kwargs: { enable_thinking: false }
+assistant_start: "<|im_start|>assistant\n"
+turn_end: "<|im_end|>"
+lora:
+  r: 64
+  alpha: 128
+  dropout: 0.05
+  target_modules: all-linear
+data:
+  source: hf
+  repo: JulianAT/at-benefits
+  revision: null # null = latest commit, resolved and recorded at load time
+  tiers: [O, A, B]
+  splits: [train]
+  eval_split: val
+  eval_max: 300
+  tool_max_chars: 1500
+  plan_examples: 2000 # single-turn persona -> plan JSON (the format plan_eval scores)
+train:
+  epochs: 2
+  lr: 1.0e-4
+  scheduler: cosine
+  warmup_ratio: 0.03
+  per_device_batch: 1
+  grad_accum: 8 # effective batch 1 × 8 × 3 GPUs = 24 sequences
+  logging_steps: 10
+  eval_steps: 100
+  save_steps: 100 # LoRA checkpoints for resume (keeps the last 2)
