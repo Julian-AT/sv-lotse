@@ -8,6 +8,7 @@ import {
   matchBenefit,
   onlineApplyText,
   pageOwner,
+  requestHead,
 } from "../../src/conversation/apply-page.ts";
 
 const catalogDir = resolve(import.meta.dirname, "../../../knowledge/catalog");
@@ -38,6 +39,12 @@ describe("matchBenefit", () => {
     expect(matchBenefit(records, ["Krankengeld", "Pflegegeld"])?.id).toBe("oegk-krankengeld");
     expect(matchBenefit(records, ["Vorsorgeuntersuchung beantragen"])).toBeUndefined();
     expect(matchBenefit(records, ["Wie komme ich zu einer Wohnung?"])).toBeUndefined();
+  });
+
+  it("reads the request line, not the letter pasted below it", () => {
+    const text = "Krankengeld beantragen, bitte ausfüllen:\n\nEntlassungsbrief … Rehabilitation";
+    expect(matchBenefit(records, [requestHead(text)])?.id).toBe("oegk-krankengeld");
+    expect(matchBenefit(records, [text])?.id).toBe("medical-rehabilitation");
   });
 });
 

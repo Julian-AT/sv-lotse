@@ -24,6 +24,7 @@ import {
   openedApplyPage,
   pageTarget,
   rememberApplyPage,
+  requestHead,
 } from "./apply-page.ts";
 import {
   answerManyFields,
@@ -334,11 +335,20 @@ export async function prepareFormAfterOpen(input: {
   // show the way; the form follows on the after-open turn.
   const model = (input.data ?? input.fill)?.model;
   if (!url && model && !pageOpenedBefore(input.history)) {
-    const registered = benefitForm(texts);
-    const benefit =
-      registered || APPLY_REQUEST.test(lastUserText(input.history))
-        ? await catalogBenefit(db, texts).catch(() => undefined)
-        : undefined;
+    // The request lines name the benefit; a pasted letter below may mention others.
+    const heads = texts.map(requestHead);
+    const explicit = APPLY_REQUEST.test(lastUserText(input.history));
+    const lookup = async (candidates: readonly string[]) => {
+      const registered = benefitForm(candidates);
+      const benefit =
+        registered || explicit
+          ? await catalogBenefit(db, candidates).catch(() => undefined)
+          : undefined;
+      return { registered, benefit };
+    };
+    const fromHeads = await lookup(heads);
+    const { registered, benefit } =
+      fromHeads.registered || fromHeads.benefit ? fromHeads : await lookup(texts);
     const choice =
       registered || benefit
         ? await chooseApplyPage({

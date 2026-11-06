@@ -114,6 +114,11 @@ export function matchBenefit(
   return undefined;
 }
 
+/** The request part of a message: its first line, without a pasted letter below it. */
+export function requestHead(text: string): string {
+  return (text.trim().split("\n")[0] ?? "").slice(0, 300);
+}
+
 let catalog: Promise<CatalogRecord[]> | undefined;
 
 /** The catalog benefit for the conversation's newest topic text (catalog loaded once). */
