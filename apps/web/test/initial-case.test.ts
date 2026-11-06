@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { selectInitialCase } from "../src/conversation/initial-case.ts";
+import { findCase, normalizeCaseId, selectInitialCase } from "../src/conversation/initial-case.ts";
 import type { CaseSummary } from "../src/conversation/schemas.ts";
 
 const cases: CaseSummary[] = [
@@ -30,4 +30,12 @@ test("missing or inaccessible explicit conversation selections fail closed", () 
 test("the ordinary workspace still selects the latest available conversation", () => {
   expect(selectInitialCase(cases, "")).toBe(cases[0]);
   expect(selectInitialCase([], "")).toBeUndefined();
+});
+
+test("the mac app's upper-case case ids open the lower-case conversation", () => {
+  expect(selectInitialCase(cases, `?caseId=${cases[1]?.id.toUpperCase()}`)).toBe(cases[1]);
+  expect(findCase(cases, cases[0]?.id.toUpperCase() ?? "")).toBe(cases[0]);
+  expect(normalizeCaseId(" EC127314-6699-4E69-95F1-BF4AB16B6635 ")).toBe(
+    "ec127314-6699-4e69-95f1-bf4ab16b6635",
+  );
 });

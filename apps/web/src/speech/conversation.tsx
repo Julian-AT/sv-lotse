@@ -39,7 +39,8 @@ export function GuidanceConversation({ language }: { language: "de" | "en" }): J
     pending.current?.abort();
     const abort = new AbortController();
     pending.current = abort;
-    const selectedCase = new URL(window.location.href).searchParams.get("caseId") ?? caseId.current;
+    const selectedCase =
+      new URL(window.location.href).searchParams.get("caseId")?.toLowerCase() ?? caseId.current;
     if (selectedCase) guidance.setCaseId(selectedCase);
     guidance.beginTurn();
     setBusy(true);

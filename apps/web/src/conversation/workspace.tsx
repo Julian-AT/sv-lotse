@@ -15,11 +15,22 @@ import { useI18n } from "../i18n/provider.tsx";
 import { workspaceFetch } from "./api.ts";
 import { WORKSPACE_CONFIG } from "./config.ts";
 import { Conversation, type ConversationStart, DraftConversation } from "./conversation.tsx";
-import { selectInitialCase } from "./initial-case.ts";
+import { findCase, normalizeCaseId, selectInitialCase } from "./initial-case.ts";
 import { loadConversation } from "./load.ts";
 import { type CaseSummary, CaseSummarySchema, CasesResponseSchema } from "./schemas.ts";
 
 type ActiveCase = { summary: CaseSummary; messages: LotseMessage[] };
+
+/** The Mac dashboard switches conversations through this hook instead of reloading the web view. */
+type CaseSwitchWindow = Window & { __lotseSelectCase?: (id: string) => boolean };
+
+/** Keeps `?caseId=` in the address in sync (lower-case) without a router navigation. */
+function rememberCase(id: string): void {
+  const url = new URL(window.location.href);
+  if (url.searchParams.get("caseId") === id) return;
+  url.searchParams.set("caseId", id);
+  window.history.replaceState(window.history.state, "", url);
+}
 
 export function Workspace(): JSX.Element {
   const { t } = useI18n();
@@ -52,6 +63,34 @@ export function Workspace(): JSX.Element {
       if (version === generation.current) setLoading(false);
     }
   }, []);
+  const casesRef = useRef(cases);
+  casesRef.current = cases;
+  useEffect(() => {
+    const target = window as CaseSwitchWindow;
+    target.__lotseSelectCase = (id: string): boolean => {
+      const wanted = normalizeCaseId(id);
+      void (async () => {
+        let summary = findCase(casesRef.current, wanted);
+        if (!summary) {
+          const listed = CasesResponseSchema.parse(
+            await workspaceFetch(WORKSPACE_CONFIG.caseListApi),
+          ).cases;
+          setCases(listed);
+          summary = findCase(listed, wanted);
+        }
+        if (!summary) throw new Error("CASE_ACCESS_DENIED");
+        rememberCase(summary.id);
+        if (activeRef.current?.summary.id !== summary.id) await select(summary);
+      })().catch(() => {
+        setFailed(true);
+        setLoading(false);
+      });
+      return true;
+    };
+    return () => {
+      delete target.__lotseSelectCase;
+    };
+  }, [select]);
   useEffect(() => {
     const reset = (): void => {
       const current = activeRef.current;
@@ -75,7 +114,10 @@ export function Workspace(): JSX.Element {
         const result = CasesResponseSchema.parse(response).cases;
         setCases(result);
         const first = selectInitialCase(result, window.location.search);
-        if (first) await select(first);
+        if (first) {
+          if (new URLSearchParams(window.location.search).has("caseId")) rememberCase(first.id);
+          await select(first);
+        }
         else if (hasNativeBridge()) {
           const created = z
             .strictObject({ case: CaseSummarySchema })

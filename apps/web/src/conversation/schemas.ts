@@ -11,7 +11,9 @@ export const CaseSummarySchema = z.strictObject({
 export type CaseSummary = z.infer<typeof CaseSummarySchema>;
 export const CasesResponseSchema = z.strictObject({ cases: z.array(CaseSummarySchema) });
 export const FactsResponseSchema = z.strictObject({ facts: z.array(FactSchema) });
-export const CaseQuerySchema = z.strictObject({ caseId: z.uuid() });
+export const CaseQuerySchema = z.strictObject({
+  caseId: z.uuid().transform((id) => id.toLowerCase()),
+});
 export const FactProposalSchema = FactSchema.extend({
   value: z.string(),
   confirmed: z.literal(false),
