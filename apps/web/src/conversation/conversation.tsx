@@ -133,6 +133,16 @@ export function Conversation({
     subjectId: selectedCase.subjectId,
     onUploaded: (documentId) => {
       settled();
+      // A document stored while the form is open fills that form from its page text right away;
+      // the fact review below runs in parallel.
+      if (anyFormViewerMounted()) {
+        chat.clearError();
+        void chat.send(
+          i18n.locale === "en"
+            ? "Please take the details from the uploaded document."
+            : "Bitte übernimm die Daten aus dem hochgeladenen Dokument.",
+        );
+      }
       void extractUploaded(documentId);
     },
   });
@@ -155,15 +165,6 @@ export function Conversation({
       const result = await extractFacts(documentId, selectedCase.subjectId, selectedCase.id);
       setProposals((current) => [...current, ...result]);
       setLastUpload(undefined);
-      // A document dropped while the form popup is open fills that form right away.
-      if (anyFormViewerMounted()) {
-        chat.clearError();
-        void chat.send(
-          i18n.locale === "en"
-            ? "Please take the details from the uploaded document."
-            : "Bitte übernimm die Daten aus dem hochgeladenen Dokument.",
-        );
-      }
     } catch {
       setFactsError(true);
     } finally {

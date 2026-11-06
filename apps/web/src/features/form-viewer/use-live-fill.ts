@@ -160,9 +160,18 @@ export function useLiveFill(options: LiveFillOptions): {
 
   useEffect(() => {
     const onEscape = (event: KeyboardEvent): void => {
+      // Writing the next message in the chat while the form fills does not stop it; Escape does.
+      const target = event.target as HTMLElement | null;
+      const writing =
+        target?.isContentEditable === true || ["INPUT", "TEXTAREA"].includes(target?.tagName ?? "");
       if (
         event.key === "Escape" ||
-        (busy.current && !event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey)
+        (busy.current &&
+          !writing &&
+          !event.repeat &&
+          !event.ctrlKey &&
+          !event.metaKey &&
+          !event.altKey)
       )
         stop();
     };
