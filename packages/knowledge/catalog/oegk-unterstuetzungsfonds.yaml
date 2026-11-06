@@ -1,0 +1,107 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 43 (1-basiert), Druckseiten 85.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Freiwillige Unterstützung, keine Leistungszusage oder Berechnung.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-unterstuetzungsfonds
+name_de: Unterstützungsfonds
+name_simple: Hilfe bei hohen Gesundheitskosten beantragen
+area: F
+life_situations:
+  - illness
+  - low-income
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: hardship
+    text_de:
+      Versicherte können bei finanziellen Belastungen im Zusammenhang mit einer Krankheit oder
+      Behandlung, die zu einer Kassenleistung führt, einen freiwilligen Zuschuss beantragen.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=43
+      quote: Bei finanziellen Belastungen im Zusammenhang mit einer Krankheit oder medizinischen
+        Behandlung, die zu einer Kassenleistung führt, können Versicherte einen Zuschuss beantragen.
+        Dabei werden die Familien-, Einkommens- und Vermögensverhältnisse der betroffenen Person
+        berücksichtigt.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: household
+    text_de:
+      Familien-, Einkommens- und Vermögensverhältnisse werden berücksichtigt; Einkommensnachweise
+      aller Haushaltsmitglieder beilegen.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=43
+      quote:
+        Stellen Sie für einen Zuschuss aus dem Unterstützungsfonds einen schriftlichen Antrag und
+        legen Sie diesen den entsprechenden Unterlagen bei. Wesentlich sind unter anderem die
+        Einkommensnachweise von allen im gemeinsamen Haushalt lebenden Personen (z.B. Lohn- und
+        Gehaltszettel, Pensionsnachweis) sowie Rechnungen und Kostenvoranschläge.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: income
+    name_de: Einkommensnachweise aller Personen im gemeinsamen Haushalt
+    required: true
+    obtain_from: Jeweilige Arbeitgeber, Pensions- oder auszahlende Stellen
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=43
+      quote:
+        Stellen Sie für einen Zuschuss aus dem Unterstützungsfonds einen schriftlichen Antrag und
+        legen Sie diesen den entsprechenden Unterlagen bei. Wesentlich sind unter anderem die
+        Einkommensnachweise von allen im gemeinsamen Haushalt lebenden Personen (z.B. Lohn- und
+        Gehaltszettel, Pensionsnachweis) sowie Rechnungen und Kostenvoranschläge.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: costs
+    name_de: Rechnungen und Kostenvoranschläge
+    required: true
+    obtain_from: Behandelnde oder verrechnende Stellen
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=43
+      quote:
+        Stellen Sie für einen Zuschuss aus dem Unterstützungsfonds einen schriftlichen Antrag und
+        legen Sie diesen den entsprechenden Unterlagen bei. Wesentlich sind unter anderem die
+        Einkommensnachweise von allen im gemeinsamen Haushalt lebenden Personen (z.B. Lohn- und
+        Gehaltszettel, Pensionsnachweis) sowie Rechnungen und Kostenvoranschläge.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Antrag um Gewährung eines Zuschusses aus dem Unterstützungsfonds
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-unterstuetzungsfonds
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=43
+    quote: Bei finanziellen Belastungen im Zusammenhang mit einer Krankheit oder medizinischen
+      Behandlung, die zu einer Kassenleistung führt, können Versicherte einen Zuschuss beantragen.
+      Dabei werden die Familien-, Einkommens- und Vermögensverhältnisse der betroffenen Person
+      berücksichtigt.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=43
+    quote: Stellen Sie für einen Zuschuss aus dem Unterstützungsfonds einen schriftlichen Antrag und
+      legen Sie diesen den entsprechenden Unterlagen bei. Wesentlich sind unter anderem die
+      Einkommensnachweise von allen im gemeinsamen Haushalt lebenden Personen (z.B. Lohn- und
+      Gehaltszettel, Pensionsnachweis) sowie Rechnungen und Kostenvoranschläge.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870473&portal=oegkportal
+    quote:
+      Die Österreichische Gesundheitskasse (ÖGK) hilft in besonderen Notlagen im Zusammenhang mit
+      Gesundheitskosten und bietet deshalb freiwillige Zuschüsse aus dem Unterstützungsfonds an.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
