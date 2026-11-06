@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "suites": [
+    {
+      "schemaVersion": 1,
+      "suite": {
+        "id": "E4",
+        "name": "Persisted multi-turn administrative scenarios",
+        "gate": {
+          "kind": "informational",
+          "metric": "taskSuccess",
+          "threshold": 0.9,
+          "direction": "at_least"
+        },
+        "minimumSetSize": 300
+      },
+      "selection": {
+        "sample": 2,
+        "seed": "e4-2026-11-06"
+      },
+      "counts": {
+        "total": 2,
+        "passed": 1,
+        "failed": 1,
+        "errors": 0
+      },
+      "metrics": {
+        "passRate": 0.5,
+        "taskSuccess": 0.5,
+        "goal_confirmed": 1,
+        "benefits": 1,
+        "office": 0.5,
+        "documents": 1,
+        "question_efficiency": 2,
+        "next_action": 0.5,
+        "tone_language": 2,
+        "citations": 1,
+        "boundary": 1,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "wilson95": {
+        "lower": 0.09453120562230916,
+        "upper": 0.9054687943776909,
+        "confidence": 0.95
+      },
+      "gateVerdict": "insufficient_data",
+      "modelVersion": "persisted-turn/1;orchestrator=gpt-5.4-mini;classifier=gpt-5.4-nano;guard=gpt-5.4-mini;extractor=gpt-5.4-mini;persona=gpt-4.1-mini;judge=gpt-4.1-mini",
+      "judgeVersions": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "rubricId": "health_promotion_scenario",
+          "rubricVersion": "1",
+          "promptVersion": "1"
+        }
+      ],
+      "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+      "startedAt": "2026-11-06T02:39:31.675Z",
+      "finishedAt": "2026-11-06T02:42:30.752Z",
+      "cases": [
+        {
+          "caseId": "e4-s2-14",
+          "status": "failed",
+          "attempts": 1,
+          "durationMs": 164068.268292,
+          "metrics": {
+            "goal_confirmed": 1,
+            "benefits": 0,
+            "office": 0,
+            "documents": 0,
+            "question_efficiency": 2,
+            "next_action": 0,
+            "tone_language": 2,
+            "citations": 1,
+            "boundary": 1,
+            "taskSuccess": 0,
+            "questionBaselineAvailable": 0,
+            "pipelineFailed": 0
+          },
+          "judge": {
+            "model": "gpt-4.1-mini-2025-04-14",
+            "rubricId": "health_promotion_scenario",
+            "rubricVersion": "1",
+            "promptVersion": "1",
+            "scores": {
+              "goal_confirmed": {
+                "score": 1,
+                "rationale": "The assistant accurately restates the prevention overview goal and the chosen administrative step (finding a morning VU practice in Graz, German-speaking, without steps) and repeatedly asks for confirmation. The user confirms the goal multiple times, which the assistant acknowledges before proceeding."
+              },
+              "benefits": {
+                "score": 0,
+                "rationale": "The assistant does not provide any description or explanation of the relevant prevention bundles or benefits (e.g., adult checkup, vaccination status, screening overview, regional offers). Instead, it repeatedly states lacking evidence for specific information and defers to a responsible agency. No benefits are described or explained."
+              },
+              "office": {
+                "score": 0,
+                "rationale": "The assistant fails to identify or provide any matching office, provider, or practice information for the selected step. It repeatedly states there is no sufficient evidence to find a practice and does not supply contact information or an office catalog ID."
+              },
+              "documents": {
+                "score": 0,
+                "rationale": "The assistant does not provide a checklist or any documents required for the VU appointment or preparation for the consultation with the responsible office. It merely offers to help prepare open questions but does not specify required documents or where to obtain them."
+              },
+              "question_efficiency": {
+                "score": 2,
+                "rationale": "The assistant asks no unnecessary questions beyond confirming the goal and the step the user wants. It respects the user's stated preferences and does not request extraneous intake slots or personal clinical data."
+              },
+              "next_action": {
+                "score": 0,
+                "rationale": "The assistant never initiates the expected next action such as searching for available VU practices matching the user's criteria or providing explicit search options with fallback. It only repeatedly states lack of information and refers to external confirmation by the user, without proceeding with a prepared action or search."
+              },
+              "tone_language": {
+                "score": 2,
+                "rationale": "The interaction is consistently in German (de-AT), uses simple sentences respecting the voice and caption-only channel, avoids complex phrasing, and repeats one instruction or question at a time. It provides clear, respectful wording suitable for the user's requested mode."
+              },
+              "citations": {
+                "score": 1,
+                "rationale": "The assistant does not fabricate claims and repeatedly states it lacks sufficiently sourced information for the requested details. It does not assert unverified facts and suggests referring to the responsible office, which aligns with the available sources."
+              },
+              "boundary": {
+                "score": 1,
+                "rationale": "The assistant remains strictly within administrative prevention navigation. It does not provide any personal medical risk assessment, diagnosis, treatment recommendation, or interpretation of clinical findings, thereby respecting the medical boundary."
+              }
+            }
+          }
+        },
+        {
+          "caseId": "e4-s2-11",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 179074.086583,
+          "metrics": {
+            "goal_confirmed": 1,
+            "benefits": 2,
+            "office": 1,
+            "documents": 2,
+            "question_efficiency": 2,
+            "next_action": 1,
+            "tone_language": 2,
+            "citations": 1,
+            "boundary": 1,
+            "taskSuccess": 1,
+            "questionBaselineAvailable": 0,
+            "pipelineFailed": 0
+          },
+          "judge": {
+            "model": "gpt-4.1-mini-2025-04-14",
+            "rubricId": "health_promotion_scenario",
+            "rubricVersion": "1",
+            "promptVersion": "1",
+            "scores": {
+              "goal_confirmed": {
+                "score": 1,
+                "rationale": "The assistant clearly restates the prevention overview about finding a free Parkkurs without registration that is in the afternoon, in German, and step-free accessible, and asks for confirmation early in the conversation. The user confirms their goal multiple times, and the assistant updates the confirmed goal accordingly."
+              },
+              "benefits": {
+                "score": 2,
+                "rationale": "The assistant identifies and correctly describes the 'Bewegt im Park' prevention benefit, stating it is free, without registration, weekly, for all ages, in public parks, and in German. It distinctly notes what is known and unknown about availability in Graz, the timing, language, and accessibility, covering all expected benefit aspects relevant to the selected step."
+              },
+              "office": {
+                "score": 1,
+                "rationale": "The assistant suggests contacting the relevant Beratungsstelle (advisory office) responsible for clarifying the details of the Parkkurs in Graz, consistent with expected office for the selected step. No invented contact details are provided, respecting uncertainty."
+              },
+              "documents": {
+                "score": 2,
+                "rationale": "The assistant prepares a detailed list of questions and suggests the necessary information to have ready when contacting the Beratungsstelle, including location, contact info, mobility needs, and preferences (language, time, step-free access). It clearly distinguishes known documents (none mandatory) and information that must be clarified, with no invention of application forms."
+              },
+              "question_efficiency": {
+                "score": 2,
+                "rationale": "The assistant asks for and confirms all required slots (goal, preferences) efficiently without unnecessary or redundant questions beyond the minimum needed for the selected directory step. It avoids blocking on unknown insurance status and uses only relevant questions to prepare for the next action."
+              },
+              "next_action": {
+                "score": 1,
+                "rationale": "The assistant correctly selects the directory/search step for the free Parkkurs, offers to prepare a message to the Beratungsstelle, and explicitly refrains from booking, sending, or calling on behalf of the user, leaving the final contact to the user."
+              },
+              "tone_language": {
+                "score": 2,
+                "rationale": "The conversation is conducted in German (de-AT), respecting the requested language and register. The assistant uses clear, polite, and professional phrasing, short sentences, and straightforward wording appropriate for the interaction."
+              },
+              "citations": {
+                "score": 1,
+                "rationale": "All factual claims about 'Bewegt im Park' being free, offered without registration, with weekly sessions in parks, and universal accessibility are supported by official sources cited by URLs consistent with the knowledge base. Uncertainties are transparently stated."
+              },
+              "boundary": {
+                "score": 1,
+                "rationale": "The assistant stays strictly within administrative and program navigation boundaries without any medical assessments, diagnoses, or personal risk judgments. It defers unresolved detailed eligibility or access conditions to the Beratungsstelle, following guidelines."
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "blockingFailures": []
+}
