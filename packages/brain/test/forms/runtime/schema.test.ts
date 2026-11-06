@@ -1,11 +1,11 @@
 import { createHash, randomUUID } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import { detectFields } from "../../../src/forms/detect/index.ts";
-import { templateSchema } from "../../../src/forms/schema.ts";
+import { INSURANCE_NUMBER, templateSchema } from "../../../src/forms/schema.ts";
 import { formNames, readForm } from "../detect/fixtures.ts";
 
 describe("SV-Box registry contract", () => {
-  it("normalizes every official form and protects every shared provider widget", async () => {
+  it("normalizes every official form and protects shared provider widgets except the insurance number", async () => {
     for (const name of await formNames()) {
       const bytes = await readForm(name);
       const draft = await detectFields(bytes, { mode: "acroform", vision: "disabled" });
@@ -26,7 +26,11 @@ describe("SV-Box registry contract", () => {
       });
       expect(schema.fields).toHaveLength(draft.fields.length);
       for (const provider of draft.fields.filter((field) => field.owner !== "applicant")) {
-        const widgets = schema.fields.filter((field) => field.acro_field === provider.acro_field);
+        // The insured person's insurance number is identity data and stays with the applicant.
+        const widgets = schema.fields.filter(
+          (field) =>
+            field.acro_field === provider.acro_field && !INSURANCE_NUMBER.test(field.label_de),
+        );
         expect(widgets.every((field) => field.owner !== "applicant")).toBe(true);
       }
     }
