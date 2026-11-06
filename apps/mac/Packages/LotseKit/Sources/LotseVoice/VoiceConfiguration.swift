@@ -20,6 +20,8 @@ public enum VoiceConfiguration {
     /// A capture started from the chat's mic button sends itself after this long.
     public static let toggleCaptureLimit: Duration = .seconds(60)
     public static let segmentTimeout: Duration = .seconds(45)
+    /// An answer that starts speaking this soon after the question needs no acknowledgement.
+    public static let acknowledgementGrace: Duration = .milliseconds(500)
     /// The TTS socket opened at the question stays open this long for the answer's first sentence.
     public static let ttsInactivityTimeoutSeconds = 60
     public static let warmSocketLifetime: Duration = .seconds(50)

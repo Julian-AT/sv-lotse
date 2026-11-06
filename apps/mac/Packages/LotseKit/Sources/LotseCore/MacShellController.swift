@@ -108,6 +108,7 @@ public final class MacShellController {
             recording = false
             menu.setLanguage(settings.language)
             synchronizeProfileLanguage()
+            speech.prepareAcknowledgements(language: settings.language.providerLanguage)
             importPanel?.copy = ImportCopy(english: settings.language == .english)
             refreshMenuStatus()
         }

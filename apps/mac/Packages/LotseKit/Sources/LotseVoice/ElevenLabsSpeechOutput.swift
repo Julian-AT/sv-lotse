@@ -8,7 +8,7 @@ final class ElevenLabsSpeechOutput {
     private var pronunciationAliases: [VoiceAlias] = []
     private var socket: URLSessionWebSocketTask?
     private var turnID: String?
-    private var voiceID: String?
+    private(set) var voiceID: String?
     private var player: PCMStreamingPlayer?
     private var warm: Task<OpenedSocket?, Never>?
     private var warmLanguage: String?
@@ -131,6 +131,37 @@ final class ElevenLabsSpeechOutput {
         let socket = URLSession.shared.webSocketTask(with: address)
         socket.resume()
         return OpenedSocket(socket: socket, voice: voice, aliases: token.vocabulary?.pronunciationAliases ?? [], opened: .now)
+    }
+
+    /// Renders short fixed lines over one socket of their own, for playback later without the network.
+    func render(_ lines: [String], language: String) async throws -> (voice: String, clips: [Data]) {
+        let connection = try await open(language: Self.ttsLanguage(language))
+        let socket = connection.socket
+        let deadline = Task { @MainActor in
+            do { try await Task.sleep(for: VoiceConfiguration.segmentTimeout) } catch { return }
+            socket.cancel(with: .goingAway, reason: nil)
+        }
+        defer { deadline.cancel(); socket.cancel(with: .normalClosure, reason: nil) }
+        var clips: [Data] = []
+        for line in lines {
+            let context = UUID().uuidString
+            try await sendVoiceMessage(TTSText(text: line + " ", contextID: context), to: socket)
+            var clip = Data()
+            while true {
+                let event = try await receiveVoiceMessage(TTSAudio.self, from: socket)
+                if let message = event.error { throw VoiceProviderError(message: String(message.prefix(200))) }
+                guard event.contextId == context || event.contextId == nil else { continue }
+                if let audio = event.audio, audio.isEmpty == false {
+                    guard let data = Data(base64Encoded: audio) else { throw VoiceServiceError.invalidAudio }
+                    clip.append(data)
+                }
+                if event.isFinal == true { break }
+            }
+            guard clip.isEmpty == false else { throw VoiceProviderError(message: "leeres Audio für Stimme \(connection.voice)") }
+            try await sendVoiceMessage(TTSCloseContext(contextID: context), to: socket)
+            clips.append(clip)
+        }
+        return (connection.voice, clips)
     }
 
     nonisolated static func ttsLanguage(_ language: String) -> String { language.hasPrefix("en") ? "en" : "de" }

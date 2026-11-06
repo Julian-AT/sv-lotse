@@ -50,6 +50,7 @@ extension MacShellController {
                         let language: CompanionLanguage = profile.language == "en" ? .english : .german
                         if settings.language != language { settings.language = language }
                     }
+                    speech.prepareAcknowledgements(language: settings.language.providerLanguage)
                     refreshMenuStatus()
                 }
             }
