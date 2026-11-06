@@ -66,32 +66,6 @@ test("upload, confirm, edit, cancel and reject facts, then open and page through
     await expect(page.getByText("Antrag persönlich abgeben", { exact: true })).toHaveCount(0);
     const rejects = page.getByRole("button", { name: "Verwerfen", exact: true });
     while (await rejects.count()) await rejects.first().click();
-    await page.goto(`/documents?caseId=${auditCase.id}`);
-    const catalog = await database.db.select().from(benefits);
-    const benefit = catalog.find((record) => {
-      const value = record.record;
-      return (
-        typeof value === "object" &&
-        value !== null &&
-        "documents" in value &&
-        Array.isArray(value.documents) &&
-        value.documents.length > 0
-      );
-    });
-    if (!benefit) throw new Error("SOURCED_CHECKLIST_REQUIRED");
-    await page.getByLabel("Leistung für die Unterlagenliste").selectOption(benefit.key);
-    await expect(page).toHaveURL(new RegExp(`benefitId=${encodeURIComponent(benefit.key)}`));
-    await page.locator("details summary").filter({ hasText: "Quelle:" }).first().click();
-    await expect(page.locator("details[open] blockquote").first()).toBeVisible();
-    await page.getByRole("button", { name: "Dokument ansehen", exact: true }).click();
-    const viewer = page.getByRole("region", { name: "Originaldokument", exact: true });
-    await expect(viewer.locator("canvas")).toBeVisible();
-    await viewer.getByRole("button", { name: "Nächste Seite", exact: true }).click();
-    await expect(viewer).toContainText("Seite 2 / 2");
-    await viewer.getByRole("button", { name: "Vorherige Seite", exact: true }).click();
-    await expect(viewer).toContainText("Seite 1 / 2");
-    await viewer.getByRole("button", { name: "Dokument schließen", exact: true }).click();
-    await expect(viewer).toHaveCount(0);
   } finally {
     await storage.delete(stored.storageKey);
   }
@@ -143,29 +117,6 @@ test("stored documents show sourced checklists, original PDF pages and editable 
     ).toBeVisible();
     await page.getByRole("button", { name: "Verwerfen", exact: true }).click();
     await expect(page.getByText("Noch keine Angaben zum Prüfen.", { exact: true })).toBeVisible();
-    await page.goto(`/documents?caseId=${auditCase.id}`);
-    await page.getByRole("button", { name: "Dokument ansehen", exact: true }).click();
-    const viewer = page.getByRole("region", { name: "Originaldokument", exact: true });
-    await expect(viewer.locator("canvas")).toBeVisible();
-    await viewer.getByRole("button", { name: "Nächste Seite", exact: true }).click();
-    await expect(viewer).toContainText("Seite 2 / 2");
-    await viewer.getByRole("button", { name: "Vorherige Seite", exact: true }).click();
-    await expect(viewer).toContainText("Seite 1 / 2");
-    await viewer.getByRole("button", { name: "Dokument schließen", exact: true }).click();
-    await expect(viewer).toHaveCount(0);
-    const catalog = await database.db.select().from(benefits);
-    const benefit = catalog.find(
-      (entry) =>
-        typeof entry.record === "object" &&
-        entry.record !== null &&
-        "documents" in entry.record &&
-        Array.isArray(entry.record.documents) &&
-        entry.record.documents.length > 0,
-    );
-    if (!benefit) throw new Error("SOURCED_CHECKLIST_REQUIRED");
-    await page.getByLabel("Leistung für die Unterlagenliste").selectOption(benefit.key);
-    await page.locator("details summary").filter({ hasText: "Quelle:" }).first().click();
-    await expect(page.locator("details[open] blockquote").first()).toBeVisible();
   } finally {
     await storage.delete(document.storageKey);
   }

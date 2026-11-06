@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { createDatabase } from "@lotse/db";
 import {
   approvals,
@@ -48,7 +47,6 @@ test("@demo @live Scenario 3 imports the original, confirms the goal and prepare
   let subjectId: string | undefined;
   let selectedBenefitId = "";
   let responsibilityStepId = "";
-  let selectedFacilityId = "";
   const browserErrors: string[] = [];
   page.on("pageerror", () => browserErrors.push("BROWSER_RUNTIME_ERROR"));
   try {
@@ -292,7 +290,6 @@ test("@demo @live Scenario 3 imports the original, confirms the goal and prepare
       const facilities = facilitySchema.parse(await requireTool(page, caseId, "facility.search"));
       const facility = facilities[0];
       if (!facility) throw new Error("FACILITY_MISSING");
-      selectedFacilityId = facility.id;
       await say(
         page,
         `Bitte suchen Sie mit appointment.search Kontaktmöglichkeiten zur Einrichtung „${facility.title}“ mit facilityIds ["${facility.id}"]. Ich möchte in den nächsten vier Wochen vormittags anfragen, Ausgangsort Wien, maximal 100 km, Sprache Deutsch, keine zusätzlichen Zugänglichkeitswünsche. Ich werde selbst Kontakt aufnehmen; nichts versenden oder buchen.`,
@@ -310,7 +307,7 @@ test("@demo @live Scenario 3 imports the original, confirms the goal and prepare
       expect(prepared.callSheet).toContain(facility.title);
     });
 
-    await test.step("Complete only the clarified responsibility step and show the durable journey", async () => {
+    await test.step("Complete only the clarified responsibility step", async () => {
       await say(
         page,
         `Die zuständige Anlaufstelle und die Kontaktentwürfe sind jetzt geklärt. Bitte schließen Sie mit process.completeStep nur den ersten Verwaltungsschritt ${responsibilityStepId} zur Zuständigkeitsklärung ab, mit meiner Aussage als Beleg (type user_statement). Bereiten Sie dann mit process.nextStep den nächsten offenen Schritt vor. Der medizinische Teil fehlt noch und der Antrag wurde nicht eingereicht.`,
@@ -319,33 +316,6 @@ test("@demo @live Scenario 3 imports the original, confirms the goal and prepare
       const steps = await database.db.select().from(caseSteps).where(eq(caseSteps.caseId, caseId));
       expect(steps.find((step) => step.id === responsibilityStepId)?.status).toBe("completed");
       expect(steps.some((step) => step.status !== "completed")).toBe(true);
-      await page.goto(`/journey?caseId=${caseId}`);
-      await expect(page.getByText("Erledigt", { exact: true }).first()).toBeVisible();
-      await page.screenshot({ path: testInfo.outputPath("journey.png"), fullPage: true });
-      await page.goto(`/documents?caseId=${caseId}`);
-      await expect(page.getByRole("heading", { name: "Vorliegende Unterlagen" })).toBeVisible();
-      await page.goto(`/offers?caseId=${caseId}`);
-      await expect(page.getByRole("button", { name: "Karte laden", exact: true })).toBeVisible();
-      await page.getByRole("button", { name: "Karte laden", exact: true }).click();
-      await expect(page.getByRole("region", { name: "Karte der Einrichtungen" })).toBeVisible();
-      await page.goto(
-        `/appointments?caseId=${caseId}&facilityId=${encodeURIComponent(selectedFacilityId)}`,
-      );
-      await page.getByRole("button", { name: "Entwürfe vorbereiten", exact: true }).click();
-      await expect(
-        page.getByRole("textbox", { name: "Spickzettel für den Anruf", exact: true }),
-      ).toHaveValue(/.+/u);
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const date = tomorrow.toISOString().slice(0, 10);
-      await page.getByLabel("Beginn (Ihre Ortszeit)").fill(`${date}T09:00`);
-      await page.getByLabel("Ende (Ihre Ortszeit)").fill(`${date}T09:30`);
-      const downloadEvent = page.waitForEvent("download");
-      await page.getByRole("button", { name: ".ics herunterladen", exact: true }).click();
-      const download = await downloadEvent;
-      const calendar = testInfo.outputPath("appointment.ics");
-      await download.saveAs(calendar);
-      expect(await readFile(calendar, "utf8")).toContain("STATUS:TENTATIVE");
       expect(browserErrors).toEqual([]);
       expect((await outputs(page, caseId, "appointment.prepare")).length).toBeGreaterThan(0);
     });

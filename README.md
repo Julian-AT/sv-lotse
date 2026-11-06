@@ -41,7 +41,7 @@ flowchart LR
 
 | Part | Role |
 | --- | --- |
-| `apps/web` | Next.js App Router. The workspace UI is the only conversation client (AI SDK UI `useChat`), in the browser and inside the Mac app. Route handlers under `src/app/api` host the brain, anonymous sessions and voice-token minting; they contain no business logic. |
+| `apps/web` | Next.js App Router. There is no standalone website: the workspace chat (AI SDK UI `useChat`) is served only to the Mac app's web view, plus the helper pages for relatives mode. Route handlers under `src/app/api` host the brain, anonymous sessions and voice-token minting; they contain no business logic. |
 | `apps/mac` | SwiftUI/AppKit menu-bar app derived from Clicky (MIT). A capability provider for the embedded workspace: push-to-talk, screen capture and OCR, speech playback, the companion cursor, encrypted upload queue, guided portal windows and relatives screen sharing. It holds no provider key, no conversation logic and no fact store. |
 | `packages/brain` | Agent runtime (AI SDK `ToolLoopAgent` with tool approvals), process engine, retrieval, context assembly, form engine, guards, model router and persistence. |
 | `packages/protocol` | Zod schemas for every message between brain and clients, with generated JSON Schema and Swift types. |
@@ -93,7 +93,8 @@ For the Mac app, `scripts/local/start.sh` does all of this idempotently in a sep
 database, builds the web app and serves it on :3000 in the background (log: `../sv-lotse-local.log`).
 `LOTSE_PROVIDER_ENV_FILE` may point at a file with `OPENAI_BASE_URL`/`OPENAI_API_KEY` for a compatible endpoint.
 
-Run the workspace and open <http://localhost:3000>:
+Run the server (API, embedded chat and helper pages; the chat opens only in the Mac app, `/` is a
+service notice):
 
 ```sh
 bun run --filter @lotse/web dev

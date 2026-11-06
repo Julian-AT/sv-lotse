@@ -236,12 +236,6 @@ test("FR-D5 recorded tools fill beside chat, confirm, stop and save corrections 
       ),
     ).toEqual([]);
     expect(requests).toBe(4);
-    for (const surface of ["documents", "journey"]) {
-      await page.goto(`/${surface}?caseId=${caseId}`);
-      await expect(
-        page.getByRole("link", { name: "Formular öffnen", exact: true }),
-      ).toHaveAttribute("href", `/forms/${instanceId}`);
-    }
   } finally {
     await database.sql`DELETE FROM subject WHERE id = ${subjectId}`;
     await database.sql`DELETE FROM form_template WHERE id = ${templateId}`;

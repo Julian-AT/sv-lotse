@@ -5,7 +5,7 @@ import { PDFDocument } from "pdf-lib";
 import { seedApproval } from "./approval-fixture.ts";
 import { database, expect, storage, test } from "./fixtures.ts";
 
-for (const screen of ["forms", "workspace", "case"] as const) {
+for (const screen of ["workspace"] as const) {
   for (const approved of [true, false]) {
     test(`${screen} ${approved ? "approves" : "declines"} a signed form group through the real brain`, async ({
       page,
@@ -50,15 +50,9 @@ for (const screen of ["forms", "workspace", "case"] as const) {
           fieldIds: ["name"],
           values: { name: "Ada" },
         });
-        await page.goto(
-          screen === "forms"
-            ? `/forms/${instanceId}`
-            : screen === "case"
-              ? `/cases/${auditCase.id}`
-              : "/workspace",
-        );
-        const label = approved ? (screen === "case" ? "Bestätigen" : "Zustimmen") : "Ablehnen";
-        if (screen === "workspace" && approved) {
+        await page.goto("/workspace");
+        const label = approved ? "Zustimmen" : "Ablehnen";
+        if (approved) {
           await expect(page.getByRole("button", { name: label, exact: true })).toBeVisible();
           const settings = page.locator("header details");
           await settings.locator("summary").click();
@@ -82,13 +76,7 @@ for (const screen of ["forms", "workspace", "case"] as const) {
             return row?.state;
           })
           .toBe(approved ? "confirmed" : "draft");
-        if (screen === "forms" && approved)
-          await expect(
-            page.getByLabel("Formularfelder").getByText("Bestätigt", { exact: true }),
-          ).toBeVisible();
-        if (screen === "forms")
-          await expect(page.getByRole("button", { name: label, exact: true })).toBeDisabled();
-        else await expect(page.getByRole("button", { name: label, exact: true })).toHaveCount(0);
+        await expect(page.getByRole("button", { name: label, exact: true })).toHaveCount(0);
       } finally {
         await database.sql`DELETE FROM form_instance WHERE id = ${instanceId}`;
         await database.sql`DELETE FROM form_template WHERE id = ${templateId}`;

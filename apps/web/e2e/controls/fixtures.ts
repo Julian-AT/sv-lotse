@@ -24,7 +24,7 @@ export const test = base.extend<
     { scope: "worker", auto: true },
   ],
   auditCase: async ({ page }, use) => {
-    await page.goto("/");
+    await page.goto("/workspace");
     const identity = z
       .object({ userId: z.uuid() })
       .parse(await (await page.request.post("/api/session")).json());

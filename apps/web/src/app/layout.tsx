@@ -46,13 +46,13 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             {copy.skip}
           </a>
           <header className={styles.siteHeader}>
-            <a className={styles.wordmark} href="/">
+            <span className={styles.wordmark}>
               <Image src="/brand/sv-logo.png" alt="" width={44} height={44} unoptimized />
               <span>{brandCopy[language].name}</span>
-            </a>
+            </span>
             <nav aria-label={copy.navigation}>
               <a
-                href="/?lang=de"
+                href="?lang=de"
                 lang="de"
                 hrefLang="de"
                 aria-current={locale === "de" ? "page" : undefined}
@@ -60,7 +60,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                 {t("preferences.german")}
               </a>
               <a
-                href="/?lang=en"
+                href="?lang=en"
                 lang="en"
                 hrefLang="en"
                 aria-current={locale === "en" ? "page" : undefined}
@@ -68,7 +68,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
                 {t("preferences.english")}
               </a>
               <a
-                href="/?lang=de-simple"
+                href="?lang=de-simple"
                 lang="de"
                 hrefLang="de"
                 aria-current={locale === "de-simple" ? "page" : undefined}

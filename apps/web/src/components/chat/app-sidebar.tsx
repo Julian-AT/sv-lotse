@@ -60,7 +60,7 @@ export function AppSidebar({
                 className="size-8 !px-0 items-center justify-center group-data-[collapsible=icon]:group-hover/logo:opacity-0"
                 tooltip="SV KI-Lotse"
               >
-                <Link aria-label={labels.home} href="/" onClick={closeMobile}>
+                <Link aria-label={labels.home} href="/workspace" onClick={closeMobile}>
                   <MessageSquareIcon className="size-4 text-sidebar-foreground/50" />
                 </Link>
               </SidebarMenuButton>
@@ -146,7 +146,7 @@ export function AppSidebar({
               className="h-8 rounded-lg text-[13px] text-sidebar-foreground/60 hover:text-sidebar-foreground"
               tooltip={labels.home}
             >
-              <Link href="/" onClick={closeMobile}>
+              <Link href="/workspace" onClick={closeMobile}>
                 <HomeIcon className="size-4" />
                 <span>{labels.home}</span>
               </Link>

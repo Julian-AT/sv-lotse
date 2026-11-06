@@ -4,8 +4,13 @@ Run commands from the repository root with Node 22 on `PATH`. Bun runs the packa
 
 ## Workspace pages
 
-Routes: `/cases`, `/journey`, `/documents`, `/offers`, `/appointments`. The home page links to
-the workspace. Pages support German and English, the existing language cookie and keyboard use.
+There is no standalone website. The server provides the API (`src/app/api`), the chat at
+`/workspace` that the SV KI-Lotse Mac app embeds, and the helper pages (`/helper`,
+`/invite/[token]`). `/` answers with a one-line service notice. `/workspace` and
+`/workspace/helpers` (invite link and helper admission, opened from the Mac preferences) are
+served only to the Mac web view, which appends `SVKILotseMac/` to its user agent; browsers get a
+short "Bitte öffnen Sie SV KI-Lotse in der Mac-App" page. The Playwright configs send that user
+agent. Pages support German and English, the existing language cookie and keyboard use.
 
 The session-protected `/api/workspace` endpoint reads real Postgres context through
 `@lotse/brain/workspace`. `caseId` selects an owned case; `benefitId` selects a catalog checklist.
@@ -256,7 +261,7 @@ Run `bun run --filter @lotse/web dev` from the repository root. The app loads ro
 ## Remote helpers (FR-R1–R5)
 
 1. Run `docker compose up -d --wait` and `bun run --filter @lotse/db db:migrate`.
-2. Open an existing case in the workspace or Helpers settings. Choose screen only, screen plus
+2. In the Mac app open Settings → Helpers → **Hilfsperson einladen** (`/workspace/helpers`). Choose screen only, screen plus
    case overview, or screen plus case and individually selected saved facts, then invite the helper.
 3. Copy the link to the helper. It expires after 15 minutes and can be claimed by one
    browser. The helper opens it and requests admission. The inviting browser must approve.
@@ -415,11 +420,7 @@ whitespace only and rejects ambiguous matches. Stored OCR fallback accepts pages
 and top-left page coordinates. Unknown metadata falls back to the PDF text layer; an unmatched
 quote produces an explicit status instead of an approximate highlight.
 
-Run `bun run e2e --config playwright.source.config.ts` against a running app (default
-`http://localhost:4343`, override `SOURCE_TEST_URL`). This test uses real Postgres, MinIO and an
-original SV-Box PDF, with a test-only controlled speech clock. It checks source geometry,
-playback timing below 600 ms for an already displayed page, persistence on stop and access denial
-for another session. Remote Chromium uses `PW_TEST_CONNECT_WS_ENDPOINT` as in other browser tests.
+The former source-highlight browser spec was removed with the standalone documents page.
 
 ## Grouped settings
 
