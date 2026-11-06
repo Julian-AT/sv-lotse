@@ -73,14 +73,15 @@ function PureMultimodalInput({
     [importer],
   );
 
+  // While a turn runs the parent queues the text and sends it when the turn ends.
   const handlePromptSubmit = useCallback(() => {
-    if (!input.trim() || busy || disabled) {
+    if (!input.trim() || disabled) {
       return;
     }
     sendMessage(input.trim());
     setInput("");
     textareaRef.current?.focus();
-  }, [busy, disabled, input, sendMessage, setInput]);
+  }, [disabled, input, sendMessage, setInput]);
 
   const { file, status: uploadStatus } = importer;
 

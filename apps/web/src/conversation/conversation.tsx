@@ -2,6 +2,7 @@
 
 import type { LotseMessage } from "@lotse/brain";
 import type { Fact } from "@lotse/protocol";
+import { isToolUIPart } from "ai";
 import { type JSX, useEffect, useRef, useState } from "react";
 import { ChatHeader } from "@/components/chat/chat-header";
 import { Messages } from "@/components/chat/messages";
@@ -114,6 +115,8 @@ export function Conversation({
   const [lastUpload, setLastUpload] = useState<string>();
   const [extracting, setExtracting] = useState(false);
   const [dock, setDock] = useState<HTMLDivElement | null>(null);
+  /** Written while a turn is running: sent as soon as the turn ends, never dropped. */
+  const [queued, setQueued] = useState<string>();
   const settled = (): void => {
     onSettled();
   };
@@ -182,11 +185,33 @@ export function Conversation({
     };
   }, [selectedCase.id, selectedCase.subjectId, busy]);
   const submit = (text: string, reply = false): void => {
-    if (!text.trim() || busy || awaiting) return;
+    const trimmed = text.trim();
+    if (!trimmed || awaiting) return;
     setInput("");
+    if (busy) {
+      setQueued((current) => (current ? `${current}\n${trimmed}` : trimmed));
+      return;
+    }
     chat.clearError();
-    void chat.send(text.trim(), reply);
+    void chat.send(trimmed, reply);
   };
+  // A tool call still waiting for the app belongs to the running turn; a send would supersede it.
+  const waitingForApp =
+    last?.role === "assistant" &&
+    last.parts.some(
+      (part) =>
+        isToolUIPart(part) &&
+        (part.state === "input-streaming" || part.state === "input-available"),
+    );
+  const sendQueued = !busy && !awaiting && !waitingForApp ? queued : undefined;
+  const send = chat.send;
+  const clearError = chat.clearError;
+  useEffect(() => {
+    if (!sendQueued) return;
+    setQueued(undefined);
+    clearError();
+    void send(sendQueued);
+  }, [sendQueued, send, clearError]);
   const started = useRef(false);
   useEffect(() => {
     if (started.current || !autoStart) return;
@@ -297,6 +322,27 @@ export function Conversation({
               )}
               {!busy && !awaiting && (
                 <OpenOfferReplies messages={chat.messages} onReply={(text) => submit(text, true)} />
+              )}
+              {queued && (
+                <div
+                  className="flex items-center gap-3 rounded-xl border border-border/60 bg-muted/60 px-3.5 py-2 text-[0.8125rem]"
+                  role="status"
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="text-muted-foreground">{t("workspace.queued")}</span>{" "}
+                    <span className="line-clamp-2 [overflow-wrap:anywhere]">{queued}</span>
+                  </span>
+                  <UiButton
+                    onClick={() => {
+                      setInput(input.trim() ? `${queued}\n${input}` : queued);
+                      setQueued(undefined);
+                    }}
+                    size="sm"
+                    variant="ghost"
+                  >
+                    {t("workspace.queuedEdit")}
+                  </UiButton>
+                </div>
               )}
               <MultimodalInput
                 disabled={awaiting}
