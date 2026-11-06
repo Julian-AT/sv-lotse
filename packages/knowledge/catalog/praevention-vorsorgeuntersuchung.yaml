@@ -1,0 +1,87 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: praevention-vorsorgeuntersuchung
+name_de: Vorsorgeuntersuchung
+name_simple: Gesundheits-Check für Erwachsene
+area: A
+life_situations:
+  - prevention
+scope: social_insurance
+criteria:
+  - id: published-access
+    text_de: Ab 18 Jahren mit Wohnsitz in Österreich einmal jährlich kostenlos. Auch
+      ohne Krankenversicherung ist der Zugang über einen Ersatzkrankenschein der
+      ÖGK möglich.
+    source: &a1
+      url: https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung.html
+      quote: Die Vorsorgeuntersuchung bietet allen Personen ab dem 18. Lebensjahr mit
+        Wohnsitz in Österreich einmal pro Jahr ein umfangreiches
+        Untersuchungsprogramm.
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers:
+  - oegk
+  - svs
+  - bvaeb
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents:
+  - id: entitlement-proof
+    name_de: "e-card oder Ersatzkrankenschein als Anspruchsnachweis"
+    required: true
+    obtain_from: "Eigene e-card; ohne Krankenversicherung stellt die für den Wohnsitz zuständige Landesstelle der ÖGK einen Ersatzkrankenschein aus."
+    source: &doc1
+      url: "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html"
+      quote: "Als Anspruchsnachweis ist Ihre e-card oder der Ersatzkrankenschein erforderlich."
+      retrieved_at: "2026-11-06T03:45:00Z"
+  - id: previous-findings
+    name_de: "Befunde vorausgegangener Untersuchungen"
+    required: false
+    obtain_from: "Eigene Unterlagen oder die Stelle, die die frühere Untersuchung durchgeführt hat"
+    source: &doc2
+      url: "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html"
+      quote: "Zusätzlich empfiehlt es sich, alte Befunde von vorausgegangenen Untersuchungen mitzubringen."
+      retrieved_at: "2026-11-06T03:45:00Z"
+  - id: previous-letter
+    name_de: "Arztbrief einer früheren Vorsorgeuntersuchung"
+    required: false
+    obtain_from: "Eigene Unterlagen aus der früheren Vorsorgeuntersuchung"
+    source: &doc3
+      url: "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html"
+      quote: "Haben Sie schon einmal eine Vorsorgeuntersuchung in Anspruch genommen, nehmen Sie den Arztbrief mit, den Sie damals erhalten haben."
+      retrieved_at: "2026-11-06T03:45:00Z"
+  - id: medication-list
+    name_de: "Liste der regelmäßig eingenommenen Medikamente"
+    required: false
+    obtain_from: "Selbst erstellen"
+    source: &doc4
+      url: "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html"
+      quote: "Nehmen Sie eine Liste all jener Medikamente mit, die Sie regelmäßig einnehmen."
+      retrieved_at: "2026-11-06T03:45:00Z"
+forms: []
+process: ref:processes/praevention-vorsorgeuntersuchung
+appointment_channels:
+  - kind: phone
+    number: 0800 501 522
+    verified_at: 2026-11-06
+sources:
+  - *a1
+  - &a2
+    url: https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html
+    quote: Ziel der Vorsorgeuntersuchung ist auch, die Häufigkeit von
+      Herz-Kreislauf- und Krebserkrankungen sowie die Todesfälle zu senken.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - *doc1
+  - *doc2
+  - *doc3
+  - *doc4
+  - url: "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html"
+    quote: "Auch nicht krankenversicherte Personen können die Vorsorgeuntersuchung in Anspruch nehmen, wenn sie sich bei der für ihren Wohnsitz zuständigen Landesstelle der Österreichischen Gesundheitskasse einen Ersatzkrankenschein für die Untersuchung ausstellen lassen."
+    retrieved_at: "2026-11-06T03:45:00Z"
+as_of: 2026-11-06
+target_group:
+  age_min: 18
+  sex: all
+  interval: einmal pro Jahr
+  rationale_text: Ziel der Vorsorgeuntersuchung ist auch, die Häufigkeit von
+    Herz-Kreislauf- und Krebserkrankungen sowie die Todesfälle zu senken.
+  rationale_source: *a2

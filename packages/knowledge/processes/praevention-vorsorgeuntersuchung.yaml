@@ -1,0 +1,46 @@
+# Awaiting human review; administrative access only.
+id: praevention-vorsorgeuntersuchung
+benefit: ref:catalog/praevention-vorsorgeuntersuchung
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: region
+    type: string
+    question_hint: In welchem Bundesland suchen Sie ein Angebot?
+steps:
+  - id: programme-information
+    needs: []
+    criteria: ref:catalog/praevention-vorsorgeuntersuchung#criteria
+    outputs:
+      - id: published-programme
+        type: document
+    transitions:
+      - to: prepare-access
+  - id: prepare-access
+    needs:
+      - region
+    outputs:
+      - id: official-access
+        type: document
+    transitions:
+      - to: finish
+  - id: finish
+    needs: []
+    outputs:
+      - id: access-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung.html
+    quote: Die Vorsorgeuntersuchung bietet allen Personen ab dem 18. Lebensjahr mit
+      Wohnsitz in Österreich einmal pro Jahr ein umfangreiches
+      Untersuchungsprogramm.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html
+    quote: Ziel der Vorsorgeuntersuchung ist auch, die Häufigkeit von
+      Herz-Kreislauf- und Krebserkrankungen sowie die Todesfälle zu senken.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
