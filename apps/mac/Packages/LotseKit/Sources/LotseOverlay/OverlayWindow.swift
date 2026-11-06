@@ -44,6 +44,24 @@ public enum AnnotationStyle: String, Sendable {
     case arrow, circle, rectangle, numbered, highlight
 }
 
+/// One frame of a guided page tour: where the cursor hovers, the block it outlines and its words.
+/// While a tour runs it owns the cursor: other steps and speech clearing the overlay cannot pull the
+/// cursor back to the mouse until the tour ends.
+public struct TourFrame: Equatable, Sendable {
+    public var point: CGPoint
+    public var highlight: CGRect?
+    public var caption: String
+    /// The cursor shows a scroll gesture while the page moves under it.
+    public var scrolling: Bool
+
+    public init(point: CGPoint, highlight: CGRect?, caption: String, scrolling: Bool = false) {
+        self.point = point
+        self.highlight = highlight
+        self.caption = caption
+        self.scrolling = scrolling
+    }
+}
+
 public struct OverlayAnnotation: Equatable, Sendable {
     public let rect: CGRect
     public let style: AnnotationStyle
@@ -80,7 +98,12 @@ public final class OverlayState {
     public var listeningEnglish = false
     /// True while the cursor flies along its arc; following and easing are off then.
     public var isFlying = false
+    /// The running page tour; it wins over `target`, `annotation` and `caption` until it ends (nil).
+    public var tour: TourFrame?
     public init() {}
+
+    /// Where the cursor is headed: the tour, else the current step, else nil (follow the mouse).
+    public var goal: CGPoint? { tour?.point ?? target }
 
     public var cursorMode: CursorMode {
         switch listening.phase {
@@ -103,6 +126,8 @@ public final class OverlayWindowManager {
     private var windows: [OverlayWindow] = []
     private var animationTask: Task<Void, Never>?
     public private(set) var isDrawing = false
+    /// The overlay windows are on screen.
+    public var isShowing: Bool { windows.isEmpty == false }
     public var onSelection: ((CircleSelection) -> Void)?
     private var localEscapeMonitor: Any?
     private var globalEscapeMonitor: Any?
@@ -141,9 +166,9 @@ public final class OverlayWindowManager {
         var started = ContinuousClock.now
         while Task.isCancelled == false {
             let mouse = NSEvent.mouseLocation
-            if lastTarget != state.target {
-                lastTarget = state.target
-                flight = CursorFlight(start: state.position, end: state.target ?? CGPoint(x: mouse.x + 25, y: mouse.y - 25))
+            if lastTarget != state.goal {
+                lastTarget = state.goal
+                flight = CursorFlight(start: state.position, end: state.goal ?? CGPoint(x: mouse.x + 25, y: mouse.y - 25))
                 started = .now
             }
             if let current = flight {
@@ -159,7 +184,7 @@ public final class OverlayWindowManager {
                 state.isFlying = flight != nil
             } else {
                 state.isFlying = false
-                state.position = state.target ?? CGPoint(x: mouse.x + 25, y: mouse.y - 25)
+                state.position = state.goal ?? CGPoint(x: mouse.x + 25, y: mouse.y - 25)
                 state.rotation = -35
                 state.scale = 1
             }
@@ -250,8 +275,12 @@ struct CompanionCursorView: View {
                         .accessibilityHidden(true)
                 }
             }
-            if let annotation = state.annotation, screenFrame.intersects(annotation.rect) {
+            if state.tour == nil, let annotation = state.annotation, screenFrame.intersects(annotation.rect) {
                 AnnotationView(annotation: annotation, screenFrame: screenFrame)
+            }
+            if let box = state.tour?.highlight, screenFrame.intersects(box) {
+                TourHighlightView(rect: CGRect(x: box.minX - screenFrame.minX, y: screenFrame.maxY - box.maxY,
+                    width: box.width, height: box.height), reduceMotion: reduceMotion)
             }
             if screenFrame.contains(state.position) {
                 cursor(at: localPoint(state.position))
@@ -284,6 +313,12 @@ struct CompanionCursorView: View {
                 .scaleEffect(sizeScale)
                 .opacity(mode == .processing ? 1 : 0)
                 .animation(.easeIn(duration: 0.15), value: mode)
+            if state.tour?.scrolling == true {
+                ScrollGestureView(reduceMotion: reduceMotion)
+                    .scaleEffect(sizeScale)
+                    .offset(x: 2, y: 30 * sizeScale)
+                    .transition(.opacity)
+            }
         }
         .position(point)
         .animation(follow, value: point)
@@ -302,7 +337,7 @@ struct CompanionCursorView: View {
         switch state.listening.phase {
         case .error(let message): message
         case .listening, .sending: state.listening.partial
-        case .hidden: state.caption
+        case .hidden: state.tour.map(\.caption) ?? state.caption
         }
     }
 
@@ -362,6 +397,45 @@ private struct AnnotationView: View {
                 context.draw(Text(verbatim: label).foregroundStyle(color).bold(), at: CGPoint(x: rect.midX, y: max(15, rect.minY - 18)))
             }
         }
+        .accessibilityHidden(true)
+    }
+}
+
+/// The tour's outline around a page block: a soft green fill and a glowing rounded border that
+/// glides from block to block.
+private struct TourHighlightView: View {
+    let rect: CGRect
+    let reduceMotion: Bool
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 10, style: .continuous)
+            .fill(OverlayPalette.brand.opacity(0.12))
+            .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(OverlayPalette.brand, lineWidth: 3))
+            .shadow(color: OverlayPalette.brand.opacity(0.55), radius: 10)
+            .frame(width: max(24, rect.width), height: max(24, rect.height))
+            .position(x: rect.midX, y: rect.midY)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.35), value: rect)
+            .accessibilityHidden(true)
+    }
+}
+
+/// Two chevrons below the cursor that run downwards while the tour scrolls the page.
+private struct ScrollGestureView: View {
+    let reduceMotion: Bool
+
+    var body: some View {
+        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: reduceMotion)) { context in
+            let phase = reduceMotion ? 0.5 : context.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: 0.7) / 0.7
+            VStack(spacing: -4) {
+                Image(systemName: "chevron.compact.down").opacity(0.45 + 0.55 * phase)
+                Image(systemName: "chevron.compact.down").opacity(1 - 0.55 * phase)
+            }
+            .font(.system(size: 16, weight: .bold))
+            .foregroundStyle(OverlayPalette.brand)
+            .shadow(color: OverlayPalette.brand.opacity(0.6), radius: 5)
+            .offset(y: phase * 6)
+        }
+        .frame(width: 24, height: 30)
         .accessibilityHidden(true)
     }
 }

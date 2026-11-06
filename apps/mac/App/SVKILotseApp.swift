@@ -67,6 +67,9 @@ final class CompanionAppDelegate: NSObject, NSApplicationDelegate, ObservableObj
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        #if DEBUG
+        if BrowserTourProbe.runIfRequested() { return }
+        #endif
         do {
             let shell = try MacShellController()
             self.shell = shell

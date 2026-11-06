@@ -87,6 +87,35 @@ public final class LiveAXNode: BrowserAXNode, @unchecked Sendable {
 
     public func isSameElement(as other: LiveAXNode) -> Bool { CFEqual(element, other.element) }
 
+    /// The page finished loading (Chromium and WebKit report AXLoaded on the web area).
+    public var isLoaded: Bool {
+        var raw: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, "AXLoaded" as CFString, &raw) == .success, let raw,
+            CFGetTypeID(raw) == CFBooleanGetTypeID()
+        else { return true }
+        return CFBooleanGetValue(unsafeDowncast(raw, to: CFBoolean.self))
+    }
+
+    /// The enclosing element (the div, section or article around this one), read fresh.
+    public var parent: LiveAXNode? {
+        var raw: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, kAXParentAttribute as CFString, &raw) == .success, let raw,
+            CFGetTypeID(raw) == AXUIElementGetTypeID()
+        else { return nil }
+        return LiveAXNode(unsafeDowncast(raw, to: AXUIElement.self), primaryTop: primaryTop)
+    }
+
+    /// Up to `limit` enclosing elements, nearest first, stopping at the page's web area.
+    public func ancestors(limit: Int = 10) -> [LiveAXNode] {
+        var result: [LiveAXNode] = []
+        var current = parent
+        while let node = current, result.count < limit, node.role != "AXWebArea" {
+            result.append(node)
+            current = node.parent
+        }
+        return result
+    }
+
     /// Brings the window that shows this page to the front of its app.
     public func raiseWindow() {
         var window: CFTypeRef?
@@ -153,6 +182,17 @@ public enum BrowserAccessibility {
             }
         }
         return found
+    }
+
+    /// One small scroll-wheel step (pixels, positive scrolls the page down) at a point given in
+    /// AppKit global coordinates. Posted to the session, so the mouse pointer itself never moves;
+    /// the browser scrolls the page under that point, smoothly like a trackpad.
+    public static func scrollWheel(pixels: Int32, at point: CGPoint, primaryTop: CGFloat) {
+        guard let event = CGEvent(scrollWheelEvent2Source: nil, units: .pixel, wheelCount: 1, wheel1: -pixels, wheel2: 0,
+            wheel3: 0)
+        else { return }
+        event.location = CGPoint(x: point.x, y: primaryTop - point.y)
+        event.post(tap: .cgSessionEventTap)
     }
 
     /// Types text with Unicode key events at a readable pace. Never sends Return or Enter.

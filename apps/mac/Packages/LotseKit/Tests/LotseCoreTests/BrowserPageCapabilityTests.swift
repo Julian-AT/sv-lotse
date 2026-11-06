@@ -115,16 +115,56 @@ struct BrowserNavigationTests {
         #expect(BrowserPageCapability.scrollTarget(elements, page: page, up: true) == nil)
     }
 
-    @Test func theTourPrefersTheApplicationLinkThenTheFormLink() {
-        let page: [(role: String, label: String)] = [
-            ("link", "Pension"), ("heading", "Pflegegeld beantragen"), ("link", "Pflegegeld-Antrag"),
-            ("button", "Antrag absenden"), ("link", "Anmelden")
+    @Test func tourEndsOnTheApplicationDocumentOrForm() {
+        let page = "https://www.pv.at/web/pflegegeld"
+        let elements: [(role: String, label: String, url: String?)] = [
+            ("link", "Pflegegeld-Antrag", page + "#zeilenkonzept"),
+            ("link", "Anspruch auf Pflegegeld (PDF, 164 KB)", "https://www.pv.at/cdscontent/load?contentid=1"),
+            ("heading", "Antrag auf Pflegegeld", nil),
+            ("link", "Online-Antrag", "https://www.sozialversicherung.gv.at/formgen/?contentid=1"),
+            ("link", "Antrag (PDF)", "https://www.pv.at/cdscontent/load?contentid=2"),
+            ("link", "Absenden", "https://www.pv.at/send")
         ]
-        #expect(BrowserPageCapability.applicationElement(page, formStage: false) == 2)
-        let next: [(role: String, label: String)] = [
-            ("link", "Antrag auf Pflegegeld"), ("link", "Antragsformular Pflegegeld (PDF)"), ("heading", "Antrag")
+        #expect(BrowserPageCapability.applicationTargets(elements, page: page) == [4, 3, 2, 1])
+        let ministry: [(role: String, label: String, url: String?)] = [
+            ("heading", "Voraussetzungen", nil), ("heading", "Wie beantrage ich Pflegegeld?", nil),
+            ("link", "Formular Nr. 36", "https://www.oesterreich.gv.at/dam/jcr:1/antrag_pflegegl.pdf")
         ]
-        #expect(BrowserPageCapability.applicationElement(next, formStage: true) == 1)
-        #expect(BrowserPageCapability.applicationElement([("link", "Kontakt")], formStage: false) == nil)
+        #expect(BrowserPageCapability.applicationTarget(ministry, page: "https://www.oesterreich.gv.at/a") == 2)
+        let none: [(role: String, label: String, url: String?)] = [("link", "Kontakt", "https://www.oegk.at/kontakt")]
+        #expect(BrowserPageCapability.applicationTarget(none, page: "https://www.oegk.at/a") == nil)
+    }
+
+    @Test func tourOutlinesTheEnclosingBlockNotTheWholePage() {
+        let page = CGRect(x: 0, y: 100, width: 1700, height: 900)
+        let heading = CGRect(x: 400, y: 600, width: 300, height: 36)
+        let ancestors: [(role: String, frame: CGRect)] = [
+            ("AXGroup", CGRect(x: 400, y: 600, width: 300, height: 40)),
+            ("AXGroup", CGRect(x: 380, y: 450, width: 900, height: 220)),
+            ("AXGroup", CGRect(x: 0, y: 100, width: 1700, height: 2000))
+        ]
+        let block = BrowserPageCapability.blockFrame(element: heading, ancestors: ancestors, page: page)
+        #expect(block.width > 900 && block.width < 920 && block.height > 220 && block.height < 240)
+        let bare = BrowserPageCapability.blockFrame(element: heading, ancestors: [ancestors[2]], page: page)
+        #expect(bare.contains(heading) && bare.height < 60)
+        let section = BrowserPageCapability.section(below: heading, page: page)
+        #expect(section.minY < heading.minY - 200 && section.maxY > heading.maxY && page.contains(section))
+    }
+
+    @Test func tourPicksTheTitleAndKnowsWhereATargetSits() {
+        let headings: [(label: String, frame: CGRect)] = [
+            ("Inhalt", CGRect(x: 1100, y: 600, width: 500, height: 36)),
+            ("Pflegegeld", CGRect(x: 130, y: 560, width: 280, height: 70))
+        ]
+        #expect(BrowserPageCapability.mainHeading(headings) == 1)
+        let page = CGRect(x: 0, y: 100, width: 1700, height: 900)
+        #expect(BrowserPageCapability.inBand(CGRect(x: 0, y: 700, width: 100, height: 30), page: page, from: 0.1, to: 0.5))
+        #expect(BrowserPageCapability.inBand(CGRect(x: 0, y: 100, width: 100, height: 0), page: page, from: 0.1, to: 0.5) == false)
+    }
+
+    @Test func tourPaceDefaultsToSteps() {
+        #expect(BrowserPageCapability.TourPace(hint: nil) == .step)
+        #expect(BrowserPageCapability.TourPace(hint: "fast") == .fast)
+        #expect(BrowserPageCapability.TourPace(hint: "highlight") == .step)
     }
 }

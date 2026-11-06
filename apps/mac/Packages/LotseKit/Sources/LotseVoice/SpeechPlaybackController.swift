@@ -33,6 +33,8 @@ public final class SpeechPlaybackController {
     private var acknowledgementID = UUID()
     private var acknowledgedTurn = AcknowledgedTurn.none
     private var preparing: Set<String> = []
+    /// Tour narration lines waiting to finish, by turn and index.
+    private var narrationWaiters: [String: CheckedContinuation<Void, Never>] = [:]
     private let log = Logger(subsystem: "dev.svkilotse.mac", category: "voice")
 
     public convenience init(loadToken: @escaping VoiceTokenLoader) {
@@ -93,6 +95,34 @@ public final class SpeechPlaybackController {
         if task == nil { drain() }
     }
 
+    /// Speaks one line of a guided page tour, also after a typed message (the person asked to be
+    /// shown the page), and returns when the line finished, was stopped or was replaced by a new
+    /// answer. Lines of one tour share a turn id and play in order after anything already playing.
+    public func narrate(_ segment: SpeechSegment) async {
+        guard segment.text.isEmpty == false, stoppedTurns.contains(segment.turnID) == false else { return }
+        let key = Self.narrationKey(segment)
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            narrationWaiters[key]?.resume()
+            narrationWaiters[key] = continuation
+            if acknowledging == false { cancelAcknowledgement() }
+            queue.append(segment)
+            prefetchQueued()
+            if task == nil { drain() }
+        }
+    }
+
+    private static func narrationKey(_ segment: SpeechSegment) -> String { "\(segment.turnID)#\(segment.index)" }
+
+    private func finishNarration(_ segment: SpeechSegment) {
+        narrationWaiters.removeValue(forKey: Self.narrationKey(segment))?.resume()
+    }
+
+    private func finishAllNarration() {
+        let waiters = narrationWaiters.values
+        narrationWaiters.removeAll()
+        for waiter in waiters { waiter.resume() }
+    }
+
     public func handle(_ control: SpeechControl) {
         guard control.stop else { return }
         // The workspace stops speech when the user types or presses stop: stay silent until the next voice question.
@@ -116,6 +146,7 @@ public final class SpeechPlaybackController {
         current = nil
         primary.stop()
         fallback.stop()
+        finishAllNarration()
         isActive = acknowledging
         if notify { onControl?(.init(segmentIndex: index, state: .idle, stop: true)) }
     }
@@ -149,6 +180,7 @@ public final class SpeechPlaybackController {
                 guard self.generation == generation, Task.isCancelled == false else { return }
                 onControl?(.init(segmentIndex: segment.index, state: .idle, stop: false))
                 current = nil
+                finishNarration(segment)
             }
             if self.generation == generation {
                 task = nil

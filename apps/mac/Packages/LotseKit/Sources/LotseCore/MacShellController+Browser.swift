@@ -8,7 +8,8 @@ extension MacShellController {
     /// The companion cursor leaves the mouse, flies to the step and highlights it; it returns to the
     /// mouse only when no further step follows for a while.
     func presentBrowserStep(_ step: BrowserPageCapability.Step) {
-        if overlayVisible { overlay.showOverlay() }
+        // Re-showing the overlay would reset the cursor to the mouse: only show it when it is gone.
+        if overlayVisible, overlay.isShowing == false { overlay.showOverlay() }
         overlay.state.highlights = []
         overlay.state.target = CGPoint(x: step.rect.midX, y: step.rect.midY)
         overlay.state.caption = step.label
@@ -20,18 +21,36 @@ extension MacShellController {
         }
     }
 
-    /// One short spoken sentence for a step the pilot does on its own in the browser.
-    func sayBrowserStep(_ text: String) {
-        speech.enqueue(SpeechSegment(actionIDS: [], citations: [], index: 0, language: settings.language.rawValue,
-            text: settings.language == .english ? Self.englishStep(text) : text, turnID: "browser-\(UUID().uuidString)"))
+    /// The visible tour on the page just opened: the cursor detaches from the mouse, outlines the
+    /// heading block, scrolls down by itself, outlines the application section and its link, then
+    /// returns to the mouse.
+    func runBrowserTour(pace: BrowserPageCapability.TourPace) async {
+        browserStepExpiry?.cancel()
+        if overlayVisible == false {
+            browserPage.log.error("tour runs without the cursor: the overlay is hidden")
+        } else if overlay.isShowing == false {
+            overlay.showOverlay()
+        }
+        overlay.state.annotation = nil
+        overlay.state.highlights = []
+        let tour = "tour-\(UUID().uuidString)"
+        var index = 0
+        await browserPage.visibleTour(english: settings.language == .english, pace: pace,
+            show: { [weak self] frame in self?.overlay.state.tour = frame },
+            say: { [weak self] text in
+                defer { index += 1 }
+                return self?.narrateTourStep(text, tour: tour, index: index)
+            })
     }
 
-    private static func englishStep(_ text: String) -> String {
-        [
-            "Hier steht der Antrag.": "Here is the application.",
-            "Hier finden Sie das Antragsformular.": "Here is the application form.",
-            "Ich öffne den Link zum Antrag.": "I am opening the link to the application."
-        ][text] ?? text
+    /// Speaks a tour step with the companion's voice, also after a typed message (the person asked
+    /// to be shown the page); silent when voice is switched off in the settings. The task ends when
+    /// the sentence has been spoken or was stopped.
+    func narrateTourStep(_ text: String, tour: String, index: Int) -> Task<Void, Never>? {
+        guard settings.voiceEnabled else { return nil }
+        let segment = SpeechSegment(actionIDS: [], citations: [], index: index, language: settings.language.rawValue,
+            text: text, turnID: tour)
+        return Task { @MainActor [weak self] in await self?.speech.narrate(segment) }
     }
 
     /// The open result continues the conversation, so a failed delivery is retried and logged.
@@ -53,18 +72,16 @@ extension MacShellController {
         switch message {
         case .action(let envelope) where browserPage.claimsOpen(envelope.payload):
             let action = envelope.payload
+            var hint: String?
+            if case .openResource(let open) = action { hint = open.payload.style }
+            let pace = BrowserPageCapability.TourPace(hint: hint)
             Task { @MainActor [weak self] in
                 guard let self else { return }
                 let result = await browserPage.open(action)
                 await sendBrowserResult(result)
                 // Show the page right away instead of waiting for the next model turn.
                 guard result.success else { return }
-                if let step = await browserPage.firstLook() {
-                    presentBrowserStep(step)
-                    try? await Task.sleep(for: .milliseconds(900))
-                }
-                await browserPage.applicationTour(present: { [weak self] in self?.presentBrowserStep($0) },
-                    say: { [weak self] in self?.sayBrowserStep($0) })
+                await runBrowserTour(pace: pace)
             }
             return true
         case .action(let envelope) where envelope.payload.sourceText == nil:

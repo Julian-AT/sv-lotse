@@ -308,6 +308,8 @@ extension MacShellController {
         case .speechControl(let envelope):
             speech.handle(envelope.payload)
             if envelope.payload.stop {
+                // The stop button ends a running page tour together with its narration.
+                browserPage.cancelNavigation()
                 sentenceActions.reset()
                 sourceHighlights.stop(notify: false)
             }
