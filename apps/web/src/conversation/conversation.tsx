@@ -132,18 +132,19 @@ export function Conversation({
   const importer = useDocumentImport({
     subjectId: selectedCase.subjectId,
     onUploaded: (documentId) => {
+      // A document stored while the form is open fills that form from its page text once the
+      // upload has settled.
+      const formOpen = anyFormViewerMounted();
       settled();
-      // A document stored while the form is open fills that form from its page text right away;
-      // the fact review below runs in parallel.
-      if (anyFormViewerMounted()) {
+      void extractUploaded(documentId).finally(() => {
+        if (!formOpen) return;
         chat.clearError();
         void chat.send(
           i18n.locale === "en"
             ? "Please take the details from the uploaded document."
             : "Bitte übernimm die Daten aus dem hochgeladenen Dokument.",
         );
-      }
-      void extractUploaded(documentId);
+      });
     },
   });
   const busy = chat.status === "submitted" || chat.status === "streaming";
