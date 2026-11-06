@@ -48,7 +48,7 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
         )
         webView = ImportWorkspaceWebView(frame: .zero, configuration: webConfiguration)
         webView.registerForDraggedTypes(ImportPasteboard.types)
-        // The page is transparent inside the app; the native glass behind the web view shows through.
+        // The page is transparent inside the app; the native window background behind the web view shows through.
         webView.setValue(false, forKey: "drawsBackground")
         webView.underPageBackgroundColor = .clear
         let window = WorkspaceWindow(

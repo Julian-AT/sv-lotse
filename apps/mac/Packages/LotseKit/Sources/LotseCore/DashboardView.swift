@@ -27,7 +27,8 @@ struct DashboardView: View {
         } detail: {
             WorkspaceContent(webView: model.workspace.webView)
                 .frame(minWidth: 500, minHeight: 500)
-                .background(WorkspaceGlass().ignoresSafeArea())
+                // The chat page is transparent; this is its background, the same colour as the window and toolbar.
+                .background(Color(nsColor: .windowBackgroundColor).ignoresSafeArea())
                 .overlay {
                     // Until the workspace page has loaded, the web view would paint a blank white sheet (also in dark mode).
                     if !model.workspaceReady {
@@ -160,19 +161,6 @@ struct DashboardView: View {
 }
 
 @MainActor
-/// The glass behind the transparent chat page; follows light/dark, reduced transparency and window focus.
-private struct WorkspaceGlass: NSViewRepresentable {
-    func makeNSView(context: Context) -> NSVisualEffectView {
-        let view = NSVisualEffectView()
-        view.material = .underWindowBackground
-        view.blendingMode = .behindWindow
-        view.state = .followsWindowActiveState
-        return view
-    }
-
-    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {}
-}
-
 private struct WorkspaceContent: NSViewRepresentable {
     let webView: WKWebView
     func makeNSView(context: Context) -> WKWebView { webView }
