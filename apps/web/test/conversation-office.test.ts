@@ -39,7 +39,16 @@ test("FR-O1 displays the sourced office even when generated prose contains no of
   expect(screen.getByText(office.channels.phone)).toBeTruthy();
   fireEvent.click(screen.getByText("Quellen zur Anlaufstelle"));
   expect(screen.getByText(office.sources[0]?.quote ?? "")).toBeTruthy();
-  expect(screen.getByRole("link").getAttribute("href")).toBe(office.sources[0]?.url);
+  expect(screen.getByRole("link", { name: "example.org" }).getAttribute("href")).toBe(
+    office.sources[0]?.url,
+  );
+  // Contact channels render as direct actions: call and directions to the sourced address.
+  expect(screen.getByRole("link", { name: office.channels.phone }).getAttribute("href")).toBe(
+    "tel:+431000",
+  );
+  expect(screen.getByRole("link", { name: "Route" }).getAttribute("href")).toContain(
+    encodeURIComponent(office.address.city),
+  );
 });
 test("FR-O1 withholds incomplete and unsafe office records rather than rendering ungrounded contacts", () => {
   const { container, rerender } = render(

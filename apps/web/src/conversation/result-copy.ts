@@ -46,6 +46,18 @@ export const resultCopy = {
     requiredDocuments: "Benötigte Unterlagen",
     submitOnline: "Online einreichen",
     asOf: "Stand",
+    call: "Anrufen",
+    email: "E-Mail schreiben",
+    website: "Website",
+    route: "Route",
+    hours: "Öffnungszeiten",
+    address: "Adresse",
+    contact: "Kontakt",
+    criteriaSummary: (met: number, total: number): string =>
+      `${met} von ${total} Kriterien erfüllt`,
+    documentsSummary: (have: number, total: number): string =>
+      `${have} von ${total} Unterlagen vorhanden`,
+    eligibility: "Voraussetzungen",
   },
   en: {
     office: "Responsible contact office",
@@ -91,6 +103,17 @@ export const resultCopy = {
     requiredDocuments: "Required documents",
     submitOnline: "Submit online",
     asOf: "As of",
+    call: "Call",
+    email: "Write e-mail",
+    website: "Website",
+    route: "Directions",
+    hours: "Opening hours",
+    address: "Address",
+    contact: "Contact",
+    criteriaSummary: (met: number, total: number): string => `${met} of ${total} criteria met`,
+    documentsSummary: (have: number, total: number): string =>
+      `${have} of ${total} documents available`,
+    eligibility: "Requirements",
   },
 } as const;
 

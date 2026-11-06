@@ -26,11 +26,20 @@ import type { ChatMessage } from "@/lib/types";
 import { cn, sanitizeText } from "@/lib/utils";
 import { MessageContent, MessageResponse } from "../ai-elements/message";
 import { Shimmer } from "../ai-elements/shimmer";
-import { Tool, ToolContent, ToolHeader, ToolInput, ToolOutput } from "../ai-elements/tool";
+import { ToolStep } from "../gen-ui/tool-step";
 import { SparklesIcon } from "./icons";
 import { MessageActions } from "./message-actions";
 import { MessageReasoning } from "./message-reasoning";
 import { PreviewAttachment } from "./preview-attachment";
+
+/** Tools whose sourced result renders as a card (see conversation/results.tsx and office.tsx). */
+const RESULT_TOOLS = new Set([
+  "catalog.findBenefits",
+  "documents.checklist",
+  "eko.lookupCoverage",
+  "fees.explainReimbursement",
+  "office.resolve",
+]);
 
 function WaitingText({ label }: { label: string }) {
   return (
@@ -199,23 +208,18 @@ export const PreviewMessage = ({
       const approval = approvalFor(toolPart.toolCallId);
       return (
         <div
-          className="w-[min(100%,450px)]"
+          className="w-[min(100%,560px)]"
+          data-tool-step=""
           key={toolPart.toolCallId}
           id={workspaceTargets.toolRow(toolPart.toolCallId)}
         >
-          <Tool className="w-full" defaultOpen={toolPart.state === "approval-requested"}>
-            <ToolHeader
-              state={toolPart.state}
-              title={toolLabel(getToolName(toolPart), language)}
-              type={toolPart.type}
-            />
-            <ToolContent>
-              {toolPart.input !== undefined && <ToolInput input={toolPart.input} />}
-              {(toolPart.state === "output-available" || toolPart.state === "output-error") && (
-                <ToolOutput errorText={toolPart.errorText} output={toolPart.output} />
-              )}
-            </ToolContent>
-          </Tool>
+          <ToolStep
+            state={toolPart.state}
+            title={toolLabel(getToolName(toolPart), language)}
+            language={language}
+            errorText={toolPart.errorText}
+            skeleton={RESULT_TOOLS.has(getToolName(toolPart))}
+          />
           {approval && <div className="mt-2">{approval}</div>}
         </div>
       );
@@ -278,7 +282,7 @@ export const PreviewMessage = ({
   );
 
   const cards = isAssistant && (
-    <div className="lotse-legacy grid min-w-0 gap-3">
+    <div className="grid w-[min(100%,560px)] min-w-0 gap-3">
       <OfficeResults message={message} language={language} />
       <ToolResultCards
         message={message}

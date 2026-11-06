@@ -1,9 +1,10 @@
 "use client";
 
 import type { Citation, Labels } from "@lotse/ui";
-import { CitationChip, de } from "@lotse/ui";
+import { de } from "@lotse/ui";
 import { ShieldCheckIcon } from "lucide-react";
 import { type JSX, useId } from "react";
+import { SourceChip } from "@/components/gen-ui/source-chips.tsx";
 
 /**
  * Server-side approval request in the chatbot template's tool approval style
@@ -32,18 +33,23 @@ export function ApprovalPanel({
     <section
       aria-busy={pending || undefined}
       aria-labelledby={`${id}-title`}
-      className="w-full rounded-md border bg-card"
+      className="fade-up w-full overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
     >
-      <div className="flex items-center gap-2 p-3">
-        <ShieldCheckIcon className="size-4 text-muted-foreground" aria-hidden="true" />
-        <h4 className="m-0 font-medium text-sm" id={`${id}-title`}>
+      <div className="flex items-center gap-2.5 border-b border-border bg-caution-soft px-4 py-2.5">
+        <span className="flex size-6 items-center justify-center rounded-full bg-card text-caution shadow-[var(--shadow-card)]">
+          <ShieldCheckIcon className="size-3.5" aria-hidden="true" />
+        </span>
+        <h4 className="m-0 font-semibold text-[13px]" id={`${id}-title`}>
           {title}
         </h4>
       </div>
-      <div className="space-y-3 px-4 pb-3 text-sm">
+      <div className="space-y-3 px-4 py-3 text-sm">
         <ul className="m-0 grid list-none gap-1.5 p-0">
           {[...new Set(changes)].map((change) => (
-            <li className="rounded-md bg-muted/50 px-3 py-2 text-[13px]" key={change}>
+            <li
+              className="rounded-xl border border-border/70 bg-background/60 px-3 py-2 text-[13px] leading-relaxed"
+              key={change}
+            >
               {change}
             </li>
           ))}
@@ -51,10 +57,10 @@ export function ApprovalPanel({
         {provenance.length > 0 && (
           <ul aria-label={copy.sources} className="m-0 grid list-none gap-2 p-0 text-xs">
             {provenance.map((source) => (
-              <li className="grid gap-1" key={source.id}>
-                <CitationChip source={source} />
+              <li className="grid gap-1.5" key={source.id}>
+                <SourceChip source={source} labels={copy} className="w-fit" />
                 {source.quote && (
-                  <blockquote className="m-0 border-l-2 border-border pl-3 text-muted-foreground">
+                  <blockquote className="m-0 border-l-2 border-brand/60 pl-3 text-muted-foreground leading-relaxed">
                     {source.quote}
                   </blockquote>
                 )}
@@ -66,10 +72,10 @@ export function ApprovalPanel({
           {copy.keyboardHint} {copy.voiceHint}
         </p>
       </div>
-      <div className="flex items-center justify-end gap-2 border-t px-4 py-3">
+      <div className="flex items-center justify-end gap-2 border-t border-border bg-muted/40 px-4 py-2.5">
         <button
           aria-describedby={`${id}-hint`}
-          className="rounded-md px-3 py-1.5 text-muted-foreground text-sm transition-colors hover:bg-muted hover:text-foreground disabled:opacity-50"
+          className="h-8 rounded-full px-3.5 text-muted-foreground text-[13px] font-medium transition-colors hover:bg-background hover:text-foreground disabled:opacity-50"
           disabled={pending}
           onClick={onDecline}
           type="button"
@@ -78,7 +84,7 @@ export function ApprovalPanel({
         </button>
         <button
           aria-describedby={`${id}-hint`}
-          className="rounded-md bg-primary px-3 py-1.5 text-primary-foreground text-sm transition-colors hover:bg-primary/90 disabled:opacity-50"
+          className="h-8 rounded-full bg-primary px-4 text-primary-foreground text-[13px] font-medium shadow-[var(--shadow-card)] transition-colors hover:bg-primary/90 disabled:opacity-50"
           disabled={pending}
           onClick={onApprove}
           type="button"

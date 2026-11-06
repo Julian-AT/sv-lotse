@@ -126,6 +126,11 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-brand: var(--brand);
+  --color-brand-text: var(--brand-text);
+  --color-brand-soft: var(--brand-soft);
+  --color-caution: var(--caution);
+  --color-caution-soft: var(--caution-soft);
 }
 
 :root {
@@ -169,6 +174,16 @@
   --shadow-inset: inset 0 1px 1px oklch(0 0 0 / 0.03);
   --shadow-glow: 0 0 20px oklch(0 0 0 / 0.08);
 
+  /* SV brand green as an accent only (packages/ui tokens); text uses the AA "pressed" shade. */
+  --brand: #008e5c;
+  --brand-text: #006d47;
+  --brand-soft: color-mix(in oklab, #008e5c 9%, transparent);
+  --caution: oklch(0.5 0.11 65);
+  --caution-soft: oklch(0.8 0.12 80 / 0.16);
+  --glass: oklch(1 0 0 / 0.72);
+  --glass-edge: oklch(0 0 0 / 0.07);
+  --glass-highlight: inset 0 1px 0 oklch(1 0 0 / 0.7);
+
   --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -206,6 +221,15 @@
   --sidebar-accent-foreground: oklch(0.94 0 0);
   --sidebar-border: oklch(0.25 0 0);
   --sidebar-ring: oklch(0.45 0 0);
+
+  --brand: #3fbf8a;
+  --brand-text: #78dbad;
+  --brand-soft: color-mix(in oklab, #3fbf8a 14%, transparent);
+  --caution: oklch(0.82 0.12 80);
+  --caution-soft: oklch(0.8 0.12 80 / 0.12);
+  --glass: oklch(0.225 0 0 / 0.7);
+  --glass-edge: oklch(1 0 0 / 0.08);
+  --glass-highlight: inset 0 1px 0 oklch(1 0 0 / 0.06);
 
   --shadow-card:
     inset 0 1px 0 oklch(1 0 0 / 0.04), 0 1px 2px oklch(0 0 0 / 0.2), 0 0.5px 1px oklch(0 0 0 / 0.15);
@@ -443,10 +467,31 @@
   }
 }
 
+/* Liquid glass, only for floating chrome (header, composer, popovers). */
+@utility glass {
+  background-color: var(--glass);
+  border-color: var(--glass-edge);
+  box-shadow: var(--glass-highlight), var(--shadow-float);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+}
+
 @media (prefers-reduced-transparency: reduce) {
-  .chatbot-root :where([class*="backdrop-blur"]) {
+  .chatbot-root :where([class*="backdrop-blur"]),
+  .chatbot-root .glass,
+  .glass {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+  }
+  .chatbot-root .glass,
+  .glass {
+    background-color: var(--card) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chatbot-root :where(.fade-up, .message-fade-in, .animate-pulse, .animate-spin) {
+    animation: none !important;
   }
 }
 
