@@ -19,10 +19,12 @@ public enum PortalPageMode: String, Sendable {
 /// Never submits, never clicks, never reads or fills password fields or login pages.
 @MainActor
 public final class BrowserPageCapability {
-    struct ActivePage: Sendable {
+    struct ActivePage: @unchecked Sendable {
         let bundleID: String
         let pid: pid_t
         let url: URL
+        /// The web area of the tab Lotse opened, so an older tab of the same page is never used.
+        var area: LiveAXNode?
     }
 
     let log = Logger(subsystem: "dev.svkilotse.mac", category: "browser")
@@ -111,6 +113,8 @@ public final class BrowserPageCapability {
             return Self.result(open.id, false, "BROWSER_UNAVAILABLE")
         }
         let pid = application.processIdentifier
+        let screenTop = Self.primaryTop
+        let earlier = await Task.detached { BrowserAccessibility.webAreas(pid: pid, primaryTop: screenTop) }.value
         active = ActivePage(bundleID: bundleID, pid: pid, url: url)
         log.info("browser opened \(bundleID, privacy: .public) for \(url.host ?? "", privacy: .public)")
         guard AXIsProcessTrusted() else {
@@ -121,22 +125,26 @@ public final class BrowserPageCapability {
         let requested = url.absoluteString
         let top = Self.primaryTop
         let started = ContinuousClock.now
+        var readyArea: LiveAXNode?
         let ready = await Self.awaitReady(timeout: readyTimeout) {
-            // The tab Lotse just opened: the exact page first; after a grace period (redirects) only the
-            // focused window's page on the same site, never an older tab of that site.
-            let exactOnly = started.duration(to: .now) < .seconds(3)
-            return await Task.detached { () -> String? in
+            // Only the tab Lotse just opened, in the front window: the exact page (redirects reported by
+            // the browser count after the grace period). A tab that existed before never qualifies.
+            let exactOnly = started.duration(to: .now) < .seconds(4)
+            let found = await Task.detached { () -> LiveAXNode? in
                 BrowserAccessibility.enableWebAccessibility(pid: pid)
-                let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top, where: {
-                    $0.url.map { BrowserPageSafety.sameDocument($0, requested) } ?? false
-                }) ?? (exactOnly ? nil : BrowserAccessibility.webArea(pid: pid, primaryTop: top, focusedOnly: true))
-                guard let area else { return nil }
-                return Self.pageReady(url: area.url, childCount: area.children.count, requested: requested, exactOnly: exactOnly)
-                    ? area.url : nil
+                let isNew = { (node: LiveAXNode) in earlier.contains { $0.isSameElement(as: node) } == false }
+                return BrowserAccessibility.webArea(pid: pid, primaryTop: top, focusedOnly: true) { node in
+                    guard let url = node.url, isNew(node), node.children.isEmpty == false else { return false }
+                    return Self.pageReady(url: url, childCount: 1, requested: requested, exactOnly: exactOnly)
+                }
             }.value
+            readyArea = found
+            return found?.url
         }
         if let ready {
-            if let readyURL = URL(string: ready) { active = ActivePage(bundleID: bundleID, pid: pid, url: readyURL) }
+            if let readyURL = URL(string: ready) {
+                active = ActivePage(bundleID: bundleID, pid: pid, url: readyURL, area: readyArea)
+            }
             log.info("browser page ready via AX: \(URL(string: ready)?.path ?? "", privacy: .public)")
             return ActionResult(actionID: open.id, confidence: 1, failureReason: nil, resolvedBy: .ax, success: true)
         }
@@ -152,7 +160,12 @@ public final class BrowserPageCapability {
 
     /// The page Lotse is working on: the expected document in any window, else the focused
     /// window's allowlisted page. An older tab of the same site is never picked by origin alone.
-    nonisolated static func pageArea(pid: pid_t, top: CGFloat, policy: GuidedOriginPolicy?, expected: String?) -> LiveAXNode? {
+    nonisolated static func pageArea(pid: pid_t, top: CGFloat, policy: GuidedOriginPolicy?, expected: String?,
+                                     preferred: LiveAXNode? = nil) -> LiveAXNode? {
+        if let preferred {
+            let current = preferred.refreshed()
+            if let url = current.url, policy?.allows(url) == true { return current }
+        }
         if let expected, let exact = BrowserAccessibility.webArea(pid: pid, primaryTop: top, where: {
             $0.url.map { BrowserPageSafety.sameDocument($0, expected) } ?? false
         }) { return exact }
@@ -181,9 +194,10 @@ public final class BrowserPageCapability {
         let policy = policy
         let top = Self.primaryTop
         let expected = active?.url.absoluteString
+        let preferred = active?.area
         let page = await Task.detached { () -> Page? in
             BrowserAccessibility.enableWebAccessibility(pid: pid)
-            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected),
+            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected, preferred: preferred),
                 let url = area.url,
                 policy?.allows(url) == true, BrowserPageSafety.isLoginPage(url) == false, let pageFrame = area.frame
             else { return nil }
@@ -191,7 +205,7 @@ public final class BrowserPageCapability {
         }.value
         if let page {
             if let current = active, let url = URL(string: page.url) {
-                active = ActivePage(bundleID: current.bundleID, pid: current.pid, url: url)
+                active = ActivePage(bundleID: current.bundleID, pid: current.pid, url: url, area: current.area)
             }
             labels = Dictionary(page.handles.map { ($0.id, $0.label) }, uniquingKeysWith: { first, _ in first })
             log.info("browser page read via AX: \(page.handles.count) handles")
@@ -230,9 +244,10 @@ public final class BrowserPageCapability {
         let policy = policy
         let top = Self.primaryTop
         let expected = active.url.absoluteString
+        let preferred = active.area
         let known = labels
         let (rect, reason) = await Task.detached { () -> (CGRect?, String) in
-            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected),
+            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected, preferred: preferred),
                 let url = area.url, BrowserPageSafety.isLoginPage(url) == false, let pageFrame = area.frame
             else { return (nil, "no allowlisted page") }
             let node: LiveAXNode
@@ -304,9 +319,10 @@ public final class BrowserPageCapability {
         let policy = policy
         let top = Self.primaryTop
         let expected = active.url.absoluteString
+        let preferred = active.area
         let label = labels[dom.handle]
         let field = await Task.detached { () -> (LiveAXNode, CGRect)? in
-            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected),
+            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected, preferred: preferred),
                 let url = area.url,
                 policy?.allows(url) == true, BrowserPageSafety.isLoginPage(url) == false, let pageFrame = area.frame,
                 let element = BrowserPageReader.element(handle: dom.handle, label: label, in: BrowserPageReader.elements(in: area)),

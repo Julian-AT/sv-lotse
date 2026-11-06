@@ -81,6 +81,22 @@ public final class LiveAXNode: BrowserAXNode, @unchecked Sendable {
     }
 
     public func currentValue() -> String? { LiveAXNode(element, primaryTop: primaryTop).value }
+
+    /// A fresh read of the same element, so its URL and frame are current.
+    public func refreshed() -> LiveAXNode { LiveAXNode(element, primaryTop: primaryTop) }
+
+    public func isSameElement(as other: LiveAXNode) -> Bool { CFEqual(element, other.element) }
+
+    /// Brings the window that shows this page to the front of its app.
+    public func raiseWindow() {
+        var window: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, kAXWindowAttribute as CFString, &window) == .success, let window,
+            CFGetTypeID(window) == AXUIElementGetTypeID()
+        else { return }
+        let ref = unsafeDowncast(window, to: AXUIElement.self)
+        AXUIElementPerformAction(ref, kAXRaiseAction as CFString)
+        AXUIElementSetAttributeValue(ref, kAXMainAttribute as CFString, kCFBooleanTrue)
+    }
 }
 
 /// The user's default browser and its frontmost page, read through Accessibility.
@@ -116,6 +132,27 @@ public enum BrowserAccessibility {
             if let area = BrowserPageReader.webArea(in: [LiveAXNode(window, primaryTop: primaryTop)], where: accept) { return area }
         }
         return nil
+    }
+
+    /// Every web area in the app's windows (pages already open before Lotse opens one).
+    public static func webAreas(pid: pid_t, primaryTop: CGFloat) -> [LiveAXNode] {
+        let app = AXUIElementCreateApplication(pid)
+        AXUIElementSetMessagingTimeout(app, 0.25)
+        var all: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(app, kAXWindowsAttribute as CFString, &all) == .success,
+            let windows = all as? [AXUIElement]
+        else { return [] }
+        var found: [LiveAXNode] = []
+        for window in windows {
+            var queue = [LiveAXNode(window, primaryTop: primaryTop)]
+            var index = 0
+            while index < queue.count && index < BrowserPageReader.webAreaSearchNodes {
+                let node = queue[index]
+                index += 1
+                if node.role == "AXWebArea" { found.append(node) } else { queue += node.children }
+            }
+        }
+        return found
     }
 
     /// Types text with Unicode key events at a readable pace. Never sends Return or Enter.

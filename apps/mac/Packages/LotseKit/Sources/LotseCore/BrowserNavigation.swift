@@ -22,6 +22,7 @@ extension BrowserPageCapability {
         let rect: CGRect
         let decision: BrowserClickDecision
         let page: String
+        var scrolled = false
     }
 
     /// One navigation step from a `ui.click` tool invocation.
@@ -39,9 +40,10 @@ extension BrowserPageCapability {
         let policy = policy
         let top = Self.primaryTop
         let expected = active?.url.absoluteString
+        let preferred = active?.area
         let label = labels[handle]
         let found = await Task.detached { () -> ClickTarget? in
-            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected), let current = area.url,
+            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected, preferred: preferred), let current = area.url,
                 BrowserPageSafety.isLoginPage(current) == false, let page = area.frame,
                 let element = BrowserPageReader.element(handle: handle, label: label, in: BrowserPageReader.elements(in: area))
             else { return nil }
@@ -79,23 +81,26 @@ extension BrowserPageCapability {
         let policy = policy
         let top = Self.primaryTop
         let started = ContinuousClock.now
+        var landed: LiveAXNode?
         let ready = await Self.awaitReady(timeout: readyTimeout) {
             guard generation == navigationGeneration else { return "" }
             let exactOnly = started.duration(to: .now) < .seconds(3)
-            return await Task.detached { () -> String? in
-                let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top, where: {
+            let area = await Task.detached { () -> LiveAXNode? in
+                let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top, focusedOnly: true, where: {
                     $0.url.map { BrowserPageSafety.sameDocument($0, destination) } ?? false
                 }) ?? (exactOnly ? nil : BrowserAccessibility.webArea(pid: pid, primaryTop: top, focusedOnly: true) {
                     $0.url.map { policy?.allows($0) == true && BrowserPageSafety.sameDocument($0, previous) == false } ?? false
                 })
-                guard let area, let url = area.url, area.children.isEmpty == false else { return nil }
-                return url
+                guard let area, area.url != nil, area.children.isEmpty == false else { return nil }
+                return area
             }.value
+            landed = area
+            return area?.url
         }
         guard let ready, ready.isEmpty == false, let url = URL(string: ready) else {
             return Self.result(id, false, ready == "" ? "USER_STOPPED" : "load-timeout")
         }
-        if let current = active { active = ActivePage(bundleID: current.bundleID, pid: current.pid, url: url) }
+        if let current = active { active = ActivePage(bundleID: current.bundleID, pid: current.pid, url: url, area: landed) }
         log.info("browser navigated via AX to \(url.path, privacy: .public)")
         return ActionResult(actionID: id, confidence: BrowserPageSafety.sameDocument(ready, destination) ? 1 : 0.8,
             failureReason: nil, resolvedBy: .ax, success: true)
@@ -111,16 +116,17 @@ extension BrowserPageCapability {
         let policy = policy
         let top = Self.primaryTop
         let expected = active?.url.absoluteString
+        let preferred = active?.area
         let label = handle.flatMap { labels[$0] }
         let page = await Task.detached { () -> CGRect? in
-            Self.pageArea(pid: pid, top: top, policy: policy, expected: expected)?.frame
+            Self.pageArea(pid: pid, top: top, policy: policy, expected: expected, preferred: preferred)?.frame
         }.value
         guard let page else { return Self.result(id, false, "target_unavailable") }
         NSRunningApplication(processIdentifier: pid)?.activate()
         present(Step(rect: CGRect(x: page.midX - 20, y: up ? page.maxY - 140 : page.minY + 100, width: 40, height: 40),
             label: up ? "↑" : "↓"))
         let rect = await Task.detached { () -> CGRect? in
-            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected), let frame = area.frame else { return nil }
+            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected, preferred: preferred), let frame = area.frame else { return nil }
             let elements = BrowserPageReader.elements(in: area)
             let node: LiveAXNode?
             if let handle {
@@ -152,8 +158,9 @@ extension BrowserPageCapability {
         let policy = policy
         let top = Self.primaryTop
         let expected = active?.url.absoluteString
+        let preferred = active?.area
         return await Task.detached { () -> Step? in
-            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected), let page = area.frame else { return nil }
+            guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected, preferred: preferred), let page = area.frame else { return nil }
             let heading = BrowserPageReader.elements(in: area, limit: 1500).first {
                 $0.role == "heading" && page.contains(CGPoint(x: $0.frame.midX, y: $0.frame.midY))
             }
@@ -171,10 +178,13 @@ extension BrowserPageCapability {
             let policy = policy
             let top = Self.primaryTop
             let expected = active?.url.absoluteString
+        let preferred = active?.area
+            NSRunningApplication(processIdentifier: pid)?.activate()
             let found = await Task.detached { () -> ClickTarget? in
-                guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected), let current = area.url,
+                guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected, preferred: preferred), let current = area.url,
                     BrowserPageSafety.isLoginPage(current) == false, let page = area.frame
                 else { return nil }
+                area.raiseWindow()
                 let elements = BrowserPageReader.elements(in: area)
                 guard let best = Self.applicationElement(elements.map { ($0.role, $0.label) }, formStage: hop > 0) else { return nil }
                 let element = elements[best]
@@ -182,9 +192,28 @@ extension BrowserPageCapability {
                     label: element.label, url: element.node.url, expanded: element.node.expanded,
                     secure: BrowserPageReader.isSecure(element.node)) { policy?.allows($0) == true }
                 guard let rect = Self.scrolledIntoView(element.node, page: page) else { return nil }
-                return ClickTarget(node: element.node, rect: rect, decision: decision, page: current)
+                return ClickTarget(node: element.node, rect: rect, decision: decision, page: current,
+                    scrolled: element.frame.midY != rect.midY)
             }.value
-            guard let found, generation == navigationGeneration else { return }
+            guard var found, generation == navigationGeneration else {
+                log.info("browser tour found no application part")
+                return
+            }
+            log.info("browser tour on \(URL(string: found.page)?.path ?? "", privacy: .public)")
+            if found.scrolled { log.info("browser tour scrolled to the application part") }
+            // A jump link ("#antrag") scrolls the page itself: press it so the scroll is visible.
+            if case .navigate(let target) = found.decision, BrowserPageSafety.sameDocument(target, found.page),
+                target != found.page, URL(string: target)?.fragment != nil {
+                present(Step(rect: found.rect, label: ""))
+                try? await Task.sleep(for: .milliseconds(700))
+                let node = found.node
+                _ = await Task.detached { node.perform(kAXPressAction) }.value
+                try? await Task.sleep(for: .milliseconds(700))
+                if let moved = await Task.detached(operation: { node.refreshedFrame() }).value {
+                    log.info("browser tour scrolled to the section of \(URL(string: target)?.fragment ?? "", privacy: .public)")
+                    found = ClickTarget(node: node, rect: moved, decision: .toggle, page: found.page, scrolled: true)
+                }
+            }
             present(Step(rect: found.rect, label: ""))
             say(hop == 0 ? "Hier steht der Antrag." : "Hier finden Sie das Antragsformular.")
             log.info("browser tour highlighted the application part (hop \(hop))")
@@ -195,7 +224,8 @@ extension BrowserPageCapability {
             else { return }
             clickTimes.append(Date())
             say("Ich öffne den Link zum Antrag.")
-            guard await Task.detached(operation: { found.node.perform(kAXPressAction) }).value else { return }
+            let link = found.node
+            guard await Task.detached(operation: { link.perform(kAXPressAction) }).value else { return }
             let result = await awaitNavigation(id: "tour", pid: pid, destination: destination, previous: found.page,
                 generation: generation)
             guard result.success else { return }
