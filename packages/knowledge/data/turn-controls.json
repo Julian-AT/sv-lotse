@@ -1,0 +1,70 @@
+{
+  "source": {
+    "uri": "docs/prd/SV-KI-Lotse-PRD.md#h-autonomy-language-and-accessibility",
+    "as_of": "2026-11-06",
+    "quotes": [
+      "User switches level by voice or panel",
+      "the person can pause sharing with one word"
+    ],
+    "notes": "Deterministic German and English command vocabulary for FR-A1 and FR-R5; implementation brief supplies the German autonomy examples. Exact utterances only, never substring matching."
+  },
+  "rules": [
+    {
+      "kind": "pause",
+      "phrases": [
+        "Pause",
+        "Teilen stoppen",
+        "Teilen pausieren",
+        "Stop sharing",
+        "Pause sharing",
+        "Bitte teilen stoppen",
+        "Please stop sharing"
+      ]
+    },
+    {
+      "kind": "autonomy",
+      "level": "L1",
+      "phrases": [
+        "Zeig es mir nur",
+        "Zeige es mir nur",
+        "Bitte zeig es mir nur",
+        "Just show me",
+        "Only show me",
+        "Show me only",
+        "Please just show me"
+      ]
+    },
+    {
+      "kind": "autonomy",
+      "level": "L2",
+      "phrases": [
+        "Bereite alles vor",
+        "Bitte bereite alles vor",
+        "Prepare everything",
+        "Get everything ready",
+        "Please prepare everything"
+      ]
+    },
+    {
+      "kind": "autonomy",
+      "level": "L3",
+      "phrases": [
+        "Mach das für mich",
+        "Mache das für mich",
+        "Bitte mach das für mich",
+        "Do it for me",
+        "Do that for me",
+        "Please do it for me"
+      ]
+    },
+    {
+      "kind": "confirm-autonomy",
+      "phrases": ["Autonomiestufe bestätigen", "Confirm autonomy level"]
+    },
+    {
+      "kind": "confirm",
+      "phrases": ["Ja", "Ja bitte", "Bestätigen", "Yes", "Yes please", "Confirm"]
+    },
+    { "kind": "decline", "phrases": ["Nein", "Abbrechen", "No", "Cancel"] }
+  ]
+}
