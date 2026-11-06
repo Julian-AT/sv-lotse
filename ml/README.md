@@ -20,12 +20,40 @@ for GRPO is installed separately on the GPU box (`uv pip install "verl[vllm]"`).
 | `uv run python -m sft.rollout --teacher <model> --n 120000` | Teacher rollouts in the gym, kept if R ≥ 0.9, zero boundary flags, valid citations |
 | `uv run --extra train python -m sft.train --base qwen3-30b-a3b` | SFT (configs in `sft/configs/`: `qwen3-30b-a3b` LoRA r=64, `eurollm-9b` full, `qwen3-8b` LoRA, `qwen3-1.7b-smoke`) |
 | `uv run --extra train python -m sft.smoke --config sft/configs/qwen3-8b-smoke.yaml` | Short LoRA SFT plus plan proxy eval of base and fine-tune |
-| `uv run --extra train python -m eval.plan_eval --model <hf id> [--adapter <dir>]` | Single-turn plan **proxy** eval (no tools, no simulated user); not the multi-turn gym |
+| `uv run --extra train python -m eval.plan_eval --model <hf id> [--adapter <dir>] [--personas hf]` | Single-turn plan **proxy** eval (no tools, no simulated user); not the multi-turn gym |
 | `uv run python -m rl.prepare` then `uv run python -m rl.train --config rl/grpo-a3b.yaml` | Multi-turn GRPO with verl (`rl/grpo-a3b.yaml`, `rl/grpo-euro9b.yaml`); reward from `gym.reward` via `rl/reward_plugin.py` |
 
 SFT trains on the gym's oracle trajectories (`data/sft/oracle.jsonl`) when present, otherwise on
 single-turn plan examples derived from the personas' gold. Loss is on assistant and tool-call
 tokens only (`sft/masking.py`).
+
+### Remote run on 3×H100 (`ml/remote/`)
+
+`sft/configs/qwen3-8b-sft.yaml` trains Qwen3-8B (LoRA r=64, seq 8192, 2 epochs, DDP on 3 GPUs) on
+the published dataset: `JulianAT/at-benefits` config `dialogues` (tiers O+A+B, split `train`,
+`val` for eval loss; tool outputs compacted to 1,500 characters of valid JSON with every id kept,
+examples still longer than `max_length` tokens dropped and counted in the run record) plus 2,000
+single-turn plan examples from config `situations`. `--data hf` selects this source for any config.
+
+```sh
+ml/remote/run.sh user@host            # sync, train, eval, fetch, publish (blocks; rerun resumes)
+ml/remote/run.sh --no-wait user@host  # only start; rerun later to fetch and publish
+ml/remote/status.sh user@host [-f]    # stages, GPU load, loss, log tail
+SSH_OPTS="-p 2222 -i ~/.ssh/key" TRAIN_SET="max_length=16384" ml/remote/run.sh user@host
+```
+
+The box needs an NVIDIA driver, `curl`, `rsync` and ideally `tmux`; nothing else (uv, Python
+3.12, torch for the driver's CUDA, data and weights are fetched there). Code goes to
+`~/lotse-ml` (no data), stages (`gpu`, `setup`, `data`, `train`, `eval`, `merge`) log to
+`~/lotse-ml/logs/<stage>.log` and are skipped once `<stage>.done` exists; training resumes from
+its last LoRA checkpoint. The eval is `eval.plan_eval` on 200 `situations` test personas, base and
+fine-tune in parallel on two GPUs (vLLM when importable, else transformers).
+
+Publishing (`python -m publish.model`, card with licence, datasets, data hash, git SHA and the eval
+table; `--dry-run` writes the card to `results/`): by default from the Mac after the adapter is
+copied back, so the HF token never leaves it. `--merged` also uploads merged bf16 weights from the
+box; the token is then read from `.env.local` by `run.sh` and streamed through the SSH session's
+stdin into the publish process only (never a command line, file or log on the box).
 
 ## Research tool server
 
