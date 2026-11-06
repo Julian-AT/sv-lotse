@@ -1,0 +1,171 @@
+id: sozialhilfe-steiermark
+name_de: Sozialunterstützung in der Steiermark
+name_simple: Geld für Leben und Wohnen in der Steiermark
+area: E
+life_situations: [geringes-einkommen]
+scope: state
+carriers: []
+criteria:
+  - id: residence-styria
+    text_de: Hauptwohnsitz und tatsächlicher Aufenthalt müssen in der Steiermark sein.
+    condition: federal_state == 'Steiermark' and main_residence_confirmed == true and actual_residence_confirmed == true
+    legal_basis: Steiermärkisches Sozialunterstützungsgesetz (StSUG), laut Land Steiermark
+    source: &residence
+      url: https://www.soziales.steiermark.at/cms/beitrag/12706097/61183307/
+      quote: >-
+        Grundsätzlich können nur jene Personen Sozialunterstützung nach dem
+        StSUG (Steiermärkisches Sozialunterstützungsgesetz) erhalten, die ihren
+        Hauptwohnsitz und ihren tatsächlichen Aufenthalt in der Steiermark haben sowie
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: residence-entitlement
+    text_de: >-
+      Dauernde Aufenthaltsberechtigung und grundsätzlich mindestens fünf Jahre
+      Aufenthalt in Österreich. Unionsrechtliche und völkerrechtliche Ausnahmen,
+      etwa für Asylberechtigte, prüft die Behörde. Kein automatischer Ausschluss
+      allein wegen einer kürzeren Aufenthaltsdauer.
+    legal_basis: Steiermärkisches Sozialunterstützungsgesetz (StSUG), laut Land Steiermark
+    source: &status
+      url: https://www.soziales.steiermark.at/cms/beitrag/12706097/61183307/
+      quote: >-
+        zu einem dauernden Aufenthalt im Inland berechtigt sind und sich
+        grundsätzlich seit mindestens fünf Jahren im Bundesgebiet aufhalten
+        (unionsrechtliche und völkerrechtliche Bestimmungen sehen aber auch
+        Ausnahmen zur 5-Jahres-Frist vor, z.B. für Asylberechtigte).
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: own-resources-and-prior-benefits
+    text_de: >-
+      Eigene Mittel und vorrangige gleichartige Leistungen sind einzusetzen.
+      Vermögensfreibeträge und weitere Ausnahmen prüft die Behörde.
+    legal_basis: Steiermärkisches Sozialunterstützungsgesetz (StSUG), laut Land Steiermark
+    source: &resources
+      url: https://www.soziales.steiermark.at/cms/beitrag/12706097/61183307/
+      quote: >-
+        Bevor Sozialunterstützung gewährt werden kann, müssen die Antragstellenden
+        zunächst die eigenen Mittel (Einkommen und Vermögen) zur Bestreitung des
+        Lebensunterhaltes einsetzen. Auch müssen gleichartige Leistungen,
+        die Bund oder Land gewähren, zuerst in Anspruch genommen werden.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: third-party-claims
+    text_de: Bestehende Ansprüche gegen Dritte, etwa auf Unterhalt oder offene Gehaltszahlungen, sind zu verfolgen.
+    legal_basis: Steiermärkisches Sozialunterstützungsgesetz (StSUG), laut Land Steiermark
+    source: &claims
+      url: https://www.soziales.steiermark.at/cms/beitrag/12706097/61183307/
+      quote: >-
+        Gibt es Ansprüche gegen Dritte (z.B.: Unterhalt, Schadenersatz, offene
+        Gehaltszahlung etc.), so müssen diese verfolgt werden.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: work-and-exemptions
+    text_de: >-
+      Einsatz der Arbeitskraft, soweit keine gesetzliche Ausnahme vorliegt.
+      Die Behörde prüft Ausnahmen; der Lotse beurteilt keine Arbeitsfähigkeit.
+    legal_basis: § 7 Abs. 2 StSUG, laut Land Steiermark
+    source: &work
+      url: https://www.soziales.steiermark.at/cms/beitrag/12706097/61183307/
+      quote: >-
+        Die Höhe der Leistung ist vom Einsatz der Arbeitskraft abhängig.
+        Dies gilt für arbeitsfähige Personen und Personen, die nach § 7 Abs 2 StSUG
+        nicht vom Einsatz der Arbeitskraft ausgenommen sind.
+      retrieved_at: 2026-11-05T23:49:35Z
+office_rules:
+  - when: federal_state == 'Steiermark' and district == 'Graz'
+    office: ref:offices/graz-sozialamt
+  - when: federal_state == 'Steiermark' and district == 'Bruck-Mürzzuschlag'
+    office: ref:offices/bh-bruck-muerzzuschlag
+  - when: federal_state == 'Steiermark' and district == 'Deutschlandsberg'
+    office: ref:offices/bh-deutschlandsberg
+  - when: federal_state == 'Steiermark' and district == 'Graz-Umgebung'
+    office: ref:offices/bh-graz-umgebung
+  - when: federal_state == 'Steiermark' and district == 'Hartberg-Fürstenfeld'
+    office: ref:offices/bh-hartberg-fuerstenfeld
+  - when: federal_state == 'Steiermark' and district == 'Leibnitz'
+    office: ref:offices/bh-leibnitz
+  - when: federal_state == 'Steiermark' and district == 'Leoben'
+    office: ref:offices/bh-leoben
+  - when: federal_state == 'Steiermark' and district == 'Liezen'
+    office: ref:offices/bh-liezen
+  - when: federal_state == 'Steiermark' and district == 'Murau'
+    office: ref:offices/bh-murau
+  - when: federal_state == 'Steiermark' and district == 'Murtal'
+    office: ref:offices/bh-murtal
+  - when: federal_state == 'Steiermark' and district == 'Südoststeiermark'
+    office: ref:offices/bh-suedoststeiermark
+  - when: federal_state == 'Steiermark' and district == 'Voitsberg'
+    office: ref:offices/bh-voitsberg
+  - when: federal_state == 'Steiermark' and district == 'Weiz'
+    office: ref:offices/bh-weiz
+documents:
+  - id: identification-and-residence
+    name_de: Lichtbildausweis, Personenstand und gegebenenfalls Aufenthaltsnachweis
+    required: true
+    obtain_from: Eigene Dokumente; fehlende Ausfertigungen bei Passbehörde, Standesamt oder Aufenthaltsbehörde anfordern.
+    source: &identification
+      url: https://www.graz.at/cms/beitrag/10269022/7761791/Sozialunterstuetzung.html
+      quote: >-
+        amtlichen Lichtbildausweis (Reisepass, Personalausweis, Führerschein,
+        ID-Card) Geburtsurkunde Staatsbürgerschaftsnachweis Nachweis über
+        rechtmäßigen Aufenthalt (Aufenthaltstitel oder -bescheinigung)
+      retrieved_at: 2026-11-05T23:55:00Z
+  - id: housing-evidence
+    name_de: Nachweise zu Wohnung und Wohnkosten, soweit zutreffend
+    required: false
+    obtain_from: Eigene Unterlagen bzw. bei Vermieter, Hausverwaltung oder Grundbuch anfordern.
+    source: &housing
+      url: https://www.graz.at/cms/beitrag/10269022/7761791/Sozialunterstuetzung.html
+      quote: Mietvertrag Grundbuchsauszug Betriebskostennachweis sonstige wohnungsbezogene Kosten
+      retrieved_at: 2026-11-05T23:55:00Z
+  - id: income-evidence
+    name_de: Nachweise zu Einkommen und bezogenen Leistungen, soweit zutreffend
+    required: false
+    obtain_from: Bei Arbeitgeber, Finanzamt, AMS, pensionsauszahlendem Träger oder Krankenkasse anfordern.
+    source: &income-documents
+      url: https://www.graz.at/cms/beitrag/10269022/7761791/Sozialunterstuetzung.html
+      quote: >-
+        Lohnbestätigung Einkommensteuerbescheid Leistungsbezugsbestätigung des
+        Arbeitsmarktservice, Nachweise über Pensions-/Rentenleistungen
+        Bestätigung der Krankenkasse über Krankengeld und Kinderbetreuungsgeld
+      retrieved_at: 2026-11-05T23:55:00Z
+  - id: asset-evidence
+    name_de: Vermögensverzeichnis und vorhandene Vermögensbelege
+    required: true
+    obtain_from: Eigenes Vermögensverzeichnis erstellen; Belege bei Bank oder Bausparkasse anfordern.
+    source: &assets
+      url: https://www.graz.at/cms/beitrag/10269022/7761791/Sozialunterstuetzung.html
+      quote: Vermögensverzeichnis Sparbücher Bausparverträge Kontoauszüge Aktien / Wertpapiere
+      retrieved_at: 2026-11-05T23:55:00Z
+  - id: employment-or-exemption-evidence
+    name_de: AMS-Vormerkung oder vorhandener Nachweis einer Ausnahme
+    required: false
+    obtain_from: Vormerkbestätigung beim AMS anfordern; vorhandene amtliche Nachweise für Ausnahmen beilegen.
+    source: &work-documents
+      url: https://www.graz.at/cms/beitrag/10269022/7761791/Sozialunterstuetzung.html
+      quote: Bestätigung der Vormerkung zur Arbeitssuche Gutachten zur Arbeitsunfähigkeit Nachweise über Verhinderung des Einsatzes der Arbeitskraft
+      retrieved_at: 2026-11-05T23:55:00Z
+  - id: representation-evidence
+    name_de: Vollmacht oder Vertretungsnachweis, falls eine Vertretung handelt
+    required: false
+    obtain_from: Vollmacht durch die vertretene Person; vorhandenen gerichtlichen Vertretungsnachweis verwenden.
+    source: &representation
+      url: https://www.graz.at/cms/beitrag/10269022/7761791/Sozialunterstuetzung.html
+      quote: Vertretungsnachweis (Erwachsenenschutzvertreter / Vollmacht)
+      retrieved_at: 2026-11-05T23:55:00Z
+forms:
+  - search: Antrag zur Gewährung der Sozialunterstützung samt Anhang A und Anhang B
+    publisher: Land Steiermark
+process: ref:processes/sozialhilfe-steiermark
+appointment_channels: []
+sources:
+  - *residence
+  - *status
+  - *resources
+  - *claims
+  - *work
+  - *identification
+  - *housing
+  - *income-documents
+  - *assets
+  - *work-documents
+  - *representation
+  - url: https://www.soziales.steiermark.at/cms/ziel/108519437/DE/
+    quote: Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.
+    retrieved_at: 2026-11-05T23:49:35Z
+as_of: 2026-11-06

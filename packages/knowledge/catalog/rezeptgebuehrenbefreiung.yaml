@@ -1,0 +1,235 @@
+id: rezeptgebuehrenbefreiung
+name_de: Rezeptgebührenbefreiung
+name_simple: Keine Rezeptgebühr zahlen
+area: E
+life_situations: [geringes-einkommen]
+scope: social_insurance
+carriers: [oegk, svs, bvaeb]
+criteria:
+  - id: standard-income
+    text_de: >-
+      Richtsätze 2026 für die Befreiung auf Antrag: monatliches Nettoeinkommen
+      bis 1.308,39 Euro für Alleinstehende und bis 2.064,12 Euro für Paare.
+      Die Haushaltsberechnung und Zuschläge prüft der zuständige Träger.
+      Für aktiv erwerbstätige SVS-Bäuerinnen und Bauern gelten Einheitswertgrenzen.
+    source: &income
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: >-
+        Wenn Ihr monatliches Nettoeinkommen folgende Richtsätze nicht übersteigt,
+        können Sie einen Antrag auf Befreiung von der Rezeptgebühr stellen:
+        Alleinstehende: EUR 1.308,39 Ehepaare: EUR 2.064,12
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: documented-additional-expenses
+    text_de: >-
+      Bei nachgewiesenem erhöhtem Medikamentenbedarf gelten 2026 die erhöhten
+      Richtsätze von 1.504,65 Euro für Alleinstehende und 2.373,74 Euro für Paare.
+      Der Träger prüft die Nachweise; aus Symptomen oder Befunden wird kein Bedarf abgeleitet.
+    source: &higher-income
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: >-
+        Wenn Sie einen erhöhten Bedarf an Medikamenten aufgrund einer Krankheit
+        oder eines Gebrechens haben, gelten folgende Richtsätze für Sie:
+        Alleinstehende: EUR 1.504,65 Ehepaare: EUR 2.373,74
+        Die Richtsätze für Ehepaare gelten auch für Lebensgemeinschaften und eingetragene Partnerschaften.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: household-income
+    text_de: >-
+      Bei der ÖGK zählen das eigene Einkommen und das Einkommen der Partnerperson
+      zu 100 Prozent, Einkommen anderer Haushaltsmitglieder zu 12,5 Prozent.
+      Pro Kind erhöht sich der Richtsatz um 201,88 Euro, wenn dessen Nettoeinkommen
+      unter 481,23 Euro liegt. Für Kinder über 18 prüft die ÖGK weitere Voraussetzungen.
+    source: &household
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: >-
+        Für jedes Kind erhöht sich der Richtsatz um EUR 201,88, sofern das
+        Nettoeinkommen des Kindes den Grenzbetrag von EUR 481,23 nicht erreicht.
+        Für Kinder über 18 werden weitere Voraussetzungen geprüft.
+        Wir berücksichtigen dabei Ihr Einkommen und das Ihrer Partnerin bzw.
+        Ihres Partners zu 100 Prozent. Das Einkommen aller anderen Personen,
+        die im selben Haushalt leben, rechnen wir mit 12,5 Prozent an.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: svs-agriculture
+    text_de: >-
+      Für aktiv erwerbstätige SVS-Bäuerinnen und Bauern ist eine Befreiung wegen
+      geringen Einkommens auf Antrag bei einem Einheitswert bis 6.800 Euro
+      (alleinstehend) bzw. 10.800 Euro (verheiratet oder in eingetragener Partnerschaft)
+      möglich. Weitere Belastungsfälle prüft die SVS gesondert.
+    source: &agriculture
+      url: https://www.svs.at/cdscontent/?contentid=10007.816812&portal=svsportal
+      quote: >-
+        Auf Antrag ist eine Rezeptgebührenbefreiung bei der SVS für aktiv
+        erwerbstätige Versicherte wegen geringen Einkommens möglich, wenn der
+        Einheitswert des land(forst)wirtschaftlichen Betriebes EUR 6.800,00
+        (bei alleinstehenden Betriebsführer/innen) bzw. EUR 10.800,00
+        (bei verheirateten bzw. in eingetragener Partnerschaft lebenden
+        Betriebsführer/innen) nicht übersteigt.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: bvaeb-income
+    text_de: >-
+      Auch die BVAEB veröffentlicht 2026 die Richtsätze von 1.308,39 Euro
+      für Alleinstehende und 2.064,12 Euro für Ehepaare oder eingetragene
+      Partnerschaften sowie eine Erhöhung um 201,88 Euro pro mitversichertem Kind.
+      Die BVAEB prüft die familiären Verhältnisse und weitere Befreiungsgründe.
+    source: &bvaeb
+      url: https://www.bvaeb.at/cdscontent/?contentid=10007.840469&portal=bvaebbportal&viewmode=content
+      quote: >-
+        Alleinstehende bis zu einem Nettoeinkommen von EUR 1.308,39
+        Ehepaare/eingetr. Partner bis zu einem Nettoeinkommen von EUR 2.064,12
+        für jedes mitversicherte Kind erhöht sich der Richtsatz um EUR 201,88
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: automatic-exemption
+    text_de: >-
+      Bei der ÖGK sind unter anderem Personen mit Ausgleichszulage und Personen,
+      die durch den Sozialhilfebezug krankenversichert sind, automatisch befreit.
+      Vor einem Antrag den bestehenden Befreiungsstatus beim Träger klären.
+    source: &automatic
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: >-
+        Folgende Personengruppen sind automatisch von der Rezeptgebühr befreit:
+        Bezieherinnen und Bezieher einer Ausgleichszulage oder eines
+        Ausgleichszulagenbonus bzw. Pensionsbonus Zivildiener
+        Bezieherinnen und Bezieher von Sozialhilfe, die aufgrund des Bezugs
+        von Sozialhilfe krankenversichert sind
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: annual-fee-cap
+    text_de: >-
+      Nach Erreichen der Zwei-Prozent-Grenze des Jahresnettoeinkommens erfolgt
+      die Befreiung für den Rest des Kalenderjahres automatisch, ohne Antrag.
+      Zusätzlich ist eine Mindestobergrenze zu beachten. Maßgeblich ist der
+      vom Träger bestätigte Stand des Rezeptgebührenkontos; der Lotse berechnet
+      keine Befreiung aus einer Zahl von Packungen.
+    source: &annual-cap
+      url: https://www.oesterreich.gv.at/de/themen/hilfe_und_finanzielle_unterstuetzung_erhalten/armut-in-oesterreich/Seite.1693902
+      quote: >-
+        Es besteht eine Deckelung der Rezeptgebühren: Wer im laufenden
+        Kalenderjahr bereits zwei Prozent des Jahresnettoeinkommens für
+        Rezeptgebühren bezahlt hat, ist automatisch für den Rest des Jahres
+        von der Rezeptgebühr befreit. Ein Antrag ist nicht erforderlich.
+      retrieved_at: 2026-11-05T23:49:35Z
+office_rules:
+  - when: carrier == 'oegk' and federal_state == 'Wien'
+    office: ref:offices/oegk-wien
+  - when: carrier == 'oegk' and federal_state == 'Niederösterreich'
+    office: ref:offices/oegk-niederoesterreich
+  - when: carrier == 'oegk' and federal_state == 'Burgenland'
+    office: ref:offices/oegk-burgenland
+  - when: carrier == 'oegk' and federal_state == 'Steiermark'
+    office: ref:offices/oegk-steiermark
+  - when: carrier == 'oegk' and federal_state == 'Kärnten'
+    office: ref:offices/oegk-kaernten
+  - when: carrier == 'oegk' and federal_state == 'Oberösterreich'
+    office: ref:offices/oegk-oberoesterreich
+  - when: carrier == 'oegk' and federal_state == 'Salzburg'
+    office: ref:offices/oegk-salzburg
+  - when: carrier == 'oegk' and federal_state == 'Tirol'
+    office: ref:offices/oegk-tirol
+  - when: carrier == 'oegk' and federal_state == 'Vorarlberg'
+    office: ref:offices/oegk-vorarlberg
+  - when: carrier == 'svs' and federal_state == 'Wien'
+    office: ref:offices/svs-wien
+  - when: carrier == 'svs' and federal_state == 'Niederösterreich'
+    office: ref:offices/svs-niederoesterreich
+  - when: carrier == 'svs' and federal_state == 'Burgenland'
+    office: ref:offices/svs-burgenland
+  - when: carrier == 'svs' and federal_state == 'Steiermark'
+    office: ref:offices/svs-steiermark
+  - when: carrier == 'svs' and federal_state == 'Kärnten'
+    office: ref:offices/svs-kaernten
+  - when: carrier == 'svs' and federal_state == 'Oberösterreich'
+    office: ref:offices/svs-oberoesterreich
+  - when: carrier == 'svs' and federal_state == 'Salzburg'
+    office: ref:offices/svs-salzburg
+  - when: carrier == 'svs' and federal_state == 'Tirol'
+    office: ref:offices/svs-tirol
+  - when: carrier == 'svs' and federal_state == 'Vorarlberg'
+    office: ref:offices/svs-vorarlberg
+  - when: carrier == 'bvaeb' and federal_state == 'Wien'
+    office: ref:offices/bvaeb-wien
+  - when: carrier == 'bvaeb' and federal_state == 'Niederösterreich'
+    office: ref:offices/bvaeb-niederoesterreich
+  - when: carrier == 'bvaeb' and federal_state == 'Burgenland'
+    office: ref:offices/bvaeb-burgenland
+  - when: carrier == 'bvaeb' and federal_state == 'Steiermark'
+    office: ref:offices/bvaeb-steiermark
+  - when: carrier == 'bvaeb' and federal_state == 'Kärnten'
+    office: ref:offices/bvaeb-kaernten
+  - when: carrier == 'bvaeb' and federal_state == 'Oberösterreich'
+    office: ref:offices/bvaeb-oberoesterreich
+  - when: carrier == 'bvaeb' and federal_state == 'Salzburg'
+    office: ref:offices/bvaeb-salzburg
+  - when: carrier == 'bvaeb' and federal_state == 'Tirol'
+    office: ref:offices/bvaeb-tirol
+  - when: carrier == 'bvaeb' and federal_state == 'Vorarlberg'
+    office: ref:offices/bvaeb-vorarlberg
+documents:
+  - id: household-income-evidence
+    name_de: Aktuelle Einkommensbelege aller Personen im gemeinsamen Haushalt
+    required: true
+    obtain_from: >-
+      Je nach Einkommensart bei Arbeitgeber, pensionsauszahlendem Träger, AMS,
+      Sozialhilfebehörde oder dem sonstigen Leistungsträger anfordern.
+    source: &income-documents
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: >-
+        Einkommensbelege von allen im gemeinsamen Haushalt lebenden Personen
+        (z.B. Gehaltszettel, Pensionsbescheid, Firmenpension, Auslandsrente,
+        Unfallrente, Arbeitslosengeld, Sozialhilfe)
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: maintenance-evidence
+    name_de: Unterhaltsbelege und gegebenenfalls Scheidungsunterlagen
+    required: false
+    obtain_from: Eigene Zahlungsbelege bzw. Ausfertigungen beim zuständigen Gericht anfordern.
+    source: &maintenance
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: Belege über den Bezug von Unterhalt Gerichtsbeschluss und Vergleichsausfertigung einer Scheidung
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: documented-medication-list
+    name_de: Ärztliche Medikamentenliste, nur wenn für den Befreiungsgrund erforderlich
+    required: false
+    obtain_from: Bei der behandelnden Ärztin oder beim behandelnden Arzt anfordern.
+    source: &medication-list
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: Medikamentenliste von der Ärztin oder dem Arzt (nur bei Zutreffen der Befreiungsgründe)
+      retrieved_at: 2026-11-05T23:49:35Z
+forms:
+  - search: Antrag auf Befreiung von der Rezeptgebühr
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+  - search: Befreiung von der Kostenbeteiligung und Rezeptgebühr nach dem GSVG
+    publisher: Sozialversicherungsanstalt der Selbständigen (SVS)
+  - search: Antrag auf Rezeptgebührenbefreiung für Bauern
+    publisher: Sozialversicherungsanstalt der Selbständigen (SVS)
+  - search: Antrag auf Befreiung von der Rezeptgebühr / vom Behandlungsbeitrag
+    publisher: Versicherungsanstalt öffentlich Bediensteter, Eisenbahnen und Bergbau (BVAEB)
+process: ref:processes/rezeptgebuehrenbefreiung
+appointment_channels: []
+sources:
+  - *income
+  - *higher-income
+  - *household
+  - *agriculture
+  - *bvaeb
+  - url: https://www.bvaeb.at/cdscontent/?contentid=10007.840469&portal=bvaebbportal&viewmode=content
+    quote: >-
+      Für Personen, die wegen eines Gebrechens oder Leidens einen erhöhten
+      Medikamentenbedarf nachweisen können, wie chronisch Kranke, erhöhen sich
+      diese Richtsätze um 15 %:
+    retrieved_at: 2026-11-05T23:49:35Z
+  - *automatic
+  - *annual-cap
+  - url: https://www.oesterreich.gv.at/de/themen/hilfe_und_finanzielle_unterstuetzung_erhalten/armut-in-oesterreich/Seite.1693902
+    quote: >-
+      Personen, die nicht von der Rezeptgebühr befreit sind, müssen in jedem Fall
+      mindestens 41 Rezeptgebühren zu je 7,55 Euro (Wert für 2026) zahlen, bevor
+      die Zwei-Prozent-Deckelung der Rezeptgebühren zur Anwendung kommt (Mindestobergrenze).
+    retrieved_at: 2026-11-05T23:49:35Z
+  - *income-documents
+  - *maintenance
+  - *medication-list
+  - &svs-income
+    url: https://www.svs.at/cdscontent/?contentid=10007.816812&portal=svsportal
+    quote: >-
+      Besondere soziale Schutzbedürftigkeit ist anzunehmen, wenn das monatliche
+      Nettoeinkommen EUR 1.308,39 nicht übersteigt. Für Ehepaare bzw Lebensgefährten
+      im gemeinsamen Haushalt beläuft sich die Einkommensgrenze auf EUR 2.064,12.
+    retrieved_at: 2026-11-05T23:49:35Z
+as_of: 2026-11-06

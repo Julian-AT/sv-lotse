@@ -1,0 +1,122 @@
+id: sozialhilfe-steiermark
+benefit: ref:catalog/sozialhilfe-steiermark
+actor_roles: [subject, helper]
+slots:
+  - id: federal_state
+    type: enum:federal-state
+    question_hint: In welchem Bundesland liegt Ihr Hauptwohnsitz?
+    validation:
+      options: [Steiermark]
+  - id: main_residence_confirmed
+    type: boolean
+    question_hint: Haben Sie Ihren Hauptwohnsitz in der Steiermark?
+  - id: actual_residence_confirmed
+    type: boolean
+    question_hint: Halten Sie sich tatsächlich in der Steiermark auf?
+  - id: district
+    type: enum:styrian-district
+    question_hint: In welchem Bezirk wohnen Sie? Graz und Graz-Umgebung sind verschiedene Bezirke.
+    validation:
+      options:
+        [
+          Graz,
+          Bruck-Mürzzuschlag,
+          Deutschlandsberg,
+          Graz-Umgebung,
+          Hartberg-Fürstenfeld,
+          Leibnitz,
+          Leoben,
+          Liezen,
+          Murau,
+          Murtal,
+          Südoststeiermark,
+          Voitsberg,
+          Weiz,
+        ]
+  - id: residence_status
+    type: string
+    question_hint: Welche Aufenthaltsberechtigung haben Sie laut Ihren Unterlagen und seit wann leben Sie in Österreich?
+  - id: household_resources
+    type: string
+    question_hint: Welche Einkommen, Leistungen und Vermögen gibt es in Ihrem Haushalt?
+  - id: prior_claims
+    type: string
+    question_hint: Haben Sie andere Leistungen oder Unterhalt beantragt, auf die Sie Anspruch haben könnten?
+  - id: work_or_exception
+    type: string
+    question_hint: Sind Sie beim AMS gemeldet oder haben Sie schon einen Nachweis für eine Ausnahme?
+  - id: submission_confirmed
+    type: boolean
+    question_hint: >-
+      Haben Sie den Antrag selbst bei Ihrer Bezirkshauptmannschaft oder beim
+      Sozialamt Graz eingereicht? Das Land bietet auch einen Online-Antrag an.
+      In Graz sind Online-Antrag, Formular, Schreiben oder E-Mail möglich.
+      Für ein persönliches Gespräch in Graz bitte einen Termin vereinbaren.
+steps:
+  - id: clarify-situation
+    needs: [federal_state, main_residence_confirmed, actual_residence_confirmed, residence_status]
+    criteria: ref:catalog/sozialhilfe-steiermark#criteria
+    transitions:
+      - to: find-office
+  - id: find-office
+    needs: [clarify-situation, district]
+    action: office.resolve
+    outputs:
+      - id: responsible-district-authority
+        type: office
+    transitions:
+      - to: prepare-application
+  - id: prepare-application
+    needs: [find-office, household_resources, prior_claims, work_or_exception]
+    documents: ref:catalog/sozialhilfe-steiermark#documents
+    action: documents.checklist
+    outputs:
+      - id: application-checklist
+        type: document
+    reminders:
+      - after_days: 1
+        text_de: Möchten Sie Ihren Antrag weiter vorbereiten? Dies ist eine freiwillige Erinnerung, keine gesetzliche Frist.
+    transitions:
+      - to: confirm-submission
+  - id: confirm-submission
+    needs: [prepare-application, submission_confirmed]
+    signature: subject
+    transitions:
+      - to: application-submitted
+        when: submission_confirmed == true
+  - id: application-submitted
+    needs: [confirm-submission]
+    outputs:
+      - id: submission-record
+        type: information
+    reminders:
+      - after_days: 7
+        text_de: >-
+          Gibt es bekannte Änderungen Ihrer Angaben? Melden Sie wichtige Änderungen
+          der Behörde so schnell wie möglich, längstens binnen zwei Wochen.
+          Die Erinnerung verschiebt diese Frist nicht.
+completion:
+  evidence: [user_statement]
+sources:
+  - url: https://www.soziales.steiermark.at/cms/ziel/108519437/DE/
+    quote: Anträge auf Sozialunterstützung nehmen die Bezirkshauptmannschaften bzw. das Sozialamt der Stadt Graz entgegen.
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.soziales.steiermark.at/cms/ziel/108519437/DE/
+    quote: Online-Antrag zur Gewährung der Sozialunterstützung
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.graz.at/cms/beitrag/10269022/7761791/Sozialunterstuetzung.html
+    quote: Stellen Sie einen Antrag - online, mittels Formular, einfachen Schreiben/Mail oder persönlich
+    retrieved_at: 2026-11-05T23:55:00Z
+  - url: https://www.graz.at/cms/beitrag/10269022/7761791/Sozialunterstuetzung.html
+    quote: >-
+      Für persönliche Gespräche vereinbaren Sie bitte einen Termin - telefonisch
+      oder online auf unserer Buchungsseite. Anträge und Unterlagen senden Sie
+      uns bitte per E-Mail oder Post.
+    retrieved_at: 2026-11-05T23:55:00Z
+  - url: https://www.soziales.steiermark.at/cms/beitrag/12706097/61183307/
+    quote: >-
+      Jede bekannte Änderung, die für die Gewährung der Sozialunterstützung
+      maßgeblich ist, muss der Behörde so schnell wie möglich, längstens
+      binnen zwei Wochen, gemeldet bzw. angezeigt werden.
+    retrieved_at: 2026-11-05T23:49:35Z
+as_of: 2026-11-06
