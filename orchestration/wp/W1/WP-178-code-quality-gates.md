@@ -5,7 +5,7 @@ wave: W1
 lane: repo
 risk: normal
 codex_effort: high
-depends_on: [WP-010]
+depends_on: [DEFERRED-UNTIL-AFTER-DEADLINE]
 fr: [NFR-13]
 owns:
   - knip.json
