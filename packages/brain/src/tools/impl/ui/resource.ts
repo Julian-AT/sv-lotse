@@ -158,3 +158,13 @@ export function recentUserTexts(history: readonly LotseMessage[]): string[] {
       message.parts.flatMap((part) => (part.type === "text" ? [part.text] : [])).join(" "),
     );
 }
+
+/** The conversation is answering an earlier open offer: never offer the same page again. */
+export function answersOffer(history: readonly LotseMessage[]): boolean {
+  const assistant = history.findLast((message) => message.role === "assistant");
+  return (
+    assistant?.parts.some(
+      (part) => part.type === "tool-ui.offerResource" || part.type === "tool-ui.openResource",
+    ) ?? false
+  );
+}

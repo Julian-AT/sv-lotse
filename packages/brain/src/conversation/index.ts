@@ -67,7 +67,12 @@ import {
   type ProductEventSink,
 } from "../telemetry/product-events.ts";
 import { contracts, isToolName } from "../tools/contracts/index.ts";
-import { guidanceOffer, offerChunks, recentUserTexts } from "../tools/impl/ui/resource.ts";
+import {
+  answersOffer,
+  guidanceOffer,
+  offerChunks,
+  recentUserTexts,
+} from "../tools/impl/ui/resource.ts";
 import type { LotseMessage } from "../tools/types.ts";
 import { pointedToolCall, resultPointAction } from "../workspace/targets.ts";
 import { approvedResultCheckpoint } from "./approved-results.ts";
@@ -581,7 +586,16 @@ async function runTurn(
       let pointed = false;
       const results: { toolCallId: string; toolName: string }[] = [];
       const finalize = async (): Promise<void> => {
-        if (!offered && !approvalRequested && !pointed) {
+        const resourceCalls = [...inputs.values()].some((call) =>
+          call.toolName.endsWith("Resource"),
+        );
+        if (
+          !offered &&
+          !approvalRequested &&
+          !pointed &&
+          !resourceCalls &&
+          !answersOffer(prepared.history)
+        ) {
           const offer = await guidanceOffer({
             userTexts: [userText, ...recentUserTexts(prepared.history)],
             sources: topSources(

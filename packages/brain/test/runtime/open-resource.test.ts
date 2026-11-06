@@ -6,6 +6,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { createLotseAgent, POLICY } from "../../src/agent/index.ts";
 import { BOOKING_ALLOWLIST_FILE } from "../../src/config/index.ts";
 import {
+  answersOffer,
   guidanceOffer,
   isGuidanceRequest,
   offerChunks,
@@ -259,4 +260,17 @@ it("offers the most relevant allowlisted page as a completed offer in its own st
     "start-step",
   ]);
   expect(chunks[2]).toMatchObject({ output: { open: false, label: offer.label } });
+});
+
+it("does not offer again while the user answers an offer", () => {
+  const assistant = (type: string) =>
+    [
+      {
+        id: "a",
+        role: "assistant",
+        parts: [{ type, toolCallId: "t", state: "output-available", input: {}, output: {} }],
+      },
+    ] as never;
+  expect(answersOffer(assistant("tool-ui.offerResource"))).toBe(true);
+  expect(answersOffer(assistant("tool-kb.search"))).toBe(false);
 });
