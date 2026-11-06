@@ -1,0 +1,46 @@
+{
+  "id": "oegk-prevention-graz",
+  "name_de": "Mein Gesundheitszentrum Graz – Vorsorgeuntersuchung",
+  "type": "Vorsorgeuntersuchung",
+  "region": "Steiermark",
+  "address": {
+    "street": "Friedrichgasse 18",
+    "postal_code": "8010",
+    "locality": "Graz",
+    "country": "AT"
+  },
+  "phone": "+43 5 0766-158901",
+  "email": "gesundheitszentrum-graz@oegk.at",
+  "url": "https://www.oegk.at/cdscontent/?contentid=10007.869915&portal=oegkportal",
+  "carriers": ["oegk"],
+  "opening_hours": {
+    "monday": "06:30–14:30",
+    "tuesday": "06:30–16:00",
+    "wednesday": "06:30–17:00",
+    "thursday": "06:30–17:00",
+    "friday": "06:30–14:30"
+  },
+  "services": ["Vorsorgeuntersuchung", "Telefonische Terminvereinbarung erforderlich"],
+  "sources": [
+    {
+      "url": "https://www.oegk.at/cdscontent/?contentid=10007.869915&portal=oegkportal",
+      "quote": "Mein Gesundheitszentrum Graz Friedrichgasse 18 8010 Graz Telefon: +43 5 0766-158901",
+      "retrieved_at": "2026-11-06T03:44:49.318835Z"
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.878943&portal=oegkportal",
+      "quote": "Gesundheitszentren der Österreichischen Gesundheitskasse: Mein Gesundheitszentrum Graz",
+      "retrieved_at": "2026-11-06T03:44:49.318835Z"
+    },
+    {
+      "url": "https://www.oegk.at/locationfinder-json",
+      "quote": "address: Friedrichgasse 18 8010 Graz; latitude: 47.0649028; longitude: 15.4363389",
+      "retrieved_at": "2026-11-06T03:44:49.318835Z"
+    }
+  ],
+  "as_of": "2026-11-06",
+  "location": {
+    "latitude": 47.0649028,
+    "longitude": 15.4363389
+  }
+}

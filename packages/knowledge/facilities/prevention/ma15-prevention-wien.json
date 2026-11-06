@@ -1,0 +1,35 @@
+{
+  "id": "ma15-prevention-wien",
+  "name_de": "Gesundheitsvorsorgezentrum des Gesundheitsdienstes (MA 15)",
+  "type": "Vorsorgeuntersuchung",
+  "region": "Wien",
+  "address": {
+    "street": "Erdbergstraße 135",
+    "postal_code": "1030",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "+43 1 4000-87600",
+  "url": "https://www.wien.gv.at/gesundheit/vorsorgeuntersuchung",
+  "services": [
+    "Vorsorgeuntersuchung",
+    "Telefonische Terminvereinbarung: Montag bis Freitag 07:30–15:00"
+  ],
+  "sources": [
+    {
+      "url": "https://www.wien.gv.at/gesundheit/vorsorgeuntersuchung",
+      "quote": "Gesundheitsvorsorgezentrum des Gesundheitsdienstes (MA 15), 3., Erdbergstraße 135. Termin buchen: telefonisch unter + 43 1 4000-87600",
+      "retrieved_at": "2026-11-06T03:44:49.318835Z"
+    },
+    {
+      "url": "https://data.wien.gv.at/daten/OGDAddressService.svc/GetAddressInfo?Address=Erdbergstra%C3%9Fe%20135",
+      "quote": "Adresse: Erdbergstraße 135; PostalCode: 1030; EPSG:31256 coordinates: [5809.09,339478.07]",
+      "retrieved_at": "2026-11-06T03:44:49.318835Z"
+    }
+  ],
+  "as_of": "2026-11-06",
+  "location": {
+    "latitude": 48.1936915,
+    "longitude": 16.4102713
+  }
+}
