@@ -1,0 +1,120 @@
+# Nur administrative Kostenübernahme des genau genannten Produkts (PRD FR-M1).
+# eko.lookupCoverage liefert nur Abdeckungsfelder; keine Alternativen, Eignung oder Dosierung.
+# approval_required wird aus dem Ergebnis von eko.lookupCoverage beantwortet, nie aus Befunden.
+id: eko-medikamente-kostenuebernahme
+benefit: ref:catalog/eko-medikamente-kostenuebernahme
+actor_roles: [subject, helper]
+slots:
+  - id: medicine_name
+    type: string
+    question_hint: >-
+      Wie lautet der Name des Medikaments genau so, wie er auf Ihrem Rezept oder Entlassungsbrief
+      steht?
+    validation:
+      min_length: 2
+  - id: approval_required
+    type: boolean
+    question_hint: >-
+      Zeigt die EKO-Auskunft für dieses Medikament, dass eine Bewilligung der Krankenkasse nötig
+      ist?
+  - id: prescriber_requests_approval
+    type: boolean
+    question_hint: >-
+      Holt Ihre verordnende Ärztin oder Ihr verordnender Arzt die Bewilligung selbst ein?
+      Vertragsärztinnen und Vertragsärzte tun das immer; bei einem Spitalsrezept sagt Ihnen die
+      Ambulanz, ob Sie selbst etwas tun müssen.
+  - id: carrier
+    type: enum:health-insurer
+    from_context: insurance.carrier
+    question_hint: Bei welcher Krankenkasse sind Sie versichert?
+    validation:
+      options: [oegk, svs, bvaeb]
+  - id: federal_state
+    type: enum:federal-state
+    from_context: residence.state
+    question_hint: In welchem Bundesland wohnen Sie?
+    validation:
+      options:
+        [
+          Wien,
+          Niederösterreich,
+          Burgenland,
+          Steiermark,
+          Kärnten,
+          Oberösterreich,
+          Salzburg,
+          Tirol,
+          Vorarlberg,
+        ]
+steps:
+  - id: lookup-coverage
+    needs: [medicine_name]
+    criteria: ref:catalog/eko-medikamente-kostenuebernahme#criteria
+    action: eko.lookupCoverage
+    outputs:
+      - id: coverage-fields
+        type: information
+    transitions:
+      - to: review-approval
+  - id: review-approval
+    needs: [lookup-coverage, approval_required]
+    transitions:
+      - to: arrange-approval
+        when: approval_required == true
+      - to: explain-fees
+        when: approval_required == false
+  - id: arrange-approval
+    needs: [review-approval, prescriber_requests_approval]
+    documents: ref:catalog/eko-medikamente-kostenuebernahme#documents
+    action: documents.checklist
+    outputs:
+      - id: approval-checklist
+        type: checklist
+    reminders:
+      - after_days: 0
+        text_de: >-
+          Bitte klären Sie mit der verordnenden Ärztin, dem verordnenden Arzt oder der Apotheke, wer
+          die Bewilligung einholt. Dies ist ein Aufgabenhinweis, keine gesetzliche Frist.
+        when: prescriber_requests_approval == false
+    transitions:
+      - to: explain-fees
+        when: prescriber_requests_approval == true
+      - to: contact-carrier
+        when: prescriber_requests_approval == false
+  - id: contact-carrier
+    needs: [carrier, federal_state]
+    action: office.resolve
+    outputs:
+      - id: responsible-office
+        type: office
+    transitions:
+      - to: explain-fees
+  - id: explain-fees
+    needs: []
+    criteria: ref:catalog/eko-medikamente-kostenuebernahme#criteria
+    outputs:
+      - id: fee-information
+        type: information
+completion:
+  evidence: [user_statement]
+sources:
+  - url: https://www.sozialversicherung.at/cdscontent/?contentid=10007.844503&portal=svportal
+    quote: >-
+      Die Kosten werden von den Krankenversicherungsträgern nur bei Vorliegen einer Bewilligung
+      des chef- und kontrollärztlichen Dienstes übernommen (RE1).
+    retrieved_at: 2026-11-06T03:45:00Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+    quote: >-
+      Entscheidet Ihre Ärztin oder Ihr Arzt, dass Sie ein bewilligungspflichtiges Medikament
+      brauchen, holen alle Vertragsärztinnen und Vertragsärzte und jene Wahlärztinnen und
+      Wahlärzte, die ein vollständiges Rezepturrecht haben, die notwendige Bewilligung für Sie ein.
+    retrieved_at: 2026-11-06T03:45:00Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+    quote: >-
+      Das Rezept kann per Post übermittelt, oder persönlich vorbeigebracht werden falls eine
+      Bewilligung erforderlich ist. Sonst können Sie direkt damit in die Apotheke gehen.
+    retrieved_at: 2026-11-06T03:45:00Z
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+    quote: Die Rezeptgebühr beträgt EUR 7,55 pro Packung (2026).
+    retrieved_at: 2026-11-06T03:45:00Z
+as_of: 2026-11-06

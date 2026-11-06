@@ -1,0 +1,226 @@
+# Medikamente nur administrativ (PRD FR-M1): Kostenübernahme des genau genannten Produkts.
+# Keine Alternativen, keine Eignung, keine Dosierung; solche Fragen gehen an Ärztin, Arzt oder Apotheke.
+# eko.lookupCoverage liefert nur Abdeckungsfelder (Box, Bewilligung, Rezeptgebühr, Obergrenze, Befreiung).
+# Beträge: Rezeptgebühr und Mindestobergrenze 2026 laut Quelle; keine persönliche Berechnung.
+id: eko-medikamente-kostenuebernahme
+name_de: Kostenübernahme von Medikamenten nach dem Erstattungskodex (EKO)
+name_simple: Zahlt die Krankenkasse mein verordnetes Medikament?
+area: C
+life_situations:
+  - illness
+  - after-hospital
+scope: social_insurance
+carriers: [oegk, svs, bvaeb]
+criteria:
+  - id: eko-green
+    text_de: >-
+      Grüne Box: Das Medikament darf in der als frei verschreibbar angegebenen Menge ohne
+      Bewilligung des chef- und kontrollärztlichen Dienstes abgegeben werden, allgemein oder unter
+      bestimmten Voraussetzungen. Werden diese Voraussetzungen nicht eingehalten, ist eine
+      Bewilligung nötig.
+    source: &eko-green
+      url: https://www.sozialversicherung.at/cdscontent/?contentid=10007.844503&portal=svportal
+      quote: >-
+        Der Grüne Bereich (G) des EKO beinhaltet Arzneispezialitäten, die entweder allgemein oder
+        unter bestimmten Voraussetzungen in der als frei verschreibbar angegebenen Menge ohne
+        Bewilligung des chef- und kontrollärztlichen Dienstes abgegeben werden dürfen.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: eko-yellow-re1
+    text_de: >-
+      Gelbe Box RE1 (dunkelgelb): Die Krankenversicherung übernimmt die Kosten nur, wenn vorher
+      eine Bewilligung des chef- und kontrollärztlichen Dienstes vorliegt.
+    source: &eko-re1
+      url: https://www.sozialversicherung.at/cdscontent/?contentid=10007.844503&portal=svportal
+      quote: >-
+        Die Kosten werden von den Krankenversicherungsträgern nur bei Vorliegen einer Bewilligung
+        des chef- und kontrollärztlichen Dienstes übernommen (RE1).
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: eko-yellow-re2
+    text_de: >-
+      Gelbe Box RE2 (hellgelb): Statt einer vorherigen Bewilligung kann eine nachfolgende
+      Kontrolle genügen, wenn die im EKO bestimmte Verwendung eingehalten und dokumentiert wird.
+      Ob das zutrifft, beurteilt die verordnende Ärztin oder der verordnende Arzt.
+    source: &eko-re2
+      url: https://www.sozialversicherung.at/cdscontent/?contentid=10007.844503&portal=svportal
+      quote: >-
+        Für einzelne Arzneispezialitäten im Gelben Bereich kann die Bewilligung des chef- und
+        kontrollärztlichen Dienstes durch eine nachfolgende Kontrolle der Einhaltung der bestimmten
+        Verwendung ersetzt werden. Diese Arzneispezialitäten sind mit RE2 gekennzeichnet.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: eko-red
+    text_de: >-
+      Rote Box: Das Medikament ist befristet aufgenommen, solange über den Antrag auf Aufnahme in
+      den EKO entschieden wird. Die Kosten werden nur mit Bewilligung des chef- und
+      kontrollärztlichen Dienstes übernommen.
+    source: &eko-red
+      url: https://www.sozialversicherung.at/cdscontent/?contentid=10007.844503&portal=svportal
+      quote: >-
+        Der Rote Bereich des EKO beinhaltet zeitlich befristet jene Arzneispezialitäten, für die ein
+        vollständiger Antrag auf Aufnahme in den EKO vorliegt, solange bis über den Antrag durch den
+        Dachverband rechtskräftig entschieden wurde. Die Kosten werden von den
+        Krankenversicherungsträgern nur bei Vorliegen einer Bewilligung des chef- und
+        kontrollärztlichen Dienstes übernommen.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: eko-not-listed
+    text_de: >-
+      Nicht im EKO: Bei der ÖGK ist dafür immer eine Bewilligung nötig; die Kosten werden nur im
+      Einzelfall übernommen. Fehlt ein Produktname im bereitgestellten EKO-Auszug, folgt daraus
+      allein noch keine Ablehnung; bitte den genauen Namen von der Verordnung prüfen.
+    source: &eko-no-box
+      url: https://www.oegk.at/cdscontent/?contentid=10007.881095&portal=oegkvpportal
+      quote: >-
+        nicht im Erstattungskodex erhaltene Medikamenten („No Box“): immer bewilligungspflichtig,
+        weil grundsätzlich nicht erstattungsfähig (Einzelfallentscheidung)
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: approval-by-prescriber
+    text_de: >-
+      Eine nötige Bewilligung holt bei der ÖGK die verordnende Vertragsärztin oder der verordnende
+      Vertragsarzt ein, ebenso Wahlärztinnen und Wahlärzte mit vollständigem Rezepturrecht.
+      Versicherte müssen dafür keine Wege machen.
+    source: &approval-by-prescriber
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+      quote: >-
+        Entscheidet Ihre Ärztin oder Ihr Arzt, dass Sie ein bewilligungspflichtiges Medikament
+        brauchen, holen alle Vertragsärztinnen und Vertragsärzte und jene Wahlärztinnen und
+        Wahlärzte, die ein vollständiges Rezepturrecht haben, die notwendige Bewilligung für Sie ein.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: wahlarzt-prescription-approval
+    text_de: >-
+      Muss ein Rezept einer Wahlärztin oder eines Wahlarztes noch bewilligt werden, kann es bei der
+      ÖGK per Post eingereicht oder persönlich abgegeben werden. Ohne Bewilligungspflicht geht es
+      direkt in die Apotheke.
+    source: &wahlarzt-prescription
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+      quote: >-
+        Das Rezept kann per Post übermittelt, oder persönlich vorbeigebracht werden falls eine
+        Bewilligung erforderlich ist. Sonst können Sie direkt damit in die Apotheke gehen.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: prescription-fee
+    text_de: >-
+      Rezeptgebühr 2026: 7,55 Euro pro Packung, außer Sie sind von der Rezeptgebühr befreit.
+    source: &prescription-fee
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: Die Rezeptgebühr beträgt EUR 7,55 pro Packung (2026).
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: fee-cap
+    text_de: >-
+      Rezeptgebührenobergrenze: Wer im Kalenderjahr zwei Prozent des Jahres-Nettoeinkommens und
+      mindestens 314,01 Euro (2026) bezahlt hat, ist für den Rest des Jahres automatisch befreit.
+      Den Stand zeigt Meine ÖGK; der Lotse berechnet keine persönliche Obergrenze.
+    source: &fee-cap
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: >-
+        Sie sind von der Rezeptgebühr befreit, wenn Sie: pro Kalenderjahr zumindest EUR 314,01
+        bezahlen und pro Kalenderjahr in Summe mindestens zwei Prozent Ihres
+        Jahres-Nettoeinkommens für die Rezeptgebühren ausgeben.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: fee-exemption
+    text_de: >-
+      Manche Personengruppen sind automatisch befreit; andere können eine Befreiung bei geringem
+      Einkommen beantragen. Die Voraussetzungen prüft die Krankenkasse
+      (siehe Rezeptgebührenbefreiung).
+    source: &fee-exemption
+      url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+      quote: >-
+        Manche Personengruppen sind automatisch per Gesetz von der Rezeptgebühr befreit, andere
+        können unter bestimmten Voraussetzungen per Antrag befreit werden.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: choice-stays-with-prescriber
+    text_de: >-
+      Welches Medikament passt, entscheidet die verordnende Ärztin oder der verordnende Arzt. Der
+      Lotse nennt nur die Kostenübernahme des genau genannten Produkts und schlägt keine anderen
+      Medikamente vor; Fragen zu Eignung oder Dosierung beantworten Ärztin, Arzt oder Apotheke.
+    source: &choice
+      url: https://www.sozialversicherung.at/cdscontent/?contentid=10007.844503&portal=svportal
+      quote: >-
+        Der EKO soll die Ärztinnen und Ärzten in der Praxis unterstützen, von mehreren
+        therapeutisch geeigneten Medikamenten das ökonomisch günstigste auszuwählen.
+      retrieved_at: 2026-11-06T03:45:00Z
+office_rules:
+  - when: carrier == 'oegk' and federal_state == 'Wien'
+    office: ref:offices/oegk-wien
+  - when: carrier == 'oegk' and federal_state == 'Niederösterreich'
+    office: ref:offices/oegk-niederoesterreich
+  - when: carrier == 'oegk' and federal_state == 'Burgenland'
+    office: ref:offices/oegk-burgenland
+  - when: carrier == 'oegk' and federal_state == 'Steiermark'
+    office: ref:offices/oegk-steiermark
+  - when: carrier == 'oegk' and federal_state == 'Kärnten'
+    office: ref:offices/oegk-kaernten
+  - when: carrier == 'oegk' and federal_state == 'Oberösterreich'
+    office: ref:offices/oegk-oberoesterreich
+  - when: carrier == 'oegk' and federal_state == 'Salzburg'
+    office: ref:offices/oegk-salzburg
+  - when: carrier == 'oegk' and federal_state == 'Tirol'
+    office: ref:offices/oegk-tirol
+  - when: carrier == 'oegk' and federal_state == 'Vorarlberg'
+    office: ref:offices/oegk-vorarlberg
+  - when: carrier == 'svs' and federal_state == 'Wien'
+    office: ref:offices/svs-wien
+  - when: carrier == 'svs' and federal_state == 'Niederösterreich'
+    office: ref:offices/svs-niederoesterreich
+  - when: carrier == 'svs' and federal_state == 'Burgenland'
+    office: ref:offices/svs-burgenland
+  - when: carrier == 'svs' and federal_state == 'Steiermark'
+    office: ref:offices/svs-steiermark
+  - when: carrier == 'svs' and federal_state == 'Kärnten'
+    office: ref:offices/svs-kaernten
+  - when: carrier == 'svs' and federal_state == 'Oberösterreich'
+    office: ref:offices/svs-oberoesterreich
+  - when: carrier == 'svs' and federal_state == 'Salzburg'
+    office: ref:offices/svs-salzburg
+  - when: carrier == 'svs' and federal_state == 'Tirol'
+    office: ref:offices/svs-tirol
+  - when: carrier == 'svs' and federal_state == 'Vorarlberg'
+    office: ref:offices/svs-vorarlberg
+  - when: carrier == 'bvaeb' and federal_state == 'Wien'
+    office: ref:offices/bvaeb-wien
+  - when: carrier == 'bvaeb' and federal_state == 'Niederösterreich'
+    office: ref:offices/bvaeb-niederoesterreich
+  - when: carrier == 'bvaeb' and federal_state == 'Burgenland'
+    office: ref:offices/bvaeb-burgenland
+  - when: carrier == 'bvaeb' and federal_state == 'Steiermark'
+    office: ref:offices/bvaeb-steiermark
+  - when: carrier == 'bvaeb' and federal_state == 'Kärnten'
+    office: ref:offices/bvaeb-kaernten
+  - when: carrier == 'bvaeb' and federal_state == 'Oberösterreich'
+    office: ref:offices/bvaeb-oberoesterreich
+  - when: carrier == 'bvaeb' and federal_state == 'Salzburg'
+    office: ref:offices/bvaeb-salzburg
+  - when: carrier == 'bvaeb' and federal_state == 'Tirol'
+    office: ref:offices/bvaeb-tirol
+  - when: carrier == 'bvaeb' and federal_state == 'Vorarlberg'
+    office: ref:offices/bvaeb-vorarlberg
+documents:
+  - id: prescription
+    name_de: Rezept (e-Rezept oder Papierrezept) mit dem genauen Produktnamen
+    required: true
+    obtain_from: Verordnende Ärztin oder verordnender Arzt; das e-Rezept ist im e-card-System gespeichert.
+    source: &prescription
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+      quote: Sie/Er tut dies entweder in Form eines Papierrezepts oder aber auch elektronisch.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: approval
+    name_de: Bewilligung des chef- und kontrollärztlichen Dienstes, nur wenn sie erforderlich ist
+    required: false
+    obtain_from: >-
+      Holt die verordnende Ärztin oder der verordnende Arzt ein; bei einem Wahlarzt-Rezept ohne
+      Rezepturrecht das Rezept per Post oder persönlich bei der Krankenkasse einreichen.
+    source: *approval-by-prescriber
+forms: []
+process: ref:processes/eko-medikamente-kostenuebernahme
+appointment_channels: []
+sources:
+  - *eko-green
+  - *eko-re1
+  - *eko-re2
+  - *eko-red
+  - *eko-no-box
+  - *approval-by-prescriber
+  - *wahlarzt-prescription
+  - *prescription-fee
+  - *fee-cap
+  - *fee-exemption
+  - *choice
+  - *prescription
+as_of: 2026-11-06
