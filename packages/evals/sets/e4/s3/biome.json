@@ -1,0 +1,14 @@
+{
+  "extends": "//",
+  "overrides": [
+    {
+      "includes": ["rubric.v1.yaml"],
+      "formatter": {
+        "enabled": false
+      }
+    }
+  ],
+  "files": {
+    "includes": ["**"]
+  }
+}
