@@ -10,6 +10,7 @@ import { getToolName, isToolUIPart } from "ai";
 import type { ReactNode } from "react";
 import { ApprovalPanel } from "@/conversation/approval-card.tsx";
 import { workspaceLabels } from "@/conversation/copy.ts";
+import { DEADLINE_TOOLS, DeadlineResults, deadlineResults } from "@/conversation/deadlines.tsx";
 import { OfficeResults, officeResults } from "@/conversation/office.tsx";
 import { ToolResultCards } from "@/conversation/results.tsx";
 import {
@@ -40,6 +41,7 @@ const RESULT_TOOLS = new Set([
   "eko.lookupCoverage",
   "fees.explainReimbursement",
   "office.resolve",
+  ...DEADLINE_TOOLS,
 ]);
 
 function WaitingText({ label }: { label: string }) {
@@ -137,6 +139,7 @@ export const PreviewMessage = ({
       ? [
           ...toolResults(message).map((result) => result.callId),
           ...officeResults(message).map((office) => office.callId),
+          ...deadlineResults(message).map((deadline) => deadline.callId),
         ]
       : [],
   );
@@ -218,7 +221,14 @@ export const PreviewMessage = ({
       const name = getToolName(toolPart);
       // A sourced result replaces its step line with its card, at the tool's place in the answer.
       const card = resultIds.has(toolPart.toolCallId) ? (
-        name === "office.resolve" ? (
+        DEADLINE_TOOLS.has(name) ? (
+          <DeadlineResults
+            key="deadlines"
+            message={message}
+            language={language}
+            callId={toolPart.toolCallId}
+          />
+        ) : name === "office.resolve" ? (
           <OfficeResults
             key="office"
             message={message}
