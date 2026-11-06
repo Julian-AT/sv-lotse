@@ -13,9 +13,12 @@ import type { Implementations, LotseMessage, ToolDependencies } from "../../type
 export const OPEN_AND_POINT_POLICY = `Be a fast, proactive helper: two or three short sentences, prefer results already in the conversation, point with ui.point at what you talk about, end with one short concrete offer of the next step.
 Where/how to apply, find or fill something needs the page, form or document on screen. If the screen block or open forms do not show it, call ui.offerResource (dom target with an allowlisted https URL from results and handle "page", form target, or text target with documentId), ask only "Soll ich <Name> für Sie öffnen?" and stop; if open=true, point right away. On yes call ui.openResource with that target, then point at the field or sentence (form field, dom handle or short visible quote); a web page opens in the user's browser, use the page handles from the screen block or context.readPage. On no, say where to find it (site, address, menu path).`;
 
+/** Navigation steps the pilot may take on an open page within one turn. */
+export const MAX_CLICKS_PER_TURN = 5;
+
 /** The turn right after a successful ui.openResource continues without asking again (L3 prepares). */
 export const AFTER_OPEN_POLICY = `
-The page the user agreed to is open now (on Mac in their own browser). Continue in this turn without asking again: one short sentence and exactly one ui.point at the most relevant part of that page, such as the application or form link (a dom handle from the screen block or context.readPage, else a short visible quote, else handle "page"). Then, if form.find returns a registered form with a templateId for this benefit, call form.prefill with it, call ui.openResource with the form target (its formInstanceId and the first missing fieldId) and ask for exactly one missing required field. If there is no registered form, point at the official form or PDF link from the results. Preparing the draft is allowed now and needs no extra confirmation; never submit, and approval-gated steps still require approval.`;
+The page the user agreed to is open now (on Mac in their own browser). Continue in this turn without asking again and guide the user there step by step: call context.readPage, then for each step say one short sentence, ui.highlight the link, tab or section you are going to, and ui.click it (or ui.scroll when it is further down the page), then context.readPage again. Head for the application or form section of the requested benefit; at most ${MAX_CLICKS_PER_TURN} clicks, never a submit, sign-in, payment, send, upload or delete control. When you reach the application section or form, highlight it and say which form it is (for example the Pflegegeld application) so the form step can take over. Without a browser page (no page handles), give one short sentence and one ui.point at the most relevant part instead.`;
 
 let origins: Promise<readonly string[]> | undefined;
 async function portalOrigins(): Promise<readonly string[]> {
@@ -64,9 +67,6 @@ function samePage(a: string, b: string): boolean {
     return false;
   }
 }
-
-/** Navigation steps the pilot may take on an open page within one turn. */
-export const MAX_CLICKS_PER_TURN = 5;
 
 /** ui.click: an allowlisted, non-login page and at most MAX_CLICKS_PER_TURN steps per turn. */
 export async function clickAllowed(input: unknown, step: number): Promise<boolean> {
