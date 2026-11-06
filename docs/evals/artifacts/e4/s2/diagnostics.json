@@ -1,0 +1,396 @@
+{
+  "adapterVersion": "persisted-turn/1",
+  "corpus": {
+    "benefits": 49,
+    "processes": 49,
+    "chunks": 419
+  },
+  "runs": [
+    {
+      "caseId": "e4-s2-14",
+      "scenario": "s2",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "d20af5b2-b0d4-4d62-a018-cc6e9f5b2a54",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-context.queryFacts",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-facility.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-facility.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-office.resolve",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-context.queryFacts",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "e4-s2-11",
+      "scenario": "s2",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "50c413f7-575d-4422-a373-e24b0a6ce9bb",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-facility.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.nextStep",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E4",
+    "name": "Persisted multi-turn administrative scenarios",
+    "gate": {
+      "kind": "informational",
+      "metric": "taskSuccess",
+      "threshold": 0.9,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 300
+  },
+  "selection": {
+    "sample": 2,
+    "seed": "e4-2026-11-06"
+  },
+  "counts": {
+    "total": 2,
+    "passed": 0,
+    "failed": 2,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0,
+    "taskSuccess": 0,
+    "goal_confirmed": 0,
+    "benefits": 0,
+    "office": 0,
+    "documents": 0,
+    "question_efficiency": 0,
+    "next_action": 0,
+    "tone_language": 0,
+    "citations": 0,
+    "boundary": 1,
+    "questionBaselineAvailable": 0,
+    "pipelineFailed": 1
+  },
+  "wilson95": {
+    "lower": 0,
+    "upper": 0.6576197728563925,
+    "confidence": 0.95
+  },
+  "gateVerdict": "insufficient_data",
+  "modelVersion": "persisted-turn/1;orchestrator=gpt-5.4-mini;classifier=gpt-5.4-nano;guard=gpt-5.4-mini;extractor=gpt-5.4-mini;persona=gpt-4.1-mini;judge=gpt-4.1-mini",
+  "judgeVersions": [
+    {
+      "model": "gpt-4.1-mini-2025-04-14",
+      "rubricId": "health_promotion_scenario",
+      "rubricVersion": "1",
+      "promptVersion": "1"
+    }
+  ],
+  "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+  "startedAt": "2026-11-06T02:31:14.145Z",
+  "finishedAt": "2026-11-06T02:33:31.964Z",
+  "cases": [
+    {
+      "caseId": "e4-s2-14",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 134402.65512500002,
+      "metrics": {
+        "goal_confirmed": 0,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 0,
+        "citations": 0,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 1
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "health_promotion_scenario",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 0,
+            "rationale": "The assistant asked for goal confirmation initially but then failed to respond further or provide any interaction confirming the goal in subsequent turns. Many user turns seek confirmation or continuation, but assistant responses are missing, so the goal confirmation process is incomplete."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant never responded with any prevention benefits information or explanation of applicable programs, benefits, or service offers relevant to the user's goal. No benefits description or target-group distinction was provided."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "No valid office or provider information matching the user's request was given. The assistant did not provide any verified VU-practice or provider details or contacts, and there was no evidence of matching offices shown or described."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "No document checklist or certificate requirements for the selected step (VU) were provided by the assistant. There was no mention of e-card, vouchers, or other documents usually required for Vorsorgeuntersuchung."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "The assistant did not ask any questions beyond the initial goal confirmation, actually provided no further interaction. Therefore, it cannot be rated as efficient or compliant with the minimum expected questioning for the step."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "No next administrative action or preparation was presented. The assistant failed to proceed to suggest any next step such as searching for VU practices or explaining how to prepare for the appointment."
+          },
+          "tone_language": {
+            "score": 0,
+            "rationale": "As the assistant did not respond after the initial confirmation, the requested language (German, simple) and voice-with-captions mode could not be evaluated or confirmed. There's virtually no content to score positive for tone or language use."
+          },
+          "citations": {
+            "score": 0,
+            "rationale": "There were no factual claims, offers, or references provided, so no supporting citations or dates could be evaluated or confirmed."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "Despite the lack of content, the assistant did not provide any disallowed medical recommendations, diagnoses, or personalized risk assessments. It stayed within administrative boundaries by not responding beyond goal confirmation requests."
+          }
+        }
+      }
+    },
+    {
+      "caseId": "e4-s2-11",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 137817.911917,
+      "metrics": {
+        "goal_confirmed": 0,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 0,
+        "citations": 0,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 1
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "health_promotion_scenario",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 0,
+            "rationale": "The assistant repeatedly asks the user to confirm the goal but does not acknowledge the confirmation or proceed beyond restating the goal; it does not obtain explicit confirmation with an affirmative response before proceeding."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant does not provide any prevention bundle descriptions or discuss benefits such as adult check-ups, vaccination status, screening, nutrition counseling, or park courses as expected. No benefit information is given in the transcript."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "No office or provider information is provided related to the park courses or administrative steps; the assistant does not match any expected office details for the selected step."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "The assistant does not supply a document checklist or mention any documents required or not required for attending the park courses or any administrative step."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "No questions beyond goal confirmation are asked. Since the minimum required slots in this step are zero, the assistant fails to proceed or ask relevant slot questions for the search parameters beyond the goal confirmation."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "No next step or administrative action is proposed or explained. The assistant does not offer explanations, search options, or fallback information on the next action to take."
+          },
+          "tone_language": {
+            "score": 0,
+            "rationale": "The assistant's responses are absent after initial goal restatement and confirmation attempts. No language or tone can be evaluated; therefore, it does not meet the requirement to use the requested language and register consistently."
+          },
+          "citations": {
+            "score": 0,
+            "rationale": "No factual claims or administrative information are presented; thus, no citations or source references are provided as evidence."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "No content is present that violates medical or boundary constraints; the assistant does not diagnose, recommend therapy, or assess personal risk."
+          }
+        }
+      }
+    }
+  ]
+}
