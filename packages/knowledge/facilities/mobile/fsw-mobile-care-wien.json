@@ -1,0 +1,36 @@
+{
+  "id": "fsw-mobile-care-wien",
+  "name_de": "FSW – Wiener Pflege- und Betreuungsdienste GmbH – Mobile Hauskrankenpflege",
+  "type": "Mobile Pflege",
+  "region": "Wien",
+  "address": {
+    "street": "Guglgasse 7–9",
+    "postal_code": "1030",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "location": {
+    "latitude": 48.1861406,
+    "longitude": 16.417604
+  },
+  "url": "https://www.fsw.at/downloads/anerkannte-einrichtungen/liste-anerkannter-einrichtungen.pdf",
+  "services": [
+    "Hauskrankenpflege",
+    "Hauskrankenpflege-Kinder",
+    "Mehrstündige Alltagsbegleitung",
+    "Besuchsdienst (wienweit)"
+  ],
+  "sources": [
+    {
+      "url": "https://www.fsw.at/downloads/anerkannte-einrichtungen/liste-anerkannter-einrichtungen.pdf",
+      "quote": "FSW – Wiener Pflege- und Betreuungsdienste GmbH (1030 Wien, Guglgasse 7-9) Hauskrankenpflege, Hauskrankenpflege-Kinder, Mehrstündige Alltagsbegleitung; Besuchsdienst (Wien weit)",
+      "retrieved_at": "2026-11-06T03:44:49.318835Z"
+    },
+    {
+      "url": "https://www.fsw.at/standorte",
+      "quote": "Guglgasse 7–9 1030 Wien; data-lat=\"48.1861406\" data-lng=\"16.417604\"",
+      "retrieved_at": "2026-11-06T03:44:49.318835Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}
