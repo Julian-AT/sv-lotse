@@ -13,6 +13,7 @@ import { z } from "zod";
 import { hasNativeBridge, postNative } from "../bridge/index.ts";
 import { dispatchFormAction, formViewerMounted } from "../features/form-viewer/workspace.tsx";
 import { WORKSPACE_CONFIG } from "./config.ts";
+import { pointNatively, stopNativePointing } from "./native-pointer.ts";
 import { formFieldUiTarget, openResource } from "./open-resource.ts";
 
 export function nativeEnvelope<Message extends BridgeToNative["type"]>(
@@ -127,11 +128,23 @@ export function createClientRuntime(
           success: false,
           failureReason: "APPROVAL_REQUIRED",
         };
+      if (hasNativeBridge()) {
+        // Mac app: the native overlay cursor flies to workspace elements as well.
+        if (await pointNatively(action)) return;
+        // Not on this page: the native side resolves the guided portal window or the screen.
+        if (action.target.kind !== "ui" && action.target.kind !== "form") {
+          await postNative(nativeEnvelope("Action", action));
+          return;
+        }
+      }
       const formField = formFieldUiTarget(action.target);
       if (formField) return pageGuide().execute({ ...action, target: formField } as Action);
       return pageGuide().execute(action);
     },
-    clear: () => guide?.clear(),
+    clear: () => {
+      stopNativePointing();
+      guide?.clear();
+    },
     dispose: () => guide?.dispose(),
   };
 }
