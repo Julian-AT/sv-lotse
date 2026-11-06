@@ -2,7 +2,6 @@
 
 import {
   type FieldCorrection,
-  isEditableField,
   type ViewerInstance,
   ViewerInstanceSchema,
 } from "@lotse/brain/forms/viewer/schema";
@@ -25,7 +24,7 @@ import {
 import { measureFieldTarget, reportFormTargetRect, subscribeFormViewerBridge } from "./bridge.ts";
 import { FORM_VIEWER_CONFIG, formInstanceUrl } from "./config.ts";
 import { type FormViewerLanguage, formViewerCopy } from "./copy.ts";
-import { FormFieldList, filledFieldCount } from "./field-list.tsx";
+import { FormFieldList, fillableFieldCount, filledFieldCount } from "./field-list.tsx";
 import { FormPage } from "./form-page.tsx";
 import { FormReview } from "./form-review.tsx";
 import { FormPackage } from "./package.tsx";
@@ -218,11 +217,11 @@ function FormViewerSession({
     setInstance(ViewerInstanceSchema.parse(await response.json()));
   };
   const filled = instance ? filledFieldCount(instance) : 0;
-  const editableCount = instance?.schema.fields.filter(isEditableField).length ?? 0;
+  const fillableCount = instance ? fillableFieldCount(instance) : 0;
   const status = reviewSaved
     ? reviewCopy[language].saved
     : live.caption ||
-      (instance ? copy.progress(filled, editableCount) : error ? copy.error : copy.loading);
+      (instance ? copy.progress(filled, fillableCount) : error ? copy.error : copy.loading);
   const zoomBy = (step: number): void =>
     setZoom((value) =>
       Math.min(FORM_VIEWER_CONFIG.maxZoom, Math.max(FORM_VIEWER_CONFIG.minZoom, value + step)),

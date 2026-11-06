@@ -64,10 +64,18 @@ function isEmpty(value: ViewerValue["value"] | undefined): boolean {
   return value === undefined || value === null || value === "" || value === false;
 }
 
+/** Every field with a value counts, including sourced entries in a professional's part. */
 export function filledFieldCount(instance: ViewerInstance): number {
-  return instance.schema.fields.filter(
-    (field) => isEditableField(field) && !isEmpty(instance.fields[field.id]?.value),
+  return instance.schema.fields.filter((field) => !isEmpty(instance.fields[field.id]?.value))
+    .length;
+}
+
+/** Fields that take a value at all: everything except signatures. */
+export function fillableFieldCount(instance: ViewerInstance): number {
+  const fillable = instance.schema.fields.filter(
+    (field) => field.type !== "signature" && field.signature === "none",
   ).length;
+  return Math.max(fillable, filledFieldCount(instance));
 }
 
 interface FieldProps {
@@ -128,6 +136,9 @@ function FormField(props: FieldProps): JSX.Element {
   const stored = value?.value ?? "";
   const shown = draft ?? preview?.value ?? (typeof stored === "boolean" ? "" : String(stored));
   const empty = !preview && isEmpty(value?.value);
+  // A professional's part filled from the person's documents stays read-only but fully legible.
+  const reservedFilled = !editable && !empty;
+  const legible = reservedFilled && "disabled:cursor-default disabled:opacity-100";
   const missing = editable && field.validation.required === true && empty;
   const invalid = editable && !empty && !preview && !isValidFieldValue(field, stored);
 
@@ -175,6 +186,7 @@ function FormField(props: FieldProps): JSX.Element {
         disabled={!editable || pending}
         checked={preview ? preview.value === "true" : stored === true}
         aria-invalid={error || undefined}
+        className={cn(legible)}
         onCheckedChange={(checked) => {
           props.onEdit(field.id);
           void save(checked === true);
@@ -192,7 +204,7 @@ function FormField(props: FieldProps): JSX.Element {
         <SelectTrigger
           id={inputId}
           size="sm"
-          className="h-7! min-h-0 w-full text-[0.8125rem]"
+          className={cn("h-7! min-h-0 w-full text-[0.8125rem]", legible)}
           aria-invalid={error || undefined}
         >
           <SelectValue placeholder={editable ? "—" : copy.readOnly} />
@@ -210,7 +222,7 @@ function FormField(props: FieldProps): JSX.Element {
         {...textProps}
         placeholder={placeholder}
         rows={2}
-        className="min-h-12 px-2.5 py-1.5 text-[0.8125rem] md:text-[0.8125rem]"
+        className={cn("min-h-12 px-2.5 py-1.5 text-[0.8125rem] md:text-[0.8125rem]", legible)}
         onChange={(event) => change(event.target.value)}
       />
     ) : (
@@ -218,7 +230,7 @@ function FormField(props: FieldProps): JSX.Element {
         {...textProps}
         placeholder={placeholder}
         inputMode={field.type === "number" ? "decimal" : undefined}
-        className="h-7 min-h-0 px-2.5 text-[0.8125rem] md:text-[0.8125rem]"
+        className={cn("h-7 min-h-0 px-2.5 text-[0.8125rem] md:text-[0.8125rem]", legible)}
         onChange={(event) => change(event.target.value)}
         onKeyDown={(event) => {
           if (event.key === "Enter") event.currentTarget.blur();
@@ -238,6 +250,11 @@ function FormField(props: FieldProps): JSX.Element {
   const meta = (
     <span className="ml-auto flex shrink-0 items-center gap-1.5 text-xs">
       {hint}
+      {reservedFilled && (
+        <Badge variant="secondary" className="h-4 px-1.5 text-[0.6875rem] font-normal">
+          {copy.ownerBadge[field.owner]}
+        </Badge>
+      )}
       <SourceChip field={field} value={value} preview={preview} language={language} />
     </span>
   );
@@ -255,6 +272,7 @@ function FormField(props: FieldProps): JSX.Element {
         "data-active:bg-primary/5 data-active:ring-2 data-active:ring-primary/50",
         "data-pointed:bg-primary/5 data-pointed:ring-2 data-pointed:ring-primary/60",
         field.type === "checkbox" ? "sm:col-span-2" : "flex flex-col gap-1",
+        !editable && empty && "opacity-70",
         long && "sm:col-span-2",
       )}
     >
@@ -299,10 +317,7 @@ export function FormFieldList(props: {
       {sectionsOf(props.instance.schema.fields, props.language).map((section, index) => (
         <Fragment key={section.key}>
           {index > 0 && <Separator />}
-          <section
-            aria-label={section.title}
-            className={cn("flex flex-col gap-2", section.readOnly && "opacity-70")}
-          >
+          <section aria-label={section.title} className="flex flex-col gap-2">
             <h3 className="m-0 px-1.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
               {section.title}
             </h3>
