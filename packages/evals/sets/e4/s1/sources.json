@@ -1,0 +1,158 @@
+[
+  {
+    "id": "scenario",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#3-users-personas-and-scenarios",
+    "passage": "Care allowance (Pflegegeld) application at the carrier paying her pension, care counseling, mobile services, Pflegekarenz information for Daniel, support for 24-hour care, follow-up and rehabilitation support from documented orders",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "goal",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#b-understanding-and-guidance",
+    "passage": "Within the first turns the pilot states the goal it understood",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "questions",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#b-understanding-and-guidance",
+    "passage": "Questions come only from the process engine's missing slots for the next step; no question is asked twice",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "ownership",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#principles",
+    "passage": "Facts belong to the person they describe, not to the person operating the app.",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "approval",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#action-boundary-and-autonomy-levels",
+    "passage": "Across all levels the pilot never submits forms, sends messages, places calls, books paid services or enters credentials.",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "language",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#h-autonomy-language-and-accessibility",
+    "passage": "German and English are enabled at launch",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "simple_language",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#h-autonomy-language-and-accessibility",
+    "passage": "short sentences, everyday words, one instruction at a time",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "captions",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#h-autonomy-language-and-accessibility",
+    "passage": "Captions for all speech",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "citations",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#principles",
+    "passage": "Every claim carries a source, every pre-filled value a provenance, every uncertainty a plain statement.",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "boundary",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#medical-boundary",
+    "passage": "Quoting an explicitly documented recommendation verbatim, with its location in the document",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "checklist",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#14-quality-evaluation-and-testing",
+    "passage": "complete document list, number of questions against the minimum the engine allows",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "routing",
+    "uri": "https://www.oesterreich.gv.at/de/themen/pflege/4/Seite.360515",
+    "passage": "Das ist jene Stelle, die auch die Pension",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "application",
+    "uri": "https://www.oesterreich.gv.at/de/themen/pflege/4/1/Seite.360517",
+    "passage": "Der Antrag auf Pflegegeld kann formlos eingebracht werden.",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "reports",
+    "uri": "https://www.oesterreich.gv.at/de/themen/pflege/4/1/Seite.360517",
+    "passage": "ärztliche Atteste oder Befunde eines Krankenhauses",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "signature",
+    "uri": "https://www.oesterreich.gv.at/de/themen/pflege/4/1/Seite.360517",
+    "passage": "unterschrieben an den zuständigen Entscheidungsträger",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "leave",
+    "uri": "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html",
+    "passage": "Das Pflegekarenzgeld kann beim Sozialministeriumservice beantragt werden.",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "round_the_clock",
+    "uri": "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html",
+    "passage": "Erste Anlaufstelle bei Fragen zur 24-Stunden-Betreuung und für die Ansuchenstellung ist das Sozialministeriumservice mit seinen neun Landesstellen.",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "fsw",
+    "uri": "https://www.fsw.at/p/pflege-betreuung",
+    "passage": "Beim FSW-Kund:innenservice werden Sie kostenlos beraten.",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "regional_counseling",
+    "uri": "https://pflege.gv.at/de/beratungsstellen-im-bundesland",
+    "passage": "Nachstehend finden Sie eine Auflistung der Pflegeberatungsstellen im jeweiligen Bundesland.",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "pva-wien",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/pva-wien.yaml",
+    "passage": "name_de: \"Pensionsversicherung – Landesstelle Wien\"",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "pva-steiermark",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/pva-steiermark.yaml",
+    "passage": "name_de: \"Pensionsversicherung – Landesstelle Steiermark\"",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "pva-oberoesterreich",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/pva-oberoesterreich.yaml",
+    "passage": "name_de: \"Pensionsversicherung – Landesstelle Oberösterreich\"",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "svs-steiermark",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/svs-steiermark.yaml",
+    "passage": "name_de: \"SVS-Kundencenter Steiermark\"",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "fsw_office",
+    "uri": "file:///repo/packages/knowledge/offices/regional/fsw-pflege-und-betreuung-1030.json",
+    "passage": "Fonds Soziales Wien – Beratung und Service-Center Pflege und Betreuung – Guglgasse 7–9",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "document_evidence",
+    "uri": "file:///repo/packages/evals/sets/e12/gold.json",
+    "passage": "\"path\": \"Befunde/Entlassungsbefund.pdf\"",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "document_policy",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md#medical-boundary",
+    "passage": "Explaining the administrative process behind a documented recommendation",
+    "retrievedAt": "2026-11-06"
+  }
+]
