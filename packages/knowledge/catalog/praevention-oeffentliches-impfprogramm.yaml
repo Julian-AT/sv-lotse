@@ -1,0 +1,62 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: praevention-oeffentliches-impfprogramm
+name_de: Öffentliches Impfprogramm – Influenza und Impfpassübersicht
+name_simple: Impfangebote finden und dokumentierte Impfeinträge ansehen
+area: A
+life_situations:
+  - prevention
+scope: federal
+criteria:
+  - id: published-access
+    text_de: Der Zugang zur Influenza-Impfung im öffentlichen Programm ist
+      kostenlos. Verfügbarkeit bei der Impfstelle prüfen. Hier werden
+      ausschließlich bestätigte dokumentierte Impfeinträge gezeigt.
+      Impfstoffwahl und persönliche Termine entscheidet die behandelnde Ärztin
+      oder der behandelnde Arzt.
+    source: &a1
+      url: https://impfen.gv.at/impfungen/influenza
+      quote: Die Influenza-Impfung ist im Rahmen des öffentlichen Impfprogramms von
+        Bund, Länder und Sozialversicherung für alle gratis.
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers: []
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents:
+  - id: identification
+    name_de: "e-card oder Ausweis zur Identifikation"
+    required: true
+    obtain_from: "Eigene e-card oder ein eigener Ausweis"
+    source: &doc1
+      url: "https://www.gesundheit.gv.at/gesundheitsleistungen/elga/elektronischer-impfpass.html"
+      quote: "Man kommt mit der e-card oder einem Ausweis zur Impfung."
+      retrieved_at: "2026-11-06T03:45:00Z"
+  - id: paper-vaccination-pass
+    name_de: "Gelber Papierimpfpass, um frühere Impfungen nachtragen zu lassen"
+    required: false
+    obtain_from: "Eigene Unterlagen"
+    source: &doc2
+      url: "https://www.gesundheit.gv.at/gesundheitsleistungen/elga/elektronischer-impfpass.html"
+      quote: "Auch zurückliegende Impfungen – z.B. aus dem gelben Papierimpfpass – kann man in das Elektronische Impfregister nachtragen lassen kann."
+      retrieved_at: "2026-11-06T03:45:00Z"
+forms: []
+process: ref:processes/praevention-oeffentliches-impfprogramm
+appointment_channels: []
+sources:
+  - *a1
+  - &a2
+    url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.890481&filter-preselect=%22Vorsorgen%22&portal=oegkportal
+    quote: Impfen ist ein wirksamer Schutz gegen bestimmte Infektionskrankheiten.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.gesundheit.gv.at/gesundheitsleistungen/elga/elektronischer-impfpass.html
+    quote: Man kann seine Impfungen über Mein Gesundheitsportal im eImpfpass
+      einsehen und ausdrucken.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - *doc1
+  - *doc2
+as_of: 2026-11-06
+target_group:
+  sex: all
+  interval: saisonales Programm; keine persönlichen Impftermine berechnen
+  rationale_text: Impfen ist ein wirksamer Schutz gegen bestimmte Infektionskrankheiten.
+  rationale_source: *a2
