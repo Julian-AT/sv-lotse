@@ -1,0 +1,5 @@
+export const INVITE_TOKEN_BYTES = 32;
+export const INVITE_MAX_LIFETIME_MS = 24 * 60 * 60_000;
+export const RATE_WINDOW_MS = 60_000;
+export const TURN_REQUESTS_PER_WINDOW = 30;
+export const HELPER_APPROVAL_ATTEMPTS_PER_WINDOW = 5;
