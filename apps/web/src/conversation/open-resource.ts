@@ -3,6 +3,8 @@ import {
   type Action,
   type ActionResult,
   type BridgeToNative,
+  type ContextCapsule,
+  ContextCapsuleSchema,
   PROTOCOL_VERSION,
   type Target,
   TargetSchema,
@@ -16,6 +18,8 @@ export const OPEN_RESOURCE_CONFIG = {
   /** Native guided window: page load plus guide runtime injection. */
   nativeTimeoutMs: 30_000,
   formTimeoutMs: 15_000,
+  /** A typed turn waits at most this long for the browser page read. */
+  pageReadTimeoutMs: 1_500,
   /** A page opened by the "Ja, öffnen" click counts as open for the following tool call. */
   offerReuseMs: 120_000,
   openFormEvent: "lotse:open-form",
@@ -87,6 +91,39 @@ export const formFieldElementId = (fieldId: string): string => `lotse-form-field
 export function formFieldUiTarget(target: Target): Target | undefined {
   if (target.kind !== "form") return;
   return { kind: "ui", elementId: formFieldElementId(target.fieldId) };
+}
+
+const pageWaiters = new Map<string, (page: ContextCapsule["page"]) => void>();
+/** Feed bridge ToolOutputs here; returns true when a page request was waiting for it. */
+export function receiveNativePage(toolCallId: string, output: unknown): boolean {
+  const waiter = pageWaiters.get(toolCallId);
+  if (!waiter) return false;
+  pageWaiters.delete(toolCallId);
+  waiter(ContextCapsuleSchema.safeParse(output).data?.page);
+  return true;
+}
+
+/**
+ * Mac app: the page opened in the browser, read natively for a typed turn's context capsule, so
+ * the pilot knows what is on screen. Undefined when none is open or the read takes too long.
+ */
+export async function nativePageCapsule(): Promise<ContextCapsule> {
+  if (!nativePageOpen() || !hasNativeBridge()) return {};
+  const toolCallId = `page-${crypto.randomUUID()}`;
+  const page = new Promise<ContextCapsule["page"]>((resolve) => {
+    pageWaiters.set(toolCallId, resolve);
+    setTimeout(() => {
+      if (pageWaiters.delete(toolCallId)) resolve(undefined);
+    }, OPEN_RESOURCE_CONFIG.pageReadTimeoutMs);
+  });
+  await postNative({
+    v: PROTOCOL_VERSION,
+    id: crypto.randomUUID(),
+    type: "ToolInvocation",
+    payload: { toolCallId, toolName: "context.readPage", input: {} },
+  } as BridgeToNative).catch(() => undefined);
+  const result = await page;
+  return result ? { page: result } : {};
 }
 
 let nativePageOpenedAt = 0;

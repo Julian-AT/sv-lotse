@@ -23,7 +23,11 @@ import { receiveFormViewerBridgeMessage } from "../features/form-viewer/bridge.t
 import { stopFormFilling } from "../features/form-viewer/config.ts";
 import { useGuidance } from "../speech/provider.tsx";
 import { type ClientRuntime, createClientRuntime, nativeEnvelope } from "./client-tools.ts";
-import { receiveNativeActionResult } from "./open-resource.ts";
+import {
+  nativePageCapsule,
+  receiveNativeActionResult,
+  receiveNativePage,
+} from "./open-resource.ts";
 import { createTurnTransport, type TurnState } from "./transport.ts";
 
 type Options = {
@@ -206,6 +210,7 @@ export function useConversation({
           break;
         }
         case "ToolOutput": {
+          if (receiveNativePage(message.payload.toolCallId, message.payload.output)) return;
           const toolName = pending.current.get(message.payload.toolCallId);
           if (!toolName) return;
           const result = (
@@ -272,7 +277,7 @@ export function useConversation({
     await stop();
     turnState.actionResults.push(...guidanceRef.current.takeActionResults());
     turnState.inputKind = "text";
-    turnState.capsule = {};
+    turnState.capsule = await nativePageCapsule();
     await chat.sendMessage({ text });
   };
   useEffect(() => {

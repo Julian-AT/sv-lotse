@@ -7,8 +7,10 @@ import { pendingOfferQuestion, pendingOpenOffer } from "../src/conversation/open
 import {
   formFieldElementId,
   OPEN_RESOURCE_CONFIG,
+  nativePageCapsule,
   openPortalPageNow,
   receiveNativeActionResult,
+  receiveNativePage,
 } from "../src/conversation/open-resource.ts";
 
 const guide = vi.hoisted(() => ({
@@ -141,6 +143,19 @@ test("on Mac a page opened in the browser is read and filled natively", async ()
   const local = { ...fill, target: { ...fill.target, url: `${window.location.origin}/x` } };
   await runtime.execute("fill-2", "ui.fill", local);
   expect(guide.execute).toHaveBeenCalledWith(expect.objectContaining({ id: "fill-2" }));
+});
+
+test("a typed turn carries the browser page read natively", async () => {
+  const postMessage = vi.fn();
+  window.webkit = { messageHandlers: { lotse: { postMessage } } };
+  const pending = nativePageCapsule();
+  await vi.waitFor(() => expect(postMessage).toHaveBeenCalled());
+  const { payload } = postMessage.mock.calls[0]?.[0] as { payload: { toolCallId: string } };
+  expect(payload).toMatchObject({ toolName: "context.readPage" });
+  const page = { url: `${allowed}/d`, handles: [] };
+  expect(receiveNativePage(payload.toolCallId, { page })).toBe(true);
+  expect(await pending).toEqual({ page });
+  expect(receiveNativePage("unknown", { page })).toBe(false);
 });
 
 test("opens a workspace form instance and waits for its viewer", async () => {
