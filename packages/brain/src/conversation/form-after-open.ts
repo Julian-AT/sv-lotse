@@ -303,11 +303,30 @@ export async function prepareFormAfterOpen(input: {
   requested?: boolean;
   /** Data the person handed over with the request (e.g. a pasted letter), filled in right away. */
   data?: { text: string; turnId: string; language: string; model: LanguageModel };
+  /** Fills the form from everything the person provided earlier, also on the after-open turn. */
+  fill?: { turnId: string; language: string; model: LanguageModel };
 }): Promise<{ goalConfirmed?: string } | undefined> {
   const { db, context } = input;
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
   const url = openedPageUrl(input.history);
   if (!url && !input.requested) return;
+  // Requested at L3 with a known official page: open it first so the cursor can show the way; the
+  // form follows on the after-open turn.
+  const official = url ? undefined : officialPage(benefitForm(topicTexts(input.history))?.formId);
+  if (official && !pageOpenedBefore(input.history)) {
+    const id = randomUUID();
+    input.writer.write({ type: "start-step" });
+    input.writer.write({ type: "text-start", id });
+    input.writer.write({ type: "text-delta", id, delta: official.sentence });
+    input.writer.write({ type: "text-end", id });
+    input.writer.write({
+      type: "tool-input-available",
+      toolCallId: randomUUID(),
+      toolName: "ui.openResource",
+      input: { target: { kind: "dom", handle: "page", url: official.url }, label: official.label },
+    });
+    return {};
+  }
   const benefit = benefitForm(topicTexts(input.history));
   // An official PDF form outside the registry is acquired (allowlist, size cap) and detected.
   const template =
@@ -344,16 +363,17 @@ export async function prepareFormAfterOpen(input: {
     subjectId: context.subjectId,
   };
   const prefilled = await prefillForm(db, prefillInput, context, input.signal);
-  if (input.data)
+  const fill = input.data ?? input.fill;
+  if (fill)
     await answerManyFields({
       db,
       context,
-      turnId: input.data.turnId,
-      language: input.data.language,
+      turnId: fill.turnId,
+      language: fill.language,
       topics: topicTexts(input.history),
-      model: input.data.model,
+      model: fill.model,
       pending: { formInstanceId: prefilled.formInstanceId, fieldId: "" },
-      answer: input.data.text,
+      answer: input.data?.text ?? lastUserText(input.history),
       fromDocuments: true,
     });
   const schema = templateSchema(await getTemplate(db, template.id));
@@ -435,4 +455,42 @@ export async function formQuestion(input: {
     actions,
     ...(asked ? { next: { formInstanceId: prepared.formInstanceId, fieldId: asked.id } } : {}),
   };
+}
+
+const OFFICIAL_PAGES: Readonly<Record<string, { url: string; label: string }>> = {
+  "svbox-kur-reha": {
+    url: "https://www.pv.at/web/reha-und-praevention/vom-antrag-zu-reha-und-kur",
+    label: "die Seite der PVA zu Reha und Kur",
+  },
+  "svbox-pflegegeld": {
+    url: "https://www.pv.at/web/pflegegeld",
+    label: "die Pflegegeld-Seite der PVA",
+  },
+};
+
+function officialPage(formId: string | undefined) {
+  const page = formId ? OFFICIAL_PAGES[formId] : undefined;
+  return page
+    ? {
+        ...page,
+        sentence: `Ich öffne ${page.label} und zeige Ihnen, wo der Antrag steht. Danach fülle ich das Formular für Sie aus.`,
+      }
+    : undefined;
+}
+
+function pageOpenedBefore(history: readonly LotseMessage[]): boolean {
+  return history.some((message) =>
+    message.parts.some(
+      (part) =>
+        part.type === "tool-ui.openResource" &&
+        JSON.stringify("input" in part ? part.input : {}).includes('"dom"'),
+    ),
+  );
+}
+
+function lastUserText(history: readonly LotseMessage[]): string {
+  const message = history.findLast((item) => item.role === "user");
+  return (message?.parts ?? [])
+    .flatMap((part) => (part.type === "text" ? [part.text] : []))
+    .join("\n");
 }

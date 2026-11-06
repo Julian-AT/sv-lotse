@@ -431,6 +431,14 @@ async function runTurn(
         history: prepared.history,
         writer,
         requested: latest.role === "user" && FILL_INTENT.test(userText),
+        fill: {
+          turnId: prepared.turnId,
+          language: formLanguage,
+          model:
+            options?.languageModel ??
+            options?.model ??
+            createModelRouter(config).modelFor("extractor"),
+        },
         ...(latest.role === "user"
           ? {
               data: {
