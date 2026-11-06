@@ -161,3 +161,56 @@ test("the token boundary refuses arbitrary provider paths and unsupported langua
   expect(VoiceTokenRequestSchema.safeParse({ language: "arbitrary" }).success).toBe(false);
   expect(VoiceTokenRequestSchema.safeParse({ userId: "caller-controlled" }).success).toBe(false);
 });
+test("on the free tier a configured library voice falls back to a premade voice the API may use", async () => {
+  const info = vi.spyOn(console, "info").mockImplementation(() => {});
+  const fetcher = vi.fn<typeof fetch>(async (url) => {
+    if (String(url).endsWith("/voices"))
+      return Response.json({
+        voices: [
+          {
+            voice_id: "laura",
+            category: "professional",
+            is_owner: false,
+            labels: { accent: "german" },
+          },
+          {
+            voice_id: "sarah",
+            category: "premade",
+            is_owner: false,
+            labels: { description: "multilingual" },
+          },
+        ],
+      });
+    if (String(url).endsWith("/user/subscription")) return Response.json({ tier: "free" });
+    return Response.json({ token: "tts-single-use" });
+  });
+  const library = voiceConfiguration({ ELEVENLABS_API_KEY: "k", ELEVENLABS_VOICE_ID_DE: "laura" });
+  const result = await createVoiceToken(
+    VoiceTokenRequestSchema.parse({ type: "tts_websocket" }),
+    library,
+    undefined,
+    fetcher,
+  );
+  expect(result.voiceId).toBe("sarah");
+  expect(info.mock.calls.map(([line]) => String(line)).join("\n")).toContain(
+    "library_voice_requires_paid_plan",
+  );
+  info.mockRestore();
+});
+test("on a paid tier the configured library voice is kept", async () => {
+  const fetcher = vi.fn<typeof fetch>(async (url) => {
+    if (String(url).endsWith("/voices"))
+      return Response.json({
+        voices: [{ voice_id: "laura", category: "professional", is_owner: false }],
+      });
+    if (String(url).endsWith("/user/subscription")) return Response.json({ tier: "creator" });
+    return Response.json({ token: "tts-single-use" });
+  });
+  const result = await createVoiceToken(
+    VoiceTokenRequestSchema.parse({ type: "tts_websocket" }),
+    voiceConfiguration({ ELEVENLABS_API_KEY: "k2", ELEVENLABS_VOICE_ID_DE: "laura" }),
+    undefined,
+    fetcher,
+  );
+  expect(result.voiceId).toBe("laura");
+});

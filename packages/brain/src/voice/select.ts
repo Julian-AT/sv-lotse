@@ -12,11 +12,14 @@ const voiceSchema = z.object({
     .array(z.object({ language: z.string().nullish(), accent: z.string().nullish() }))
     .nullish(),
   high_quality_base_model_ids: z.array(z.string()).nullish(),
+  is_owner: z.boolean().nullish(),
 });
 type AccountVoice = z.infer<typeof voiceSchema>;
 const listSchema = z.object({ voices: z.array(voiceSchema) });
+const subscriptionSchema = z.object({ tier: z.string() });
 
-let cache: { key: string; expiresAt: number; voices: AccountVoice[] } | undefined;
+type Account = { voices: AccountVoice[]; libraryVoicesAllowed: boolean };
+let cache: { key: string; expiresAt: number; account: Account } | undefined;
 const logged = new Map<VoiceLanguage, string>();
 
 /** Test hook: forget the cached account voices. */
@@ -30,18 +33,41 @@ async function accountVoices(
   fetcher: typeof fetch,
   signal?: AbortSignal,
   now = Date.now(),
-): Promise<AccountVoice[]> {
-  if (cache && cache.key === apiKey && cache.expiresAt > now) return cache.voices;
-  const timeout = AbortSignal.timeout(VOICE_REQUEST_TIMEOUT_MS);
-  const response = await fetcher(`${VOICE_API_BASE}/voices`, {
-    headers: { "xi-api-key": apiKey },
-    signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
-    cache: "no-store",
-  });
+): Promise<Account> {
+  if (cache && cache.key === apiKey && cache.expiresAt > now) return cache.account;
+  const request = (path: string) => {
+    const timeout = AbortSignal.timeout(VOICE_REQUEST_TIMEOUT_MS);
+    return fetcher(`${VOICE_API_BASE}${path}`, {
+      headers: { "xi-api-key": apiKey },
+      signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
+      cache: "no-store",
+    });
+  };
+  const [response, subscription] = await Promise.all([
+    request("/voices"),
+    request("/user/subscription").catch(() => undefined),
+  ]);
   if (!response.ok) throw new Error("VOICE_LIST_UNAVAILABLE");
   const { voices } = listSchema.parse(await response.json());
-  cache = { key: apiKey, expiresAt: now + VOICE_LIST_TTL_MS, voices };
-  return voices;
+  const account = { voices, libraryVoicesAllowed: await allowsLibraryVoices(subscription) };
+  cache = { key: apiKey, expiresAt: now + VOICE_LIST_TTL_MS, account };
+  return account;
+}
+
+/**
+ * ElevenLabs refuses library voices over the API on the free tier; the multi-context TTS socket then
+ * answers with an empty final frame and the app falls back to the system voice. Unknown tier counts
+ * as free, so a working voice wins over a nicer one that may stay silent.
+ */
+async function allowsLibraryVoices(response: Response | undefined): Promise<boolean> {
+  if (!response?.ok) return false;
+  const parsed = subscriptionSchema.safeParse(await response.json().catch(() => undefined));
+  return parsed.success && parsed.data.tier.toLowerCase() !== "free";
+}
+
+/** A voice added from the Voice Library (not premade, not the account's own clone or design). */
+export function isLibraryVoice(voice: AccountVoice): boolean {
+  return voice.is_owner === false && voice.category !== "premade";
 }
 
 function score(voice: AccountVoice, language: VoiceLanguage): number {
@@ -104,8 +130,16 @@ export async function selectVoice(
     language === "en" ? config.ELEVENLABS_VOICE_ID_EN : config.ELEVENLABS_VOICE_ID_DE;
   if (!config.ELEVENLABS_API_KEY) return undefined;
   let voices: AccountVoice[];
+  let skipped: string | undefined;
   try {
-    voices = await accountVoices(config.ELEVENLABS_API_KEY, fetcher, signal);
+    const account = await accountVoices(config.ELEVENLABS_API_KEY, fetcher, signal);
+    voices = account.libraryVoicesAllowed
+      ? account.voices
+      : account.voices.filter((voice) => !isLibraryVoice(voice));
+    if (configured && !voices.some((voice) => voice.voice_id === configured))
+      skipped = account.voices.some((voice) => voice.voice_id === configured)
+        ? "library_voice_requires_paid_plan"
+        : "not_on_account";
   } catch {
     signal?.throwIfAborted();
     // The account list is unavailable: keep the configured voice rather than failing speech.
@@ -126,7 +160,9 @@ export async function selectVoice(
         language,
         source: selection.source,
         voiceId: selection.voiceId,
-        ...(configured && selection.source === "fallback" ? { configuredVoiceId: configured } : {}),
+        ...(configured && selection.source === "fallback"
+          ? { configuredVoiceId: configured, reason: skipped }
+          : {}),
       }),
     );
   }
