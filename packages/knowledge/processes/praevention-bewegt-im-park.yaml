@@ -1,0 +1,47 @@
+# Awaiting human review; administrative access only.
+id: praevention-bewegt-im-park
+benefit: ref:catalog/praevention-bewegt-im-park
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: region
+    type: string
+    question_hint: In welchem Bundesland suchen Sie ein Angebot?
+steps:
+  - id: programme-information
+    needs: []
+    criteria: ref:catalog/praevention-bewegt-im-park#criteria
+    outputs:
+      - id: published-programme
+        type: document
+    transitions:
+      - to: prepare-access
+  - id: prepare-access
+    needs:
+      - region
+    outputs:
+      - id: official-access
+        type: document
+    transitions:
+      - to: finish
+  - id: finish
+    needs: []
+    outputs:
+      - id: access-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.bewegt-im-park.at/
+    quote: Alle Kurse sind kostenlos und ohne Anmeldung.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.gesundheit.gv.at/news/aktuelles/aktuell-2026/bewegt-im-park.html
+    quote: Alle können mitmachen, unabhängig von Alter oder Fitness.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.bmwkms.gv.at/themen/sport/breitensport/breiten-gesundheitssport/bewegungsangebote/bewegt-im-park.html
+    quote: „Bewegt im Park“ sind kostenlose Bewegungskurse von Juni bis September in
+      öffentlichen Parks oder anderen Freiflächen.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
