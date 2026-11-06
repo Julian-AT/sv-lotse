@@ -1,0 +1,142 @@
+.panel {
+  composes: lotse-glass from global;
+  margin: 1rem 0;
+  padding: 1.25rem;
+}
+.panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.75rem 0;
+}
+.panel button,
+.panel select,
+.panel input,
+.room button {
+  min-height: 44px;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--lotse-border);
+  border-radius: 0.5rem;
+  background: var(--lotse-surface);
+  color: var(--lotse-text);
+  font: inherit;
+}
+.panel button:disabled,
+.room button:disabled {
+  opacity: 0.55;
+}
+.panel button:focus-visible,
+.panel select:focus-visible,
+.panel input:focus-visible,
+.room button:focus-visible {
+  outline: 3px solid #986500;
+  outline-offset: 3px;
+}
+.link {
+  width: 100%;
+  box-sizing: border-box;
+}
+.note {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.error {
+  color: var(--lotse-danger);
+}
+.active {
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.4rem;
+  background: var(--lotse-success-surface);
+  font-weight: 650;
+}
+.screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #14261f;
+  color: var(--lotse-on-accent);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+.video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.panel .pointerSurface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  background: transparent;
+  border: 0;
+}
+.cursor {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  color: var(--lotse-color-on-brand, #001008);
+  padding: 0.25rem 0.45rem;
+  border-radius: 0 0.5rem 0.5rem;
+  background: var(--lotse-color-brand-helper, #78dbad);
+  border: 2px solid white;
+  box-shadow: 0 1px 5px #0006;
+  font: 600 14px / 1.3 system-ui;
+  transform: translate(0, 0);
+}
+.cursor::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: -7px;
+  border-left: 7px solid var(--lotse-color-brand-helper, #78dbad);
+  border-top: 7px solid transparent;
+}
+.mark {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 4px solid var(--lotse-color-brand-helper, #78dbad);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px white;
+  transform: translate(-50%, -50%);
+}
+.audio {
+  display: none;
+}
+
+.scopePicker {
+  flex-basis: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--lotse-border);
+  border-radius: 0.5rem;
+}
+.scopePicker select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.scopePicker label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-wrap: anywhere;
+}
+.scopePicker input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 44px;
+}
