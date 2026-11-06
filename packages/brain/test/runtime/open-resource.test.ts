@@ -10,6 +10,7 @@ import {
   guidanceOffer,
   isGuidanceRequest,
   offerChunks,
+  recentUserTexts,
   resourceIsOpen,
 } from "../../src/tools/impl/ui/resource.ts";
 import { buildTools } from "../../src/tools/registry.ts";
@@ -276,4 +277,13 @@ it("does not offer again while the user answers an offer", () => {
   expect(answersOffer(assistant("tool-ui.offerResource"), "Wo beantrage ich Pflegegeld?")).toBe(
     false,
   );
+});
+
+it("finds the question behind a goal confirmation with or without the current message", () => {
+  const user = (text: string) => ({ id: text, role: "user", parts: [{ type: "text", text }] });
+  const asked = [user("Wo beantrage ich Pflegegeld?")] as never;
+  expect(recentUserTexts(asked, "Ja")).toEqual(["Wo beantrage ich Pflegegeld?"]);
+  expect(recentUserTexts([...asked, user("Ja")] as never, "Ja")).toEqual([
+    "Wo beantrage ich Pflegegeld?",
+  ]);
 });

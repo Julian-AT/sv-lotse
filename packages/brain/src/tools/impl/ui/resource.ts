@@ -148,15 +148,15 @@ export function offerChunks(
   ];
 }
 
-/** The user's earlier messages, newest first, as plain text. */
-export function recentUserTexts(history: readonly LotseMessage[]): string[] {
-  return history
+/** The user's earlier messages (without the current one), newest first, as plain text. */
+export function recentUserTexts(history: readonly LotseMessage[], current = ""): string[] {
+  const texts = history
     .filter((message) => message.role === "user")
-    .slice(-3, -1)
-    .reverse()
     .map((message) =>
       message.parts.flatMap((part) => (part.type === "text" ? [part.text] : [])).join(" "),
     );
+  if (texts.at(-1)?.trim() === current.trim()) texts.pop();
+  return texts.slice(-2).reverse();
 }
 
 /** The latest assistant message opened a resource successfully (the turn continues after it). */
