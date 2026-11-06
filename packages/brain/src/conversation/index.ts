@@ -88,8 +88,9 @@ import { awaitPreviousTurn } from "./continuation-wait.ts";
 import { TurnError, turnStreamError } from "./errors.ts";
 import { formQuestion, prepareFormAfterOpen, topicTexts } from "./form-after-open.ts";
 
+// Any wish to apply, fill or find the application opens the known form at once (no offer first).
 const FILL_INTENT =
-  /ausf(?:ü|ue)ll|formular|antrag (?:stellen|vorbereiten)|beantrag|unterst(?:ü|ue)tz|schritt f(?:ü|ue)r schritt|^(?:ja|ja,? bitte|gerne)\b|fill (?:in|out)|apply/iu;
+  /ausf(?:ü|ue)ll|formular|antrag|beantrag|einreich|unterst(?:ü|ue)tz|schritt f(?:ü|ue)r schritt|^(?:ja|ja,? bitte|gerne|ok|okay)\b|fill (?:in|out)|apply|application/iu;
 
 import { answerFormQuestion } from "./form-answers.ts";
 import {
