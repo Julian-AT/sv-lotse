@@ -62,8 +62,9 @@ review its proposed version-range-only diff within the owning package's scope be
 
 ## Frozen findings and regression checks
 
-The initial inventory contains 16 knip findings (five dependencies/devDependencies, eight value
-exports and three type exports), 40 complex functions across 26 paths, and 15 architecture findings
+The inventory refreshed against the current tree on 2026-11-06 contains 17 knip findings (five
+dependencies/devDependencies, nine value exports and three type exports), 42 complex functions
+across 27 paths, and 15 architecture findings
 (nine knowledge-to-brain runtime edges, two cycles and four relative imports into package internals).
 The two Playwright manifest paths are inventoried separately. There are no existing suppressions
 for the other seven stricter Biome rules and no unused-file baseline.
