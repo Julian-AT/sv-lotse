@@ -1,0 +1,155 @@
+{
+ "OgdSearchResult": {
+  "OgdDocumentResults": {
+   "Hits": {
+    "@pageNumber": "5",
+    "@pageSize": "10",
+    "#text": "1121"
+   },
+   "OgdDocumentReference": [
+    {
+     "Data": {
+      "Metadaten": {
+       "Technisch": {
+        "ID": "NOR40259062",
+        "Applikation": "BrKons",
+        "Organ": "BKA (Bundeskanzleramt)",
+        "ImportTimestamp": {
+         "@xsi:nil": "true",
+         "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"
+        }
+       },
+       "Allgemein": {
+        "Veroeffentlicht": "2024-01-09",
+        "Geaendert": "2024-01-09",
+        "DokumentUrl": "https://ogd.ris.bka.gv.at/eli/bgbl/1955/189/P30b/NOR40259062"
+       },
+       "Bundesrecht": {
+        "Kurztitel": "Allgemeines Sozialversicherungsgesetz",
+        "Eli": "https://ris.bka.gv.at/eli/bgbl/1955/189/P30b/NOR40259062",
+        "BrKons": {
+         "Kundmachungsorgan": "BGBl. Nr. 189/1955 zuletzt geändert durch BGBl. I Nr. 191/2023 ",
+         "Typ": "BG",
+         "Dokumenttyp": "Paragraph",
+         "ArtikelParagraphAnlage": "§ 30b",
+         "Paragraphnummer": "30",
+         "Paragraphbuchstabe": "b",
+         "StammnormPublikationsorgan": "BGBl. Nr.",
+         "StammnormBgblnummer": "189/1955",
+         "NovellenPublikationsorgan": "BGBl. I Nr.",
+         "NovellenBgblnummer": "191/2023",
+         "NovellenBeziehung": "zuletzt geändert durch",
+         "Inkrafttretensdatum": "2024-01-01",
+         "Abkuerzung": "ASVG",
+         "Indizes": {
+          "item": "66/01 Allgemeines Sozialversicherungsgesetz"
+         },
+         "Aenderung": "",
+         "Gesetzesnummer": "10008147",
+         "GesamteRechtsvorschriftUrl": "https://ogd.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10008147"
+        }
+       }
+      },
+      "Dokumentliste": {
+       "ContentReference": {
+        "ContentType": "MainDocument",
+        "Name": "Hauptdokument",
+        "Urls": {
+         "ContentUrl": [
+          {
+           "DataType": "Xml",
+           "Url": "https://ogd.ris.bka.gv.at/Dokumente/Bundesnormen/NOR40259062/NOR40259062.xml"
+          },
+          {
+           "DataType": "Html",
+           "Url": "https://ogd.ris.bka.gv.at/Dokumente/Bundesnormen/NOR40259062/NOR40259062.html"
+          },
+          {
+           "DataType": "Rtf",
+           "Url": "https://ogd.ris.bka.gv.at/Dokumente/Bundesnormen/NOR40259062/NOR40259062.rtf"
+          },
+          {
+           "DataType": "Pdf",
+           "Url": "https://ogd.ris.bka.gv.at/Dokumente/Bundesnormen/NOR40259062/NOR40259062.pdf"
+          }
+         ]
+        }
+       }
+      }
+     }
+    },
+    {
+     "Data": {
+      "Metadaten": {
+       "Technisch": {
+        "ID": "NOR40250349",
+        "Applikation": "BrKons",
+        "Organ": "BKA (Bundeskanzleramt)",
+        "ImportTimestamp": {
+         "@xsi:nil": "true",
+         "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance"
+        }
+       },
+       "Allgemein": {
+        "Veroeffentlicht": "2023-01-04",
+        "Geaendert": "2023-01-04",
+        "DokumentUrl": "https://ogd.ris.bka.gv.at/eli/bgbl/1955/189/P30c/NOR40250349"
+       },
+       "Bundesrecht": {
+        "Kurztitel": "Allgemeines Sozialversicherungsgesetz",
+        "Eli": "https://ris.bka.gv.at/eli/bgbl/1955/189/P30c/NOR40250349",
+        "BrKons": {
+         "Kundmachungsorgan": "BGBl. Nr. 189/1955 zuletzt geändert durch BGBl. I Nr. 217/2022 ",
+         "Typ": "BG",
+         "Dokumenttyp": "Paragraph",
+         "ArtikelParagraphAnlage": "§ 30c",
+         "Paragraphnummer": "30",
+         "Paragraphbuchstabe": "c",
+         "StammnormPublikationsorgan": "BGBl. Nr.",
+         "StammnormBgblnummer": "189/1955",
+         "NovellenPublikationsorgan": "BGBl. I Nr.",
+         "NovellenBgblnummer": "217/2022",
+         "NovellenBeziehung": "zuletzt geändert durch",
+         "Inkrafttretensdatum": "2020-01-03",
+         "Abkuerzung": "ASVG",
+         "Indizes": {
+          "item": "66/01 Allgemeines Sozialversicherungsgesetz"
+         },
+         "Aenderung": "",
+         "Gesetzesnummer": "10008147",
+         "GesamteRechtsvorschriftUrl": "https://ogd.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10008147"
+        }
+       }
+      },
+      "Dokumentliste": {
+       "ContentReference": {
+        "ContentType": "MainDocument",
+        "Name": "Hauptdokument",
+        "Urls": {
+         "ContentUrl": [
+          {
+           "DataType": "Xml",
+           "Url": "https://ogd.ris.bka.gv.at/Dokumente/Bundesnormen/NOR40250349/NOR40250349.xml"
+          },
+          {
+           "DataType": "Html",
+           "Url": "https://ogd.ris.bka.gv.at/Dokumente/Bundesnormen/NOR40250349/NOR40250349.html"
+          },
+          {
+           "DataType": "Rtf",
+           "Url": "https://ogd.ris.bka.gv.at/Dokumente/Bundesnormen/NOR40250349/NOR40250349.rtf"
+          },
+          {
+           "DataType": "Pdf",
+           "Url": "https://ogd.ris.bka.gv.at/Dokumente/Bundesnormen/NOR40250349/NOR40250349.pdf"
+          }
+         ]
+        }
+       }
+      }
+     }
+    }
+   ]
+  }
+ }
+}
