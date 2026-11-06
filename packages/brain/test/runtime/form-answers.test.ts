@@ -8,7 +8,9 @@ import {
   questionKey,
 } from "../../src/conversation/form-answers.ts";
 import type { FormField } from "../../src/forms/schema.ts";
+import { createSegmentWriter } from "../../src/pipeline/segment.ts";
 import type { LotseMessage } from "../../src/tools/types.ts";
+import { config } from "./helpers.ts";
 
 function field(factType: string, type: FormField["type"] = "text", maxLength = 40): FormField {
   return {
@@ -36,7 +38,7 @@ describe("fieldValue", () => {
   it("normalizes birth dates and reads them back", () => {
     expect(fieldValue(field("person.birth_date"), "12. März 1948", false)).toEqual({
       value: "12.03.1948",
-      readBack: "12. März 1948",
+      readBack: "12.03.1948",
     });
     expect(fieldValue(field("person.birth_date"), "3.7.1950", false)?.value).toBe("03.07.1950");
     expect(fieldValue(field("person.birth_date", "date"), "12.03.1948", false)?.value).toBe(
@@ -94,4 +96,35 @@ describe("questionKey", () => {
     expect(questionKey(detected("Diagnose"))).toBeUndefined();
     expect(questionKey(field("person.title"))).toBeUndefined();
   });
+});
+
+it("reads the answered value back in the streamed text and the spoken segment", () => {
+  const chunks: { type: string; delta?: string; data?: { text: string } }[] = [];
+  const output = createSegmentWriter({
+    writer: { write: (chunk) => void chunks.push(chunk as never) },
+    context: {
+      caseId: randomUUID(),
+      subjectId: randomUUID(),
+      actorId: randomUUID(),
+      userId: randomUUID(),
+      sessionId: randomUUID(),
+      actorRole: "subject",
+      autonomyLevel: "L3",
+      shareScope: {},
+      sentenceIndex: 0,
+    },
+    turnId: randomUUID(),
+    language: "de-AT",
+    config,
+    passages: new Map(),
+  });
+  const readBack = fieldValue(field("person.birth_date"), "12. März 1948", false)?.readBack;
+  output.emit(
+    randomUUID(),
+    `Danke, eingetragen: ${readBack}. Wie lautet der Vorname Ihrer Mutter?`,
+  );
+  expect(chunks.find((chunk) => chunk.type === "text-delta")?.delta).toContain("12.03.1948");
+  expect(chunks.find((chunk) => chunk.type === "data-speech-segment")?.data?.text).toBe(
+    "Danke, eingetragen: 12.03.1948.",
+  );
 });

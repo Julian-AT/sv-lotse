@@ -161,10 +161,8 @@ export function fieldValue(
       field.type === "date"
         ? `${date.year}-${pad(date.month)}-${pad(date.day)}`
         : `${pad(date.day)}.${pad(date.month)}.${date.year}`;
-    const month = MONTHS[date.month - 1] ?? "";
-    const readBack = english
-      ? `${date.day}.${date.month}.${date.year}`
-      : `${date.day}. ${month.charAt(0).toUpperCase()}${month.slice(1)} ${date.year}`;
+    // "12. März 1948" would be split into two spoken sentences after "12."; digits stay one.
+    const readBack = `${pad(date.day)}.${pad(date.month)}.${date.year}`;
     return validFieldValue(field, value) ? { value, readBack } : undefined;
   }
   const stripped = text.replace(LEAD_IN, "").trim();
