@@ -505,7 +505,12 @@ export const contracts = {
     'Before on-screen guidance on a page, form or document, offer to open it. Target: dom (allowlisted https URL, handle "page"), form (formInstanceId, fieldId) or text with a case documentId. If open is false, ask only whether to open it and end the reply; if true, point right away.',
   ),
   "ui.openResource": client(
-    z.strictObject({ target: TargetSchema, label: text.optional() }),
+    z.strictObject({
+      target: TargetSchema,
+      label: text.optional(),
+      /** Page tour pace on the Mac: "fast" when the person chose fast filling, else step. */
+      style: z.enum(["step", "fast"]).optional(),
+    }),
     ActionResultSchema,
     "Open an offered page, form or document after the user agreed. Returns once it has loaded; then point at the relevant field or sentence. Nothing is submitted.",
   ),

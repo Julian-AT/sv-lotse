@@ -352,7 +352,11 @@ export async function prepareFormAfterOpen(input: {
         type: "tool-input-available",
         toolCallId: randomUUID(),
         toolName: "ui.openResource",
-        input: { target: pageTarget(choice.url), label: choice.label },
+        input: {
+          target: pageTarget(choice.url),
+          label: choice.label,
+          ...(formMode(userTexts(input.history)) === "fast" ? { style: "fast" } : {}),
+        },
       });
       return {};
     }

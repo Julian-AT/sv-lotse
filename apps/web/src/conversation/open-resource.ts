@@ -29,6 +29,7 @@ export const OPEN_RESOURCE_CONFIG = {
 export const OpenResourceInputSchema = z.object({
   target: TargetSchema,
   label: z.string().optional(),
+  style: z.enum(["step", "fast"]).optional(),
 });
 
 let portalOrigins: Promise<readonly string[]> | undefined;
@@ -132,12 +133,17 @@ export function nativePageOpen(): boolean {
   return nativePageOpenedAt > 0;
 }
 
-async function openNative(id: string, target: Target, label?: string): Promise<ActionResult> {
+async function openNative(
+  id: string,
+  target: Target,
+  label?: string,
+  style?: string,
+): Promise<ActionResult> {
   const action: Action = {
     id,
     kind: "openResource",
     target,
-    payload: label ? { label } : {},
+    payload: { ...(label ? { label } : {}), ...(style ? { style } : {}) },
     sentenceIndex: 0,
   };
   const result = new Promise<ActionResult>((resolve) => {
@@ -192,11 +198,11 @@ export async function openResource(
 ): Promise<ActionResult> {
   const parsed = OpenResourceInputSchema.safeParse(input);
   if (!parsed.success) return failure(id, "INVALID_RESOURCE");
-  const { target, label } = parsed.data;
+  const { target, label, style } = parsed.data;
   if (target.kind === "dom") {
     const allowed = allowedPortalUrl(target.url, await loadPortalOrigins());
     if (!allowed) return failure(id, "origin-not-allowed", "dom");
-    if (hasNativeBridge()) return openNative(id, { ...target, url: allowed }, label);
+    if (hasNativeBridge()) return openNative(id, { ...target, url: allowed }, label, style);
     const openedAt = openedPages.get(allowed);
     if (openedAt && Date.now() - openedAt < OPEN_RESOURCE_CONFIG.offerReuseMs) {
       openedPages.delete(allowed);
