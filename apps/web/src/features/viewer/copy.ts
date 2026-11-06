@@ -1,0 +1,38 @@
+export const viewerCopy = {
+  de: {
+    title: "Originaldokument",
+    open: "Dokument ansehen",
+    close: "Dokument schließen",
+    loading: "Dokument wird geladen …",
+    error: "Das Originaldokument konnte nicht angezeigt werden.",
+    page: "Seite",
+    previous: "Vorherige Seite",
+    next: "Nächste Seite",
+    quote: "Zitat aus Ihrem Dokument",
+    notFound:
+      "Das genaue Zitat ist auf dieser Seite nicht eindeutig auffindbar. Es wurde keine andere Stelle markiert.",
+    stop: "Vorlesen stoppen",
+    speechError: "Die Sprachausgabe ist nicht verfügbar.",
+    message: "Ihre Nachricht",
+    send: "Senden",
+    turnError: "Die Antwort konnte nicht geladen werden.",
+  },
+  en: {
+    title: "Original document",
+    open: "View document",
+    close: "Close document",
+    loading: "Loading document …",
+    error: "The original document could not be displayed.",
+    page: "Page",
+    previous: "Previous page",
+    next: "Next page",
+    quote: "Quote from your document",
+    notFound:
+      "The exact quote could not be located uniquely on this page. No other passage was highlighted.",
+    stop: "Stop reading",
+    speechError: "Speech playback is unavailable.",
+    message: "Your message",
+    send: "Send",
+    turnError: "The response could not be loaded.",
+  },
+};
