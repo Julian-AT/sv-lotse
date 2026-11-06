@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { DatabaseClient } from "@lotse/db";
-import { facts, formFields, formInstances } from "@lotse/db/schema";
+import { documents, facts, formFields, formInstances } from "@lotse/db/schema";
 import {
   type Action,
   ActionSchema,
@@ -60,8 +60,27 @@ export function questionKey(field: FormField): string | undefined {
   return LABEL_KEYS.find(([pattern]) => pattern.test(label))?.[1];
 }
 
+/**
+ * Fields the pilot asks for one by one: the known administrative ones, and every other
+ * applicant-writable text field by its label. Checkboxes and provider sections are not asked.
+ */
 export function askable(field: FormField): boolean {
-  return questionKey(field) !== undefined;
+  if (questionKey(field) !== undefined) return true;
+  return (
+    writableField(field) &&
+    field.type !== "checkbox" &&
+    cleanLabel(field.label_de).length > 1 &&
+    !/^(?:datum|date|ort,? datum)$/iu.test(cleanLabel(field.label_de))
+  );
+}
+
+/** A form label without technical suffixes ("Bei welcher Anstalt2" → "Bei welcher Anstalt"). */
+export function cleanLabel(label: string): string {
+  return label
+    .replace(/[_\s]*\d+$/u, "")
+    .replace(/_/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim();
 }
 
 const RELATIVES: Readonly<Record<string, { de: string; en: string }>> = {
@@ -94,7 +113,7 @@ export function applicantOf(texts: readonly string[], english: boolean): string 
 export function fieldNoun(field: FormField, english: boolean): string {
   const noun = QUESTIONS[questionKey(field) ?? ""];
   if (noun) return english ? noun.en : noun.de;
-  const label = english ? (field.labels?.en ?? field.label_de) : field.label_de;
+  const label = cleanLabel(english ? (field.labels?.en ?? field.label_de) : field.label_de);
   return english ? `“${label}”` : `„${label}“`;
 }
 
@@ -115,6 +134,8 @@ export function fieldActions(
   formInstanceId: string,
   fieldId: string,
   typed?: { value: string; provenance: Provenance },
+  /** Typing time for this field; bulk fills shorten it after the first few fields. */
+  budgetMs = 2_400,
 ): Action[] {
   const target = { kind: "form" as const, formInstanceId, fieldId };
   const point = ActionSchema.parse({
@@ -137,7 +158,7 @@ export function fieldActions(
             ...typed,
             pace: Math.max(
               5,
-              Math.min(FORM_TYPE_PACE_MS, Math.round(2_400 / Math.max(1, typed.value.length))),
+              Math.min(FORM_TYPE_PACE_MS, Math.round(budgetMs / Math.max(1, typed.value.length))),
             ),
           },
         }),
@@ -150,8 +171,8 @@ export function fieldQuestion(field: FormField, applicant: string, english: bool
   const noun = QUESTIONS[key ?? ""];
   if (!noun)
     return english
-      ? `What should I enter for “${field.label_de}”?`
-      : `Was soll ich bei „${field.label_de}“ eintragen?`;
+      ? `What should I enter for “${cleanLabel(field.labels?.en ?? field.label_de)}”?`
+      : `Was soll ich bei „${cleanLabel(field.label_de)}“ eintragen?`;
   if (english) return `What is ${noun.en} of ${applicant}?`;
   return key === "address.building_unit"
     ? `Wie lauten Hausnummer, Stiege und Tür ${applicant}?`
@@ -323,6 +344,7 @@ const copy = {
     fastNothing:
       "Aus Ihren bisherigen Angaben kann ich nichts weiter eintragen. Sagen Sie mir einfach alles auf einmal oder fügen Sie einen Brief ein.",
     and: "und",
+    review: "Bitte prüfen Sie den Entwurf.",
   },
   en: {
     filled: (value: string) => `Thanks, filled in: ${value}.`,
@@ -342,6 +364,7 @@ const copy = {
     fastNothing:
       "I cannot fill in anything else from what you told me so far. Just tell me everything at once or paste a letter.",
     and: "and",
+    review: "Please review the draft.",
   },
 } as const;
 
@@ -375,8 +398,8 @@ export async function answerFormQuestion(input: {
   if (!pending) {
     // A form is open and the person hands over data (typed or "from the letter"): fill it directly.
     const data =
-      ((answer.length > 40 || MANY.test(answer)) && !answer.includes("?")) ||
-      FIELD_HINT.test(answer);
+      ((answer.length > 40 || MANY.test(answer)) && !asksQuestion(answer)) ||
+      (FIELD_HINT.test(answer) && !asksQuestion(answer));
     if (!(fromDocuments || data)) return;
     const [latest] = await db
       .select({ id: formInstances.id })
@@ -399,11 +422,12 @@ export async function answerFormQuestion(input: {
     });
   }
   if (
-    answer.length > 80 ||
-    MANY.test(answer) ||
-    fromDocuments ||
-    CORRECTION.test(answer) ||
-    FIELD_HINT.test(answer)
+    !asksQuestion(answer) &&
+    (answer.length > 80 ||
+      MANY.test(answer) ||
+      fromDocuments ||
+      CORRECTION.test(answer) ||
+      FIELD_HINT.test(answer))
   )
     return answerManyFields({
       ...input,
@@ -428,6 +452,22 @@ export async function answerFormQuestion(input: {
   const index = fields.findIndex((field) => field.id === pending.fieldId);
   const field = fields[index];
   if (!field || !askable(field)) return;
+  // "Maria Beispiel" to a name question fills given and family name separately.
+  const nameKeys = ["person.family_name", "person.given_name"];
+  if (
+    nameKeys.includes(questionKey(field) ?? "") &&
+    nameKeys.every((key) => fields.some((candidate) => questionKey(candidate) === key)) &&
+    /^\p{Lu}[\p{L}'-]+\s+\p{Lu}[\p{L}'-]+$/u.test(answer.replace(LEAD_IN, "").trim())
+  ) {
+    const many = await answerManyFields({
+      ...input,
+      pending,
+      answer,
+      mode: formMode(userTexts(input.history)),
+      only: nameKeys,
+    });
+    if (many) return many;
+  }
   const english = input.language.startsWith("en");
   const strings = english ? copy.en : copy.de;
   const applicant = applicantOf(input.topics, english);
@@ -484,11 +524,27 @@ export async function answerFormQuestion(input: {
   };
 }
 
+/**
+ * A question for the agent, not data for the form: it ends with "?", or is a short message with
+ * a question mark or a question word. A pasted block of values with a "?" inside stays data.
+ */
+export function asksQuestion(text: string): boolean {
+  const trimmed = text.trim();
+  if (/\?\s*$/u.test(trimmed)) return true;
+  if (trimmed.length > 160 || /\n/u.test(trimmed)) return false;
+  return (
+    trimmed.includes("?") ||
+    /^(?:wie|was|warum|wieso|weshalb|wann|wo|wer|welche[rsmn]?|kann|könnte|darf|muss|soll|brauche|gibt es|how|what|why|when|where|who|which|can|could|should|do|does|is|are)\b/iu.test(
+      trimmed,
+    )
+  );
+}
+
 // Several values in one message ("Maria Müller, geb. 12.3.1948, Hauptstraße 5, 1100 Wien").
 const MANY = /[\n;]|,.*,|:\s*\S.*:/u;
 // Naming a field or asking for a change targets the open form even in a short message.
 const FIELD_HINT =
-  /\b(?:namens?|namen|name|vorname|nachname|familienname|geburt\w*|adresse|stra(?:ß|ss)e|plz|postleitzahl|ort|telefon|e-?mail|versicherungsnummer|svnr|patient\w*)\b/iu;
+  /\b(?:namens?|namen|name|vorname|nachname|familienname|geburt\w*|adress\w*|anschrift|stra(?:ß|ss)e|plz|postleitzahl|ort|telefon\w*|handy\w*|mobil\w*|e-?mail\w*|versicherungsnummer|svnr|patient\w*)\b/iu;
 const CORRECTION = /(?:ändere|änder|ersetze|korrigier|statt|replace|change)/iu;
 const DOCUMENT = /brief|dokument|entlassung|befund|bescheid|unterlage|letter|document|daraus/iu;
 const extraction = z.object({
@@ -498,6 +554,8 @@ const extraction = z.object({
       value: z.string(),
       quote: z.string(),
       factId: z.string().nullable(),
+      documentId: z.string().nullable(),
+      page: z.number().int().nullable(),
     }),
   ),
 });
@@ -519,6 +577,8 @@ export async function answerManyFields(input: {
   fromDocuments?: boolean;
   /** Fast mode names everything still missing at once instead of asking only the next field. */
   mode?: FormMode;
+  /** Restricts the mapping to fields with these meanings (e.g. both name fields). */
+  only?: readonly string[];
 }): Promise<FormAnswer | undefined> {
   const { db, context, pending, answer } = input;
   if (!input.model) return;
@@ -543,7 +603,8 @@ export async function answerManyFields(input: {
     (field) =>
       field.signature === "none" &&
       field.type !== "signature" &&
-      values[field.id]?.state !== "confirmed",
+      values[field.id]?.state !== "confirmed" &&
+      (!input.only || input.only.includes(questionKey(field) ?? field.fact_type ?? "")),
   );
   if (!open.length) return;
   const english = input.language.startsWith("en");
@@ -566,6 +627,26 @@ export async function answerManyFields(input: {
         (fact) => fact.confirmed || (fact.source as { kind?: string } | null)?.kind === "document",
       )
     : [];
+  // The person's newest uploaded documents (OCR text per page), so values are quoted from them
+  // with document and page even before any extracted fact was confirmed.
+  const documentTexts = input.fromDocuments
+    ? (
+        await db
+          .select({ id: documents.id, pages: documents.pages })
+          .from(documents)
+          .where(
+            and(eq(documents.subjectId, context.subjectId), eq(documents.ocrStatus, "completed")),
+          )
+          .orderBy(desc(documents.createdAt))
+          .limit(2)
+      ).map((document) => ({
+        documentId: document.id,
+        pages: (document.pages as { page?: number; text?: string }[])
+          .filter((page) => typeof page.text === "string" && page.text.trim())
+          .slice(0, 6)
+          .map((page) => ({ page: page.page ?? 1, text: (page.text ?? "").slice(0, 4_000) })),
+      }))
+    : [];
   const result = await generateText({
     model: input.model,
     output: Output.object({ schema: extraction }),
@@ -584,7 +665,9 @@ export async function answerManyFields(input: {
       "(e.g. Patientin = weiblich; a hip fracture = Bewegungs-/Stützapparat; recommended inpatient " +
       "rehabilitation = Stationäre). For a birth year field return only the year. For every value " +
       "return quote: the exact sentence of the text that supports it. " +
-      "Set factId to the document fact's id when the value comes from it.",
+      "Set factId to the document fact's id when the value comes from it. When the value comes " +
+      "from one of documents, set documentId and page and quote the exact line from that page; " +
+      "otherwise set both to null.",
     prompt: JSON.stringify({
       fields: open.map((field) => ({
         fieldId: field.id,
@@ -592,6 +675,7 @@ export async function answerManyFields(input: {
         meaning: field.fact_type?.startsWith("form.field.") ? questionKey(field) : field.fact_type,
       })),
       text: answer,
+      documents: documentTexts,
       knownFacts: documentFacts.map((fact) => ({
         id: fact.id,
         type: fact.type,
@@ -609,15 +693,23 @@ export async function answerManyFields(input: {
     const parsed =
       field?.type === "checkbox"
         ? /^(?:true|ja|yes|x|1)$/iu.test(text) && validFieldValue(field, true)
-          ? { value: true, readBack: field.label_de }
+          ? { value: true, readBack: cleanLabel(field.label_de) }
           : undefined
         : field && (questionKey(field) || identityField(field))
           ? fieldValue(field, text, english)
           : field && text && validFieldValue(field, text)
-            ? { value: text, readBack: field.label_de }
+            ? { value: text, readBack: text }
             : undefined;
     const documentFact = documentFacts.find((fact) => fact.id === item.factId);
-    return field && parsed ? [{ field, parsed, documentFact, quote: item.quote }] : [];
+    // A document source counts only when the quote is really on that page.
+    const page = documentTexts
+      .find((document) => document.documentId === item.documentId)
+      ?.pages.find((candidate) => candidate.page === item.page);
+    const document =
+      page && item.quote.trim() && squash(page.text).includes(squash(item.quote))
+        ? { documentId: item.documentId as string, page: page.page }
+        : undefined;
+    return field && parsed ? [{ field, parsed, documentFact, document, quote: item.quote }] : [];
   });
   console.info(
     JSON.stringify({
@@ -638,25 +730,54 @@ export async function answerManyFields(input: {
   const written = unique.map((item) => ({
     ...item,
     provenance: item.documentFact
-      ? { factId: item.documentFact.id, source: item.documentFact.source as typeof source }
-      : {
-          factId: randomUUID(),
-          source: { ...source, quote: item.quote.slice(0, 500) || source.quote },
-        },
+      ? { factId: item.documentFact.id, source: item.documentFact.source as Provenance["source"] }
+      : item.document
+        ? {
+            factId: randomUUID(),
+            source: {
+              kind: "document" as const,
+              documentId: item.document.documentId,
+              page: item.document.page,
+              quote: item.quote.slice(0, 500),
+            },
+          }
+        : {
+            factId: randomUUID(),
+            source: { ...source, quote: item.quote.slice(0, 500) || source.quote },
+          },
   }));
   await db.transaction(async (tx) => {
-    for (const { field, parsed, provenance, documentFact } of written) {
+    for (const { field, parsed, provenance, documentFact, document } of written) {
       if (documentFact) continue;
-      await tx.insert(facts).values({
-        id: provenance.factId,
-        subjectId: context.subjectId,
-        type: field.fact_type ?? `form.field.${instance.templateId}.${field.id}`,
-        value: parsed.value,
-        turnId: input.turnId,
-        source,
-        confidence: 1,
-        confirmed: true,
-      });
+      const type = field.fact_type ?? `form.field.${instance.templateId}.${field.id}`;
+      // Read from a document: a fact of that document, still to be confirmed by the person.
+      const row: typeof facts.$inferInsert = document
+        ? {
+            id: provenance.factId,
+            subjectId: context.subjectId,
+            type,
+            value: parsed.value,
+            documentId: document.documentId,
+            source: {
+              kind: "document",
+              documentId: document.documentId,
+              page: document.page,
+              quote: provenance.source.quote ?? "",
+            },
+            confidence: 0.9,
+            confirmed: false,
+          }
+        : {
+            id: provenance.factId,
+            subjectId: context.subjectId,
+            type,
+            value: parsed.value,
+            turnId: input.turnId,
+            source: { ...source, quote: provenance.source.quote ?? source.quote },
+            confidence: 1,
+            confirmed: true,
+          };
+      await tx.insert(facts).values(row);
     }
     await tx
       .update(formInstances)
@@ -673,8 +794,13 @@ export async function answerManyFields(input: {
       })
       .where(eq(formInstances.id, instance.id));
   });
-  const actions = written.flatMap(({ field, parsed, provenance }) =>
-    fieldActions(instance.id, field.id, { value: String(parsed.value), provenance }),
+  const actions = written.flatMap(({ field, parsed, provenance }, index) =>
+    fieldActions(
+      instance.id,
+      field.id,
+      { value: String(parsed.value), provenance },
+      bulkBudget(index),
+    ),
   );
   const done = new Set(written.map(({ field }) => field.id));
   const next = fields.find(
@@ -682,7 +808,18 @@ export async function answerManyFields(input: {
   );
   const strings = english ? copy.en : copy.de;
   const applicant = applicantOf(input.topics, english);
-  const lead = strings.filledMany(written.map(({ parsed }) => parsed.readBack).join(", "));
+  const pairs = written.map(({ field, parsed }) =>
+    field.type === "checkbox"
+      ? parsed.readBack
+      : `${cleanLabel(english ? (field.labels?.en ?? field.label_de) : field.label_de)}: ${
+          parsed.readBack.length > 40 ? `${parsed.readBack.slice(0, 37)}…` : parsed.readBack
+        }`,
+  );
+  const lead = strings.filledMany(
+    pairs.length > 6
+      ? `${pairs.slice(0, 6).join(", ")} ${english ? "and" : "und"} ${pairs.length - 6} ${english ? "more" : "weitere"}`
+      : pairs.join(", "),
+  );
   if (next) actions.push(...fieldActions(instance.id, next.id));
   const question = next ? fieldQuestion(next, applicant, english) : strings.done;
   const missing = fields.filter(
@@ -696,6 +833,15 @@ export async function answerManyFields(input: {
     actions,
     ...(next ? { next: { formInstanceId: instance.id, fieldId: next.id } } : {}),
   };
+}
+
+function squash(text: string): string {
+  return text.replace(/\s+/gu, " ").trim().toLowerCase();
+}
+
+/** Bulk fills type the first fields visibly, the rest quickly, so typing ends with the turn. */
+export function bulkBudget(index: number): number {
+  return index < 5 ? 1_500 : 250;
 }
 
 export function missingSentence(missing: readonly FormField[], english: boolean): string {
@@ -790,19 +936,21 @@ export async function openedFormTurn(input: {
   });
   if (mode === "step" && !handedOver)
     return result(`${strings.invite} ${strings.first(question)}`, pointNext);
-  const typed = filled.flatMap((field) => {
+  const typed = filled.flatMap((field, index) => {
     const entry = values[field.id];
     const provenance = ProvenanceSchema.safeParse(entry?.provenance);
     return entry && provenance.success
-      ? fieldActions(instance.id, field.id, {
-          value: String(entry.value),
-          provenance: provenance.data,
-        })
+      ? fieldActions(
+          instance.id,
+          field.id,
+          { value: String(entry.value), provenance: provenance.data },
+          bulkBudget(index),
+        )
       : [];
   });
   if (!filled.length) return result(`${strings.invite} ${strings.first(question)}`, pointNext);
   const lead = strings.openedFilled(filled.length);
-  if (!next) return result(`${lead} ${strings.done}`, typed);
+  if (!next) return result(`${lead} ${strings.review}`, typed);
   return result(
     mode === "fast"
       ? `${lead} ${missingSentence(missing, english)} ${strings.stepOffer(question)}`

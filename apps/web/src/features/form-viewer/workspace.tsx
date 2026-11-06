@@ -28,6 +28,11 @@ export function formViewerMounted(formInstanceId: string): boolean {
   return actionListeners.has(formInstanceId);
 }
 
+/** Whether any form popup is open and receiving actions. */
+export function anyFormViewerMounted(): boolean {
+  return actionListeners.size > 0;
+}
+
 export function refreshFormViewer(formInstanceId: string): void {
   refreshListeners.get(formInstanceId)?.();
 }

@@ -7,6 +7,7 @@ import { ChatHeader } from "@/components/chat/chat-header";
 import { Messages } from "@/components/chat/messages";
 import { MultimodalInput } from "@/components/chat/multimodal-input";
 import { Button as UiButton } from "@/components/ui/button";
+import { anyFormViewerMounted } from "../features/form-viewer/workspace.tsx";
 import { useI18n } from "../i18n/provider.tsx";
 import { extractFacts, loadFacts } from "./api.ts";
 import { FactsReview } from "./facts.tsx";
@@ -147,6 +148,15 @@ export function Conversation({
       const result = await extractFacts(documentId, selectedCase.subjectId, selectedCase.id);
       setProposals((current) => [...current, ...result]);
       setLastUpload(undefined);
+      // A document dropped while the form popup is open fills that form right away.
+      if (anyFormViewerMounted()) {
+        chat.clearError();
+        void chat.send(
+          i18n.locale === "en"
+            ? "Please take the details from the uploaded document."
+            : "Bitte übernimm die Daten aus dem hochgeladenen Dokument.",
+        );
+      }
     } catch {
       setFactsError(true);
     } finally {

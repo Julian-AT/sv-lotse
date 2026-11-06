@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { formMode, handsOverData, modeRequest } from "../../src/conversation/form-answers.ts";
+import {
+  askable,
+  asksQuestion,
+  cleanLabel,
+  formMode,
+  handsOverData,
+  modeRequest,
+} from "../../src/conversation/form-answers.ts";
 import { parseFormEdit, resolveFields } from "../../src/conversation/form-edit.ts";
 import type { FormField } from "../../src/forms/schema.ts";
 
@@ -155,5 +162,26 @@ describe("fill modes", () => {
     expect(parseFormEdit("mach den Rest automatisch")).toEqual({ kind: "mode", mode: "fast" });
     expect(parseFormEdit("schneller")).toEqual({ kind: "mode", mode: "fast" });
     expect(parseFormEdit("Ja, gerne")).toEqual({ kind: "continue" });
+  });
+});
+
+describe("snippets and step walking", () => {
+  it("keeps pasted values as data and questions for the agent", () => {
+    expect(asksQuestion("Wie lange dauert das?")).toBe(true);
+    expect(asksQuestion("Kann ich das online einreichen")).toBe(true);
+    expect(asksQuestion("Maria Beispiel, geb. 12.03.1948, Hauptstraße 5, 1100 Wien")).toBe(false);
+    expect(
+      asksQuestion(
+        "Patientin: Maria Beispiel\nGeburtsdatum: 14.03.1944\nRückfragen? Station 3B\nTelefon: 0664 1234567",
+      ),
+    ).toBe(false);
+  });
+
+  it("walks every applicant text field by a clean label", () => {
+    expect(askable(field("f023", "Von welcher Stelle", "form.field.x.f023"))).toBe(true);
+    expect(cleanLabel("Bei welcher Anstalt2")).toBe("Bei welcher Anstalt");
+    expect(cleanLabel("VSNR_1")).toBe("VSNR");
+    expect(askable({ ...field("f001", "Pflegegeld"), type: "checkbox" } as FormField)).toBe(false);
+    expect(askable({ ...field("f067", "Familienname"), owner: "doctor" } as FormField)).toBe(false);
   });
 });
