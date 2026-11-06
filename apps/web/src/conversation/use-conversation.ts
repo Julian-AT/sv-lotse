@@ -8,7 +8,6 @@ import {
   ContextCapsuleSchema,
   DATA_PARTS,
   type LotseDataParts,
-  type SpeechSegment,
 } from "@lotse/protocol";
 import {
   type ChatAddToolOutputFunction,
@@ -128,16 +127,8 @@ export function useConversation({
     onData: (part) => {
       const version = generation.current;
       if (part.type === "data-status") {
+        // The brain speaks the status line itself as the first sentence of a voice turn.
         setStatusLine(part.data.text);
-        // The Mac app speaks the status line while the slow tool runs; the answer queues behind it.
-        const status = statusSpeech(part.data, turnState.language);
-        queue.current = queue.current
-          .then(async () => {
-            if (version !== generation.current || !turnState.hello) return;
-            if (!speaksAloud(turnState.inputKind)) return;
-            await postNative(nativeEnvelope("SpeechSegment", status));
-          })
-          .catch(() => setBridgeError(true));
         return;
       }
       queue.current = queue.current
@@ -308,23 +299,6 @@ export function useConversation({
 /** Only turns asked by voice (⌥⌘, „Meine SV“, the mic button) are read aloud. */
 export function speaksAloud(inputKind: TurnState["inputKind"]): boolean {
   return inputKind === "transcript";
-}
-
-/** Above every answer sentence's index, so it never replaces one; the native queue plays it first. */
-export const STATUS_SEGMENT_INDEX = 9999;
-
-export function statusSpeech(
-  status: { turnId: string; text: string },
-  language: string,
-): SpeechSegment {
-  return {
-    turnId: status.turnId,
-    index: STATUS_SEGMENT_INDEX,
-    text: status.text,
-    language,
-    citations: [],
-    actionIds: [],
-  };
 }
 
 export function approvalContexts(messages: LotseMessage[]): LotseDataParts["approval-context"][] {
