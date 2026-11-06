@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type { DatabaseClient } from "@lotse/db";
 import { facts, formFields, formInstances } from "@lotse/db/schema";
-import { type Action, ActionSchema, type JsonValue } from "@lotse/protocol";
+import { type Action, ActionSchema, type JsonValue, type Provenance } from "@lotse/protocol";
 import { generateText, type LanguageModel, Output } from "ai";
 import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
@@ -82,6 +82,43 @@ export function applicantOf(texts: readonly string[], english: boolean): string 
     if (relative) return english ? relative.en : relative.de;
   }
   return english ? "the applicant" : "der antragstellenden Person";
+}
+
+/** How a field is named in a spoken list ("die Telefonnummer", else its label). */
+export function fieldNoun(field: FormField, english: boolean): string {
+  const noun = QUESTIONS[questionKey(field) ?? ""];
+  if (noun) return english ? noun.en : noun.de;
+  const label = english ? (field.labels?.en ?? field.label_de) : field.label_de;
+  return english ? `“${label}”` : `„${label}“`;
+}
+
+/** Cleared fields keep an empty draft; they count as missing again. */
+export function emptyValue(entry: { value: unknown } | undefined): boolean {
+  return (
+    entry === undefined ||
+    entry.value === null ||
+    (typeof entry.value === "string" && !entry.value.trim())
+  );
+}
+
+/** Live typing of one field in the viewer. */
+export function fieldActions(
+  formInstanceId: string,
+  fieldId: string,
+  typed?: { value: string; provenance: Provenance },
+): Action[] {
+  const target = { kind: "form" as const, formInstanceId, fieldId };
+  return typed
+    ? [
+        ActionSchema.parse({
+          id: randomUUID(),
+          kind: "type",
+          sentenceIndex: 0,
+          target,
+          payload: { ...typed, pace: FORM_TYPE_PACE_MS },
+        }),
+      ]
+    : [];
 }
 
 export function fieldQuestion(field: FormField, applicant: string, english: boolean): string {
@@ -328,19 +365,13 @@ export async function answerFormQuestion(input: {
         .where(eq(formInstances.id, instance.id));
     });
     actions.push(
-      ActionSchema.parse({
-        id: randomUUID(),
-        kind: "type",
-        sentenceIndex: 0,
-        target: { kind: "form", formInstanceId: instance.id, fieldId: field.id },
-        payload: { value: String(parsed.value), provenance, pace: FORM_TYPE_PACE_MS },
-      }),
+      ...fieldActions(instance.id, field.id, { value: String(parsed.value), provenance }),
     );
     lead = strings.filled(parsed.readBack);
   }
   const next = fields.find(
     (candidate, position) =>
-      position > index && askable(candidate) && values[candidate.id] === undefined,
+      position > index && askable(candidate) && emptyValue(values[candidate.id]),
   );
   return {
     text: `${lead} ${next ? fieldQuestion(next, applicant, english) : strings.done}`,
@@ -533,18 +564,12 @@ export async function answerManyFields(input: {
       })
       .where(eq(formInstances.id, instance.id));
   });
-  const actions = written.map(({ field, parsed, provenance }) =>
-    ActionSchema.parse({
-      id: randomUUID(),
-      kind: "type",
-      sentenceIndex: 0,
-      target: { kind: "form", formInstanceId: instance.id, fieldId: field.id },
-      payload: { value: String(parsed.value), provenance, pace: FORM_TYPE_PACE_MS },
-    }),
+  const actions = written.flatMap(({ field, parsed, provenance }) =>
+    fieldActions(instance.id, field.id, { value: String(parsed.value), provenance }),
   );
   const done = new Set(written.map(({ field }) => field.id));
   const next = fields.find(
-    (field) => askable(field) && values[field.id] === undefined && !done.has(field.id),
+    (field) => askable(field) && emptyValue(values[field.id]) && !done.has(field.id),
   );
   const strings = english ? copy.en : copy.de;
   const applicant = applicantOf(input.topics, english);

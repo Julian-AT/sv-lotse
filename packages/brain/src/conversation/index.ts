@@ -93,6 +93,7 @@ const FILL_INTENT =
   /ausf(?:ü|ue)ll|f(?:ü|ue)ll|formul|\bform\b|eintrag|trag\w* .{0,40}\bein\b|antrag|beantrag|einreich|unterst(?:ü|ue)tz|schritt f(?:ü|ue)r schritt|^(?:ja|ja,? bitte|gerne|ok|okay)\b|\bfill\b|apply|application/iu;
 
 import { answerFormQuestion } from "./form-answers.ts";
+import { answerFormEdit } from "./form-edit.ts";
 import {
   hasOpenToolCall,
   loadMessages,
@@ -425,35 +426,51 @@ async function runTurn(
         return;
       }
       const formLanguage = parsed.language?.startsWith("en") ? "en" : "de-AT";
-      const formFill = await prepareFormAfterOpen({
-        db,
-        context: prepared.context,
-        history: prepared.history,
-        writer,
-        requested: latest.role === "user" && FILL_INTENT.test(userText),
-        fill: {
-          turnId: prepared.turnId,
-          language: formLanguage,
-          model:
-            options?.languageModel ??
-            options?.model ??
-            createModelRouter(config).modelFor("extractor"),
-        },
-        ...(latest.role === "user"
-          ? {
-              data: {
-                text: userText,
-                turnId: prepared.turnId,
-                language: formLanguage,
-                model:
-                  options?.languageModel ??
-                  options?.model ??
-                  createModelRouter(config).modelFor("extractor"),
-              },
-            }
-          : {}),
-        ...(options?.abortSignal ? { signal: options.abortSignal } : {}),
-      });
+      // Edit commands for the open form ("Ändere das Geburtsdatum auf …", "was fehlt noch?") run
+      // before anything else, so a form word in them never opens a page or the agent.
+      const formEdit =
+        latest.role === "user"
+          ? await answerFormEdit({
+              db,
+              context: prepared.context,
+              history: prepared.history,
+              userText,
+              turnId: prepared.turnId,
+              language: formLanguage,
+              topics: topicTexts(prepared.history),
+            })
+          : undefined;
+      const formFill = formEdit
+        ? undefined
+        : await prepareFormAfterOpen({
+            db,
+            context: prepared.context,
+            history: prepared.history,
+            writer,
+            requested: latest.role === "user" && FILL_INTENT.test(userText),
+            fill: {
+              turnId: prepared.turnId,
+              language: formLanguage,
+              model:
+                options?.languageModel ??
+                options?.model ??
+                createModelRouter(config).modelFor("extractor"),
+            },
+            ...(latest.role === "user"
+              ? {
+                  data: {
+                    text: userText,
+                    turnId: prepared.turnId,
+                    language: formLanguage,
+                    model:
+                      options?.languageModel ??
+                      options?.model ??
+                      createModelRouter(config).modelFor("extractor"),
+                  },
+                }
+              : {}),
+            ...(options?.abortSignal ? { signal: options.abortSignal } : {}),
+          });
       if (formFill) {
         if (formFill.goalConfirmed)
           writer.write({
@@ -469,12 +486,14 @@ async function runTurn(
         return;
       }
       // The question needs its own tool-less step, or the client would continue again.
-      const question = await formQuestion({
-        db,
-        context: prepared.context,
-        history: prepared.history,
-        language: formLanguage,
-      });
+      const question =
+        formEdit ??
+        (await formQuestion({
+          db,
+          context: prepared.context,
+          history: prepared.history,
+          language: formLanguage,
+        }));
       const formTurn =
         question ??
         (latest.role === "user"
