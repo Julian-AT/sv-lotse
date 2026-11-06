@@ -411,21 +411,31 @@ export async function answerManyFields(input: {
   if (!open.length) return;
   const english = input.language.startsWith("en");
   // Administrative facts already read from the person's documents (e.g. a discharge letter).
+  // Everything the person already provided: document facts and their own confirmed statements
+  // from earlier messages or chats (e.g. a letter pasted before), each with its source quote.
   const documentFacts = input.fromDocuments
     ? (
         await db
-          .select({ id: facts.id, type: facts.type, value: facts.value, source: facts.source })
+          .select({
+            id: facts.id,
+            type: facts.type,
+            value: facts.value,
+            source: facts.source,
+            confirmed: facts.confirmed,
+          })
           .from(facts)
           .where(eq(facts.subjectId, context.subjectId))
-      ).filter((fact) => (fact.source as { kind?: string } | null)?.kind === "document")
+      ).filter(
+        (fact) => fact.confirmed || (fact.source as { kind?: string } | null)?.kind === "document",
+      )
     : [];
   const result = await generateText({
     model: input.model,
     output: Output.object({ schema: extraction }),
     system:
       "Fill an application form for the person concerned (the patient) from the given text, which " +
-      "may be a pasted letter such as a hospital discharge letter, and from the listed document " +
-      "facts. For each form field whose meaning matches a value stated in the text, return it: " +
+      "may be a pasted letter such as a hospital discharge letter, and from knownFacts (what the " +
+      "person provided earlier, with quotes). Use knownFacts even when the text itself has no data. For each form field whose meaning matches a value stated in the text, return it: " +
       "the full name for name fields (person.name, insured.name), only the first name for Vorname, " +
       "only the surname for Familienname/Nachname, " +
       "date of birth as DD.MM.YYYY, insurance number as 10 digits without spaces, the patient's own " +
@@ -445,10 +455,11 @@ export async function answerManyFields(input: {
         meaning: field.fact_type?.startsWith("form.field.") ? questionKey(field) : field.fact_type,
       })),
       text: answer,
-      documentFacts: documentFacts.map((fact) => ({
+      knownFacts: documentFacts.map((fact) => ({
         id: fact.id,
         type: fact.type,
         value: fact.value,
+        quote: (fact.source as { quote?: string } | null)?.quote?.slice(0, 300),
       })),
     }),
     abortSignal: AbortSignal.timeout(15_000),

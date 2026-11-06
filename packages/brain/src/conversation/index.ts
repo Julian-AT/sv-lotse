@@ -431,7 +431,7 @@ async function runTurn(
         history: prepared.history,
         writer,
         requested: latest.role === "user" && FILL_INTENT.test(userText),
-        ...(latest.role === "user" && userText.length > 80
+        ...(latest.role === "user"
           ? {
               data: {
                 text: userText,

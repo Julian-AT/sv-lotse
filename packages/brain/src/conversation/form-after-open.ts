@@ -344,7 +344,7 @@ export async function prepareFormAfterOpen(input: {
     subjectId: context.subjectId,
   };
   const prefilled = await prefillForm(db, prefillInput, context, input.signal);
-  if (input.data && input.data.text.length > 80)
+  if (input.data)
     await answerManyFields({
       db,
       context,
