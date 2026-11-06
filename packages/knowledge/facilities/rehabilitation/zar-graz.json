@@ -1,0 +1,39 @@
+{
+  "id": "zar-graz",
+  "name_de": "PV Zentrum für ambulante Rehabilitation Graz",
+  "type": "rehabilitation",
+  "region": "Steiermark",
+  "address": {
+    "street": "Eggenberger Straße 7",
+    "postal_code": "8020",
+    "locality": "Graz",
+    "country": "AT"
+  },
+  "location": {
+    "latitude": 47.0703298,
+    "longitude": 15.4152529
+  },
+  "phone": "+43 50303 84915",
+  "url": "https://www.zar-graz.at/web/kontakt-und-service/kontakt",
+  "sources": [
+    {
+      "url": "https://www.zar-graz.at/web/kontakt-und-service/kontakt",
+      "quote": "Zentrum für ambulante Rehabilitation Graz\nEggenberger Straße 7\n8020 Graz\nTelefon: +43 (0)5 03 03-84 915\nE-Mail: zar-graz@pv.at\nMo. bis Do.: 7:00–20:00 Uhr\nFr. 7:00–15:00 Uhr",
+      "retrieved_at": "2026-11-06T01:36:33.054140Z"
+    },
+    {
+      "url": "https://www.openstreetmap.org/way/188363109",
+      "quote": "7, Eggenberger Straße, Katastralgemeinde Lend, Lend, Graz, Steiermark, 8020, Österreich",
+      "retrieved_at": "2026-11-06T01:36:33.054140Z"
+    }
+  ],
+  "as_of": "2026-11-06",
+  "email": "zar-graz@pv.at",
+  "opening_hours": {
+    "monday": "07:00–20:00",
+    "tuesday": "07:00–20:00",
+    "wednesday": "07:00–20:00",
+    "thursday": "07:00–20:00",
+    "friday": "07:00–15:00"
+  }
+}

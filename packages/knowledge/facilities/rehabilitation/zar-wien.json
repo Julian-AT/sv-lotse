@@ -1,0 +1,32 @@
+{
+  "id": "zar-wien",
+  "name_de": "PV Zentrum für ambulante Rehabilitation Wien",
+  "type": "rehabilitation",
+  "region": "Wien",
+  "address": {
+    "street": "Wehlistraße 127",
+    "postal_code": "1020",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "location": {
+    "latitude": 48.2294739,
+    "longitude": 16.3991386
+  },
+  "phone": "+43 50303 22905",
+  "email": "zar-wien@pv.at",
+  "url": "https://www.zar-wien.at/web/kontakt-und-service/kontakt",
+  "sources": [
+    {
+      "url": "https://www.zar-wien.at/web/kontakt-und-service/kontakt",
+      "quote": "Zentrum für ambulante Rehabilitation Wien\nWehlistraße 127\n1020 Wien\nTelefon: +43 (0)5 03 03-22 905\nE-Mail: zar-wien@pv.at",
+      "retrieved_at": "2026-11-06T01:43:15.545803Z"
+    },
+    {
+      "url": "https://www.openstreetmap.org/node/5648386756",
+      "quote": "127-129, Wehlistraße, Nordbahnviertel, Leopoldstadt, Katastralgemeinde Leopoldstadt, Leopoldstadt, Wien, 1020, Österreich",
+      "retrieved_at": "2026-11-06T01:43:15.545803Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}
