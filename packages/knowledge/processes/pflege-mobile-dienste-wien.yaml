@@ -1,0 +1,107 @@
+# Task reminders are immediate prompts, not calculated statutory deadlines.
+id: "pflege-mobile-dienste-wien"
+benefit: "ref:catalog/pflege-mobile-dienste-wien"
+actor_roles:
+  - "subject"
+  - "helper"
+slots:
+  - id: "residence_region"
+    type: "enum:residence-region"
+    question_hint: "In welchem Bundesland wohnt die Person, für die Sie Hilfe suchen?"
+    validation:
+      options:
+        - "Wien"
+        - "Niederösterreich"
+        - "Burgenland"
+        - "Oberösterreich"
+        - "Steiermark"
+        - "Kärnten"
+        - "Salzburg"
+        - "Tirol"
+        - "Vorarlberg"
+        - "Ausland"
+  - id: "needs_clarified"
+    type: "boolean"
+    question_hint: "Hat der FSW mit Ihnen den Bedarf und die gewünschten Leistungen geklärt?"
+  - id: "application_ready"
+    type: "boolean"
+    question_hint: "Sind das aktuelle FSW-Formular, die Unterschrift und die für Sie nötigen Beilagen fertig?"
+  - id: "application_submitted"
+    type: "boolean"
+    question_hint: "Haben Sie oder Ihre berechtigte Vertretung den Antrag selbst an den FSW übermittelt?"
+  - id: "funding_clarified"
+    type: "boolean"
+    question_hint: "Sind Förderentscheidung und Kostenbeitrag mit dem FSW geklärt?"
+steps:
+  - id: "clarify"
+    needs:
+      - "residence_region"
+      - "needs_clarified"
+    criteria: "ref:catalog/pflege-mobile-dienste-wien#criteria"
+    action: "office.resolve"
+    outputs:
+      - id: "fsw-contact"
+        type: "office"
+    transitions:
+      - to: "prepare"
+        when: 'residence_region == "Wien" and needs_clarified == true'
+  - id: "prepare"
+    needs:
+      - "clarify"
+      - "application_ready"
+    documents: "ref:catalog/pflege-mobile-dienste-wien#documents"
+    action: "documents.checklist"
+    signature: "subject"
+    outputs:
+      - id: "application-checklist"
+        type: "checklist"
+    reminders:
+      - after_days: 0
+        text_de: "Bitte prüfen Sie die Unterlagen mit der zuständigen Stelle. Sie reichen den Antrag selbst ein."
+        when: "application_ready == false"
+    transitions:
+      - to: "confirm-submission"
+        when: "application_ready == true"
+  - id: "confirm-submission"
+    needs:
+      - "prepare"
+      - "application_submitted"
+    transitions:
+      - to: "funding"
+        when: "application_submitted == true"
+  - id: "funding"
+    needs:
+      - "confirm-submission"
+      - "funding_clarified"
+    outputs:
+      - id: "funding-and-contribution"
+        type: "decision"
+    transitions:
+      - to: "finish"
+        when: "funding_clarified == true"
+  - id: "finish"
+    needs:
+      - "funding"
+completion:
+  evidence:
+    - "user_statement"
+sources:
+  - url: "https://www.fsw.at/p/pflege-betreuung"
+    quote: "Beim FSW-Kund:innenservice werden Sie kostenlos beraten. Und Sie bekommen Hilfe dabei, den Antrag auf Förderung zu stellen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/heimhilfe-pflege-betreuung"
+    quote: "Das FSW-Kund:innenservice stellt den individuellen Bedarf fest."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/hauskrankenpflege"
+    quote: "Die Mitarbeiter:innen des FSW-Kund:innenservice stellen den individuellen Bedarf fest."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/antrag"
+    quote: "Den ausgefüllten und unterschriebenen Antrag können Sie direkt auf MeinFSW einreichen. Sie können den Antrag auch gemeinsam mit den notwendigen Beilagen und Unterlagen per E-Mail oder Post an den FSW schicken."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/antrag"
+    quote: "Es sind immer die aktuellen Formulare von dieser Seite zu verwenden."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/hauskrankenpflege"
+    quote: "Der Kostenbeitrag für Kund:innen ist abhängig von ihrem Einkommen, ihren Unterhaltspflichten bzw. -berechtigungen, den Miet- und Wohnkosten, dem Pflegegeld und den in Anspruch genommenen Leistungen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"
