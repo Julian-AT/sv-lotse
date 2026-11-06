@@ -1,0 +1,160 @@
+# Antragsweg je Art der Leistung; die medizinische Entscheidung bleibt beim Medizinischen Dienst.
+# Medikamente: eko.lookupCoverage liefert nur Abdeckungsfelder, keine Alternativen oder Dosierung.
+# Erinnerungen sind freiwillige Aufgabenhinweise, keine gesetzlichen Fristen.
+id: bewilligung-chef-kontrollaerztlicher-dienst
+benefit: ref:catalog/bewilligung-chef-kontrollaerztlicher-dienst
+actor_roles: [subject, helper]
+slots:
+  - id: item_type
+    type: enum:approval-item
+    question_hint: >-
+      Wofür brauchen Sie die Bewilligung: für ein Medikament, für einen Heilbehelf oder ein
+      Hilfsmittel, oder für eine andere Leistung wie eine Behandlung?
+    validation:
+      options: [medikament, heilbehelf, andere-leistung]
+  - id: medicine_name
+    type: string
+    question_hint: >-
+      Wie lautet der Name des Medikaments genau so, wie er auf Ihrem Rezept steht?
+    validation:
+      min_length: 2
+  - id: approval_required
+    type: boolean
+    question_hint: >-
+      Zeigt die EKO-Auskunft für dieses Medikament, dass eine Bewilligung der Krankenkasse nötig
+      ist?
+  - id: prescriber_requests_approval
+    type: boolean
+    question_hint: >-
+      Holt Ihre verordnende Ärztin oder Ihr verordnender Arzt die Bewilligung selbst ein?
+      Vertragsärztinnen und Vertragsärzte tun das immer.
+  - id: supplier_requests_approval
+    type: boolean
+    question_hint: >-
+      Hat der Fachbetrieb bestätigt, dass er als Vertragspartner der ÖGK die Bewilligung für Sie
+      einholt?
+  - id: federal_state
+    type: enum:federal-state
+    from_context: residence.state
+    question_hint: In welchem Bundesland wohnen Sie?
+    validation:
+      options:
+        [
+          Wien,
+          Niederösterreich,
+          Burgenland,
+          Steiermark,
+          Kärnten,
+          Oberösterreich,
+          Salzburg,
+          Tirol,
+          Vorarlberg,
+        ]
+  - id: approval_received
+    type: boolean
+    question_hint: Liegt die Bewilligung der ÖGK inzwischen vor?
+steps:
+  - id: choose-path
+    needs: [item_type]
+    criteria: ref:catalog/bewilligung-chef-kontrollaerztlicher-dienst#criteria
+    transitions:
+      - to: medicine-coverage
+        when: item_type == "medikament"
+      - to: aid-approval
+        when: item_type == "heilbehelf"
+      - to: other-approval
+        when: item_type == "andere-leistung"
+  - id: medicine-coverage
+    needs: [choose-path, medicine_name]
+    action: eko.lookupCoverage
+    outputs:
+      - id: coverage-fields
+        type: information
+    transitions:
+      - to: medicine-review
+  - id: medicine-review
+    needs: [medicine-coverage, approval_required]
+    transitions:
+      - to: medicine-request
+        when: approval_required == true
+      - to: no-approval-needed
+        when: approval_required == false
+  - id: no-approval-needed
+    needs: [medicine-review]
+    outputs:
+      - id: coverage-information
+        type: information
+  - id: medicine-request
+    needs: [medicine-review, prescriber_requests_approval]
+    documents: ref:catalog/bewilligung-chef-kontrollaerztlicher-dienst#documents
+    action: documents.checklist
+    outputs:
+      - id: medicine-approval-checklist
+        type: checklist
+    transitions:
+      - to: await-decision
+        when: prescriber_requests_approval == true
+      - to: contact-office
+        when: prescriber_requests_approval == false
+  - id: aid-approval
+    needs: [choose-path, supplier_requests_approval]
+    documents: ref:catalog/bewilligung-chef-kontrollaerztlicher-dienst#documents
+    action: documents.checklist
+    outputs:
+      - id: aid-approval-checklist
+        type: checklist
+    transitions:
+      - to: await-decision
+        when: supplier_requests_approval == true
+      - to: contact-office
+        when: supplier_requests_approval == false
+  - id: other-approval
+    needs: [choose-path]
+    criteria: ref:catalog/bewilligung-chef-kontrollaerztlicher-dienst#criteria
+    transitions:
+      - to: contact-office
+  - id: contact-office
+    needs: [federal_state]
+    action: office.resolve
+    outputs:
+      - id: responsible-office
+        type: office
+    transitions:
+      - to: await-decision
+  - id: await-decision
+    needs: [approval_received]
+    reminders:
+      - after_days: 7
+        text_de: >-
+          Liegt die Bewilligung noch nicht vor? Fragen Sie bei Ihrer Ärztin, Ihrem Arzt, dem
+          Fachbetrieb oder Ihrer ÖGK-Stelle nach. Dies ist eine freiwillige Erinnerung, keine
+          gesetzliche Frist.
+        when: approval_received == false
+    transitions:
+      - to: finish
+        when: approval_received == true
+  - id: finish
+    needs: [await-decision]
+    outputs:
+      - id: approval-confirmed
+        type: confirmation
+completion:
+  evidence: [user_statement, document_present]
+sources:
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.881096
+    quote: >-
+      Für bestimmte Leistungen der Österreichischen Gesundheitskasse (ÖGK) ist eine Bewilligung
+      des Medizinischen Dienstes notwendig. Manche Bewilligungen wurden vorübergehend ausgesetzt.
+    retrieved_at: 2026-11-06T03:45:00Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.881095&portal=oegkvpportal
+    quote: Bewilligungen sind immer im Voraus einzuholen.
+    retrieved_at: 2026-11-06T03:45:00Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+    quote: >-
+      Das Rezept kann per Post übermittelt, oder persönlich vorbeigebracht werden falls eine
+      Bewilligung erforderlich ist. Sonst können Sie direkt damit in die Apotheke gehen.
+    retrieved_at: 2026-11-06T03:45:00Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.881096
+    quote: ab € 1.500 bewilligungspflichtig
+    retrieved_at: 2026-11-06T03:45:00Z
+as_of: 2026-11-06

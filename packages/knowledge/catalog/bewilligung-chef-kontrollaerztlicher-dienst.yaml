@@ -1,0 +1,174 @@
+# Antragsweg je Art der Leistung (PRD §10, Bereich F). Quellen: ÖGK; andere Träger folgen als eigene Einträge.
+# Keine medizinische Beurteilung: ob eine Leistung nötig ist, entscheiden Ärztin, Arzt oder Medizinischer Dienst.
+id: bewilligung-chef-kontrollaerztlicher-dienst
+name_de: Bewilligung durch den chef- und kontrollärztlichen Dienst (Medizinischer Dienst der ÖGK)
+name_simple: Genehmigung der Krankenkasse für ein Medikament, einen Behelf oder eine Behandlung
+area: F
+life_situations:
+  - illness
+  - after-hospital
+scope: social_insurance
+carriers: [oegk]
+criteria:
+  - id: approval-before-use
+    text_de: >-
+      Für bestimmte Leistungen der ÖGK ist eine Bewilligung des Medizinischen Dienstes nötig.
+      Manche Bewilligungspflichten sind vorübergehend ausgesetzt; die zuständige ÖGK-Stelle nennt
+      den aktuellen Stand.
+    source: &approval-required
+      url: https://www.oegk.at/cdscontent/?contentid=10007.881096
+      quote: >-
+        Für bestimmte Leistungen der Österreichischen Gesundheitskasse (ÖGK) ist eine Bewilligung
+        des Medizinischen Dienstes notwendig. Manche Bewilligungen wurden vorübergehend ausgesetzt.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: medicine-in-advance
+    text_de: Bewilligungen für Medikamente werden immer vor der Abgabe eingeholt.
+    source: &medicine-in-advance
+      url: https://www.oegk.at/cdscontent/?contentid=10007.881095&portal=oegkvpportal
+      quote: Bewilligungen sind immer im Voraus einzuholen.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: medicine-path-prescriber
+    text_de: >-
+      Medikamente: Die verordnende Vertragsärztin oder der verordnende Vertragsarzt (ebenso
+      Wahlärztinnen und Wahlärzte mit vollständigem Rezepturrecht) holt die Bewilligung
+      elektronisch über das Arzneimittel-Bewilligungs-Service im e-card-System ein.
+    source: &medicine-path
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+      quote: >-
+        Entscheidet Ihre Ärztin oder Ihr Arzt, dass Sie ein bewilligungspflichtiges Medikament
+        brauchen, holen alle Vertragsärztinnen und Vertragsärzte und jene Wahlärztinnen und
+        Wahlärzte, die ein vollständiges Rezepturrecht haben, die notwendige Bewilligung für Sie ein.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: medicine-path-abs
+    text_de: >-
+      Die Anfrage stellt die Ärztin oder der Arzt elektronisch über das
+      Arzneimittel-Bewilligungs-Service (ABS) an den Medizinischen Dienst.
+    source: &medicine-abs
+      url: https://www.oegk.at/cdscontent/?contentid=10007.881095&portal=oegkvpportal
+      quote: >-
+        Sie stellen eine Bewilligungsanfrage an den Medizinischen Dienst und zwar elektronisch über
+        das Arzneimittel-Bewilligungs-Service (ABS). Dieses ist in das e-card-System integriert.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: medicine-path-wahlarzt
+    text_de: >-
+      Rezept einer Wahlärztin oder eines Wahlarztes mit Bewilligungspflicht: per Post an die ÖGK
+      schicken oder persönlich in einer Kundenservicestelle abgeben.
+    source: &medicine-wahlarzt
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+      quote: >-
+        Das Rezept kann per Post übermittelt, oder persönlich vorbeigebracht werden falls eine
+        Bewilligung erforderlich ist. Sonst können Sie direkt damit in die Apotheke gehen.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: medicine-path-hospital
+    text_de: Bei einem Rezept aus der Spitalsambulanz sagt Ihnen die Ambulanz, ob Sie noch eine Bewilligung einholen müssen.
+    source: &medicine-hospital
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+      quote: >-
+        In der Spitalsambulanz wird Ihnen bei Ausstellung des Rezepts mitgeteilt, ob Sie noch eine
+        Bewilligung bei der ÖGK einholen müssen.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: medicine-rejection
+    text_de: >-
+      Wird eine Bewilligung abgelehnt, erhält die einreichende Ärztin oder der einreichende Arzt
+      die Begründung und kann fehlende Angaben nachreichen. Wenden Sie sich dafür an Ihre Ärztin
+      oder Ihren Arzt.
+    source: &medicine-rejection
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+      quote: >-
+        Wird ein Medikament von einer Ärztin bzw. einem Arzt der ÖGK über das elektronische
+        Arzneimittel-Bewilligungs-Service abgelehnt, so erhält die einreichende Ärztin oder der
+        einreichende Arzt dazu immer eine Begründung - zum Beispiel, dass noch eine Dokumentation
+        oder eine Diagnose fehlt.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: medicine-regional-targets
+    text_de: >-
+      In Oberösterreich und Vorarlberg gelten bei Medikamenten Zielvereinbarungen statt einer
+      Bewilligungspflicht; in besonderen Fällen ist trotzdem Kontakt mit der ÖGK nötig.
+    source: &medicine-regional
+      url: https://www.oegk.at/cdscontent/?contentid=10007.881095&portal=oegkvpportal
+      quote: >-
+        In Oberösterreich und Vorarlberg gelten bei Arzneimitteln Zielvereinbarungen statt einer
+        Bewilligungspflicht.
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: aids-threshold
+    text_de: >-
+      Heilbehelfe und Hilfsmittel: Bei der ÖGK ab 1.500 Euro bewilligungspflichtig. Darunter
+      besteht daraus keine allgemeine Zusage; den Einzelfall klärt der Vertragspartner oder die
+      ÖGK-Stelle.
+    source: &aids-threshold
+      url: https://www.oegk.at/cdscontent/?contentid=10007.881096
+      quote: ab € 1.500 bewilligungspflichtig
+      retrieved_at: 2026-11-06T03:45:00Z
+  - id: aids-partner
+    text_de: >-
+      Bei einem Vertragspartner der ÖGK werden eine nötige Bewilligung und die Verrechnung in der
+      Regel direkt vom Vertragspartner abgewickelt.
+    source: &aids-partner
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870456
+      quote: >-
+        Wird ein Heilbehelf oder ein Hilfsmittel bei einem Leistungserbringer erworben, der einen
+        Vertrag mit der ÖGK hat, dann erfolgt die Abwicklung (allenfalls erforderliche Bewilligung,
+        Verrechnung der im Vertrag festgelegten Leistungen, Vorschreibung des Selbstbehaltes, usw.)
+        in der Regel direkt durch die Vertragspartnerin oder den Vertragspartner.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: regional-contact
+    text_de: >-
+      Zwischen den Bundesländern gibt es noch Unterschiede bei Bewilligungen, Anträgen und
+      Fristen. Ansprechpartnerin ist die ÖGK-Stelle im eigenen Bundesland.
+    source: &regional-contact
+      url: https://www.oegk.at/cdscontent/?contentid=10007.881096
+      quote: >-
+        Bitte wenden Sie sich daher mit Ihrem Anliegen an Ihre ÖGK-Ansprechpartnerinnen und
+        –Ansprechpartner in Ihrem Bundesland!
+      retrieved_at: 2026-11-06T03:45:00Z
+office_rules:
+  - when: federal_state == 'Wien'
+    office: ref:offices/oegk-wien
+  - when: federal_state == 'Niederösterreich'
+    office: ref:offices/oegk-niederoesterreich
+  - when: federal_state == 'Burgenland'
+    office: ref:offices/oegk-burgenland
+  - when: federal_state == 'Steiermark'
+    office: ref:offices/oegk-steiermark
+  - when: federal_state == 'Kärnten'
+    office: ref:offices/oegk-kaernten
+  - when: federal_state == 'Oberösterreich'
+    office: ref:offices/oegk-oberoesterreich
+  - when: federal_state == 'Salzburg'
+    office: ref:offices/oegk-salzburg
+  - when: federal_state == 'Tirol'
+    office: ref:offices/oegk-tirol
+  - when: federal_state == 'Vorarlberg'
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: prescription
+    name_de: Rezept oder Verordnung für das Medikament, den Behelf oder die Behandlung
+    required: true
+    obtain_from: Verordnende Ärztin oder verordnender Arzt
+    source: *medicine-path
+  - id: wahlarzt-prescription
+    name_de: Original-Rezept der Wahlärztin oder des Wahlarztes, wenn Sie es selbst zur Bewilligung einreichen
+    required: false
+    obtain_from: Wahlärztin oder Wahlarzt; per Post an die ÖGK oder persönlich in einer Kundenservicestelle
+    source: *medicine-wahlarzt
+  - id: written-approval
+    name_de: Bewilligung der ÖGK, sobald sie vorliegt
+    required: false
+    obtain_from: Zuständige ÖGK-Stelle; bei Medikamenten über die verordnende Ärztin oder den verordnenden Arzt
+    source: *approval-required
+forms: []
+process: ref:processes/bewilligung-chef-kontrollaerztlicher-dienst
+appointment_channels: []
+sources:
+  - *approval-required
+  - *medicine-in-advance
+  - *medicine-path
+  - *medicine-abs
+  - *medicine-wahlarzt
+  - *medicine-hospital
+  - *medicine-rejection
+  - *medicine-regional
+  - *aids-threshold
+  - *aids-partner
+  - *regional-contact
+as_of: 2026-11-06
