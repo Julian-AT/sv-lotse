@@ -851,7 +851,12 @@ async function runTurn(
             console.warn(JSON.stringify({ event: "answer_composer_failed" }));
           }
         }
-        // Approval turns and composer failures keep the agent's text under the same gates.
+        // Approval turns and composer failures keep the agent's text under the same gates; the
+        // response guard runs beside the answer guard instead of before it.
+        if (draft.text.trim()) {
+          await writeAnswer(id, draft.text);
+          return output.finish(responseCheck);
+        }
         await writeAnswer(id, (await guardText(draft.text)).text);
         return output.finish();
       };
