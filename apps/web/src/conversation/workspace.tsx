@@ -5,7 +5,6 @@ import { type JSX, useCallback, useEffect, useRef, useState } from "react";
 import { Toaster } from "sonner";
 import { z } from "zod";
 import { AppSidebar } from "@/components/chat/app-sidebar";
-import { Greeting } from "@/components/chat/greeting";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Button as UiButton } from "@/components/ui/button";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -15,7 +14,7 @@ import { SESSION_RESET_EVENT } from "../config.ts";
 import { useI18n } from "../i18n/provider.tsx";
 import { workspaceFetch } from "./api.ts";
 import { WORKSPACE_CONFIG } from "./config.ts";
-import { Conversation } from "./conversation.tsx";
+import { Conversation, type ConversationStart, DraftConversation } from "./conversation.tsx";
 import { selectInitialCase } from "./initial-case.ts";
 import { loadConversation } from "./load.ts";
 import { type CaseSummary, CaseSummarySchema, CasesResponseSchema } from "./schemas.ts";
@@ -98,20 +97,27 @@ export function Workspace(): JSX.Element {
       generation.current++;
     };
   }, [select]);
-  const create = async (): Promise<void> => {
-    setLoading(true);
+  const pendingStart = useRef<(ConversationStart & { caseId: string }) | undefined>(undefined);
+  const [starting, setStarting] = useState(false);
+  const create = async (start?: ConversationStart): Promise<void> => {
+    if (start) setStarting(true);
+    else setLoading(true);
     setFailed(false);
     try {
       const response = z
         .strictObject({ case: CaseSummarySchema })
         .parse(await workspaceFetch(WORKSPACE_CONFIG.casesApi, { method: "POST" }));
+      pendingStart.current = start ? { ...start, caseId: response.case.id } : undefined;
       setCases((current) => [response.case, ...current]);
       await select(response.case);
     } catch {
       setFailed(true);
       setLoading(false);
+    } finally {
+      setStarting(false);
     }
   };
+
   const native = useNativeWorkspace();
   const labels = {
     newChat: t("workspace.newCase"),
@@ -122,7 +128,7 @@ export function Workspace(): JSX.Element {
   };
   const status = (
     <>
-      {loading && (
+      {loading && !starting && (
         <div
           className="flex h-dvh w-full items-center justify-center bg-background text-[13px] text-muted-foreground"
           role="status"
@@ -150,14 +156,6 @@ export function Workspace(): JSX.Element {
             variant="outline"
           >
             {t("workspace.retry")}
-          </UiButton>
-        </div>
-      )}
-      {!loading && !failed && !active && (
-        <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 bg-background">
-          <Greeting subtitle={t("workspace.empty")} title={t("workspace.greeting")} />
-          <UiButton disabled={loading} onClick={() => void create()}>
-            {t("workspace.start")}
           </UiButton>
         </div>
       )}
@@ -198,9 +196,23 @@ export function Workspace(): JSX.Element {
                     void refresh().catch(() => setFailed(true));
                   }}
                   showSidebarToggle={!native}
+                  autoStart={
+                    pendingStart.current?.caseId === active.summary.id
+                      ? pendingStart.current
+                      : undefined
+                  }
+                  onAutoStarted={() => {
+                    pendingStart.current = undefined;
+                  }}
                 />
-              ) : (
+              ) : failed || (loading && !starting) ? (
                 status
+              ) : (
+                <DraftConversation
+                  onStart={(start) => void create(start)}
+                  showSidebarToggle={!native}
+                  starting={starting}
+                />
               )}
             </SidebarInset>
           </SidebarProvider>

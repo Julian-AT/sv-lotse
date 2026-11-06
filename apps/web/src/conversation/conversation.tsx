@@ -3,7 +3,7 @@
 import type { LotseMessage } from "@lotse/brain";
 import type { Fact } from "@lotse/protocol";
 import { Button, Heading, Stack, WhyPanel } from "@lotse/ui";
-import { type JSX, useEffect, useState } from "react";
+import { type JSX, useEffect, useRef, useState } from "react";
 import { ChatHeader } from "@/components/chat/chat-header";
 import { Messages } from "@/components/chat/messages";
 import { MultimodalInput } from "@/components/chat/multimodal-input";
@@ -17,8 +17,77 @@ import { OpenOfferReplies } from "./open-offer.tsx";
 import { retryUserText } from "./retry.ts";
 import type { CaseSummary, ReviewableFact } from "./schemas.ts";
 import { messageCitations, passageDates } from "./sources.ts";
-import { DocumentDropZone, useDocumentImport } from "./upload.tsx";
+import { DocumentDropZone, type DocumentImport, useDocumentImport } from "./upload.tsx";
 import { approvalContexts, useConversation } from "./use-conversation.ts";
+
+export type ConversationStart = { text?: string; file?: File };
+
+/**
+ * The template's empty chat before a case exists: greeting, suggestions and composer are usable at
+ * once; the first message, suggestion or document creates the case and continues in it.
+ */
+export function DraftConversation({
+  showSidebarToggle,
+  starting,
+  onStart,
+}: {
+  showSidebarToggle: boolean;
+  starting: boolean;
+  onStart: (start: ConversationStart) => void;
+}): JSX.Element {
+  const { t } = useI18n();
+  const [input, setInput] = useState("");
+  const importer: DocumentImport = {
+    file: undefined,
+    status: "idle",
+    disabled: starting,
+    choose: (file) => onStart({ file }),
+    confirm: async () => {},
+    cancel: () => {},
+  };
+  return (
+    <div className="flex h-dvh w-full flex-row overflow-hidden" data-chat-surface="">
+      <section
+        aria-labelledby="conversation-title"
+        className="flex min-w-0 flex-1 flex-col bg-sidebar"
+      >
+        <ChatHeader level="" showSidebarToggle={showSidebarToggle} title={t("workspace.title")} />
+        <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
+          <Messages
+            busyLabel={t("workspace.busy")}
+            contexts={[]}
+            greeting={{ title: t("workspace.greeting"), subtitle: t("workspace.empty") }}
+            messages={[]}
+            onApproval={() => {}}
+            onAutonomyDecision={async () => {}}
+            passageDates={new Map()}
+            status={starting ? "submitted" : "ready"}
+            subjectId=""
+          />
+          <div className="sticky bottom-0 z-1 mx-auto flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4">
+            <MultimodalInput
+              disabled={starting}
+              hasMessages={false}
+              importer={importer}
+              input={input}
+              sendMessage={(text) => {
+                if (!text.trim() || starting) return;
+                setInput("");
+                onStart({ text: text.trim() });
+              }}
+              setInput={setInput}
+              status={starting ? "submitted" : "ready"}
+              stop={() => {}}
+            />
+            <p className="m-0 text-center text-[11px] text-muted-foreground/70">
+              {t("workspace.boundary")}
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
 
 /** Wide windows show the form viewer, facts and Why panel beside the chat (the template's artifact slot). */
 function useWideLayout(): boolean {
@@ -39,11 +108,16 @@ export function Conversation({
   initialMessages,
   onSettled,
   showSidebarToggle,
+  autoStart,
+  onAutoStarted,
 }: {
   selectedCase: CaseSummary;
   initialMessages: LotseMessage[];
   onSettled: () => void;
   showSidebarToggle: boolean;
+  /** The first message or document from the draft screen, continued once in this new case. */
+  autoStart?: ConversationStart | undefined;
+  onAutoStarted?: () => void;
 }): JSX.Element {
   const i18n = useI18n();
   const { t } = i18n;
@@ -124,6 +198,17 @@ export function Conversation({
     chat.clearError();
     void chat.send(text.trim());
   };
+  const started = useRef(false);
+  useEffect(() => {
+    if (started.current || !autoStart) return;
+    started.current = true;
+    onAutoStarted?.();
+    if (autoStart.file) importer.choose(autoStart.file);
+    if (autoStart.text) {
+      chat.clearError();
+      void chat.send(autoStart.text);
+    }
+  }, [autoStart, importer, chat, onAutoStarted]);
   const wide = useWideLayout();
   const status = chat.status;
   const support = (

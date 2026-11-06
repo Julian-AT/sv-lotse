@@ -39,9 +39,11 @@ function PureChatHeader({
         {title}
       </h1>
 
-      <span className="ml-auto rounded-lg border border-border/50 px-2.5 py-1 text-[12px] text-muted-foreground">
-        {level}
-      </span>
+      {level ? (
+        <span className="ml-auto rounded-lg border border-border/50 px-2.5 py-1 text-[12px] text-muted-foreground">
+          {level}
+        </span>
+      ) : null}
     </header>
   );
 }
