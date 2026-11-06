@@ -1,0 +1,129 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 20 (1-basiert), Druckseiten 38–39.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Fachliche Leistungsvoraussetzungen werden ausschließlich durch befugte Fachpersonen und ÖGK festgestellt; keine Diagnose erheben oder auswerten. Keine parallele Psychotherapie und klinisch-psychologische Behandlung (PDF S. 38).
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-klinisch-psychologische-behandlung
+name_de: Klinisch-psychologische Behandlung
+name_simple: Kosten für psychologische Behandlung klären
+area: C
+life_situations:
+  - illness
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: examination
+    text_de:
+      Schriftlicher Nachweis einer ärztlichen Untersuchung spätestens vor der zweiten Behandlung
+      erforderlich.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+      quote: Der schriftliche Nachweis, dass spätestens vor der zweiten psychotherapeutischen bzw.
+        klinisch-psychologischen Behandlung eine ärztliche Untersuchung durchgeführt wurde. Diese
+        Bestätigung kann formlos oder durch das dafür vorgesehene Formular erfolgen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: examination_confirmed == true
+  - id: approval
+    text_de: Bei mehr als zehn Therapieeinheiten ist ein Bewilligungsantrag erforderlich.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+      quote: Bei Behandlungen, die mehr als zehn Therapieeinheiten erfordern, ist ein Antrag auf
+        Bewilligung der Psychotherapie bzw. klinisch-psychologischen Behandlung erforderlich.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: units <= 10 or approval_present == true
+  - id: no-double-funding
+    text_de: Kein gleichzeitiger Kostenzuschuss bei Behandlung auf Kassenrechnung.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+      quote:
+        Es ist nicht möglich, gleichzeitig eine Therapie auf Rechnung in einer Vertragseinrichtung
+        bzw. in einem Gesundheitszentrum zu machen und einen Kostenzuschuss zu erhalten.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: private_invoice == false or parallel_contract_treatment == false
+  - id: no-parallel-treatment
+    text_de:
+      Psychotherapie und klinisch-psychologische Behandlung können nicht gleichzeitig in Anspruch
+      genommen werden.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+      quote:
+        Es ist auch nicht möglich, eine klinisch-psychologische Behandlung und eine Psychotherapie
+        gleichzeitig in Anspruch zu nehmen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: other_psychological_treatment == false
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: examination
+    name_de: Bestätigung der ärztlichen Untersuchung
+    required: true
+    obtain_from: Untersuchende Ärztin oder untersuchender Arzt
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+      quote: Der schriftliche Nachweis, dass spätestens vor der zweiten psychotherapeutischen bzw.
+        klinisch-psychologischen Behandlung eine ärztliche Untersuchung durchgeführt wurde. Diese
+        Bestätigung kann formlos oder durch das dafür vorgesehene Formular erfolgen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: invoice
+    name_de: "Bei Kostenzuschuss: saldierte detaillierte Honorarrechnung"
+    required: false
+    obtain_from: Behandelnde Fachperson
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+      quote: Die ÖGK leistet einen Kostenzuschuss gegen Vorlage der saldierten, detaillierten
+        Honorarrechnung.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Bewilligung Klinisch-psychologische Behandlung
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+  - search: Kostenzuschuss Klinisch-psychologische Behandlung
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-klinisch-psychologische-behandlung
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote: Der schriftliche Nachweis, dass spätestens vor der zweiten psychotherapeutischen bzw.
+      klinisch-psychologischen Behandlung eine ärztliche Untersuchung durchgeführt wurde. Diese
+      Bestätigung kann formlos oder durch das dafür vorgesehene Formular erfolgen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote: Bei Behandlungen, die mehr als zehn Therapieeinheiten erfordern, ist ein Antrag auf
+      Bewilligung der Psychotherapie bzw. klinisch-psychologischen Behandlung erforderlich.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote:
+      Es ist nicht möglich, gleichzeitig eine Therapie auf Rechnung in einer Vertragseinrichtung
+      bzw. in einem Gesundheitszentrum zu machen und einen Kostenzuschuss zu erhalten.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote:
+      Es ist auch nicht möglich, eine klinisch-psychologische Behandlung und eine Psychotherapie
+      gleichzeitig in Anspruch zu nehmen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote: Die ÖGK leistet einen Kostenzuschuss gegen Vorlage der saldierten, detaillierten
+      Honorarrechnung.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.897679&portal=oegkportal
+    quote: "Das bedeutet: Im Rahmen des Vertrages erbrachte Leistungen werden direkt mit der ÖGK
+      verrechnet."
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
