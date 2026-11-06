@@ -11,15 +11,22 @@ Read the repository `AGENTS.md` and the assigned work-package brief before chang
 Run from the repository root:
 
 - `bun run --filter @lotse/guide typecheck` — check source and test types.
-- `bun run --filter @lotse/guide test` — run Vitest under Node.js.
+- `bun run --filter @lotse/guide test` — run Vitest and the bundle's Playwright tests under Node.js.
+- `bun run --filter @lotse/guide build:bundle` — generate `dist/guide.iife.js` for page injection.
+- `bun run --filter @lotse/guide test:bundle` — build and test the injected IIFE in Chromium.
 - `bunx playwright install chromium` — install the browser used by E8 fixtures.
 - `bun run --filter @lotse/guide e2e` — run Playwright against local HTML fixtures in Chromium.
 - `PW_TEST_CONNECT_WS_ENDPOINT=ws://127.0.0.1:4179/ PW_TEST_CONNECT_EXPOSE_NETWORK='<loopback>' bun run --filter @lotse/guide e2e` — use a matching external Playwright server when local browser launch is unavailable.
 - `bun run lint` — lint with Biome.
 - `bun run format:check` — check formatting.
 
-There is no build step: the package exports browser TypeScript source. The local test server uses
-Node's type stripping and serves real source modules with an import map. The E8 runner materializes
+The package exports browser TypeScript source and builds an optional self-contained injection IIFE.
+The injection contract, enforced 512 KiB raw size budget and integration notes are in `build/README.md`.
+Only `window.__lotseGuide.createGuide` is exported by the injection bundle; it retains the source
+runtime's safety rules. Build source lives under `build/`, which the repository ignore pattern
+matches: the orchestrator must explicitly stage those source files. Never commit generated `dist/`.
+The local E8 test server uses Node's type stripping and serves real source modules with an import
+map. The E8 runner materializes
 Playwright's mutable configuration from named exports in `playwright.config.ts` into a temporary
 ESM file and removes it afterward. No live provider or DOM emulator is required.
 

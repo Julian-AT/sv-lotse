@@ -7,12 +7,15 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run test/unit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p build/tsconfig.json",
+    "test": "vitest run test/unit test/bundle/build.test.ts && bun run test:bundle",
+    "build:bundle": "node --experimental-strip-types build/generate.ts",
+    "test:bundle": "bun run build:bundle && node --experimental-strip-types test/bundle/run.ts",
     "e2e": "node --experimental-strip-types test/run-e2e.ts"
   },
   "devDependencies": {
-    "@playwright/test": "1.64.1"
+    "@playwright/test": "1.64.1",
+    "esbuild": "0.28.2"
   },
   "dependencies": {
     "@lotse/protocol": "workspace:*",
