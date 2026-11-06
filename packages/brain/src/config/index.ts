@@ -115,12 +115,12 @@ export const PIPELINE_CONFIG = {
 } as const;
 
 export const CONTEXT_SHARES = {
-  policy: 15,
+  policy: 20,
   profile: 5,
   case: 10,
   facts: 15,
   knowledge: 30,
-  screen: 15,
+  screen: 10,
   history: 10,
 } as const;
 
@@ -145,6 +145,11 @@ export type ModelRole = (typeof modelRoles)[number];
 const optionalOverride = <T extends z.ZodType>(schema: T) =>
   z.preprocess((value) => (value === "" ? undefined : value), schema);
 const modelName = z.string().trim().min(1);
+// Reasoning effort per model role; unset keeps the provider default (and the composer's own).
+const reasoningEffort = optionalOverride(
+  z.enum(["none", "minimal", "low", "medium", "high", "xhigh"]).optional(),
+);
+export type ReasoningEffort = "none" | "minimal" | "low" | "medium" | "high" | "xhigh";
 const environmentSchema = z.object({
   LOTSE_CASE_BUDGET_USD: optionalOverride(z.coerce.number().positive().finite().optional()),
   LOTSE_MODEL_PRICING_JSON: z.preprocess((value) => {
@@ -175,6 +180,14 @@ const environmentSchema = z.object({
   OPENAI_MODEL_GUARD_FALLBACK: optionalOverride(modelName.optional()),
   OPENAI_MODEL_EXTRACTOR_FALLBACK: optionalOverride(modelName.optional()),
   OPENAI_MODEL_EMBEDDING_FALLBACK: optionalOverride(modelName.optional()),
+  OPENAI_REASONING_EFFORT_ORCHESTRATOR: reasoningEffort,
+  OPENAI_REASONING_EFFORT_CLASSIFIER: reasoningEffort,
+  OPENAI_REASONING_EFFORT_GUARD: reasoningEffort,
+  // The extractor role also composes the spoken answer.
+  OPENAI_REASONING_EFFORT_EXTRACTOR: reasoningEffort,
+  OPENAI_REASONING_EFFORT_VISION: reasoningEffort,
+  // Caps the orchestrator's model steps per turn (default PIPELINE_CONFIG.maxSteps).
+  LOTSE_AGENT_MAX_STEPS: optionalOverride(z.coerce.number().int().min(1).max(12).optional()),
 });
 
 export function parseBrainConfig(environment: NodeJS.ProcessEnv = process.env) {
@@ -203,6 +216,14 @@ export function parseBrainConfig(environment: NodeJS.ProcessEnv = process.env) {
     modelPricing: value.LOTSE_MODEL_PRICING_JSON,
     approvalSecret: value.APPROVAL_HMAC_SECRET,
     allowStubs: false,
+    agentMaxSteps: value.LOTSE_AGENT_MAX_STEPS,
+    reasoningEffort: {
+      orchestrator: value.OPENAI_REASONING_EFFORT_ORCHESTRATOR,
+      classifier: value.OPENAI_REASONING_EFFORT_CLASSIFIER,
+      guard: value.OPENAI_REASONING_EFFORT_GUARD,
+      extractor: value.OPENAI_REASONING_EFFORT_EXTRACTOR,
+      vision: value.OPENAI_REASONING_EFFORT_VISION,
+    } as Partial<Record<ModelRole, ReasoningEffort | undefined>>,
     models: {
       orchestrator: {
         primary: value.OPENAI_MODEL_ORCHESTRATOR,

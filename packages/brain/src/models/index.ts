@@ -1,6 +1,11 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { wrapLanguageModel } from "ai";
-import { type BrainConfig, type ModelRole, parseBrainConfig } from "../config/index.ts";
+import {
+  type BrainConfig,
+  type ModelRole,
+  parseBrainConfig,
+  type ReasoningEffort,
+} from "../config/index.ts";
 import { withProviderToolNames } from "./tool-names.ts";
 
 type Language = ReturnType<ReturnType<typeof createOpenAI>["responses"]>;
@@ -54,6 +59,23 @@ export function withStatelessResponses(model: Language): Language {
           },
         };
       },
+    },
+  });
+}
+/** Applies a configured reasoning effort to every call of a role; the operator's choice wins. */
+export function withReasoningEffort(model: Language, effort?: ReasoningEffort): Language {
+  if (!effort) return model;
+  return wrapLanguageModel({
+    model,
+    middleware: {
+      specificationVersion: "v4",
+      transformParams: async ({ params }) => ({
+        ...params,
+        providerOptions: {
+          ...params.providerOptions,
+          openai: { ...params.providerOptions?.openai, reasoningEffort: effort },
+        },
+      }),
     },
   });
 }
@@ -132,10 +154,14 @@ export function createModelRouter(config: BrainConfig) {
         },
       };
     }
+    const effort = config.reasoningEffort?.[role];
     const language = (id: string) =>
-      config.responsesStore === false
-        ? withStatelessResponses(provider.responses(id))
-        : provider.responses(id);
+      withReasoningEffort(
+        config.responsesStore === false
+          ? withStatelessResponses(provider.responses(id))
+          : provider.responses(id),
+        effort,
+      );
     return withProviderToolNames(
       withLanguageFallback(
         language(choice.primary),

@@ -67,6 +67,7 @@ export function createLotseAgent(options: {
         : []),
     ].join("\n");
   const tools = buildTools(options.dependencies);
+  const maxSteps = options.config.agentMaxSteps ?? PIPELINE_CONFIG.maxSteps;
   let persistenceFailure: { error: unknown } | undefined;
   return new ToolLoopAgent({
     model: options.model ?? createModelRouter(options.config).modelFor("orchestrator"),
@@ -95,7 +96,7 @@ export function createLotseAgent(options: {
         return "denied";
       return contracts[toolCall.toolName].approval ? "user-approval" : "not-applicable";
     },
-    prepareStep: async ({ runtimeContext }) => {
+    prepareStep: async ({ runtimeContext, stepNumber }) => {
       if (persistenceFailure) throw persistenceFailure.error;
       if (options.dependencies.db) {
         const authority = await options.dependencies.db.transaction((tx) =>
@@ -128,10 +129,13 @@ export function createLotseAgent(options: {
               instructions: instructionsFor(instructions),
             }
           : {}),
-        activeTools: allowedToolNames(
-          runtimeContext.autonomyLevel,
-          runtimeContext.actorRole,
-        ).filter((name) => !options.irrelevantTools?.has(name)),
+        // The last allowed step answers from the evidence gathered so far instead of calling tools.
+        activeTools:
+          stepNumber >= maxSteps - 1
+            ? []
+            : allowedToolNames(runtimeContext.autonomyLevel, runtimeContext.actorRole).filter(
+                (name) => !options.irrelevantTools?.has(name),
+              ),
       };
     },
     onStepStart: () => {
@@ -159,7 +163,7 @@ export function createLotseAgent(options: {
       for (const call of toolCalls) options.telemetry?.recordTool(call.toolCallId);
       await options.checkpoint?.(stepNumber + 1);
     },
-    stopWhen: isStepCount(PIPELINE_CONFIG.maxSteps),
+    stopWhen: isStepCount(maxSteps),
     maxOutputTokens: PIPELINE_CONFIG.maxOutputTokens,
     maxRetries: 1,
     // The SDK's default error logger includes request bodies and provider

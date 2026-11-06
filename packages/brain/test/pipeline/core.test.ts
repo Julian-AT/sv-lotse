@@ -228,3 +228,22 @@ it("retries rate-limited requests to a compatible endpoint before giving up", as
   ).toBe(429);
   expect(limited).toHaveBeenCalledTimes(2);
 });
+
+it("reads per-role reasoning effort and the agent step cap, unset by default", () => {
+  const base = { APPROVAL_HMAC_SECRET: randomUUID() };
+  const defaults = parseBrainConfig(base);
+  expect(defaults.reasoningEffort.orchestrator).toBeUndefined();
+  expect(defaults.agentMaxSteps).toBeUndefined();
+  const tuned = parseBrainConfig({
+    ...base,
+    OPENAI_REASONING_EFFORT_ORCHESTRATOR: "low",
+    OPENAI_REASONING_EFFORT_GUARD: "",
+    LOTSE_AGENT_MAX_STEPS: "3",
+  });
+  expect(tuned.reasoningEffort.orchestrator).toBe("low");
+  expect(tuned.reasoningEffort.guard).toBeUndefined();
+  expect(tuned.agentMaxSteps).toBe(3);
+  expect(() =>
+    parseBrainConfig({ ...base, OPENAI_REASONING_EFFORT_ORCHESTRATOR: "fast" }),
+  ).toThrow();
+});

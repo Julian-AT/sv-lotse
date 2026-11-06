@@ -46,8 +46,11 @@ if [[ -f "$PROVIDER_FILE" ]]; then
 fi
 
 # Model ids for the endpoint above; any value already in the environment wins.
-# gpt-6-sol follows the [passage:ID] citation contract more reliably than gpt-6.1-sol.
-export OPENAI_MODEL_ORCHESTRATOR="${OPENAI_MODEL_ORCHESTRATOR:-gpt-6-sol}"
+# gpt-6-luna with low reasoning effort and at most three agent steps keeps answers fast
+# (gpt-6-sol took 32-35 s for a tool turn on the local proxy, gpt-6-luna 13-22 s).
+export OPENAI_MODEL_ORCHESTRATOR="${OPENAI_MODEL_ORCHESTRATOR:-gpt-6-luna}"
+export OPENAI_REASONING_EFFORT_ORCHESTRATOR="${OPENAI_REASONING_EFFORT_ORCHESTRATOR:-low}"
+export LOTSE_AGENT_MAX_STEPS="${LOTSE_AGENT_MAX_STEPS:-3}"
 export OPENAI_MODEL_CLASSIFIER="${OPENAI_MODEL_CLASSIFIER:-gpt-6-luna}"
 export OPENAI_MODEL_GUARD="${OPENAI_MODEL_GUARD:-gpt-6-luna}"
 export OPENAI_MODEL_EXTRACTOR="${OPENAI_MODEL_EXTRACTOR:-gpt-6-luna}"
