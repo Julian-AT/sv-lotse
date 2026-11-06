@@ -1,4 +1,4 @@
-# SV KI-Lotse
+# Attention Seekers
 
 ![Bun 1.4](https://img.shields.io/badge/Bun-1.4-000000?style=flat-square&logo=bun&logoColor=white)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white)
@@ -136,9 +136,10 @@ row and an LLM judge. The judge pass rate for model-written situation texts is 0
 0.85–0.91), with Austrian dialect lowest at 0.79. The gym self-test scores gold plans at 1.0 and
 penalises boundary violations, uncited claims and malformed tool calls as specified.
 
-On `ibm_marrakesh` we ran 10 QAOA circuits (p = 1, 11–17 qubits, median transpiled depth 285) for
-case-scheduling instances built from real office opening hours. Plain QAOA found the optimum in
-2 of 5 instances; warm-start QAOA, seeded from the CP-SAT solution, recovered it in 5 of 5. CP-SAT
+On `ibm_marrakesh` we ran 10 QAOA circuits (p = 1, 11–17 qubits, median transpiled depth 285) on
+five catalog instances: three case schedules from real office opening hours and two document set
+covers. Plain QAOA found the optimum only on the two set covers; warm-start QAOA, seeded from the
+CP-SAT solution, recovered it on all five. CP-SAT
 solves every instance exactly in milliseconds, so this establishes **no quantum advantage**. See
 [ml/quantum](ml/quantum/) and the [paper](paper/lotse-rl.pdf).
 
