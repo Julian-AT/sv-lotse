@@ -1,0 +1,79 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 20 (1-basiert), Druckseiten 38.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Vertragsbehandlung und private Rechnung unterscheiden. Keine Wahl oder Empfehlung einer Behandlung; nur Verwaltung einer bereits verordneten Leistung.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-ergotherapie
+name_de: Ergotherapie
+name_simple: Kosten für Ergotherapie klären
+area: C
+life_situations:
+  - illness
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: prescription
+    text_de: Vor Beginn ist eine ärztliche Verordnung erforderlich.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+      quote: Wir bieten unseren Versicherten Ergotherapie, Logopädie und Physiotherapie nach
+        vorhergehender Verordnung an.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: prescription_present == true
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: prescription
+    name_de: Ärztliche Verordnung
+    required: true
+    obtain_from: Behandelnde Ärztin oder behandelnder Arzt
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+      quote: Wir bieten unseren Versicherten Ergotherapie, Logopädie und Physiotherapie nach
+        vorhergehender Verordnung an.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: invoice
+    name_de: "Bei privater Rechnung: detaillierte bezahlte Honorarnote und Zahlungsnachweis"
+    required: false
+    obtain_from: Behandelnde Fachperson; eigene Bank oder Zahlungsquittung
+    source:
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870178&portal=oegkportal
+      quote: die bezahlte Honorarnote (Original oder Duplikat)
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Kostenerstattung Ergotherapie
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-ergotherapie
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote: Wir bieten unseren Versicherten Ergotherapie, Logopädie und Physiotherapie nach
+      vorhergehender Verordnung an.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870178&portal=oegkportal
+    quote: die bezahlte Honorarnote (Original oder Duplikat)
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870178&portal=oegkportal
+    quote:
+      Ergotherapeutische Behandlungen bei einer Vertragspartnerin oder einem Vertragspartner sind
+      für Sie kostenlos.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
