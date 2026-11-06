@@ -3,7 +3,7 @@ import type { DatabaseClient } from "@lotse/db";
 import { facts, formFields, formInstances } from "@lotse/db/schema";
 import { type Action, ActionSchema, type JsonValue } from "@lotse/protocol";
 import { generateText, type LanguageModel, Output } from "ai";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import type { RuntimeContext } from "../agent/context.ts";
 import { FORM_TYPE_PACE_MS } from "../config/index.ts";
@@ -238,9 +238,32 @@ export async function answerFormQuestion(input: {
   if (!answer) return;
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
   const pending = pendingFormQuestion(input.history.slice(0, -1));
-  if (!pending) return;
-  if (answer.length > 80 || MANY.test(answer))
-    return answerManyFields({ ...input, pending, answer });
+  const fromDocuments = DOCUMENT.test(answer);
+  if (!pending) {
+    // A form is open and the person hands over data (typed or "from the letter"): fill it directly.
+    const data = (answer.length > 40 || MANY.test(answer)) && !answer.includes("?");
+    if (!(fromDocuments || data)) return;
+    const [latest] = await db
+      .select({ id: formInstances.id })
+      .from(formInstances)
+      .where(
+        and(
+          eq(formInstances.caseId, context.caseId),
+          eq(formInstances.subjectId, context.subjectId),
+        ),
+      )
+      .orderBy(desc(formInstances.createdAt))
+      .limit(1);
+    if (!latest) return;
+    return answerManyFields({
+      ...input,
+      pending: { formInstanceId: latest.id, fieldId: "" },
+      answer,
+      fromDocuments,
+    });
+  }
+  if (answer.length > 80 || MANY.test(answer) || fromDocuments)
+    return answerManyFields({ ...input, pending, answer, fromDocuments });
   if (answer.includes("?")) return;
   const [instance] = await db
     .select()
@@ -320,8 +343,11 @@ export async function answerFormQuestion(input: {
 
 // Several values in one message ("Maria Müller, geb. 12.3.1948, Hauptstraße 5, 1100 Wien").
 const MANY = /[\n;]|,.*,|:\s*\S.*:/u;
+const DOCUMENT = /brief|dokument|entlassung|befund|bescheid|unterlage|letter|document|daraus/iu;
 const extraction = z.object({
-  values: z.array(z.object({ fieldId: z.string(), value: z.string() })),
+  values: z.array(
+    z.object({ fieldId: z.string(), value: z.string(), factId: z.string().nullable() }),
+  ),
 });
 
 /**
@@ -338,6 +364,7 @@ async function answerManyFields(input: {
   model?: LanguageModel;
   pending: { formInstanceId: string; fieldId: string };
   answer: string;
+  fromDocuments?: boolean;
 }): Promise<FormAnswer | undefined> {
   const { db, context, pending, answer } = input;
   if (!input.model) return;
@@ -357,12 +384,22 @@ async function answerManyFields(input: {
   const open = fields.filter((field) => askable(field) && values[field.id] === undefined);
   if (!open.length) return;
   const english = input.language.startsWith("en");
+  // Administrative facts already read from the person's documents (e.g. a discharge letter).
+  const documentFacts = input.fromDocuments
+    ? (
+        await db
+          .select({ id: facts.id, type: facts.type, value: facts.value, source: facts.source })
+          .from(facts)
+          .where(eq(facts.subjectId, context.subjectId))
+      ).filter((fact) => (fact.source as { kind?: string } | null)?.kind === "document")
+    : [];
   const result = await generateText({
     model: input.model,
     output: Output.object({ schema: extraction }),
     system:
-      "Map the person's own text onto form fields. Return only values the text states explicitly, " +
-      "copied as written; never guess, infer or add medical information. Dates as DD.MM.YYYY.",
+      "Map the person's text and the listed document facts onto form fields. Return only values " +
+      "stated explicitly, copied as written; never guess, infer or add medical information. " +
+      "Dates as DD.MM.YYYY. Set factId to the document fact's id when the value comes from it.",
     prompt: JSON.stringify({
       fields: open.map((field) => ({
         fieldId: field.id,
@@ -370,6 +407,11 @@ async function answerManyFields(input: {
         kind: questionKey(field),
       })),
       text: answer,
+      documentFacts: documentFacts.map((fact) => ({
+        id: fact.id,
+        type: fact.type,
+        value: fact.value,
+      })),
     }),
     abortSignal: AbortSignal.timeout(15_000),
     // A failed or slow extraction leaves the message to the agent instead of failing the turn.
@@ -378,16 +420,23 @@ async function answerManyFields(input: {
   const filled = result.output.values.flatMap((item) => {
     const field = open.find((candidate) => candidate.id === item.fieldId);
     const parsed = field ? fieldValue(field, item.value, english) : undefined;
-    return field && parsed ? [{ field, parsed }] : [];
+    const documentFact = documentFacts.find((fact) => fact.id === item.factId);
+    return field && parsed ? [{ field, parsed, documentFact }] : [];
   });
   const unique = filled.filter(
     (item, index) => filled.findIndex((other) => other.field.id === item.field.id) === index,
   );
   if (!unique.length) return;
   const source = { kind: "statement" as const, turnId: input.turnId, quote: answer.slice(0, 500) };
-  const written = unique.map((item) => ({ ...item, provenance: { factId: randomUUID(), source } }));
+  const written = unique.map((item) => ({
+    ...item,
+    provenance: item.documentFact
+      ? { factId: item.documentFact.id, source: item.documentFact.source as typeof source }
+      : { factId: randomUUID(), source },
+  }));
   await db.transaction(async (tx) => {
-    for (const { field, parsed, provenance } of written)
+    for (const { field, parsed, provenance, documentFact } of written) {
+      if (documentFact) continue;
       await tx.insert(facts).values({
         id: provenance.factId,
         subjectId: context.subjectId,
@@ -398,6 +447,7 @@ async function answerManyFields(input: {
         confidence: 1,
         confirmed: true,
       });
+    }
     await tx
       .update(formInstances)
       .set({
