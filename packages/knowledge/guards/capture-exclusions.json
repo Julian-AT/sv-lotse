@@ -1,0 +1,18 @@
+{
+  "as_of": "2026-11-06",
+  "quote": "Screen capture excludes password managers and user-configured banking applications.",
+  "sources": [
+    "https://support.1password.com/codesign-check/",
+    "https://github.com/bitwarden/clients/tree/main/apps/desktop",
+    "https://github.com/keepassxreboot/keepassxc",
+    "https://support.apple.com/guide/passwords/welcome/mac"
+  ],
+  "bundleIdentifiers": [
+    "com.1password.1password",
+    "com.agilebits.onepassword7",
+    "com.bitwarden.desktop",
+    "org.keepassxc.keepassxc",
+    "com.dashlane.Dashlane",
+    "com.apple.Passwords"
+  ]
+}
