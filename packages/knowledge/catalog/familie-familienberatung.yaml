@@ -1,0 +1,32 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: familie-familienberatung
+name_de: Geförderte Familienberatung
+name_simple: Kostenlose Beratung zu Fragen in der Familie finden
+area: F
+life_situations:
+  - family-with-child
+scope: other
+criteria:
+  - id: published-access
+    text_de: Geförderte Familienberatungsstellen beraten kostenlos. Über die
+      offizielle Suche eine passende Stelle und deren Terminangebot auswählen.
+    source: &a1
+      url: https://www.familienberatung.gv.at/faq.html
+      quote: Die Beratung ist kostenlos.
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers: []
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents: []
+forms: []
+process: ref:processes/familie-familienberatung
+appointment_channels: []
+sources:
+  - *a1
+  - url: https://www.familienberatung.gv.at/faq.html
+    quote: Sie finden einerseits eine vollständige Auflistung aller geförderten
+      Familienberatungsstellen in Österreich, die Sie mittels Suchfunktion auf
+      Ihre Fragestellungen spezifiziert finden können.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06

@@ -1,0 +1,45 @@
+# Awaiting human review; administrative access only.
+id: familie-familienberatung
+benefit: ref:catalog/familie-familienberatung
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: region
+    type: string
+    question_hint: In welchem Bundesland suchen Sie ein Angebot?
+steps:
+  - id: programme-information
+    needs: []
+    criteria: ref:catalog/familie-familienberatung#criteria
+    outputs:
+      - id: published-programme
+        type: document
+    transitions:
+      - to: prepare-access
+  - id: prepare-access
+    needs:
+      - region
+    outputs:
+      - id: official-access
+        type: document
+    transitions:
+      - to: finish
+  - id: finish
+    needs: []
+    outputs:
+      - id: access-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.familienberatung.gv.at/faq.html
+    quote: Die Beratung ist kostenlos.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.familienberatung.gv.at/faq.html
+    quote: Sie finden einerseits eine vollständige Auflistung aller geförderten
+      Familienberatungsstellen in Österreich, die Sie mittels Suchfunktion auf
+      Ihre Fragestellungen spezifiziert finden können.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
