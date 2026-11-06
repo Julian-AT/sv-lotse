@@ -1,0 +1,194 @@
+{
+  "adapterVersion": "persisted-turn/1",
+  "corpus": {
+    "benefits": 49,
+    "processes": 49,
+    "chunks": 419
+  },
+  "runs": [
+    {
+      "caseId": "care-parent-conflicting-residence",
+      "scenario": "s1",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "a5dced02-b352-4e2f-bcf6-5af8de569cbb",
+        "goalConfirmed": false,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          }
+        ],
+        "tools": [],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "care-parent-voice-captions-german",
+      "scenario": "s1",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "7908f83a-7c02-44dc-a6c6-bea567d56382",
+        "goalConfirmed": false,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          }
+        ],
+        "tools": [],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    }
+  ]
+}

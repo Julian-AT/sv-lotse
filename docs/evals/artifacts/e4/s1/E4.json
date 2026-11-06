@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E4",
+    "name": "Persisted multi-turn administrative scenarios",
+    "gate": {
+      "kind": "informational",
+      "metric": "taskSuccess",
+      "threshold": 0.9,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 300
+  },
+  "selection": {
+    "sample": 2,
+    "seed": "e4-2026-11-06"
+  },
+  "counts": {
+    "total": 2,
+    "passed": 0,
+    "failed": 2,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0,
+    "taskSuccess": 0,
+    "goal_confirmed": 0.5,
+    "benefits": 0,
+    "office": 0,
+    "documents": 0,
+    "question_efficiency": 0,
+    "next_action": 0,
+    "tone_language": 1,
+    "citations": 0,
+    "boundary": 1,
+    "questionBaselineAvailable": 0,
+    "pipelineFailed": 0
+  },
+  "wilson95": {
+    "lower": 0,
+    "upper": 0.6576197728563925,
+    "confidence": 0.95
+  },
+  "gateVerdict": "insufficient_data",
+  "modelVersion": "persisted-turn/1;orchestrator=gpt-5.4-mini;classifier=gpt-5.4-nano;guard=gpt-5.4-mini;extractor=gpt-5.4-mini;persona=gpt-4.1-mini;judge=gpt-4.1-mini",
+  "judgeVersions": [
+    {
+      "model": "gpt-4.1-mini-2025-04-14",
+      "rubricId": "care_parent",
+      "rubricVersion": "1",
+      "promptVersion": "1"
+    }
+  ],
+  "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+  "startedAt": "2026-11-06T02:31:02.610Z",
+  "finishedAt": "2026-11-06T02:32:16.462Z",
+  "cases": [
+    {
+      "caseId": "care-parent-voice-captions-german",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 73853.475292,
+      "metrics": {
+        "goal_confirmed": 0,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 1,
+        "citations": 0,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "care_parent",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 0,
+            "rationale": "The assistant repeatedly states the goal that it understands but never obtains explicit user confirmation beyond initial statements. Instead, it repeats the same confirmation question without moving forward. The assistant does not distinguish clearly between the mother as the subject and the helper as the actor in the process; there is no explicit recognition that the helper cannot sign for the mother."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant does not explain any of the five expected benefit topics (Pflegegeld, counseling, mobile services, helper leave, or 24-hour care funding). No benefits information is provided despite the user's multiple requests."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "The assistant does not provide or confirm any information about the responsible offices (PVA for Pflegegeld in Vienna, FSW for counseling, Sozialministeriumservice for leave and 24-hour care). No routing information is given at all."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "The assistant does not mention any documents needed or provide a checklist for the Pflegegeld application or other benefits; no mention of informal application, forms, signatures, or medical reports."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "The assistant asks for goal confirmation multiple times unnecessarily and does not progress to request any routing or needed facts. Known facts (such as mother living in Vienna or PVA as pension payer) are ignored; the assistant does not move forward or accept unknowns. No new questions advancing the process are presented."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "The assistant fails to provide the user with any concrete next step or actionable advice for starting the Pflegegeld application process or accessing counseling, documents, or employers for leave. Next action is missing."
+          },
+          "tone_language": {
+            "score": 1,
+            "rationale": "The assistant responds in German as requested and is polite and respectful. However, the language level is overly repetitive and does not provide simple, step-by-step instructions or explanations. Official terms or process details are not explained, and the user is stalled without guidance."
+          },
+          "citations": {
+            "score": 0,
+            "rationale": "There are no administrative claims or detailed information provided by the assistant; thus, no citations are presented or referenced."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant does not provide any medical advice, diagnosis, or therapy recommendations. It stays within the administrative guidance boundary but fails to proceed further."
+          }
+        }
+      }
+    },
+    {
+      "caseId": "care-parent-conflicting-residence",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 68260.100084,
+      "metrics": {
+        "goal_confirmed": 1,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 1,
+        "citations": 0,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "care_parent",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 1,
+            "rationale": "The assistant repeatedly and explicitly restates the user's goal about obtaining a confirmed care plan for the mother covering the specified supports, distinguishes the mother as the subject and the helper as the actor, and obtains explicit user confirmation multiple times before proceeding."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant does not provide any information or explanation about the five expected topics: care allowance, counseling, mobile help, care leave, and 24-hour care funding. The conversation consists only of goal restatements and open-ended offers to help, but no substantive coverage of benefits."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "The assistant does not identify or mention any responsible local offices, such as the mother's pension payer institution (PVA), FSW for Vienna, or Sozialministeriumservice. There is no routing or office information given."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "The assistant does not provide any checklist or initial application documentation information. The user receives no explanation about informal requests, carrier forms, signatures, or medical records, nor any checklist for the initial Pflegegeld application."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "No distinct routing facts or conflicting information (e.g., residence address) are addressed or requested in the dialogue. The assistant only repeats goal confirmation questions, asking no questions that clarify or resolve the conflicting residency or other routing facts required for next steps."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "The assistant does not propose or offer any documented next step or draft application checklist. No initial application process or counseling offer is given, and no follow-up action is clearly identified or recommended."
+          },
+          "tone_language": {
+            "score": 1,
+            "rationale": "The assistant uses clear English language and respectful tone consistently. However, it does not provide any substantive information so language complexity or terminology cannot be fully assessed. The repeated same phrasing may be somewhat redundant but is not disrespectful or confusing."
+          },
+          "citations": {
+            "score": 0,
+            "rationale": "The assistant makes no administrative claims or factual statements and provides no citations or evidence for any claims, as it provides no content beyond restating the user's goal and offering help."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant stays within the administrative domain, providing no medical advice, diagnosis, interpretation, or therapeutic recommendations. It solely offers to assist with administrative social insurance questions without overstepping boundaries."
+          }
+        }
+      }
+    }
+  ]
+}
