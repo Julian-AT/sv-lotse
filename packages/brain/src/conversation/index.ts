@@ -51,6 +51,7 @@ import {
   composeAnswer,
   dropUnsupportedSentences,
   toolSources,
+  topSources,
 } from "../pipeline/compose.ts";
 import { handleTurnControl } from "../pipeline/controls.ts";
 import { preparePipeline } from "../pipeline/index.ts";
@@ -66,6 +67,7 @@ import {
   type ProductEventSink,
 } from "../telemetry/product-events.ts";
 import { contracts, isToolName } from "../tools/contracts/index.ts";
+import { guidanceOffer, offerChunks, recentUserTexts } from "../tools/impl/ui/resource.ts";
 import type { LotseMessage } from "../tools/types.ts";
 import { pointedToolCall, resultPointAction } from "../workspace/targets.ts";
 import { approvedResultCheckpoint } from "./approved-results.ts";
@@ -579,6 +581,24 @@ async function runTurn(
       let pointed = false;
       const results: { toolCallId: string; toolName: string }[] = [];
       const finalize = async (): Promise<void> => {
+        if (!offered && !approvalRequested && !pointed) {
+          const offer = await guidanceOffer({
+            userTexts: [userText, ...recentUserTexts(prepared.history)],
+            sources: topSources(
+              [
+                ...toolEvidence,
+                ...searchEvidence,
+                ...(pipeline.confirmed ? pipeline.passages : []),
+              ],
+              userText,
+            ),
+          });
+          if (offer) {
+            for (const chunk of offerChunks(randomUUID(), offer)) writer.write(chunk);
+            output.offer(offer.label);
+            offered = true;
+          }
+        }
         const id = draft.id;
         if (id === undefined) return output.finish();
         if (!approvalRequested && !offered && userText.trim()) {

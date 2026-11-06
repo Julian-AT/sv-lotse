@@ -5,7 +5,12 @@ import { MockLanguageModelV4 } from "ai/test";
 import { beforeAll, describe, expect, it } from "vitest";
 import { createLotseAgent, POLICY } from "../../src/agent/index.ts";
 import { BOOKING_ALLOWLIST_FILE } from "../../src/config/index.ts";
-import { resourceIsOpen } from "../../src/tools/impl/ui/resource.ts";
+import {
+  guidanceOffer,
+  isGuidanceRequest,
+  offerChunks,
+  resourceIsOpen,
+} from "../../src/tools/impl/ui/resource.ts";
 import { buildTools } from "../../src/tools/registry.ts";
 import { chunks, config } from "./helpers.ts";
 
@@ -221,4 +226,37 @@ it("the pilot policy stays inside its context budget", async () => {
   expect(tokenEstimate(POLICY)).toBeLessThanOrEqual(
     (PIPELINE_CONFIG.contextTokens * CONTEXT_SHARES.policy) / 100,
   );
+});
+
+it("recognises where-to-apply requests, also behind a bare goal confirmation", () => {
+  expect(isGuidanceRequest(["Wo beantrage ich Pflegegeld?"])).toBe(true);
+  expect(isGuidanceRequest(["Zeigen Sie mir bitte das Formular"])).toBe(true);
+  expect(isGuidanceRequest(["Where do I apply for care allowance?"])).toBe(true);
+  expect(isGuidanceRequest(["Ja", "Wo beantrage ich Pflegegeld?"])).toBe(true);
+  expect(isGuidanceRequest(["Wie hoch ist das Pflegegeld?"])).toBe(false);
+  expect(isGuidanceRequest(["Ja", "Wie hoch ist das Pflegegeld?"])).toBe(false);
+});
+
+it("offers the most relevant allowlisted page as a completed offer in its own step", async () => {
+  const offer = await guidanceOffer({
+    userTexts: ["Wo beantrage ich Pflegegeld?"],
+    sources: [{ url: "https://evil.example/pflegegeld" }, { url: portalUrl }],
+  });
+  expect(offer).toMatchObject({ target: { kind: "dom", url: portalUrl, handle: "page" } });
+  expect(
+    await guidanceOffer({
+      userTexts: ["Wo beantrage ich Pflegegeld?"],
+      sources: [{ url: "https://evil.example/" }],
+    }),
+  ).toBeUndefined();
+  if (!offer) throw new Error("offer expected");
+  const chunks = offerChunks("call-1", offer);
+  expect(chunks.map((chunk) => chunk.type)).toEqual([
+    "start-step",
+    "tool-input-available",
+    "tool-output-available",
+    "finish-step",
+    "start-step",
+  ]);
+  expect(chunks[2]).toMatchObject({ output: { open: false, label: offer.label } });
 });

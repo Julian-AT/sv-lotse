@@ -1,9 +1,10 @@
 import { randomUUID } from "node:crypto";
 import { isPortalLoginPage, loadPortalPolicy } from "@lotse/knowledge/portal-policy";
 import type { ContextCapsule, Target } from "@lotse/protocol";
+import type { InferUIMessageChunk } from "ai";
 import { BOOKING_ALLOWLIST_FILE } from "../../../config/index.ts";
 import { contracts } from "../../contracts/index.ts";
-import type { Implementations, ToolDependencies } from "../../types.ts";
+import type { Implementations, LotseMessage, ToolDependencies } from "../../types.ts";
 
 /**
  * Show-then-do guidance (PRD §4, §8): before pointing at a page, form or document the user does
@@ -85,4 +86,75 @@ export function implementations(deps: ToolDependencies): Implementations {
       };
     },
   };
+}
+
+const GUIDANCE_REQUEST =
+  /\b(?:wo|wie)\b[^?.!]{0,60}\b(?:beantrag|antrag|find|bekomm|einreich|formular|herunterlad|stell)|\bzeig(?:en)?\b[^?.!]{0,20}\bmir\b|\bwhere\b[^?.!]{0,40}\b(?:apply|find|get|submit)|\bshow me\b|\bhow do i apply\b/iu;
+const CONFIRMATION = /^\s*(?:ja|jawohl|genau|ok(?:ay)?|yes|yep|richtig)\b[\s,.!]*\S{0,30}\s*$/iu;
+
+/**
+ * "Wo beantrage ich …?" and similar requests ask to be shown a page. A bare goal confirmation
+ * ("Ja") carries the request of the user message before it.
+ */
+export function isGuidanceRequest(userTexts: readonly string[]): boolean {
+  const [latest = "", previous = ""] = userTexts;
+  return (
+    GUIDANCE_REQUEST.test(latest) || (CONFIRMATION.test(latest) && GUIDANCE_REQUEST.test(previous))
+  );
+}
+
+/** The most relevant allowlisted official page among this turn's sources, as an offer. */
+export async function pageOffer(
+  sources: readonly { url: string }[],
+): Promise<{ target: Target; label: string } | undefined> {
+  const allowed = await portalOrigins();
+  const source = sources.find((item) => portalPageAllowed(item.url, allowed));
+  if (!source) return;
+  const host = new URL(source.url).hostname.replace(/^www\./u, "");
+  return {
+    target: { kind: "dom", handle: "page", url: source.url },
+    label: `die offizielle Seite auf ${host}`,
+  };
+}
+
+/** Server-side offer for a guidance request when the pilot did not offer or point itself. */
+export async function guidanceOffer(input: {
+  userTexts: readonly string[];
+  sources: readonly { url: string }[];
+}): Promise<{ target: Target; label: string } | undefined> {
+  return isGuidanceRequest(input.userTexts) ? pageOffer(input.sources) : undefined;
+}
+
+/** The offer as a completed ui.offerResource call, followed by a new step for the question. */
+export function offerChunks(
+  toolCallId: string,
+  offer: { target: Target; label: string },
+): InferUIMessageChunk<LotseMessage>[] {
+  return [
+    { type: "start-step" },
+    {
+      type: "tool-input-available",
+      toolCallId,
+      toolName: "ui.offerResource",
+      input: { target: offer.target, label: offer.label },
+    },
+    {
+      type: "tool-output-available",
+      toolCallId,
+      output: { offerId: randomUUID(), open: false, label: offer.label, target: offer.target },
+    },
+    { type: "finish-step" },
+    { type: "start-step" },
+  ];
+}
+
+/** The user's earlier messages, newest first, as plain text. */
+export function recentUserTexts(history: readonly LotseMessage[]): string[] {
+  return history
+    .filter((message) => message.role === "user")
+    .slice(-3, -1)
+    .reverse()
+    .map((message) =>
+      message.parts.flatMap((part) => (part.type === "text" ? [part.text] : [])).join(" "),
+    );
 }
