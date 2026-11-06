@@ -82,6 +82,7 @@ import type { LotseMessage } from "../tools/types.ts";
 import { pointedToolCall, resultPointAction } from "../workspace/targets.ts";
 import { approvedResultCheckpoint } from "./approved-results.ts";
 import { TurnError, turnStreamError } from "./errors.ts";
+import { formAlreadyPrepared, prepareFormAfterOpen } from "./form-after-open.ts";
 import {
   hasOpenToolCall,
   loadMessages,
@@ -400,6 +401,46 @@ async function runTurn(
         output.emit(randomUUID(), control.reply);
         speechSegments.push(...output.segments);
         timings.totalMs = performance.now() - pipelineStarted;
+        writer.write({ type: "finish" });
+        return;
+      }
+      // The form viewer reported back after a prepared form opened; its question is already asked.
+      if (formAlreadyPrepared(prepared.history)) {
+        writer.write({ type: "finish" });
+        return;
+      }
+      const formLanguage = parsed.language?.startsWith("en") ? "en" : "de-AT";
+      const formFill = await prepareFormAfterOpen({
+        db,
+        context: prepared.context,
+        history: prepared.history,
+        language: formLanguage,
+        writer,
+        ...(options?.abortSignal ? { signal: options.abortSignal } : {}),
+      });
+      if (formFill) {
+        if (formFill.goalConfirmed)
+          writer.write({
+            type: "data-case-event",
+            data: {
+              caseId: prepared.context.caseId,
+              kind: "goal_confirmed",
+              payload: { goal: formFill.goalConfirmed },
+            },
+          });
+        const output = createSegmentWriter({
+          writer,
+          context: prepared.context,
+          turnId: prepared.turnId,
+          language: formLanguage,
+          config,
+          passages: new Map(),
+        });
+        for (const action of formFill.actions) output.action(action);
+        output.emit(randomUUID(), formFill.text);
+        speechSegments.push(...output.segments);
+        timings.totalMs = performance.now() - pipelineStarted;
+        writer.write({ type: "finish-step" });
         writer.write({ type: "finish" });
         return;
       }
