@@ -1,0 +1,79 @@
+.results {
+  display: grid;
+  gap: var(--lotse-space-medium);
+}
+.card {
+  display: grid;
+  gap: var(--lotse-space-medium);
+  padding: var(--lotse-space-large);
+  min-width: 0;
+}
+.card :is(h3, h4) {
+  margin: 0;
+}
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--lotse-space-small);
+}
+.groups {
+  display: grid;
+  gap: var(--lotse-space-medium);
+}
+.group {
+  display: grid;
+  gap: var(--lotse-space-small);
+  padding-inline-start: var(--lotse-space-medium);
+  border-inline-start: 4px solid var(--lotse-border);
+}
+.group[data-status="met"] {
+  border-color: var(--lotse-success);
+}
+.group[data-status="unknown"] {
+  border-color: var(--lotse-warning);
+}
+.group[data-status="not_met"] {
+  border-color: var(--lotse-danger);
+}
+.groupHeading {
+  font-size: var(--lotse-text-body);
+}
+.criteria {
+  display: grid;
+  gap: var(--lotse-space-medium);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card > p {
+  margin: 0;
+}
+.criteria > li > p {
+  margin: 0;
+}
+.legal {
+  font-size: var(--lotse-text-small);
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lotse-space-small);
+  margin: var(--lotse-space-small) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lotse-space-small);
+}
+.why {
+  display: grid;
+  gap: var(--lotse-space-medium);
+  justify-items: start;
+}
+.why > div {
+  width: 100%;
+}
