@@ -81,6 +81,7 @@ import { deepPageOffer } from "../tools/impl/web/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
 import { pointedToolCall, resultPointAction } from "../workspace/targets.ts";
 import { approvedResultCheckpoint } from "./approved-results.ts";
+import { awaitPreviousTurn } from "./continuation-wait.ts";
 import { TurnError, turnStreamError } from "./errors.ts";
 import { formQuestion, prepareFormAfterOpen } from "./form-after-open.ts";
 import {
@@ -198,51 +199,53 @@ async function runTurn(
   const productEvents = heldUntilCommit(options?.onProductEvent);
   const approvalService = createApprovalService(db, config.approvalSecret, productEvents.sink);
   const prepared = await telemetry.stage("context", () =>
-    db.transaction(async (tx) => {
-      const context = await resolveContext(tx, parsed, session);
-      // History can repeat private facts in prose as well as tool results. Until
-      // it has a provenance-aware projection, restricted helpers cannot read it.
-      if (context.actorRole === "helper") {
-        const scope = effectiveShareScope(context.shareScope);
-        if (scope.facts !== true || scope.documents !== true)
-          throw new TurnError("CASE_ACCESS_DENIED", 403);
-      }
-      const { turnId, recover } = await claimTurn(tx, context, parsed);
-      const stored = await loadMessages(tx, context.caseId);
-      const history = recover ? await recoverConsumedCalls(tx, context.caseId, stored) : stored;
-      // A safety notice may interrupt a pending approval without consuming or dispatching it.
-      // Continue the server-owned assistant message so its approval parts remain actionable.
-      const pending = hasOpenToolCall(history.at(-1));
-      const merged =
-        (safety || detectTurnControl(userText)?.kind === "pause") &&
-        pending &&
-        !history.some((message) => message.id === latest.id)
-          ? { history, dispatch: [] as string[] }
-          : await mergeLatest(tx, history, latest, context, approvalService);
-      await saveMessages(tx, context.caseId, merged.history);
-      const safetyDelivered = history.some((message) =>
-        message.parts.some((part) => part.type === "data-safety-notice" && part.id === latest.id),
-      );
-      const caseJobs = await tx.select().from(jobs).where(eq(jobs.caseId, context.caseId));
-      const [cost] = await tx
-        .select({
-          complete: sql<boolean>`coalesce(bool_and(case when ${turns.id} = ${turnId} then true else coalesce(${turns.timings}->'costComplete' = 'true'::jsonb, false) end), true)`,
-          usd: sql<string>`coalesce(sum(case when jsonb_typeof(${turns.timings}->'costUsd') = 'number' then (${turns.timings}->>'costUsd')::numeric else 0 end), 0)`,
-        })
-        .from(turns)
-        .where(eq(turns.caseId, context.caseId));
-      return {
-        ...merged,
-        context,
-        turnId,
-        safetyDelivered,
-        jobProgress: caseJobs.map((job) =>
-          jobProgress(job, parsed.language?.startsWith("en") ? "en" : "de"),
-        ),
-        caseCostUsd: Number(cost?.usd ?? 0),
-        caseCostComplete: cost?.complete ?? false,
-      };
-    }),
+    awaitPreviousTurn(latest.role === "assistant", () =>
+      db.transaction(async (tx) => {
+        const context = await resolveContext(tx, parsed, session);
+        // History can repeat private facts in prose as well as tool results. Until
+        // it has a provenance-aware projection, restricted helpers cannot read it.
+        if (context.actorRole === "helper") {
+          const scope = effectiveShareScope(context.shareScope);
+          if (scope.facts !== true || scope.documents !== true)
+            throw new TurnError("CASE_ACCESS_DENIED", 403);
+        }
+        const { turnId, recover } = await claimTurn(tx, context, parsed);
+        const stored = await loadMessages(tx, context.caseId);
+        const history = recover ? await recoverConsumedCalls(tx, context.caseId, stored) : stored;
+        // A safety notice may interrupt a pending approval without consuming or dispatching it.
+        // Continue the server-owned assistant message so its approval parts remain actionable.
+        const pending = hasOpenToolCall(history.at(-1));
+        const merged =
+          (safety || detectTurnControl(userText)?.kind === "pause") &&
+          pending &&
+          !history.some((message) => message.id === latest.id)
+            ? { history, dispatch: [] as string[] }
+            : await mergeLatest(tx, history, latest, context, approvalService);
+        await saveMessages(tx, context.caseId, merged.history);
+        const safetyDelivered = history.some((message) =>
+          message.parts.some((part) => part.type === "data-safety-notice" && part.id === latest.id),
+        );
+        const caseJobs = await tx.select().from(jobs).where(eq(jobs.caseId, context.caseId));
+        const [cost] = await tx
+          .select({
+            complete: sql<boolean>`coalesce(bool_and(case when ${turns.id} = ${turnId} then true else coalesce(${turns.timings}->'costComplete' = 'true'::jsonb, false) end), true)`,
+            usd: sql<string>`coalesce(sum(case when jsonb_typeof(${turns.timings}->'costUsd') = 'number' then (${turns.timings}->>'costUsd')::numeric else 0 end), 0)`,
+          })
+          .from(turns)
+          .where(eq(turns.caseId, context.caseId));
+        return {
+          ...merged,
+          context,
+          turnId,
+          safetyDelivered,
+          jobProgress: caseJobs.map((job) =>
+            jobProgress(job, parsed.language?.startsWith("en") ? "en" : "de"),
+          ),
+          caseCostUsd: Number(cost?.usd ?? 0),
+          caseCostComplete: cost?.complete ?? false,
+        };
+      }),
+    ),
   );
   productEvents.commit();
   telemetry.identify(prepared.context.caseId, prepared.turnId);
