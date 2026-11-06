@@ -3,7 +3,7 @@
 <p>
   <a href="paper/lotse-rl.pdf"><img alt="Paper" src="https://img.shields.io/badge/Paper-Lotse--RL%20(PDF)-B31B1B?style=for-the-badge&logo=arxiv&logoColor=white" /></a>
   <a href="https://huggingface.co/datasets/JulianAT/at-benefits"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-AT--Benefits-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" /></a>
-  <a href="ml/sft/"><img alt="Model" src="https://img.shields.io/badge/Model-Qwen3--8B%20SFT%20(training%20pending)-6B7280?style=for-the-badge&logo=huggingface&logoColor=white" /></a>
+  <a href="https://huggingface.co/JulianAT/sv-lotse-qwen3-8b-sft"><img alt="Model" src="https://img.shields.io/badge/Model-SV--Lotse%20Qwen3--8B-6B7280?style=for-the-badge&logo=huggingface&logoColor=white" /></a>
 </p>
 
 ![Bun 1.4](https://img.shields.io/badge/Bun-1.4-000000?style=flat-square&logo=bun&logoColor=white)
@@ -114,7 +114,9 @@ verifiable. Plan: [docs/research/lotse-rl.md](docs/research/lotse-rl.md).
 The quantum study formulates case scheduling and document set cover as QUBOs from catalog data
 and runs them on IBM hardware (`ibm_marrakesh`); classical CP-SAT solves every instance exactly, so
 there is no quantum advantage. Results are in the [paper](paper/lotse-rl.pdf). The SFT recipe for
-Qwen3-8B is in [`ml/sft`](ml/sft/); the model is not trained yet.
+Qwen3-8B is in [`ml/sft`](ml/sft/). The LoRA SFT of Qwen3-8B is on Hugging Face as
+[`JulianAT/sv-lotse-qwen3-8b-sft`](https://huggingface.co/JulianAT/sv-lotse-qwen3-8b-sft),
+trained on 883 examples; task evaluation is pending.
 
 ## Quickstart
 
