@@ -27,6 +27,9 @@ export const formExportUrl = (id: string): string => `${formInstanceUrl(id)}/pdf
 
 export const FORM_FILL_STOP_EVENT = "lotse:form-fill-stop";
 
+/** Window event with `detail: boolean`: whether the form viewer is typing values right now. */
+export const FORM_FILLING_EVENT = "lotse:form-filling";
+
 export function stopFormFilling(): void {
   window.dispatchEvent(new Event(FORM_FILL_STOP_EVENT));
 }

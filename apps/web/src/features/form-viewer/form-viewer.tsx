@@ -23,7 +23,7 @@ import {
   FormGroupConfirmation,
 } from "./approval.tsx";
 import { measureFieldTarget, reportFormTargetRect, subscribeFormViewerBridge } from "./bridge.ts";
-import { FORM_VIEWER_CONFIG, formInstanceUrl } from "./config.ts";
+import { FORM_FILLING_EVENT, FORM_VIEWER_CONFIG, formInstanceUrl } from "./config.ts";
 import { type FormViewerLanguage, formViewerCopy } from "./copy.ts";
 import { FormFieldList, fillableFieldCount, filledFieldCount } from "./field-list.tsx";
 import { FormPage } from "./form-page.tsx";
@@ -115,6 +115,14 @@ function FormViewerSession({
   useEffect(() => {
     if (instance) props.onInstanceLoaded?.(instance);
   }, [instance, props.onInstanceLoaded]);
+  // The chat holds a queued message until the live fill has finished typing.
+  useEffect(() => {
+    const announce = (filling: boolean): void => {
+      window.dispatchEvent(new CustomEvent(FORM_FILLING_EVENT, { detail: filling }));
+    };
+    announce(live.isFilling);
+    return () => announce(false);
+  }, [live.isFilling]);
 
   useEffect(() => {
     if (refreshVersion > 0) void reload().catch(() => setError(true));

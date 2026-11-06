@@ -8,6 +8,7 @@ import { ChatHeader } from "@/components/chat/chat-header";
 import { Messages } from "@/components/chat/messages";
 import { MultimodalInput } from "@/components/chat/multimodal-input";
 import { Button as UiButton } from "@/components/ui/button";
+import { FORM_FILLING_EVENT } from "../features/form-viewer/config.ts";
 import { anyFormViewerMounted } from "../features/form-viewer/workspace.tsx";
 import { useI18n } from "../i18n/provider.tsx";
 import { extractFacts, loadFacts } from "./api.ts";
@@ -21,6 +22,8 @@ import { DocumentDropZone, type DocumentImport, useDocumentImport } from "./uplo
 import { approvalContexts, useConversation } from "./use-conversation.ts";
 
 export type ConversationStart = { text?: string; file?: File };
+
+const QUEUE_GRACE_MS = 1500;
 
 /**
  * The template's empty chat before a case exists: greeting, suggestions and composer are usable at
@@ -203,14 +206,27 @@ export function Conversation({
         isToolUIPart(part) &&
         (part.state === "input-streaming" || part.state === "input-available"),
     );
-  const sendQueued = !busy && !awaiting && !waitingForApp ? queued : undefined;
+  // Sending stops a running form fill, so a queued message also waits for the typing to finish.
+  const [formFilling, setFormFilling] = useState(false);
+  useEffect(() => {
+    const update = (event: Event): void => {
+      if (event instanceof CustomEvent) setFormFilling(event.detail === true);
+    };
+    window.addEventListener(FORM_FILLING_EVENT, update);
+    return () => window.removeEventListener(FORM_FILLING_EVENT, update);
+  }, []);
+  const sendQueued = !busy && !awaiting && !waitingForApp && !formFilling ? queued : undefined;
   const send = chat.send;
   const clearError = chat.clearError;
   useEffect(() => {
     if (!sendQueued) return;
-    setQueued(undefined);
-    clearError();
-    void send(sendQueued);
+    // A grace period lets actions from the finished turn start their fill before the send.
+    const timer = setTimeout(() => {
+      setQueued(undefined);
+      clearError();
+      void send(sendQueued);
+    }, QUEUE_GRACE_MS);
+    return () => clearTimeout(timer);
   }, [sendQueued, send, clearError]);
   const started = useRef(false);
   useEffect(() => {
