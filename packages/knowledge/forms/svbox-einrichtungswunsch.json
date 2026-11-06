@@ -1,0 +1,197 @@
+{
+  "id": "svbox-einrichtungswunsch",
+  "template_id": "f550a7b6-19b3-5503-8476-405eee5add75",
+  "status": "auto",
+  "fields": [
+    {
+      "id": "f000",
+      "label_de": "Familienname KundIn",
+      "labels": {
+        "en": "Familienname KundIn"
+      },
+      "help_text": "Familienname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.family_name",
+      "acro_field": "Familienname KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f001",
+      "label_de": "Vorname KundIn",
+      "labels": {
+        "en": "Vorname KundIn"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.given_name",
+      "acro_field": "Vorname KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f002",
+      "label_de": "Geburtsdatum KundIn 3",
+      "labels": {
+        "en": "Geburtsdatum KundIn 3"
+      },
+      "help_text": "Geburtsdatum (TT.MM.JJJJ)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.birth_date",
+      "acro_field": "Geburtsdatum KundIn 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f003",
+      "label_de": "Dringend 4",
+      "labels": {
+        "en": "Dringend 4"
+      },
+      "help_text": "einem Wohn- und Pflegeplatz suchen.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "housing.urgent",
+      "acro_field": "Dringend 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f004",
+      "label_de": "Zeit 4",
+      "labels": {
+        "en": "Zeit 4"
+      },
+      "help_text": "Ich habe Zeit, auf einen bestimmten Wohn- und Pflegeplatz zu warten.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "housing.can_wait",
+      "acro_field": "Zeit 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f005",
+      "label_de": "Bezirke dringend 4",
+      "labels": {
+        "en": "Bezirke dringend 4"
+      },
+      "help_text": "Folgende Bezirke sind mir am liebsten:",
+      "type": "text",
+      "validation": {},
+      "fact_type": "housing.preferred_districts",
+      "acro_field": "Bezirke dringend 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f006",
+      "label_de": "Bezirke Zeit 4",
+      "labels": {
+        "en": "Bezirke Zeit 4"
+      },
+      "help_text": "Ich möchte nur in folgende Bezirke oder Einrichtungen ziehen:",
+      "type": "text",
+      "validation": {},
+      "fact_type": "housing.waiting_districts",
+      "acro_field": "Bezirke Zeit 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f007",
+      "label_de": "Datum 3",
+      "labels": {
+        "en": "Datum 3"
+      },
+      "help_text": "aktuelles Datum",
+      "type": "text",
+      "validation": {},
+      "fact_type": "application.date",
+      "acro_field": "Datum 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f008",
+      "label_de": "Kontaktaufnahme mit mir 3",
+      "labels": {
+        "en": "Kontaktaufnahme mit mir 3"
+      },
+      "help_text": "mit mir",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "contact.self",
+      "acro_field": "Kontaktaufnahme mit mir 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f009",
+      "label_de": "Kontaktaufnahme folgende Person 3",
+      "labels": {
+        "en": "Kontaktaufnahme folgende Person 3"
+      },
+      "help_text": "mit folgender Person:",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "contact.other",
+      "acro_field": "Kontaktaufnahme folgende Person 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f010",
+      "label_de": "Name Kontaktaufnahme 3",
+      "labels": {
+        "en": "Name Kontaktaufnahme 3"
+      },
+      "help_text": "Name",
+      "type": "text",
+      "validation": {},
+      "fact_type": "contact.delegate_name",
+      "acro_field": "Name Kontaktaufnahme 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f011",
+      "label_de": "Telefonnummer Kontaktaufnahme 4",
+      "labels": {
+        "en": "Telefonnummer Kontaktaufnahme 4"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "contact.delegate_phone",
+      "acro_field": "Telefonnummer Kontaktaufnahme 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f012",
+      "label_de": "E-Mail Adresse Kontaktaufnahme 4",
+      "labels": {
+        "en": "E-Mail Adresse Kontaktaufnahme 4"
+      },
+      "help_text": "E-Mail-Adresse",
+      "type": "text",
+      "validation": {},
+      "fact_type": "contact.delegate_email",
+      "acro_field": "E-Mail Adresse Kontaktaufnahme 4",
+      "owner": "applicant",
+      "signature": "none"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.fsw.at",
+      "quote": "Familienname",
+      "retrieved_at": "2026-11-06T02:20:00Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}

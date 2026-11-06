@@ -1,0 +1,1723 @@
+{
+  "id": "svbox-fsw-foerderung",
+  "template_id": "537852b8-13eb-564a-9398-9018a0a5426a",
+  "status": "auto",
+  "fields": [
+    {
+      "id": "f000",
+      "label_de": "Geburtsdatum KundIn",
+      "labels": {
+        "en": "Geburtsdatum KundIn"
+      },
+      "help_text": "Geburtsdatum (TT.MM.JJJJ)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.birth_date",
+      "acro_field": "Geburtsdatum KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f001",
+      "label_de": "Familienname Titel KundIn",
+      "labels": {
+        "en": "Familienname Titel KundIn"
+      },
+      "help_text": "Familienname und Titel",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.family_name_title",
+      "acro_field": "Familienname Titel KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f002",
+      "label_de": "Vorname KundIn",
+      "labels": {
+        "en": "Vorname KundIn"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.given_name",
+      "acro_field": "Vorname KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f003",
+      "label_de": "Geschlecht KundIn",
+      "labels": {
+        "en": "Geschlecht KundIn"
+      },
+      "help_text": "männlich",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f003",
+      "acro_field": "Geschlecht KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f004",
+      "label_de": "Leistungen Pflege und Betreuung",
+      "labels": {
+        "en": "Leistungen Pflege und Betreuung"
+      },
+      "help_text": "Leistungen Pflege und Betreuung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f004",
+      "acro_field": "Leistungen Pflege und Betreuung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f005",
+      "label_de": "Leistungen Behinderung und Inklusion",
+      "labels": {
+        "en": "Leistungen Behinderung und Inklusion"
+      },
+      "help_text": "Leistungen Behinderung und Inklusion",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f005",
+      "acro_field": "Leistungen Behinderung und Inklusion",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f006",
+      "label_de": "Leistungen Obdach- und Wohnungslosenhilfe",
+      "labels": {
+        "en": "Leistungen Obdach- und Wohnungslosenhilfe"
+      },
+      "help_text": "Leistungen Obdach- und Wohnungslosenhilfe",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f006",
+      "acro_field": "Leistungen Obdach- und Wohnungslosenhilfe",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f007",
+      "label_de": "Familienstand seit",
+      "labels": {
+        "en": "Familienstand seit"
+      },
+      "help_text": "seit: (TT.MM.JJJJ)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.marital_status_since",
+      "acro_field": "Familienstand seit",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f008",
+      "label_de": "Familienstand ",
+      "labels": {
+        "en": "Familienstand "
+      },
+      "help_text": "Familienstand",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.marital_status",
+      "acro_field": "Familienstand ",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f009",
+      "label_de": "Geburtsland KundIn",
+      "labels": {
+        "en": "Geburtsland KundIn"
+      },
+      "help_text": "Geburtsland",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.birth_country",
+      "acro_field": "Geburtsland KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f010",
+      "label_de": "Telefonnummer KundIn",
+      "labels": {
+        "en": "Telefonnummer KundIn"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "contact.phone",
+      "acro_field": "Telefonnummer KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f011",
+      "label_de": "E-Mail Adresse KundIn",
+      "labels": {
+        "en": "E-Mail Adresse KundIn"
+      },
+      "help_text": "E-Mail-Adresse",
+      "type": "text",
+      "validation": {},
+      "fact_type": "contact.email",
+      "acro_field": "E-Mail Adresse KundIn",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f012",
+      "label_de": "Strassennamen Lebensmittelpunkt",
+      "labels": {
+        "en": "Strassennamen Lebensmittelpunkt"
+      },
+      "help_text": "Straße",
+      "type": "text",
+      "validation": {},
+      "fact_type": "address.street",
+      "acro_field": "Strassennamen Lebensmittelpunkt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f013",
+      "label_de": "PLZ Lebensmittelpunkt",
+      "labels": {
+        "en": "PLZ Lebensmittelpunkt"
+      },
+      "help_text": "PLZ",
+      "type": "text",
+      "validation": {},
+      "fact_type": "address.postcode",
+      "acro_field": "PLZ Lebensmittelpunkt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f014",
+      "label_de": "Ort Lebensmittelpunkt",
+      "labels": {
+        "en": "Ort Lebensmittelpunkt"
+      },
+      "help_text": "Ort",
+      "type": "text",
+      "validation": {},
+      "fact_type": "address.city",
+      "acro_field": "Ort Lebensmittelpunkt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f015",
+      "label_de": "Hausnr Lebensmittelpunkt",
+      "labels": {
+        "en": "Hausnr Lebensmittelpunkt"
+      },
+      "help_text": "Hausnr.",
+      "type": "text",
+      "validation": {},
+      "fact_type": "address.house_number",
+      "acro_field": "Hausnr Lebensmittelpunkt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f016",
+      "label_de": "Stiege Lebensmittelpunkt",
+      "labels": {
+        "en": "Stiege Lebensmittelpunkt"
+      },
+      "help_text": "Stiege",
+      "type": "text",
+      "validation": {},
+      "fact_type": "address.stair",
+      "acro_field": "Stiege Lebensmittelpunkt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f017",
+      "label_de": "Tuernr Lebensmittelpunkt",
+      "labels": {
+        "en": "Tuernr Lebensmittelpunkt"
+      },
+      "help_text": "Türnr.",
+      "type": "text",
+      "validation": {},
+      "fact_type": "address.door",
+      "acro_field": "Tuernr Lebensmittelpunkt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f018",
+      "label_de": "Familienname Titel vertretungsbefugte Person 3",
+      "labels": {
+        "en": "Familienname Titel vertretungsbefugte Person 3"
+      },
+      "help_text": "Familienname und Titel",
+      "type": "text",
+      "validation": {},
+      "fact_type": "representative.family_name_title",
+      "acro_field": "Familienname Titel vertretungsbefugte Person 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f019",
+      "label_de": "Familienname ZustellbevollmaechtigteR",
+      "labels": {
+        "en": "Familienname ZustellbevollmaechtigteR"
+      },
+      "help_text": "Familienname und Titel",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f019",
+      "acro_field": "Familienname ZustellbevollmaechtigteR",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f020",
+      "label_de": "Vorname vertretungsbefugte Person 3",
+      "labels": {
+        "en": "Vorname vertretungsbefugte Person 3"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "representative.given_name",
+      "acro_field": "Vorname vertretungsbefugte Person 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f021",
+      "label_de": "Vorname ZustellbevollmaechtigteR",
+      "labels": {
+        "en": "Vorname ZustellbevollmaechtigteR"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f021",
+      "acro_field": "Vorname ZustellbevollmaechtigteR",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f022",
+      "label_de": "Telefonnummer vertretungsbefugte Person 3",
+      "labels": {
+        "en": "Telefonnummer vertretungsbefugte Person 3"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "representative.phone",
+      "acro_field": "Telefonnummer vertretungsbefugte Person 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f023",
+      "label_de": "Telefonnummer ZustellbevollmaechtigteR",
+      "labels": {
+        "en": "Telefonnummer ZustellbevollmaechtigteR"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f023",
+      "acro_field": "Telefonnummer ZustellbevollmaechtigteR",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f024",
+      "label_de": "E-Mail-Adresse vertretungsbefugte Person 3",
+      "labels": {
+        "en": "E-Mail-Adresse vertretungsbefugte Person 3"
+      },
+      "help_text": "E-Mail-Adresse",
+      "type": "text",
+      "validation": {},
+      "fact_type": "representative.email",
+      "acro_field": "E-Mail-Adresse vertretungsbefugte Person 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f025",
+      "label_de": "E-Mail-Adresse ZustellbevollmaechtigteR",
+      "labels": {
+        "en": "E-Mail-Adresse ZustellbevollmaechtigteR"
+      },
+      "help_text": "E-Mail-Adresse",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f025",
+      "acro_field": "E-Mail-Adresse ZustellbevollmaechtigteR",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f026",
+      "label_de": "Vertretungsbefugte Person",
+      "labels": {
+        "en": "Vertretungsbefugte Person"
+      },
+      "help_text": "Ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f026",
+      "acro_field": "Vertretungsbefugte Person",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f027",
+      "label_de": "Strassennamen ZustellbevollmaechtigteR 2",
+      "labels": {
+        "en": "Strassennamen ZustellbevollmaechtigteR 2"
+      },
+      "help_text": "Straße",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f027",
+      "acro_field": "Strassennamen ZustellbevollmaechtigteR 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f028",
+      "label_de": "Hausnr ZustellbevollmaechtigteR 2",
+      "labels": {
+        "en": "Hausnr ZustellbevollmaechtigteR 2"
+      },
+      "help_text": "Hausnr.",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f028",
+      "acro_field": "Hausnr ZustellbevollmaechtigteR 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f029",
+      "label_de": "Stiege ZustellbevollmaechtigteR 2",
+      "labels": {
+        "en": "Stiege ZustellbevollmaechtigteR 2"
+      },
+      "help_text": "Stiege",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f029",
+      "acro_field": "Stiege ZustellbevollmaechtigteR 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f030",
+      "label_de": "Tuernr ZustellbevollmaechtigteR 2",
+      "labels": {
+        "en": "Tuernr ZustellbevollmaechtigteR 2"
+      },
+      "help_text": "Türnr.",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f030",
+      "acro_field": "Tuernr ZustellbevollmaechtigteR 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f031",
+      "label_de": "Vertretungsbefugte Person 2",
+      "labels": {
+        "en": "Vertretungsbefugte Person 2"
+      },
+      "help_text": "(In diesem Fall müssen Sie die Daten nicht nochmals angeben).",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f031",
+      "acro_field": "Vertretungsbefugte Person 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f032",
+      "label_de": "Vertretungsbefugte Person 3",
+      "labels": {
+        "en": "Vertretungsbefugte Person 3"
+      },
+      "help_text": "Ich benenne die unten genannte(n) Person(en) als Vertrauensperson(en).",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f032",
+      "acro_field": "Vertretungsbefugte Person 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f033",
+      "label_de": "PLZ ZustellbevollmaechtigteR 2",
+      "labels": {
+        "en": "PLZ ZustellbevollmaechtigteR 2"
+      },
+      "help_text": "PLZ",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f033",
+      "acro_field": "PLZ ZustellbevollmaechtigteR 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f034",
+      "label_de": "Ort ZustellbevollmaechtigteR 2",
+      "labels": {
+        "en": "Ort ZustellbevollmaechtigteR 2"
+      },
+      "help_text": "Ort",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f034",
+      "acro_field": "Ort ZustellbevollmaechtigteR 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f035",
+      "label_de": "Familienname Vertrauensperson",
+      "labels": {
+        "en": "Familienname Vertrauensperson"
+      },
+      "help_text": "Familienname und Titel",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f035",
+      "acro_field": "Familienname Vertrauensperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f036",
+      "label_de": "Familienname weitere Vertrauensperson",
+      "labels": {
+        "en": "Familienname weitere Vertrauensperson"
+      },
+      "help_text": "Familienname und Titel",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f036",
+      "acro_field": "Familienname weitere Vertrauensperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f037",
+      "label_de": "Vorname Vertrauensperson",
+      "labels": {
+        "en": "Vorname Vertrauensperson"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f037",
+      "acro_field": "Vorname Vertrauensperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f038",
+      "label_de": "Vorname weitere Vertrauensperson",
+      "labels": {
+        "en": "Vorname weitere Vertrauensperson"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f038",
+      "acro_field": "Vorname weitere Vertrauensperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f039",
+      "label_de": "Telefonnummer Vertrauensperson",
+      "labels": {
+        "en": "Telefonnummer Vertrauensperson"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f039",
+      "acro_field": "Telefonnummer Vertrauensperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f040",
+      "label_de": "Telefonnummer weitere Vertrauensperson",
+      "labels": {
+        "en": "Telefonnummer weitere Vertrauensperson"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f040",
+      "acro_field": "Telefonnummer weitere Vertrauensperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f041",
+      "label_de": "E-Mail-Adresse Vertrauensperson",
+      "labels": {
+        "en": "E-Mail-Adresse Vertrauensperson"
+      },
+      "help_text": "E-Mail-Adresse",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f041",
+      "acro_field": "E-Mail-Adresse Vertrauensperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f042",
+      "label_de": "E-Mail-Adresse weitere Vertrauensperson",
+      "labels": {
+        "en": "E-Mail-Adresse weitere Vertrauensperson"
+      },
+      "help_text": "E-Mail-Adresse",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f042",
+      "acro_field": "E-Mail-Adresse weitere Vertrauensperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f043",
+      "label_de": "Einkommen",
+      "labels": {
+        "en": "Einkommen"
+      },
+      "help_text": "Pension, Gehalt, Geld vom AMS",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f043",
+      "acro_field": "Einkommen",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f044",
+      "label_de": "Familienname zweite ZeugIn 4",
+      "labels": {
+        "en": "Familienname zweite ZeugIn 4"
+      },
+      "help_text": "Familienname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f044",
+      "acro_field": "Familienname zweite ZeugIn 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f045",
+      "label_de": "Beziehung zweite ZeugIn 3",
+      "labels": {
+        "en": "Beziehung zweite ZeugIn 3"
+      },
+      "help_text": "Beziehung zum:zur Kund:in",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f045",
+      "acro_field": "Beziehung zweite ZeugIn 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f046",
+      "label_de": "Datum Unterschrift zweite ZeugIn 3",
+      "labels": {
+        "en": "Datum Unterschrift zweite ZeugIn 3"
+      },
+      "help_text": "Datum",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f046",
+      "acro_field": "Datum Unterschrift zweite ZeugIn 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f047",
+      "label_de": "Unterschriftsfeld Zeuge 2",
+      "labels": {
+        "en": "Unterschriftsfeld Zeuge 2"
+      },
+      "help_text": "Unterschrift zweite:r Zeug:in",
+      "type": "signature",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f047",
+      "acro_field": "Unterschriftsfeld Zeuge 2",
+      "owner": "applicant",
+      "signature": "subject"
+    },
+    {
+      "id": "f048",
+      "label_de": "Vorname zweite ZeugIn 3",
+      "labels": {
+        "en": "Vorname zweite ZeugIn 3"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f048",
+      "acro_field": "Vorname zweite ZeugIn 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f049",
+      "label_de": "Telefonnummer zweite ZeugIn 3",
+      "labels": {
+        "en": "Telefonnummer zweite ZeugIn 3"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f049",
+      "acro_field": "Telefonnummer zweite ZeugIn 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f050",
+      "label_de": "Familienname erste ZeugIn 3",
+      "labels": {
+        "en": "Familienname erste ZeugIn 3"
+      },
+      "help_text": "Familienname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f050",
+      "acro_field": "Familienname erste ZeugIn 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f051",
+      "label_de": "Beziehung erste Zeugin / erster Zeuge 3",
+      "labels": {
+        "en": "Beziehung erste Zeugin / erster Zeuge 3"
+      },
+      "help_text": "Beziehung zum:zur Kund:in",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f051",
+      "acro_field": "Beziehung erste Zeugin / erster Zeuge 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f052",
+      "label_de": "Datum Unterschrift erste Zeugin / erster Zeuge 3",
+      "labels": {
+        "en": "Datum Unterschrift erste Zeugin / erster Zeuge 3"
+      },
+      "help_text": "Datum",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f052",
+      "acro_field": "Datum Unterschrift erste Zeugin / erster Zeuge 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f053",
+      "label_de": "Unterschriftsfeld Zeuge 1",
+      "labels": {
+        "en": "Unterschriftsfeld Zeuge 1"
+      },
+      "help_text": "Unterschrift erste:r Zeug:in",
+      "type": "signature",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f053",
+      "acro_field": "Unterschriftsfeld Zeuge 1",
+      "owner": "applicant",
+      "signature": "subject"
+    },
+    {
+      "id": "f054",
+      "label_de": "Vorname erste ZeugIn 3",
+      "labels": {
+        "en": "Vorname erste ZeugIn 3"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f054",
+      "acro_field": "Vorname erste ZeugIn 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f055",
+      "label_de": "Telefon erste Zeugin / erster Zeuge 3",
+      "labels": {
+        "en": "Telefon erste Zeugin / erster Zeuge 3"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f055",
+      "acro_field": "Telefon erste Zeugin / erster Zeuge 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f056",
+      "label_de": "Begründung Zeugin/Zeuge 4",
+      "labels": {
+        "en": "Begründung Zeugin/Zeuge 4"
+      },
+      "help_text": "Begründung",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f056",
+      "acro_field": "Begründung Zeugin/Zeuge 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f057",
+      "label_de": "Datum Unterschrift KundIn 4",
+      "labels": {
+        "en": "Datum Unterschrift KundIn 4"
+      },
+      "help_text": "Datum",
+      "type": "text",
+      "validation": {},
+      "fact_type": "application.date",
+      "acro_field": "Datum Unterschrift KundIn 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f058",
+      "label_de": "Unterschriftsfeld KundIn",
+      "labels": {
+        "en": "Unterschriftsfeld KundIn"
+      },
+      "help_text": "Unterschrift der:des Kundin:Kunden oder der vertretungsbefugten Person",
+      "type": "signature",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f058",
+      "acro_field": "Unterschriftsfeld KundIn",
+      "owner": "applicant",
+      "signature": "subject"
+    },
+    {
+      "id": "f059",
+      "label_de": "Unfall",
+      "labels": {
+        "en": "Unfall"
+      },
+      "help_text": "Ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f059",
+      "acro_field": "Unfall",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f060",
+      "label_de": "Wohn und Pflegehäuser",
+      "labels": {
+        "en": "Wohn und Pflegehäuser"
+      },
+      "help_text": "Wohn- und Pflegehäuser",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f060",
+      "acro_field": "Wohn und Pflegehäuser",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f061",
+      "label_de": "Wohn- und Pflegehäuser: befristet",
+      "labels": {
+        "en": "Wohn- und Pflegehäuser: befristet"
+      },
+      "help_text": "befristet",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f061",
+      "acro_field": "Wohn- und Pflegehäuser: befristet",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f062",
+      "label_de": "Wohn- und Pflegehäuser: unbefristet",
+      "labels": {
+        "en": "Wohn- und Pflegehäuser: unbefristet"
+      },
+      "help_text": "unbefristet",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f062",
+      "acro_field": "Wohn- und Pflegehäuser: unbefristet",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f063",
+      "label_de": "Kurzzeitpflege",
+      "labels": {
+        "en": "Kurzzeitpflege"
+      },
+      "help_text": "Kurzzeitpflege – Remobilisation:",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f063",
+      "acro_field": "Kurzzeitpflege",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f064",
+      "label_de": "Entlastung Angehoeriger",
+      "labels": {
+        "en": "Entlastung Angehoeriger"
+      },
+      "help_text": "Die Leistung ist mit maximal 35 Tagen befristet.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f064",
+      "acro_field": "Entlastung Angehoeriger",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f065",
+      "label_de": "Dringend",
+      "labels": {
+        "en": "Dringend"
+      },
+      "help_text": "einem Wohn- und Pflegeplatz suchen.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "housing.urgent",
+      "acro_field": "Dringend",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f066",
+      "label_de": "Zeit",
+      "labels": {
+        "en": "Zeit"
+      },
+      "help_text": "Ich habe Zeit, auf einen bestimmten Wohn- und Pflegeplatz zu warten.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "housing.can_wait",
+      "acro_field": "Zeit",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f067",
+      "label_de": "Urlaubspflege",
+      "labels": {
+        "en": "Urlaubspflege"
+      },
+      "help_text": "Die Leistung ist mit maximal 35 Tagen befristet.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f067",
+      "acro_field": "Urlaubspflege",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f068",
+      "label_de": "Pflege und Betreuung zu Hause",
+      "labels": {
+        "en": "Pflege und Betreuung zu Hause"
+      },
+      "help_text": "Pflege und Betreuung zu Hause",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "application.home_support",
+      "acro_field": "Pflege und Betreuung zu Hause",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f069",
+      "label_de": "Tagesbetreuung",
+      "labels": {
+        "en": "Tagesbetreuung"
+      },
+      "help_text": "Tagesbetreuung (Tageszentrum, Tageshospiz)",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "application.day_support",
+      "acro_field": "Tagesbetreuung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f070",
+      "label_de": "Wohngemeinschaft",
+      "labels": {
+        "en": "Wohngemeinschaft"
+      },
+      "help_text": "Senior:innen-Wohngemeinschaft – Basispaket",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "application.shared_housing",
+      "acro_field": "Wohngemeinschaft",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f071",
+      "label_de": "Bezirke dringend",
+      "labels": {
+        "en": "Bezirke dringend"
+      },
+      "help_text": "Folgende Bezirke sind mir am liebsten:",
+      "type": "text",
+      "validation": {},
+      "fact_type": "housing.preferred_districts",
+      "acro_field": "Bezirke dringend",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f072",
+      "label_de": "Bezirke Zeit",
+      "labels": {
+        "en": "Bezirke Zeit"
+      },
+      "help_text": "Ich möchte nur in folgende Bezirke oder Einrichtungen ziehen:",
+      "type": "text",
+      "validation": {},
+      "fact_type": "housing.waiting_districts",
+      "acro_field": "Bezirke Zeit",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f073",
+      "label_de": "Keine Unterhaltsverpflichtung Unterhaltsberechtigung PuB",
+      "labels": {
+        "en": "Keine Unterhaltsverpflichtung Unterhaltsberechtigung PuB"
+      },
+      "help_text": "Ich habe keine unterhaltsverpflichteten oder unterhaltsberechtigten Angehörigen.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f073",
+      "acro_field": "Keine Unterhaltsverpflichtung Unterhaltsberechtigung PuB",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f074",
+      "label_de": "Unterhaltsberechtigte Angehoerige PuB",
+      "labels": {
+        "en": "Unterhaltsberechtigte Angehoerige PuB"
+      },
+      "help_text": "Ich habe unterhaltsberechtigte Angehörige. Das sind Angehörige, die ein Recht haben, von mir Unterhalt zu bekommen.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f074",
+      "acro_field": "Unterhaltsberechtigte Angehoerige PuB",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f075",
+      "label_de": "Unterhaltsverpflichtete Angehoerige PuB",
+      "labels": {
+        "en": "Unterhaltsverpflichtete Angehoerige PuB"
+      },
+      "help_text": "Ich habe unterhaltsverpflichtete Angehörige. Das sind Angehörige, die zu meinem Unterhalt verpflichtet sind.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f075",
+      "acro_field": "Unterhaltsverpflichtete Angehoerige PuB",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f076",
+      "label_de": "Kontaktaufnahme mit mir",
+      "labels": {
+        "en": "Kontaktaufnahme mit mir"
+      },
+      "help_text": "mit mir",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "contact.self",
+      "acro_field": "Kontaktaufnahme mit mir",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f077",
+      "label_de": "Kontaktaufnahme folgende Person",
+      "labels": {
+        "en": "Kontaktaufnahme folgende Person"
+      },
+      "help_text": "mit folgender Person:",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "contact.other",
+      "acro_field": "Kontaktaufnahme folgende Person",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f078",
+      "label_de": "KontoinhaberIn 3",
+      "labels": {
+        "en": "KontoinhaberIn 3"
+      },
+      "help_text": "Kontoinhaber:in",
+      "type": "text",
+      "validation": {},
+      "fact_type": "bank.account_holder",
+      "acro_field": "KontoinhaberIn 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f079",
+      "label_de": "Anzahl volljaehrige Personen",
+      "labels": {
+        "en": "Anzahl volljaehrige Personen"
+      },
+      "help_text": "Wie viele volljährige Personen leben in Ihrem Haushalt?",
+      "type": "text",
+      "validation": {},
+      "fact_type": "household.adults",
+      "acro_field": "Anzahl volljaehrige Personen",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f080",
+      "label_de": "IBAN 3",
+      "labels": {
+        "en": "IBAN 3"
+      },
+      "help_text": "IBAN (Internationale Kontonummer)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "bank.iban",
+      "acro_field": "IBAN 3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f081",
+      "label_de": "Aktuelle Befunde",
+      "labels": {
+        "en": "Aktuelle Befunde"
+      },
+      "help_text": "Ich habe einen aktuellen Befund über meinen Bedarf für Wohnen und Pflege.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f081",
+      "acro_field": "Aktuelle Befunde",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f082",
+      "label_de": "Keine Aktuellen Befunde",
+      "labels": {
+        "en": "Keine Aktuellen Befunde"
+      },
+      "help_text": "Ich habe noch keinen aktuellen Befund über meinen Bedarf.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f082",
+      "acro_field": "Keine Aktuellen Befunde",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f083",
+      "label_de": "Familienname Kontaktaufnahme",
+      "labels": {
+        "en": "Familienname Kontaktaufnahme"
+      },
+      "help_text": "Name",
+      "type": "text",
+      "validation": {},
+      "fact_type": "contact.delegate_name",
+      "acro_field": "Familienname Kontaktaufnahme",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f084",
+      "label_de": "Telefonnummer Kontaktaufnahme 2",
+      "labels": {
+        "en": "Telefonnummer Kontaktaufnahme 2"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "contact.delegate_phone",
+      "acro_field": "Telefonnummer Kontaktaufnahme 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f085",
+      "label_de": "E-Mail Adresse Kontaktaufnahme 2",
+      "labels": {
+        "en": "E-Mail Adresse Kontaktaufnahme 2"
+      },
+      "help_text": "E-Mail-Adresse",
+      "type": "text",
+      "validation": {},
+      "fact_type": "contact.delegate_email",
+      "acro_field": "E-Mail Adresse Kontaktaufnahme 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f086",
+      "label_de": "Unfall 2",
+      "labels": {
+        "en": "Unfall 2"
+      },
+      "help_text": "Ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f086",
+      "acro_field": "Unfall 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f087",
+      "label_de": "Rollstuhl",
+      "labels": {
+        "en": "Rollstuhl"
+      },
+      "help_text": "Ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f087",
+      "acro_field": "Rollstuhl",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f088",
+      "label_de": "Tagesstruktur",
+      "labels": {
+        "en": "Tagesstruktur"
+      },
+      "help_text": "Tagesstruktur inklusive Mobilitätskonzept",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f088",
+      "acro_field": "Tagesstruktur",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f089",
+      "label_de": "Betreutes Wohnen",
+      "labels": {
+        "en": "Betreutes Wohnen"
+      },
+      "help_text": "Betreutes Wohnen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f089",
+      "acro_field": "Betreutes Wohnen",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f090",
+      "label_de": "Mobile Fruehfoerderung",
+      "labels": {
+        "en": "Mobile Fruehfoerderung"
+      },
+      "help_text": "Mobile Frühförderung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f090",
+      "acro_field": "Mobile Fruehfoerderung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f091",
+      "label_de": "Berufsintegration",
+      "labels": {
+        "en": "Berufsintegration"
+      },
+      "help_text": "Berufsintegration",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f091",
+      "acro_field": "Berufsintegration",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f092",
+      "label_de": "Berufsqualifizierung",
+      "labels": {
+        "en": "Berufsqualifizierung"
+      },
+      "help_text": "Berufsqualifizierung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f092",
+      "acro_field": "Berufsqualifizierung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f093",
+      "label_de": "Lehrlingsausbildung",
+      "labels": {
+        "en": "Lehrlingsausbildung"
+      },
+      "help_text": "Lehrlingsausbildung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f093",
+      "acro_field": "Lehrlingsausbildung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f094",
+      "label_de": "Schule",
+      "labels": {
+        "en": "Schule"
+      },
+      "help_text": "Schule:",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f094",
+      "acro_field": "Schule",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f095",
+      "label_de": "Hilfsmittel",
+      "labels": {
+        "en": "Hilfsmittel"
+      },
+      "help_text": "Hilfsmittel, PKW-Adaptierung oder Blindenführhund. Hilfsmittel sind zum Beispiel: Hörgeräte, Kommunikationshilfen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f095",
+      "acro_field": "Hilfsmittel",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f096",
+      "label_de": "Teilbetreutes Wohnen",
+      "labels": {
+        "en": "Teilbetreutes Wohnen"
+      },
+      "help_text": "Teilbetreutes Wohnen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f096",
+      "acro_field": "Teilbetreutes Wohnen",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f097",
+      "label_de": "Vollbetreutes Wohnen",
+      "labels": {
+        "en": "Vollbetreutes Wohnen"
+      },
+      "help_text": "Vollbetreutes Wohnen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f097",
+      "acro_field": "Vollbetreutes Wohnen",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f098",
+      "label_de": "Schule Adresse",
+      "labels": {
+        "en": "Schule Adresse"
+      },
+      "help_text": "Bitte geben Sie die Adresse an.",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f098",
+      "acro_field": "Schule Adresse",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f099",
+      "label_de": "Hilfsmittel Beantragnung",
+      "labels": {
+        "en": "Hilfsmittel Beantragnung"
+      },
+      "help_text": "Ich beantrage",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f099",
+      "acro_field": "Hilfsmittel Beantragnung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f100",
+      "label_de": "Dolmetschleistung",
+      "labels": {
+        "en": "Dolmetschleistung"
+      },
+      "help_text": "Dolmetschleistungen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f100",
+      "acro_field": "Dolmetschleistung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f101",
+      "label_de": "Lohnkostenzuschuss",
+      "labels": {
+        "en": "Lohnkostenzuschuss"
+      },
+      "help_text": "Lohnkostenzuschuss",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f101",
+      "acro_field": "Lohnkostenzuschuss",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f102",
+      "label_de": "MentorInnenzuschuss",
+      "labels": {
+        "en": "MentorInnenzuschuss"
+      },
+      "help_text": "Mentor:innenzuschuss",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f102",
+      "acro_field": "MentorInnenzuschuss",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f103",
+      "label_de": "Pflegegldergänzungsleistung",
+      "labels": {
+        "en": "Pflegegldergänzungsleistung"
+      },
+      "help_text": "Pflegegeldergänzungsleistung für Persönliche Assistenz",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f103",
+      "acro_field": "Pflegegldergänzungsleistung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f104",
+      "label_de": "Fahrtbegleitung",
+      "labels": {
+        "en": "Fahrtbegleitung"
+      },
+      "help_text": "Fahrtbegleitung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f104",
+      "acro_field": "Fahrtbegleitung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f105",
+      "label_de": "Fahrtkostenersatz",
+      "labels": {
+        "en": "Fahrtkostenersatz"
+      },
+      "help_text": "Fahrtkostenersatz",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f105",
+      "acro_field": "Fahrtkostenersatz",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f106",
+      "label_de": "Mobilitaetstraining",
+      "labels": {
+        "en": "Mobilitaetstraining"
+      },
+      "help_text": "Mobilitätstraining",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f106",
+      "acro_field": "Mobilitaetstraining",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f107",
+      "label_de": "Sonstige Leistung",
+      "labels": {
+        "en": "Sonstige Leistung"
+      },
+      "help_text": "Sonstige Leistung:",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f107",
+      "acro_field": "Sonstige Leistung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f108",
+      "label_de": "Welche sonstige Leistung",
+      "labels": {
+        "en": "Welche sonstige Leistung"
+      },
+      "help_text": "Sonstige Leistung",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f108",
+      "acro_field": "Welche sonstige Leistung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f109",
+      "label_de": "Anmerkung Bedarf",
+      "labels": {
+        "en": "Anmerkung Bedarf"
+      },
+      "help_text": "Anmerkungen zum Bedarf",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f109",
+      "acro_field": "Anmerkung Bedarf",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f110",
+      "label_de": "Keine Unterhaltsverpflichtung Unterhaltsberechtigung BuI",
+      "labels": {
+        "en": "Keine Unterhaltsverpflichtung Unterhaltsberechtigung BuI"
+      },
+      "help_text": "Ich habe keine unterhaltsverpflichteten oder unterhaltsberechtigten Angehörigen.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f110",
+      "acro_field": "Keine Unterhaltsverpflichtung Unterhaltsberechtigung BuI",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f111",
+      "label_de": "Unterhaltsberechtigte Angehoerige BuI",
+      "labels": {
+        "en": "Unterhaltsberechtigte Angehoerige BuI"
+      },
+      "help_text": "Ich habe unterhaltsberechtigte Angehörige. Das sind Angehörige, die ein Recht haben, von mir Unterhalt zu bekommen.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f111",
+      "acro_field": "Unterhaltsberechtigte Angehoerige BuI",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f112",
+      "label_de": "Unterhaltsverpflichtete Angehoerige BuI",
+      "labels": {
+        "en": "Unterhaltsverpflichtete Angehoerige BuI"
+      },
+      "help_text": "Ich habe unterhaltsverpflichtete Angehörige. Das sind Angehörige, die zu meinem Unterhalt verpflichtet sind.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f112",
+      "acro_field": "Unterhaltsverpflichtete Angehoerige BuI",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f113",
+      "label_de": "IBAN 4",
+      "labels": {
+        "en": "IBAN 4"
+      },
+      "help_text": "IBAN (Internationale Kontonummer)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "bank.iban",
+      "acro_field": "IBAN 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f114",
+      "label_de": "KontoinhaberIn 4",
+      "labels": {
+        "en": "KontoinhaberIn 4"
+      },
+      "help_text": "Kontoinhaber:in",
+      "type": "text",
+      "validation": {},
+      "fact_type": "bank.account_holder",
+      "acro_field": "KontoinhaberIn 4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f115",
+      "label_de": "Fahrtendienst",
+      "labels": {
+        "en": "Fahrtendienst"
+      },
+      "help_text": "Fahrtendienst:",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f115",
+      "acro_field": "Fahrtendienst",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f116",
+      "label_de": "Fahrtendienst Start",
+      "labels": {
+        "en": "Fahrtendienst Start"
+      },
+      "help_text": "Ich möchte hier abgeholt werden",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f116",
+      "acro_field": "Fahrtendienst Start",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f117",
+      "label_de": "Fahrtendienst Ziel",
+      "labels": {
+        "en": "Fahrtendienst Ziel"
+      },
+      "help_text": "Ich möchte hierhin fahren",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f117",
+      "acro_field": "Fahrtendienst Ziel",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f118",
+      "label_de": "Freizeitfahrtendienst",
+      "labels": {
+        "en": "Freizeitfahrtendienst"
+      },
+      "help_text": "Freizeitfahrtendienst für dauerhaft schwer gehbehinderte Menschen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f118",
+      "acro_field": "Freizeitfahrtendienst",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f119",
+      "label_de": "Personengemeinschaft",
+      "labels": {
+        "en": "Personengemeinschaft"
+      },
+      "help_text": "Ich möchte die Leistung allein nutzen.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f119",
+      "acro_field": "Personengemeinschaft",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f120",
+      "label_de": "Vermögen",
+      "labels": {
+        "en": "Vermögen"
+      },
+      "help_text": "Ich habe Vermögen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f120",
+      "acro_field": "Vermögen",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f121",
+      "label_de": "Leistungen Obdach- und Wohnungslosenhilfe 2",
+      "labels": {
+        "en": "Leistungen Obdach- und Wohnungslosenhilfe 2"
+      },
+      "help_text": "Leistungen Obdach- und Wohnungslosenhilfe",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.537852b8-13eb-564a-9398-9018a0a5426a.f121",
+      "acro_field": "Leistungen Obdach- und Wohnungslosenhilfe 2",
+      "owner": "applicant",
+      "signature": "none"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.fsw.at",
+      "quote": "Leistungen Pflege und Betreuung",
+      "retrieved_at": "2026-11-06T02:20:00Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}

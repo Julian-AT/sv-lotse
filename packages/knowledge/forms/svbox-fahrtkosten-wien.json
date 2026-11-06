@@ -1,0 +1,207 @@
+{
+  "id": "svbox-fahrtkosten-wien",
+  "template_id": "ed85a4c6-1a99-5616-9732-cb97b0eb635e",
+  "status": "auto",
+  "fields": [
+    {
+      "id": "f000",
+      "label_de": "Patient/in",
+      "labels": {
+        "en": "Patient/in"
+      },
+      "help_text": "PATIENT/IN",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.name",
+      "acro_field": "Patient/in",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f001",
+      "label_de": "Versicherte/r",
+      "labels": {
+        "en": "Versicherte/r"
+      },
+      "help_text": "Versicherte/r",
+      "type": "text",
+      "validation": {},
+      "fact_type": "insured.name",
+      "acro_field": "Versicherte/r",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f002",
+      "label_de": "Versicherungsnummer1",
+      "labels": {
+        "en": "Versicherungsnummer1"
+      },
+      "help_text": "Versicherungsnummer",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "person.insurance_number",
+      "acro_field": "Versicherungsnummer1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f003",
+      "label_de": "Versicherungsnummer2",
+      "labels": {
+        "en": "Versicherungsnummer2"
+      },
+      "help_text": "Versicherungsnummer",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "insured.insurance_number",
+      "acro_field": "Versicherungsnummer2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f004",
+      "label_de": "Adresse",
+      "labels": {
+        "en": "Adresse"
+      },
+      "help_text": "Adresse",
+      "type": "text",
+      "validation": {},
+      "fact_type": "address.full",
+      "acro_field": "Adresse",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f005",
+      "label_de": "Behandler/in",
+      "labels": {
+        "en": "Behandler/in"
+      },
+      "help_text": "Bei wem fand die Behandlung statt?",
+      "type": "text",
+      "validation": {},
+      "fact_type": "travel.provider",
+      "acro_field": "Behandler/in",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f006",
+      "label_de": "Art der Behandlung",
+      "labels": {
+        "en": "Art der Behandlung"
+      },
+      "help_text": "Art der Behandlung bzw. Reha-Maßnahme",
+      "type": "text",
+      "validation": {},
+      "fact_type": "travel.documented_purpose",
+      "acro_field": "Art der Behandlung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f007",
+      "label_de": "Transportmittel",
+      "labels": {
+        "en": "Transportmittel"
+      },
+      "help_text": "Welches Transportmittel haben sie genommen?",
+      "type": "choice",
+      "validation": {
+        "options": ["Auswahl1", "Auswahl3", "Auswahl2"]
+      },
+      "fact_type": "travel.transport_option",
+      "acro_field": "Transportmittel",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f008",
+      "label_de": "Tatsächliche Kosten",
+      "labels": {
+        "en": "Tatsächliche Kosten"
+      },
+      "help_text": "(Bitte",
+      "type": "text",
+      "validation": {},
+      "fact_type": "travel.cost",
+      "acro_field": "Tatsächliche Kosten",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f009",
+      "label_de": "Begleitperson",
+      "labels": {
+        "en": "Begleitperson"
+      },
+      "help_text": "Begleitperson",
+      "type": "choice",
+      "validation": {
+        "options": ["Auswahl1", "Auswahl2"]
+      },
+      "fact_type": "travel.companion_option",
+      "acro_field": "Begleitperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f010",
+      "label_de": "Grund",
+      "labels": {
+        "en": "Grund"
+      },
+      "help_text": "Warum wurden Sie begleitet?",
+      "type": "text",
+      "validation": {},
+      "fact_type": "travel.companion_reason",
+      "acro_field": "Grund",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f011",
+      "label_de": "IBAN",
+      "labels": {
+        "en": "IBAN"
+      },
+      "help_text": "IBAN:",
+      "type": "text",
+      "validation": {
+        "max_length": 20
+      },
+      "fact_type": "bank.iban",
+      "acro_field": "IBAN",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f012",
+      "label_de": "Ort/Datum",
+      "labels": {
+        "en": "Ort/Datum"
+      },
+      "help_text": "Ort/Datum:",
+      "type": "text",
+      "validation": {},
+      "fact_type": "application.place_date",
+      "acro_field": "Ort/Datum",
+      "owner": "applicant",
+      "signature": "none"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.oegk.at",
+      "quote": "Versicherungsnummer",
+      "retrieved_at": "2026-11-06T02:20:00Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}
