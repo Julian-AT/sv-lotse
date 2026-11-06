@@ -1,0 +1,70 @@
+{
+  "as_of": "2026-11-06",
+  "sources": [
+    {
+      "url": "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html",
+      "quote": "bei GSVG-Pension (Gewerbetreibende) und BSVG-Pension (Bauern) die Sozialversicherungsanstalt der Selbständigen (SVS)",
+      "retrieved_at": "2026-11-06T01:36:53.366210Z"
+    }
+  ],
+  "aliases": {
+    "carrier": ["carrier", "insurance_carrier", "responsible_carrier", "contact_carrier"],
+    "region": ["region", "residence_region", "residence_state", "contact_region", "federal_state"],
+    "subjectStatus": ["status", "subject_status", "insurance_status", "pension_status"]
+  },
+  "carrier_aliases": {
+    "ögk": "oegk",
+    "ö g k": "oegk",
+    "pv": "pva",
+    "pensionsversicherung": "pva"
+  },
+  "status_values": {
+    "employed": {
+      "pension_source": "none"
+    },
+    "dependent": {
+      "pension_source": "none"
+    },
+    "co-insured": {
+      "pension_source": "none"
+    },
+    "asvg": {
+      "pension_source": "asvg"
+    },
+    "gsvg-bsvg": {
+      "pension_source": "gsvg-bsvg"
+    },
+    "public-rail-mining": {
+      "pension_source": "public-rail-mining"
+    },
+    "none": {
+      "pension_source": "none"
+    },
+    "pensioner:pva": {
+      "pension_source": "asvg"
+    },
+    "pensioner:svs": {
+      "pension_source": "gsvg-bsvg"
+    },
+    "pensioner:bvaeb": {
+      "pension_source": "public-rail-mining"
+    }
+  },
+  "administrative_fact_types": [
+    "name",
+    "name.full",
+    "person.name",
+    "person.full_name",
+    "contact.name",
+    "contact.email",
+    "contact.phone",
+    "insurance.carrier",
+    "insurance.status",
+    "insurance.pension_source",
+    "address.postal_code",
+    "residence.postal_code",
+    "residence.region",
+    "appointment.from",
+    "appointment.to"
+  ]
+}
