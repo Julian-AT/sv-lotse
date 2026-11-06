@@ -31,6 +31,7 @@ export async function seedEntities(db: DatabaseClient): Promise<Record<string, E
       "reminder",
       "job",
       "helper_session",
+      "helper_invite",
       "audit_event",
     ].map((table) => [table, randomUUID()]),
   );
@@ -245,6 +246,14 @@ export async function seedEntities(db: DatabaseClient): Promise<Record<string, E
     scope: { mode: "view" },
     startedAt: now,
   });
+  await db.insert(schema.helperInvites).values({
+    id: identifier("helper_invite"),
+    tokenHash: identifier("helper_invite").replaceAll("-", "").repeat(2),
+    caseId: identifier("case"),
+    issuerId: identifier("user"),
+    shareScope: { mode: "restricted", factTypes: [] },
+    expiresAt: new Date(now.getTime() + 3_600_000),
+  });
   await db.insert(schema.auditEvents).values({
     id: identifier("audit_event"),
     actorId: identifier("case_actor"),
@@ -277,6 +286,14 @@ export async function seedEntities(db: DatabaseClient): Promise<Record<string, E
       journey_map: [{ status: "pending" }],
     },
     case_actor: { id: identifier("case_actor"), role: "subject", share_scope: { mode: "full" } },
+    helper_invite: {
+      id: identifier("helper_invite"),
+      token_hash: identifier("helper_invite").replaceAll("-", "").repeat(2),
+      case_id: identifier("case"),
+      issuer_id: identifier("user"),
+      share_scope: { mode: "restricted", factTypes: [] },
+      consumed_at: null,
+    },
     case_step: {
       id: identifier("case_step"),
       process_step: "prepare",

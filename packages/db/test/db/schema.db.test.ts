@@ -15,6 +15,15 @@ const expectedColumns = {
   session: ["id", "user_id", "client_kind", "created_at", "expires_at"],
   subject: ["id", "display_name", "relation_to_user", "created_by"],
   case_actor: ["id", "case_id", "user_id", "role", "share_scope"],
+  helper_invite: [
+    "id",
+    "token_hash",
+    "case_id",
+    "issuer_id",
+    "share_scope",
+    "expires_at",
+    "consumed_at",
+  ],
   profile: [
     "id",
     "user_id",
@@ -147,7 +156,7 @@ describe("WP-004 real Postgres schema", () => {
   test("AC3 applies committed migrations to an empty database and is idempotent", async () => {
     expect(emptyTableCount).toBe(0);
     const before = await database.sql`SELECT hash FROM drizzle.__drizzle_migrations ORDER BY id`;
-    expect(before).toHaveLength(3);
+    expect(before).toHaveLength(4);
     await migrateDatabase(database);
     expect(await database.sql`SELECT hash FROM drizzle.__drizzle_migrations ORDER BY id`).toEqual(
       before,
@@ -204,6 +213,44 @@ describe("WP-004 real Postgres schema", () => {
       WHERE table_schema = 'public' AND table_name = 'kb_chunk' AND column_name = 'tsv'`;
     expect(generated?.is_generated).toBe("ALWAYS");
     expect(generated?.generation_expression).toContain("'german'::regconfig");
+  });
+
+  test("WP-190 helper invites enforce unique hashes and valid expiry times", async () => {
+    const invite = entities.helper_invite;
+    const caseEntity = entities.case;
+    const user = entities.user;
+    if (!invite || !caseEntity || !user) throw new Error("Missing invite fixture");
+    const base = {
+      caseId: caseEntity.id,
+      issuerId: user.id,
+      shareScope: { mode: "full" },
+      expiresAt: new Date(Date.now() + 60_000),
+    };
+    await expect(
+      db.insert(schema.helperInvites).values({
+        ...base,
+        tokenHash: String(invite.token_hash),
+      }),
+    ).rejects.toMatchObject({
+      cause: { code: "23505", constraint_name: "helper_invite_token_hash_unique" },
+    });
+    await expect(
+      db.insert(schema.helperInvites).values({
+        ...base,
+        tokenHash: "invalid",
+      }),
+    ).rejects.toMatchObject({
+      cause: { code: "23514", constraint_name: "helper_invite_token_hash_check" },
+    });
+    await expect(
+      db.insert(schema.helperInvites).values({
+        ...base,
+        tokenHash: randomUUID().replaceAll("-", "").repeat(2),
+        expiresAt: new Date(0),
+      }),
+    ).rejects.toMatchObject({
+      cause: { code: "23514", constraint_name: "helper_invite_expiry_check" },
+    });
   });
 
   test("AC3 rejects duplicate approval ids and case message positions", async () => {

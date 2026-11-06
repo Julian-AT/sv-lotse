@@ -14,6 +14,9 @@ Run from the repository root:
 
 - `bun run --filter @lotse/brain typecheck` — check source and test types.
 - `bun run --filter @lotse/brain test` — run Vitest under Node.js, excluding `test/**/*.db.test.ts`.
+- `bun run --filter @lotse/brain test:subjects` — run subject/actor/invite acceptance tests against
+  real Postgres. Loads root `.env.local` without overwriting exported values, migrates a unique
+  temporary database, then drops it. Requires `CREATEDB`; does not skip unavailable services.
 - `bun run --filter @lotse/brain test -- test/forms/detect` — real SV-Box AcroForm/flattened tests and E13 fixture harness; no provider calls.
 - `RUN_LIVE=1 bun run --filter @lotse/brain test:live -- test/runtime` — authenticated `/api/turn` handler with real OpenAI and persisted messages. Requires the Compose services and runtime environment; no keys or response content are logged.
 - `RUN_LIVE=1 bun run --filter @lotse/brain test:live` — all live tests, including the existing form vision test. Optional positional filters match test paths.
@@ -77,6 +80,20 @@ and knowledge must never depend on brain. Db remains a leaf workspace package.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
 - Export only implemented symbols from `src/index.ts`; no placeholder business logic.
 - Preserve the medical boundary in PRD §4 in user-facing text and fixtures.
+- `@lotse/brain/subjects` binds a shared `@lotse/db` database to a server-authenticated user id.
+  Never accept this identity from request input. `createCase` atomically adds its initial actor:
+  `subject` for `self`, otherwise the creating `helper`. The subject creator is the case owner
+  because the case schema has no separate owner column. Only that owner or a persisted subject
+  actor grants roles/scopes and issues invites; either may delete the subject.
+- Share scopes are `{ mode: "full" }` or `{ mode: "restricted", factTypes: string[] }` with exact
+  fact-type matching. Empty or malformed scopes grant helpers no facts. `factsVisibleTo` takes a
+  persisted actor id and subject id, checks the bound user and case subject, and locks the actor
+  while reading; scopes from different cases are never merged. Subject actors see all their facts.
+- Helper invites contain 256 bits of randomness. Only the SHA-256 hash is persisted; return the
+  bearer token once and never log it. The caller supplies an explicit expiry; Postgres checks its
+  own clock after acquiring the invite lock. Consumption and helper insertion share a transaction;
+  duplicate actors cannot broaden existing access or burn an invite. Redemption rechecks issuer
+  authority. Subject/case deletion cascades to invites; object storage cleanup belongs elsewhere.
 - `@lotse/brain/forms/detect` returns `auto` drafts only. Boxes use the displayed PDF CropBox in
   points, top-left origin, one-based pages, including rotation. `mode: "acroform"` reads exactly
   one field per widget; the default `auto` mode also detects missing fields from page content.

@@ -11,12 +11,14 @@
     "./db/migrations": "./src/db/migrations.ts",
     "./storage/s3": "./src/storage/s3.ts",
     "./forms/detect": "./src/forms/detect/index.ts",
-    "./deadlines": "./src/deadlines/index.ts"
+    "./deadlines": "./src/deadlines/index.ts",
+    "./subjects": "./src/subjects/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests --exclude 'test/**/*.db.test.ts' --exclude 'test/**/*.live.test.ts'",
     "test:live": "node test/runtime/live.mjs",
+    "test:subjects": "vitest run test/subjects --hookTimeout=30000 --testTimeout=15000",
     "test:db": "bun run --filter @lotse/db test:db",
     "test:integration": "bun run --filter @lotse/db test:integration && vitest run test/runtime/turn.db.test.ts test/runtime/persistence.db.test.ts --hookTimeout=30000 --testTimeout=30000",
     "db:generate": "bun run --filter @lotse/db db:generate",
