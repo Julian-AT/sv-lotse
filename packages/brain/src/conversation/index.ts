@@ -759,8 +759,10 @@ async function runTurn(
       };
       // Lookups whose sourced results are the whole answer: the agent's own prose adds nothing
       // the composer may state, so the turn need not wait for it.
+      // After a page opened the agent keeps navigating; a pointer must not end its turn early.
+      const navigating = openedResource(prepared.history);
       const draftless = (): boolean =>
-        [...inputs.values()].every((call) => DRAFTLESS_TOOLS.has(call.toolName));
+        !navigating && [...inputs.values()].every((call) => DRAFTLESS_TOOLS.has(call.toolName));
       let toolCalled = false;
       let offered = false;
       // Without an explicit pointer, the cursor shows the result card the answer is about.
