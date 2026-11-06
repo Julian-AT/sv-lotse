@@ -1,7 +1,7 @@
 # Lotse-RL preprint
 
-LaTeX source of *Lotse-RL: Executable Eligibility Rules as Verifiable Ground Truth for Benefits
-Navigation in Austrian Social Insurance* (arXiv, cs.CL / cs.AI). The research plan is in
+LaTeX source of *Lotse-RL: Executable Eligibility Rules as Verifiable Ground Truth for
+Benefits-Navigation Agents* (arXiv, cs.CL / cs.AI). Figures are TikZ in `main.tex`. The research plan is in
 [docs/research/lotse-rl.md](../docs/research/lotse-rl.md).
 
 ```sh
@@ -19,6 +19,9 @@ Requirements: Python 3 (standard library only) and [tectonic](https://tectonic-t
 | `packages/knowledge/` | World statistics (catalog, processes, offices, forms) |
 | `docs/evals/results.md` | Product evaluation baseline (labelled as product evals) |
 | `ml/results/*persona*.json`, `*corpus*.json`, `*selftest*`/`*gym*.json`, `*sft*.json` | Personas, corpus, gym self-test, SFT smoke run |
+| `ml/results/sft-qwen3-8b-*.json`, `sources/hf-sv-lotse-qwen3-8b-sft-README.md` | SFT configuration (`tab_sft.tex`) and tool-output truncation sweep (`tab_toollimit.tex`) |
+| `ml/results/t1-*.json` (written by `ml/eval/run.py`) | Gym baselines T1 (`tab_t1.tex`, best value per column in bold; *pending* without files) |
+| `ml/gym/reward.py`, `ml/gym/metrics.py` | Reward weights and the success threshold quoted in the text |
 | `ml/results/*.json` (by table id or name) | Status of planned tables T1–T8 |
 | `ml/quantum/results.json` | T9 quantum study |
 | `ml/results/datagen-*.json`, `publish-*.json`, `sources/hf-at-benefits-README.md` | Data release table (`tab_data.tex`); the card snapshot supplies only the documents counts |
