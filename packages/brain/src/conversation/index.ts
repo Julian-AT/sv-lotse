@@ -926,7 +926,7 @@ async function runTurn(
           ...(pipeline.goalOpen ? { readOnly: true } : {}),
         }),
         prepareContext: async () =>
-          (await pipeline.refreshContext()) + citationInstructions + goalInstructions,
+          (await pipeline.refreshContext()) + citationInstructions + goalInstructions + afterOpen,
         dependencies: {
           db,
           config,
