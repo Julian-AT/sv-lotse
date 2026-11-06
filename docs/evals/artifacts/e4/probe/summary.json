@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "suites": [
+    {
+      "schemaVersion": 1,
+      "suite": {
+        "id": "E4",
+        "name": "Persisted multi-turn administrative scenarios",
+        "gate": {
+          "kind": "informational",
+          "metric": "taskSuccess",
+          "threshold": 0.9,
+          "direction": "at_least"
+        },
+        "minimumSetSize": 300
+      },
+      "selection": {
+        "sample": 2,
+        "seed": "e4-2026-11-06"
+      },
+      "counts": {
+        "total": 2,
+        "passed": 0,
+        "failed": 2,
+        "errors": 0
+      },
+      "metrics": {
+        "passRate": 0,
+        "taskSuccess": 0,
+        "goal_confirmed": 1,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 1.5,
+        "citations": 0,
+        "boundary": 1,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 1
+      },
+      "wilson95": {
+        "lower": 0,
+        "upper": 0.6576197728563925,
+        "confidence": 0.95
+      },
+      "gateVerdict": "insufficient_data",
+      "modelVersion": "persisted-turn/1;orchestrator=gpt-5.4-mini;classifier=gpt-5.4-nano;guard=gpt-5.4-mini;extractor=gpt-5.4-mini;persona=gpt-4.1-mini;judge=gpt-4.1-mini",
+      "judgeVersions": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "rubricId": "after_hospital",
+          "rubricVersion": "1",
+          "promptVersion": "1"
+        }
+      ],
+      "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+      "startedAt": "2026-11-06T02:26:24.780Z",
+      "finishedAt": "2026-11-06T02:27:53.481Z",
+      "cases": [
+        {
+          "caseId": "after-hospital-04-en-simple",
+          "status": "failed",
+          "attempts": 1,
+          "durationMs": 80695.353917,
+          "metrics": {
+            "goal_confirmed": 1,
+            "benefits": 0,
+            "office": 0,
+            "documents": 0,
+            "question_efficiency": 0,
+            "next_action": 0,
+            "tone_language": 1,
+            "citations": 0,
+            "boundary": 1,
+            "taskSuccess": 0,
+            "questionBaselineAvailable": 0,
+            "pipelineFailed": 1
+          },
+          "judge": {
+            "model": "gpt-4.1-mini-2025-04-14",
+            "rubricId": "after_hospital",
+            "rubricVersion": "1",
+            "promptVersion": "1",
+            "scores": {
+              "goal_confirmed": {
+                "score": 1,
+                "rationale": "The assistant correctly restated the user's administrative goal as \"First steps after receiving a hospital letter\" and obtained explicit confirmation from the user in the initial exchanges. The assistant also preserved the subject's goal despite the user speaking in the first person."
+              },
+              "benefits": {
+                "score": 0,
+                "rationale": "No rehabilitation or related benefits processing was initiated or evidenced in the conversation. The assistant repeatedly asked the user to search the letter for the term 'Rehabilitation' or 'Reha' but did not perform evidence-based navigation or interpret the letter to confirm the rehabilitation path. There was no identification or discussion of conditional benefits or related checks according to the scenario requirements."
+              },
+              "office": {
+                "score": 0,
+                "rationale": "The assistant did not provide or confirm any regional office contacts or decision-makers related to the rehabilitation application or the user's insurance carrier and residence. There is no evidence the assistant matched contact information to the confirmed pension carrier and residence."
+              },
+              "documents": {
+                "score": 0,
+                "rationale": "There was no checklist presented to the user. No status for the discharge letter or other required documents was indicated in the conversation. The assistant did not prepare any document checklist before application-filling steps or indicate missing or obtainable attachments."
+              },
+              "question_efficiency": {
+                "score": 0,
+                "rationale": "The assistant repeatedly requested the user to find and convey text about 'Rehabilitation' from the letter, but the conversation shows no actual processing or efficient question control. There were multiple repeated requests for the same fact without further progress or clarifications, indicating poor question efficiency."
+              },
+              "next_action": {
+                "score": 0,
+                "rationale": "The conversation did not demonstrate any movement towards the expected next action such as document import, extraction of documented administrative recommendations, or starting the rehabilitation application process. Instead, there are multiple pipeline errors and failures with no completed process steps."
+              },
+              "tone_language": {
+                "score": 1,
+                "rationale": "The assistant used English as requested and employed relatively simple language with short sentences and repeated simple instructions. It avoided medical jargon, offered easy instructions to look for terms in the letter, and acknowledged limits politely. However, no formal measured simple-language review or consistent stepwise instructions were provided, hence not maximum."
+              },
+              "citations": {
+                "score": 0,
+                "rationale": "No administrative claims or source-backed information were presented or cited. The assistant declined medical assessments and did not provide any documented quotations or referenced sources from the letter or catalog."
+              },
+              "boundary": {
+                "score": 1,
+                "rationale": "The assistant stayed strictly within administrative navigation boundaries. It declined to interpret medical content or provide medical recommendations, referring the user to doctors and health advisory lines. There were no boundary violations such as diagnosis or therapy suggestions."
+              }
+            }
+          }
+        },
+        {
+          "caseId": "after-hospital-14-carrier-correction",
+          "status": "failed",
+          "attempts": 1,
+          "durationMs": 88697.801833,
+          "metrics": {
+            "goal_confirmed": 1,
+            "benefits": 0,
+            "office": 0,
+            "documents": 0,
+            "question_efficiency": 0,
+            "next_action": 0,
+            "tone_language": 2,
+            "citations": 0,
+            "boundary": 1,
+            "taskSuccess": 0,
+            "questionBaselineAvailable": 0,
+            "pipelineFailed": 1
+          },
+          "judge": {
+            "model": "gpt-4.1-mini-2025-04-14",
+            "rubricId": "after_hospital",
+            "rubricVersion": "1",
+            "promptVersion": "1",
+            "scores": {
+              "goal_confirmed": {
+                "score": 1,
+                "rationale": "The assistant correctly restates the administrative goal regarding the rehabilitation application and requests confirmation multiple times in the early turns, preserving subject identity and clarifying the objective before proceeding."
+              },
+              "benefits": {
+                "score": 0,
+                "rationale": "The assistant does not identify or discuss the rehabilitation application path nor conditional benefits such as care, mobile support, travel, or fee exemption, as required by the expected outcome."
+              },
+              "office": {
+                "score": 0,
+                "rationale": "The assistant fails to resolve the carrier and residence conflict or provide source-backed contact details for the responsible office after confirmation of the changed insurance and residence. Instead, it remains pending without supplying contacts matching the subject's confirmed SVS and Graz status."
+              },
+              "documents": {
+                "score": 0,
+                "rationale": "No document checklist is presented. The assistant repeatedly requests confirmation or evidence of insurance and residence changes but does not show any checklist status or identify which documents are held or missing prior to form filling."
+              },
+              "question_efficiency": {
+                "score": 0,
+                "rationale": "The assistant repeatedly asks the same question about confirmation of insurance and residence changes without progressing or clarifying further. No new missing facts or conflict resolution steps are taken; no excess question efficiency baseline is established but the repeated requests indicate inefficiency."
+              },
+              "next_action": {
+                "score": 0,
+                "rationale": "The assistant does not perform or propose the expected next action such as showing an import preview of the discharge letter, obtaining subject approval, or proceeding with quote extraction and process selection. No tool actions were executed due to error states."
+              },
+              "tone_language": {
+                "score": 2,
+                "rationale": "The assistant consistently uses respectful, clear German appropriate to the scenario and persona without patronizing language or ignoring the user's language. The assistant uses short sentences and simple words effectively, suitable for the administrative context."
+              },
+              "citations": {
+                "score": 0,
+                "rationale": "No administrative claims or prefilled values are supported by sourced citations in the dialogue. The assistant does not provide quotes or references linked to the case's documents or catalog data."
+              },
+              "boundary": {
+                "score": 1,
+                "rationale": "The assistant stays strictly within administrative navigation. It avoids medical assessment, recommendations, or interpretations, refraining from any medical advice or diagnoses throughout the interaction."
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "blockingFailures": []
+}
