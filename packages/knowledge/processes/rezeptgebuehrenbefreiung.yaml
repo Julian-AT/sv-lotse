@@ -1,0 +1,147 @@
+id: rezeptgebuehrenbefreiung
+benefit: ref:catalog/rezeptgebuehrenbefreiung
+actor_roles: [subject, helper]
+slots:
+  - id: carrier
+    type: enum:health-insurer
+    question_hint: Bei welcher Krankenkasse sind Sie versichert?
+    validation:
+      options: [oegk, svs, bvaeb]
+  - id: federal_state
+    type: enum:federal-state
+    question_hint: In welchem Bundesland wohnen Sie?
+    validation:
+      options:
+        [
+          Wien,
+          Niederösterreich,
+          Burgenland,
+          Steiermark,
+          Kärnten,
+          Oberösterreich,
+          Salzburg,
+          Tirol,
+          Vorarlberg,
+        ]
+  - id: already_exempt
+    type: boolean
+    question_hint: Hat Ihre Krankenkasse bereits bestätigt, dass Sie von der Rezeptgebühr befreit sind?
+  - id: assessment_year
+    type: number
+    question_hint: Für welches Jahr möchten Sie die Befreiung beantragen? Die vorliegenden Richtsätze gelten für 2026.
+    validation:
+      min: 2026
+      max: 2026
+  - id: household_type
+    type: enum:household-type
+    question_hint: Leben Sie allein oder mit einer Ehe- oder Partnerperson im gemeinsamen Haushalt?
+    validation:
+      options: [single, couple]
+  - id: monthly_net_income
+    type: number
+    question_hint: Wie hoch ist Ihr monatliches Nettoeinkommen laut den aktuellen Belegen?
+    validation:
+      min: 0
+  - id: children_in_household
+    type: number
+    question_hint: Wie viele Kinder leben mit Ihnen im Haushalt? Die Krankenkasse prüft mögliche Zuschläge.
+    validation:
+      min: 0
+  - id: other_household_income
+    type: boolean
+    question_hint: Haben andere Personen in Ihrem Haushalt eigenes Einkommen?
+  - id: svs_agriculture
+    type: boolean
+    question_hint: Sind Sie bei der SVS als Bäuerin oder Bauer versichert? Dafür gelten eigene Regeln.
+  - id: documented_additional_expenses
+    type: boolean
+    question_hint: Haben Sie bereits Nachweise für erhöhte Aufwendungen, die Ihre Krankenkasse prüfen soll?
+  - id: submission_confirmed
+    type: boolean
+    question_hint: >-
+      Haben Sie den Antrag selbst eingereicht? Bei der ÖGK geht das online über
+      Meine ÖGK mit ID Austria oder per Post. Bei der SVS gibt es
+      einen Online-Antrag und Formulare; für Bauern bitte die Landesstelle nach
+      dem passenden Formular fragen. Bei der BVAEB gibt es das Formular und den
+      Online-Antrag in MeineBVAEB.
+steps:
+  - id: clarify-status
+    needs: [carrier, federal_state, already_exempt]
+    action: office.resolve
+    outputs:
+      - id: responsible-carrier
+        type: office
+    transitions:
+      - to: existing-exemption
+        when: already_exempt == true
+      - to: review-requirements
+        when: already_exempt == false
+  - id: existing-exemption
+    needs: [clarify-status]
+    outputs:
+      - id: confirmed-exemption-status
+        type: information
+  - id: review-requirements
+    needs:
+      [
+        clarify-status,
+        assessment_year,
+        household_type,
+        monthly_net_income,
+        children_in_household,
+        other_household_income,
+        svs_agriculture,
+        documented_additional_expenses,
+      ]
+    criteria: ref:catalog/rezeptgebuehrenbefreiung#criteria
+    outputs:
+      - id: requirements-for-carrier-review
+        type: information
+    transitions:
+      - to: prepare-documents
+  - id: prepare-documents
+    needs: [review-requirements]
+    documents: ref:catalog/rezeptgebuehrenbefreiung#documents
+    action: documents.checklist
+    outputs:
+      - id: application-checklist
+        type: document
+    reminders:
+      - after_days: 7
+        text_de: Möchten Sie Ihre Unterlagen prüfen? Dies ist eine freiwillige Erinnerung, keine gesetzliche Frist.
+    transitions:
+      - to: confirm-submission
+  - id: confirm-submission
+    needs: [prepare-documents, submission_confirmed]
+    signature: subject
+    transitions:
+      - to: application-submitted
+        when: submission_confirmed == true
+  - id: application-submitted
+    needs: [confirm-submission]
+    outputs:
+      - id: submission-record
+        type: information
+completion:
+  evidence: [user_statement]
+sources:
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+    quote: >-
+      Rezeptgebühr-Befreiung beantragen Wie wollen Sie das Service nutzen?
+      Meine ÖGK-Website (ID Austria erforderlich) Fertig ausdrucken und per Post
+      schicken Leeres Formular herunterladen
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.svs.at/cdscontent/?contentid=10007.816812&portal=svsportal
+    quote: >-
+      Befreiung von der Kostenbeteiligung und Rezeptgebühr nach dem GSVG
+      Inhalte relevant für: Gewerbetreibende Neue Selbständige PDF (0.1MB) Online Antrag
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.svs.at/cdscontent/?contentid=10007.816812&portal=svsportal
+    quote: Weiterführende Informationen erhalten Sie in Ihrer SVS-Landesstelle.
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.bvaeb.at/cdscontent/?contentid=10007.860147&portal=bvaebportal
+    quote: >-
+      Antrag auf Befreiung von der Rezeptgebühr / vom Behandlungsbeitrag
+      (PDF, 724 KB) auch als online-Service mit Login in MeineBVAEB
+    retrieved_at: 2026-11-05T23:49:35Z
+as_of: 2026-11-06
