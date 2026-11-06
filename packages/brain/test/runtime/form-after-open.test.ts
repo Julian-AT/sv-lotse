@@ -3,8 +3,8 @@ import type { DatabaseClient } from "@lotse/db";
 import { describe, expect, it } from "vitest";
 import {
   benefitForm,
-  formAlreadyPrepared,
   openedPageWithoutForm,
+  preparedFormAwaitingQuestion,
   prepareFormAfterOpen,
   topicTexts,
 } from "../../src/conversation/form-after-open.ts";
@@ -33,13 +33,25 @@ function opened(target: unknown, extra: LotseMessage["parts"] = []): LotseMessag
   };
 }
 
+const prefilled = { formInstanceId: randomUUID(), proposals: [], missingFields: ["f001"] };
 const prefillPart = {
   type: "tool-form.prefill",
   toolCallId: randomUUID(),
   state: "output-available",
   input: {},
-  output: {},
+  output: prefilled,
 } as unknown as LotseMessage["parts"][number];
+const formTarget = { kind: "form", formInstanceId: prefilled.formInstanceId, fieldId: "f001" };
+
+function formOpen(state: "input-available" | "output-available"): LotseMessage["parts"][number] {
+  return {
+    type: "tool-ui.openResource",
+    toolCallId: randomUUID(),
+    state,
+    input: { target: formTarget },
+    ...(state === "output-available" ? { output: { success: true } } : {}),
+  } as unknown as LotseMessage["parts"][number];
+}
 
 describe("benefitForm", () => {
   it("maps benefits to their registered forms", () => {
@@ -62,16 +74,28 @@ describe("after a page opened", () => {
 
   it("detects a successful page open without a prepared form", () => {
     expect(openedPageWithoutForm(history)).toBe(true);
-    expect(formAlreadyPrepared(history)).toBe(false);
+    expect(preparedFormAwaitingQuestion(history)).toBeUndefined();
     expect(topicTexts(history)[1]).toContain("Pflegegeld");
   });
 
   it("does not prepare twice and does not treat a form open as a page", () => {
-    const prepared = [history[0] as LotseMessage, opened(page, [prefillPart])];
-    expect(openedPageWithoutForm(prepared)).toBe(false);
-    expect(formAlreadyPrepared(prepared)).toBe(true);
-    const form = { kind: "form", formInstanceId: randomUUID(), fieldId: "f001" };
-    expect(openedPageWithoutForm([history[0] as LotseMessage, opened(form)])).toBe(false);
+    const pending = [
+      history[0] as LotseMessage,
+      opened(page, [prefillPart, formOpen("input-available")]),
+    ];
+    expect(openedPageWithoutForm(pending)).toBe(false);
+    expect(preparedFormAwaitingQuestion(pending)).toBeUndefined();
+    expect(openedPageWithoutForm([history[0] as LotseMessage, opened(formTarget)])).toBe(false);
+  });
+
+  it("asks once after the form viewer reported back", () => {
+    const settled = opened(page, [prefillPart, formOpen("output-available")]);
+    expect(preparedFormAwaitingQuestion([settled])).toEqual(prefilled);
+    const asked = {
+      ...settled,
+      parts: [...settled.parts, { type: "text", text: "Was soll ich eintragen?" }],
+    } as LotseMessage;
+    expect(preparedFormAwaitingQuestion([asked])).toBeUndefined();
   });
 
   it("leaves L1, helpers and unrelated turns to the agent without touching the case", async () => {
@@ -96,7 +120,6 @@ describe("after a page opened", () => {
         db: untouchable,
         context: { ...context, ...overrides },
         history: messages,
-        language: "de-AT",
         writer: { write: () => {} },
       });
     await expect(run({ autonomyLevel: "L1" }, history)).resolves.toBeUndefined();

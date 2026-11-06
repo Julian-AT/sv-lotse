@@ -82,7 +82,7 @@ import type { LotseMessage } from "../tools/types.ts";
 import { pointedToolCall, resultPointAction } from "../workspace/targets.ts";
 import { approvedResultCheckpoint } from "./approved-results.ts";
 import { TurnError, turnStreamError } from "./errors.ts";
-import { formAlreadyPrepared, prepareFormAfterOpen } from "./form-after-open.ts";
+import { formQuestion, prepareFormAfterOpen } from "./form-after-open.ts";
 import {
   hasOpenToolCall,
   loadMessages,
@@ -404,17 +404,11 @@ async function runTurn(
         writer.write({ type: "finish" });
         return;
       }
-      // The form viewer reported back after a prepared form opened; its question is already asked.
-      if (formAlreadyPrepared(prepared.history)) {
-        writer.write({ type: "finish" });
-        return;
-      }
       const formLanguage = parsed.language?.startsWith("en") ? "en" : "de-AT";
       const formFill = await prepareFormAfterOpen({
         db,
         context: prepared.context,
         history: prepared.history,
-        language: formLanguage,
         writer,
         ...(options?.abortSignal ? { signal: options.abortSignal } : {}),
       });
@@ -428,6 +422,19 @@ async function runTurn(
               payload: { goal: formFill.goalConfirmed },
             },
           });
+        writer.write({ type: "finish-step" });
+        writer.write({ type: "finish" });
+        return;
+      }
+      // The question needs its own tool-less step, or the client would continue again.
+      const question = await formQuestion({
+        db,
+        context: prepared.context,
+        history: prepared.history,
+        language: formLanguage,
+      });
+      if (question) {
+        writer.write({ type: "start-step" });
         const output = createSegmentWriter({
           writer,
           context: prepared.context,
@@ -436,8 +443,8 @@ async function runTurn(
           config,
           passages: new Map(),
         });
-        for (const action of formFill.actions) output.action(action);
-        output.emit(randomUUID(), formFill.text);
+        for (const action of question.actions) output.action(action);
+        output.emit(randomUUID(), question.text);
         speechSegments.push(...output.segments);
         timings.totalMs = performance.now() - pipelineStarted;
         writer.write({ type: "finish-step" });

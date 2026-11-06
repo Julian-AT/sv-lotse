@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { DatabaseClient } from "@lotse/db";
-import { cases, formTemplates } from "@lotse/db/schema";
+import { cases, formInstances, formTemplates } from "@lotse/db/schema";
 import {
   type Action,
   ActionSchema,
@@ -12,12 +12,13 @@ import {
   type Target,
 } from "@lotse/protocol";
 import type { UIMessageStreamWriter } from "ai";
-import { desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import type { RuntimeContext } from "../agent/context.ts";
 import { FORM_TYPE_PACE_MS } from "../config/index.ts";
 import { prefillForm } from "../forms/instances/index.ts";
 import { getTemplate } from "../forms/registry/index.ts";
-import { templateSchema } from "../forms/schema.ts";
+import { type FormField, type FormToolResult, templateSchema } from "../forms/schema.ts";
+import { contracts } from "../tools/contracts/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
 
 export interface BenefitForm {
@@ -155,10 +156,27 @@ export function openedPageWithoutForm(history: readonly LotseMessage[]): boolean
   });
 }
 
-/** The continuation after the form viewer opened; the question was already asked. */
-export function formAlreadyPrepared(history: readonly LotseMessage[]): boolean {
+/** The prefill output of the form prepared in the last assistant message, once its open settled. */
+export function preparedFormAwaitingQuestion(
+  history: readonly LotseMessage[],
+): { formInstanceId: string; proposals: Proposal[]; missingFields: string[] } | undefined {
   const last = history.at(-1);
-  return last?.role === "assistant" && last.parts.some((part) => part.type === "tool-form.prefill");
+  if (last?.role !== "assistant") return;
+  const index = last.parts.findIndex((part) => part.type === "tool-form.prefill");
+  if (index < 0) return;
+  const after = last.parts.slice(index + 1);
+  if (after.some((part) => part.type === "text")) return;
+  const opened = after.findLast((part) => part.type === "tool-ui.openResource");
+  if (
+    !opened ||
+    !("state" in opened) ||
+    !["output-available", "output-error"].includes(opened.state)
+  )
+    return;
+  const parsed = contracts["form.prefill"].output.safeParse(
+    toolOutput(last.parts[index] as Part, "tool-form.prefill"),
+  );
+  return parsed.success ? parsed.data : undefined;
 }
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../../../");
@@ -236,27 +254,20 @@ const copy = {
   },
 } as const;
 
-export interface FormAfterOpenResult {
-  goalConfirmed?: string;
-  formInstanceId: string;
-  text: string;
-  actions: Action[];
-  askedFieldId?: string;
-}
+type Proposal = FormToolResult<"form.prefill">["proposals"][number];
 
 /**
  * After the user agreed to open an official page, a registered form for the same benefit is
- * prepared as a draft (L3): goal confirmed, prefilled from confirmed facts, opened in the viewer,
- * and exactly one missing administrative field is asked for. Nothing is submitted.
+ * prepared as a draft (L3): goal confirmed, prefilled from confirmed facts and opened in the viewer.
+ * The question follows once the viewer reports back. Nothing is submitted.
  */
 export async function prepareFormAfterOpen(input: {
   db: DatabaseClient;
   context: RuntimeContext;
   history: readonly LotseMessage[];
-  language: string;
   writer: Pick<UIMessageStreamWriter<LotseMessage>, "write">;
   signal?: AbortSignal;
-}): Promise<FormAfterOpenResult | undefined> {
+}): Promise<{ goalConfirmed?: string } | undefined> {
   const { db, context } = input;
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
   if (!openedPageWithoutForm(input.history)) return;
@@ -281,11 +292,10 @@ export async function prepareFormAfterOpen(input: {
   };
   const prefilled = await prefillForm(db, prefillInput, context, input.signal);
   const schema = templateSchema(await getTemplate(db, template.id));
-  const missing = new Set(prefilled.missingFields);
-  const asked = schema.fields.find(
-    (field) => missing.has(field.id) && field.fact_type && ASKABLE_FACT.test(field.fact_type),
-  );
-  const firstField = asked?.id ?? prefilled.proposals[0]?.fieldId ?? schema.fields[0]?.id;
+  const firstField =
+    askedField(schema.fields, prefilled.missingFields)?.id ??
+    prefilled.proposals[0]?.fieldId ??
+    schema.fields[0]?.id;
   if (!firstField) return;
   const prefillCallId = randomUUID();
   input.writer.write({ type: "start-step" });
@@ -308,12 +318,43 @@ export async function prepareFormAfterOpen(input: {
       target: { kind: "form", formInstanceId: prefilled.formInstanceId, fieldId: firstField },
     },
   });
-  const actions = prefilled.proposals.map((proposal) =>
+  return goalConfirmed ? { goalConfirmed } : {};
+}
+
+function askedField(fields: readonly FormField[], missingFields: readonly string[]) {
+  const missing = new Set(missingFields);
+  return fields.find(
+    (field) => missing.has(field.id) && field.fact_type && ASKABLE_FACT.test(field.fact_type),
+  );
+}
+
+/** Once the viewer is open: type the prefilled fields and ask for exactly one missing field. */
+export async function formQuestion(input: {
+  db: DatabaseClient;
+  context: RuntimeContext;
+  history: readonly LotseMessage[];
+  language: string;
+}): Promise<{ text: string; actions: Action[] } | undefined> {
+  const prepared = preparedFormAwaitingQuestion(input.history);
+  if (!prepared) return;
+  const [instance] = await input.db
+    .select({ templateId: formInstances.templateId })
+    .from(formInstances)
+    .where(
+      and(
+        eq(formInstances.id, prepared.formInstanceId),
+        eq(formInstances.caseId, input.context.caseId),
+      ),
+    );
+  if (!instance) return;
+  const template = await getTemplate(input.db, instance.templateId);
+  const asked = askedField(templateSchema(template).fields, prepared.missingFields);
+  const actions = prepared.proposals.map((proposal) =>
     ActionSchema.parse({
       id: randomUUID(),
       kind: "type",
       sentenceIndex: 0,
-      target: { kind: "form", formInstanceId: prefilled.formInstanceId, fieldId: proposal.fieldId },
+      target: { kind: "form", formInstanceId: prepared.formInstanceId, fieldId: proposal.fieldId },
       payload: {
         value: String(proposal.value),
         provenance: ProvenanceSchema.parse(proposal.provenance),
@@ -324,14 +365,8 @@ export async function prepareFormAfterOpen(input: {
   const strings = input.language.startsWith("en") ? copy.en : copy.de;
   const label = asked ? asked.help_text?.trim() || asked.label_de : undefined;
   const text = [
-    strings.opened(template.title, prefilled.proposals.length),
+    strings.opened(template.title, prepared.proposals.length),
     label ? strings.ask(label) : strings.done,
   ].join(" ");
-  return {
-    ...(goalConfirmed ? { goalConfirmed } : {}),
-    formInstanceId: prefilled.formInstanceId,
-    text,
-    actions,
-    ...(asked ? { askedFieldId: asked.id } : {}),
-  };
+  return { text, actions };
 }
