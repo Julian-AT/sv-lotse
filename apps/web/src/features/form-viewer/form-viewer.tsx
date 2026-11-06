@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Spinner } from "@/components/ui/spinner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useWorkspacePreferences } from "../settings/speech-preferences.ts";
@@ -264,7 +263,7 @@ function FormViewerSession({
             <Button
               type="button"
               size="xs"
-              variant={view === "fields" ? "secondary" : "outline"}
+              variant={view === "fields" ? "secondary" : "ghost"}
               aria-pressed={view === "fields"}
               onClick={() => setView("fields")}
             >
@@ -274,7 +273,7 @@ function FormViewerSession({
             <Button
               type="button"
               size="xs"
-              variant={view === "pdf" ? "secondary" : "outline"}
+              variant={view === "pdf" ? "secondary" : "ghost"}
               aria-pressed={view === "pdf"}
               disabled={!pdf}
               onClick={() => setView("pdf")}
@@ -347,7 +346,7 @@ function FormViewerSession({
             )}
           </div>
         </div>
-        <ScrollArea className="min-h-0 flex-1">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <div className="flex flex-col gap-4 px-4 py-4">
             {props.approval && props.onApprovalDecision && instance && (
               <div className="lotse-legacy">
@@ -451,7 +450,7 @@ function FormViewerSession({
               </div>
             )}
           </div>
-        </ScrollArea>
+        </div>
         {instance && (
           <FormPackage
             key={JSON.stringify(instance.fields)}

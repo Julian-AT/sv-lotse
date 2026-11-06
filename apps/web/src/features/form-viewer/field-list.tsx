@@ -189,7 +189,12 @@ function FormField(props: FieldProps): JSX.Element {
           void save(next);
         }}
       >
-        <SelectTrigger id={inputId} size="sm" className="w-full" aria-invalid={error || undefined}>
+        <SelectTrigger
+          id={inputId}
+          size="sm"
+          className="h-7! min-h-0 w-full text-[0.8125rem]"
+          aria-invalid={error || undefined}
+        >
           <SelectValue placeholder={editable ? "—" : copy.readOnly} />
         </SelectTrigger>
         <SelectContent>
@@ -205,7 +210,7 @@ function FormField(props: FieldProps): JSX.Element {
         {...textProps}
         placeholder={placeholder}
         rows={2}
-        className="min-h-14 px-3 py-2 text-sm md:text-sm"
+        className="min-h-12 px-2.5 py-1.5 text-[0.8125rem] md:text-[0.8125rem]"
         onChange={(event) => change(event.target.value)}
       />
     ) : (
@@ -213,7 +218,7 @@ function FormField(props: FieldProps): JSX.Element {
         {...textProps}
         placeholder={placeholder}
         inputMode={field.type === "number" ? "decimal" : undefined}
-        className="h-8 text-sm md:text-sm"
+        className="h-7 min-h-0 px-2.5 text-[0.8125rem] md:text-[0.8125rem]"
         onChange={(event) => change(event.target.value)}
         onKeyDown={(event) => {
           if (event.key === "Enter") event.currentTarget.blur();
@@ -246,16 +251,16 @@ function FormField(props: FieldProps): JSX.Element {
         else props.elements.delete(field.id);
       }}
       className={cn(
-        "scroll-my-16 rounded-lg p-1.5 transition-[background-color,box-shadow] duration-200",
+        "scroll-my-16 rounded-lg px-1.5 py-1 transition-[background-color,box-shadow] duration-200",
         "data-active:bg-primary/5 data-active:ring-2 data-active:ring-primary/50",
-        field.type === "checkbox" ? "sm:col-span-2" : "flex flex-col gap-1.5",
+        field.type === "checkbox" ? "sm:col-span-2" : "flex flex-col gap-1",
         long && "sm:col-span-2",
       )}
     >
       {field.type === "checkbox" ? (
         <div className="flex items-start gap-2">
           <div className="pt-px">{control}</div>
-          <Label htmlFor={inputId} className="leading-snug font-normal" title={label}>
+          <Label htmlFor={inputId} className="text-xs leading-snug font-normal" title={label}>
             <span className="line-clamp-2">{label}</span>
           </Label>
           {meta}
@@ -263,7 +268,7 @@ function FormField(props: FieldProps): JSX.Element {
       ) : (
         <>
           <div className="flex min-h-4 items-center gap-1.5">
-            <Label htmlFor={inputId} className="min-w-0 text-[0.8125rem]" title={label}>
+            <Label htmlFor={inputId} className="min-w-0 text-xs" title={label}>
               <span className="truncate">{label}</span>
             </Label>
             {meta}
