@@ -12,7 +12,7 @@ import { searchKnowledge } from "../retrieval/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
 import { type Classification, classifyInput } from "./classify.ts";
 import { copyFor } from "./copy.ts";
-import { explicitlyConfirmsGoal, guardAnswer } from "./guards.ts";
+import { explicitlyConfirmsGoal } from "./guards.ts";
 
 const metadataSchema = z.object({
   pendingGoal: z.string().min(1).optional(),
@@ -41,6 +41,10 @@ export type PreparedPipeline =
       classification: Classification;
       confirmed: true;
       goalConfirmed: string | undefined;
+      /** No case goal is confirmed yet: the turn answers read-only. */
+      goalOpen: boolean;
+      /** A process goal to offer at the end of the answer; a "yes" confirms it next turn. */
+      offerGoal?: { goal: string; lifeSituation: string | null };
       refreshContext: () => Promise<string>;
     });
 export async function preparePipeline(options: {
@@ -61,7 +65,7 @@ export async function preparePipeline(options: {
   // An authenticated assistant continuation contains an approval decision or a tool result,
   // not a new user utterance. Execute its already-authorized work before another model call.
   // In particular, a classifier/embedding outage must not strand a consumed approval.
-  if (last?.role === "assistant" && state.record.confirmedGoal) {
+  if (last?.role === "assistant") {
     const classification: Classification = {
       language,
       intent: "confirmation",
@@ -88,6 +92,7 @@ export async function preparePipeline(options: {
       confirmed: true,
       ...context,
       goalConfirmed: undefined,
+      goalOpen: !state.record.confirmedGoal,
       refreshContext: async (): Promise<string> =>
         (
           await assembleContext(
@@ -140,31 +145,20 @@ export async function preparePipeline(options: {
     state.record.confirmedGoal = candidate;
     justConfirmed = true;
   }
-  if (!state.record.confirmedGoal) {
-    const goal = classification.candidateGoal;
-    const proposed = goal ? copy.goal(goal) : undefined;
-    const checked = proposed
-      ? await guardAnswer(
-          options.config,
-          proposed,
-          classification.language,
-          new Map(),
-          options.abortSignal,
-        )
-      : undefined;
+  // Informational questions are answered directly. A process goal is never confirmed in a
+  // separate turn: the answer ends with an offer to start it, and a "yes" confirms it.
+  if (
+    !state.record.confirmedGoal &&
+    classification.intent === "other" &&
+    !classification.candidateGoal
+  )
     return {
       language: classification.language,
       classification,
       confirmed: false as const,
-      goal: checked === proposed ? (goal ?? undefined) : undefined,
-      reply:
-        classification.intent === "medical"
-          ? copy.handoff
-          : goal
-            ? (checked ?? copy.unsupported)
-            : copy.clarifyGoal,
+      goal: undefined,
+      reply: copy.clarifyGoal,
     };
-  }
   if (classification.intent === "medical")
     return {
       language: classification.language,
@@ -173,8 +167,10 @@ export async function preparePipeline(options: {
       goal: undefined,
       reply: copy.handoff,
     };
-  const query =
-    justConfirmed || classification.intent === "confirmation"
+  const goalOpen = !state.record.confirmedGoal;
+  const query = goalOpen
+    ? text
+    : justConfirmed || classification.intent === "confirmation"
       ? state.record.confirmedGoal
       : `${state.record.confirmedGoal}\n${text}`;
   const retrievalStarted = performance.now();
@@ -209,6 +205,15 @@ export async function preparePipeline(options: {
     confirmed: true as const,
     ...context,
     goalConfirmed: justConfirmed ? candidate : undefined,
+    goalOpen,
+    ...(goalOpen && classification.candidateGoal
+      ? {
+          offerGoal: {
+            goal: classification.candidateGoal,
+            lifeSituation: classification.lifeSituation,
+          },
+        }
+      : {}),
     refreshContext: async (): Promise<string> => {
       const next = await assembleContext(
         options.db,

@@ -33,3 +33,18 @@ test("tools already used in the conversation stay available", () => {
   });
   expect(excluded.has("appointment.search")).toBe(false);
 });
+
+test("without a confirmed goal only lookups and display tools are offered", () => {
+  const excluded = irrelevantToolNames({
+    texts: ["Ich möchte das Pflegegeld-Formular ausfüllen."],
+    history: [],
+    readOnly: true,
+  });
+  for (const tool of ["process.start", "case.update", "form.prefill", "form.fillLive", "ui.fill"])
+    expect(excluded.has(tool as never)).toBe(true);
+  for (const tool of ["kb.search", "catalog.findBenefits", "form.find", "ui.offerResource"])
+    expect(excluded.has(tool as never)).toBe(false);
+  const offering = irrelevantToolNames({ texts: [], history: [], readOnly: true, offering: false });
+  expect(offering.has("ui.offerResource")).toBe(true);
+  expect(offering.has("kb.search")).toBe(false);
+});

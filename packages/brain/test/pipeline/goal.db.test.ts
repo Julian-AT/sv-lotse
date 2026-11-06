@@ -30,7 +30,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await database?.cleanup();
 });
-it("FR-G7 retrieves the confirmed goal even when a confirmation is classified as administrative", async () => {
+it("FR-G7 answers first and offers the goal; a yes confirms it and retrieves the goal", async () => {
   const session = await identity(database.db);
   const goal = "Administrative document preparation";
   classify.mockResolvedValue({
@@ -49,8 +49,23 @@ it("FR-G7 retrieves the confirmed goal even when a confirmation is classified as
   });
   const caseId = first.headers.get("x-lotse-case-id");
   if (!caseId) throw new Error("Missing case id");
-  await chunks(first);
-  expect(search).not.toHaveBeenCalled();
+  const answered = await chunks(first);
+  // The first message is answered directly; the goal is only offered, never asked separately.
+  expect(search).toHaveBeenCalledWith(
+    database.db,
+    config,
+    expect.objectContaining({ query: userMessage().parts[0]?.text }),
+    undefined,
+  );
+  expect(answered).toContainEqual(
+    expect.objectContaining({
+      type: "message-metadata",
+      messageMetadata: expect.objectContaining({ pendingGoal: goal }),
+    }),
+  );
+  const [open] = await database.db.select().from(cases).where(eq(cases.id, caseId));
+  expect(open?.confirmedGoal).toBe("");
+  search.mockClear();
   classify.mockResolvedValue({
     language: "de-AT",
     intent: "administrative",

@@ -502,6 +502,11 @@ async function runTurn(
         }),
       );
       const searchEvidence: ComposerSource[] = [];
+      const previousAnswer = prepared.history
+        .findLast((message) => message.role === "assistant")
+        ?.parts.flatMap((part) => (part.type === "text" ? [part.text] : []))
+        .join(" ")
+        .slice(-600);
       let approvalRequested = false;
       const guardText = async (text: string) =>
         guard({ ...guardContext, text, claims: extractCitedClaims(text, guardPassages) });
@@ -537,6 +542,10 @@ async function runTurn(
             : {}),
           communication: communicationInstructions(settings),
           administrativeOnly,
+          ...(pipeline.confirmed && pipeline.offerGoal
+            ? { offerGoal: pipeline.offerGoal.goal }
+            : {}),
+          ...(previousAnswer ? { previousAnswer } : {}),
           ...(options?.abortSignal ? { abortSignal: options.abortSignal } : {}),
         });
         const ms = performance.now() - started;
@@ -674,6 +683,15 @@ async function runTurn(
         writer.write({ type: "finish" });
         return;
       }
+      // The goal is offered inside the answer; a "yes" next turn confirms it.
+      if (pipeline.offerGoal)
+        writer.write({
+          type: "message-metadata",
+          messageMetadata: {
+            pendingGoal: pipeline.offerGoal.goal,
+            pendingLifeSituation: pipeline.offerGoal.lifeSituation,
+          },
+        });
       for (const passage of pipeline.passages) {
         passages.set(passage.id, passage);
         // The citation verifier deliberately accepts only its strict evidence contract.
@@ -690,17 +708,23 @@ async function runTurn(
         });
       const citationInstructions =
         "\nThe knowledge entries in the context are retrieved passages. Cite every substantive administrative claim inline as [passage:ID] at the end of its sentence, where ID is the id field of a knowledge entry or kb.search result, e.g. 'Der Antrag ist beim zuständigen Träger zu stellen. [passage:<id>]'. Use only retrieved passage IDs. State what is unknown. All recommendations require a source and its validity date. Never infer eligibility from medical facts. Continue only with administrative matters. Answer directly from the retrieved context when it contains the answer. Tool failures are not evidence. Use kb.search for additional passages, and do not call office/catalog tools for a simple explanation already supported by retrieved sources.";
+      // Without a confirmed goal the turn only looks things up; nothing writes to the case.
+      const goalInstructions = pipeline.goalOpen
+        ? "\nNo case goal is confirmed yet. Answer the question directly with read-only lookups; do not ask the user to confirm a goal and do not start a process or change the case."
+        : "";
       const agent = createLotseAgent({
         context: prepared.context,
         administrativeOnly,
         config: turnConfig,
         telemetry,
-        instructions: pipeline.instructions + citationInstructions,
+        instructions: pipeline.instructions + citationInstructions + goalInstructions,
         irrelevantTools: irrelevantToolNames({
           texts: [userText, pipeline.blocks.case, pipeline.blocks.screen],
           history: prepared.history,
+          ...(pipeline.goalOpen ? { readOnly: true, offering: !pipeline.offerGoal } : {}),
         }),
-        prepareContext: async () => (await pipeline.refreshContext()) + citationInstructions,
+        prepareContext: async () =>
+          (await pipeline.refreshContext()) + citationInstructions + goalInstructions,
         dependencies: {
           db,
           config,

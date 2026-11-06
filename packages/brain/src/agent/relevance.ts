@@ -1,5 +1,5 @@
 import { getToolName, isToolUIPart } from "ai";
-import type { ToolName } from "../tools/contracts/index.ts";
+import { type ToolName, toolNames } from "../tools/contracts/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
 
 /** Topic groups, offered when the request, the confirmed goal or the screen mentions them. */
@@ -61,6 +61,31 @@ const GROUPS: readonly { pattern: RegExp; tools: readonly ToolName[] }[] = [
   },
 ];
 
+/** Lookups and display tools: what a turn may use before the user confirms a case goal. */
+const READ_ONLY_TOOLS: ReadonlySet<ToolName> = new Set<ToolName>([
+  "kb.search",
+  "catalog.findBenefits",
+  "catalog.getBenefit",
+  "office.resolve",
+  "facility.search",
+  "eko.lookupCoverage",
+  "fees.explainReimbursement",
+  "form.find",
+  "context.queryFacts",
+  "context.readScreen",
+  "context.readPage",
+  "ui.point",
+  "ui.highlight",
+  "ui.annotate",
+  "ui.caption",
+  "ui.offerResource",
+  "ui.openResource",
+]);
+const OFFER_TOOLS: ReadonlySet<ToolName> = new Set<ToolName>([
+  "ui.offerResource",
+  "ui.openResource",
+]);
+
 /**
  * Tools of topic groups the request does not touch. Everything else (knowledge, catalog, process,
  * case, screen and display tools, and any tool not in a group) stays offered, and so does every
@@ -70,6 +95,10 @@ const GROUPS: readonly { pattern: RegExp; tools: readonly ToolName[] }[] = [
 export function irrelevantToolNames(input: {
   texts: readonly string[];
   history: readonly LotseMessage[];
+  /** No confirmed goal: only lookups and display tools, whatever the history used. */
+  readOnly?: boolean;
+  /** With readOnly, false also removes resource offers (the answer offers the goal instead). */
+  offering?: boolean;
 }): ReadonlySet<ToolName> {
   const text = input.texts.join("\n");
   const excluded = new Set<ToolName>();
@@ -80,5 +109,9 @@ export function irrelevantToolNames(input: {
     for (const part of message.parts)
       if (isToolUIPart(part)) kept.add(getToolName(part) as ToolName);
   for (const tool of kept) excluded.delete(tool);
+  if (input.readOnly)
+    for (const tool of toolNames)
+      if (!READ_ONLY_TOOLS.has(tool) || (input.offering === false && OFFER_TOOLS.has(tool)))
+        excluded.add(tool);
   return excluded;
 }

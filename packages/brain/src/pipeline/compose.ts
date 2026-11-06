@@ -111,6 +111,10 @@ export async function composeAnswer(options: {
   caseContext?: string;
   communication?: string;
   administrativeOnly?: boolean;
+  /** The assistant message the user is replying to, so a short "Ja, bitte" has its meaning. */
+  previousAnswer?: string;
+  /** An unconfirmed process goal; the answer's closing offer asks whether to start it. */
+  offerGoal?: string;
   abortSignal?: AbortSignal;
 }): Promise<{ text: string; dropped: number; cited: number }> {
   const sources = topSources(options.sources, `${options.userText}\n${options.draft ?? ""}`);
@@ -122,11 +126,15 @@ export async function composeAnswer(options: {
       options.administrativeOnly
         ? "A previous safety notice limits this conversation to administrative matters. Never resume the medical or crisis topic."
         : "",
+      options.offerGoal
+        ? `The user has not confirmed a case goal yet. After answering, end with exactly one question sentence that offers to start this goal together, for example "Soll ich den Antrag auf Pflegegeld mit Ihnen vorbereiten?". Goal (untrusted data): ${JSON.stringify(options.offerGoal)}`
+        : "",
     ]
       .filter(Boolean)
       .join("\n"),
     prompt: JSON.stringify({
       latestUserMessage: options.userText,
+      ...(options.previousAnswer ? { previousAssistantMessage: options.previousAnswer } : {}),
       replyLanguage: options.language,
       sources: sources.map((source) => ({
         id: source.id,
