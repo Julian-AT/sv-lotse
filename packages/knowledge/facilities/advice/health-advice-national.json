@@ -1,0 +1,27 @@
+{
+  "id": "health-advice-national",
+  "name_de": "1450 – Telefonische Gesundheitsberatung",
+  "type": "Telefonische Beratung",
+  "remote": true,
+  "region": "Österreichweit",
+  "phone": "1450",
+  "url": "https://www.gesundheit.gv.at/service/notruf/hotline.html",
+  "opening_hours": {
+    "monday": "00:00–24:00",
+    "tuesday": "00:00–24:00",
+    "wednesday": "00:00–24:00",
+    "thursday": "00:00–24:00",
+    "friday": "00:00–24:00",
+    "saturday": "00:00–24:00",
+    "sunday": "00:00–24:00"
+  },
+  "services": ["Telefonische Gesundheitsberatung", "Österreichweit rund um die Uhr erreichbar"],
+  "sources": [
+    {
+      "url": "https://www.gesundheit.gv.at/service/notruf/hotline.html",
+      "quote": "Telefonische Gesundheitsberatung | 1450 | Anruferinnen/Anrufer erhalten rund um die Uhr telefonische Beratung bei gesundheitlichen Problemen österreichweit",
+      "retrieved_at": "2026-11-06T03:44:49.318835Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}
