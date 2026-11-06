@@ -1,0 +1,637 @@
+{
+  "as_of": "2026-11-06",
+  "terms": [
+    {
+      "canonical": "ÖGK",
+      "variants": ["OEGK", "Ö G K", "Ö Geh Kah", "Ö Geka", "Oe G K"],
+      "pronunciation": {
+        "de": "Ö Geh Kah",
+        "en": "Oe Gay Kah"
+      },
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal",
+          "quote": "Österreichische Gesundheitskasse Wien\nWienerbergstraße 15-19\n1100 Wien\nTel. +43 5 0766-11",
+          "retrieved_at": "2026-11-05T22:41:30Z"
+        }
+      ]
+    },
+    {
+      "canonical": "SVS",
+      "variants": ["S V S", "Es Fau Es"],
+      "pronunciation": {
+        "de": "Es Fau Es",
+        "en": "Ess Vee Ess"
+      },
+      "sources": [
+        {
+          "url": "https://www.svs.at/cdscontent/?contentid=10007.816865&portal=svsportal",
+          "quote": "Sozialversicherungsanstalt der Selbständigen\nWiedner Hauptstraße 84-86\n1051 Wien\nTel.: 050 808 808",
+          "retrieved_at": "2026-11-05T22:41:30Z"
+        }
+      ]
+    },
+    {
+      "canonical": "BVAEB",
+      "variants": ["B V A E B", "Be Fau A E Be"],
+      "pronunciation": {
+        "de": "Be Fau A E Be",
+        "en": "Bee Vee Ay Ee Bee"
+      },
+      "sources": [
+        {
+          "url": "https://www.bvaeb.at/cdscontent/?contentid=10007.855051&portal=bvaebbportal",
+          "quote": "Versicherungsanstalt öffentlich Bediensteter, Eisenbahnen und Bergbau (BVAEB)\nJosefstädter Straße 80\n1080 Wien\n050405\npostoffice@bvaeb.at",
+          "retrieved_at": "2026-11-05T22:41:30Z"
+        }
+      ]
+    },
+    {
+      "canonical": "PVA",
+      "variants": ["P V A", "Pe Fau A"],
+      "pronunciation": {
+        "de": "Pe Fau A",
+        "en": "Pee Vee Ay"
+      },
+      "sources": [
+        {
+          "url": "https://www.pv.at/web/service-und-kontakt/kontakt/wien/kontakt-wien",
+          "quote": "Adresse: Friedrich-Hillegeist-Straße 1,\n1020 Wien\nTelefon: +43 (0)5 03 03\nFax: +43 (0)5 03 03-28 850\nE-Mail: pva-lsw@pv.at",
+          "retrieved_at": "2026-11-05T22:41:30Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Eltern-Kind-Pass",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.sozialministerium.gv.at/Themen/Gesundheit/Eltern-und-Kind/Eltern-Kind-Pass.html",
+          "quote": "Nach Feststellen einer Schwangerschaft erhält jede Schwangere mit Wohnsitz in Österreich von Ihrem betreuenden Arzt/Ihrer betreuenden Ärztin einen Eltern-Kind-Pass.",
+          "retrieved_at": "2026-11-05T23:52:44.349Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Familienbeihilfe",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+          "quote": "Einen Anspruch auf Familienbeihilfe haben Eltern, deren Lebensmittelpunkt in Österreich liegt und deren Kind (leibliches Kind, Adoptivkind, Pflegekind, Stiefkind oder Enkelkind) mit ihnen zusammen in einem Haushalt lebt oder – wenn das Kind mit keinem Elternteil im Haushalt lebt – für das sie überwiegend Unterhalt leisten.",
+          "retrieved_at": "2026-11-05T23:52:44.349Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Geförderte Familienberatung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.familienberatung.gv.at/faq.html",
+          "quote": "Die Beratung ist kostenlos.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Kinderbetreuungsgeld",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630&portal=oegkportal",
+          "quote": "Anspruch und Bezug der Familienbeihilfe für das Kind,",
+          "retrieved_at": "2026-11-05T23:52:44.349Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Kostenfreies Kinderimpfprogramm",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.sozialministerium.gv.at/Themen/Gesundheit/Impfen/Kostenfreies-Kinderimpfprogramm.html",
+          "quote": "Die Umsetzung des Nationalen Kinderimpfprogramms liegt in der Zuständigkeit der einzelnen Bundesländer.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Heilbehelfe und Hilfsmittel",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/?contentid=10007.870456",
+          "quote": "Sie brauchen eine ärztliche Verordnung oder eine Verordnung von diplomierten Gesundheits- und Krankenpfleger*innen (DKGP). Seit 1. Jänner 2024 sind diplomierte Gesundheits- und Krankenpfleger*innen (kurz: DGKP) in bestimmten pflegespezifischen Bereichen zur Verordnung von Medizinprodukten, zu denen auch bestimmte Heilbehelfe und Hilfsmittel zählen, berechtigt. Voraussetzung für die Verordnung von Heilbehelfen und Hilfsmitteln ist die Absolvierung einer entsprechenden Fortbildung, z.B. beim Österreichischen Gesundheits- und Krankenpflegeverband (ÖGKV). Welche Produkte verordnet werden können, ist in der Krankenordnung der ÖGK (§ 32a Abs. 3) festgelegt.“",
+          "retrieved_at": "2026-11-05T23:49:33Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Medizinische Rehabilitation einschließlich Anschlussheilverfahren",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html",
+          "quote": "Maßnahmen der medizinischen Rehabilitation werden nur aufgrund eines Antrages erbracht.",
+          "retrieved_at": "2026-11-05T23:49:34.968Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Ergotherapie",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20",
+          "quote": "Wir bieten unseren Versicherten Ergotherapie, Logopädie und Physiotherapie nach vorhergehender Verordnung an.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Bewilligung einer geplanten Behandlung im Ausland",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19",
+          "quote": "Für eine Kostenübernahme einer geplanten Behandlung im Ausland muss vorab eine Bewilligung nach medizinischer Prüfung vorliegen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Heilmassage",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19",
+          "quote": "des gehobenen medizinisch-technischen Dienstes sowie eine Leistung einer Heilmasseurin bzw. eines Heilmasseurs.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Heilmittel auf ärztliches Rezept",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=22",
+          "quote": "Diese verschreibt Ihnen Ihre Ärztin bzw. Ihr Arzt und speichert das e-Rezept im e-card-System. Das Rezept können Sie in jeder öffentlichen Apotheke oder Hausapotheke auf Kosten der ÖGK einlösen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Klinisch-psychologische Behandlung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20",
+          "quote": "Der schriftliche Nachweis, dass spätestens vor der zweiten psychotherapeutischen bzw. klinisch-psychologischen Behandlung eine ärztliche Untersuchung durchgeführt wurde. Diese Bestätigung kann formlos oder durch das dafür vorgesehene Formular erfolgen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Klinisch-psychologische Diagnostik",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19",
+          "quote": "Eine aufgrund ärztlicher Verschreibung oder psychotherapeutischer Zuweisung erforderliche diagnostische Leistung einer klinischen Psychologin bzw. eines klinischen Psychologen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Krankengeld",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29",
+          "quote": "Dabei gilt: Halber Lohn-/Gehaltsanspruch bedeutet halbes Krankengeld.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Krankenhauspflege",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=24",
+          "quote": "Wenn und solange es die Krankheit erfordert, übernimmt die ÖGK die Kosten in der allgemeinen Gebührenklasse einer landesgesundheitsfondsfinanzierten Krankenanstalt (z.B. Landeskrankenhäuser, Ordensspitäler) oder in einer privaten Vertragskrankenanstalt (Privatkrankenanstalten-Finanzierungsfonds) zur Gänze.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Logopädie",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20",
+          "quote": "Wir bieten unseren Versicherten Ergotherapie, Logopädie und Physiotherapie nach vorhergehender Verordnung an.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Physiotherapie",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20",
+          "quote": "Wir bieten unseren Versicherten Ergotherapie, Logopädie und Physiotherapie nach vorhergehender Verordnung an.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Psychotherapie",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20",
+          "quote": "Der schriftliche Nachweis, dass spätestens vor der zweiten psychotherapeutischen bzw. klinisch-psychologischen Behandlung eine ärztliche Untersuchung durchgeführt wurde. Diese Bestätigung kann formlos oder durch das dafür vorgesehene Formular erfolgen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Selbstversicherung bei geringfügiger Beschäftigung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11",
+          "quote": "Die Voraussetzungen sind, dass Sie nur geringfügig beschäftigt sind und noch keine Pflichtversicherung in der Kranken- und/oder Pensionsversicherung haben. Das Entgelt, das Sie erhalten, darf die jeweils gültige Geringfügigkeitsgrenze nicht übersteigen. Die Geringfügigkeitsgrenze liegt im Jahr 2026 bei 551,10 Euro.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Selbstversicherung für Studierende",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11",
+          "quote": "Für Studierende gibt es zusätzliche Erleichterungen. Einerseits entfällt die Wartezeit, andererseits genügt der gewöhnliche Aufenthalt im Inland. Außerdem gilt: Der monatliche Beitrag beträgt 78,84 Euro. Die begünstigte Studentenversicherung ist an Einkommensgrenzen und Studiendauer gebunden.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Selbstversicherung in der Krankenversicherung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11",
+          "quote": "Personen, die nicht in einer gesetzlichen Krankenversicherung pflichtversichert sind, können sich auf Antrag selbst versichern – solange sich ihr Wohnsitz im Inland befindet. Das ist die „Freiwillige Krankenversicherung nach § 16 ASVG”.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Transportkosten",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=32",
+          "quote": "Die ÖGK übernimmt Transportkosten im Inland, wenn eine ärztliche Transportanweisung über die Gehunfähigkeit des Versicherten oder Angehörigen vorliegt.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Unterstützungsfonds",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=43",
+          "quote": "Bei finanziellen Belastungen im Zusammenhang mit einer Krankheit oder medizinischen Behandlung, die zu einer Kassenleistung führt, können Versicherte einen Zuschuss beantragen. Dabei werden die Familien-, Einkommens- und Vermögensverhältnisse der betroffenen Person berücksichtigt.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Ärztliche Behandlung im Urlaub",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21",
+          "quote": "Mit der EKVK bekommen Sie direkt bei Vertragspartnerinnen und Vertragspartnern im Ausland medizinisch notwendige Sachleistungen. Legen Sie dafür die EKVK den Leistungserbringern (Ärztin oder Arzt, Krankenanstalt usw.) vor.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Ärztliche Hilfe bei Vertragsärztinnen und Vertragsärzten",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18",
+          "quote": "Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder Zuweisungsschein vorlegen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Kostenerstattung für Wahlärztinnen und Wahlärzte",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18",
+          "quote": "Versicherte müssen das Honorar zunächst selbst bezahlen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Wiedereingliederungsgeld",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=30",
+          "quote": "Mindestens sechswöchige durchgehende Arbeitsunfähigkeit.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Konservierende-chirurgische Zahnbehandlung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=39",
+          "quote": "Werden Leistungen von einer Wahlzahnärztin bzw. einem Wahlzahnarzt im In- oder Ausland erbracht, die zu den Vertragsleistungen zählen, müssen Sie die Rechnung zunächst selbst bezahlen und danach einreichen. Sie erhalten von der ÖGK eine Kostenerstattung in der Höhe von 80 Prozent der entsprechenden Vertragstarife.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Zahnersatz",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=41",
+          "quote": "Für die Anfertigung eines Zahnersatzes stellt Ihnen Ihre behandelnde Vertragszahnärztin bzw. Ihr behandelnder Vertragszahnarzt (Vertragseinrichtung) das Formular „Antrag auf Kostenübernahme für Zahnersatz” aus. Vor Beginn der Behandlung müssen Sie eine Genehmigung bei der ÖGK einholen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Kieferorthopädie und Zahnspangen",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=39",
+          "quote": "Generelle Voraussetzung für eine Kostenbeteiligung der ÖGK ist, dass der Therapievorschlag eingereicht und vom Zahnmedizinischen Dienst der ÖGK bewilligt wird.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Förderung der 24-Stunden-Betreuung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html",
+          "quote": "Bezug von Pflegegeld ab der Stufe 3",
+          "retrieved_at": "2026-11-06T00:06:59Z"
+        }
+      ]
+    },
+    {
+      "canonical": "FSW-Förderung für mobile Pflege und Betreuung in Wien",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.fsw.at/p/pflege-betreuung",
+          "quote": "Sie möchten wissen, welche Pflege- und Betreuungsangebote es in Wien gibt? Der Fonds Soziales Wien berät Sie und sorgt dafür, dass Sie genau die Unterstützung bekommen, die Sie brauchen.",
+          "retrieved_at": "2026-11-06T00:06:59Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Pflegeberatung durch den Fonds Soziales Wien",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.fsw.at/p/pflege-betreuung",
+          "quote": "Sie möchten wissen, welche Pflege- und Betreuungsangebote es in Wien gibt? Der Fonds Soziales Wien berät Sie und sorgt dafür, dass Sie genau die Unterstützung bekommen, die Sie brauchen.",
+          "retrieved_at": "2026-11-06T00:06:59Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Pflegegeld",
+      "variants": ["Pflege Geld", "pflege gelt"],
+      "sources": [
+        {
+          "url": "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html",
+          "quote": "ständiger Betreuungs- und Hilfsbedarf wegen einer körperlichen, geistigen oder psychischen Behinderung beziehungsweise einer Sinnesbehinderung, die voraussichtlich mindestens sechs Monate andauern wird,",
+          "retrieved_at": "2026-11-06T00:06:59Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Pflegekarenz",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html",
+          "quote": "nahe Angehörige, denen zum Zeitpunkt des Antritts Pflegegeld ab Stufe 3 nach dem Bundespflegegeldgesetz (BPGG) mit Bescheid zuerkannt wurde.",
+          "retrieved_at": "2026-11-06T00:06:59Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Pflegekarenzgeld bei Pflegekarenz oder Pflegeteilzeit",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.oesterreich.gv.at/de/themen/pflege/5/1/Seite.360529",
+          "quote": "Vorliegen einer Vollversicherung (Krankenversicherung, Unfallversicherung und Pensionsversicherung) aufgrund eines unmittelbar vor Inanspruchnahme der Pflegekarenz oder Pflegeteilzeit liegenden, ununterbrochenen Arbeitsverhältnisses von zumindest drei Monaten",
+          "retrieved_at": "2026-11-06T00:06:59Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Pflegeteilzeit",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html",
+          "quote": "nahe Angehörige, denen zum Zeitpunkt des Antritts Pflegegeld ab Stufe 3 nach dem Bundespflegegeldgesetz (BPGG) mit Bescheid zuerkannt wurde.",
+          "retrieved_at": "2026-11-06T00:06:59Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Bewegt im Park",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.bewegt-im-park.at/",
+          "quote": "Alle Kurse sind kostenlos und ohne Anmeldung.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Brustkrebs-Früherkennung – automatische Freischaltung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.frueh-erkennen.at/so-koennen-sie-teilnehmen/",
+          "quote": "Wenn Sie zwischen 45 und 74 Jahre alt sind, ist Ihre e-card automatisch für eine Früherkennungsmammografie alle 2 Jahre freigeschaltet.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Brustkrebs-Früherkennung – freiwillige Anmeldung ab 75",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.frueh-erkennen.at/so-koennen-sie-teilnehmen/",
+          "quote": "Wenn Sie zwischen 40 und 44 Jahre oder älter als 74 Jahre sind, können Sie sich freiwillig zum Brustkrebs-Früherkennungsprogramm anmelden.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Brustkrebs-Früherkennung – freiwillige Anmeldung 40 bis 44",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.frueh-erkennen.at/so-koennen-sie-teilnehmen/",
+          "quote": "Wenn Sie zwischen 40 und 44 Jahre oder älter als 74 Jahre sind, können Sie sich freiwillig zum Brustkrebs-Früherkennungsprogramm anmelden.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Darmkrebsvorsorge",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html",
+          "quote": "In Österreich können Personen ab 45 Jahren diese beiden Früherkennungsuntersuchungen gratis durchführen lassen:",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Ernährungsberatung – Zugang und regionale Angebote",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://pflege.gv.at/de/diaetologie",
+          "quote": "Viele Angebote können Sie kostenlos über Ihre Krankenversicherung nutzen.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Öffentliches Impfprogramm – Pneumokokken und Gürtelrose ab 60",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.gesundheitskasse.at/cdscontent/load?contentid=10008.798702&version=1759924855",
+          "quote": "Personen ab dem vollendeten 60. Lebensjahr",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Öffentliches Impfprogramm – Influenza und Impfpassübersicht",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://impfen.gv.at/impfungen/influenza",
+          "quote": "Die Influenza-Impfung ist im Rahmen des öffentlichen Impfprogramms von Bund, Länder und Sozialversicherung für alle gratis.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Vorsorgeuntersuchung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung.html",
+          "quote": "Die Vorsorgeuntersuchung bietet allen Personen ab dem 18. Lebensjahr mit Wohnsitz in Österreich einmal pro Jahr ein umfangreiches Untersuchungsprogramm.",
+          "retrieved_at": "2026-11-06T01:36:22Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Rezeptgebührenbefreiung",
+      "variants": ["Rezept Gebühren Befreiung"],
+      "sources": [
+        {
+          "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal",
+          "quote": "Wenn Ihr monatliches Nettoeinkommen folgende Richtsätze nicht übersteigt, können Sie einen Antrag auf Befreiung von der Rezeptgebühr stellen: Alleinstehende: EUR 1.308,39 Ehepaare: EUR 2.064,12",
+          "retrieved_at": "2026-11-05T23:49:35Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Sozialunterstützung in der Steiermark",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.soziales.steiermark.at/cms/beitrag/12706097/61183307/",
+          "quote": "Grundsätzlich können nur jene Personen Sozialunterstützung nach dem StSUG (Steiermärkisches Sozialunterstützungsgesetz) erhalten, die ihren Hauptwohnsitz und ihren tatsächlichen Aufenthalt in der Steiermark haben sowie",
+          "retrieved_at": "2026-11-05T23:49:35Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Wiener Mindestsicherung",
+      "variants": [],
+      "sources": [
+        {
+          "url": "https://www.wien.gv.at/amtswege/mindestsicherung-antrag",
+          "quote": "Die Grundlage bildet das Wiener Mindestsicherungsgesetz.",
+          "retrieved_at": "2026-11-05T23:49:35Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Rehabilitation",
+      "variants": ["Reha Bilitation"],
+      "sources": [
+        {
+          "url": "https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html",
+          "quote": "Maßnahmen der medizinischen Rehabilitation werden nur aufgrund eines Antrages erbracht.",
+          "retrieved_at": "2026-11-05T23:49:34.968Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Wahlarzt",
+      "variants": ["Wahl Arzt"],
+      "sources": [
+        {
+          "url": "https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18",
+          "quote": "Versicherte müssen das Honorar zunächst selbst bezahlen.",
+          "retrieved_at": "2026-11-06T00:07:42.653242Z"
+        }
+      ]
+    },
+    {
+      "canonical": "Rezeptgebühr",
+      "variants": ["Rezept Gebühr"],
+      "sources": [
+        {
+          "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal",
+          "quote": "Wenn Ihr monatliches Nettoeinkommen folgende Richtsätze nicht übersteigt, können Sie einen Antrag auf Befreiung von der Rezeptgebühr stellen: Alleinstehende: EUR 1.308,39 Ehepaare: EUR 2.064,12",
+          "retrieved_at": "2026-11-05T23:49:35Z"
+        }
+      ]
+    }
+  ]
+}
