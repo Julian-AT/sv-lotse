@@ -1,0 +1,128 @@
+# Task reminders are immediate prompts, not calculated statutory deadlines.
+id: "pflege-24-stunden-betreuung"
+benefit: "ref:catalog/pflege-24-stunden-betreuung"
+actor_roles:
+  - "subject"
+  - "helper"
+slots:
+  - id: "residence_region"
+    type: "enum:residence-region"
+    question_hint: "In welchem Bundesland wohnt die Person, für die Sie Hilfe suchen?"
+    validation:
+      options:
+        - "Wien"
+        - "Niederösterreich"
+        - "Burgenland"
+        - "Oberösterreich"
+        - "Steiermark"
+        - "Kärnten"
+        - "Salzburg"
+        - "Tirol"
+        - "Vorarlberg"
+        - "Ausland"
+  - id: "care_level"
+    type: "number"
+    question_hint: "Welche Pflegegeldstufe steht im Bescheid?"
+    validation:
+      min: 0
+      max: 7
+  - id: "care_start"
+    type: "date"
+    question_hint: "Wann beginnt oder begann das Betreuungsverhältnis?"
+  - id: "sms_requirements_clarified"
+    type: "boolean"
+    question_hint: "Hat das SMS Bedarf, Betreuungsverhältnis, Qualifikation und Einkommensgrenze mit Ihnen geklärt? Bei Stufe 3 oder 4 prüft das SMS den Bedarf gesondert."
+  - id: "application_ready"
+    type: "boolean"
+    question_hint: "Sind Ansuchen und die für Ihre Betreuungsform nötigen Nachweise bereit?"
+  - id: "application_submitted"
+    type: "boolean"
+    question_hint: "Haben Sie oder Ihre berechtigte Vertretung das Ansuchen selbst beim SMS eingereicht?"
+  - id: "decision_received"
+    type: "boolean"
+    question_hint: "Haben Sie die Förderentscheidung des SMS erhalten?"
+steps:
+  - id: "clarify"
+    needs:
+      - "residence_region"
+      - "care_level"
+      - "care_start"
+      - "sms_requirements_clarified"
+    criteria: "ref:catalog/pflege-24-stunden-betreuung#criteria"
+    action: "office.resolve"
+    outputs:
+      - id: "sms-office"
+        type: "office"
+    reminders:
+      - after_days: 0
+        text_de: "Ansuchen möglichst vor Betreuungsbeginn, spätestens im Folgemonat stellen. Bei späterem Eingang ist die Förderung frühestens ab Beginn des Monats vor Antragstellung möglich."
+        when: "true"
+    transitions:
+      - to: "prepare"
+        when: "care_level >= 3 and sms_requirements_clarified == true"
+  - id: "prepare"
+    needs:
+      - "clarify"
+      - "application_ready"
+    documents: "ref:catalog/pflege-24-stunden-betreuung#documents"
+    action: "documents.checklist"
+    signature: "subject"
+    outputs:
+      - id: "application-checklist"
+        type: "checklist"
+    reminders:
+      - after_days: 0
+        text_de: "Bitte prüfen Sie die Unterlagen mit der zuständigen Stelle. Sie reichen den Antrag selbst ein."
+        when: "application_ready == false"
+    transitions:
+      - to: "confirm-submission"
+        when: "application_ready == true"
+  - id: "confirm-submission"
+    needs:
+      - "prepare"
+      - "application_submitted"
+    transitions:
+      - to: "decision"
+        when: "application_submitted == true"
+  - id: "decision"
+    needs:
+      - "confirm-submission"
+      - "decision_received"
+    outputs:
+      - id: "support-decision"
+        type: "decision"
+    transitions:
+      - to: "finish"
+        when: "decision_received == true"
+  - id: "finish"
+    needs:
+      - "decision"
+completion:
+  evidence:
+    - "user_statement"
+sources:
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Bezug von Pflegegeld ab der Stufe 3"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Bezieht die pflegebedürftige Person ein Pflegegeld der Stufen 3 oder 4, ist die Notwendigkeit einer 24-Stunden-Betreuung durch das Sozialministeriumservice gesondert festzustellen. Die Entscheidung erfolgt auf Basis des zuletzt erstellten Pflegegeldgutachtens."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Die Einkommensgrenze beträgt 2.500 Euro netto monatlich, wobei Leistungen wie Pflegegeld, Sonderzahlungen, Familienbeihilfe, Kinderbetreuungsgeld und Wohnbeihilfen unberücksichtigt bleiben."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Für unterhaltsberechtigte Angehörige erhöht sich die Einkommensgrenze um 400 Euro bzw. um 600 Euro für unterhaltsberechtigte Angehörige mit Behinderung."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Die Betreuungspersonen müssen entweder eine theoretische Ausbildung nachweisen, die im Wesentlichen derjenigen Heimhilfe entspricht, oder seit mindestens sechs Monaten die Betreuung der pflegebedürftigen Person sachgerecht durchgeführt haben. Alternativ dazu muss eine fachspezifische Ermächtigung (Delegation) der Betreuungsperson zu pflegerischen Tätigkeiten vorliegen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Zeitliche Nähe ist dann gegeben, wenn das Ansuchen spätestens in dem Monat einlangt, der auf den Beginn des Betreuungsverhältnisses folgt."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Bei später einlangenden Ansuchen ist eine Förderung frühestens mit Beginn des Monates vor der Ansuchenstellung möglich."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Ueber_uns/Sozialministeriumservice/Landesstellen/Landesstellen_des_Sozialministeriumservice.de.html"
+    quote: "Die Landesstellen des Sozialministeriumservice sind die regionale Anlaufstellen in den Bundesländern."
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"
