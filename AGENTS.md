@@ -55,6 +55,12 @@ SV KI-Lotse is a voice-first, screen-aware guide through Austria's health and so
     (say so in the test and the report).
   Stop only for real conflicts: a frozen contract (protocol, database schema, tool schemas), a path
   another WP owns, a new paid service, or a requirement that contradicts the PRD.
+- **Fast mode (owner, 2026-11-06, until the deadline): never stop at a path boundary.** If your
+  work needs something outside your owned paths (an API route, a backend function, a shared
+  component, a schema field, a migration), build the smallest working version yourself, keep it
+  consistent with the existing code, and list it under `deviations`. Only stop if you would have to
+  change `data/svbox/`, the PRD, `orchestration/` or secrets. Report `status: done` when the gates
+  pass, `partial` when most of it works.
 - **Deadline mode (until the hackathon deadline): do not stop for details.** When the brief, the PRD
   and a frozen contract disagree on a detail, choose the least invasive reading that keeps the
   contract and the safety rules (security, approvals, medical boundary, no secrets), implement it,

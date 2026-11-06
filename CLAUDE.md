@@ -39,6 +39,12 @@ sections of both on demand; do not load whole files into context without need.
 While workers run, review finished WPs, write the next briefs, and keep the batch full up to
 `MAX_PARALLEL`.
 
+### Fast mode (owner decision, 2026-11-06)
+
+Ownership is advisory (`FAST_MODE=1`): workers build what they need across paths, every WP lands
+when its gates pass (risk: high included), reviews run after landing as notes. The orchestrator
+keeps the worker slots full and merges continuously. Restore strict mode after the deadline.
+
 ### Deadline mode (owner decision, 2026-11-05, 12 hours before the deadline)
 
 Work lands directly on `main`: the `protect-main` ruleset is disabled, `REQUIRE_CI=0`, and
