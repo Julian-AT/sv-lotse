@@ -1,12 +1,22 @@
 import { MockLanguageModelV4 } from "ai/test";
-import { expect, test } from "vitest";
-import { findOfficialPages } from "../../src/tools/impl/web/index.ts";
+import { afterEach, expect, test, vi } from "vitest";
+import {
+  findOfficialPages,
+  implementations,
+  MAX_PAGE_READS,
+  readOfficialPage,
+} from "../../src/tools/impl/web/index.ts";
 
 const usage = {
   inputTokens: { total: 1, noCache: 1, cacheRead: 0, cacheWrite: 0 },
   outputTokens: { total: 1, text: 1, reasoning: 0 },
 };
-const origins = ["https://www.oegk.at", "https://www.pv.at", "https://www.oesterreich.gv.at"];
+const origins = [
+  "https://www.oegk.at",
+  "https://www.pv.at",
+  "https://www.oesterreich.gv.at",
+  "https://www.sozialministerium.gv.at",
+];
 const pflegegeld = "https://www.pv.at/web/pflegegeld/antrag";
 
 function searchModel(text: string, sources: readonly string[]) {
@@ -102,4 +112,107 @@ test("returns an empty list when the search fails", async () => {
   await expect(
     findOfficialPages({ query: "Pflegegeld Antrag" }, { model, origins }),
   ).resolves.toEqual([]);
+});
+
+test("prefers a deep page over a home page and keeps a home page only as the last resort", async () => {
+  const ministry = "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html";
+  const deep = searchModel("", ["https://www.pv.at/", ministry]);
+  await expect(
+    findOfficialPages({ query: "Wo beantrage ich Pflegegeld?" }, { model: deep.model, origins }),
+  ).resolves.toEqual([{ url: ministry, title: "www.sozialministerium.gv.at", snippet: "" }]);
+
+  const home = searchModel("", ["https://www.pv.at/"]);
+  await expect(
+    findOfficialPages({ query: "Pflegegeld" }, { model: home.model, origins }),
+  ).resolves.toEqual([{ url: "https://www.pv.at", title: "www.pv.at", snippet: "" }]);
+});
+
+test("uses pages from the ingested sources when the web search fails", async () => {
+  const model = new MockLanguageModelV4({
+    doGenerate: async () => {
+      throw new Error("search unavailable");
+    },
+  });
+  const known = Promise.resolve([
+    { url: pflegegeld, title: "", snippet: "Den Antrag stellen Sie bei der PVA." },
+    { url: "https://www.example.com/pflegegeld", title: "", snippet: "Fremde Seite." },
+  ]);
+
+  await expect(
+    findOfficialPages({ query: "Pflegegeld Antrag" }, { model, origins, known }),
+  ).resolves.toEqual([
+    { url: pflegegeld, title: "www.pv.at", snippet: "Den Antrag stellen Sie bei der PVA." },
+  ]);
+});
+
+const html = `<!doctype html><html><head><title>Pflegegeld | PVA</title></head><body>
+<nav><a href="/">Startseite</a><a href="https://www.facebook.com/pva">Facebook</a></nav>
+<main><h1>Pflegegeld</h1><p>Das Pflegegeld beantragen Sie bei Ihrer Pensionsversicherung.</p>
+<a href="/web/pflegegeld/antrag">Pflegegeld online beantragen</a>
+<a href="/documents/antrag-pflegegeld.pdf">Antragsformular (PDF)</a>
+<a href="https://www.pflegegeld-hilfe.at/antrag">Hilfe beim Antrag</a>
+<a href="https://www.pv.at/login">Anmelden</a>
+<form><label for="svnr">Sozialversicherungsnummer</label><input id="svnr" name="svnr" type="text">
+<input type="hidden" name="token" value="x"><button type="submit">Senden</button></form>
+</main></body></html>`;
+
+function htmlResponse(body = html) {
+  return new Response(body, {
+    status: 200,
+    headers: { "content-type": "text/html; charset=utf-8" },
+  });
+}
+
+test("reads allowlisted links, form fields and the PDF form of a page", async () => {
+  const page = await readOfficialPage("https://www.pv.at/web/pflegegeld", {
+    origins,
+    fetcher: async () => htmlResponse(),
+  });
+
+  expect(page.title).toBe("Pflegegeld | PVA");
+  expect(page.headings).toEqual(["Pflegegeld"]);
+  expect(page.text).toContain("Das Pflegegeld beantragen Sie bei Ihrer Pensionsversicherung.");
+  expect(page.links.map((link) => link.href)).toEqual([
+    "https://www.pv.at/documents/antrag-pflegegeld.pdf",
+    "https://www.pv.at/web/pflegegeld/antrag",
+    "https://www.pv.at/",
+  ]);
+  expect(page.links[0]).toMatchObject({ pdf: true, form: true, apply: true });
+  expect(page.formPdf).toBe("https://www.pv.at/documents/antrag-pflegegeld.pdf");
+  expect(page.fields).toEqual([{ label: "Sozialversicherungsnummer", name: "svnr", type: "text" }]);
+  expect(page.sources[0]?.url).toBe("https://www.pv.at/web/pflegegeld");
+});
+
+test("refuses pages and redirects outside the allowlist", async () => {
+  await expect(
+    readOfficialPage("https://www.pflegegeld-hilfe.at/antrag", {
+      origins,
+      fetcher: async () => htmlResponse(),
+    }),
+  ).rejects.toThrow("PAGE_NOT_ALLOWED");
+  await expect(
+    readOfficialPage("https://www.pv.at/weiter", {
+      origins,
+      fetcher: async () =>
+        new Response(null, {
+          status: 302,
+          headers: { location: "https://evil.example/pflegegeld" },
+        }),
+    }),
+  ).rejects.toThrow("PAGE_NOT_ALLOWED");
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
+test("caps page reads per turn", async () => {
+  vi.stubGlobal("fetch", async () => htmlResponse());
+  const readPage = implementations({ allowStubs: false })["web.readPage"];
+  if (!readPage) throw new Error("Missing web.readPage");
+  const read = () =>
+    readPage({ url: "https://www.pv.at/web/pflegegeld" }, {} as never, {} as never);
+
+  for (let index = 0; index < MAX_PAGE_READS; index++) await expect(read()).resolves.toBeTruthy();
+  await expect(read()).rejects.toThrow("PAGE_READ_LIMIT");
 });

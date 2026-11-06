@@ -26,6 +26,7 @@ describe("runtime contracts", () => {
           "web.findOfficialPage",
           "ui.click",
           "ui.scroll",
+          "web.readPage",
         ]),
       ].sort(),
     );

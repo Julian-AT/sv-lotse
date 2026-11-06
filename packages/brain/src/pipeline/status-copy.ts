@@ -26,6 +26,7 @@ const families: Partial<Record<ToolName, StatusFamily>> = {
   "eko.lookupCoverage": "lookup",
   "fees.explainReimbursement": "lookup",
   "web.findOfficialPage": "lookup",
+  "web.readPage": "lookup",
   "office.resolve": "office",
   "facility.search": "office",
   "appointment.search": "office",

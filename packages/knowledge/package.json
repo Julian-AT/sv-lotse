@@ -6,6 +6,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./portal-policy": "./src/portal-policy.ts",
+    "./page-reader": "./src/page-reader.ts",
     "./turn-controls": "./src/turn-controls.ts",
     "./form-owner-declarations": "./data/form-owner-declarations.json",
     "./document-policy": "./src/document-policy.ts",

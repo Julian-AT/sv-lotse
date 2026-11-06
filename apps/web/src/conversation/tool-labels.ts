@@ -27,6 +27,7 @@ const labels: Record<string, { de: string; en: string }> = {
   "ui.scroll": { de: "Seite scrollen", en: "Scroll the page" },
   "ui.point": { de: "Zeigen", en: "Point" },
   "web.findOfficialPage": { de: "Offizielle Seite suchen", en: "Find official page" },
+  "web.readPage": { de: "Seite lesen", en: "Read page" },
 };
 
 const normalize = (name: string) =>
