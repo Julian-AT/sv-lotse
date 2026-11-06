@@ -12,7 +12,7 @@ import {
   ProvenanceSchema,
   type Target,
 } from "@lotse/protocol";
-import type { UIMessageStreamWriter } from "ai";
+import type { LanguageModel, UIMessageStreamWriter } from "ai";
 import { and, desc, eq, sql } from "drizzle-orm";
 import type { RuntimeContext } from "../agent/context.ts";
 import { FORM_TYPE_PACE_MS } from "../config/index.ts";
@@ -22,7 +22,13 @@ import { getTemplate } from "../forms/registry/index.ts";
 import { type FormField, type FormToolResult, templateSchema } from "../forms/schema.ts";
 import { contracts } from "../tools/contracts/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
-import { applicantOf, askable, type FormAnswer, fieldQuestion } from "./form-answers.ts";
+import {
+  answerManyFields,
+  applicantOf,
+  askable,
+  type FormAnswer,
+  fieldQuestion,
+} from "./form-answers.ts";
 
 export interface BenefitForm {
   formId: string;
@@ -295,6 +301,8 @@ export async function prepareFormAfterOpen(input: {
   signal?: AbortSignal;
   /** The person asked to fill in or apply; open the registered form without a page first. */
   requested?: boolean;
+  /** Data the person handed over with the request (e.g. a pasted letter), filled in right away. */
+  data?: { text: string; turnId: string; language: string; model: LanguageModel };
 }): Promise<{ goalConfirmed?: string } | undefined> {
   const { db, context } = input;
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
@@ -336,6 +344,18 @@ export async function prepareFormAfterOpen(input: {
     subjectId: context.subjectId,
   };
   const prefilled = await prefillForm(db, prefillInput, context, input.signal);
+  if (input.data && input.data.text.length > 80)
+    await answerManyFields({
+      db,
+      context,
+      turnId: input.data.turnId,
+      language: input.data.language,
+      topics: topicTexts(input.history),
+      model: input.data.model,
+      pending: { formInstanceId: prefilled.formInstanceId, fieldId: "" },
+      answer: input.data.text,
+      fromDocuments: true,
+    });
   const schema = templateSchema(await getTemplate(db, template.id));
   const firstField =
     askedField(schema.fields, prefilled.missingFields)?.id ??

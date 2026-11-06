@@ -90,7 +90,7 @@ import { formQuestion, prepareFormAfterOpen, topicTexts } from "./form-after-ope
 
 // Any wish to apply, fill or find the application opens the known form at once (no offer first).
 const FILL_INTENT =
-  /ausf(?:ü|ue)ll|formular|antrag|beantrag|einreich|unterst(?:ü|ue)tz|schritt f(?:ü|ue)r schritt|^(?:ja|ja,? bitte|gerne|ok|okay)\b|fill (?:in|out)|apply|application/iu;
+  /ausf(?:ü|ue)ll|f(?:ü|ue)ll|formul|\bform\b|eintrag|trag\w* .{0,40}\bein\b|antrag|beantrag|einreich|unterst(?:ü|ue)tz|schritt f(?:ü|ue)r schritt|^(?:ja|ja,? bitte|gerne|ok|okay)\b|\bfill\b|apply|application/iu;
 
 import { answerFormQuestion } from "./form-answers.ts";
 import {
@@ -431,6 +431,19 @@ async function runTurn(
         history: prepared.history,
         writer,
         requested: latest.role === "user" && FILL_INTENT.test(userText),
+        ...(latest.role === "user" && userText.length > 80
+          ? {
+              data: {
+                text: userText,
+                turnId: prepared.turnId,
+                language: formLanguage,
+                model:
+                  options?.languageModel ??
+                  options?.model ??
+                  createModelRouter(config).modelFor("extractor"),
+              },
+            }
+          : {}),
         ...(options?.abortSignal ? { signal: options.abortSignal } : {}),
       });
       if (formFill) {

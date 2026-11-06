@@ -367,7 +367,7 @@ const extraction = z.object({
  * person's own text onto the open fields; each value still passes the field's own validation, is
  * stored as the person's statement and typed live. Nothing matched leaves the turn to the agent.
  */
-async function answerManyFields(input: {
+export async function answerManyFields(input: {
   db: DatabaseClient;
   context: RuntimeContext;
   turnId: string;
@@ -394,7 +394,10 @@ async function answerManyFields(input: {
   const fields = templateSchema(await getTemplate(db, instance.templateId)).fields;
   const values = formFields.parse(instance.fields);
   // Empty fields and the person's own drafts can be (re)filled; confirmed values stay untouched.
-  const open = fields.filter((field) => askable(field) && values[field.id]?.state !== "confirmed");
+  // Every applicant-writable field; doctor and hospital sections are excluded by writableField.
+  const open = fields.filter(
+    (field) => writableField(field) && values[field.id]?.state !== "confirmed",
+  );
   if (!open.length) return;
   const english = input.language.startsWith("en");
   // Administrative facts already read from the person's documents (e.g. a discharge letter).
@@ -410,15 +413,19 @@ async function answerManyFields(input: {
     model: input.model,
     output: Output.object({ schema: extraction }),
     system:
-      "Map the person's text and the listed document facts onto form fields. Return only values " +
-      "stated explicitly, copied as written; never guess, infer or add medical information. " +
-      "Dates as DD.MM.YYYY. Set factId to the document fact's id when the value comes from it. " +
-      "A new value for a field replaces its current draft.",
+      "Fill an application form for the person concerned (the patient) from the given text, which " +
+      "may be a pasted letter such as a hospital discharge letter, and from the listed document " +
+      "facts. For each form field whose meaning matches a value stated in the text, return it: " +
+      "the patient's full name for name fields (person.name, insured.name, family/given name), " +
+      "date of birth as DD.MM.YYYY, insurance number as 10 digits without spaces, the patient's own " +
+      "address and phone only if stated as theirs. Copy values as written; never guess. Never use " +
+      "names, addresses or phone numbers of hospitals, clinics, doctors or nurses. Skip checkboxes " +
+      "and anything medical. Set factId to the document fact's id when the value comes from it.",
     prompt: JSON.stringify({
       fields: open.map((field) => ({
         fieldId: field.id,
         label: field.label_de,
-        kind: questionKey(field),
+        meaning: field.fact_type?.startsWith("form.field.") ? questionKey(field) : field.fact_type,
       })),
       text: answer,
       documentFacts: documentFacts.map((fact) => ({
@@ -437,6 +444,14 @@ async function answerManyFields(input: {
     const documentFact = documentFacts.find((fact) => fact.id === item.factId);
     return field && parsed ? [{ field, parsed, documentFact }] : [];
   });
+  console.info(
+    JSON.stringify({
+      event: "form_fill_extract",
+      open: open.length,
+      proposed: result.output.values.map((item) => [item.fieldId, item.value]),
+      accepted: filled.map((item) => item.field.id),
+    }),
+  );
   const unique = filled.filter(
     (item, index) => filled.findIndex((other) => other.field.id === item.field.id) === index,
   );
