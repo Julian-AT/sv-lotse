@@ -1,0 +1,72 @@
+.voice {
+  composes: lotse-glass from global;
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 1.5rem;
+}
+.voice p {
+  margin: 0;
+}
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.voice button,
+.composer button {
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.pushToTalk {
+  touch-action: none;
+  user-select: none;
+  background: var(--lotse-accent);
+  color: var(--lotse-on-accent);
+}
+.pushToTalk[aria-pressed="true"] {
+  background: #782f16;
+}
+.voice label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 44px;
+}
+.voice input[type="range"] {
+  width: min(100%, 24rem);
+  min-height: 44px;
+}
+.voice input[type="checkbox"] {
+  width: 44px;
+  height: 44px;
+}
+.caption {
+  min-height: 1.5em;
+  font-weight: 600;
+}
+.composer {
+  display: grid;
+  gap: 0.75rem;
+}
+.composer textarea {
+  width: 100%;
+  min-height: 6rem;
+  padding: 0.75rem;
+  font: inherit;
+}
+.messages {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+.messages li {
+  padding: 1rem;
+  border-inline-start: 3px solid var(--lotse-accent);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
