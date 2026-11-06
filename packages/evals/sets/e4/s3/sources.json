@@ -1,0 +1,275 @@
+[
+  {
+    "id": "goal",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-G7 | Goal capture and confirmation | Within the first turns the pilot states the goal it understood (\"You want to apply for care allowance for your mother\") and asks for confirmation; the confirmed goal is stored on the case and selects the process; a changed goal re-plans without losing facts | P0 |"
+  },
+  {
+    "id": "bundle",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-G5 | Life-situation bundles | For any life situation defined in the catalog (the brief's S1 to S4 are four instances) the pilot assembles the bundle from the catalog, inside and outside social insurance; no scenario id is referenced in code (E2) | P1 |"
+  },
+  {
+    "id": "questions",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-G3 | Minimal questioning | Questions come only from the process engine's missing slots for the next step; no question is asked twice; the next question is the one that most reduces the remaining unknowns for the confirmed goal | P0 |"
+  },
+  {
+    "id": "import",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D1 | Document import from file, drag-and-drop, photo, iPhone scan, screen capture and guided-window download | Each channel lands a document in the user context after a preview of what will be stored; multi-page screen capture scrolls through the document | P0 |"
+  },
+  {
+    "id": "quotes",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D3 | Documented-statement extraction | Output is a list of verbatim quotes with page and bounding box, typed as documented recommendation or administrative fact (date, institution, care level, carrier, case number, named medicine); no paraphrased medical content; diagnoses are not extracted as facts | P0 |"
+  },
+  {
+    "id": "highlight",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D4 | Highlight in the source | The pilot highlights the exact quoted sentence on screen or in the document viewer while speaking it | P0 |"
+  },
+  {
+    "id": "live",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D5 | Live form filling with provenance | The pilot fills the form in front of the user. The companion cursor moves to each field in the document viewer (Mac and web) or on the page (guided window), clicks into it and types the value at a readable pace, while the caption or voice says what it enters and where it comes from. Each value carries its provenance (fact and quote, or user statement). Values go into a draft form instance and count only after the user confirms the field group (L2) or the whole form (L3). Missing and invalid fields are marked and asked for. Fields reserved for doctors, hospitals or offices, and signature fields, are skipped and flagged. The user can stop the pilot at any moment by voice, key or click and correct a field by voice or keyboard; corrections are saved as user-statement facts | P0 |"
+  },
+  {
+    "id": "checklist",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D9 | Required-document identification | For each benefit the pilot lists the required documents from the catalog with status have (in context), missing, or obtainable, and for missing ones names where to get them (office, portal, doctor) with source; the list is shown before any form is filled | P0 |"
+  },
+  {
+    "id": "acquire",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D10 | Dynamic form acquisition | When a process step needs a form that is not in the form registry, the pilot searches the catalog and allowlisted official sites (carriers, ministries, federal states, FSW). It shows the candidate with publisher, title and date, downloads the official file once the user agrees, and registers it as a versioned template (source URL, hash, retrieval date). Known templates are reused and re-checked for newer versions before use. Only allowlisted origins; nothing behind a login | P0 |"
+  },
+  {
+    "id": "office",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-O1 | Responsible office resolution | Office is derived from benefit, insurance carrier, subject's status (employed, pensioner by carrier, co-insured) and region via catalog rules and the office directory, with address, channel, opening hours where known and source | P0 |"
+  },
+  {
+    "id": "facility",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-O2 | Facility and offer finder with map | Rehabilitation facilities, care advice, mobile services, Vorsorgeuntersuchung providers and regional offers shown on a map with distance and opening times where known | P1 |"
+  },
+  {
+    "id": "appointment",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-O3 | Appointment preparation | The pilot prepares a call cheat sheet, an e-mail draft, a calendar hold and, where a real booking form exists, a pre-filled booking form; it does not book on its own | P1 |"
+  },
+  {
+    "id": "preferences",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-O5 | Appointment search with preferences | The pilot captures preferences (near me or a place, morning or afternoon, language, accessibility needs such as step-free access) through follow-up questions and finds options: facility or doctor, distance, opening hours, booking channel (online form, phone, e-mail, 1450 for advice); options carry a source and a retrieval date | P1 |"
+  },
+  {
+    "id": "booking",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-O6 | Guided appointment arrangement at L3 | At autonomy level L3 and after explicit approval of the exact values, the pilot fills a real online booking form on an allowlisted page in the guided window; the user performs the final confirming click; the pilot never submits and never places calls. Where the catalog has no verified booking page for the facility, the step ends with the prepared call cheat sheet, e-mail draft and calendar hold from FR-O3 | P1 |"
+  },
+  {
+    "id": "language",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-L1 | Multilingual voice and text | Spoken language detected automatically; answers in that language; forms stay in German with translated labels; German and English are enabled at launch, further languages are behind a feature flag until they pass E4 | P0 |"
+  },
+  {
+    "id": "simple",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-L2 | Simple language mode | \"Einfache Sprache\" (about CEFR B1): short sentences, everyday words, one instruction at a time; toggle by voice; measured by a readability check in E4 | P0 |"
+  },
+  {
+    "id": "helper",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-R4 | Roles and limits | Helpers can point, annotate and propose values; approvals stay with the person; a visible indicator shows an active session; either side can end it | P1 |"
+  },
+  {
+    "id": "eko",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-M1 | Medicine cost-coverage lookup (EKO) | For a medicine named verbatim on the user's own prescription or discharge letter, or typed by the user, the pilot answers only: whether it is listed in the EKO; which box applies (green, yellow RE1 with prior approval, yellow RE2 with subsequent control, red); whether chief or control physician approval (chef- und kontrollärztliche Bewilligung) is required and who requests it; the current prescription fee, the 2% income cap and exemption rules with sources. Lookup matches product names exactly. When the document names only a substance (for example \"Amlodipin\"), the lookup works at substance level: the answer states the coverage status shared by the listed packs, or that it differs between packs and the prescription decides, without naming any product. The tool returns coverage fields only; the pilot never names, compares or suggests another medicine and never comments on suitability or dosage; such questions are answered with a handoff to doctor or pharmacist | P1 |"
+  },
+  {
+    "id": "voice",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "- Scenario 3 must be completable by voice and captions alone (tested in E4)."
+  },
+  {
+    "id": "boundary",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "Medical assessment remains with the treating doctors and health professionals."
+  },
+  {
+    "id": "approval",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "1. **Show, then do; never do silently.** Every side-effecting action is proposed, shown and confirmed. The pilot never submits."
+  },
+  {
+    "id": "demo",
+    "path": "docs/prd/SV-KI-Lotse-PRD.md",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "**Scenario 3 demo.** It runs on the SV-Box discharge letter (fictional patient Anna Berger):\n\n- Its documented recommendation for oncological rehabilitation leads to the rehabilitation application. This is the SV-Box form \"Antrag auf Rehabilitations-, Kur- bzw. Erholungsaufenthalt\", filled live.\n- Its open-task list adds:\n  - Pflegegeld (PVA form PAL 080);\n  - mobile home care (FSW funding application);\n  - the travel-cost subsidy (ÖGK form);\n  - the prescription-fee exemption, whose form is acquired live from the carrier's site (FR-D10).\n- The discharge medication is checked against the EKO (FR-M1).\n- The hospital form for Anschlussheilverfahren is explained and handed to the hospital, never filled by the pilot."
+  },
+  {
+    "id": "letter_carrier",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "passage": "Gesetzlich krankenversichert, ÖGK (fiktive Angabe)",
+    "page": 1
+  },
+  {
+    "id": "letter_rehabilitation",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "passage": "Empfehlung:   Prüfung einer stationären onkologischen Rehabilitation nach Abschluss\nder geplanten Strahlentherapie.",
+    "page": 5
+  },
+  {
+    "id": "letter_prepare",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "passage": "Der Antrag soll rechtzeitig mit dem behandelnden onkologischen Team bzw. der\nHausärztin vorbereitet werden.",
+    "page": 5
+  },
+  {
+    "id": "letter_decision",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "passage": "Die endgültige Entscheidung über die Bewilligung und die geeignete Einrichtung trifft der\nzuständige Kostenträger.",
+    "page": 5
+  },
+  {
+    "id": "letter_mobile",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "passage": "Kontaktaufnahme mit den zuständigen Wiener Beratungs- und Servicestellen zur\nOrganisation mobiler Pflege und gegebenenfalls weiterer Alltagshilfen.",
+    "page": 6
+  },
+  {
+    "id": "letter_fee",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "passage": "Bei entsprechender finanzieller Situation Information über die Voraussetzungen\neiner Rezeptgebührenbefreiung.",
+    "page": 6
+  },
+  {
+    "id": "letter_travel",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "passage": "Klärung möglicher Unterstützungsleistungen für Fahrten zu notwendigen\nBehandlungsterminen.",
+    "page": 6
+  },
+  {
+    "id": "letter_conditional",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "passage": "Hinweis:   Ob und in welchem Umfang die genannten Leistungen gewährt werden, hängt\nvon den individuellen Voraussetzungen, den geltenden Regelungen und gegebenenfalls\neiner gesonderten Antragstellung ab.",
+    "page": 6
+  },
+  {
+    "id": "rehab_form",
+    "path": "Anträge und Formulare/Antrag Kur und Reha.pdf",
+    "uri": "svbox:///Anträge%20und%20Formulare/Antrag%20Kur%20und%20Reha.pdf",
+    "passage": "Antrag auf Rehabilitations-, Kur- bzw. Erholungsaufenthalt",
+    "page": 1
+  },
+  {
+    "id": "physician_section",
+    "path": "Anträge und Formulare/Antrag Kur und Reha.pdf",
+    "uri": "svbox:///Anträge%20und%20Formulare/Antrag%20Kur%20und%20Reha.pdf",
+    "passage": "Ärztliche Stellungnahme",
+    "page": 2
+  },
+  {
+    "id": "travel_form",
+    "path": "Anträge und Formulare/Antrag-auf-Zuschuss-zu-Fahrtkosten_Wien.pdf",
+    "uri": "svbox:///Anträge%20und%20Formulare/Antrag-auf-Zuschuss-zu-Fahrtkosten_Wien.pdf",
+    "passage": "Antrag auf Zuschuss zu Fahrtkosten für Versicherte mit Rezeptgebührenbefreiung",
+    "page": 1
+  },
+  {
+    "id": "pva_contact",
+    "path": "packages/knowledge/offices/carriers/pva-wien.yaml",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/pva-wien.yaml",
+    "passage": "Pensionsversicherung – Landesstelle Wien"
+  },
+  {
+    "id": "pva_region",
+    "path": "packages/knowledge/offices/carriers/pva-wien.yaml",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/pva-wien.yaml",
+    "passage": "Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort, bei Wohnsitz im Ausland ist die Landesstelle Wien zuständig."
+  },
+  {
+    "id": "oegk_contact",
+    "path": "packages/knowledge/offices/carriers/oegk-wien.yaml",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/oegk-wien.yaml",
+    "passage": "Österreichische Gesundheitskasse Wien"
+  },
+  {
+    "id": "fsw_contact",
+    "path": "packages/knowledge/offices/regional/fsw-pflege-und-betreuung-1150.json",
+    "uri": "file:///repo/packages/knowledge/offices/regional/fsw-pflege-und-betreuung-1150.json",
+    "passage": "Pflege und Betreuung"
+  },
+  {
+    "id": "svs_contact",
+    "path": "packages/knowledge/offices/carriers/svs-steiermark.yaml",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/svs-steiermark.yaml",
+    "passage": "SVS-Kundencenter Steiermark"
+  },
+  {
+    "id": "bvaeb_contact",
+    "path": "packages/knowledge/offices/carriers/bvaeb-tirol.yaml",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/bvaeb-tirol.yaml",
+    "passage": "BVAEB – Landesstelle für Tirol"
+  },
+  {
+    "id": "letter_medicine_1",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "page": 3,
+    "passage": "Amlodipin"
+  },
+  {
+    "id": "letter_medicine_2",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "page": 3,
+    "passage": "Ondansetron"
+  },
+  {
+    "id": "letter_medicine_3",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "page": 3,
+    "passage": "Macrogol"
+  },
+  {
+    "id": "letter_medicine_4",
+    "uri": "svbox:///Befunde/Entlassungsbefund.pdf",
+    "path": "Befunde/Entlassungsbefund.pdf",
+    "page": 3,
+    "passage": "Pantoprazol"
+  }
+]
