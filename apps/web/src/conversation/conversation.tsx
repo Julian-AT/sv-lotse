@@ -362,7 +362,7 @@ export function Conversation({
         </section>
       </DocumentDropZone>
       {/* Form slot: the open form docks here beside the chat on wide windows. */}
-      <div className="contents" ref={setDock} />
+      <div ref={setDock} style={{ display: "contents" }} />
     </div>
   );
 }
