@@ -73,11 +73,11 @@ import { contracts, isToolName } from "../tools/contracts/index.ts";
 import {
   AFTER_OPEN_POLICY,
   answersOffer,
-  guidanceOffer,
   offerChunks,
   openedResource,
   recentUserTexts,
 } from "../tools/impl/ui/resource.ts";
+import { deepPageOffer } from "../tools/impl/web/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
 import { pointedToolCall, resultPointAction } from "../workspace/targets.ts";
 import { approvedResultCheckpoint } from "./approved-results.ts";
@@ -784,7 +784,9 @@ async function runTurn(
           !resourceCalls &&
           !answersOffer(prepared.history, userText)
         ) {
-          const offer = await guidanceOffer({
+          const offer = await deepPageOffer({
+            model: createModelRouter(config).modelFor("extractor"),
+            signal: options?.abortSignal,
             userTexts: [userText, ...recentUserTexts(prepared.history, userText)],
             sources: topSources(
               [

@@ -1,6 +1,7 @@
 import { MockLanguageModelV4 } from "ai/test";
 import { afterEach, expect, test, vi } from "vitest";
 import {
+  deepPageOffer,
   findOfficialPages,
   implementations,
   MAX_PAGE_READS,
@@ -215,4 +216,23 @@ test("caps page reads per turn", async () => {
 
   for (let index = 0; index < MAX_PAGE_READS; index++) await expect(read()).resolves.toBeTruthy();
   await expect(read()).rejects.toThrow("PAGE_READ_LIMIT");
+});
+
+test("offers the on-topic apply link of the best page for a where-to-apply request", async () => {
+  vi.stubGlobal("fetch", async () =>
+    htmlResponse(`<main><h1>Pflegegeld</h1>
+<a href="https://www.pv.at/formulare">Anträge und Formulare</a>
+<a href="https://www.pv.at/web/pflegegeld/antrag">Pflegegeld online beantragen</a></main>`),
+  );
+  const { model } = searchModel("", ["https://www.pv.at/web/pflegegeld"]);
+
+  await expect(
+    deepPageOffer({ userTexts: ["Wo beantrage ich Pflegegeld?"], sources: [], model }),
+  ).resolves.toEqual({
+    target: { kind: "dom", handle: "page", url: "https://www.pv.at/web/pflegegeld/antrag" },
+    label: "die Seite „Pflegegeld online beantragen“ auf pv.at",
+  });
+  await expect(
+    deepPageOffer({ userTexts: ["Was ist Pflegegeld?"], sources: [], model }),
+  ).resolves.toBeUndefined();
 });

@@ -1,6 +1,7 @@
 import { openai } from "@ai-sdk/openai";
 import { readPageStructure } from "@lotse/knowledge/page-reader";
 import { loadPortalPolicy } from "@lotse/knowledge/portal-policy";
+import type { Target } from "@lotse/protocol";
 import { generateText, type LanguageModel } from "ai";
 import type { z } from "zod";
 import { BOOKING_ALLOWLIST_FILE, parseBrainConfig } from "../../../config/index.ts";
@@ -9,7 +10,7 @@ import { createModelRouter } from "../../../models/index.ts";
 import { searchKnowledge } from "../../../retrieval/index.ts";
 import { contracts } from "../../contracts/index.ts";
 import type { Implementations, ToolDependencies } from "../../types.ts";
-import { portalPageAllowed } from "../ui/resource.ts";
+import { isGuidanceRequest, pageOffer, portalPageAllowed } from "../ui/resource.ts";
 
 type PageQuery = z.infer<(typeof contracts)["web.findOfficialPage"]["input"]>;
 export type OfficialPage = { url: string; title: string; snippet: string };
@@ -77,10 +78,7 @@ function pageScore(page: OfficialPage, query: PageQuery, preferred: string | und
   const url = new URL(page.url);
   const depth = url.pathname.split("/").filter(Boolean).length + (url.search ? 1 : 0);
   const haystack = `${url.pathname}${url.search} ${page.title}`.toLowerCase();
-  const words = query.query
-    .toLowerCase()
-    .split(/[^\p{L}]+/u)
-    .filter((word) => word.length >= 5 && !STOPWORDS.has(word));
+  const words = queryWords(query.query);
   const matches = words.filter((word) => haystack.includes(word)).length;
   return (
     Math.min(depth, 4) +
@@ -88,6 +86,13 @@ function pageScore(page: OfficialPage, query: PageQuery, preferred: string | und
     (APPLY.test(haystack) ? 2 : 0) +
     (url.host === preferred ? 3 : 0)
   );
+}
+
+function queryWords(query: string): string[] {
+  return query
+    .toLowerCase()
+    .split(/[^\p{L}]+/u)
+    .filter((word) => word.length >= 5 && !STOPWORDS.has(word));
 }
 
 function parseLines(text: string): OfficialPage[] {
@@ -295,6 +300,61 @@ export async function readOfficialPage(
     );
   }
   throw new Error("PAGE_REDIRECT_LIMIT");
+}
+
+/** The on-topic apply or form link of a read page; generic "Formulare" menus do not count. */
+function applyLink(page: PageRead, query: string): PageRead["links"][number] | undefined {
+  const words = queryWords(query);
+  return page.links
+    .filter((link) => link.apply || link.form)
+    .map((link) => ({
+      link,
+      matches: words.filter((word) => `${link.text} ${link.href}`.toLowerCase().includes(word))
+        .length,
+    }))
+    .filter(({ matches }) => matches > 0)
+    .sort(
+      (left, right) =>
+        right.matches - left.matches ||
+        Number(right.link.apply) - Number(left.link.apply) ||
+        Number(left.link.pdf) - Number(right.link.pdf),
+    )[0]?.link;
+}
+
+/**
+ * Server-side offer for a where-to-apply request: the deepest official page among the turn's
+ * sources and a web search, followed one link further to its on-topic apply page when it has one.
+ */
+export async function deepPageOffer(input: {
+  userTexts: readonly string[];
+  sources: readonly { url: string }[];
+  model: LanguageModel;
+  signal?: AbortSignal | undefined;
+}): Promise<{ target: Target; label: string } | undefined> {
+  if (!isGuidanceRequest(input.userTexts)) return;
+  const query = input.userTexts.slice(0, 2).join(" ").slice(0, 300);
+  const origins = await allowlistedOrigins();
+  const [best] = await findOfficialPages(
+    { query },
+    {
+      model: input.model,
+      origins,
+      known: Promise.resolve(input.sources.map(({ url }) => ({ url, title: "", snippet: "" }))),
+      signal: input.signal,
+    },
+  );
+  if (!best) return pageOffer(input.sources);
+  const page = await readOfficialPage(best.url, { origins, signal: input.signal }).catch(
+    () => undefined,
+  );
+  const link = page && applyLink(page, query);
+  const url = link?.href ?? page?.url ?? best.url;
+  const name = (link?.text ?? page?.title ?? "").slice(0, 80);
+  const host = new URL(url).hostname.replace(/^www\./u, "");
+  return {
+    target: { kind: "dom", handle: "page", url },
+    label: name ? `die Seite „${name}“ auf ${host}` : `die offizielle Seite auf ${host}`,
+  };
 }
 
 export function implementations(deps: ToolDependencies): Implementations {
