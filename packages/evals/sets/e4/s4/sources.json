@@ -1,0 +1,135 @@
+[
+  {
+    "id": "scenario",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |",
+    "locator": "§3 Core scenarios, S4 row",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "goal",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "Within the first turns the pilot states the goal it understood (\"You want to apply for care allowance for your mother\") and asks for confirmation; the confirmed goal is stored on the case and selects the process; a changed goal re-plans without losing facts",
+    "locator": "§5 FR-G7",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "questions",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "Questions come only from the process engine's missing slots for the next step; no question is asked twice; the next question is the one that most reduces the remaining unknowns for the confirmed goal",
+    "locator": "§5 FR-G3",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "transparency",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "Every claim carries a source, every pre-filled value a provenance, every uncertainty a plain statement.",
+    "locator": "§4 Transparent by default",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "language",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "\"Einfache Sprache\" (about CEFR B1): short sentences, everyday words, one instruction at a time; toggle by voice; measured by a readability check in E4",
+    "locator": "§5 FR-L2",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "medical_boundary",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "The SV KI-Lotse must not derive diagnoses from symptoms, independently interpret medical findings, diagnose illnesses, assess medical risks, make therapy decisions, or recommend medicines or change dosages. Medical assessment remains with the treating doctors and health professionals.",
+    "locator": "§4 Medical boundary, translation",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "actions",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "Across all levels the pilot never submits forms, sends messages, places calls, books paid services or enters credentials.",
+    "locator": "§4 Action boundary",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "pass",
+    "uri": "https://www.gesundheit.gv.at/leben/eltern/eltern-kind-pass/eltern-kind-pass-untersuchungen.html",
+    "passage": "Für den Bezug des Kinderbetreuungsgeldes in voller Höhe muss die Durchführung der ersten zehn Eltern-Kind-Pass-Untersuchungen beim zuständigen Krankenversicherungsträger nachgewiesen werden.",
+    "locator": "Hinweis following the October 2026 programme changes",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "vaccinations",
+    "uri": "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/impfungen/kinderimpfungen.html",
+    "passage": "Jedes Bundesland regelt für sich, wie und wo Impfungen im Rahmen des kostenfreien Kinderimpfprogramms durchgeführt werden.",
+    "locator": "Wo kann ich mein Kind impfen lassen?",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "parent_services",
+    "uri": "https://www.gesundheit.gv.at/service/beratungsstellen/gesund-leben/eltern-kind/elternberatung.html",
+    "passage": "Angebote der Elternbildung unterstützen in Erziehungsfragen. Auf der Webseite www.eltern-bildung.at können Sie Angebot und Trägervereine in Ihrer Nähe suchen.\nDas Gemeinschaftsprogramm Richtig essen von Anfang an (REVAN) bietet umfangreiche Informationen zu folgenden Themenbereichen:\nRichtig essen für Babys\nRichtig essen für Kleinkinder\nRichtig essen für 4- bis 10-Jährige",
+    "locator": "Angebote der Elternbildung; Richtig essen von Anfang an, programme and topic link labels",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "movement",
+    "uri": "https://www.gesundheit.gv.at/leben/bewegung/gesunde-bewegung/kinder-bewegung.html",
+    "passage": "Bewegungskurse, zum Beispiel beim \"Eltern-Kind-Turnen\", im Kindergarten oder in einem Sportverein.",
+    "locator": "Bewegungsempfehlungen für Kinder (drei bis sechs Jahre), course examples only",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "nutrition",
+    "uri": "https://www.gesundheit.gv.at/leben/eltern/kinderernaehrung/kinder-essen-gesund.html",
+    "passage": "„Kinder essen gesund“ ist eine österreichweite Initiative des Fonds Gesundes Österreich zur Förderung von gesunder Ernährung bei 4- bis 10-jährigen Kindern.",
+    "locator": "Opening paragraph, published age group; no dietary instruction",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "counseling",
+    "uri": "https://www.familienberatung.gv.at/faq.html",
+    "passage": "Die Beratung ist kostenlos.\nAuf unserer Startseite finden Sie eine Suchfunktion, die Ihnen dabei hilft, jene Familienberatungsstelle zu finden, die zu Ihrer Fragestellung Rat weiß und die örtlich so gelegen ist, dass sie für Sie gut erreichbar ist.",
+    "locator": "Kostet die Beratung etwas?; An wen kann ich mich mit meinen Fragen wenden? (paragraph excerpts)",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "regional_vienna",
+    "uri": "https://www.wien.gv.at/zusammenleben/elternberatungsstellen",
+    "passage": "Die Elternberatung erfolgt in den Elternberatungsstellen der Abteilung Kinder- und Jugendhilfe (MA 11).",
+    "locator": "Standorte und Öffnungszeiten; Angebot includes Pflege und Ernährung, Spiel und Beschäftigung",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "family_allowance",
+    "uri": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+    "passage": "Die Daten des im Inland geborenen Kindes sowie die Personenstandsdaten der Eltern werden durch das Standesamt im Zentralen Personenstandsregister (ZPR) erfasst. Anschließend werden diese Daten vom Bundesministerium für Inneres (Betreiber des Zentralen Personenstandsregisters) der Finanzverwaltung übermittelt. Die Finanzverwaltung wird auf Basis der vorliegenden elektronischen Daten automatisiert prüfen, ob alle Voraussetzungen und Informationen für die Gewährung und Auszahlung der Familienbeihilfe vorliegen. Fehlen der Finanzverwaltung noch Informationen, wie beispielsweise die Kontonummer (IBAN, BIC), dann werden die Eltern ersucht, die fehlenden Daten bekannt zu geben bzw. noch offene Fragen zu beantworten. Auch in diesem Fall muss kein Familienbeihilfenantrag gestellt werden. Es genügt, das Informationsschreiben mit den Antworten und eventuellen Nachweisen zurückzuschicken.",
+    "locator": "Verfahrensablauf, domestic birth and missing-information process; paragraph excerpts with website abbreviation expansions omitted",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "family_office",
+    "uri": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+    "passage": "Finanzamt Österreich",
+    "locator": "Zuständige Stelle",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "family_form",
+    "uri": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+    "passage": "In allen anderen Fällen ist – nach wie vor – ein Antrag auf die Gewährung der Familienbeihilfe notwendig. Der Familienbeihilfenantrag kann elektronisch über FinanzOnline an das Wohnsitzfinanzamt übermittelt werden.\nFamilienbeihilfe – Antrag – Beih100",
+    "locator": "Verfahrensablauf, application cases; Zum Formular, Beih100 link label",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "childcare",
+    "uri": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630",
+    "passage": "Das Kinderbetreuungsgeld sowie die Beihilfe zum pauschalen Kinderbetreuungsgeld gebühren nur auf Antrag.",
+    "locator": "Anspruch und Antrag, opening paragraph",
+    "retrievedAt": "2026-11-06"
+  },
+  {
+    "id": "childcare_office",
+    "uri": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.879630",
+    "passage": "Zuständig ist jener Krankenversicherungsträger, bei dem Wochengeld bezogen wurde bzw. bei dem man versichert (anspruchsberechtigt) ist bzw. zuletzt versichert (anspruchsberechtigt) war.",
+    "locator": "Anspruch und Antrag; next sentence assigns ÖGK when no previous insurance existed",
+    "retrievedAt": "2026-11-06"
+  }
+]
