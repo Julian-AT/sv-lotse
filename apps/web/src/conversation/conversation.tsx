@@ -4,45 +4,46 @@ import type { LotseMessage } from "@lotse/brain";
 import type { Fact } from "@lotse/protocol";
 import { Button, Heading, Stack, WhyPanel } from "@lotse/ui";
 import { type JSX, useEffect, useState } from "react";
-import {
-  Conversation as AiConversation,
-  ConversationContent,
-  ConversationEmptyState,
-  ConversationScrollButton,
-} from "@/components/ai-elements/conversation.tsx";
-import { Loader } from "@/components/ai-elements/loader.tsx";
-import {
-  PromptInput,
-  PromptInputSubmit,
-  PromptInputTextarea,
-  PromptInputToolbar,
-  PromptInputTools,
-} from "@/components/ai-elements/prompt-input.tsx";
-import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion.tsx";
-import { Badge } from "@/components/ui/badge.tsx";
-import { Button as UiButton } from "@/components/ui/button.tsx";
+import { ChatHeader } from "@/components/chat/chat-header";
+import { Messages } from "@/components/chat/messages";
+import { MultimodalInput } from "@/components/chat/multimodal-input";
+import { Button as UiButton } from "@/components/ui/button";
 import { useI18n } from "../i18n/provider.tsx";
 import { extractFacts, loadFacts } from "./api.ts";
 import { workspaceLabels } from "./copy.ts";
 import { ReviewFact } from "./facts.tsx";
 import { ConversationForm } from "./form.tsx";
-import { ConversationMessage } from "./messages.tsx";
 import { OpenOfferReplies } from "./open-offer.tsx";
 import { retryUserText } from "./retry.ts";
 import type { CaseSummary, ReviewableFact } from "./schemas.ts";
 import { messageCitations, passageDates } from "./sources.ts";
-import { DocumentDropZone, DocumentUpload, useDocumentImport } from "./upload.tsx";
+import { DocumentDropZone, useDocumentImport } from "./upload.tsx";
 import { approvalContexts, useConversation } from "./use-conversation.ts";
-import styles from "./workspace.module.css";
 
+/** Wide windows show the form viewer, facts and Why panel beside the chat (the template's artifact slot). */
+function useWideLayout(): boolean {
+  const [wide, setWide] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1180px)");
+    const update = (): void => setWide(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  return wide;
+}
+
+// Chat shell from Vercel's chatbot template (Apache-2.0, see THIRD_PARTY_NOTICES.md).
 export function Conversation({
   selectedCase,
   initialMessages,
   onSettled,
+  showSidebarToggle,
 }: {
   selectedCase: CaseSummary;
   initialMessages: LotseMessage[];
   onSettled: () => void;
+  showSidebarToggle: boolean;
 }): JSX.Element {
   const i18n = useI18n();
   const { t } = i18n;
@@ -123,217 +124,156 @@ export function Conversation({
     chat.clearError();
     void chat.send(text.trim());
   };
-  const suggestions =
-    i18n.locale === "en"
-      ? [
-          "My mother needs help at home",
-          "I have a discharge letter",
-          "Submit an elective doctor bill",
-        ]
-      : [
-          "Meine Mutter braucht Pflege",
-          "Ich habe einen Entlassungsbrief",
-          "Wahlarzt-Rechnung einreichen",
-        ];
+  const wide = useWideLayout();
+  const status = chat.status;
+  const support = (
+    <div className="lotse-legacy grid min-w-0 gap-4">
+      <ConversationForm
+        messages={chat.messages}
+        language={i18n.locale === "en" ? "en" : "de"}
+        contexts={contexts}
+        onApprovalDecision={(decision) => {
+          void chat.addToolApprovalResponse(decision);
+        }}
+      />
+      <section aria-labelledby="facts-title" className="grid gap-3">
+        <Heading id="facts-title">{t("workspace.facts")}</Heading>
+        {factsError && (
+          <>
+            <p role="alert">{t("workspace.error")}</p>
+            <Button
+              disabled={extracting}
+              onClick={() => {
+                if (lastUpload) void extractUploaded(lastUpload);
+                else void refreshFacts().catch(() => setFactsError(true));
+              }}
+            >
+              {t("workspace.retry")}
+            </Button>
+          </>
+        )}
+        {!factsError && facts.length === 0 && proposals.length === 0 && (
+          <p>{t("workspace.noFacts")}</p>
+        )}
+        <Stack>
+          {[...facts, ...proposals].map((fact) => (
+            <ReviewFact
+              key={fact.id}
+              fact={fact}
+              onSaved={async () => {
+                await refreshFacts();
+                setProposals((current) => current.filter((proposal) => proposal.id !== fact.id));
+              }}
+            />
+          ))}
+        </Stack>
+      </section>
+      <WhyPanel
+        sources={sources}
+        unknowns={sources.length === 0 ? [t("workspace.whyEmpty")] : []}
+        labels={workspaceLabels(i18n)}
+      />
+    </div>
+  );
   return (
-    <div className={styles.columns} data-chat-surface="">
-      <DocumentDropZone importer={importer}>
+    <div className="flex h-dvh w-full flex-row overflow-hidden" data-chat-surface="">
+      <DocumentDropZone importer={importer} className="flex min-w-0 flex-1">
         <section
           aria-labelledby="conversation-title"
-          className="relative flex h-[calc(100dvh-9rem)] min-h-[32rem] min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-background font-sans text-foreground shadow-[var(--shadow-card)]"
+          className="flex min-w-0 flex-1 flex-col bg-sidebar"
         >
-          <header className="glass absolute inset-x-0 top-0 z-20 flex h-14 items-center gap-2 border-b border-border/50 px-4">
-            <h2 id="conversation-title" className="m-0 text-sm font-semibold">
-              {t("workspace.title")}
-            </h2>
-            <Badge variant="secondary" className="ml-auto">
-              {t("workspace.level", { level: selectedCase.autonomyLevel })}
-            </Badge>
-          </header>
-          <AiConversation className="min-h-0 flex-1">
-            <ConversationContent className="pt-20 [overflow-wrap:anywhere]" aria-busy={busy}>
-              {chat.messages.length === 0 && (
-                <ConversationEmptyState
-                  className="pointer-events-none min-h-64 flex-1"
-                  title={t("workspace.greeting")}
-                  description={t("workspace.empty")}
-                />
-              )}
-              {chat.messages.map((message, index) => (
-                <ConversationMessage
-                  key={message.id}
-                  message={message}
-                  subjectId={selectedCase.subjectId}
-                  contexts={contexts}
-                  passageDates={dates}
-                  streaming={busy && index === chat.messages.length - 1}
-                  actionable={index === chat.messages.length - 1 && !busy}
-                  onAutonomyDecision={chat.send}
-                  onApproval={(id, approved) => {
-                    void chat.addToolApprovalResponse({ id, approved });
-                  }}
-                  {...(index === chat.messages.length - 1 &&
-                  message.role === "assistant" &&
-                  retryText &&
-                  !awaiting
-                    ? {
-                        onRetry: () => {
-                          chat.clearError();
-                          void chat.send(retryText);
-                        },
-                      }
-                    : {})}
-                />
-              ))}
+          <ChatHeader
+            level={t("workspace.level", { level: selectedCase.autonomyLevel })}
+            showSidebarToggle={showSidebarToggle}
+            title={selectedCase.confirmedGoal || t("workspace.title")}
+          />
+
+          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
+            <Messages
+              busyLabel={t("workspace.busy")}
+              contexts={contexts}
+              greeting={{ title: t("workspace.greeting"), subtitle: t("workspace.empty") }}
+              messages={chat.messages}
+              onApproval={(id, approved) => {
+                void chat.addToolApprovalResponse({ id, approved });
+              }}
+              onAutonomyDecision={chat.send}
+              onRetry={
+                retryText && !awaiting
+                  ? () => {
+                      chat.clearError();
+                      void chat.send(retryText);
+                    }
+                  : undefined
+              }
+              passageDates={dates}
+              status={status}
+              subjectId={selectedCase.subjectId}
+            >
               {chat.partial && (
                 <p
-                  role="status"
                   aria-label={t("workspace.partial")}
-                  className="m-0 whitespace-pre-wrap text-muted-foreground md:pl-10"
+                  className="m-0 whitespace-pre-wrap pl-10 text-[13px] text-muted-foreground"
+                  role="status"
                 >
                   {chat.partial}
                 </p>
               )}
-              {busy && chat.messages.at(-1)?.role !== "assistant" && (
-                <Loader role="status" label={t("workspace.busy")} />
-              )}
-              {busy && chat.messages.at(-1)?.role === "assistant" && (
-                <p role="status" className="sr-only">
+              {busy && (
+                <p className="sr-only" role="status">
                   {t("workspace.busy")}
                 </p>
               )}
-            </ConversationContent>
-            <ConversationScrollButton />
-          </AiConversation>
-          <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 px-2 pb-3 md:px-4 md:pb-4">
-            {(chat.error || chat.bridgeError) && (
-              <div
-                role="alert"
-                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-2.5 text-sm text-foreground"
-              >
-                <span>{t("workspace.error")}</span>
-                {chat.error && (
-                  <UiButton
-                    variant="outline"
-                    size="sm"
-                    disabled={awaiting || !retryText}
-                    onClick={() => {
-                      chat.clearError();
-                      if (retryText) void chat.send(retryText);
-                    }}
-                  >
-                    {t("workspace.retry")}
-                  </UiButton>
-                )}
-              </div>
-            )}
-            {!busy && !awaiting && <OpenOfferReplies messages={chat.messages} onReply={submit} />}
-            {chat.messages.length === 0 && !busy && (
-              <Suggestions>
-                {suggestions.map((suggestion) => (
-                  <Suggestion
-                    key={suggestion}
-                    suggestion={suggestion}
-                    disabled={awaiting}
-                    onClick={submit}
-                  />
-                ))}
-              </Suggestions>
-            )}
-            <PromptInput
-              onSubmit={(event) => {
-                event.preventDefault();
-                submit(input);
-              }}
-            >
-              <label htmlFor="workspace-message" className="sr-only">
-                {t("workspace.message")}
-              </label>
-              <PromptInputTextarea
-                id="workspace-message"
-                value={input}
-                placeholder={t("workspace.placeholder")}
-                onChange={(event) => setInput(event.target.value)}
+              {!wide && chat.messages.length > 0 && (
+                <div className="border-t border-border/40 pt-6">{support}</div>
+              )}
+            </Messages>
+
+            <div className="sticky bottom-0 z-1 mx-auto flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4">
+              {(chat.error || chat.bridgeError) && (
+                <div
+                  className="flex items-center justify-between gap-3 rounded-xl border border-destructive/20 bg-destructive/5 px-3.5 py-2 text-[13px] text-foreground"
+                  role="alert"
+                >
+                  <span>{t("workspace.error")}</span>
+                  {chat.error && (
+                    <UiButton
+                      disabled={awaiting || !retryText}
+                      onClick={() => {
+                        chat.clearError();
+                        if (retryText) void chat.send(retryText);
+                      }}
+                      size="sm"
+                      variant="outline"
+                    >
+                      {t("workspace.retry")}
+                    </UiButton>
+                  )}
+                </div>
+              )}
+              {!busy && !awaiting && <OpenOfferReplies messages={chat.messages} onReply={submit} />}
+              <MultimodalInput
                 disabled={awaiting}
-                rows={2}
+                hasMessages={chat.messages.length > 0}
+                importer={importer}
+                input={input}
+                sendMessage={submit}
+                setInput={setInput}
+                status={status}
+                stop={() => void chat.stop()}
               />
-              <PromptInputToolbar>
-                <PromptInputTools>
-                  <DocumentUpload importer={importer} compact />
-                </PromptInputTools>
-                {busy ? (
-                  <PromptInputSubmit
-                    type="button"
-                    status="streaming"
-                    aria-label={t("workspace.stop")}
-                    onClick={() => void chat.stop()}
-                  />
-                ) : (
-                  <PromptInputSubmit
-                    status="ready"
-                    aria-label={t("workspace.send")}
-                    disabled={awaiting || !input.trim()}
-                  />
-                )}
-              </PromptInputToolbar>
-            </PromptInput>
-            <p className="m-0 text-center text-[11px] text-muted-foreground">
-              {t("workspace.boundary")}
-            </p>
+              <p className="m-0 text-center text-[11px] text-muted-foreground/70">
+                {t("workspace.boundary")}
+              </p>
+            </div>
           </div>
         </section>
       </DocumentDropZone>
-      <div className={styles.support}>
-        <ConversationForm
-          messages={chat.messages}
-          language={i18n.locale === "en" ? "en" : "de"}
-          contexts={contexts}
-          onApprovalDecision={(decision) => {
-            void chat.addToolApprovalResponse(decision);
-          }}
-        />
-        <aside className={styles.sidebar}>
-          <section aria-labelledby="facts-title">
-            <Heading id="facts-title">{t("workspace.facts")}</Heading>
-            {factsError && (
-              <>
-                <p role="alert">{t("workspace.error")}</p>
-                <Button
-                  disabled={extracting}
-                  onClick={() => {
-                    if (lastUpload) void extractUploaded(lastUpload);
-                    else void refreshFacts().catch(() => setFactsError(true));
-                  }}
-                >
-                  {t("workspace.retry")}
-                </Button>
-              </>
-            )}
-            {!factsError && facts.length === 0 && proposals.length === 0 && (
-              <p>{t("workspace.noFacts")}</p>
-            )}
-            <Stack>
-              {[...facts, ...proposals].map((fact) => (
-                <ReviewFact
-                  key={fact.id}
-                  fact={fact}
-                  onSaved={async () => {
-                    await refreshFacts();
-                    setProposals((current) =>
-                      current.filter((proposal) => proposal.id !== fact.id),
-                    );
-                  }}
-                />
-              ))}
-            </Stack>
-          </section>
-          <WhyPanel
-            sources={sources}
-            unknowns={sources.length === 0 ? [t("workspace.whyEmpty")] : []}
-            labels={workspaceLabels(i18n)}
-          />
+      {wide && (
+        <aside className="no-scrollbar w-[380px] shrink-0 overflow-y-auto border-l border-border/40 bg-sidebar p-4">
+          {support}
         </aside>
-      </div>
+      )}
     </div>
   );
 }

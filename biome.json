@@ -41,5 +41,17 @@
     "rules": {
       "preset": "recommended"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "apps/web/src/components/ui/**",
+        "apps/web/src/components/ai-elements/**",
+        "apps/web/src/components/chat/icons.tsx"
+      ],
+      "linter": {
+        "enabled": false
+      }
+    }
+  ]
 }

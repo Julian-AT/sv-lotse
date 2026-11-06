@@ -1,9 +1,15 @@
 "use client";
 
 import type { LotseMessage } from "@lotse/brain";
-import { Button, Field, Heading, Inline, Select } from "@lotse/ui";
 import { type JSX, useCallback, useEffect, useRef, useState } from "react";
+import { Toaster } from "sonner";
 import { z } from "zod";
+import { AppSidebar } from "@/components/chat/app-sidebar";
+import { Greeting } from "@/components/chat/greeting";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Button as UiButton } from "@/components/ui/button";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { hasNativeBridge, mountWorkspaceBridge } from "../bridge/index.ts";
 import { SESSION_RESET_EVENT } from "../config.ts";
 import { useI18n } from "../i18n/provider.tsx";
@@ -13,7 +19,6 @@ import { Conversation } from "./conversation.tsx";
 import { selectInitialCase } from "./initial-case.ts";
 import { loadConversation } from "./load.ts";
 import { type CaseSummary, CaseSummarySchema, CasesResponseSchema } from "./schemas.ts";
-import styles from "./workspace.module.css";
 
 type ActiveCase = { summary: CaseSummary; messages: LotseMessage[] };
 
@@ -107,40 +112,31 @@ export function Workspace(): JSX.Element {
       setLoading(false);
     }
   };
-  return (
-    <div className={styles.workspace}>
-      <div className={styles.caseControls}>
-        <Heading level={1}>{t("workspace.cases")}</Heading>
-        <Inline>
-          <Field label={t("workspace.cases")}>
-            <Select
-              value={active?.summary.id ?? ""}
-              disabled={loading}
-              onChange={(event) => {
-                const selected = cases.find((item) => item.id === event.target.value);
-                if (selected) void select(selected);
-              }}
-            >
-              <option value="" disabled>
-                {t("workspace.cases")}
-              </option>
-              {cases.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.confirmedGoal || t("workspace.untitled")}
-                </option>
-              ))}
-            </Select>
-          </Field>
-          <Button disabled={loading} onClick={() => void create()}>
-            {t("workspace.newCase")}
-          </Button>
-        </Inline>
-      </div>
-      {loading && <p role="status">{t("workspace.ui.assistant")} …</p>}
+  const native = useNativeWorkspace();
+  const labels = {
+    newChat: t("workspace.newCase"),
+    history: t("workspace.cases"),
+    untitled: t("workspace.untitled"),
+    home: t("workspace.home"),
+    empty: t("workspace.noCases"),
+  };
+  const status = (
+    <>
+      {loading && (
+        <div
+          className="flex h-dvh w-full items-center justify-center bg-background text-[13px] text-muted-foreground"
+          role="status"
+        >
+          {t("workspace.ui.assistant")} …
+        </div>
+      )}
       {failed && (
-        <div role="alert">
-          <p>{t("workspace.loadError")}</p>
-          <Button
+        <div
+          className="flex h-dvh w-full flex-col items-center justify-center gap-3 bg-background text-[13px]"
+          role="alert"
+        >
+          <p className="m-0">{t("workspace.loadError")}</p>
+          <UiButton
             onClick={() => {
               setLoading(true);
               setFailed(false);
@@ -151,22 +147,72 @@ export function Workspace(): JSX.Element {
                   setLoading(false);
                 });
             }}
+            variant="outline"
           >
             {t("workspace.retry")}
-          </Button>
+          </UiButton>
         </div>
       )}
-      {!loading && !failed && !active && <p>{t("workspace.empty")}</p>}
-      {active && (
-        <Conversation
-          key={active.summary.id}
-          selectedCase={cases.find((entry) => entry.id === active.summary.id) ?? active.summary}
-          initialMessages={active.messages}
-          onSettled={() => {
-            void refresh().catch(() => setFailed(true));
-          }}
-        />
+      {!loading && !failed && !active && (
+        <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 bg-background">
+          <Greeting subtitle={t("workspace.empty")} title={t("workspace.greeting")} />
+          <UiButton disabled={loading} onClick={() => void create()}>
+            {t("workspace.newCase")}
+          </UiButton>
+        </div>
       )}
-    </div>
+    </>
   );
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange enableSystem>
+      <TooltipProvider>
+        <div className="chatbot-root fixed inset-0 z-50 bg-sidebar font-sans text-foreground antialiased">
+          <SidebarProvider defaultOpen={!native}>
+            {!native && (
+              <AppSidebar
+                activeId={active?.summary.id}
+                cases={cases}
+                disabled={loading}
+                labels={labels}
+                onNewChat={() => void create()}
+                onSelect={(item) => void select(item)}
+              />
+            )}
+            <SidebarInset className="bg-sidebar">
+              <Toaster
+                position="top-center"
+                theme="system"
+                toastOptions={{
+                  className:
+                    "!bg-card !text-foreground !border-border/50 !shadow-[var(--shadow-float)]",
+                }}
+              />
+              {active ? (
+                <Conversation
+                  key={active.summary.id}
+                  selectedCase={
+                    cases.find((entry) => entry.id === active.summary.id) ?? active.summary
+                  }
+                  initialMessages={active.messages}
+                  onSettled={() => {
+                    void refresh().catch(() => setFailed(true));
+                  }}
+                  showSidebarToggle={!native}
+                />
+              ) : (
+                status
+              )}
+            </SidebarInset>
+          </SidebarProvider>
+        </div>
+      </TooltipProvider>
+    </ThemeProvider>
+  );
+}
+
+/** The macOS dashboard has its own sidebar; the embedded workspace hides the template's. */
+function useNativeWorkspace(): boolean {
+  const [native, setNative] = useState(false);
+  useEffect(() => setNative(hasNativeBridge()), []);
+  return native;
 }

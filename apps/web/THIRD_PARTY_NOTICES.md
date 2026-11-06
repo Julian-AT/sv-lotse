@@ -2,12 +2,17 @@
 
 ## Vercel AI Chatbot template
 
-The chat surface in `src/components/ai-elements/`, `src/components/ui/`, `src/app/ai-elements.css`
-and `src/conversation/conversation.tsx` / `messages.tsx` is adapted from Vercel's AI Chatbot
-template (https://github.com/vercel/chatbot, commit a8989b522fa3672a2ae52f053105e40993b36ca1):
-its theme tokens, message layout, tool, suggestion, shimmer and prompt-input components.
-Changes: German copy, wiring to the SV KI-Lotse `useChat` transport and tool parts, removal of
-auth, database, model selector and artifacts, CSS keyframes instead of `motion`.
+The /workspace chat is taken from Vercel's AI Chatbot template
+(https://github.com/vercel/chatbot, commit a8989b522fa3672a2ae52f053105e40993b36ca1):
+`src/components/ui/` (shadcn/ui) and `src/components/ai-elements/` (AI Elements) are copied
+unchanged apart from formatting, German tool status labels and two type casts for this repo's
+stricter TypeScript settings; `src/components/chat/` (messages, message, multimodal input,
+suggested actions, greeting, chat header, message actions, reasoning, attachment preview, app
+sidebar, icons), `src/hooks/use-messages.tsx`, `use-scroll-to-bottom.tsx`, `use-mobile.ts`,
+`src/components/theme-provider.tsx` and the theme in `src/app/ai-elements.css` are adapted from
+it. Changes: German copy, SV KI-Lotse's chat transport, cases instead of chat history, our tool
+parts and cards inside the message layout, preflight scoped to the chat, and removal of auth,
+database, model selector, artifacts, votes and slash commands.
 
 ```
 Copyright 2024 Vercel, Inc.

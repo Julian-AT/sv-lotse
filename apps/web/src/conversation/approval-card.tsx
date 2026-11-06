@@ -4,10 +4,11 @@ import type { Citation, Labels } from "@lotse/ui";
 import { CitationChip, de } from "@lotse/ui";
 import { ShieldCheckIcon } from "lucide-react";
 import { type JSX, useId } from "react";
-import { Button } from "@/components/ui/button.tsx";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card.tsx";
 
-/** Server-side approval request, restyled with the shared card primitives. */
+/**
+ * Server-side approval request in the chatbot template's tool approval style
+ * (ToolApprovalActions from Vercel's chatbot template, Apache-2.0; see THIRD_PARTY_NOTICES.md).
+ */
 export function ApprovalPanel({
   title,
   changes,
@@ -28,30 +29,29 @@ export function ApprovalPanel({
   const id = useId();
   const copy = { ...de, ...labels };
   return (
-    <Card
-      aria-labelledby={`${id}-title`}
+    <section
       aria-busy={pending || undefined}
-      className="w-full border-l-4 border-l-brand"
-      role="region"
+      aria-labelledby={`${id}-title`}
+      className="w-full rounded-md border bg-card"
     >
-      <CardHeader>
-        <CardTitle id={`${id}-title`} className="flex items-center gap-2 text-base">
-          <ShieldCheckIcon className="size-5 text-brand" aria-hidden="true" />
+      <div className="flex items-center gap-2 p-3">
+        <ShieldCheckIcon className="size-4 text-muted-foreground" aria-hidden="true" />
+        <h4 className="m-0 font-medium text-sm" id={`${id}-title`}>
           {title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="grid gap-3">
-        <ul className="m-0 grid list-none gap-1 p-0">
+        </h4>
+      </div>
+      <div className="space-y-3 px-4 pb-3 text-sm">
+        <ul className="m-0 grid list-none gap-1.5 p-0">
           {[...new Set(changes)].map((change) => (
-            <li key={change} className="rounded-xl bg-muted px-3 py-2 text-sm">
+            <li className="rounded-md bg-muted/50 px-3 py-2 text-[13px]" key={change}>
               {change}
             </li>
           ))}
         </ul>
         {provenance.length > 0 && (
-          <ul aria-label={copy.sources} className="m-0 grid list-none gap-2 p-0 text-sm">
+          <ul aria-label={copy.sources} className="m-0 grid list-none gap-2 p-0 text-xs">
             {provenance.map((source) => (
-              <li key={source.id} className="grid gap-1">
+              <li className="grid gap-1" key={source.id}>
                 <CitationChip source={source} />
                 {source.quote && (
                   <blockquote className="m-0 border-l-2 border-border pl-3 text-muted-foreground">
@@ -62,23 +62,30 @@ export function ApprovalPanel({
             ))}
           </ul>
         )}
-      </CardContent>
-      <CardFooter>
-        <Button disabled={pending} onClick={onApprove} aria-describedby={`${id}-hint`}>
-          {copy.approve}
-        </Button>
-        <Button
-          variant="outline"
-          disabled={pending}
-          onClick={onDecline}
-          aria-describedby={`${id}-hint`}
-        >
-          {copy.decline}
-        </Button>
-        <p id={`${id}-hint`} className="m-0 basis-full text-xs text-muted-foreground">
+        <p className="m-0 text-[11px] text-muted-foreground" id={`${id}-hint`}>
           {copy.keyboardHint} {copy.voiceHint}
         </p>
-      </CardFooter>
-    </Card>
+      </div>
+      <div className="flex items-center justify-end gap-2 border-t px-4 py-3">
+        <button
+          aria-describedby={`${id}-hint`}
+          className="rounded-md px-3 py-1.5 text-muted-foreground text-sm transition-colors hover:bg-muted hover:text-foreground disabled:opacity-50"
+          disabled={pending}
+          onClick={onDecline}
+          type="button"
+        >
+          {copy.decline}
+        </button>
+        <button
+          aria-describedby={`${id}-hint`}
+          className="rounded-md bg-primary px-3 py-1.5 text-primary-foreground text-sm transition-colors hover:bg-primary/90 disabled:opacity-50"
+          disabled={pending}
+          onClick={onApprove}
+          type="button"
+        >
+          {copy.approve}
+        </button>
+      </div>
+    </section>
   );
 }

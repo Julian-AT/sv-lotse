@@ -84,7 +84,9 @@ test("@demo @live Scenario 3 imports the original, confirms the goal and prepare
         (response) => /\/api\/documents\/[^/]+\/extract$/.test(response.url()),
         { timeout: DEMO_E2E.extractionTimeoutMs },
       );
-      await page.locator('input[type="file"]').setInputFiles(demoAsset(manifest.document));
+      await page
+        .locator('[data-testid="document-input"]')
+        .setInputFiles(demoAsset(manifest.document));
       await page
         .getByRole("dialog", { name: "Dokument vor dem Speichern prüfen" })
         .getByRole("button", { name: "Dokument speichern", exact: true })

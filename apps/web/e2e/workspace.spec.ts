@@ -266,7 +266,7 @@ test("§6 workspace persists case selection, reviews facts and uploads actual do
     const pdf = await PDFDocument.create();
     pdf.addPage().drawText("Datum: 06.11.2026. Institution: Oesterreichische Gesundheitskasse.");
     const uploadBytes = Buffer.from(await pdf.save());
-    await page.locator('input[type="file"]').setInputFiles({
+    await page.locator('[data-testid="document-input"]').setInputFiles({
       name: "administrative.pdf",
       mimeType: "application/pdf",
       buffer: uploadBytes,

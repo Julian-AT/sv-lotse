@@ -33,6 +33,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const copy = shellCopy[locale];
   return (
     <html
+      suppressHydrationWarning
       lang={language === "en" ? "en" : "de-AT"}
       data-cursor-size={preferences.cursorSize}
       data-cursor-speed={preferences.cursorSpeed}

@@ -3,7 +3,7 @@ import type { LotseMessage } from "@lotse/brain";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { createElement } from "react";
 import { afterEach, expect, test, vi } from "vitest";
-import { ConversationMessage } from "../src/conversation/messages.tsx";
+import { PreviewMessage } from "../src/components/chat/message.tsx";
 import { I18nProvider } from "../src/i18n/provider.tsx";
 
 const id = "358f7746-7510-4ecf-95e5-b7a23af607be";
@@ -33,10 +33,10 @@ test("FR-D10 shows acquisition metadata and sends only the user's explicit refus
     createElement(
       I18nProvider,
       { locale: "de" },
-      createElement(ConversationMessage, {
+      createElement(PreviewMessage, {
         message,
         subjectId: id,
-        streaming: false,
+        isLoading: false,
         actionable: true,
         onApproval: decide,
         onAutonomyDecision: vi.fn(async () => {}),
