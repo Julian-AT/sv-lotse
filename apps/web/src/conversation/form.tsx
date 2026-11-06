@@ -8,6 +8,7 @@ import { Dialog as DialogPrimitive } from "radix-ui";
 import { type JSX, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   type ApprovalResponder,
   FormGroupApprovalSchema,
@@ -22,26 +23,66 @@ import { OPEN_RESOURCE_CONFIG } from "./open-resource.ts";
 const instanceOutput = z.object({ formInstanceId: z.uuid() });
 const DIALOG_MARGIN_PX = 12;
 const DIALOG_MIN_HEIGHT_PX = 220;
+/** From this chat width on, the form docks beside the chat instead of floating over it. */
+const DOCK_MIN_WIDTH_PX = 900;
+/** Share of the space above the reply area the narrow popup may take; the rest shows the chat. */
+const POPUP_SHARE = 0.6;
 
-/** Bottom edge for the form popup: it ends above the chat composer so replies stay possible. */
-function useComposerTop(active: boolean): number | undefined {
-  const [top, setTop] = useState<number>();
+function useWidth(element: Element | null | undefined): number | undefined {
+  const [width, setWidth] = useState<number>();
   useEffect(() => {
-    if (!active) return;
-    const composer = (): Element | null | undefined =>
-      document.getElementById("workspace-message")?.closest("form");
-    const measure = (): void => setTop(composer()?.getBoundingClientRect().top);
+    if (!element) return;
+    const measure = (): void => setWidth(element.getBoundingClientRect().width);
     measure();
     const observer = typeof ResizeObserver === "function" ? new ResizeObserver(measure) : undefined;
-    const element = composer();
+    observer?.observe(element);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [element]);
+  return width;
+}
+
+/** Top of the reply chips and composer: the narrow popup ends well above it. */
+function useReplyAreaTop(surface: Element | null | undefined, active: boolean): number | undefined {
+  const [top, setTop] = useState<number>();
+  useEffect(() => {
+    if (!active || !surface) return;
+    const area = (): Element | null => surface.querySelector("[data-chat-reply-area]");
+    const measure = (): void => {
+      const tops = [...(area()?.children ?? [])]
+        .map((child) => child.getBoundingClientRect())
+        .filter((rect) => rect.height > 0)
+        .map((rect) => rect.top);
+      setTop(tops.length ? Math.min(...tops) : undefined);
+    };
+    measure();
+    const observer = typeof ResizeObserver === "function" ? new ResizeObserver(measure) : undefined;
+    const element = area();
     if (element) observer?.observe(element);
     window.addEventListener("resize", measure);
     return () => {
       observer?.disconnect();
       window.removeEventListener("resize", measure);
     };
-  }, [active]);
+  }, [surface, active]);
   return top;
+}
+
+/** Keeps the latest assistant message in view when the form opens or changes its layout. */
+function scrollChatToEnd(surface: Element | null | undefined): () => void {
+  const scroll = (): void => {
+    const log = surface?.querySelector('[role="log"]');
+    log?.scrollTo({ top: log.scrollHeight });
+  };
+  const frame = requestAnimationFrame(scroll);
+  const timer = setTimeout(scroll, 260);
+  return () => {
+    cancelAnimationFrame(frame);
+    clearTimeout(timer);
+  };
 }
 
 export function conversationFormId(messages: LotseMessage[]): string | undefined {
@@ -65,11 +106,18 @@ export function ConversationForm({
   language,
   contexts,
   onApprovalDecision,
+  dock,
 }: {
   messages: LotseMessage[];
   language: "de" | "en";
   contexts: ApprovalContext[];
   onApprovalDecision: ApprovalResponder;
+  /**
+   * The chat surface's form slot. The form always renders into it, so switching between the
+   * docked panel and the narrow popup never remounts the viewer and its running live fill.
+   * `null` while the slot mounts; omitted, the form floats over the page as a popup.
+   */
+  dock?: HTMLElement | null | undefined;
 }): JSX.Element | null {
   const [opened, setOpened] = useState<string>();
   useEffect(() => {
@@ -149,12 +197,23 @@ export function ConversationForm({
   useEffect(() => {
     if (needsViewer) setOpen(true);
   }, [needsViewer]);
-  const composerTop = useComposerTop(open);
+  const surface = dock?.parentElement;
+  const surfaceWidth = useWidth(surface);
+  const docked = surfaceWidth !== undefined && surfaceWidth >= DOCK_MIN_WIDTH_PX;
+  const replyTop = useReplyAreaTop(surface, open && !docked);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: docking reflows the chat, so re-scroll
+  useEffect(() => {
+    if (open && id) return scrollChatToEnd(surface);
+  }, [open, id, docked, surface]);
   if (!id) return null;
+  const surfaceTop = surface?.getBoundingClientRect().top ?? 0;
   const maxHeight =
-    composerTop === undefined
+    replyTop === undefined
       ? undefined
-      : Math.max(DIALOG_MIN_HEIGHT_PX, composerTop - 2 * DIALOG_MARGIN_PX);
+      : Math.max(
+          DIALOG_MIN_HEIGHT_PX,
+          Math.round((replyTop - surfaceTop - 2 * DIALOG_MARGIN_PX) * POPUP_SHARE),
+        );
   const copy =
     language === "en"
       ? { open: "Open form", title: "Form" }
@@ -172,27 +231,35 @@ export function ConversationForm({
         {copy.open}
       </Button>
       {/* Kept mounted (hidden when closed) so live fills and group approvals reach the viewer. */}
-      <DialogPrimitive.Root open={open} onOpenChange={setOpen} modal={false}>
-        <DialogPrimitive.Portal forceMount>
-          <DialogPrimitive.Content
-            forceMount
-            aria-describedby={undefined}
-            onInteractOutside={(event) => event.preventDefault()}
-            onOpenAutoFocus={(event) => event.preventDefault()}
-            style={{ top: DIALOG_MARGIN_PX, maxHeight }}
-            className="chatbot-root fixed left-1/2 z-50 flex max-h-[calc(100dvh-1.5rem)] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 flex-col overflow-hidden rounded-xl border border-border bg-background text-foreground shadow-2xl data-[state=closed]:hidden data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2 data-[state=open]:duration-200"
-          >
-            <DialogPrimitive.Title className="sr-only">{copy.title}</DialogPrimitive.Title>
-            <FormViewerWorkspace
-              key={id}
-              formInstanceId={id}
-              language={language}
-              embedded
-              onClose={() => setOpen(false)}
-            />
-          </DialogPrimitive.Content>
-        </DialogPrimitive.Portal>
-      </DialogPrimitive.Root>
+      {dock !== null && (
+        <DialogPrimitive.Root open={open} onOpenChange={setOpen} modal={false}>
+          <DialogPrimitive.Portal forceMount container={dock}>
+            <DialogPrimitive.Content
+              forceMount
+              aria-describedby={undefined}
+              data-docked={docked || undefined}
+              onInteractOutside={(event) => event.preventDefault()}
+              onOpenAutoFocus={(event) => event.preventDefault()}
+              style={docked ? undefined : { top: DIALOG_MARGIN_PX, maxHeight }}
+              className={cn(
+                "chatbot-root flex flex-col overflow-hidden bg-background text-foreground data-[state=closed]:hidden data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:duration-200",
+                docked
+                  ? "relative h-full w-[56%] max-w-[56rem] min-w-[26rem] shrink-0 border-l border-border data-[state=open]:slide-in-from-right-4"
+                  : "fixed left-1/2 z-50 max-h-[calc(100dvh-1.5rem)] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 rounded-xl border border-border shadow-2xl data-[state=open]:slide-in-from-top-2",
+              )}
+            >
+              <DialogPrimitive.Title className="sr-only">{copy.title}</DialogPrimitive.Title>
+              <FormViewerWorkspace
+                key={id}
+                formInstanceId={id}
+                language={language}
+                embedded
+                onClose={() => setOpen(false)}
+              />
+            </DialogPrimitive.Content>
+          </DialogPrimitive.Portal>
+        </DialogPrimitive.Root>
+      )}
     </>
   );
 }

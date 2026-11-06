@@ -113,6 +113,7 @@ export function Conversation({
   const [factsError, setFactsError] = useState(false);
   const [lastUpload, setLastUpload] = useState<string>();
   const [extracting, setExtracting] = useState(false);
+  const [dock, setDock] = useState<HTMLDivElement | null>(null);
   const settled = (): void => {
     onSettled();
   };
@@ -245,6 +246,7 @@ export function Conversation({
               )}
               <div className="grid gap-3 pl-10">
                 <ConversationForm
+                  dock={dock}
                   messages={chat.messages}
                   language={i18n.locale === "en" ? "en" : "de"}
                   contexts={contexts}
@@ -268,7 +270,10 @@ export function Conversation({
               />
             </Messages>
 
-            <div className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-page-fade from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto">
+            <div
+              data-chat-reply-area=""
+              className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-page-fade from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto"
+            >
               {(chat.error || chat.bridgeError) && (
                 <div
                   className="flex items-center justify-between gap-3 rounded-xl border border-destructive/20 bg-destructive/5 px-3.5 py-2 text-[0.8125rem] text-foreground"
@@ -310,6 +315,8 @@ export function Conversation({
           </div>
         </section>
       </DocumentDropZone>
+      {/* Form slot: the open form docks here beside the chat on wide windows. */}
+      <div className="contents" ref={setDock} />
     </div>
   );
 }
