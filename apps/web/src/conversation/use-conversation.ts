@@ -42,11 +42,14 @@ export function useConversation({
   send: (text: string) => Promise<void>;
   partial: string;
   bridgeError: boolean;
+  statusLine: string;
 } {
   const guidance = useGuidance();
   const guidanceRef = useRef(guidance);
   guidanceRef.current = guidance;
   const [partial, setPartial] = useState("");
+  // Fixed progress line ("Ich schaue das kurz nach …") while a slow tool step runs.
+  const [statusLine, setStatusLine] = useState("");
   const [bridgeError, setBridgeError] = useState(false);
   const [turnState] = useState<TurnState>(() => ({
     caseId,
@@ -118,6 +121,10 @@ export function useConversation({
       }
     },
     onData: (part) => {
+      if (part.type === "data-status") {
+        setStatusLine(part.data.text);
+        return;
+      }
       const version = generation.current;
       queue.current = queue.current
         .then(async () => {
@@ -259,13 +266,24 @@ export function useConversation({
       ).catch(() => setBridgeError(true));
   };
   const send = async (text: string): Promise<void> => {
+    setStatusLine("");
     await stop();
     turnState.actionResults.push(...guidanceRef.current.takeActionResults());
     turnState.inputKind = "text";
     turnState.capsule = {};
     await chat.sendMessage({ text });
   };
-  return { ...chat, send, stop, partial, bridgeError };
+  useEffect(() => {
+    if (chat.status === "ready" || chat.status === "error") setStatusLine("");
+  }, [chat.status]);
+  return {
+    ...chat,
+    send,
+    stop,
+    partial,
+    bridgeError,
+    statusLine: chat.status === "ready" || chat.status === "error" ? "" : statusLine,
+  };
 }
 
 export function approvalContexts(messages: LotseMessage[]): LotseDataParts["approval-context"][] {

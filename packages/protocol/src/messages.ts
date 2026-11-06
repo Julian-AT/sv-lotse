@@ -224,7 +224,15 @@ export const MESSAGE_SCHEMAS = {
   SafetyNotice: SafetyNoticeSchema,
 } as const;
 
+/** A fixed, claim-free progress line streamed while a slow tool step runs (never persisted). */
+export const StatusLineSchema = z.strictObject({
+  turnId: IdSchema,
+  text: z.string().max(120),
+});
+export type StatusLine = z.infer<typeof StatusLineSchema>;
+
 export const DATA_PARTS = {
+  status: StatusLineSchema,
   "speech-segment": SpeechSegmentSchema,
   action: ActionSchema,
   "case-event": CaseEventSchema,

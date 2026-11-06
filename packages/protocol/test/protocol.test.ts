@@ -50,7 +50,7 @@ it("AC1 exports all six semantic target variants", () => {
   );
 });
 
-it("FR-C3 maps exactly the six stream data parts", () => {
+it("FR-C3 maps exactly the six stream data parts plus the transient status line", () => {
   expect(Object.keys(DATA_PARTS).sort()).toEqual(
     [
       "speech-segment",
@@ -59,6 +59,7 @@ it("FR-C3 maps exactly the six stream data parts", () => {
       "safety-notice",
       "job-progress",
       "approval-context",
+      "status",
     ].sort(),
   );
 });

@@ -55,6 +55,7 @@ import {
 import { handleTurnControl } from "../pipeline/controls.ts";
 import { preparePipeline } from "../pipeline/index.ts";
 import { createSegmentWriter } from "../pipeline/segment.ts";
+import { createStatusAnnouncer, statusPart } from "../pipeline/status-copy.ts";
 import type { Passage } from "../retrieval/index.ts";
 import { effectiveShareScope } from "../subjects/access.ts";
 import { startTurnTelemetry, type TurnMetrics, type TurnTelemetry } from "../telemetry/index.ts";
@@ -690,6 +691,8 @@ async function runTurn(
       });
       const inputs = new Map<string, { toolName: string; input: unknown }>();
       const withheldInputs = new Set<string>();
+      // At most one fixed status line per turn tells the user that Lotse is looking something up.
+      const announce = createStatusAnnouncer(language);
       const sdkStream = result.toUIMessageStream<LotseMessage>({
         sendReasoning: false,
         sendSources: false,
@@ -749,6 +752,8 @@ async function runTurn(
             speechSegments.splice(0, speechSegments.length, ...output.segments);
             timings.totalMs = performance.now() - pipelineStarted;
           }
+          const status = statusPart(part, announce, prepared.turnId);
+          if (status) writer.write(status);
           if (
             part.type === "tool-input-start" &&
             isToolName(part.toolName) &&

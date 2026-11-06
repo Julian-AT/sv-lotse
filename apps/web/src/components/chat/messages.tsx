@@ -72,6 +72,7 @@ function PureMessages({
           {messages.map((message, index) => (
             <PreviewMessage
               actionable={index === messages.length - 1 && !busy}
+              busyLabel={busyLabel}
               contexts={contexts}
               isLoading={busy && messages.length - 1 === index}
               key={message.id}

@@ -14,5 +14,6 @@ it("AC5 uses LotseDataParts as the AI SDK 7 UIMessage data generic", () => {
     | "safety-notice"
     | "job-progress"
     | "approval-context"
+    | "status"
   >();
 });

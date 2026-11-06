@@ -275,7 +275,7 @@ export function Conversation({
 
           <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
             <Messages
-              busyLabel={t("workspace.busy")}
+              busyLabel={chat.statusLine || t("workspace.busy")}
               contexts={contexts}
               greeting={{ title: t("workspace.greeting"), subtitle: t("workspace.empty") }}
               messages={chat.messages}

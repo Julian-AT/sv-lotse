@@ -53,6 +53,8 @@ export type PreviewMessageProps = {
   onApproval: (id: string, approved: boolean) => void;
   onAutonomyDecision: (text: string) => Promise<void>;
   onRetry?: (() => void) | undefined;
+  /** Shimmer text while the answer is pending (a tool status line or "Lotse antwortet …"). */
+  busyLabel?: string | undefined;
 };
 
 export const PreviewMessage = ({
@@ -65,6 +67,7 @@ export const PreviewMessage = ({
   onApproval,
   onAutonomyDecision,
   onRetry,
+  busyLabel,
 }: PreviewMessageProps) => {
   const i18n = useI18n();
   const { t } = i18n;
@@ -302,7 +305,7 @@ export const PreviewMessage = ({
   );
 
   const content = isThinking ? (
-    <WaitingText label={t("workspace.busy")} />
+    <WaitingText label={busyLabel || t("workspace.busy")} />
   ) : (
     <>
       {attachments}
