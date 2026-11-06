@@ -1,0 +1,105 @@
+version: sr1.at.emergency-crisis.v1
+as_of: "2026-11-06"
+review:
+  status: pending_independent_human_review
+  basis: PRD section 4 SR-1; authored patterns with positive and negative regression tests
+sources:
+  - url: https://www.gesundheit.gv.at/service/notruf/notrufnummern.html
+    quote: "Rettung: 144"
+  - url: https://www.gesundheit.gv.at/service/beratungsstellen.html
+    quote: "Euronotruf: 112"
+  - url: https://www.rtr.at/TKP/was_wir_tun/telekommunikation/konsumentenservice/information/informationen_fuer_konsumenten/TKKS_Notrufe.de.html
+    quote: "147"
+notices:
+  de:
+    text: "Bei einem Notfall: Rettung 144 oder Euronotruf 112. Telefonische Gesundheitsberatung: 1450. Bei Krisen: Telefonseelsorge 142. Für Kinder und Jugendliche: Rat auf Draht 147. Ich kann hier mit Anträgen, Unterlagen und Behördenwegen weiterhelfen."
+    numbers:
+      - { label: Rettung, number: "144" }
+      - { label: Euronotruf, number: "112" }
+      - { label: Telefonische Gesundheitsberatung, number: "1450" }
+      - { label: Telefonseelsorge, number: "142" }
+      - { label: Rat auf Draht — Kinder und Jugendliche, number: "147" }
+    scopeAfter: administrative_only
+  en:
+    text: "For an emergency: ambulance 144 or European emergency number 112. Telephone health advice: 1450. For a crisis: crisis helpline 142. For children and young people: Rat auf Draht 147. I can continue helping with applications, documents and administrative steps."
+    numbers:
+      - { label: Ambulance, number: "144" }
+      - { label: European emergency number, number: "112" }
+      - { label: Telephone health advice, number: "1450" }
+      - { label: Crisis helpline, number: "142" }
+      - { label: Rat auf Draht — children and young people, number: "147" }
+    scopeAfter: administrative_only
+# Only non-current clauses are neutralized for post-SR-1 generation/classification.
+# The original user text is always used by SR-1 first; current statements stay unchanged.
+contextTerms:
+  - '\b(?:akute?\w* brustschmerz\w*|brustschmerz\w*|bewusstlos\w*|starke?\w* blutung|suizid\w*|suizidal|umbringen|töten|antun)\b'
+  - '\b(?:acute chest pain|chest pain|unconscious|bleeding heavily|suicidal|suicide|kill myself|end my life|take my own life)\b'
+# Exclusions apply to a single clause, never to the whole message.
+nonCurrent:
+  - '\b(not|no)\s+(?:acute\s+)?(chest pain|unconscious|bleeding|suicidal)\b'
+  - '\b(don.t|do not|never)\s+(want|intend|plan)\b'
+  - '\b(vor jahren|vor \d+ jahren|years ago|waren bewusstlos)\b'
+  - '\b(kein\w*|niemand|nobody)\b.{0,35}\b(brustschmerz\w*|bewusstlos\w*|unconscious)'
+  - '\b(blute|bleeding)\s+(nicht|not)\b'
+  - '\b(nicht|not)\s+(suizidal|suicidal)\b'
+  - '\b(nichts|nicht)\s+(antun|umbringen|töten)\b'
+  - '\b(war|hatte|früher|letzte[nsrm]?\s+(jahr|monat)|vorjahr|yesterday|last\s+(year|month)|used to|was unconscious)\b'
+  - '\b(roman|buch|fictional|character|schulpräsentation|kurs heißt|old discharge letter)\b'
+  - '\b(im|auf dem|in der)\s+(alten?\s+)?(brief|befund|bericht|entlassungsbrief|merkblatt|formular|broschüre|dokument|blatt)\b'
+  - '\b(mein\w*|der|dieser)\s+befund\s+von\s+\d{4}\b'
+  - '\b(webseite|webpage)\s+(erklärt|lists)\b'
+  - '(?:keine?|nicht|nie|not|no|never)\s+(?:\S+\s+){0,2}(?:brustschmerzen|bewusstlos|chest pain|unconscious)'
+  - "(?:was bedeutet|was heißt|what does|beispiel|zum beispiel|for example)"
+patterns:
+  - id: emergency-present-de
+    category: emergency
+    language: de
+    pattern: '\b(ich|er|sie|jemand|eine person|mein\w*|mama|neben mir|hier|akute?\w* brustschmerz\w*).{0,100}(bewusstlos\w*|akute?\w* brustschmerz\w*|starke?\w* brustschmerz\w*|brust tut.{0,15}(weh|schmerz)|blut\w* gerade sehr|blute.{0,20}(stark|viel)|schwere blutung|verliere.{0,30}blut|bekomm\w*.{0,20}(keine|kaum) luft|kann.{0,20}nicht atmen)'
+  - id: emergency-short-de
+    category: emergency
+    language: de
+    pattern: '\b(akute?\w* brustschmerz\w*|hier ist ein notfall|medizinischen notfall)\b'
+  - id: emergency-present-en
+    category: emergency
+    language: en
+    pattern: '\b(i am|i.m|he is|she is|my|i cannot|i can.t).{0,100}(acute chest pain|unconscious|bleeding heavily|breathe)\b|\bi (cannot|can.t) breathe\b'
+  - id: crisis-intent-de
+    category: crisis
+    language: de
+    pattern: '\b((will|werde|möchte|vor|beschlossen|werd\w*|wird|wollen).{0,70}(umbringen|töten|leben (zu )?nehmen|leben nehmen|etwas an(zu)?tun|suizid begehen)|suizidal.{0,30}(hilfe|jetzt)|sich.{0,40}(umbringen|töten).{0,30}(will|wird)|mich.{0,30}(umbringen|töten).{0,20}will)\b'
+  - id: crisis-intent-en
+    category: crisis
+    language: en
+    pattern: '\b(want|going|intend\w*|will).{0,65}(kill (myself|herself|himself|themselves)|take my own life|end my life)\b'
+  - id: crisis-explicit-present
+    category: crisis
+    language: both
+    pattern: '\b((ich bin|i am|i.m)\s+(suizidal|suicidal)|ich (will|möchte) nicht mehr leben|i (want|intend) to die)\b'
+  - id: pipeline-safety-net-1
+    category: emergency
+    language: both
+    pattern: '(?:ich habe|ich hab|habe gerade|akute|starke|plötzliche)\s+(?:akute\s+|starke\s+|plötzliche\s+)?(?:brustschmerzen|schmerzen in der brust)'
+  - id: pipeline-safety-net-2
+    category: emergency
+    language: both
+    pattern: '(?:ist|bin|wurde)\s+(?:gerade\s+)?bewusstlos'
+  - id: pipeline-safety-net-3
+    category: emergency
+    language: both
+    pattern: '(?:ich|er|sie)\s+blute(?:t)?\s+stark'
+  - id: pipeline-safety-net-4
+    category: emergency
+    language: both
+    pattern: '(?:ich habe|ich hab|er hat|sie hat)\s+(?:starke|schwere)\s+blutungen'
+  - id: pipeline-safety-net-5
+    category: crisis
+    language: both
+    pattern: '(?:ich will|ich werde|ich möchte)\s+(?:mich umbringen|mir das leben nehmen|nicht mehr leben)'
+  - id: pipeline-safety-net-6
+    category: crisis
+    language: both
+    pattern: '(?:i have|i am having)\s+(?:acute|severe|sudden)\s+chest pain'
+  - id: pipeline-safety-net-7
+    category: crisis
+    language: both
+    pattern: "(?:is unconscious|i am bleeding heavily|i want to kill myself|i want to end my life|i want to die)"
