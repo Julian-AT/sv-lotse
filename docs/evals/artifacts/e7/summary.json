@@ -1,0 +1,477 @@
+{
+  "schemaVersion": 1,
+  "suites": [
+    {
+      "schemaVersion": 1,
+      "suite": {
+        "id": "E7",
+        "name": "SV-Box form prefill",
+        "gate": {
+          "kind": "informational",
+          "metric": "normalizedMatch",
+          "threshold": 0.95,
+          "direction": "at_least"
+        },
+        "minimumSetSize": 21
+      },
+      "selection": {
+        "seed": "baseline-2026-11-06"
+      },
+      "counts": {
+        "total": 21,
+        "passed": 21,
+        "failed": 0,
+        "errors": 0
+      },
+      "metrics": {
+        "passRate": 1,
+        "normalizedMatch": 1,
+        "positiveFields": 218,
+        "exactCorrect": 218,
+        "normalizedCorrect": 218,
+        "blankFields": 1030,
+        "blankCorrect": 1030,
+        "unexpectedProposals": 0,
+        "exactMatch": 1,
+        "blankAccuracy": 1,
+        "provenanceErrors": 0,
+        "persistenceErrors": 0,
+        "missingErrors": 0
+      },
+      "wilson95": {
+        "lower": 0.8453609808643685,
+        "upper": 1,
+        "confidence": 0.95
+      },
+      "gateVerdict": "passed",
+      "modelVersion": "brain-form-prefill/2",
+      "judgeVersions": [],
+      "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+      "startedAt": "2026-11-06T02:32:32.166Z",
+      "finishedAt": "2026-11-06T02:32:32.395Z",
+      "cases": [
+        {
+          "caseId": "svbox-einrichtungswunsch-persona-1",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 134.47850000000017,
+          "metrics": {
+            "positiveFields": 9,
+            "exactCorrect": 9,
+            "normalizedCorrect": 9,
+            "blankFields": 4,
+            "blankCorrect": 4,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-einrichtungswunsch-persona-2",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 112.81383299999925,
+          "metrics": {
+            "positiveFields": 9,
+            "exactCorrect": 9,
+            "normalizedCorrect": 9,
+            "blankFields": 4,
+            "blankCorrect": 4,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-einrichtungswunsch-persona-3",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 116.93695899999966,
+          "metrics": {
+            "positiveFields": 12,
+            "exactCorrect": 12,
+            "normalizedCorrect": 12,
+            "blankFields": 1,
+            "blankCorrect": 1,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-fahrtkosten-wien-persona-1",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 102.44891700000062,
+          "metrics": {
+            "positiveFields": 8,
+            "exactCorrect": 8,
+            "normalizedCorrect": 8,
+            "blankFields": 5,
+            "blankCorrect": 5,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-fahrtkosten-wien-persona-2",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 114.1860829999996,
+          "metrics": {
+            "positiveFields": 7,
+            "exactCorrect": 7,
+            "normalizedCorrect": 7,
+            "blankFields": 6,
+            "blankCorrect": 6,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-fahrtkosten-wien-persona-3",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 121.09033400000044,
+          "metrics": {
+            "positiveFields": 7,
+            "exactCorrect": 7,
+            "normalizedCorrect": 7,
+            "blankFields": 6,
+            "blankCorrect": 6,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-fsw-foerderung-persona-1",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 127.05616699999973,
+          "metrics": {
+            "positiveFields": 27,
+            "exactCorrect": 27,
+            "normalizedCorrect": 27,
+            "blankFields": 95,
+            "blankCorrect": 95,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-fsw-foerderung-persona-2",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 121.34799999999996,
+          "metrics": {
+            "positiveFields": 20,
+            "exactCorrect": 20,
+            "normalizedCorrect": 20,
+            "blankFields": 102,
+            "blankCorrect": 102,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-fsw-foerderung-persona-3",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 133.16350000000057,
+          "metrics": {
+            "positiveFields": 33,
+            "exactCorrect": 33,
+            "normalizedCorrect": 33,
+            "blankFields": 89,
+            "blankCorrect": 89,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-kur-reha-persona-1",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 142.6709580000006,
+          "metrics": {
+            "positiveFields": 8,
+            "exactCorrect": 8,
+            "normalizedCorrect": 8,
+            "blankFields": 83,
+            "blankCorrect": 83,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-kur-reha-persona-2",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 133.35379099999955,
+          "metrics": {
+            "positiveFields": 6,
+            "exactCorrect": 6,
+            "normalizedCorrect": 6,
+            "blankFields": 85,
+            "blankCorrect": 85,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-kur-reha-persona-3",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 144.81341599999996,
+          "metrics": {
+            "positiveFields": 7,
+            "exactCorrect": 7,
+            "normalizedCorrect": 7,
+            "blankFields": 84,
+            "blankCorrect": 84,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-pflegegeld-persona-1",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 118.42983300000014,
+          "metrics": {
+            "positiveFields": 14,
+            "exactCorrect": 14,
+            "normalizedCorrect": 14,
+            "blankFields": 83,
+            "blankCorrect": 83,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-pflegegeld-persona-2",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 111.18420799999967,
+          "metrics": {
+            "positiveFields": 12,
+            "exactCorrect": 12,
+            "normalizedCorrect": 12,
+            "blankFields": 85,
+            "blankCorrect": 85,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-pflegegeld-persona-3",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 102.61041599999953,
+          "metrics": {
+            "positiveFields": 19,
+            "exactCorrect": 19,
+            "normalizedCorrect": 19,
+            "blankFields": 78,
+            "blankCorrect": 78,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-reha-unfall-persona-1",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 106.76087499999994,
+          "metrics": {
+            "positiveFields": 0,
+            "exactCorrect": 0,
+            "normalizedCorrect": 0,
+            "blankFields": 59,
+            "blankCorrect": 59,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-reha-unfall-persona-2",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 102.39804200000071,
+          "metrics": {
+            "positiveFields": 0,
+            "exactCorrect": 0,
+            "normalizedCorrect": 0,
+            "blankFields": 59,
+            "blankCorrect": 59,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-reha-unfall-persona-3",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 99.65095800000017,
+          "metrics": {
+            "positiveFields": 0,
+            "exactCorrect": 0,
+            "normalizedCorrect": 0,
+            "blankFields": 59,
+            "blankCorrect": 59,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-senioren-wg-persona-1",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 100.80262500000026,
+          "metrics": {
+            "positiveFields": 7,
+            "exactCorrect": 7,
+            "normalizedCorrect": 7,
+            "blankFields": 14,
+            "blankCorrect": 14,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-senioren-wg-persona-2",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 93.26145799999995,
+          "metrics": {
+            "positiveFields": 5,
+            "exactCorrect": 5,
+            "normalizedCorrect": 5,
+            "blankFields": 16,
+            "blankCorrect": 16,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        },
+        {
+          "caseId": "svbox-senioren-wg-persona-3",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 90.07937500000025,
+          "metrics": {
+            "positiveFields": 8,
+            "exactCorrect": 8,
+            "normalizedCorrect": 8,
+            "blankFields": 13,
+            "blankCorrect": 13,
+            "unexpectedProposals": 0,
+            "exactMatch": 1,
+            "normalizedMatch": 1,
+            "blankAccuracy": 1,
+            "provenanceErrors": 0,
+            "persistenceErrors": 0,
+            "missingErrors": 0
+          }
+        }
+      ]
+    }
+  ],
+  "blockingFailures": []
+}
