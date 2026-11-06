@@ -1,0 +1,91 @@
+# Explicit seeds only; no unbounded discovery. Robots rules always apply.
+- url: "https://www.oegk.at/cdscontent/?contentid=10007.878901&portal=oegkportal"
+  publisher: "ÖGK"
+  refresh_days: 7
+  carrier: ÖGK
+  region: AT
+  life_situations: [administration, health-insurance]
+- url: "https://www.svs.at/"
+  publisher: "SVS"
+  refresh_days: 7
+  carrier: SVS
+  region: AT
+  life_situations: [self-employment]
+- url: "https://www.bvaeb.at/"
+  publisher: "BVAEB"
+  refresh_days: 7
+  carrier: BVAEB
+  region: AT
+  life_situations: [health-insurance]
+- url: "https://www.pv.at/"
+  publisher: "PVA"
+  refresh_days: 7
+  carrier: PVA
+  region: AT
+  life_situations: [pension, care]
+- url: "https://www.sozialversicherung.at/"
+  publisher: "Dachverband der Sozialversicherungsträger"
+  refresh_days: 7
+  carrier: null
+  region: AT
+  life_situations: [health-insurance]
+- url: "https://www.sozialversicherung.gv.at/"
+  publisher: "Dachverband der Sozialversicherungsträger"
+  refresh_days: 7
+  carrier: null
+  region: AT
+  life_situations: [health-insurance]
+- url: "https://www.sozdok.at/"
+  publisher: "Dachverband der Sozialversicherungsträger"
+  refresh_days: 7
+  carrier: null
+  region: AT
+  life_situations: [legal-information]
+- url: "https://www.gesundheit.gv.at/"
+  publisher: "Gesundheitsportal Österreich"
+  refresh_days: 7
+  carrier: null
+  region: AT
+  life_situations: [prevention, family]
+- url: "https://www.oesterreich.gv.at/"
+  publisher: "oesterreich.gv.at"
+  refresh_days: 7
+  carrier: null
+  region: AT
+  life_situations: [administration]
+- url: "https://www.sozialministerium.gv.at/"
+  publisher: "Sozialministerium"
+  refresh_days: 7
+  carrier: null
+  region: AT
+  life_situations: [care]
+- url: "https://www.sozialministeriumservice.gv.at/"
+  publisher: "Sozialministeriumservice"
+  refresh_days: 7
+  carrier: null
+  region: AT
+  life_situations: [care]
+- url: "https://www.bmf.gv.at/"
+  publisher: "Bundesministerium für Finanzen"
+  refresh_days: 30
+  carrier: null
+  region: AT
+  life_situations: [family]
+- url: "https://www.fsw.at/"
+  publisher: "Fonds Soziales Wien"
+  refresh_days: 7
+  carrier: null
+  region: Wien
+  life_situations: [care]
+- url: "https://www.aekwien.at/"
+  publisher: "Ärztekammer für Wien"
+  refresh_days: 30
+  carrier: null
+  region: Wien
+  life_situations: [reimbursement]
+- url: "https://www.bewegt-im-park.at/"
+  publisher: "Bewegt im Park"
+  refresh_days: 7
+  carrier: null
+  region: AT
+  life_situations: [prevention]

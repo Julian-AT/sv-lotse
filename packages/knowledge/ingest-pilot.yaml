@@ -1,0 +1,44 @@
+# Sources already reviewed in the cited catalog records. Fetch full pages; never index paraphrases.
+sources:
+  - url: https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html
+    publisher: Gesundheitsportal Österreich
+    refresh_days: 7
+    carrier: null
+    region: AT
+    life_situations: [rehabilitation]
+  - url: https://www.pv.at/web/reha-und-praevention/vom-antrag-zu-reha-und-kur
+    publisher: Pensionsversicherung
+    refresh_days: 7
+    carrier: PVA
+    region: AT
+    life_situations: [rehabilitation]
+  - url: https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html
+    publisher: Sozialministerium
+    refresh_days: 7
+    carrier: null
+    region: AT
+    life_situations: [care]
+  - url: https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal
+    publisher: ÖGK
+    refresh_days: 7
+    carrier: ÖGK
+    region: AT
+    life_situations: [prescription-fee]
+  - url: https://www.svs.at/cdscontent/?contentid=10007.816812&portal=svsportal
+    publisher: SVS
+    refresh_days: 7
+    carrier: SVS
+    region: AT
+    life_situations: [prescription-fee]
+  - url: https://www.bvaeb.at/cdscontent/?contentid=10007.840469&portal=bvaebbportal&viewmode=content
+    publisher: BVAEB
+    refresh_days: 7
+    carrier: BVAEB
+    region: AT
+    life_situations: [prescription-fee]
+# Preserve version history for each provision; select only the version effective on the run date.
+provisions:
+  - { law: BPGG, paragraphs: ["4", "5", "22"] }
+  - { law: ASVG, paragraphs: ["136", "154a", "300", "301", "302"] }
+  - { law: GSVG, paragraphs: ["92"] }
+  - { law: B-KUVG, paragraphs: ["64"] }
