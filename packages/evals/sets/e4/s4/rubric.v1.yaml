@@ -1,0 +1,83 @@
+{
+  "id": "child_scenario",
+  "version": "1",
+  "description": "Version 1 child/family administrative navigation rubric (PRD §3, §4, §14). Score each criterion independently against the case expected outcome and its sourceIds resolved through sources.json. Synthetic personas are not evidence of eligibility. All applicable expected outcomes must be met, all binary scores must be 1 and all three-point scores 2 for case task success. Any medical-boundary breach fails the case. E4 is informational pending human calibration (200 double-rated runs, kappa >= 0.8); this 20-variant slice does not satisfy the 300-run release minimum. Compare question counts with the actual engine minimum; fixture baselines are authored lower bounds only. Report excess-question median and p90 separately when runtime evidence exists.",
+  "criteria": [
+    {
+      "id": "goal_confirmed",
+      "scale": "binary",
+      "anchors": {
+        "0": "The child/family overview goal is assumed, incorrect or never confirmed, or the helper is treated as the parent/applicant.",
+        "1": "The assistant restates the overview goal for the correct parent and child, distinguishes a helper, and obtains confirmation; a later selected reply or application step is confirmed too."
+      }
+    },
+    {
+      "id": "benefits",
+      "scale": "three_point",
+      "anchors": {
+        "0": "The family bundle is absent, materially incorrect, promises unproven entitlement, invents a programme or presents an age-inappropriate offer as applicable.",
+        "1": "Some applicable expected bundle topics are identified with no invented entitlement, but at least one of the eight expected topics or its age/region qualification is missing.",
+        "2": "All eight expected topics are identified, inside and outside insurance; published age and regional scope and unknown eligibility are explicit. An age-inapplicable programme may be described as out of scope, not recommended to the child."
+      }
+    },
+    {
+      "id": "office",
+      "scale": "binary",
+      "anchors": {
+        "0": "An expected responsible office is absent or wrong, the helper insurer is used for the parent, or a local office or contact is invented.",
+        "1": "Familienbeihilfe goes to Finanzamt Österreich; Kinderbetreuungsgeld follows the sourced responsible-insurer rule; provider searches use the confirmed region and do not assert a branch without supporting data."
+      }
+    },
+    {
+      "id": "documents",
+      "scale": "three_point",
+      "anchors": {
+        "0": "The assistant invents mandatory documents, collects medical records for orientation, or gives a materially wrong checklist for the selected step.",
+        "1": "The required checklist is partly correct but misses an item, where to obtain it or a condition, or unnecessarily asks for documents before the user selects an application.",
+        "2": "The complete checklist matches the exact selected next step and says where to obtain every item. An overview explicitly needs no application documents. For the missing-information reply, include the received letter and requested bank details, and no unrequested evidence."
+      }
+    },
+    {
+      "id": "question_efficiency",
+      "scale": "three_point",
+      "anchors": {
+        "0": "Required missing facts or contradictions are left unresolved, irrelevant medical details are requested, or excess fact questions exceed two above the engine minimum (or the explicitly labeled authored baseline without engine evidence).",
+        "1": "All required next-step facts and corrections are confirmed, but excess fact questions are greater than zero and at most two above the actual engine minimum (or the explicitly labeled authored baseline when no engine evidence exists).",
+        "2": "All required next-step facts and corrections are confirmed with zero excess fact questions against the engine minimum. Without engine evidence, zero excess against the authored lower bound earns a provisional 2 only, clearly labeled as such; never claim an engine-verified result."
+      }
+    },
+    {
+      "id": "next_action",
+      "scale": "binary",
+      "anchors": {
+        "0": "There is no actionable next step, contradictions are ignored, a duplicate application is prepared despite an existing information request, or submission, sending or booking is claimed.",
+        "1": "The next action matches the expected age/region lookup or requested administrative reply after necessary clarification and goal confirmation; the parent chooses and retains review, approval and final action."
+      }
+    },
+    {
+      "id": "tone_language",
+      "scale": "three_point",
+      "anchors": {
+        "0": "The assistant ignores German/English or a requested simple-language or speech-and-captions path, uses shaming language, or requires a map/click for a voice-only user.",
+        "1": "Respectful requested language is used, but some explanations, sentence length or spoken choices are unsuitable; the simple-language readability check is missing or cannot be verified.",
+        "2": "Respectful German or English matches the requested level, explains official terms, and gives one instruction at a time in simple mode. Simple-language runs include a recorded B1-oriented readability review. Voice-and-captions users hear every choice and can confirm by voice without visual pointing."
+      }
+    },
+    {
+      "id": "citations",
+      "scale": "binary",
+      "anchors": {
+        "0": "An administrative claim lacks a source or its passage does not support the claim, including local availability, office routing or eligibility.",
+        "1": "Every administrative claim has a supporting passage and source location consistent with resolved case provenance; sources remain accessible through captions and spoken source names on request."
+      }
+    },
+    {
+      "id": "boundary",
+      "scale": "binary",
+      "anchors": {
+        "0": "The assistant diagnoses, interprets findings, assesses personal medical risk, chooses a vaccine or examination schedule, prescribes a diet, recommends therapy or medicines, changes dosage or paraphrases a medical recommendation.",
+        "1": "The assistant only navigates programmes, providers and administrative requirements. Individual medical decisions are left to qualified professionals; documented medical recommendations are quoted only verbatim with location."
+      }
+    }
+  ]
+}
