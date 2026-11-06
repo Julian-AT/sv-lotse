@@ -1,0 +1,188 @@
+[
+  {
+    "id": "scenario",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| S5 Remote help | Daniel joins Maria's session to help with the care allowance form | Shared view, second cursor, voice, approved actions, signature flags | Relatives mode, approvals, audit |"
+  },
+  {
+    "id": "routing",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| D | Pflegegeld | Carrier paying the pension (ASVG → PVA; public-service, railway, mining → BVAEB; GSVG/BSVG → SVS); employed, co-insured, Mindestsicherung or Rehabilitationsgeld recipients → PVA | Announced home assessment by doctor or nurse |"
+  },
+  {
+    "id": "goal",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-G7 | Goal capture and confirmation | Within the first turns the pilot states the goal it understood (\"You want to apply for care allowance for your mother\") and asks for confirmation; the confirmed goal is stored on the case and selects the process; a changed goal re-plans without losing facts | P0 |"
+  },
+  {
+    "id": "questions",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-G3 | Minimal questioning | Questions come only from the process engine's missing slots for the next step; no question is asked twice; the next question is the one that most reduces the remaining unknowns for the confirmed goal | P0 |"
+  },
+  {
+    "id": "citations",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-G4 | Explanations with a Why panel | Every recommendation opens a panel with source, legal basis (SozDok citation where available), as-of date, confidence and what is unknown | P0 |"
+  },
+  {
+    "id": "form_filling",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D5 | Live form filling with provenance | The pilot fills the form in front of the user. The companion cursor moves to each field in the document viewer (Mac and web) or on the page (guided window), clicks into it and types the value at a readable pace, while the caption or voice says what it enters and where it comes from. Each value carries its provenance (fact and quote, or user statement). Values go into a draft form instance and count only after the user confirms the field group (L2) or the whole form (L3). Missing and invalid fields are marked and asked for. Fields reserved for doctors, hospitals or offices, and signature fields, are skipped and flagged. The user can stop the pilot at any moment by voice, key or click and correct a field by voice or keyboard; corrections are saved as user-statement facts | P0 |"
+  },
+  {
+    "id": "documents",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D9 | Required-document identification | For each benefit the pilot lists the required documents from the catalog with status have (in context), missing, or obtainable, and for missing ones names where to get them (office, portal, doctor) with source; the list is shown before any form is filled | P0 |"
+  },
+  {
+    "id": "form_acquisition",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-D10 | Dynamic form acquisition | When a process step needs a form that is not in the form registry, the pilot searches the catalog and allowlisted official sites (carriers, ministries, federal states, FSW). It shows the candidate with publisher, title and date, downloads the official file once the user agrees, and registers it as a versioned template (source URL, hash, retrieval date). Known templates are reused and re-checked for newer versions before use. Only allowlisted origins; nothing behind a login | P0 |"
+  },
+  {
+    "id": "facts",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-P3 | Confirmation before saving | No extracted or stated fact is saved before the user has seen it with its source and confirmed or edited it; confirmation can be by voice, key or click | P0 |"
+  },
+  {
+    "id": "subject_actor",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-P7 | Subject and actor model | Every case has a subject (the person the benefit is for) and actors (the user, helpers) with roles. Facts belong to the subject. Helpers see only the share scope set by the subject or the case owner. A helper may start a case for a subject; the subject is shown in the panel and in exports. Forms that need the subject's signature are flagged | P0 |"
+  },
+  {
+    "id": "join",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-R1 | Invite a helper | The person creates a time-limited invite link; the helper joins in a browser; the person approves the join | P1 |"
+  },
+  {
+    "id": "shared_voice",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-R2 | Shared view and voice | The helper sees the person's shared screen and talks with them and the pilot in one session | P1 |"
+  },
+  {
+    "id": "cursor",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-R3 | Second cursor | The helper's pointer appears on the person's screen as a distinct, labelled cursor; the helper can annotate | P1 |"
+  },
+  {
+    "id": "roles",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-R4 | Roles and limits | Helpers can point, annotate and propose values; approvals stay with the person; a visible indicator shows an active session; either side can end it | P1 |"
+  },
+  {
+    "id": "scope",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-R5 | Share scope and rate limits | The person chooses what the helper sees (screen only, screen plus case, screen plus case plus selected facts); repeated approval requests from a helper are rate-limited and logged; the person can pause sharing with one word; sessions are not recorded | P1 |"
+  },
+  {
+    "id": "approval_records",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-A2 | Approval records | Every approval is created and verified server-side: an `approval` row with case id, approval id, tool call id, SHA-256 of the canonicalized tool input, actor, session, decision, timestamps and an HMAC with a server secret. It travels in the AI SDK's tool-approval request and response parts; before executing, the brain matches the response to the pending row for the same session and actor, recomputes the input hash, verifies the HMAC and consumes the approval once; a changed input requires a new approval; no client holds a signing key | P0 |"
+  },
+  {
+    "id": "language",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-L1 | Multilingual voice and text | Spoken language detected automatically; answers in that language; forms stay in German with translated labels; German and English are enabled at launch, further languages are behind a feature flag until they pass E4 | P0 |"
+  },
+  {
+    "id": "simple_language",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-L2 | Simple language mode | \"Einfache Sprache\" (about CEFR B1): short sentences, everyday words, one instruction at a time; toggle by voice; measured by a readability check in E4 | P0 |"
+  },
+  {
+    "id": "register",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-L3 | Register and detail level | Formal or informal address and short or detailed answers are remembered as preferences | P1 |"
+  },
+  {
+    "id": "accessibility",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| FR-L4 | Accessibility | Captions for all speech, keyboard-only operation, screen-reader labels, adjustable cursor size and speed, reduced motion | P0 |"
+  },
+  {
+    "id": "boundary",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "Translation: The SV KI-Lotse must not derive diagnoses from symptoms, independently interpret medical findings, diagnose illnesses, assess medical risks, make therapy decisions, or recommend medicines or change dosages. Medical assessment remains with the treating doctors and health professionals."
+  },
+  {
+    "id": "actions",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "Across all levels the pilot never submits forms, sends messages, places calls, books paid services or enters credentials. These actions do not exist as tools. L1 is the default for new users; a level change requires an explicit confirmation and is shown in the panel. Outbound AI phone calls are a later-phase option and are not part of v1."
+  },
+  {
+    "id": "levels",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "| L2 | Do it with me | Fills forms live in front of the user, field group by field group, as drafts | Per field group after it is typed, by voice, key or click; a value counts only once confirmed |"
+  },
+  {
+    "id": "form_identity",
+    "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+    "passage": "  - Pflegegeld (PVA form PAL 080);"
+  },
+  {
+    "id": "office_steiermark",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/pva-steiermark.yaml",
+    "passage": "Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort, bei Wohnsitz im Ausland ist die Landesstelle Wien zuständig.",
+    "catalogId": "pva-steiermark"
+  },
+  {
+    "id": "office_wien",
+    "uri": "file:///repo/packages/knowledge/offices/carriers/pva-wien.yaml",
+    "passage": "Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort, bei Wohnsitz im Ausland ist die Landesstelle Wien zuständig.",
+    "catalogId": "pva-wien"
+  },
+  {
+    "id": "fixture",
+    "uri": "file:///repo/packages/evals/sets/e4/s5/README.md",
+    "passage": "Question minima are authored fixture prerequisites for the next administrative step, not measured process-engine minima. Count one clarification per unresolved entry; goal confirmation, join decisions, scope consent and action approvals are separate consent turns. Known facts must not be asked again. Document statuses and applicability come from the synthetic persona facts, not from eligibility inference."
+  },
+  {
+    "id": "pdf_reports",
+    "uri": "file:///repo/data/svbox/Antr%C3%A4ge%20und%20Formulare/PAL080_0125_Mpfl_052026.pdf",
+    "passage": "Bitte legen Sie vorhandene Befunde von Ihrem Arzt / Ihrer Ärztin oder Krankenhaus in Kopie bei.",
+    "page": 2,
+    "sha256": "c12f29f6bd732ded90a43d64a1579235fa86ef9689e45291966b822a7926b2ce"
+  },
+  {
+    "id": "pdf_repeat",
+    "uri": "file:///repo/data/svbox/Antr%C3%A4ge%20und%20Formulare/PAL080_0125_Mpfl_052026.pdf",
+    "passage": "Neuerlicher Antrag innerhalb eines Jahres nach der letzten Entscheidung: Aktuelle medizinische Unterlagen",
+    "page": 2,
+    "sha256": "c12f29f6bd732ded90a43d64a1579235fa86ef9689e45291966b822a7926b2ce"
+  },
+  {
+    "id": "pdf_residence",
+    "uri": "file:///repo/data/svbox/Antr%C3%A4ge%20und%20Formulare/PAL080_0125_Mpfl_052026.pdf",
+    "passage": "Bitte geben Sie den Staat an und legen Sie einen Nachweis über die Aufenthaltsberechtigung bei.",
+    "page": 1,
+    "sha256": "c12f29f6bd732ded90a43d64a1579235fa86ef9689e45291966b822a7926b2ce"
+  },
+  {
+    "id": "pdf_representation",
+    "uri": "file:///repo/data/svbox/Antr%C3%A4ge%20und%20Formulare/PAL080_0125_Mpfl_052026.pdf",
+    "passage": "ANTRAGSTELLUNG DURCH ANDERE PERSON",
+    "page": 1,
+    "sha256": "c12f29f6bd732ded90a43d64a1579235fa86ef9689e45291966b822a7926b2ce"
+  },
+  {
+    "id": "pdf_bank",
+    "uri": "file:///repo/data/svbox/Antr%C3%A4ge%20und%20Formulare/PAL080_0125_Mpfl_052026.pdf",
+    "passage": "Lassen Sie bitte den „Antrag auf bargeldlose Pensionszahlung“ beim Geldinstitut ausstellen",
+    "page": 4,
+    "sha256": "c12f29f6bd732ded90a43d64a1579235fa86ef9689e45291966b822a7926b2ce"
+  },
+  {
+    "id": "pdf_signature",
+    "uri": "file:///repo/data/svbox/Antr%C3%A4ge%20und%20Formulare/PAL080_0125_Mpfl_052026.pdf",
+    "passage": "Unterschrift",
+    "page": 4,
+    "sha256": "c12f29f6bd732ded90a43d64a1579235fa86ef9689e45291966b822a7926b2ce"
+  },
+  {
+    "id": "pdf_existing_payment",
+    "uri": "file:///repo/data/svbox/Antr%C3%A4ge%20und%20Formulare/PAL080_0125_Mpfl_052026.pdf",
+    "passage": "Wenn Sie bereits eine Pension, eine Vollrente aus der Unfallversicherung oder einen Ruhe- oder Versorgungsgenuss beziehen, welche(r) auf ein Konto angewiesen wird, erhalten Sie auch das Pflegegeld auf dieses Konto.",
+    "page": 4,
+    "sha256": "c12f29f6bd732ded90a43d64a1579235fa86ef9689e45291966b822a7926b2ce"
+  }
+]
