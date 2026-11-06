@@ -8,6 +8,10 @@ codex_effort: xhigh
 depends_on: [WP-006]
 fr: [FR-A1, FR-A2, FR-P7, NFR-4]
 owns:
+  - packages/brain/src/tools/impl/context/**
+  - packages/brain/src/tools/impl/reminder/**
+  - packages/brain/src/tools/registry.ts
+  - packages/brain/src/tools/types.ts
   - packages/brain/src/conversation/**
   - packages/brain/src/agent/**
   - packages/brain/src/approvals/**
@@ -94,6 +98,10 @@ Some attempt-3 findings may already be fixed on main; verify each and fix what r
    Only approval issuance and decisions write `auditEvents`. Fact reads and case/reminder mutations lack the tool audit events required by PRD §13, leaving access and changes absent from that audit trail.
 
    **Required change:** Record opaque actor, case and tool-call identifiers with operation/outcome names; keep user values out. Commit mutation audit events transactionally with their writes and verify them in integration tests.
+
+## Scope note (2026-11-06)
+
+Audit events for the `case` tool group are WP-V1's (it owns `tools/impl/case`); fix the other findings.
 
 ## Acceptance criteria
 

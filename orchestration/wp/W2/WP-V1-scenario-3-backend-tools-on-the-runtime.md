@@ -60,6 +60,11 @@ slice needs, reuse what exists on main, document deviations in the report and ke
 standard and safety rules in AGENTS.md still apply (no secrets, approvals server-side, medical
 boundary, no hard-coded domain data).
 
+## Also
+
+Write append-only `audit_event` rows for every state-changing tool in the groups you own (finding
+from the WP-006 review).
+
 ## Acceptance criteria
 
 - [ ] AC1: A scripted scenario 3 sequence of tool calls (find benefits for the discharge-letter facts,

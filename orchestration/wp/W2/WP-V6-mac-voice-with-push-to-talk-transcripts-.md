@@ -8,6 +8,8 @@ codex_effort: xhigh
 depends_on: [WP-012]
 fr: [FR-D5, FR-G3, FR-O1, FR-A2]
 owns:
+  - apps/mac/Packages/LotseKit/Tests/LotseCoreTests/**
+  - apps/mac/Packages/LotseKit/Sources/LotseCore/MacShellController.swift
   - apps/mac/Packages/LotseKit/Sources/LotseVoice/**
   - apps/mac/Packages/LotseKit/Tests/LotseVoiceTests/**
   - apps/web/src/app/api/voice/**

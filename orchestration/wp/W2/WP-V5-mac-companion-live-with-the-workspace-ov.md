@@ -51,8 +51,9 @@ boundary, no hard-coded domain data).
 
 ## Acceptance criteria
 
-- [ ] AC1: E2E script (apps/mac/E2E) launches the app against the local workspace, sends a scripted turn and
-  asserts the overlay received and resolved a point action (logs or test hook).
+- [ ] AC1: A WebKit test loads the bridge fixture page (`Tests/LotseBridgeTests/Resources/echo.html`, extend
+  it) which sends protocol `Action` envelopes; the overlay receives and resolves a `point` and a
+  `highlight` (test hook). The full app-against-workspace E2E is part of WP-V7.
 - [ ] AC2: xcodebuild build and test pass; SwiftLint strict passes.
 
 ## Suggested commits
