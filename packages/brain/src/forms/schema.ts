@@ -51,8 +51,9 @@ export function templateSchema(template: Template): FormSchema {
     if (ids.has(field.id) || field.page > template.pages) throw new FormError("invalid_fields");
     ids.add(field.id);
     const owner = restricted.get(field.acro_field);
-    // A native AcroForm value is shared by all its widgets, including provider copies.
-    if (owner) {
+    // A native AcroForm value is shared by all its widgets, including provider copies. The insured
+    // person's insurance number is identity data, not a provider entry, so the applicant keeps it.
+    if (owner && !(field.owner === "applicant" && INSURANCE_NUMBER.test(field.label_de))) {
       field.owner = owner.owner;
       field.signature = owner.type === "signature" ? "subject" : owner.signature;
     }
@@ -77,3 +78,5 @@ export class FormError extends Error {
     this.name = "FormError";
   }
 }
+
+export const INSURANCE_NUMBER = /versicherungsnummer|\bvsnr/iu;

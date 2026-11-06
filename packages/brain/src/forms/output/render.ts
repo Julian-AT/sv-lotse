@@ -18,7 +18,7 @@ import {
   FORM_PDF_FONT_SIZE,
 } from "../../config/index.ts";
 import { validFieldValue, writableField } from "../policy.ts";
-import { FormError, type FormField, type FormSchema } from "../schema.ts";
+import { FormError, type FormField, type FormSchema, INSURANCE_NUMBER } from "../schema.ts";
 
 function clearField(field: PDFField): void {
   if (field instanceof PDFTextField) field.setText(undefined);
@@ -97,8 +97,16 @@ export async function renderFormPdf(
   if (form.hasXFA()) throw new FormError("unsupported_format");
   for (const field of form.getFields()) clearField(field);
   const written = new Map<string, string>();
+  // Shared identity fields (the insurance number) stay writable; see templateSchema.
+  const shared = new Set(
+    schema.fields
+      .filter((field) => writableField(field) && INSURANCE_NUMBER.test(field.label_de))
+      .map((field) => field.acro_field),
+  );
   const restricted = new Set(
-    schema.fields.filter((field) => !writableField(field)).map((field) => field.acro_field),
+    schema.fields
+      .filter((field) => !writableField(field) && !shared.has(field.acro_field))
+      .map((field) => field.acro_field),
   );
   for (const field of schema.fields) {
     const entry = fields[field.id];
