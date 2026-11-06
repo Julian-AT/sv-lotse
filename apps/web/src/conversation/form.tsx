@@ -38,7 +38,7 @@ const DOCKED_STYLE = {
 };
 const POPUP_STYLE = { width: "calc(100% - 2rem)", maxWidth: "42rem", minWidth: 0 };
 /** Share of the space above the reply area the narrow popup may take; the rest shows the chat. */
-const POPUP_SHARE = 0.6;
+const POPUP_SHARE = 0.66;
 
 function useWidth(element: Element | null | undefined): number | undefined {
   const [width, setWidth] = useState<number>();
@@ -232,16 +232,19 @@ export function ConversationForm({
       : { open: "Formular öffnen", title: "Formular" };
   return (
     <>
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        className="w-fit rounded-full"
-        onClick={() => setOpen(true)}
-      >
-        <FileTextIcon aria-hidden="true" />
-        {copy.open}
-      </Button>
+      {/* Hidden while the form is open, so the chat keeps the latest message in view. */}
+      {!open && (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="w-fit rounded-full"
+          onClick={() => setOpen(true)}
+        >
+          <FileTextIcon aria-hidden="true" />
+          {copy.open}
+        </Button>
+      )}
       {/* Kept mounted (hidden when closed) so live fills and group approvals reach the viewer. */}
       {dock !== null && (
         <DialogPrimitive.Root open={open} onOpenChange={setOpen} modal={false}>
