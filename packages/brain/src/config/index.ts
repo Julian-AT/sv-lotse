@@ -190,6 +190,10 @@ const environmentSchema = z.object({
   // The extractor role also composes the spoken answer.
   OPENAI_REASONING_EFFORT_EXTRACTOR: reasoningEffort,
   OPENAI_REASONING_EFFORT_VISION: reasoningEffort,
+  // OpenAI processing tier for every model call; "priority" trades price for lower latency.
+  OPENAI_SERVICE_TIER: optionalOverride(
+    z.enum(["auto", "default", "flex", "priority", "fast", "ultrafast"]).optional(),
+  ),
   // Caps the orchestrator's model steps per turn (default PIPELINE_CONFIG.maxSteps).
   LOTSE_AGENT_MAX_STEPS: optionalOverride(z.coerce.number().int().min(1).max(12).optional()),
 });
@@ -221,6 +225,7 @@ export function parseBrainConfig(environment: NodeJS.ProcessEnv = process.env) {
     approvalSecret: value.APPROVAL_HMAC_SECRET,
     allowStubs: false,
     agentMaxSteps: value.LOTSE_AGENT_MAX_STEPS,
+    serviceTier: value.OPENAI_SERVICE_TIER,
     reasoningEffort: {
       orchestrator: value.OPENAI_REASONING_EFFORT_ORCHESTRATOR,
       classifier: value.OPENAI_REASONING_EFFORT_CLASSIFIER,

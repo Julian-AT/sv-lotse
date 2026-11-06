@@ -247,3 +247,12 @@ it("reads per-role reasoning effort and the agent step cap, unset by default", (
     parseBrainConfig({ ...base, OPENAI_REASONING_EFFORT_ORCHESTRATOR: "fast" }),
   ).toThrow();
 });
+
+it("reads the OpenAI service tier, unset by default", () => {
+  const base = { APPROVAL_HMAC_SECRET: randomUUID() };
+  expect(parseBrainConfig(base).serviceTier).toBeUndefined();
+  expect(parseBrainConfig({ ...base, OPENAI_SERVICE_TIER: "priority" }).serviceTier).toBe(
+    "priority",
+  );
+  expect(() => parseBrainConfig({ ...base, OPENAI_SERVICE_TIER: "instant" })).toThrow();
+});

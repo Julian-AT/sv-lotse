@@ -62,9 +62,15 @@ export function withStatelessResponses(model: Language): Language {
     },
   });
 }
-/** Applies a configured reasoning effort to every call of a role; the operator's choice wins. */
-export function withReasoningEffort(model: Language, effort?: ReasoningEffort): Language {
-  if (!effort) return model;
+export type ServiceTier = "auto" | "default" | "flex" | "priority" | "fast" | "ultrafast";
+
+/** Applies a configured reasoning effort and service tier to every call of a role; the operator's choice wins. */
+export function withReasoningEffort(
+  model: Language,
+  effort?: ReasoningEffort,
+  serviceTier?: ServiceTier,
+): Language {
+  if (!effort && !serviceTier) return model;
   return wrapLanguageModel({
     model,
     middleware: {
@@ -73,7 +79,11 @@ export function withReasoningEffort(model: Language, effort?: ReasoningEffort): 
         ...params,
         providerOptions: {
           ...params.providerOptions,
-          openai: { ...params.providerOptions?.openai, reasoningEffort: effort },
+          openai: {
+            ...params.providerOptions?.openai,
+            ...(effort ? { reasoningEffort: effort } : {}),
+            ...(serviceTier ? { serviceTier } : {}),
+          },
         },
       }),
     },
@@ -161,6 +171,7 @@ export function createModelRouter(config: BrainConfig) {
           ? withStatelessResponses(provider.responses(id))
           : provider.responses(id),
         effort,
+        config.serviceTier,
       );
     return withProviderToolNames(
       withLanguageFallback(
