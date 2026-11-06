@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E13",
+    "name": "Form field detection",
+    "gate": {
+      "kind": "informational",
+      "metric": "targetAttainment",
+      "threshold": 1,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 20
+  },
+  "selection": {
+    "seed": "baseline-2026-11-06"
+  },
+  "counts": {
+    "total": 20,
+    "passed": 0,
+    "failed": 20,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0,
+    "targetAttainment": 0.5227231902281301,
+    "goldCount": 539,
+    "detectedCount": 586,
+    "matchedCount": 291,
+    "boxMatchedCount": 492,
+    "labelMatchedCount": 292,
+    "ownerMatchedCount": 490,
+    "boxRecall": 0.9128014842300557,
+    "boxPrecision": 0.8395904436860068,
+    "labelMatch": 0.5934959349593496,
+    "ownerMatch": 0.9959349593495935,
+    "recall": 0.5398886827458256,
+    "precision": 0.49658703071672355
+  },
+  "wilson95": {
+    "lower": 0,
+    "upper": 0.16112515827076002,
+    "confidence": 0.95
+  },
+  "gateVerdict": "failed",
+  "modelVersion": "brain-field-detector/auto",
+  "judgeVersions": [],
+  "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+  "startedAt": "2026-11-06T02:37:30.615Z",
+  "finishedAt": "2026-11-06T02:37:31.259Z",
+  "cases": [
+    {
+      "caseId": "e13-svs-000",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 491.13366700000006,
+      "metrics": {
+        "goldCount": 40,
+        "detectedCount": 42,
+        "matchedCount": 20,
+        "boxMatchedCount": 38,
+        "labelMatchedCount": 20,
+        "ownerMatchedCount": 38,
+        "boxRecall": 0.95,
+        "boxPrecision": 0.9047619047619048,
+        "labelMatch": 0.5263157894736842,
+        "ownerMatch": 1,
+        "recall": 0.5,
+        "precision": 0.47619047619047616,
+        "targetAttainment": 0.5012531328320802
+      }
+    },
+    {
+      "caseId": "e13-svs-004",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 312.6629999999999,
+      "metrics": {
+        "goldCount": 39,
+        "detectedCount": 35,
+        "matchedCount": 26,
+        "boxMatchedCount": 30,
+        "labelMatchedCount": 26,
+        "ownerMatchedCount": 30,
+        "boxRecall": 0.7692307692307693,
+        "boxPrecision": 0.8571428571428571,
+        "labelMatch": 0.8666666666666667,
+        "ownerMatch": 1,
+        "recall": 0.6666666666666666,
+        "precision": 0.7428571428571429,
+        "targetAttainment": 0.7407407407407407
+      }
+    },
+    {
+      "caseId": "e13-svs-008",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 186.55266600000004,
+      "metrics": {
+        "goldCount": 10,
+        "detectedCount": 11,
+        "matchedCount": 8,
+        "boxMatchedCount": 9,
+        "labelMatchedCount": 8,
+        "ownerMatchedCount": 9,
+        "boxRecall": 0.9,
+        "boxPrecision": 0.8181818181818182,
+        "labelMatch": 0.8888888888888888,
+        "ownerMatch": 1,
+        "recall": 0.8,
+        "precision": 0.7272727272727273,
+        "targetAttainment": 0.7655502392344499
+      }
+    },
+    {
+      "caseId": "e13-svs-009",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 232.60125000000005,
+      "metrics": {
+        "goldCount": 20,
+        "detectedCount": 28,
+        "matchedCount": 6,
+        "boxMatchedCount": 20,
+        "labelMatchedCount": 6,
+        "ownerMatchedCount": 20,
+        "boxRecall": 1,
+        "boxPrecision": 0.7142857142857143,
+        "labelMatch": 0.3,
+        "ownerMatch": 1,
+        "recall": 0.3,
+        "precision": 0.21428571428571427,
+        "targetAttainment": 0.22556390977443608
+      }
+    },
+    {
+      "caseId": "e13-svs-010",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 241.87308399999995,
+      "metrics": {
+        "goldCount": 18,
+        "detectedCount": 18,
+        "matchedCount": 9,
+        "boxMatchedCount": 18,
+        "labelMatchedCount": 9,
+        "ownerMatchedCount": 18,
+        "boxRecall": 1,
+        "boxPrecision": 1,
+        "labelMatch": 0.5,
+        "ownerMatch": 1,
+        "recall": 0.5,
+        "precision": 0.5,
+        "targetAttainment": 0.5263157894736842
+      }
+    },
+    {
+      "caseId": "e13-svs-011",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 198.60112500000002,
+      "metrics": {
+        "goldCount": 18,
+        "detectedCount": 20,
+        "matchedCount": 16,
+        "boxMatchedCount": 18,
+        "labelMatchedCount": 16,
+        "ownerMatchedCount": 18,
+        "boxRecall": 1,
+        "boxPrecision": 0.9,
+        "labelMatch": 0.8888888888888888,
+        "ownerMatch": 1,
+        "recall": 0.8888888888888888,
+        "precision": 0.8,
+        "targetAttainment": 0.8421052631578948
+      }
+    },
+    {
+      "caseId": "e13-svs-012",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 331.2512499999999,
+      "metrics": {
+        "goldCount": 67,
+        "detectedCount": 66,
+        "matchedCount": 30,
+        "boxMatchedCount": 53,
+        "labelMatchedCount": 30,
+        "ownerMatchedCount": 53,
+        "boxRecall": 0.7910447761194029,
+        "boxPrecision": 0.803030303030303,
+        "labelMatch": 0.5660377358490566,
+        "ownerMatch": 1,
+        "recall": 0.44776119402985076,
+        "precision": 0.45454545454545453,
+        "targetAttainment": 0.4784688995215311
+      }
+    },
+    {
+      "caseId": "e13-svs-014",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 252.79729200000008,
+      "metrics": {
+        "goldCount": 19,
+        "detectedCount": 19,
+        "matchedCount": 14,
+        "boxMatchedCount": 19,
+        "labelMatchedCount": 14,
+        "ownerMatchedCount": 19,
+        "boxRecall": 1,
+        "boxPrecision": 1,
+        "labelMatch": 0.7368421052631579,
+        "ownerMatch": 1,
+        "recall": 0.7368421052631579,
+        "precision": 0.7368421052631579,
+        "targetAttainment": 0.775623268698061
+      }
+    },
+    {
+      "caseId": "e13-svs-016",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 345.84325,
+      "metrics": {
+        "goldCount": 34,
+        "detectedCount": 44,
+        "matchedCount": 23,
+        "boxMatchedCount": 33,
+        "labelMatchedCount": 23,
+        "ownerMatchedCount": 33,
+        "boxRecall": 0.9705882352941176,
+        "boxPrecision": 0.75,
+        "labelMatch": 0.696969696969697,
+        "ownerMatch": 1,
+        "recall": 0.6764705882352942,
+        "precision": 0.5227272727272727,
+        "targetAttainment": 0.5502392344497608
+      }
+    },
+    {
+      "caseId": "e13-svs-017",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 435.43325000000004,
+      "metrics": {
+        "goldCount": 7,
+        "detectedCount": 8,
+        "matchedCount": 7,
+        "boxMatchedCount": 7,
+        "labelMatchedCount": 7,
+        "ownerMatchedCount": 7,
+        "boxRecall": 1,
+        "boxPrecision": 0.875,
+        "labelMatch": 1,
+        "ownerMatch": 1,
+        "recall": 1,
+        "precision": 0.875,
+        "targetAttainment": 0.9210526315789475
+      }
+    },
+    {
+      "caseId": "e13-svs-021",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 400.1432910000001,
+      "metrics": {
+        "goldCount": 44,
+        "detectedCount": 41,
+        "matchedCount": 15,
+        "boxMatchedCount": 34,
+        "labelMatchedCount": 15,
+        "ownerMatchedCount": 34,
+        "boxRecall": 0.7727272727272727,
+        "boxPrecision": 0.8292682926829268,
+        "labelMatch": 0.4411764705882353,
+        "ownerMatch": 1,
+        "recall": 0.3409090909090909,
+        "precision": 0.36585365853658536,
+        "targetAttainment": 0.37878787878787873
+      }
+    },
+    {
+      "caseId": "e13-svs-022",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 354.3877080000001,
+      "metrics": {
+        "goldCount": 17,
+        "detectedCount": 18,
+        "matchedCount": 13,
+        "boxMatchedCount": 16,
+        "labelMatchedCount": 13,
+        "ownerMatchedCount": 16,
+        "boxRecall": 0.9411764705882353,
+        "boxPrecision": 0.8888888888888888,
+        "labelMatch": 0.8125,
+        "ownerMatch": 1,
+        "recall": 0.7647058823529411,
+        "precision": 0.7222222222222222,
+        "targetAttainment": 0.760233918128655
+      }
+    },
+    {
+      "caseId": "e13-svs-027",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 447.89420799999994,
+      "metrics": {
+        "goldCount": 23,
+        "detectedCount": 40,
+        "matchedCount": 7,
+        "boxMatchedCount": 20,
+        "labelMatchedCount": 7,
+        "ownerMatchedCount": 20,
+        "boxRecall": 0.8695652173913043,
+        "boxPrecision": 0.5,
+        "labelMatch": 0.35,
+        "ownerMatch": 1,
+        "recall": 0.30434782608695654,
+        "precision": 0.175,
+        "targetAttainment": 0.18421052631578946
+      }
+    },
+    {
+      "caseId": "e13-svs-035",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 414.250084,
+      "metrics": {
+        "goldCount": 18,
+        "detectedCount": 23,
+        "matchedCount": 10,
+        "boxMatchedCount": 17,
+        "labelMatchedCount": 10,
+        "ownerMatchedCount": 17,
+        "boxRecall": 0.9444444444444444,
+        "boxPrecision": 0.7391304347826086,
+        "labelMatch": 0.5882352941176471,
+        "ownerMatch": 1,
+        "recall": 0.5555555555555556,
+        "precision": 0.43478260869565216,
+        "targetAttainment": 0.4576659038901602
+      }
+    },
+    {
+      "caseId": "e13-svs-049",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 334.35474999999997,
+      "metrics": {
+        "goldCount": 42,
+        "detectedCount": 44,
+        "matchedCount": 18,
+        "boxMatchedCount": 38,
+        "labelMatchedCount": 18,
+        "ownerMatchedCount": 38,
+        "boxRecall": 0.9047619047619048,
+        "boxPrecision": 0.8636363636363636,
+        "labelMatch": 0.47368421052631576,
+        "ownerMatch": 1,
+        "recall": 0.42857142857142855,
+        "precision": 0.4090909090909091,
+        "targetAttainment": 0.430622009569378
+      }
+    },
+    {
+      "caseId": "e13-svs-053",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 277.7132080000001,
+      "metrics": {
+        "goldCount": 58,
+        "detectedCount": 58,
+        "matchedCount": 35,
+        "boxMatchedCount": 57,
+        "labelMatchedCount": 36,
+        "ownerMatchedCount": 55,
+        "boxRecall": 0.9827586206896551,
+        "boxPrecision": 0.9827586206896551,
+        "labelMatch": 0.631578947368421,
+        "ownerMatch": 0.9649122807017544,
+        "recall": 0.603448275862069,
+        "precision": 0.603448275862069,
+        "targetAttainment": 0.6352087114337568
+      }
+    },
+    {
+      "caseId": "e13-svs-058",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 176.300833,
+      "metrics": {
+        "goldCount": 11,
+        "detectedCount": 11,
+        "matchedCount": 8,
+        "boxMatchedCount": 11,
+        "labelMatchedCount": 8,
+        "ownerMatchedCount": 11,
+        "boxRecall": 1,
+        "boxPrecision": 1,
+        "labelMatch": 0.7272727272727273,
+        "ownerMatch": 1,
+        "recall": 0.7272727272727273,
+        "precision": 0.7272727272727273,
+        "targetAttainment": 0.7655502392344499
+      }
+    },
+    {
+      "caseId": "e13-svs-067",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 329.44566699999996,
+      "metrics": {
+        "goldCount": 10,
+        "detectedCount": 12,
+        "matchedCount": 5,
+        "boxMatchedCount": 10,
+        "labelMatchedCount": 5,
+        "ownerMatchedCount": 10,
+        "boxRecall": 1,
+        "boxPrecision": 0.8333333333333334,
+        "labelMatch": 0.5,
+        "ownerMatch": 1,
+        "recall": 0.5,
+        "precision": 0.4166666666666667,
+        "targetAttainment": 0.4385964912280702
+      }
+    },
+    {
+      "caseId": "e13-svs-125",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 258.59187499999985,
+      "metrics": {
+        "goldCount": 22,
+        "detectedCount": 24,
+        "matchedCount": 10,
+        "boxMatchedCount": 22,
+        "labelMatchedCount": 10,
+        "ownerMatchedCount": 22,
+        "boxRecall": 1,
+        "boxPrecision": 0.9166666666666666,
+        "labelMatch": 0.45454545454545453,
+        "ownerMatch": 1,
+        "recall": 0.45454545454545453,
+        "precision": 0.4166666666666667,
+        "targetAttainment": 0.4385964912280702
+      }
+    },
+    {
+      "caseId": "e13-svs-126",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 255.90279199999986,
+      "metrics": {
+        "goldCount": 22,
+        "detectedCount": 24,
+        "matchedCount": 11,
+        "boxMatchedCount": 22,
+        "labelMatchedCount": 11,
+        "ownerMatchedCount": 22,
+        "boxRecall": 1,
+        "boxPrecision": 0.9166666666666666,
+        "labelMatch": 0.5,
+        "ownerMatch": 1,
+        "recall": 0.5,
+        "precision": 0.4583333333333333,
+        "targetAttainment": 0.4824561403508772
+      }
+    }
+  ]
+}
