@@ -1,0 +1,62 @@
+[project]
+name = "lotse-ml"
+version = "0.1.0"
+description = "Lotse-RL research lane: AT-Benefits gym, personas, law corpus, training, quantum experiments"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "datasketch>=2.0.0",
+  "httpx>=0.28",
+  "huggingface-hub>=2.4.0",
+  "lingua-language-detector>=2.2.0",
+  "numpy>=2.1",
+  "openai>=3.46.0",
+  "pandas>=2.2",
+  "pillow>=11",
+  "pyarrow>=18",
+  "pydantic>=2.9",
+  "pypdfium2>=5.14.0",
+  "python-dotenv>=1.0",
+  "pyyaml>=6.0.3",
+  "reportlab>=5.1.0",
+  "scikit-learn>=1.9.1",
+]
+
+[project.optional-dependencies]
+quantum = [
+    "ortools>=9.15.6755",
+    "python-dotenv>=1.2.4",
+    "pyyaml>=6.0.3",
+    "qiskit>=2.6.2",
+    "qiskit-addon-opt-mapper>=0.1.0",
+    "qiskit-aer>=0.18.2",
+    "qiskit-ibm-runtime>=0.51.0",
+]
+publish = [
+    "huggingface-hub>=2.4.0",
+]
+train = [
+    "accelerate>=1.15.0",
+    "datasets>=5.1.0",
+    "peft>=0.21.2",
+    "torch>=2.15.0",
+    "transformers>=5.22.1",
+    "trl>=1.17.1",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.8"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["."]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
