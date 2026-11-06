@@ -3,7 +3,7 @@ import type { LotseMessage } from "@lotse/brain";
 import type { Action } from "@lotse/protocol";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { createClientRuntime } from "../src/conversation/client-tools.ts";
-import { pendingOpenOffer } from "../src/conversation/open-offer.tsx";
+import { pendingOfferQuestion, pendingOpenOffer } from "../src/conversation/open-offer.tsx";
 import {
   formFieldElementId,
   OPEN_RESOURCE_CONFIG,
@@ -168,4 +168,18 @@ test("offer chips appear only for an unopened resource of the latest assistant m
   expect(
     pendingOpenOffer([...offer(false), { id: "u", role: "user", parts: [] } as LotseMessage]),
   ).toBeUndefined();
+});
+
+test("yes/no chips appear for a proactive offer question", () => {
+  const reply = (text: string): LotseMessage[] => [
+    { id: "a", role: "assistant", parts: [{ type: "text", text }] } as LotseMessage,
+  ];
+  expect(
+    pendingOfferQuestion(
+      reply("Den Antrag stellen Sie bei der PVA. Soll ich Ihnen zeigen, wo das steht?"),
+    ),
+  ).toBeDefined();
+  expect(pendingOfferQuestion(reply("Shall I open the form?"))).toBeDefined();
+  expect(pendingOfferQuestion(reply("Welche Versicherung haben Sie?"))).toBeUndefined();
+  expect(pendingOfferQuestion(reply("Soll ich das tun? Das ist erledigt."))).toBeUndefined();
 });

@@ -14,9 +14,35 @@ const OfferSchema = z.object({ open: z.boolean(), label: z.string(), target: Tar
 export type OpenOffer = z.infer<typeof OfferSchema>;
 
 export const openOfferCopy = {
-  de: { yes: "Ja, öffnen", no: "Nein", noReply: "Nein, sagen Sie mir bitte nur, wo ich es finde." },
-  en: { yes: "Yes, open it", no: "No", noReply: "No, just tell me where to find it." },
+  de: {
+    yes: "Ja, öffnen",
+    no: "Nein",
+    noReply: "Nein, sagen Sie mir bitte nur, wo ich es finde.",
+    accept: "Ja, bitte",
+    decline: "Nein, danke",
+  },
+  en: {
+    yes: "Yes, open it",
+    no: "No",
+    noReply: "No, just tell me where to find it.",
+    accept: "Yes, please",
+    decline: "No, thanks",
+  },
 } as const;
+
+const OFFER_QUESTION =
+  /(?:^|[.!?]\s+)(?:soll ich|möchten sie,? dass ich|darf ich|shall i|should i|do you want me to|would you like me to)\b[^.!?]*\?\s*$/iu;
+
+/** The latest assistant message ends with a yes/no offer of a next step ("Soll ich …?"). */
+export function pendingOfferQuestion(messages: readonly LotseMessage[]): string | undefined {
+  const last = messages.at(-1);
+  if (last?.role !== "assistant") return;
+  const text = last.parts
+    .flatMap((part) => (part.type === "text" ? [part.text] : []))
+    .join(" ")
+    .trim();
+  return OFFER_QUESTION.test(text) ? text : undefined;
+}
 
 /** The pending "Soll ich … öffnen?" offer of the latest assistant message, if any. */
 export function pendingOpenOffer(messages: readonly LotseMessage[]): OpenOffer | undefined {
@@ -44,8 +70,14 @@ export function OpenOfferReplies({
   useEffect(() => {
     if (offer?.target.kind === "dom") void loadPortalOrigins();
   }, [offer?.target.kind]);
-  if (!offer) return null;
   const copy = openOfferCopy[locale === "en" ? "en" : "de"];
+  if (!offer)
+    return pendingOfferQuestion(messages) ? (
+      <Suggestions>
+        <Suggestion suggestion={copy.accept} onClick={onReply} />
+        <Suggestion suggestion={copy.decline} onClick={onReply} />
+      </Suggestions>
+    ) : null;
   return (
     <Suggestions aria-label={offer.label}>
       <Suggestion
