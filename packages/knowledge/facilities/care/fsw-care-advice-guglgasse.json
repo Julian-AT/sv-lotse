@@ -1,0 +1,33 @@
+{
+  "id": "fsw-care-advice-guglgasse",
+  "name_de": "Fonds Soziales Wien – Beratung und Service-Center Pflege und Betreuung – Guglgasse 7–9",
+  "region": "Wien",
+  "url": "https://www.fsw.at/standorte",
+  "address": {
+    "street": "Guglgasse 7–9",
+    "postal_code": "1030",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "phone": "01 24 5 24",
+  "opening_hours": {
+    "monday": "08:00–15:00",
+    "tuesday": "08:00–15:00",
+    "wednesday": "08:00–15:00",
+    "thursday": "08:00–17:30",
+    "friday": "08:00–15:00"
+  },
+  "sources": [
+    {
+      "url": "https://www.fsw.at/standorte",
+      "quote": "Beratung und Service-Center\nPflege und Betreuung\nGuglgasse 7–9\n1030 Wien\nMo–Fr 8:00–15:00 Uhr\nDo 8:00–17:30 Uhr\nTel.: 01 24 5 24",
+      "retrieved_at": "2026-11-06T01:36:53.365424Z"
+    }
+  ],
+  "as_of": "2026-11-06",
+  "type": "care_advice",
+  "location": {
+    "latitude": 48.1861406,
+    "longitude": 16.417604
+  }
+}
