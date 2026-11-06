@@ -1,0 +1,223 @@
+id: heilbehelfe-hilfsmittel-beziehen
+benefit: ref:catalog/heilbehelfe-hilfsmittel
+actor_roles: [subject, helper]
+slots:
+  - id: insurance_carrier
+    type: enum:carrier
+    from_context: insurance.carrier
+    question_hint: Bei welcher Krankenkasse ist die Person versichert, die den Behelf braucht?
+    validation:
+      options: [oegk, svs, bvaeb]
+  - id: residence_state
+    type: enum:state
+    from_context: residence.state
+    question_hint: In welchem Bundesland wohnt diese Person?
+    validation:
+      options:
+        [
+          Wien,
+          Niederösterreich,
+          Burgenland,
+          Oberösterreich,
+          Salzburg,
+          Steiermark,
+          Kärnten,
+          Tirol,
+          Vorarlberg,
+        ]
+  - id: prescription_present
+    type: boolean
+    question_hint: Haben Sie schon eine Verordnung für den Behelf?
+  - id: prescription_date
+    type: date
+    question_hint: Welches Ausstellungsdatum steht auf der Verordnung?
+  - id: contract_partner
+    type: boolean
+    question_hint: Hat der Fachbetrieb bestätigt, dass er einen Vertrag mit Ihrer Krankenkasse hat?
+  - id: reimbursement_clarified
+    type: boolean
+    question_hint: Hat Ihre Krankenkasse die Voraussetzungen für einen Kostenersatz bei diesem Betrieb mit Ihnen geklärt?
+  - id: approval_required
+    type: boolean
+    question_hint: Ist laut Fachbetrieb oder Krankenkasse vor dem Bezug eine Bewilligung nötig?
+  - id: quoted_price_eur
+    type: number
+    question_hint: Welchen Betrag in Euro nennt der Fachbetrieb für den verordneten Behelf?
+    validation:
+      min: 0
+  - id: approval_received
+    type: boolean
+    question_hint: Liegt die nötige Bewilligung Ihrer Krankenkasse schon vor?
+  - id: approval_date
+    type: date
+    question_hint: Welches Datum steht auf der Bewilligung?
+  - id: validity_confirmed
+    type: boolean
+    question_hint: Hat der Fachbetrieb bestätigt, dass Sie die Verordnung noch einlösen können?
+  - id: own_cost_clarified
+    type: boolean
+    question_hint: Wissen Sie vom Fachbetrieb oder der Krankenkasse, wie viel Sie selbst bezahlen müssen und ob eine Befreiung gilt?
+  - id: collected
+    type: boolean
+    question_hint: Haben Sie den verordneten Behelf inzwischen erhalten?
+steps:
+  - id: confirm_goal
+    needs: []
+    action: goal.confirm
+    transitions:
+      - to: resolve_office
+  - id: resolve_office
+    needs: [confirm_goal, insurance_carrier, residence_state]
+    action: office.resolve
+    outputs:
+      - id: responsible_office
+        type: office
+    transitions:
+      - to: check_prescription
+  - id: check_prescription
+    needs: [resolve_office, prescription_present]
+    documents: ref:catalog/heilbehelfe-hilfsmittel#documents
+    action: documents.checklist
+    transitions:
+      - to: choose_supplier
+        when: prescription_present == true
+      - to: obtain_prescription
+        when: prescription_present == false
+  - id: obtain_prescription
+    needs: [check_prescription]
+    documents: ref:catalog/heilbehelfe-hilfsmittel#documents
+    action: documents.checklist
+    outputs:
+      - id: prescription_checklist
+        type: document
+    transitions:
+      - to: check_prescription
+        when: prescription_present == true
+  - id: choose_supplier
+    needs: [check_prescription, prescription_date, contract_partner]
+    transitions:
+      - to: clarify_approval
+        when: contract_partner == true and insurance_carrier != "oegk"
+      - to: check_oegk_price
+        when: contract_partner == true and insurance_carrier == "oegk"
+      - to: clarify_reimbursement
+        when: contract_partner == false
+  - id: clarify_reimbursement
+    needs: [choose_supplier, reimbursement_clarified]
+    documents: ref:catalog/heilbehelfe-hilfsmittel#documents
+    action: documents.checklist
+    outputs:
+      - id: reimbursement_checklist
+        type: document
+    transitions:
+      - to: clarify_approval
+        when: reimbursement_clarified == true and insurance_carrier != "oegk"
+      - to: check_oegk_price
+        when: reimbursement_clarified == true and insurance_carrier == "oegk"
+  - id: check_oegk_price
+    needs: [choose_supplier, quoted_price_eur]
+    transitions:
+      - to: clarify_approval
+  - id: clarify_approval
+    needs: [choose_supplier, approval_required]
+    documents: ref:catalog/heilbehelfe-hilfsmittel#documents
+    action: documents.checklist
+    transitions:
+      - to: collect_approval
+        when: approval_required == true or (insurance_carrier == "oegk" and quoted_price_eur >= 1500)
+      - to: check_validity
+        when: approval_required == false and (insurance_carrier != "oegk" or quoted_price_eur < 1500)
+  - id: collect_approval
+    needs: [clarify_approval, approval_received]
+    documents: ref:catalog/heilbehelfe-hilfsmittel#documents
+    action: documents.checklist
+    outputs:
+      - id: approval_checklist
+        type: document
+    transitions:
+      - to: record_approval_date
+        when: approval_received == true
+      - to: await_approval
+        when: approval_received == false
+  - id: await_approval
+    needs: [collect_approval]
+    # A follow-up suggestion, not an official processing or redemption deadline.
+    reminders:
+      - after_days: 1
+        text_de: Wenn die Bewilligung noch fehlt, fragen Sie bitte beim Fachbetrieb oder Ihrer Krankenkasse nach.
+        when: approval_received == false
+    transitions:
+      - to: collect_approval
+        when: approval_received == true
+  - id: record_approval_date
+    needs: [collect_approval, approval_date]
+    transitions:
+      - to: check_validity
+  - id: check_validity
+    needs: [clarify_approval, validity_confirmed]
+    transitions:
+      - to: clarify_costs
+        when: validity_confirmed == true
+      - to: clarify_validity
+        when: validity_confirmed == false
+  - id: clarify_validity
+    needs: [check_validity]
+    documents: ref:catalog/heilbehelfe-hilfsmittel#documents
+    action: documents.checklist
+    transitions:
+      - to: check_validity
+        when: validity_confirmed == true
+  - id: clarify_costs
+    needs: [check_validity, own_cost_clarified]
+    transitions:
+      - to: check_administrative_requirements
+        when: own_cost_clarified == true
+  - id: check_administrative_requirements
+    needs: [clarify_costs]
+    criteria: ref:catalog/heilbehelfe-hilfsmittel#criteria
+    transitions:
+      - to: redeem_prescription
+        when: prescription_present == true and validity_confirmed == true and own_cost_clarified == true and (contract_partner == true or reimbursement_clarified == true) and (approval_required == false or approval_received == true) and (insurance_carrier != "oegk" or quoted_price_eur < 1500 or approval_received == true)
+  - id: redeem_prescription
+    needs: [check_administrative_requirements]
+    documents: ref:catalog/heilbehelfe-hilfsmittel#documents
+    action: documents.checklist
+    outputs:
+      - id: collection_checklist
+        type: document
+    # The Fachbetrieb confirms the actual carrier-specific expiry date.
+    reminders:
+      - after_days: 0
+        text_de: Bitte beachten Sie die vom Fachbetrieb bestätigte Einlösefrist. Für ÖGK, SVS und BVAEB gelten unterschiedliche Fristen.
+        when: collected == false
+    transitions:
+      - to: confirm_collection
+  - id: confirm_collection
+    needs: [redeem_prescription, collected]
+    transitions:
+      - to: finish
+        when: collected == true
+  - id: finish
+    needs: [confirm_collection]
+    outputs:
+      - id: collection_confirmation
+        type: user_statement
+completion:
+  evidence: [user_statement]
+sources:
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870456
+    quote: Die Verordnung muss innerhalb von 30 Tagen nach dem Ausstellungstag eingelöst werden.
+    retrieved_at: 2026-11-05T23:49:33Z
+  - url: https://www.ris.bka.gv.at/Dokumente/Avsv/AVSV_2023_0082/AVSV_2023_0082.html
+    quote: >-
+      Der Verordnungsschein wird ungültig, wenn er nicht innerhalb von einem Monat
+      nach dem Ausstellungstag oder nach dem Tag, an dem die SVS die Bewilligung
+      erteilt hat, eingelöst wird.
+    retrieved_at: 2026-11-05T23:49:33Z
+  - url: https://www.bvaeb.at/cdscontent/?contentid=10007.840378&portal=bvaebbportal
+    quote: >-
+      Verordnungen für Heilbehelfe und Hilfsmittel haben eine Gültigkeit von
+      1 Monat. Ist eine vorherige Bewilligung durch die BVAEB erforderlich, so
+      beginnt diese Frist erst mit unserem Bewilligungsdatum zu laufen.
+    retrieved_at: 2026-11-05T23:49:33Z
+as_of: 2026-11-06
