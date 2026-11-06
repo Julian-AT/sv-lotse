@@ -92,7 +92,7 @@ function queryWords(query: string): string[] {
   return query
     .toLowerCase()
     .split(/[^\p{L}]+/u)
-    .filter((word) => word.length >= 5 && !STOPWORDS.has(word));
+    .filter((word) => word.length >= 5 && !STOPWORDS.has(word) && !APPLY.test(word));
 }
 
 function parseLines(text: string): OfficialPage[] {

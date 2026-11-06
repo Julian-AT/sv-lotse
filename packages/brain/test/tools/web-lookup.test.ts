@@ -222,6 +222,7 @@ test("offers the on-topic apply link of the best page for a where-to-apply reque
   vi.stubGlobal("fetch", async () =>
     htmlResponse(`<main><h1>Pflegegeld</h1>
 <a href="https://www.pv.at/formulare">Anträge und Formulare</a>
+<a href="https://www.pv.at/wahlkarte">Wahlkarte beantragen</a>
 <a href="https://www.pv.at/web/pflegegeld/antrag">Pflegegeld online beantragen</a></main>`),
   );
   const { model } = searchModel("", ["https://www.pv.at/web/pflegegeld"]);
@@ -235,4 +236,16 @@ test("offers the on-topic apply link of the best page for a where-to-apply reque
   await expect(
     deepPageOffer({ userTexts: ["Was ist Pflegegeld?"], sources: [], model }),
   ).resolves.toBeUndefined();
+});
+
+test("stays on the best page when its apply links are about something else", async () => {
+  vi.stubGlobal("fetch", async () =>
+    htmlResponse(`<title>Pflegegeld</title><main>
+<a href="https://www.pv.at/wahlkarte">Wahlkarte beantragen</a></main>`),
+  );
+  const { model } = searchModel("", ["https://www.pv.at/web/pflegegeld"]);
+
+  await expect(
+    deepPageOffer({ userTexts: ["Wo beantrage ich Pflegegeld?"], sources: [], model }),
+  ).resolves.toMatchObject({ target: { url: "https://www.pv.at/web/pflegegeld" } });
 });
