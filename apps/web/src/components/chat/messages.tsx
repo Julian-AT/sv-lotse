@@ -68,7 +68,7 @@ function PureMessages({
         ref={messagesContainerRef}
         role="log"
       >
-        <div className="mx-auto flex min-h-full min-w-0 max-w-4xl flex-col gap-5 px-2 py-6 md:gap-7 md:px-4">
+        <div className="mx-auto flex min-h-full min-w-0 max-w-4xl flex-col gap-5 px-2 pt-6 pb-16 md:gap-7 md:px-4">
           {messages.map((message, index) => (
             <PreviewMessage
               actionable={index === messages.length - 1 && !busy}
@@ -99,7 +99,7 @@ function PureMessages({
 
       <button
         aria-label="Nach unten scrollen"
-        className={`absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center rounded-full border border-border/50 bg-card/90 px-3.5 shadow-[var(--shadow-float)] backdrop-blur-lg transition-all duration-200 h-7 text-[10px] ${
+        className={`absolute bottom-16 left-1/2 z-10 flex -translate-x-1/2 items-center rounded-full border border-border/50 bg-card/90 px-3.5 shadow-[var(--shadow-float)] backdrop-blur-lg transition-all duration-200 h-7 text-[10px] ${
           isAtBottom
             ? "pointer-events-none scale-90 opacity-0"
             : "pointer-events-auto scale-100 opacity-100"

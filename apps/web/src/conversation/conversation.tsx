@@ -64,7 +64,7 @@ export function DraftConversation({
             status={starting ? "submitted" : "ready"}
             subjectId=""
           />
-          <div className="sticky bottom-0 z-1 mx-auto flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4">
+          <div className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-background from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto">
             <MultimodalInput
               disabled={starting}
               hasMessages={false}
@@ -314,7 +314,7 @@ export function Conversation({
               )}
             </Messages>
 
-            <div className="sticky bottom-0 z-1 mx-auto flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4">
+            <div className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-background from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto">
               {(chat.error || chat.bridgeError) && (
                 <div
                   className="flex items-center justify-between gap-3 rounded-xl border border-destructive/20 bg-destructive/5 px-3.5 py-2 text-[13px] text-foreground"
