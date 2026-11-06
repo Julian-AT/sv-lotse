@@ -1,0 +1,130 @@
+id: sozialhilfe-wien
+benefit: ref:catalog/sozialhilfe-wien
+actor_roles: [subject, helper]
+slots:
+  - id: federal_state
+    type: enum:federal-state
+    question_hint: In welchem Bundesland liegt Ihr Hauptwohnsitz?
+    validation:
+      options: [Wien]
+  - id: main_residence_confirmed
+    type: boolean
+    question_hint: Haben Sie Ihren Hauptwohnsitz in Wien?
+  - id: actual_residence_confirmed
+    type: boolean
+    question_hint: Halten Sie sich derzeit tatsächlich in Wien auf?
+  - id: centre_of_life_confirmed
+    type: boolean
+    question_hint: Ist Wien Ihr Lebensmittelpunkt, also der Ort, an dem Sie leben?
+  - id: age
+    type: number
+    question_hint: Wie alt ist die Person, für die der Antrag gestellt werden soll?
+    validation:
+      min: 18
+  - id: district
+    type: number
+    question_hint: In welchem Wiener Bezirk wohnen Sie? Bitte nennen Sie die Bezirksnummer von 1 bis 23.
+    validation:
+      min: 1
+      max: 23
+  - id: housing_emergency
+    type: boolean
+    question_hint: Sind Sie obdachlos oder droht Ihnen der Verlust Ihrer Wohnung?
+  - id: permanent_benefit
+    type: boolean
+    question_hint: Beziehen Sie bereits eine Dauerleistung der Wiener Mindestsicherung?
+  - id: residence_status
+    type: string
+    question_hint: Welche Staatsbürgerschaft oder welchen Aufenthaltstitel haben Sie laut Ihren Unterlagen?
+  - id: income_situation
+    type: string
+    question_hint: Welche Einkommen oder Leistungen erhalten die Personen, die mit Ihnen den Antrag stellen?
+  - id: work_or_exception
+    type: string
+    question_hint: Sind Sie beim AMS gemeldet oder haben Sie schon einen Nachweis für eine Ausnahme?
+  - id: education_situation
+    type: string
+    question_hint: Machen Sie gerade eine Ausbildung? Welche Ausbildung haben Sie bereits abgeschlossen?
+  - id: submission_confirmed
+    type: boolean
+    question_hint: >-
+      Haben Sie den Antrag online oder mit Unterstützung im zuständigen Sozialzentrum
+      eingereicht und die nötigen Unterschriften aller volljährigen Personen abgegeben?
+      Bitte nur einen Antrag einreichen.
+steps:
+  - id: clarify-situation
+    needs:
+      [
+        federal_state,
+        main_residence_confirmed,
+        actual_residence_confirmed,
+        centre_of_life_confirmed,
+        age,
+        housing_emergency,
+        permanent_benefit,
+      ]
+    criteria: ref:catalog/sozialhilfe-wien#criteria
+    transitions:
+      - to: find-office
+  - id: find-office
+    needs: [clarify-situation, district]
+    action: office.resolve
+    outputs:
+      - id: responsible-social-centre
+        type: office
+    transitions:
+      - to: prepare-application
+  - id: prepare-application
+    needs: [find-office, residence_status, income_situation, work_or_exception, education_situation]
+    documents: ref:catalog/sozialhilfe-wien#documents
+    action: documents.checklist
+    outputs:
+      - id: application-checklist
+        type: document
+    reminders:
+      - after_days: 1
+        text_de: >-
+          Möchten Sie Ihren Antrag weiter vorbereiten? Ein möglicher Anspruch beginnt
+          erst ab Antragsabgabe. Die Erinnerung ist freiwillig und keine gesetzliche Frist.
+    transitions:
+      - to: confirm-submission
+  - id: confirm-submission
+    needs: [prepare-application, submission_confirmed]
+    signature: subject
+    transitions:
+      - to: application-submitted
+        when: submission_confirmed == true
+  - id: application-submitted
+    needs: [confirm-submission]
+    outputs:
+      - id: submission-record
+        type: information
+    reminders:
+      - after_days: 7
+        text_de: >-
+          Haben Sie Post vom Sozialzentrum erhalten? Falls Unterlagen fehlen,
+          beachten Sie die Frist im Schreiben. Diese freiwillige Erinnerung ersetzt die Frist nicht.
+completion:
+  evidence: [user_statement]
+sources:
+  - url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+    quote: >-
+      Bitte reichen Sie nur einen Antrag ein: online oder per unterstützter
+      Online-Antragstellung im Sozialzentrum. Wenn Sie Anträge mehrfach
+      einreichen, dauert die Bearbeitung länger.
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+    quote: Etwaige Ansprüche beginnen erst ab der Antragsabgabe.
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+    quote: >-
+      Wenn Ihr Antrag nicht von allen volljährigen Personen unterschrieben ist
+      und/oder die Lichtbildausweise fehlen, wird Ihnen ein Verbesserungsauftrag zugeschickt.
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+    quote: >-
+      Fehlen andere für die Berechnung der Mindestsicherung notwendige Unterlagen,
+      so werden Sie aufgefordert diese binnen einer angemessenen Frist nachzureichen.
+      Langen diese Unterlagen nicht fristgerecht ein, so wird der Antrag abgewiesen.
+    retrieved_at: 2026-11-05T23:49:35Z
+as_of: 2026-11-06

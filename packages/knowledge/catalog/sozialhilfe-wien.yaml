@@ -1,0 +1,205 @@
+id: sozialhilfe-wien
+name_de: Wiener Mindestsicherung
+name_simple: Geld für Leben und Wohnen in Wien
+area: E
+life_situations:
+  - low-income
+  - unemployment
+scope: state
+carriers: []
+criteria:
+  - id: residence-vienna
+    text_de: Lebensmittelpunkt, Hauptwohnsitz und tatsächlicher Aufenthalt müssen in Wien sein.
+    condition: federal_state == 'Wien' and main_residence_confirmed == true and actual_residence_confirmed == true and centre_of_life_confirmed == true
+    legal_basis: Wiener Mindestsicherungsgesetz (WMG), laut Stadt Wien
+    source: &residence
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: Ihren Lebensmittelpunkt sowie Ihren Hauptwohnsitz in Wien haben und sich tatsächlich in Wien aufhalten
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: insufficient-income
+    text_de: >-
+      Kein Einkommen oder Einkommen unter dem jeweiligen Mindeststandard.
+      Das Sozialzentrum prüft Familie, Vermögen und Wohnverhältnisse im Einzelfall.
+    legal_basis: Wiener Mindestsicherungsgesetz (WMG), laut Stadt Wien
+    source: &income
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: >-
+        Personen, die über kein oder ein zu geringes Einkommen (unterhalb der
+        Mindeststandards) verfügen, können Wiener Mindestsicherung beantragen.
+        Die Anspruchsvoraussetzungen für die Zuerkennung von Mindestsicherung
+        sind vielfältig und immer im Einzelfall zu beurteilen. Das Sozialzentrum
+        klärt in diesem Zusammenhang die Familien-, Vermögens- und Wohnverhältnisse
+        der Antragsteller*innen ab.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: nationality-or-equivalent-status
+    text_de: >-
+      Österreichische Staatsbürgerschaft oder rechtlich gleichgestellter Status
+      mit den jeweiligen Zusatzvoraussetzungen. Eine EU- oder EWR-Staatsbürgerschaft
+      allein ist keine automatische Zusage. Den Aufenthaltsstatus prüft die Behörde.
+    legal_basis: Wiener Mindestsicherungsgesetz (WMG), laut Stadt Wien
+    source: &status
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: österreichische*r Staatsbürger*in oder diesen gleichgestellt sind und bestimmte Zusatzvoraussetzungen erfüllen.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: willingness-to-work
+    text_de: >-
+      Arbeitswillen durch AMS-Meldung nachweisen, sofern keine Ausnahme vorliegt.
+      Ob Arbeit zumutbar ist, beurteilt die zuständige Stelle.
+    legal_basis: Wiener Mindestsicherungsgesetz (WMG), laut Stadt Wien
+    source: &work
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: >-
+        Als Antragsteller*in sind Sie verpflichtet, Ihren Arbeitswillen
+        nachzuweisen (Meldung beim AMS). Davon ausgenommen sind Personen,
+        denen keine Arbeit zugemutet werden kann.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: further-education-exclusion
+    text_de: >-
+      Kein Anspruch bei weiterführender Ausbildung, die eine Vollbeschäftigung
+      verhindert, wenn bereits eine abgeschlossene Ausbildung oder ein
+      Schulabschluss auf Maturaniveau vorliegt. Die Behörde prüft den Einzelfall.
+    legal_basis: Wiener Mindestsicherungsgesetz (WMG), laut Stadt Wien
+    source: &education
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: >-
+        Sie haben keinen Anspruch auf Mindestsicherung, wenn Sie eine
+        weiterführende Ausbildung absolvieren (zum Beispiel Studium oder
+        Maturalehrgang nach Lehrabschluss oder Fachschulabschluss) und darum
+        keiner Vollbeschäftigung nachgehen können. und bereits eine
+        abgeschlossene Ausbildung (zum Beispiel Lehrabschluss, Fachschulabschluss)
+        oder einen Schulabschluss auf Maturaniveau haben.
+      retrieved_at: 2026-11-05T23:49:35Z
+office_rules:
+  - when: federal_state == 'Wien' and (housing_emergency == true or permanent_benefit == true)
+    office: ref:offices/wien-ma40-erdbergstrasse
+  - when: federal_state == 'Wien' and housing_emergency == false and permanent_benefit == false and age >= 18 and age < 25
+    office: ref:offices/wien-ma40-u25
+  - when: federal_state == 'Wien' and housing_emergency == false and permanent_benefit == false and age >= 25 and (district == 1 or district == 2 or district == 3 or district == 4 or district == 5 or district == 6 or district == 7 or district == 8 or district == 9 or district == 20)
+    office: ref:offices/wien-ma40-sozialzentrum-walcherstrasse
+  - when: federal_state == 'Wien' and housing_emergency == false and permanent_benefit == false and age >= 25 and (district == 10 or district == 12 or district == 23)
+    office: ref:offices/wien-ma40-sozialzentrum-lemboeckgasse
+  - when: federal_state == 'Wien' and housing_emergency == false and permanent_benefit == false and age >= 25 and (district == 13 or district == 14 or district == 15 or district == 16 or district == 17 or district == 18 or district == 19)
+    office: ref:offices/wien-ma40-sozialzentrum-linke-wienzeile
+  - when: federal_state == 'Wien' and housing_emergency == false and permanent_benefit == false and age >= 25 and (district == 11 or district == 21 or district == 22)
+    office: ref:offices/wien-ma40-sozialzentrum-beatrix-kempf-gasse
+documents:
+  - id: photo-identification
+    name_de: Kopien der amtlichen Lichtbildausweise aller Antragstellenden
+    required: true
+    obtain_from: Eigene Ausweise kopieren; bei fehlendem Ausweis die Passbehörde kontaktieren.
+    source: &identification
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: Amtlicher Lichtbildausweis, zum Beispiel Reisepass
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: personal-status-documents
+    name_de: Zutreffende Personenstands- und Aufenthaltsdokumente
+    required: false
+    obtain_from: Eigene Dokumente; fehlende Ausfertigungen bei Standesamt, Aufenthaltsbehörde oder Gericht anfordern.
+    source: &personal-documents
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: >-
+        Personaldokumente, zum Beispiel: Erste und letzte Seite des
+        Anerkennungsbescheides des Bundesamtes für Fremdenwesen und Asyl,
+        aktueller Aufenthaltstitel, Heiratsurkunde, rechtskräftige
+        Scheidungsunterlagen (Scheidungsurteil oder Scheidungsbeschluss,
+        Scheidungsvergleich), Geburtsurkunden der Kinder usw.
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: income-evidence
+    name_de: Aktuelle Einkommensbelege aller Antragstellenden
+    required: true
+    obtain_from: Bei Arbeitgeber, Versicherungsträger oder sonstigem Leistungsträger anfordern, soweit Einkommen besteht.
+    source: &income-documents
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: >-
+        Aktuelle Einkommensbelege, zum Beispiel: Lohn-/Gehaltsbestätigungen
+        (Nettoeinkommen), Nachweis über Leistungen des Krankenversicherungsträgers
+        (zum Beispiel Krankengeld, Kinderbetreuungsgeld, Rehabilitationsgeld),
+        Unterhaltszahlungen, Pensionsbescheid/Rentenbescheid, Bescheide über
+        Beihilfen, Nachweis über Art und Höhe sonstiger Einkünfte
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: pending-benefit-applications
+    name_de: Nachweise über bereits beantragte Leistungen, soweit zutreffend
+    required: false
+    obtain_from: Eingangsbestätigungen beim AMS, Versicherungsträger oder sonstiger zuständiger Stelle anfordern.
+    source: &applications
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: >-
+        Nachweise über beantragte Leistungen, zum Beispiel: Anträge auf
+        Leistungen des Arbeitsmarktservice, Leistungen des
+        Krankenversicherungsträgers, Unterhalt/Alimente, Pension und sonstige Einkünfte
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: asset-evidence
+    name_de: Vermögensnachweise aller Antragstellenden
+    required: true
+    obtain_from: Eigene Unterlagen bzw. Auszüge von Bank, Versicherung oder zuständigem Register anfordern.
+    source: &assets
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: >-
+        Nachweise über Vermögen, zum Beispiel: Kontoauszüge, Sparguthaben,
+        Wertpapiere, Bausparverträge, Rückkaufswert der
+        Lebensversicherung/Pensionsvorsorge, Erbe, Schenkungen, Kfz und Grundbesitz
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: housing-costs
+    name_de: Mietvertrag und aktuelle Mietaufschlüsselung, soweit zutreffend
+    required: false
+    obtain_from: Bei Vermieter oder Hausverwaltung anfordern.
+    source: &rent
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: >-
+        Mietbelege, zum Beispiel: Mietvertrag, Nachweis über die Höhe der
+        aktuellen Miete (Mietaufschlüsselung)
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: bank-account-holder
+    name_de: Nachweis über die Kontoinhaberin oder den Kontoinhaber
+    required: true
+    obtain_from: Eigener Kontoauszug oder Bestätigung der Bank.
+    source: &account
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: Nachweis über die Kontoinhaber*in, zum Beispiel Kontoauszug
+      retrieved_at: 2026-11-05T23:49:35Z
+  - id: disability-card
+    name_de: Behindertenpass, wenn vorhanden und zutreffend
+    required: false
+    obtain_from: Eigenen Behindertenpass kopieren; ausstellende Stelle ist das Sozialministeriumservice.
+    source: &disability
+      url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+      quote: Behindertenpass gemäß § 40 Bundesbehindertengesetz – BBG
+      retrieved_at: 2026-11-05T23:49:35Z
+forms:
+  - search: Antrag auf Mindestsicherung und Unterschriftsblatt
+    publisher: Stadt Wien, MA 40
+process: ref:processes/sozialhilfe-wien
+appointment_channels: []
+sources:
+  - url: https://www.wien.gv.at/amtswege/mindestsicherung-antrag
+    quote: Die Grundlage bildet das Wiener Mindestsicherungsgesetz.
+    retrieved_at: 2026-11-05T23:49:35Z
+  - *residence
+  - *income
+  - *status
+  - *work
+  - *education
+  - *identification
+  - *personal-documents
+  - *income-documents
+  - *applications
+  - *assets
+  - *rent
+  - *account
+  - *disability
+  - url: https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten
+    quote: >-
+      Für alle anderen Anfragen und Lebenslagen wenden Sie sich an das
+      Sozialzentrum, das für den Bezirk zuständig ist, in dem Sie wohnen:
+      Wohnbezirke 1, 2, 3, 4, 5, 6, 7, 8, 9 und 20: Sozialzentrum Walcherstraße
+      Wohnbezirke 10, 12 und 23: Sozialzentrum Lemböckgasse
+      Wohnbezirke 13, 14, 15, 16, 17, 18 und 19: Sozialzentrum Linke Wienzeile
+      Wohnbezirke 11, 21 und 22: Sozialzentrum Beatrix-Kempf-Gasse
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten
+    quote: Das Zielgruppenzentrum Erdbergstraße ist zuständig für obdachlose Personen, Dauerleistungen und bei drohendem Wohnungsverlust.
+    retrieved_at: 2026-11-05T23:49:35Z
+  - url: https://www.wien.gv.at/zusammenleben/sozialhilfe-mindestsicherung-standorte-oeffnungszeiten
+    quote: U25 - Beratung für Jugendliche von 18 bis 24
+    retrieved_at: 2026-11-05T23:49:35Z
+as_of: 2026-11-06
