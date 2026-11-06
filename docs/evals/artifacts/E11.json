@@ -1,0 +1,2740 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E11",
+    "name": "Synthetic multilingual administrative slot extraction v1",
+    "gate": {
+      "kind": "informational",
+      "metric": "slotAccuracy",
+      "threshold": 0.95,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 300
+  },
+  "selection": {
+    "seed": "baseline-2026-11-06"
+  },
+  "counts": {
+    "total": 300,
+    "passed": 255,
+    "failed": 45,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0.85,
+    "slotAccuracy": 0.8499999999999976
+  },
+  "wilson95": {
+    "lower": 0.8051823888150871,
+    "upper": 0.885967531313641,
+    "confidence": 0.95
+  },
+  "gateVerdict": "failed",
+  "modelVersion": "slot-probe/1/gpt-5.4-mini",
+  "judgeVersions": [],
+  "gitSha": "18ae38884bc498765fbf7025e802ce292c7c4377",
+  "startedAt": "2026-11-06T02:09:54.057Z",
+  "finishedAt": "2026-11-06T02:10:35.122Z",
+  "cases": [
+    {
+      "caseId": "e11-001",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1837.3976660000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-002",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1555.7695829999993,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-003",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1765.8056669999987,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-004",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1489.2573340000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-005",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1594.0639170000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-006",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1494.4008750000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-007",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1694.448125,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-008",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1543.8961669999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-009",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1620.0767079999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-010",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2508.8621669999993,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-011",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1628.1278750000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-012",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1623.2326249999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-013",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1435.6324169999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-014",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1714.7456249999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-015",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1505.5714169999992,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-016",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1516.9234589999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-017",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1381.8826670000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-018",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1389.7196660000009,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-019",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1369.7334999999994,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-020",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1455.477167000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-021",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1540.8611249999994,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-022",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1436.320916999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-023",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1433.1375420000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-024",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1769.636625000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-025",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1308.8867910000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-026",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1434.0442500000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-027",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1481.8706660000007,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-028",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1485.1667079999988,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-029",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1420.576000000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-030",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1386.729792,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-031",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1494.9330830000017,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-032",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1818.2250000000004,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-033",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1734.4006669999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-034",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1657.9153340000012,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-035",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1662.4863750000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-036",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1421.56725,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-037",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1424.5376670000005,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-038",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1694.3934160000008,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-039",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1410.9936670000006,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-040",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1537.641375000001,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-041",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1459.4351670000015,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-042",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1594.702874999999,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-043",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1539.190125000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-044",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1413.3982500000002,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-045",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1409.458333999999,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-046",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1482.1646250000013,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-047",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1634.8003750000007,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-048",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1379.3382919999985,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-049",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1523.4517919999998,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-050",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1421.5210829999996,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-051",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1549.6780419999996,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-052",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1517.2605840000015,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-053",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1586.8576659999999,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-054",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1430.331709,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-055",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1631.4537920000002,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-056",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1654.3661659999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-057",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1410.3361250000016,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-058",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1814.0202499999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-059",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1562.718291000001,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-060",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1569.3563330000015,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-061",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1506.198875,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-062",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1892.7851250000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-063",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1666.822583000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-064",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1527.2140830000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-065",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1657.3153750000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-066",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1712.3025000000016,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-067",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1425.6798749999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-068",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1720.0449580000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-069",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1487.7126250000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-070",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1530.000333,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-071",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1681.6923340000012,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-072",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1629.0557080000017,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-073",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1597.554458999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-074",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1537.3460000000014,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-075",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1609.2529589999976,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-076",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1624.798999999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-077",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1507.4686249999995,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-078",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1841.3857919999991,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-079",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1380.3084579999977,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-080",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1508.038375,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-081",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1487.1560000000009,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-082",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1539.1885840000014,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-083",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1408.8486669999984,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-084",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1420.3942920000009,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-085",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1357.517667,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-086",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1310.003417,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-087",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1684.7407920000005,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-088",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1618.2228340000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-089",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1582.8738329999978,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-090",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1551.5962500000023,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-091",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1838.273624999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-092",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1795.409249999997,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-093",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1718.0382910000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-094",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1535.2854999999981,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-095",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1551.0177919999987,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-096",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1559.2354589999995,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-097",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1744.5820830000011,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-098",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1413.5300419999985,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-099",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1611.3912919999966,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-100",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1455.802083999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-101",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1560.3651250000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-102",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1412.1018750000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-103",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1740.8679169999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-104",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1520.966790999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-105",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1691.107250000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-106",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1663.3887080000022,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-107",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1528.6287909999992,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-108",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1514.088249999997,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-109",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1469.7017080000005,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-110",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1436.2865420000016,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-111",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1434.9272920000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-112",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1358.009582999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-113",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1605.705750000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-114",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1687.7982499999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-115",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1483.3489999999983,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-116",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1572.7356250000012,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-117",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1422.3317909999969,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-118",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1439.091625000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-119",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1588.510041999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-120",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1428.2700000000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-121",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2131.8628339999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-122",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1864.1551669999972,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-123",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1666.9202079999995,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-124",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1476.0931659999987,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-125",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1571.4440830000021,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-126",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1404.6489589999983,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-127",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1666.8573749999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-128",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1502.6531670000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-129",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1635.5787089999976,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-130",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1428.2400000000016,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-131",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1681.3695000000007,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-132",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1529.7450830000016,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-133",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1463.991582999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-134",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1541.565999999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-135",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1673.0243330000012,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-136",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1733.4236670000028,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-137",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1486.7810420000023,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-138",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1418.3565830000007,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-139",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1410.7842920000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-140",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1593.7652500000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-141",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1419.271208000002,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-142",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1551.4055829999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-143",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1470.216457999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-144",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1376.3259999999973,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-145",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1525.538457999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-146",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1546.2855830000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-147",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1494.9728749999995,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-148",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1414.5200409999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-149",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1516.416416,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-150",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1577.786874999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-151",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1517.6976250000007,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-152",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1954.9794159999983,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-153",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1680.8722089999974,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-154",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1407.161874999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-155",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1497.128291000001,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-156",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1651.138417000002,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-157",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1504.185708000001,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-158",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1801.8244589999995,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-159",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1409.362792,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-160",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1747.6505830000024,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-161",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1652.273833000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-162",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1654.130833000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-163",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1560.1126669999976,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-164",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1410.2701669999988,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-165",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1537.2447500000017,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-166",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1700.3003750000025,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-167",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1598.6202080000003,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-168",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1946.4759589999994,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-169",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1501.2603750000017,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-170",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1673.4466249999969,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-171",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1940.6392079999969,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-172",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1905.369917,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-173",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2750.3966669999973,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-174",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1610.304333,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-175",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1533.7789170000033,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-176",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1549.9555839999994,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-177",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2795.875208999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-178",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1538.6263750000035,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-179",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1606.1817499999997,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-180",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1850.379499999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-181",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1854.7092919999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-182",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1531.9595000000008,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-183",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1460.4565000000002,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-184",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1341.576083,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-185",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1532.5019170000014,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-186",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1277.4452920000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-187",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1516.7201249999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-188",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1606.299415999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-189",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1468.5338330000013,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-190",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1440.465541999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-191",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2514.744208,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-192",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1746.6851249999963,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-193",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1383.4775409999966,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-194",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1579.5933339999974,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-195",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1501.2434590000048,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-196",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1402.2758749999957,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-197",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1502.340874999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-198",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1525.2763750000013,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-199",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1709.5404159999962,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-200",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1580.1852919999983,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-201",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1327.3264589999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-202",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1749.8053330000002,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-203",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1552.8414589999993,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-204",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1592.1592500000042,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-205",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1477.7242499999993,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-206",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1484.6367910000045,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-207",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1533.177499999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-208",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1524.7145000000019,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-209",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1409.5707919999986,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-210",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2740.5033750000002,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-211",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1638.5256660000014,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-212",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1480.7874169999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-213",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1762.7451250000013,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-214",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1765.4908750000031,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-215",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1664.571041999996,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-216",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2782.9889170000024,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-217",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1806.6139579999945,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-218",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1401.4714160000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-219",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1575.8805829999983,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-220",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1212.7832500000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-221",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1554.7122920000038,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-222",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1455.8830830000006,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-223",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1487.8318329999965,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-224",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1460.1414590000059,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-225",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2180.178208000005,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-226",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1530.4771670000046,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-227",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1516.494000000006,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-228",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1424.5687499999985,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-229",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1706.525999999998,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-230",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1559.5920830000032,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-231",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1733.781667000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-232",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1598.2495419999977,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-233",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1540.2465840000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-234",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1516.7692500000048,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-235",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1543.8405839999978,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-236",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1386.8977079999968,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-237",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1385.3668749999997,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-238",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1607.5174590000024,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-239",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1625.6233749999956,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-240",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1196.9892080000063,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-241",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1721.4133749999964,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-242",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1594.887125000001,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-243",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1458.900207999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-244",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1518.6373749999984,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-245",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1396.1483339999977,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-246",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1570.3595419999983,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-247",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1874.5045420000024,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-248",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1254.0656670000026,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-249",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1833.9277500000026,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-250",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1460.614542000003,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-251",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1527.504958000005,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-252",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1623.057084,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-253",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1553.607124999995,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-254",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1771.0206250000047,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-255",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1514.1522500000065,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-256",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2133.5918329999986,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-257",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1261.7178329999952,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-258",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1607.9794170000023,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-259",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1589.0935420000023,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-260",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1666.2350000000006,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-261",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1879.233291000004,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-262",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1600.5272909999985,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-263",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1661.3040839999958,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-264",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1772.316082999998,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-265",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1649.4572499999995,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-266",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1637.9909169999955,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-267",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1433.1145840000027,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-268",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1694.1593340000036,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-269",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1395.9132919999975,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-270",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1416.8102500000023,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-271",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1650.3722500000003,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-272",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1677.750500000002,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-273",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1671.5865829999966,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-274",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 2017.1907500000016,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-275",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1827.8990829999966,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-276",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1783.347249999999,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-277",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1623.892375000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-278",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1875.2094159999979,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-279",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1678.5462499999994,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-280",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1696.6134160000001,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-281",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1796.624791000002,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-282",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1444.7898330000025,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-283",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1502.2857919999951,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-284",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1709.2742910000015,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-285",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1814.882000000005,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-286",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1492.2794579999972,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-287",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1421.8872090000004,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-288",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2073.139959,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-289",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 2812.917416999997,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-290",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1473.436916999999,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-291",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1547.5639589999992,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-292",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1816.2547919999997,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-293",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1633.7822500000038,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-294",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1774.3449580000015,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-295",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1676.929250000001,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-296",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1355.0564999999988,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-297",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 1509.9306250000009,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-298",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1574.794541000003,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    },
+    {
+      "caseId": "e11-299",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 2019.9147500000036,
+      "metrics": {
+        "slotAccuracy": 0
+      }
+    },
+    {
+      "caseId": "e11-300",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 1433.7874580000062,
+      "metrics": {
+        "slotAccuracy": 1
+      }
+    }
+  ]
+}
