@@ -18,7 +18,7 @@ for (const decision of ["Beitritt erlauben", "Ablehnen und beenden"] as const) {
       await helper.request.get("/api/relatives/join");
       await helper.request.get("/api/relatives/session");
       await helper.request.get("/api/relatives/token");
-      await page.goto("/");
+      await page.goto("/workspace/helpers");
       await page.getByRole("button", { name: "Hilfsperson einladen", exact: true }).click();
       const link = await page
         .getByLabel("Einladungslink (15 Minuten gültig)", { exact: true })

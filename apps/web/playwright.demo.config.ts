@@ -1,5 +1,6 @@
 import { parseBrainConfig } from "@lotse/brain/config";
 import { defineConfig } from "@playwright/test";
+import { E2E_APP_USER_AGENT } from "./e2e/config.ts";
 import { DEMO_E2E } from "./e2e/demo/config.ts";
 import { loadLocalEnvironment } from "./scripts/load-env.mjs";
 
@@ -16,6 +17,7 @@ export default defineConfig({
   timeout: DEMO_E2E.testTimeoutMs,
   expect: { timeout: DEMO_E2E.uiTimeoutMs },
   use: {
+    userAgent: E2E_APP_USER_AGENT,
     baseURL: DEMO_E2E.baseURL,
     trace: "off",
     screenshot: "only-on-failure",

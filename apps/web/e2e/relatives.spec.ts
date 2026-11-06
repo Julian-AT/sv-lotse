@@ -34,7 +34,7 @@ test("FR-R1–R3 approved helpers see screen and voice, point and annotate, and 
   const helperContext = await browser.newContext({ baseURL });
   const helperPage = await helperContext.newPage();
   const identitySchema = z.object({ userId: z.uuid(), sessionId: z.uuid() });
-  await page.goto("/");
+  await page.goto("/workspace/helpers");
   const identity = identitySchema.parse(await (await context.request.post("/api/session")).json());
   const subjects = createSubjectService(database, identity.userId);
   const subject = await subjects.createSubject({
@@ -145,7 +145,7 @@ for (const scope of ["case", "none"] as const) {
     if (!baseURL) throw new Error("TEST_BASE_URL_REQUIRED");
     const helperContext = await browser.newContext({ baseURL });
     const helperPage = await helperContext.newPage();
-    await page.goto("/");
+    await page.goto("/workspace/helpers");
     const identity = z
       .object({ userId: z.uuid() })
       .parse(await (await context.request.post("/api/session")).json());

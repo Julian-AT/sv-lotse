@@ -1,5 +1,5 @@
 import { defineConfig } from "@playwright/test";
-import { E2E_BASE_URL, E2E_PORT } from "./e2e/config.ts";
+import { E2E_APP_USER_AGENT, E2E_BASE_URL, E2E_PORT } from "./e2e/config.ts";
 import { loadLocalEnvironment } from "./scripts/load-env.mjs";
 
 loadLocalEnvironment();
@@ -11,6 +11,7 @@ export default defineConfig({
   forbidOnly: true,
   retries: 0,
   use: {
+    userAgent: E2E_APP_USER_AGENT,
     baseURL: E2E_BASE_URL,
     trace: "off",
     ...(wsEndpoint

@@ -1,4 +1,5 @@
 import { defineConfig } from "@playwright/test";
+import { E2E_APP_USER_AGENT } from "./e2e/config.ts";
 import { loadLocalEnvironment } from "./scripts/load-env.mjs";
 
 loadLocalEnvironment();
@@ -10,6 +11,7 @@ export default defineConfig({
   forbidOnly: true,
   retries: 0,
   use: {
+    userAgent: E2E_APP_USER_AGENT,
     baseURL,
     trace: "off",
     actionTimeout: 10000,

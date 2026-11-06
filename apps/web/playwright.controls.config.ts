@@ -1,5 +1,6 @@
 import { defineConfig } from "@playwright/test";
 import { z } from "zod";
+import { E2E_APP_USER_AGENT } from "./e2e/config.ts";
 import { loadLocalEnvironment } from "./scripts/load-env.mjs";
 
 loadLocalEnvironment();
@@ -23,6 +24,7 @@ export default defineConfig({
   reporter: "list",
   outputDir: "test-results/controls",
   use: {
+    userAgent: E2E_APP_USER_AGENT,
     baseURL,
     actionTimeout: 20_000,
     navigationTimeout: 45_000,

@@ -1,4 +1,5 @@
 import { defineConfig } from "@playwright/test";
+import { E2E_APP_USER_AGENT } from "./e2e/config.ts";
 import { loadLocalEnvironment } from "./scripts/load-env.mjs";
 
 loadLocalEnvironment();
@@ -11,6 +12,7 @@ export default defineConfig({
   timeout: 150000,
   expect: { timeout: 45000 },
   use: {
+    userAgent: E2E_APP_USER_AGENT,
     baseURL,
     trace: "off",
     ...(process.env.PW_TEST_CONNECT_WS_ENDPOINT

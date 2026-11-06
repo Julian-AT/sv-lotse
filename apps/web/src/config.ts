@@ -25,3 +25,10 @@ export const ONBOARDING_CONFIG = {
 } as const;
 
 export const SESSION_RESET_EVENT = "lotse:session-reset";
+
+/** The chat is served only to the SV KI-Lotse Mac app; helper pages and the API stay public. */
+export const NATIVE_APP_CONFIG = {
+  /** Appended to the user agent by the Mac workspace web view (applicationNameForUserAgent). */
+  userAgentToken: "SVKILotseMac/",
+  embeddedPrefix: "/workspace",
+} as const;

@@ -1,13 +1,18 @@
 import { randomBytes, randomUUID } from "node:crypto";
 import { type FullConfig, request } from "@playwright/test";
 import { z } from "zod";
+import { E2E_APP_USER_AGENT } from "../config.ts";
 
 /** Compile dev routes before tests create transient approval/invitation UI. No services are replaced. */
 export default async function warmup(config: FullConfig): Promise<void> {
   const baseURL = z.url().parse(config.projects[0]?.use.baseURL);
-  const context = await request.newContext({ baseURL, timeout: 60_000 });
+  const context = await request.newContext({
+    baseURL,
+    timeout: 60_000,
+    userAgent: E2E_APP_USER_AGENT,
+  });
   try {
-    await context.get("/");
+    await context.get("/workspace");
     const created = await context.post("/api/cases");
     if (!created.ok()) throw new Error("AUDIT_WARMUP_CASE_FAILED");
     const { case: record } = z
@@ -36,17 +41,9 @@ export default async function warmup(config: FullConfig): Promise<void> {
       "/api/maplibre/worker",
       "/api/pdfjs/build/pdf.worker.min.mjs",
       "/workspace",
-      "/cases",
-      `/journey?caseId=${record.id}`,
-      `/documents?caseId=${record.id}`,
-      `/offers?caseId=${record.id}`,
-      `/appointments?caseId=${record.id}`,
-      "/guided",
+      "/workspace/helpers",
       "/helper",
-      "/setup-guide",
       `/invite/${randomBytes(32).toString("hex")}`,
-      `/forms/${record.id}`,
-      `/cases/${record.id}`,
     ]) {
       const response = await context.get(path);
       if (response.status() >= 500) throw new Error("AUDIT_WARMUP_ROUTE_FAILED");
