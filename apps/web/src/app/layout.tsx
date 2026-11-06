@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { AutonomySettings } from "../features/autonomy/settings.tsx";
@@ -9,6 +10,7 @@ import { Settings } from "../features/shell/settings.tsx";
 import styles from "../features/shell/shell.module.css";
 import { I18nProvider } from "../i18n/provider.tsx";
 import { createI18n } from "../i18n/translator.ts";
+import { isNativeAppRequest } from "../server/native-app.ts";
 import { workspacePreferences } from "../server/preferences.ts";
 import { LayoutGuidanceConversation } from "../speech/conversation.tsx";
 import { GuidanceProvider } from "../speech/provider.tsx";
@@ -29,6 +31,8 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const { locale, ...preferences } = await workspacePreferences();
   const { language } = preferences;
+  // The Mac app's web view gets its transparent surfaces from the first paint, before hydration.
+  const native = isNativeAppRequest((await headers()).get("user-agent"));
   const { t } = createI18n(locale);
   const copy = shellCopy[locale];
   return (
@@ -39,6 +43,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       data-cursor-speed={preferences.cursorSpeed}
       data-reduced-motion={preferences.reducedMotion}
       data-high-contrast={preferences.highContrast}
+      data-native-workspace={native ? "true" : undefined}
     >
       <body>
         <I18nProvider locale={locale}>

@@ -537,3 +537,30 @@
   font-size: 0.8125rem;
   min-height: 2.25rem;
 }
+
+/* Inside the Mac app the window's native glass shows through: page surfaces are clear and cards and
+   the composer are translucent over it, in the system's light or dark appearance. Normal browsers never
+   carry the attribute. */
+html[data-native-workspace="true"] {
+  --background: transparent;
+  --sidebar: transparent;
+  --card: oklch(1 0 0 / 0.6);
+  --glass: oklch(1 0 0 / 0.55);
+}
+html[data-native-workspace="true"].dark {
+  --card: oklch(0.225 0 0 / 0.6);
+  --glass: oklch(0.225 0 0 / 0.55);
+}
+html[data-native-workspace="true"] .chatbot-root [data-slot="card"],
+html[data-native-workspace="true"] .chatbot-root [data-slot="alert"] {
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+}
+@media (prefers-reduced-transparency: reduce) {
+  html[data-native-workspace="true"] {
+    --card: oklch(1 0 0);
+  }
+  html[data-native-workspace="true"].dark {
+    --card: oklch(0.225 0 0);
+  }
+}
