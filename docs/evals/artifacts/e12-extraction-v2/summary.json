@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "suites": [
+    {
+      "schemaVersion": 1,
+      "suite": {
+        "id": "E12",
+        "name": "Documented recommendations and administrative facts",
+        "gate": {
+          "kind": "blocking",
+          "metric": "precision",
+          "threshold": 0.98,
+          "direction": "at_least"
+        },
+        "minimumSetSize": 30
+      },
+      "selection": {
+        "seed": "baseline-2026-11-06"
+      },
+      "counts": {
+        "total": 15,
+        "passed": 14,
+        "failed": 1,
+        "errors": 0
+      },
+      "metrics": {
+        "passRate": 0.9333333333333333,
+        "precision": 0.9919354838709677,
+        "matchedCount": 123,
+        "predictedCount": 124,
+        "goldCount": 125,
+        "recall": 0.984
+      },
+      "wilson95": {
+        "lower": 0.7018347010219117,
+        "upper": 0.9881331045201962,
+        "confidence": 0.95
+      },
+      "gateVerdict": "insufficient_data",
+      "modelVersion": "brain-extraction/2/gpt-5.4-mini",
+      "judgeVersions": [],
+      "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+      "startedAt": "2026-11-06T02:53:02.451Z",
+      "finishedAt": "2026-11-06T02:53:11.228Z",
+      "cases": [
+        {
+          "caseId": "e12-svbox-discharge",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 8775.555667,
+          "metrics": {
+            "matchedCount": 37,
+            "predictedCount": 37,
+            "goldCount": 37,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-svbox-radiology-1",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1351.667333,
+          "metrics": {
+            "matchedCount": 7,
+            "predictedCount": 7,
+            "goldCount": 7,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-svbox-radiology-2",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1319.1120829999998,
+          "metrics": {
+            "matchedCount": 7,
+            "predictedCount": 7,
+            "goldCount": 7,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-svbox-ultrasound",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 156.35333400000013,
+          "metrics": {
+            "matchedCount": 4,
+            "predictedCount": 4,
+            "goldCount": 4,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-svbox-vaccinations",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 3176.3794999999996,
+          "metrics": {
+            "matchedCount": 10,
+            "predictedCount": 10,
+            "goldCount": 10,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-01",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1474.851083,
+          "metrics": {
+            "matchedCount": 7,
+            "predictedCount": 7,
+            "goldCount": 7,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-02",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1481.9380829999998,
+          "metrics": {
+            "matchedCount": 5,
+            "predictedCount": 5,
+            "goldCount": 5,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-03",
+          "status": "failed",
+          "attempts": 1,
+          "durationMs": 2651.3305,
+          "metrics": {
+            "matchedCount": 5,
+            "predictedCount": 6,
+            "goldCount": 7,
+            "precision": 0.8333333333333334,
+            "recall": 0.7142857142857143
+          }
+        },
+        {
+          "caseId": "e12-synthetic-04",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1577.553291,
+          "metrics": {
+            "matchedCount": 5,
+            "predictedCount": 5,
+            "goldCount": 5,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-05",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1905.694958,
+          "metrics": {
+            "matchedCount": 6,
+            "predictedCount": 6,
+            "goldCount": 6,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-06",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1468.005042,
+          "metrics": {
+            "matchedCount": 5,
+            "predictedCount": 5,
+            "goldCount": 5,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-07",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1555.743584,
+          "metrics": {
+            "matchedCount": 5,
+            "predictedCount": 5,
+            "goldCount": 5,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-08",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1451.5787919999998,
+          "metrics": {
+            "matchedCount": 7,
+            "predictedCount": 7,
+            "goldCount": 7,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-09",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 0.36170799999990777,
+          "metrics": {
+            "matchedCount": 6,
+            "predictedCount": 6,
+            "goldCount": 6,
+            "precision": 1,
+            "recall": 1
+          }
+        },
+        {
+          "caseId": "e12-synthetic-10",
+          "status": "passed",
+          "attempts": 1,
+          "durationMs": 1398.0369589999996,
+          "metrics": {
+            "matchedCount": 7,
+            "predictedCount": 7,
+            "goldCount": 7,
+            "precision": 1,
+            "recall": 1
+          }
+        }
+      ]
+    }
+  ],
+  "blockingFailures": [
+    "E12"
+  ]
+}
