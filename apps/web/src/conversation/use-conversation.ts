@@ -1,0 +1,285 @@
+"use client";
+
+import { useChat } from "@ai-sdk/react";
+import type { LotseMessage } from "@lotse/brain";
+import {
+  ActionResultSchema,
+  type BridgeToWorkspace,
+  ContextCapsuleSchema,
+  DATA_PARTS,
+  type LotseDataParts,
+} from "@lotse/protocol";
+import {
+  type ChatAddToolOutputFunction,
+  getToolName,
+  isToolUIPart,
+  lastAssistantMessageIsCompleteWithApprovalResponses,
+  lastAssistantMessageIsCompleteWithToolCalls,
+} from "ai";
+import { useEffect, useRef, useState } from "react";
+import { postNative, subscribeBridge } from "../bridge/index.ts";
+import { AUTONOMY_CHANGED_EVENT } from "../features/autonomy/config.ts";
+import { receiveFormViewerBridgeMessage } from "../features/form-viewer/bridge.ts";
+import { stopFormFilling } from "../features/form-viewer/config.ts";
+import { useGuidance } from "../speech/provider.tsx";
+import { type ClientRuntime, createClientRuntime, nativeEnvelope } from "./client-tools.ts";
+import { receiveNativeActionResult } from "./open-resource.ts";
+import { createTurnTransport, type TurnState } from "./transport.ts";
+
+type Options = {
+  caseId: string;
+  language: string;
+  initialMessages: LotseMessage[];
+  onSettled: () => void;
+};
+
+export function useConversation({
+  caseId,
+  language,
+  initialMessages,
+  onSettled,
+}: Options): ReturnType<typeof useChat<LotseMessage>> & {
+  send: (text: string) => Promise<void>;
+  partial: string;
+  bridgeError: boolean;
+} {
+  const guidance = useGuidance();
+  const guidanceRef = useRef(guidance);
+  guidanceRef.current = guidance;
+  const [partial, setPartial] = useState("");
+  const [bridgeError, setBridgeError] = useState(false);
+  const [turnState] = useState<TurnState>(() => ({
+    caseId,
+    inputKind: "text",
+    language,
+    capsule: {},
+    actionResults: [],
+  }));
+  const [transport] = useState(() => createTurnTransport<LotseMessage>(turnState, onSettled));
+  const runtime = useRef<ClientRuntime | undefined>(undefined);
+  const pending = useRef(new Map<string, string>());
+  const output = useRef<ChatAddToolOutputFunction<LotseMessage>>(() => {});
+  const queue = useRef(Promise.resolve());
+  const generation = useRef(0);
+  const chat = useChat<LotseMessage>({
+    transport,
+    messages: initialMessages,
+    dataPartSchemas: DATA_PARTS,
+    sendAutomaticallyWhen: (options) =>
+      lastAssistantMessageIsCompleteWithApprovalResponses(options) ||
+      lastAssistantMessageIsCompleteWithToolCalls(options),
+    onFinish: () => {
+      window.dispatchEvent(new Event(AUTONOMY_CHANGED_EVENT));
+      onSettled();
+    },
+    onToolCall: async ({ toolCall }) => {
+      if (
+        ![
+          "context.readPage",
+          "context.readScreen",
+          "ui.fill",
+          "ui.openResource",
+          "calendar.createEvent",
+          "session.shareWithHelper",
+        ].includes(toolCall.toolName)
+      )
+        return;
+      if (pending.current.has(toolCall.toolCallId)) return;
+      pending.current.set(toolCall.toolCallId, toolCall.toolName);
+      try {
+        const result = await runtime.current?.execute(
+          toolCall.toolCallId,
+          toolCall.toolName,
+          toolCall.input,
+        );
+        if (result && "native" in result) return;
+        pending.current.delete(toolCall.toolCallId);
+        if (result && "output" in result)
+          void output.current({
+            tool: toolCall.toolName,
+            toolCallId: toolCall.toolCallId,
+            output: result.output,
+          });
+        else
+          void output.current({
+            tool: toolCall.toolName,
+            toolCallId: toolCall.toolCallId,
+            state: "output-error",
+            errorText: result?.errorText ?? "CLIENT_TOOL_UNAVAILABLE",
+          });
+      } catch {
+        pending.current.delete(toolCall.toolCallId);
+        void output.current({
+          tool: toolCall.toolName,
+          toolCallId: toolCall.toolCallId,
+          state: "output-error",
+          errorText: "CLIENT_TOOL_FAILED",
+        });
+      }
+    },
+    onData: (part) => {
+      const version = generation.current;
+      queue.current = queue.current
+        .then(async () => {
+          if (version !== generation.current) return;
+          if (part.type === "data-action") {
+            const result = await runtime.current?.action(part.data);
+            if (result) turnState.actionResults.push(result);
+            return;
+          }
+          if (!turnState.hello) return;
+          switch (part.type) {
+            case "data-speech-segment":
+              await postNative(nativeEnvelope("SpeechSegment", part.data));
+              break;
+            case "data-approval-context":
+              await postNative(nativeEnvelope("ApprovalContext", part.data));
+              break;
+            case "data-job-progress":
+              await postNative(nativeEnvelope("JobProgress", part.data));
+              break;
+            case "data-safety-notice":
+              await postNative(nativeEnvelope("SafetyNotice", part.data));
+              break;
+          }
+        })
+        .catch(() => setBridgeError(true));
+    },
+  });
+  output.current = chat.addToolOutput;
+  const currentChat = useRef(chat);
+  currentChat.current = chat;
+  turnState.language = language;
+
+  useEffect(() => {
+    guidanceRef.current.setCaseId(caseId);
+    runtime.current = createClientRuntime({
+      openDocumentHighlight: (action) => guidanceRef.current.highlightDocument(action),
+    });
+    const received = new Set<string>();
+    const receive = async (message: BridgeToWorkspace): Promise<void> => {
+      if (received.has(message.id)) return;
+      received.add(message.id);
+      receiveFormViewerBridgeMessage(message);
+      const current = currentChat.current;
+      switch (message.type) {
+        case "BridgeHello":
+          turnState.hello = message.payload;
+          break;
+        case "Transcript": {
+          setPartial(message.payload.final ? "" : message.payload.text);
+          if (!message.payload.final || !message.payload.text.trim()) return;
+          generation.current++;
+          await current.stop();
+          stopFormFilling();
+          runtime.current?.clear();
+          turnState.inputKind = "transcript";
+          turnState.language = message.payload.language ?? language;
+          turnState.capsule = message.payload.capsule ?? {};
+          await current.sendMessage({ text: message.payload.text });
+          break;
+        }
+        case "ApprovalDecision": {
+          const decision = message.payload;
+          const matching = current.messages
+            .at(-1)
+            ?.parts.find(
+              (part) =>
+                isToolUIPart(part) &&
+                part.state === "approval-requested" &&
+                part.approval.id === decision.approvalId,
+            );
+          if (!matching || (isToolUIPart(matching) && getToolName(matching) === "form.commitGroup"))
+            return;
+          await current.addToolApprovalResponse({
+            id: decision.approvalId,
+            approved: decision.approved,
+            ...(decision.reason === undefined ? {} : { reason: decision.reason }),
+          });
+          break;
+        }
+        case "ToolOutput": {
+          const toolName = pending.current.get(message.payload.toolCallId);
+          if (!toolName) return;
+          const result = (
+            toolName === "context.readScreen" ? ContextCapsuleSchema : ActionResultSchema
+          ).safeParse(message.payload.output);
+          pending.current.delete(message.payload.toolCallId);
+          if (!result.success || message.payload.error)
+            void output.current({
+              tool: toolName,
+              toolCallId: message.payload.toolCallId,
+              state: "output-error",
+              errorText: "NATIVE_TOOL_FAILED",
+            });
+          else
+            void output.current({
+              tool: toolName,
+              toolCallId: message.payload.toolCallId,
+              output: result.data,
+            });
+          break;
+        }
+        case "ActionResult":
+          if (receiveNativeActionResult(message.payload)) break;
+          turnState.actionResults.push(message.payload);
+          break;
+        case "SpeechControl":
+          if (message.payload.stop) {
+            generation.current++;
+            await current.stop();
+            stopFormFilling();
+            runtime.current?.clear();
+          }
+          break;
+      }
+    };
+    const uninstall = subscribeBridge(receive);
+    return () => {
+      uninstall();
+      generation.current++;
+      stopFormFilling();
+      runtime.current?.dispose();
+      void currentChat.current.stop();
+      if (turnState.hello)
+        void postNative(
+          nativeEnvelope("SpeechControl", { stop: true, state: "idle", segmentIndex: 0 }),
+        ).catch(() => undefined);
+    };
+  }, [caseId, language, turnState]);
+
+  const stop = async (): Promise<void> => {
+    generation.current++;
+    stopFormFilling();
+    await chat.stop();
+    runtime.current?.clear();
+    if (turnState.hello)
+      await postNative(
+        nativeEnvelope("SpeechControl", { stop: true, state: "idle", segmentIndex: 0 }),
+      ).catch(() => setBridgeError(true));
+  };
+  const send = async (text: string): Promise<void> => {
+    await stop();
+    turnState.actionResults.push(...guidanceRef.current.takeActionResults());
+    turnState.inputKind = "text";
+    turnState.capsule = {};
+    await chat.sendMessage({ text });
+  };
+  return { ...chat, send, stop, partial, bridgeError };
+}
+
+export function approvalContexts(messages: LotseMessage[]): LotseDataParts["approval-context"][] {
+  return messages.flatMap((message) =>
+    message.parts.flatMap((part) => (part.type === "data-approval-context" ? [part.data] : [])),
+  );
+}
+
+export function pendingApprovals(
+  message: LotseMessage,
+): { toolCallId: string; toolName: string; approvalId: string }[] {
+  return message.parts.flatMap((part) =>
+    isToolUIPart(part) && part.state === "approval-requested"
+      ? [{ toolCallId: part.toolCallId, toolName: getToolName(part), approvalId: part.approval.id }]
+      : [],
+  );
+}
