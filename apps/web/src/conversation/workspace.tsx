@@ -157,7 +157,7 @@ export function Workspace(): JSX.Element {
         <div className="flex h-dvh w-full flex-col items-center justify-center gap-4 bg-background">
           <Greeting subtitle={t("workspace.empty")} title={t("workspace.greeting")} />
           <UiButton disabled={loading} onClick={() => void create()}>
-            {t("workspace.newCase")}
+            {t("workspace.start")}
           </UiButton>
         </div>
       )}
