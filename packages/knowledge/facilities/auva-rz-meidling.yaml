@@ -1,0 +1,19 @@
+# Official contact data. Coordinates and appointment opening hours are not published here.
+# Awaiting human review. Visiting hours must not be presented as appointment availability.
+id: auva-rz-meidling
+name_de: AUVA Rehabilitationszentrum Meidling
+type: Rehabilitation
+region: Wien
+address:
+  street: Köglergasse 2a
+  postal_code: "1120"
+  locality: Wien
+  country: AT
+phone: "+43 5 93 93-55000"
+email: RMV@auva.at
+url: https://auva.at/gesundheitseinrichtungen/rz-meidling/
+sources:
+  - url: https://auva.at/gesundheitseinrichtungen/rz-meidling/
+    quote: "RMV@auva.at +43 5 93 93-55000 Köglergasse 2a, 1120 Wien"
+    retrieved_at: "2026-11-06T01:35:29Z"
+as_of: "2026-11-06"
