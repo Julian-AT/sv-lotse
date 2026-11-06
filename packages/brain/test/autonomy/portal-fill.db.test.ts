@@ -50,11 +50,15 @@ vi.mock("../../src/pipeline/guards.ts", async (original) => ({
 }));
 vi.mock("../../src/guards/index.ts", async (original) => ({
   ...(await original<typeof import("../../src/guards/index.ts")>()),
-  createResponseGuard: () => async (input: { text: string }) => ({
-    text: input.text,
-    disposition: "allow",
-    reason: "allowed",
-  }),
+  createResponseGuard: () =>
+    Object.assign(
+      async (input: { text: string }) => ({
+        text: input.text,
+        disposition: "allow",
+        reason: "allowed",
+      }),
+      { prewarm: () => {} },
+    ),
 }));
 
 describe("FR-D7 server-side approval of guided portal fills", () => {

@@ -81,6 +81,23 @@ const READ_ONLY_TOOLS: ReadonlySet<ToolName> = new Set<ToolName>([
   "ui.offerResource",
   "ui.openResource",
 ]);
+/** Server lookups and display tools whose sourced results carry the whole answer. */
+export const DRAFTLESS_TOOLS: ReadonlySet<string> = new Set<ToolName>([
+  "kb.search",
+  "catalog.findBenefits",
+  "catalog.getBenefit",
+  "office.resolve",
+  "facility.search",
+  "eko.lookupCoverage",
+  "fees.explainReimbursement",
+  "form.find",
+  "ui.point",
+  "ui.highlight",
+  "ui.annotate",
+  "ui.caption",
+]);
+/** Display tools that only make sense on a visible screen, page or form. */
+const SCREEN_TOOLS: readonly ToolName[] = ["ui.annotate", "ui.caption"];
 const OFFER_TOOLS: ReadonlySet<ToolName> = new Set<ToolName>([
   "ui.offerResource",
   "ui.openResource",
@@ -95,6 +112,8 @@ const OFFER_TOOLS: ReadonlySet<ToolName> = new Set<ToolName>([
 export function irrelevantToolNames(input: {
   texts: readonly string[];
   history: readonly LotseMessage[];
+  /** A screen, page or form is in view: annotations and captions have something to mark. */
+  screen?: boolean;
   /** No confirmed goal: only lookups and display tools, whatever the history used. */
   readOnly?: boolean;
   /** With readOnly, false also removes resource offers (the answer offers the goal instead). */
@@ -108,6 +127,7 @@ export function irrelevantToolNames(input: {
   for (const message of input.history)
     for (const part of message.parts)
       if (isToolUIPart(part)) kept.add(getToolName(part) as ToolName);
+  if (!input.screen) for (const tool of SCREEN_TOOLS) excluded.add(tool);
   for (const tool of kept) excluded.delete(tool);
   if (input.readOnly)
     for (const tool of toolNames)

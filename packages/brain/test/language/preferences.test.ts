@@ -214,3 +214,18 @@ describe("FR-L1 and FR-L2 speech segments", () => {
     expect(emitted[1]).toMatchObject({ index: 5, text: "Danach geht es weiter." });
   });
 });
+
+it("plain utterances in the stored language skip the preference model", async () => {
+  const { mayChangePreferences } = await import("../../src/language/detect.ts");
+  expect(mayChangePreferences("Was kostet die Rezeptgebühr 2026?", "de")).toBe(false);
+  expect(mayChangePreferences("Ja, bitte.", "de")).toBe(false);
+  expect(mayChangePreferences("Where do I apply for care allowance?", "en")).toBe(false);
+  for (const text of [
+    "Bitte antworten Sie auf Englisch.",
+    "Kannst du mir helfen?",
+    "Bitte in einfacher Sprache.",
+    "Where do I apply for care allowance?",
+    "Merhaba, yardım eder misiniz?",
+  ])
+    expect(mayChangePreferences(text, "de")).toBe(true);
+});

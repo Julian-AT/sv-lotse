@@ -35,6 +35,26 @@ export async function detectCommunicationPreferences(
   return LanguageDetectionSchema.parse(result.output);
 }
 
+const GERMAN =
+  /\b(?:ich|mein|meine|meiner|die|der|das|und|ist|sind|was|wie|wo|wer|wann|kann|habe|bitte|ja|nein|danke|für|nicht|mit|beantrage|braucht)\b/iu;
+const ENGLISH =
+  /\b(?:i|my|the|and|is|are|what|how|where|who|when|can|have|please|yes|no|thanks|for|not|with|apply|need)\b/iu;
+// Words that may state a preference (language, register, plain language, detail) or a foreign
+// language: these utterances always go to the model.
+const PREFERENCE_CUES =
+  /\b(?:deutsch|german|englisch|english|sprache|language|einfach\w*|leicht\w*|simple|plain|kurz\w*|knapp|brief|short|ausführlich\w*|detail\w*|genauer|du|dich|dir|dein\w*|duzen|siezen|formal|informal|förmlich)\b|[^\p{Script=Latin}\p{N}\p{P}\p{Z}\p{S}]/iu;
+
+/**
+ * True when the utterance can carry a new preference. A plain utterance in the stored reply
+ * language without any preference cue keeps the stored settings, which saves one model call.
+ */
+export function mayChangePreferences(text: string, language: "de" | "en"): boolean {
+  if (PREFERENCE_CUES.test(text)) return true;
+  const german = GERMAN.test(text);
+  const english = ENGLISH.test(text);
+  return language === "de" ? !german || english : !english || german;
+}
+
 function replyLanguage(detection: LanguageDetection): "de" | "en" | null {
   if (detection.requestedLanguage) return detection.requestedLanguage;
   return detection.detectedLanguage === "de" || detection.detectedLanguage === "en"

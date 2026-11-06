@@ -73,16 +73,6 @@ export async function guardResponse(
   const verifiedQuotes: string[] = [];
   try {
     if (claims.some((claim) => !text.includes(claim.text))) return unknown("citation");
-    // Every claim must verify; checking them concurrently only removes serial latency.
-    const checks = await Promise.all(
-      claims.map((claim) => verifyCitation(claim, passages, dependencies.supports, input.signal)),
-    );
-    if (checks.some((check) => !check.valid)) {
-      console.info(
-        JSON.stringify({ event: "citation_check", reasons: checks.map((check) => check.reason) }),
-      );
-      return unknown("citation");
-    }
     for (const claim of claims) {
       // Only attributed, delimited verbatim quotes are exempt from speech-act rules.
       for (const citation of claim.citations) {
@@ -100,13 +90,11 @@ export async function guardResponse(
         }
       }
     }
-    if (hasUnverifiedReferences(text, claims)) {
-      return unknown("citation");
-    }
+    const unverifiedReferences = hasUnverifiedReferences(text, claims);
     const violations = checkBoundaryRules(ruleText);
-    if (violations.some((violation) => violation.category === "injection")) return unknown("rule");
-    if (violations.length > 0) return handoff("rule");
-    const classification = await dependencies.classify(text, {
+    // The classifier runs beside the citation checks to save a round trip. Its verdict is only
+    // read after every citation, reference and rule check below has passed, in the same order.
+    const classifierContext = {
       signal: input.signal,
       verifiedQuotes,
       administrativeOnly: input.administrativeOnly,
@@ -114,7 +102,29 @@ export async function guardResponse(
       untrustedContent: input.untrustedContent
         ? { ...input.untrustedContent, text: untrustedSourceText(input.untrustedContent.text) }
         : undefined,
-    });
+    };
+    // A response the references or rules already reject never reaches the classifier.
+    const classifying =
+      unverifiedReferences || violations.length > 0
+        ? undefined
+        : dependencies.classify(text, classifierContext);
+    classifying?.catch(() => {});
+    // Every claim must verify; checking them concurrently only removes serial latency.
+    const checks = await Promise.all(
+      claims.map((claim) => verifyCitation(claim, passages, dependencies.supports, input.signal)),
+    );
+    if (checks.some((check) => !check.valid)) {
+      console.info(
+        JSON.stringify({ event: "citation_check", reasons: checks.map((check) => check.reason) }),
+      );
+      return unknown("citation");
+    }
+    if (unverifiedReferences) {
+      return unknown("citation");
+    }
+    if (violations.some((violation) => violation.category === "injection")) return unknown("rule");
+    if (violations.length > 0) return handoff("rule");
+    const classification = await (classifying ?? dependencies.classify(text, classifierContext));
     if (classification.violation || classification.score >= GUARD_CONFIG.boundaryThreshold) {
       return classification.category === "injection" ||
         (Boolean(input.userText) && classification.responseKind === "administrative")
@@ -137,7 +147,14 @@ export type ResponseGuard = ((input: ResponseGuardInput) => Promise<GuardedRespo
 };
 export function createResponseGuard(
   config: BrainConfig,
-  overrides?: { supports?: SupportVerifier },
+  overrides?: {
+    supports?: SupportVerifier;
+    /**
+     * Rewrites a withheld answer from the same evidence, keeping its citations (the composer).
+     * The rewrite is a new untrusted candidate and passes the complete gate again.
+     */
+    repair?: (input: ResponseGuardInput) => Promise<string | undefined>;
+  },
 ): ResponseGuard {
   const classify = createBoundaryClassifier(config);
   const supports = overrides?.supports ?? createSupportVerifier(config);
@@ -155,15 +172,6 @@ export function createResponseGuard(
   };
   const guard = async (input: ResponseGuardInput): Promise<GuardedResponse> => {
     const copy = guardCopy[guardLocale(input.language)];
-    if (input.userText) {
-      try {
-        if (await medicalRequest(input.userText, input.signal))
-          return { text: copy.handoff, disposition: "handoff", reason: "classifier" };
-      } catch {
-        input.signal?.throwIfAborted();
-        return { text: copy.handoff, disposition: "handoff", reason: "unavailable" };
-      }
-    }
     const dependencies: ResponseGuardDependencies = {
       supports,
       classify: async (text, context) => {
@@ -183,6 +191,16 @@ export function createResponseGuard(
         ? { text: copy.unknown, disposition: "unknown", reason: "rule" }
         : result;
     };
+    if (input.userText) {
+      // Prewarmed at the start of the turn, so this is usually already decided.
+      try {
+        if (await medicalRequest(input.userText, input.signal))
+          return { text: copy.handoff, disposition: "handoff", reason: "classifier" };
+      } catch {
+        input.signal?.throwIfAborted();
+        return { text: copy.handoff, disposition: "handoff", reason: "unavailable" };
+      }
+    }
     let guarded = await check(input);
     if (!input.userText || guarded.disposition !== "unknown") return guarded;
     // Reason codes only: the rejected text never reaches process logs.
@@ -195,25 +213,34 @@ export function createResponseGuard(
     );
     for (let attempt = 0; attempt < GUARD_CONFIG.repairAttempts; attempt++) {
       try {
-        const result = await generateText({
-          model: createModelRouter(config).modelFor("orchestrator"),
-          instructions: ADMINISTRATIVE_REPAIR_PROMPT,
-          prompt: JSON.stringify({
-            userTask: boundaryTaskText(input.userText),
-            language: input.language,
-            passages: input.passages ?? [],
-            untrustedContent: input.untrustedContent
-              ? {
-                  ...input.untrustedContent,
-                  text: untrustedSourceText(input.untrustedContent.text),
-                }
-              : null,
-          }),
-          maxRetries: 0,
-          maxOutputTokens: GUARD_CONFIG.maxOutputTokens,
-          abortSignal: guardAbortSignal(input.signal),
-          telemetry: { isEnabled: false, recordInputs: false, recordOutputs: false },
-        });
+        const recomposed =
+          attempt === 0 && overrides?.repair
+            ? await overrides.repair(input).catch(() => {
+                input.signal?.throwIfAborted();
+                return undefined;
+              })
+            : undefined;
+        const result = recomposed?.trim()
+          ? { text: recomposed }
+          : await generateText({
+              model: createModelRouter(config).modelFor("orchestrator"),
+              instructions: ADMINISTRATIVE_REPAIR_PROMPT,
+              prompt: JSON.stringify({
+                userTask: boundaryTaskText(input.userText),
+                language: input.language,
+                passages: input.passages ?? [],
+                untrustedContent: input.untrustedContent
+                  ? {
+                      ...input.untrustedContent,
+                      text: untrustedSourceText(input.untrustedContent.text),
+                    }
+                  : null,
+              }),
+              maxRetries: 0,
+              maxOutputTokens: GUARD_CONFIG.maxOutputTokens,
+              abortSignal: guardAbortSignal(input.signal),
+              telemetry: { isEnabled: false, recordInputs: false, recordOutputs: false },
+            });
         // Repair is a new, untrusted candidate. It must pass the same complete gate.
         guarded = await check({
           ...input,

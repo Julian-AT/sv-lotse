@@ -273,6 +273,15 @@ export async function assembleContext(
   const included = visiblePassages.filter((passage) =>
     blocks.knowledge.includes(JSON.stringify(passage)),
   );
+  // The agent sees each passage's opening only: enough to judge whether it answers the request
+  // and to cite it. The composer and the guards work with the full passages.
+  blocks.knowledge = JSON.stringify(
+    included.map((passage) =>
+      passage.text.length > PIPELINE_CONFIG.agentPassageCharacters
+        ? { ...passage, text: `${passage.text.slice(0, PIPELINE_CONFIG.agentPassageCharacters)}…` }
+        : passage,
+    ),
+  );
   const data = Object.entries(blocks)
     .filter(([key]) => key !== "policy" && key !== "history")
     .map(([key, value]) => `${key}: ${value}`)

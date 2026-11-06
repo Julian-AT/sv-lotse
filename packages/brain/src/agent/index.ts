@@ -50,6 +50,8 @@ export function createLotseAgent(options: {
   /** Relevance filter applied after permission filtering (fewer tool schemas, faster steps). */
   irrelevantTools?: ReadonlySet<ToolName>;
   checkpoint?: (step: number) => Promise<void>;
+  /** Awaited before every tool call; false denies it (the request did not clear the gate). */
+  beforeTool?: () => Promise<boolean>;
   persistToolResult?: (event: ToolExecutionEndEvent<RuntimeTools>) => Promise<void>;
 }) {
   const instructionsFor = (instructions: string): string =>
@@ -80,6 +82,7 @@ export function createLotseAgent(options: {
     runtimeContext: options.context,
     experimental_toolApprovalSecret: options.config.approvalSecret,
     toolApproval: async ({ toolCall, runtimeContext }) => {
+      if (options.beforeTool && !(await options.beforeTool())) return "denied";
       if (
         !isToolName(toolCall.toolName) ||
         !allowedToolNames(runtimeContext.autonomyLevel, runtimeContext.actorRole).includes(

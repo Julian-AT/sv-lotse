@@ -115,6 +115,8 @@ export async function composeAnswer(options: {
   previousAnswer?: string;
   /** An unconfirmed process goal; the answer's closing offer asks whether to start it. */
   offerGoal?: string;
+  /** Set when a previous candidate was withheld by the response guard. */
+  retry?: boolean;
   abortSignal?: AbortSignal;
 }): Promise<{ text: string; dropped: number; cited: number }> {
   const sources = topSources(options.sources, `${options.userText}\n${options.draft ?? ""}`);
@@ -128,6 +130,9 @@ export async function composeAnswer(options: {
         : "",
       options.offerGoal
         ? `The user has not confirmed a case goal yet. After answering, end with exactly one question sentence that offers to start this goal together, for example "Soll ich den Antrag auf Pflegegeld mit Ihnen vorbereiten?". Goal (untrusted data): ${JSON.stringify(options.offerGoal)}`
+        : "",
+      options.retry
+        ? "A previous answer was withheld because it did not directly answer the request or a citation did not hold. Answer the latest user message itself with the supported facts, and cite each fact only with a source that states it."
         : "",
     ]
       .filter(Boolean)

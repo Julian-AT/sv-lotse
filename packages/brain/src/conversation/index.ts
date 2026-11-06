@@ -23,7 +23,7 @@ import {
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { createLotseAgent } from "../agent/index.ts";
-import { irrelevantToolNames } from "../agent/relevance.ts";
+import { DRAFTLESS_TOOLS, irrelevantToolNames } from "../agent/relevance.ts";
 import { canonicalJson } from "../approvals/canonical.ts";
 import { createApprovalService } from "../approvals/index.ts";
 import { type BrainConfig, PIPELINE_CONFIG, parseBrainConfig } from "../config/index.ts";
@@ -34,6 +34,8 @@ import {
   createSupportVerifier,
   detectSafetyNet,
   extractCitedClaims,
+  guardCopy,
+  guardLocale,
   memoizeSupportVerifier,
   type RetrievedPassage,
 } from "../guards/index.ts";
@@ -41,6 +43,7 @@ import { jobProgress } from "../jobs/progress.ts";
 import { communicationInstructions } from "../language/copy.ts";
 import {
   detectCommunicationPreferences,
+  mayChangePreferences,
   preferencePatch,
   replySettings,
 } from "../language/detect.ts";
@@ -389,7 +392,11 @@ async function runTurn(
       // Preference detection and the pipeline (classification, retrieval) run concurrently.
       const detectSettings = async () => {
         let settings = stored;
-        if (latest.role === "user" && utterance.trim()) {
+        if (
+          latest.role === "user" &&
+          utterance.trim() &&
+          mayChangePreferences(utterance, stored.language)
+        ) {
           const detection = await detectCommunicationPreferences(
             utterance,
             options?.languageModel ??
@@ -421,7 +428,12 @@ async function runTurn(
       );
       // One verifier per turn: the early sentence check and the response guard share verdicts.
       const supports = memoizeSupportVerifier(createSupportVerifier(config));
-      const responseGuard = createResponseGuard(config, { supports });
+      // A withheld answer is recomposed from the same evidence, so its citations survive.
+      let recompose: ((text: string) => Promise<string | undefined>) | undefined;
+      const responseGuard = createResponseGuard(config, {
+        supports,
+        repair: async (input) => recompose?.(input.text),
+      });
       responseGuard.prewarm(userText, options?.abortSignal);
       const guard = observeGuard(responseGuard, productEvents.sink);
       const guardPassages: RetrievedPassage[] = [];
@@ -503,20 +515,39 @@ async function runTurn(
         }),
       );
       const searchEvidence: ComposerSource[] = [];
+      const inputs = new Map<string, { toolName: string; input: unknown }>();
       const previousAnswer = prepared.history
         .findLast((message) => message.role === "assistant")
         ?.parts.flatMap((part) => (part.type === "text" ? [part.text] : []))
         .join(" ")
         .slice(-600);
       let approvalRequested = false;
-      const guardText = async (text: string) =>
-        guard({ ...guardContext, text, claims: extractCitedClaims(text, guardPassages) });
+      const responseChecks = new Map<string, ReturnType<typeof guard>>();
+      const guardText = (text: string): ReturnType<typeof guard> => {
+        let checked = responseChecks.get(text);
+        if (!checked) {
+          checked = guard({
+            ...guardContext,
+            text,
+            claims: extractCitedClaims(text, guardPassages),
+          });
+          responseChecks.set(text, checked);
+          checked.catch(() => responseChecks.delete(text));
+        }
+        return checked;
+      };
+      // Both release gates start as soon as a candidate exists; `finish` reuses their verdicts.
+      const prefetchGuards = (text: string): void => {
+        if (!text.trim()) return;
+        output.prefetch(text);
+        guardText(text).catch(() => {});
+      };
       const writeAnswer = async (id: string, text: string): Promise<void> => {
         await output.write({ type: "text-start", id });
         await output.write({ type: "text-delta", id, delta: text });
         await output.write({ type: "text-end", id });
       };
-      const compose = async (withDraft: boolean) => {
+      const compose = async (withDraft: boolean, offerGoal?: string, retry = false) => {
         const started = performance.now();
         const sources = [
           ...toolEvidence,
@@ -543,9 +574,8 @@ async function runTurn(
             : {}),
           communication: communicationInstructions(settings),
           administrativeOnly,
-          ...(pipeline.confirmed && pipeline.offerGoal
-            ? { offerGoal: pipeline.offerGoal.goal }
-            : {}),
+          ...(offerGoal ? { offerGoal } : {}),
+          ...(retry ? { retry } : {}),
           ...(previousAnswer ? { previousAnswer } : {}),
           ...(options?.abortSignal ? { abortSignal: options.abortSignal } : {}),
         });
@@ -573,6 +603,9 @@ async function runTurn(
           });
           guardPassages.push({ id: source.id, text: source.text, url: source.url });
         }
+        // The guards check the candidate while its sentences are verified; a sentence removal
+        // only re-runs them for the shortened text.
+        if (!retry) prefetchGuards(composed.text);
         const checked = await dropUnsupportedSentences(
           composed.text,
           guardPassages,
@@ -580,22 +613,89 @@ async function runTurn(
           language,
           options?.abortSignal,
         );
-        if (checked.removed > 0)
+        if (checked.removed > 0) {
           console.info(
             JSON.stringify({ event: "answer_sentences_removed", removed: checked.removed }),
           );
-        return { ...composed, text: checked.text, ms: performance.now() - started };
+          if (!retry) prefetchGuards(checked.text);
+        }
+        return {
+          ...composed,
+          text: checked.text,
+          removed: checked.removed,
+          ms: performance.now() - started,
+        };
       };
-      // Composition from the retrieved passages starts beside the agent. When the agent answers
-      // without calling tools, this result is used; otherwise the answer is recomposed with the
-      // tool evidence and the agent's draft.
-      let speculative: Promise<Awaited<ReturnType<typeof compose>> | undefined> | undefined;
+      recompose = async () => {
+        if (!userText.trim() || approvalRequested) return undefined;
+        const composed = await compose(true, gateOffer, true);
+        return composed.cited > 0 ? composed.text : undefined;
+      };
+      // Candidates are composed from the evidence as it arrives: the retrieved passages at the
+      // start, again after each step with new tool results, and with the goal offer once the
+      // classifier proposes one. A candidate is only used when no newer evidence exists.
+      let evidenceVersion = 0;
+      let gateOffer: string | undefined;
+      let candidate:
+        | {
+            version: number;
+            offer: string | undefined;
+            result: Promise<Awaited<ReturnType<typeof compose>> | undefined>;
+          }
+        | undefined;
+      // Without a confirmed goal a turn only reads. When the retrieved passages already answer
+      // it (every composed fact verified), that answer is released without waiting for the
+      // agent, unless the agent has started a lookup by then.
+      const signal = () => {
+        let resolve = (): void => {};
+        const promise = new Promise<void>((done) => {
+          resolve = done;
+        });
+        return { promise, resolve };
+      };
+      let directSignal = signal();
+      const unknownCopy = guardCopy[guardLocale(language)].unknown;
+      const directAnswer = (): boolean => !stepTools && !toolCalled && draftless();
+      const startCandidate = (): void => {
+        if (latest.role !== "user" || !userText.trim()) return;
+        const started = {
+          version: evidenceVersion,
+          offer: gateOffer,
+          result: compose(false, gateOffer).catch(() => undefined),
+        };
+        candidate = started;
+        if (!pipeline.confirmed || !pipeline.goalOpen) return;
+        const gate = pipeline.gate;
+        void started.result.then(async (composed) => {
+          if (
+            !composed ||
+            composed.cited === 0 ||
+            composed.dropped > 0 ||
+            composed.removed > 0 ||
+            composed.text.includes(unknownCopy)
+          )
+            return;
+          const decided = await gate.catch(() => undefined);
+          if (decided && !decided.reply && decided.offerGoal?.goal === started.offer)
+            directSignal.resolve();
+        });
+      };
+      // Lookups whose sourced results are the whole answer: the agent's own prose adds nothing
+      // the composer may state, so the turn need not wait for it.
+      const draftless = (): boolean =>
+        [...inputs.values()].every((call) => DRAFTLESS_TOOLS.has(call.toolName));
       let toolCalled = false;
       let offered = false;
       // Without an explicit pointer, the cursor shows the result card the answer is about.
       let pointed = false;
       const results: { toolCallId: string; toolName: string }[] = [];
       const finalize = async (): Promise<void> => {
+        // The classifier's verdict (medical handoff, goal offer) is decided before any release.
+        const decided = pipeline.confirmed ? await pipeline.gate : {};
+        if (decided.reply) {
+          output.emit(draft.id ?? randomUUID(), decided.reply);
+          return;
+        }
         if (openedResource(prepared.history)) output.opened();
         const resourceCalls = [...inputs.values()].some((call) =>
           call.toolName.endsWith("Resource"),
@@ -624,30 +724,50 @@ async function runTurn(
             offered = true;
           }
         }
+        // The goal is offered inside the answer; a "yes" next turn confirms it.
+        if (decided.offerGoal && !offered && !approvalRequested)
+          writer.write({
+            type: "message-metadata",
+            messageMetadata: {
+              pendingGoal: decided.offerGoal.goal,
+              pendingLifeSituation: decided.offerGoal.lifeSituation,
+            },
+          });
         const id = draft.id;
         if (id === undefined) return output.finish();
-        if (!approvalRequested && !offered && userText.trim()) {
+        const responseCheck = async (text: string): Promise<string | undefined> => {
+          const checked = await guardText(text);
+          // Reason codes only: answers never reach process logs.
+          console.info(
+            JSON.stringify({
+              event: "response_guard",
+              disposition: checked.disposition,
+              reason: checked.reason,
+            }),
+          );
+          return checked.text === text ? undefined : checked.text;
+        };
+        // An unopened offer replaces the reply with its fixed question; the draft is not shown.
+        if (offered) {
+          await writeAnswer(id, draft.text);
+          return output.finish(responseCheck);
+        }
+        if (!approvalRequested && userText.trim()) {
           try {
-            const composed =
-              (!toolCalled && speculative ? await speculative : undefined) ?? (await compose(true));
+            const fresh =
+              draftless() &&
+              candidate?.version === evidenceVersion &&
+              candidate.offer === decided.offerGoal?.goal
+                ? await candidate.result
+                : undefined;
+            const composed = fresh ?? (await compose(true, decided.offerGoal?.goal));
             timings.composeMs = composed.ms;
             if (composed.text.trim()) {
               const card = pointed ? undefined : pointedToolCall(results);
               if (card) output.action(resultPointAction(randomUUID(), card));
               await writeAnswer(id, composed.text);
               // The response guard and citation verifier run beside the answer guard.
-              return output.finish(async (text) => {
-                const checked = await guardText(text);
-                // Reason codes only: answers never reach process logs.
-                console.info(
-                  JSON.stringify({
-                    event: "response_guard",
-                    disposition: checked.disposition,
-                    reason: checked.reason,
-                  }),
-                );
-                return checked.text === text ? undefined : checked.text;
-              });
+              return output.finish(responseCheck);
             }
           } catch {
             options?.abortSignal?.throwIfAborted();
@@ -685,15 +805,6 @@ async function runTurn(
         writer.write({ type: "finish" });
         return;
       }
-      // The goal is offered inside the answer; a "yes" next turn confirms it.
-      if (pipeline.offerGoal)
-        writer.write({
-          type: "message-metadata",
-          messageMetadata: {
-            pendingGoal: pipeline.offerGoal.goal,
-            pendingLifeSituation: pipeline.offerGoal.lifeSituation,
-          },
-        });
       for (const passage of pipeline.passages) {
         passages.set(passage.id, passage);
         // The citation verifier deliberately accepts only its strict evidence contract.
@@ -723,7 +834,13 @@ async function runTurn(
         irrelevantTools: irrelevantToolNames({
           texts: [userText, pipeline.blocks.case, pipeline.blocks.screen],
           history: prepared.history,
-          ...(pipeline.goalOpen ? { readOnly: true, offering: !pipeline.offerGoal } : {}),
+          screen: Boolean(
+            parsed.capsule.screen ||
+              parsed.capsule.page ||
+              parsed.capsule.focusedRegion ||
+              /formInstance/u.test(pipeline.blocks.case),
+          ),
+          ...(pipeline.goalOpen ? { readOnly: true } : {}),
         }),
         prepareContext: async () =>
           (await pipeline.refreshContext()) + citationInstructions + goalInstructions,
@@ -739,9 +856,18 @@ async function runTurn(
         ...(options?.model ? { model: options.model } : {}),
         checkpoint: checkpoint.wait,
         persistToolResult: approvedResultCheckpoint(prepared.history, save),
+        // Tools run only after the classifier has cleared the request (it runs beside the agent).
+        beforeTool: async () =>
+          !(await pipeline.gate.catch(() => ({ reply: "unavailable" }))).reply,
       });
-      if (latest.role === "user" && userText.trim())
-        speculative = compose(false).catch(() => undefined);
+      startCandidate();
+      pipeline.gate.then(
+        (decided) => {
+          gateOffer = decided.offerGoal?.goal;
+          if (gateOffer && draftless()) startCandidate();
+        },
+        () => {},
+      );
       const result = await agent.stream({
         messages: await convertToModelMessages(pipeline.history),
         timeout: { totalMs: PIPELINE_CONFIG.turnTimeoutMs, stepMs: PIPELINE_CONFIG.modelTimeoutMs },
@@ -749,7 +875,6 @@ async function runTurn(
           ? AbortSignal.any([options.abortSignal, cancellation.signal])
           : cancellation.signal,
       });
-      const inputs = new Map<string, { toolName: string; input: unknown }>();
       const withheldInputs = new Set<string>();
       // At most one fixed status line per turn tells the user that Lotse is looking something up.
       const announce = createStatusAnnouncer(language);
@@ -760,14 +885,70 @@ async function runTurn(
         onError: turnStreamError,
       });
       const reader = sdkStream.getReader();
+      // A lookup turn is released as soon as the agent starts writing prose (or reaches its last,
+      // tool-less step): the answer is composed from the evidence, not from that prose.
+      const lastStep = (turnConfig.agentMaxSteps ?? PIPELINE_CONFIG.maxSteps) - 1;
+      let step = -1;
+      let stepTools = false;
+      let stepResults = false;
+      const releasable = (): boolean =>
+        latest.role === "user" &&
+        Boolean(userText.trim()) &&
+        !approvalRequested &&
+        !failed &&
+        !stepTools &&
+        draftless();
+      const release = async (): Promise<void> => {
+        timings.earlyReleaseStep = step;
+        draft.id ??= randomUUID();
+        if (step < 0) writer.write({ type: "start-step" });
+        await guardedWriter.flush();
+        await finalize();
+        writer.write({ type: "finish-step" });
+        writer.write({ type: "finish" });
+        speechSegments.splice(0, speechSegments.length, ...output.segments);
+        timings.totalMs = performance.now() - pipelineStarted;
+        // The agent's remaining prose is not needed; stop its model call.
+        cancellation.abort();
+        reader.cancel().catch(() => {});
+      };
+      let pendingRead: ReturnType<typeof reader.read> | undefined;
       try {
         while (true) {
-          const next = await reader.read();
+          pendingRead ??= reader.read();
+          const next = await Promise.race([
+            pendingRead,
+            directSignal.promise.then(() => undefined),
+          ]);
+          if (next === undefined) {
+            directSignal = signal();
+            if (directAnswer() && candidate?.version === evidenceVersion) {
+              timings.directAnswer = 1;
+              pendingRead.catch(() => {});
+              await release();
+              break;
+            }
+            continue;
+          }
+          pendingRead = undefined;
           if (next.done) break;
           const part: UIMessageChunk = next.value;
           if (part.type === "start") continue;
-          if (acceptDraft(part)) continue;
+          if (acceptDraft(part)) {
+            if (
+              part.type === "text-delta" &&
+              draft.text.length >= PIPELINE_CONFIG.earlyReleaseCharacters &&
+              releasable()
+            ) {
+              await release();
+              break;
+            }
+            continue;
+          }
+          if (part.type === "tool-input-start") stepTools = true;
           if (part.type === "tool-output-available") {
+            evidenceVersion++;
+            stepResults = true;
             const call = inputs.get(part.toolCallId);
             const offer =
               call?.toolName === "ui.offerResource"
@@ -806,6 +987,8 @@ async function runTurn(
           if (part.type === "finish-step" || part.type === "finish") {
             await guardedWriter.flush();
           }
+          // New lookup results: compose the next candidate beside the agent's next step.
+          if (part.type === "finish-step" && stepResults && draftless()) startCandidate();
           if (await output.write(part)) continue;
           if (part.type === "finish") await finalize();
           if (part.type === "finish-step" || part.type === "finish") {
@@ -864,6 +1047,15 @@ async function runTurn(
               checkpoint.fail(new Error("Agent stream failed"));
             }
             writer.write(next.value);
+          }
+          if (part.type === "start-step") {
+            step++;
+            stepTools = false;
+            stepResults = false;
+            if (step >= lastStep && toolCalled && releasable()) {
+              await release();
+              break;
+            }
           }
         }
       } finally {

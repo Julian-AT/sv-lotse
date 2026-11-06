@@ -245,8 +245,14 @@ describe("persisted authority and real tools", () => {
       ],
     });
 
+    // Only an utterance with a preference cue reaches the preference model.
+    const request = userMessage();
+    request.parts[0] = {
+      type: "text",
+      text: "Please help me with my documents, in simple English.",
+    };
     const output = await chunks(
-      await handleTurn({ ...turn, caseId: context.caseId }, userMessage(), session, {
+      await handleTurn({ ...turn, caseId: context.caseId }, request, session, {
         db: database.db,
         config,
         model,

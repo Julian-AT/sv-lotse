@@ -101,7 +101,9 @@ export const FORM_GEOMETRY_EPSILON = 0.01;
 export const PIPELINE_CONFIG = {
   contextTokens: 16_000,
   charsPerToken: 4,
-  recentMessages: 12,
+  /** The last three exchanges; older turns are summarised by the case block. */
+  recentMessages: 6,
+  agentPassageCharacters: 700,
   retrievalK: 8,
   candidateLimit: 50,
   rrfConstant: 60,
@@ -112,6 +114,8 @@ export const PIPELINE_CONFIG = {
   guardTimeoutMs: 12_000,
   maxSteps: 12,
   maxOutputTokens: 2048,
+  /** Prose a lookup step writes before the turn is released without it (a tool-call preamble is shorter). */
+  earlyReleaseCharacters: 120,
 } as const;
 
 export const CONTEXT_SHARES = {

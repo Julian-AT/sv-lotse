@@ -68,6 +68,8 @@ export interface SegmentWriter {
   offer: (label: string) => void;
   /** This turn continues after a page was opened on request. */
   opened: () => void;
+  /** Starts the answer guard for a candidate early; `finish` reuses the verdict for that text. */
+  prefetch: (text: string) => void;
 }
 export function createSegmentWriter(options: {
   writer: Pick<UIMessageStreamWriter<LotseMessage>, "write">;
@@ -87,6 +89,23 @@ export function createSegmentWriter(options: {
   let nextIndex = options.context.sentenceIndex;
   let offered: string | undefined;
   let opened = false;
+  const verdicts = new Map<string, Promise<string>>();
+  const answerGuard = (text: string): Promise<string> => {
+    let verdict = verdicts.get(text);
+    if (!verdict) {
+      verdict = guardAnswer(
+        options.config,
+        text,
+        options.language,
+        options.passages,
+        options.abortSignal,
+      );
+      verdicts.set(text, verdict);
+      // A failed check is never reused; the caller that awaits it sees the error.
+      verdict.catch(() => verdicts.delete(text));
+    }
+    return verdict;
+  };
   const emit = (id: string, text: string): void => {
     const pending = actions
       .splice(0)
@@ -125,6 +144,9 @@ export function createSegmentWriter(options: {
     opened: (): void => {
       opened = true;
     },
+    prefetch: (text: string): void => {
+      if (text.trim()) answerGuard(text).catch(() => {});
+    },
     offer: (label: string): void => {
       offered = label.replace(/[?.!\s]+$/u, "").trim();
     },
@@ -146,8 +168,6 @@ export function createSegmentWriter(options: {
         ),
       ].join("\n");
       const started = performance.now();
-      const answerGuard = (text: string): Promise<string> =>
-        guardAnswer(options.config, text, options.language, options.passages, options.abortSignal);
       const [checked, replacement] = await Promise.all([
         answerGuard(inspected),
         original.trim() && alsoCheck ? alsoCheck(original) : Promise.resolve(undefined),
