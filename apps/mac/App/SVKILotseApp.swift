@@ -59,6 +59,11 @@ final class CompanionAppDelegate: NSObject, NSApplicationDelegate, ObservableObj
 
     func applicationWillFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.regular)
+        // The Dock caches icons per bundle path, so a rebuilt Debug app can keep a stale generic tile.
+        // Set the tile from the bundled AppIcon (asset catalog, all sizes 16 to 1024) on every launch.
+        if let icon = Bundle.main.image(forResource: "AppIcon") {
+            NSApp.applicationIconImage = icon
+        }
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
