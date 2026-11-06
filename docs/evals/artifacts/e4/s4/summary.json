@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "suites": [
+    {
+      "schemaVersion": 1,
+      "suite": {
+        "id": "E4",
+        "name": "Persisted multi-turn administrative scenarios",
+        "gate": {
+          "kind": "informational",
+          "metric": "taskSuccess",
+          "threshold": 0.9,
+          "direction": "at_least"
+        },
+        "minimumSetSize": 300
+      },
+      "selection": {
+        "sample": 2,
+        "seed": "e4-2026-11-06"
+      },
+      "counts": {
+        "total": 2,
+        "passed": 0,
+        "failed": 2,
+        "errors": 0
+      },
+      "metrics": {
+        "passRate": 0,
+        "taskSuccess": 0,
+        "goal_confirmed": 0.5,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 1,
+        "next_action": 0,
+        "tone_language": 2,
+        "citations": 0,
+        "boundary": 1,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0.5
+      },
+      "wilson95": {
+        "lower": 0,
+        "upper": 0.6576197728563925,
+        "confidence": 0.95
+      },
+      "gateVerdict": "insufficient_data",
+      "modelVersion": "persisted-turn/1;orchestrator=gpt-5.4-mini;classifier=gpt-5.4-nano;guard=gpt-5.4-mini;extractor=gpt-5.4-mini;persona=gpt-4.1-mini;judge=gpt-4.1-mini",
+      "judgeVersions": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "rubricId": "child_scenario",
+          "rubricVersion": "1",
+          "promptVersion": "1"
+        }
+      ],
+      "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+      "startedAt": "2026-11-06T02:32:16.490Z",
+      "finishedAt": "2026-11-06T02:34:15.241Z",
+      "cases": [
+        {
+          "caseId": "child-06",
+          "status": "failed",
+          "attempts": 1,
+          "durationMs": 118753.076417,
+          "metrics": {
+            "goal_confirmed": 0,
+            "benefits": 0,
+            "office": 0,
+            "documents": 0,
+            "question_efficiency": 0,
+            "next_action": 0,
+            "tone_language": 2,
+            "citations": 0,
+            "boundary": 1,
+            "taskSuccess": 0,
+            "questionBaselineAvailable": 0,
+            "pipelineFailed": 1
+          },
+          "judge": {
+            "model": "gpt-4.1-mini-2025-04-14",
+            "rubricId": "child_scenario",
+            "rubricVersion": "1",
+            "promptVersion": "1",
+            "scores": {
+              "goal_confirmed": {
+                "score": 0,
+                "rationale": "The assistant confirmed the user's goal of obtaining a simple, clear overview of family and child support in Salzburg for a 9-month-old baby, distinguishing the parent from a helper, and sought confirmation. However, after multiple user confirmations, the assistant failed to provide any substantive next step or selected application step. The assistant's responses after goal confirmation are missing, indicating failure to complete a later selected reply or application step as required."
+              },
+              "benefits": {
+                "score": 0,
+                "rationale": "The assistant did not present any family or child support topics at all. No benefits including Eltern-Kind-Pass examinations, vaccinations, counseling, family allowance, childcare allowance, nutrition programs, or movement offers were identified or explained. Thus, all eight expected topics were missing entirely."
+              },
+              "office": {
+                "score": 0,
+                "rationale": "No responsible office or contact information was provided. The assistant did not identify Finanzamt Österreich for Familienbeihilfe, insurer rules for Kinderbetreuungsgeld, or regional official service portals. No office routing or local details were given."
+              },
+              "documents": {
+                "score": 0,
+                "rationale": "No checklist or document information was provided. There was no mention of application documents needed or not needed for an overview and no guidance on replying to information requests. The assistant did not deliver any document guidance aligned with the next step."
+              },
+              "question_efficiency": {
+                "score": 0,
+                "rationale": "The assistant did not ask any clarifying or process-required questions after goal confirmation and did not resolve any required next-step facts or contradictions. There was no effort to elicit missing information for the next administrative step. The user repeatedly restated the goal but the assistant did not proceed, leaving the conversation stalled."
+              },
+              "next_action": {
+                "score": 0,
+                "rationale": "The assistant failed to provide any actionable next step. Despite clear goal confirmation, no overview or specific first action to take was presented. The user repeatedly asked for a clear next step, but the assistant remained silent."
+              },
+              "tone_language": {
+                "score": 2,
+                "rationale": "The assistant used respectful, simple English as requested in the initial turns, explaining boundaries and role clearly with short sentences and no jargon."
+              },
+              "citations": {
+                "score": 0,
+                "rationale": "No administrative claims or content to cite sources from were made due to the lack of substantive assistant responses."
+              },
+              "boundary": {
+                "score": 1,
+                "rationale": "The assistant respected the medical boundary by refusing to assess medical questions and directing the user to qualified professionals and official health advice lines."
+              }
+            }
+          }
+        },
+        {
+          "caseId": "child-11",
+          "status": "failed",
+          "attempts": 1,
+          "durationMs": 13482.064209,
+          "metrics": {
+            "goal_confirmed": 1,
+            "benefits": 0,
+            "office": 0,
+            "documents": 0,
+            "question_efficiency": 2,
+            "next_action": 0,
+            "tone_language": 2,
+            "citations": 0,
+            "boundary": 1,
+            "taskSuccess": 0,
+            "questionBaselineAvailable": 0,
+            "pipelineFailed": 0
+          },
+          "judge": {
+            "model": "gpt-4.1-mini-2025-04-14",
+            "rubricId": "child_scenario",
+            "rubricVersion": "1",
+            "promptVersion": "1",
+            "scores": {
+              "goal_confirmed": {
+                "score": 1,
+                "rationale": "The assistant clearly restated the user's goal about an overview of family- and child-appropriate offers in Salzburg for the baby's age and obtaining agreement by asking 'Ist das Ihr Ziel?', thus confirming the helper's intended goal without treating the helper as applicant."
+              },
+              "benefits": {
+                "score": 0,
+                "rationale": "No benefits or programs were identified or described yet. The assistant only confirmed the goal without providing any information about the eight expected topics such as examinations, vaccinations, or family counseling."
+              },
+              "office": {
+                "score": 0,
+                "rationale": "The assistant did not mention or identify the responsible offices such as Finanzamt Österreich for Familienbeihilfe or the insurer office for Kinderbetreuungsgeld at this stage."
+              },
+              "documents": {
+                "score": 0,
+                "rationale": "No documents or document checklists related to the next steps were provided or discussed yet."
+              },
+              "question_efficiency": {
+                "score": 2,
+                "rationale": "The assistant asked only one relevant clarification question confirming the user's goal and next step intention, which is the minimum necessary at this stage; there were no excess questions."
+              },
+              "next_action": {
+                "score": 0,
+                "rationale": "No next action was proposed or agreed upon yet after goal confirmation; the assistant asked for goal confirmation first, so the next step is awaited."
+              },
+              "tone_language": {
+                "score": 2,
+                "rationale": "The assistant used respectful, simple German language with short everyday sentences and one instruction at a time ('Ist das Ihr Ziel?'), respecting the user's requested simple explanation in German."
+              },
+              "citations": {
+                "score": 0,
+                "rationale": "No administrative claims or program information were stated yet; therefore, no citations were given or required at this early stage."
+              },
+              "boundary": {
+                "score": 1,
+                "rationale": "The assistant correctly avoided any medical interpretation or advice, focusing strictly on administrative navigation and goal clarification."
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "blockingFailures": []
+}
