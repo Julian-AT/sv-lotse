@@ -17,6 +17,8 @@ public enum VoiceConfiguration {
     public static let inputBufferSize: UInt32 = 2048
     public static let connectionTimeout: Duration = .seconds(10)
     public static let finalTimeout: Duration = .seconds(2)
+    /// A capture started from the chat's mic button sends itself after this long.
+    public static let toggleCaptureLimit: Duration = .seconds(60)
     public static let segmentTimeout: Duration = .seconds(45)
     public static let speedChoices: [Double] = [0.5, 0.75, 1, 1.25, 1.5]
     public static let speedPreferenceKey = "speechSpeed"

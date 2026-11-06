@@ -19,6 +19,7 @@ import {
 } from "../ai-elements/prompt-input";
 import { Button } from "../ui/button";
 import { PaperclipIcon, StopIcon } from "./icons";
+import { NativeVoiceButton } from "./native-voice-button";
 import { PreviewAttachment } from "./preview-attachment";
 import { SuggestedActions } from "./suggested-actions";
 
@@ -156,25 +157,28 @@ function PureMultimodalInput({
             )}
           </PromptInputTools>
 
-          {busy ? (
-            <StopButton label={t("workspace.stop")} stop={stop} />
-          ) : (
-            <PromptInputSubmit
-              aria-label={t("workspace.send")}
-              className={cn(
-                "h-7 w-7 rounded-xl transition-all duration-200",
-                input.trim() && !disabled
-                  ? "bg-foreground text-background hover:opacity-85 active:scale-95"
-                  : "bg-muted text-muted-foreground/25 cursor-not-allowed",
-              )}
-              data-testid="send-button"
-              disabled={!input.trim() || disabled}
-              status={status}
-              variant="secondary"
-            >
-              <ArrowUpIcon className="size-4" />
-            </PromptInputSubmit>
-          )}
+          <div className="flex items-center gap-1.5">
+            <NativeVoiceButton disabled={disabled} />
+            {busy ? (
+              <StopButton label={t("workspace.stop")} stop={stop} />
+            ) : (
+              <PromptInputSubmit
+                aria-label={t("workspace.send")}
+                className={cn(
+                  "h-7 w-7 rounded-xl transition-all duration-200",
+                  input.trim() && !disabled
+                    ? "bg-foreground text-background hover:opacity-85 active:scale-95"
+                    : "bg-muted text-muted-foreground/25 cursor-not-allowed",
+                )}
+                data-testid="send-button"
+                disabled={!input.trim() || disabled}
+                status={status}
+                variant="secondary"
+              >
+                <ArrowUpIcon className="size-4" />
+              </PromptInputSubmit>
+            )}
+          </div>
         </PromptInputFooter>
       </PromptInput>
 

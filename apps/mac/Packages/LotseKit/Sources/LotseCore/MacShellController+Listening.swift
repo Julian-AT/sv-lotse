@@ -1,3 +1,4 @@
+import LotseBridge
 import LotseVoice
 
 /// Clicky's cursor states (waveform while speaking, spinner until the answer speaks), the live level and
@@ -65,5 +66,36 @@ extension MacShellController {
             guard Task.isCancelled == false else { return }
             self?.overlay.state.listening.hide()
         }
+    }
+
+    /// The chat's mic button: the same capture as holding ⌥⌘, started and sent by two clicks.
+    func handleVoiceCommand(_ command: WorkspaceVoiceCommand) -> Bool {
+        switch command {
+        case .state: break
+        case .toggle:
+            if voiceToggle != nil {
+                endVoiceToggle()
+                handleShortcut(.released, toggled: true)
+            } else if recording == false {
+                wakeCapture.abandon()
+                handleShortcut(.pressed, toggled: true)
+                voiceToggle = Task { @MainActor [weak self] in
+                    do { try await Task.sleep(for: VoiceConfiguration.toggleCaptureLimit) } catch { return }
+                    guard let self, voiceToggle != nil else { return }
+                    endVoiceToggle()
+                    handleShortcut(.released, toggled: true)
+                }
+            }
+        case .stop:
+            guard voiceToggle != nil else { break }
+            endVoiceToggle()
+            handleShortcut(.cancelled, toggled: true)
+        }
+        return recording
+    }
+
+    func endVoiceToggle() {
+        voiceToggle?.cancel()
+        voiceToggle = nil
     }
 }

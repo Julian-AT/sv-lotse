@@ -86,7 +86,7 @@ final class PCMResampler: @unchecked Sendable {
 
 /// Hands the tap's buffer to the converter exactly once. The converter calls back synchronously
 /// inside `convert`, on the same thread, while the tap's buffer is still valid.
-private final class PCMFeed: @unchecked Sendable {
+final class PCMFeed: @unchecked Sendable {
     private var buffer: AVAudioPCMBuffer?
     init(_ buffer: AVAudioPCMBuffer) { self.buffer = buffer }
     func take() -> AVAudioPCMBuffer? {

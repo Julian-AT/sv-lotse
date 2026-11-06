@@ -67,7 +67,10 @@ public final class MacShellController {
     var overlayVisible = true
     private var displayObserver: NSObjectProtocol?
     private var activationObserver: NSObjectProtocol?
-    var recording = false
+    var recording = false {
+        didSet { if oldValue != recording { workspace.publishVoiceState(listening: recording) } }
+    }
+    var voiceToggle: Task<Void, Never>?
     var shortcutRunning = false
     lazy var wakeWord = WakeWordListener(enabled: WakeWordPreferences.enabled())
     lazy var wakeCapture = WakeWordCapture(transcription: transcription)
@@ -141,6 +144,7 @@ public final class MacShellController {
     }
     private func configureVoiceAndBridge() {
         shortcut.onTransition = { [weak self] transition in self?.handleShortcut(transition) }
+        workspace.onVoiceCommand = { [weak self] command in self?.handleVoiceCommand(command) ?? false }
         dictationShortcut.onTransition = { [weak self] transition in self?.handleDictationShortcut(transition) }
         dictation.onRecordingChanged = { [weak self] recording in
             self?.recording = recording
@@ -169,6 +173,7 @@ public final class MacShellController {
         workspace.onNavigationReset = { [weak self] in
             guard let self else { return }
             speech.stop(notify: false)
+            speech.silenceUntilNextVoiceQuestion()
             sentenceActions.reset()
             speechTurnID = nil
             sourceHighlights.clear()
@@ -264,7 +269,8 @@ public final class MacShellController {
         menu.updateStatus(workspace: status, voiceEnabled: voiceEnabled,
                           voiceAvailable: shortcutRunning && audioGranted, recording: recording)
     }
-    private func handleShortcut(_ transition: ShortcutTransition) {
+    func handleShortcut(_ transition: ShortcutTransition, toggled: Bool = false) {
+        if toggled == false { endVoiceToggle() }
         pauseWakeWord(for: transition)
         switch transition {
         case .pressed:
@@ -346,6 +352,9 @@ extension MacShellController {
         }
     }
     func sendTranscript(_ text: String, final: Bool) {
+        if final, text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false {
+            speech.allowSpeechForVoiceTurn()
+        }
         if final {
             overlay.cancelDrawing()
             if overlay.state.caption == copy.circleReady { overlay.state.caption = "" }

@@ -7,6 +7,7 @@ final class ElevenLabsSpeechOutput {
     private var pronunciationAliases: [VoiceAlias] = []
     private var socket: URLSessionWebSocketTask?
     private var turnID: String?
+    private var voiceID: String?
     private var player: PCMStreamingPlayer?
     private(set) var didStart = false
 
@@ -40,7 +41,9 @@ final class ElevenLabsSpeechOutput {
                 receivedAudio = true
             }
             if event.isFinal == true {
-                guard receivedAudio else { throw VoiceServiceError.invalidAudio }
+                // An empty final frame is how the multi-context socket refuses a voice (e.g. a library voice
+                // on the free tier); the single-context socket would have said so in an error message.
+                guard receivedAudio else { throw VoiceProviderError(message: "leeres Audio für Stimme \(voiceID ?? "?")") }
                 try await sendVoiceMessage(TTSCloseContext(contextID: context), to: socket)
                 await player.finish()
                 try Task.checkCancellation()
@@ -76,6 +79,7 @@ final class ElevenLabsSpeechOutput {
         let socket = URLSession.shared.webSocketTask(with: address)
         socket.resume()
         self.socket = socket
+        voiceID = voice
         pronunciationAliases = token.vocabulary?.pronunciationAliases ?? []
         turnID = segment.turnID
         return socket

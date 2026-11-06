@@ -38,6 +38,8 @@ const de = {
   "workspace.newCase": "Neues Anliegen",
   "workspace.untitled": "Neues Anliegen",
   "workspace.upload": "Dokument hochladen",
+  "workspace.voiceStart": "Sprechen (wie ⌥⌘ halten)",
+  "workspace.voiceSend": "Fertig gesprochen – senden",
   "workspace.uploading": "Dokument wird hochgeladen …",
   "workspace.uploaded": "Dokument gespeichert. Die Verarbeitung steht noch aus.",
   "workspace.uploadError":
@@ -173,6 +175,8 @@ const en = {
   "workspace.newCase": "New case",
   "workspace.untitled": "New case",
   "workspace.upload": "Upload document",
+  "workspace.voiceStart": "Speak (like holding ⌥⌘)",
+  "workspace.voiceSend": "Done speaking – send",
   "workspace.uploading": "Uploading document …",
   "workspace.uploaded": "Document saved. Processing is pending.",
   "workspace.uploadError":
@@ -299,6 +303,8 @@ const deSimple = {
   "workspace.newCase": "Neues Anliegen",
   "workspace.untitled": "Neues Anliegen",
   "workspace.upload": "Dokument hochladen",
+  "workspace.voiceStart": "Sprechen (wie ⌥⌘ halten)",
+  "workspace.voiceSend": "Fertig gesprochen – senden",
   "workspace.uploading": "Dokument wird hochgeladen …",
   "workspace.uploaded": "Ihr Dokument ist gespeichert. Es muss noch verarbeitet werden.",
   "workspace.uploadError":

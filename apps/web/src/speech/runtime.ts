@@ -39,6 +39,8 @@ export class GuidanceRuntime {
   private turnId: string | undefined;
   private generation = 0;
   private native = false;
+  /** Typed turns stay silent: captions and sentence actions still follow, nothing is read aloud. */
+  private spoken = true;
   private interrupted = false;
   private activeIndex = 0;
   private utterances = new Set<SpeechSynthesisUtterance>();
@@ -116,7 +118,8 @@ export class GuidanceRuntime {
     return results;
   }
 
-  beginTurn(): void {
+  beginTurn(spoken?: boolean): void {
+    if (spoken !== undefined) this.spoken = spoken;
     this.stop();
     this.turnId = undefined;
     this.interrupted = false;
@@ -154,6 +157,10 @@ export class GuidanceRuntime {
     this.turnId = segment.turnId;
     if (this.segments.has(segment.index)) return;
     this.segments.set(segment.index, segment);
+    if (!this.spoken) {
+      this.started(segment);
+      return;
+    }
     if (this.native) {
       void this.send("SpeechSegment", segment).catch(() => this.onError());
       return;

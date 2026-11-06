@@ -42,7 +42,7 @@ export function GuidanceConversation({ language }: { language: "de" | "en" }): J
     const selectedCase =
       new URL(window.location.href).searchParams.get("caseId")?.toLowerCase() ?? caseId.current;
     if (selectedCase) guidance.setCaseId(selectedCase);
-    guidance.beginTurn();
+    guidance.beginTurn(inputKind === "transcript");
     setBusy(true);
     setError(false);
     setReply("");

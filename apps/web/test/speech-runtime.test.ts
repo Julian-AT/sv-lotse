@@ -164,3 +164,24 @@ it("native dashboard transcripts reach only the workspace conversation client", 
   expect(host.dispatchEvent).not.toHaveBeenCalled();
   disconnect();
 });
+
+it("typed turns are not read aloud but still run their sentence actions", () => {
+  const queued: TestUtterance[] = [];
+  vi.stubGlobal("SpeechSynthesisUtterance", TestUtterance);
+  vi.stubGlobal("window", {
+    speechSynthesis: {
+      speak: (utterance: TestUtterance) => queued.push(utterance),
+      cancel: vi.fn(),
+    },
+  });
+  const execute = vi.fn();
+  const runtime = new GuidanceRuntime(execute);
+  runtime.beginTurn(false);
+  runtime.ingest(action);
+  runtime.ingest(segment);
+  expect(queued).toHaveLength(0);
+  expect(execute).toHaveBeenCalledTimes(1);
+  runtime.beginTurn(true);
+  runtime.ingest({ ...segment, data: { ...segment.data, turnId: "spoken", actionIds: [] } });
+  expect(queued).toHaveLength(1);
+});

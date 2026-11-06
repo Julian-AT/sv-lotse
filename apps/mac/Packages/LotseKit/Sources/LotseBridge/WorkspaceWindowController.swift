@@ -14,12 +14,17 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
         didSet { messageHandler.receive = onMessage }
     }
     public var onNavigationReset: (() -> Void)?
+    /// The chat's mic button; returns whether the native capture is listening afterwards.
+    public var onVoiceCommand: ((WorkspaceVoiceCommand) -> Bool)? {
+        didSet { voiceHandler.command = onVoiceCommand }
+    }
     public var onStateChanged: (() -> Void)?
     public private(set) var isReady = false
     public private(set) var loadError: Error?
     /// Changes on every navigation, including reloads of the same URL.
     public var connectionID: UUID { navigationID }
     private let messageHandler: WorkspaceMessageHandler
+    private let voiceHandler: WorkspaceVoiceHandler
     private let hello: BridgeHello
     private var documentReady = false
     private var navigationID = UUID()
@@ -32,11 +37,15 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
         self.hello = hello
         self.receiverTimeout = receiverTimeout
         messageHandler = WorkspaceMessageHandler(origin: configuration.origin)
+        voiceHandler = WorkspaceVoiceHandler(origin: configuration.origin)
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.websiteDataStore = WKWebsiteDataStore(forIdentifier: configuration.dataStoreIdentifier)
         webConfiguration.preferences.inactiveSchedulingPolicy = .none
         webConfiguration.applicationNameForUserAgent = WorkspaceConfiguration.userAgentApplicationName
         webConfiguration.userContentController.addScriptMessageHandler(messageHandler, contentWorld: .page, name: "lotse")
+        webConfiguration.userContentController.addScriptMessageHandler(
+            voiceHandler, contentWorld: .page, name: WorkspaceVoiceHandler.name
+        )
         webView = ImportWorkspaceWebView(frame: .zero, configuration: webConfiguration)
         webView.registerForDraggedTypes(ImportPasteboard.types)
         // The page is transparent inside the app; the native glass behind the web view shows through.

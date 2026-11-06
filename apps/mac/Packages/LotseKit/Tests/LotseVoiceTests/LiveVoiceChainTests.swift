@@ -85,3 +85,20 @@ func liveScribeTranscript(sentence: String) async throws {
     #expect(partials.isEmpty == false)
     #expect(release < .milliseconds(1500))
 }
+
+@Test("Live: ElevenLabs speaks the first sentence with the account voice, no system fallback",
+      .enabled(if: LiveVoice.base != nil), arguments: ["de", "en"])
+@MainActor
+func liveElevenLabsSpeech(language: String) async throws {
+    let base = try #require(LiveVoice.base)
+    let output = ElevenLabsSpeechOutput(loadToken: LiveVoice.loader(base: base))
+    let text = language == "de" ? "Pflegegeld beantragen Sie bei Ihrer Pensionsversicherung." : "You apply for care allowance online."
+    let segment = SpeechSegment(actionIDS: [], citations: [], index: 0, language: language, text: text, turnID: UUID().uuidString)
+    let begin = ContinuousClock.now
+    var firstAudio: Duration?
+    try await output.speak(segment, speed: 1, onStart: { firstAudio = ContinuousClock.now - begin })
+    output.stop()
+    let latency = try #require(firstAudio)
+    print("LIVE TTS \(language): first audio after \(ScribeRealtimeTranscriptionProvider.milliseconds(latency)) ms")
+    #expect(latency < .seconds(3))
+}

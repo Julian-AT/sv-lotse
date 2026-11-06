@@ -1,5 +1,6 @@
 import AVFoundation
 import Foundation
+import LotseProtocol
 import Testing
 
 @testable import LotseVoice
@@ -44,13 +45,12 @@ final class FileAudioSource: ScribeAudioSource {
         try file.read(into: source)
         let capacity = AVAudioFrameCount(Double(source.frameLength) * 48000 / file.processingFormat.sampleRate) + 4096
         guard let whole = AVAudioPCMBuffer(pcmFormat: target, frameCapacity: capacity) else { throw TranscriptionError.invalidAudioFormat }
-        var fed = false
+        let feed = PCMFeed(source)
         var error: NSError?
         converter.convert(to: whole, error: &error) { _, status in
-            if fed { status.pointee = .endOfStream; return nil }
-            fed = true
+            guard let next = feed.take() else { status.pointee = .endOfStream; return nil }
             status.pointee = .haveData
-            return source
+            return next
         }
         if let error { throw error }
         let silence = [Float](repeating: 0, count: 14400)
@@ -131,4 +131,24 @@ func cancelDuringHandshake() async throws {
     #expect(source.stopped)
     gate.continuation.yield()
     await #expect(throws: CancellationError.self) { try await start.value }
+}
+
+@Test("Typed turns stay silent: speech plays only after a spoken question until the workspace stops")
+@MainActor
+func speechOnlyForVoiceTurns() {
+    let speech = SpeechPlaybackController(loadToken: { _, _ in throw VoiceServiceError.unavailable })
+    let segment = SpeechSegment(actionIDS: [], citations: [], index: 0, language: "de", text: "Antwort", turnID: "typed")
+    speech.enqueue(segment)
+    #expect(speech.isActive == false)
+    speech.allowSpeechForVoiceTurn()
+    #expect(speech.gate.isOpen)
+    speech.handle(SpeechControl(segmentIndex: 0, state: .idle, stop: true))
+    #expect(speech.gate.isOpen == false)
+    speech.enqueue(SpeechSegment(actionIDS: [], citations: [], index: 1, language: "de", text: "Weiter", turnID: "typed-2"))
+    #expect(speech.isActive == false)
+    var gate = VoiceTurnSpeechGate()
+    gate.voiceQuestionSent()
+    #expect(gate.isOpen)
+    gate.closed()
+    #expect(gate.isOpen == false)
 }

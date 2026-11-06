@@ -22,10 +22,17 @@ public final class SpeechPlaybackController {
     private var seen: Set<Int> = []
     private var stoppedTurns: Set<String> = []
     private var generation = UUID()
+    /// Answers are spoken only for turns asked by voice (⌥⌘, „Meine SV“, the chat's mic button).
+    public private(set) var gate = VoiceTurnSpeechGate()
 
     public init(loadToken: @escaping VoiceTokenLoader) { primary = ElevenLabsSpeechOutput(loadToken: loadToken) }
 
+    /// A spoken question was sent: its answer (and follow-up steps) may speak.
+    public func allowSpeechForVoiceTurn() { gate.voiceQuestionSent() }
+    public func silenceUntilNextVoiceQuestion() { gate.closed() }
+
     public func enqueue(_ segment: SpeechSegment) {
+        guard gate.isOpen else { return }
         guard stoppedTurns.contains(segment.turnID) == false, segment.text.isEmpty == false else { return }
         if turnID != segment.turnID {
             stop(notify: false)
@@ -39,6 +46,8 @@ public final class SpeechPlaybackController {
 
     public func handle(_ control: SpeechControl) {
         guard control.stop else { return }
+        // The workspace stops speech when the user types or presses stop: stay silent until the next voice question.
+        gate.closed()
         stop(notify: false)
         onControl?(.init(segmentIndex: control.segmentIndex, state: .idle, stop: false))
     }
@@ -103,4 +112,13 @@ public final class SpeechPlaybackController {
             await fallback.speak(segment, speed: speed, onStart: onStart)
         }
     }
+}
+
+/// Typed turns stay silent. Opens when a spoken question is sent, closes when the workspace stops
+/// (a typed message, the stop button, a new page).
+public struct VoiceTurnSpeechGate: Sendable, Equatable {
+    public private(set) var isOpen = false
+    public init() {}
+    public mutating func voiceQuestionSent() { isOpen = true }
+    public mutating func closed() { isOpen = false }
 }

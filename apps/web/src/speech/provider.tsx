@@ -21,7 +21,8 @@ import { GuidanceRuntime } from "./runtime.ts";
 
 interface GuidanceContext {
   ingest: (part: unknown) => void;
-  beginTurn: () => void;
+  /** `spoken` is false for typed turns: the answer is not read aloud. */
+  beginTurn: (spoken?: boolean) => void;
   stop: () => void;
   highlightDocument: (action: Action) => void;
   openDocument: (selection: DocumentSelection) => void;
@@ -117,9 +118,9 @@ export function GuidanceProvider({
   const context: GuidanceContext = {
     takeActionResults: () => player.takeActionResults(),
     ingest: (part) => player.ingest(part),
-    beginTurn: () => {
+    beginTurn: (spoken) => {
       setError(false);
-      player.beginTurn();
+      player.beginTurn(spoken);
     },
     stop: () => {
       player.stop();
