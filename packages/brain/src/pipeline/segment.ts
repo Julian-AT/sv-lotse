@@ -65,7 +65,7 @@ export interface SegmentWriter {
    */
   finish: (alsoCheck?: (text: string) => Promise<string | undefined>) => Promise<void>;
   /** An unopened resource was offered: the reply becomes only the short "open it?" question. */
-  offer: (label: string) => void;
+  offer: (label: string, opening?: boolean) => void;
   /** This turn continues after a page was opened on request. */
   opened: () => void;
   /** Starts the answer guard for a candidate early; `finish` reuses the verdict for that text. */
@@ -89,6 +89,7 @@ export function createSegmentWriter(options: {
   const completed: { id: string; text: string; actions: Action[] }[] = [];
   let nextIndex = options.context.sentenceIndex;
   let offered: string | undefined;
+  let opening = false;
   let opened = false;
   const verdicts = new Map<string, Promise<string>>();
   const answerGuard = (text: string): Promise<string> => {
@@ -152,15 +153,17 @@ export function createSegmentWriter(options: {
     prefetch: (text: string): void => {
       if (text.trim()) answerGuard(text).catch(() => {});
     },
-    offer: (label: string): void => {
+    offer: (label: string, open = false): void => {
       offered = label.replace(/[?.!\s]+$/u, "").trim();
+      opening = open;
     },
     finish: async (alsoCheck?: (text: string) => Promise<string | undefined>): Promise<void> => {
       if (offered && checkBoundaryRules(offered).length === 0) {
         // Fixed copy plus the resource name: one short question, no unsourced claims to verify.
         actions.push(...completed.flatMap((item) => item.actions));
         completed.length = 0;
-        emit(options.turnId, copyFor(options.language).openOffer(offered));
+        const copy = copyFor(options.language);
+        emit(options.turnId, opening ? copy.opening(offered) : copy.openOffer(offered));
         return;
       }
       const original = completed.map((item) => item.text).join("\n");

@@ -9,9 +9,12 @@ import {
   answersOffer,
   clickAllowed,
   guidanceOffer,
+  isDocumentUrl,
   isGuidanceRequest,
   MAX_CLICKS_PER_TURN,
   offerChunks,
+  openChunks,
+  openResourceAllowed,
   recentUserTexts,
   resourceIsOpen,
 } from "../../src/tools/impl/ui/resource.ts";
@@ -299,4 +302,26 @@ it("ui.click stays on allowlisted, non-login pages and stops after five steps pe
   expect(await clickAllowed(click("https://evil.example/antrag"), 1)).toBe(false);
   expect(await clickAllowed(click(`${allowed}/login`), 1)).toBe(false);
   expect(await clickAllowed({ target: { kind: "text", quote: "x" } }, 1)).toBe(false);
+});
+
+it("PDF links are handed to the form flow and never opened as a page", async () => {
+  const allowed = (await loadPortalPolicy(BOOKING_ALLOWLIST_FILE)).origins[0]?.origin ?? "";
+  expect(isDocumentUrl(`${allowed}/formular.pdf`)).toBe(true);
+  expect(isDocumentUrl(`${allowed}/cdscontent/load?contentid=1`)).toBe(true);
+  expect(isDocumentUrl(`${allowed}/pflegegeld`)).toBe(false);
+  const open = (url: string) => ({ target: { kind: "dom", handle: "page", url } });
+  expect(await openResourceAllowed(open(`${allowed}/formular.pdf`))).toBe(false);
+  expect(await openResourceAllowed(open(`${allowed}/pflegegeld`))).toBe(true);
+});
+
+it("L3 opens the page directly as a pending client call instead of asking", () => {
+  const target = { kind: "dom" as const, handle: "page", url: "https://www.pv.at/web/pflegegeld" };
+  const chunks = openChunks("call-1", { target, label: "die Pflegegeld-Seite" });
+  expect(chunks).toContainEqual({
+    type: "tool-input-available",
+    toolCallId: "call-1",
+    toolName: "ui.openResource",
+    input: { target, label: "die Pflegegeld-Seite" },
+  });
+  expect(chunks.some((chunk) => chunk.type === "tool-output-available")).toBe(false);
 });

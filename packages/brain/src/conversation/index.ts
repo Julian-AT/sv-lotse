@@ -73,8 +73,11 @@ import { contracts, isToolName } from "../tools/contracts/index.ts";
 import {
   AFTER_OPEN_POLICY,
   answersOffer,
+  isDocumentUrl,
   offerChunks,
+  openChunks,
   openedResource,
+  openResourceAllowed,
   recentUserTexts,
 } from "../tools/impl/ui/resource.ts";
 import { deepPageOffer } from "../tools/impl/web/index.ts";
@@ -828,9 +831,13 @@ async function runTurn(
               userText,
             ),
           });
-          if (offer) {
-            for (const chunk of offerChunks(randomUUID(), offer)) writer.write(chunk);
-            output.offer(offer.label);
+          if (offer && !(offer.target.kind === "dom" && isDocumentUrl(offer.target.url))) {
+            const direct =
+              prepared.context.autonomyLevel === "L3" &&
+              (await openResourceAllowed({ target: offer.target, label: offer.label }));
+            const chunks = direct ? openChunks : offerChunks;
+            for (const chunk of chunks(randomUUID(), offer)) writer.write(chunk);
+            output.offer(offer.label, direct);
             offered = true;
           }
         }

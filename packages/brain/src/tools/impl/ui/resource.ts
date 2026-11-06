@@ -51,8 +51,19 @@ export async function openResourceAllowed(input: unknown): Promise<boolean> {
   const { target } = parsed.data;
   if (target.kind === "form") return true;
   if (target.kind === "text") return target.documentId !== undefined;
-  if (target.kind === "dom") return portalPageAllowed(target.url, await portalOrigins());
+  if (target.kind === "dom")
+    return !isDocumentUrl(target.url) && portalPageAllowed(target.url, await portalOrigins());
   return false;
+}
+
+/** PDFs and download endpoints are forms for the form flow, never pages to open or navigate. */
+export function isDocumentUrl(raw: string): boolean {
+  try {
+    const path = new URL(raw).pathname.toLowerCase();
+    return path.endsWith(".pdf") || path.includes("/cdscontent/load");
+  } catch {
+    return false;
+  }
 }
 
 function samePage(a: string, b: string): boolean {
@@ -156,6 +167,27 @@ export function offerChunks(
       type: "tool-output-available",
       toolCallId,
       output: { offerId: randomUUID(), open: false, label: offer.label, target: offer.target },
+    },
+    { type: "finish-step" },
+    { type: "start-step" },
+  ];
+}
+
+/**
+ * L3 opens the page directly instead of asking: a pending ui.openResource client call the
+ * workspace executes at once. The server checked the allowlist; the Mac app checks it again.
+ */
+export function openChunks(
+  toolCallId: string,
+  offer: { target: Target; label: string },
+): InferUIMessageChunk<LotseMessage>[] {
+  return [
+    { type: "start-step" },
+    {
+      type: "tool-input-available",
+      toolCallId,
+      toolName: "ui.openResource",
+      input: { target: offer.target, label: offer.label },
     },
     { type: "finish-step" },
     { type: "start-step" },
