@@ -1,0 +1,307 @@
+.settings {
+  position: relative;
+}
+/* A glass sheet pinned to the viewport; the spread shadow dims the page behind it. */
+.drawer {
+  position: fixed;
+  color: var(--lotse-text);
+  background: var(--lotse-glass-background);
+  border: 1px solid var(--lotse-glass-edge);
+  -webkit-backdrop-filter: var(--lotse-glass-filter);
+  backdrop-filter: var(--lotse-glass-filter);
+  inset-block: 0.75rem;
+  inset-inline-end: 0.75rem;
+  z-index: 40;
+  width: min(60rem, calc(100vw - 1.5rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  border-radius: var(--lotse-radius-large);
+  box-shadow:
+    var(--lotse-glass-shadow),
+    var(--lotse-elevation-dialog),
+    0 0 0 100vmax rgb(8 24 18 / 0.32);
+  text-align: start;
+}
+.heading {
+  margin-block-end: 1.25rem;
+}
+.heading h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+.heading p {
+  margin: 0.5rem 0 0;
+  color: var(--lotse-muted);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+/* Grouped sections sit on the glass sheet as quiet tinted plates, never as a second blur layer. */
+.panel {
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--lotse-border) 40%, transparent);
+  border-radius: var(--lotse-radius-medium);
+  background: color-mix(in srgb, var(--lotse-surface) 72%, transparent);
+}
+.panelHeading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.panelHeading h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: var(--lotse-color-brand-text);
+}
+.panelHeading p {
+  margin: 0.4rem 0 0;
+  color: var(--lotse-muted);
+  font-size: 0.94rem;
+}
+.panel h4 {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+}
+.panel fieldset {
+  padding: 0;
+  margin: 0 0 1rem;
+  border: 0;
+}
+.panel legend {
+  margin-bottom: 0.5rem;
+}
+.panel p {
+  max-width: 65ch;
+}
+.panel label:has(input[type="checkbox"]) {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.panel input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 1.5rem;
+  margin: 0;
+  accent-color: var(--lotse-accent);
+}
+.formFields {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.field {
+  display: grid;
+  gap: 0.25rem;
+  margin-block: 0.75rem;
+}
+.field label {
+  display: flex;
+  align-items: center;
+}
+.field p,
+.note {
+  color: var(--lotse-muted);
+  font-size: 0.92rem;
+  margin: 0.5rem 0;
+}
+.levelExplanation {
+  padding: 1rem;
+  border-inline-start: 3px solid var(--lotse-accent);
+  border-radius: 0 0.5rem 0.5rem 0;
+  background: var(--lotse-subtle);
+}
+.saveBar {
+  position: sticky;
+  bottom: calc(-1 * clamp(1rem, 2.5vw, 1.75rem));
+  z-index: 1;
+  margin-inline: calc(-1 * clamp(1rem, 2.5vw, 1.75rem));
+  padding-inline: clamp(1rem, 2.5vw, 1.75rem);
+  background: var(--lotse-surface);
+  border-top: 1px solid color-mix(in srgb, var(--lotse-border) 35%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-block: 1rem;
+}
+.saveBar p {
+  margin: 0;
+  color: var(--lotse-muted);
+  font-size: 0.9rem;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.secondary {
+  background: var(--lotse-surface);
+  color: var(--lotse-accent);
+  border-color: var(--lotse-border);
+}
+.secondary:hover {
+  border-color: var(--lotse-accent);
+  background: var(--lotse-subtle);
+}
+.privacyActions {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-block: 0.75rem;
+}
+.actionRow p {
+  font-size: 0.9rem;
+  color: var(--lotse-muted);
+  margin: 0.5rem 0 0;
+}
+.dangerZone {
+  padding-top: 1rem;
+  border-top: 1px solid var(--lotse-border);
+}
+.dangerZone p {
+  font-size: 0.92rem;
+  margin-top: 0;
+}
+.danger {
+  background: var(--lotse-surface);
+  border-color: var(--lotse-danger);
+  color: var(--lotse-danger);
+}
+.macKey {
+  border-top: 1px solid var(--lotse-border);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.macKey p {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  color: var(--lotse-muted);
+}
+.connectionLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.connections,
+.sessions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.connection {
+  padding-block: 0.75rem;
+  border-top: 1px solid var(--lotse-border);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2rem;
+  background: var(--lotse-subtle);
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+.badge::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+.badge[data-state="verified"] {
+  color: var(--lotse-success);
+}
+.badge[data-state="missing"] {
+  color: var(--lotse-danger);
+}
+.repair summary {
+  color: var(--lotse-accent);
+  font-size: 0.9rem;
+  width: fit-content;
+}
+.repair p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+.timestamp {
+  color: var(--lotse-muted);
+  font-size: 0.85rem;
+}
+.invite {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--lotse-border);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--lotse-subtle) 60%, transparent);
+}
+.invite input {
+  margin-block: 0.5rem;
+}
+.sessions li {
+  padding-block: 0.75rem;
+  border-top: 1px solid var(--lotse-border);
+}
+.sessions p {
+  margin-block: 0.5rem;
+  font-size: 0.92rem;
+}
+.feedback {
+  margin-block: 0 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--lotse-border);
+  border-inline-start: 3px solid var(--lotse-accent);
+  border-radius: 0.5rem;
+  background: var(--lotse-surface);
+}
+.drawer > .grid + .grid {
+  margin-block: 1rem;
+}
+@media (max-width: 52rem) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .drawer {
+    inset: 0.5rem;
+    width: auto;
+  }
+  .panel {
+    padding: 1rem;
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
