@@ -1,0 +1,2482 @@
+{
+  "adapterVersion": "persisted-turn/1",
+  "corpus": {
+    "benefits": 49,
+    "processes": 49,
+    "chunks": 419
+  },
+  "runs": [
+    {
+      "caseId": "after-hospital-05-vienna-dialect",
+      "scenario": "s3",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 8,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "715f5b50-5ab6-4e53-88e7-440bd83cd52a",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-docs.extractStatements",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "408ad5b4-4364-431c-8c4a-9655c7211350",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-02-en-standard",
+      "scenario": "s3",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 11,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "9b232dc0-1be3-463d-9caa-b4791e2313c9",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "a3cfab74-632e-4119-bcc7-9e33ccf32039",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-01-de-standard",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "0054fe56-4e52-402a-9121-4de7692a6846",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "2ca55114-5fcf-48f7-8eb6-826fc595d8af",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-03-de-simple",
+      "scenario": "s3",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 11,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "406e25d1-a2fa-4256-987f-efa783c7b63e",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.nextStep",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "c324334d-a192-488c-b492-12dbaf30693b",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-06-dialect-colloquial",
+      "scenario": "s3",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "087107ad-abd9-4cf7-8171-10967de69f5a",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "42e79258-624c-41ad-9f23-c876eff91e6f",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-09-daughter-approved",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "53fd1e79-a068-479a-bcf5-275e437d0507",
+        "goalConfirmed": false,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          }
+        ],
+        "tools": [],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-08-en-colloquial",
+      "scenario": "s3",
+      "personaStatus": "give_up",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 10,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "1b451899-d415-4d99-9da8-b16b5af955fa",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.nextStep",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-facility.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "f3fbfc0e-4976-4094-bf4a-b32886bd4d2a",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-07-de-colloquial",
+      "scenario": "s3",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "a59eb379-7b25-4c52-9e3c-3abb61154545",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "b28a923f-6ec0-4bc1-a674-b618eeabdc1d",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-10-son-not-approved",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "d337e64b-05ad-4cd4-8002-fa5b63225b0c",
+        "goalConfirmed": false,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          }
+        ],
+        "tools": [],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-12-unknown-residence",
+      "scenario": "s3",
+      "personaStatus": "give_up",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "1faf0e5c-e9a0-486e-adbe-f640b75a40d4",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "bea834b9-d476-4efd-93f9-81e663bd8c20",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-13-partial-letter",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "16e0c8c0-e8e4-4d8a-805d-8366fcf6e033",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-docs.extractStatements",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-docs.extractStatements",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "38faac36-435c-4441-b58f-9cdd66fad5aa",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-11-unknown-pension-carrier",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "72832623-f1c5-4558-9f24-21fc95df4b74",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-14-carrier-correction",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "1bdaf535-a9d6-4311-8a52-974a854e2ce4",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-available"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-16-conflicting-pension-notices",
+      "scenario": "s3",
+      "personaStatus": "give_up",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "8ac6b468-82b8-45a1-b992-3c1b3997045e",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-docs.explainLetter",
+            "state": "output-available"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "52ca3fc1-1660-4081-b8b4-f9c359bf1741",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-17-voice-only-de",
+      "scenario": "s3",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "d208e8b1-04b2-4aba-8571-dc53d5bb26db",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-process.nextStep",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "7f166bc2-9e79-4a30-b132-86d6bb776542",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-15-region-correction",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "8b270ca7-d029-4888-ba29-0264b3b02f6c",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-office.resolve",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-office.resolve",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-office.resolve",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "e854b84e-1ad0-44d4-aedc-a47701a24531",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-19-missing-attachments",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "b8cb5026-9446-4d1b-894c-e2a73a263533",
+        "goalConfirmed": false,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          }
+        ],
+        "tools": [],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-18-voice-only-en",
+      "scenario": "s3",
+      "personaStatus": "give_up",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "f45094eb-f48d-4d4f-915e-f857ac55ecc4",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-docs.extractStatements",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-docs.extractStatements",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "e1b9c1bf-fb70-4f02-9869-fe833d1aa65b",
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "after-hospital-20-substance-coverage",
+      "scenario": "s3",
+      "personaStatus": "goal_reached",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "b4b181f3-0dc3-4709-9e89-1c5537732bf5",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "55c781b0-4faf-4dc3-bb25-c497f8d2dc8e",
+        "questionBaselineCount": 0
+      }
+    }
+  ]
+}
