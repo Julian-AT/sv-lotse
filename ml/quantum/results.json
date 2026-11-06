@@ -1,0 +1,3177 @@
+{
+ "aer": {
+  "backend": "aer",
+  "shots": 4096,
+  "finished_at": "2026-11-06T04:28:15+00:00",
+  "runs": [
+   {
+    "name": "qa-care-noe-care-s2-d1-v11",
+    "kind": "Q-A",
+    "sha256": "42a2ace14bf30be5ee3e965536dc50da59318f2f604ca5dddd221a299556b1a5",
+    "qubits": 11,
+    "penalties": {
+     "A_one_hot": 337.0,
+     "B_overlap": 337.0,
+     "C_travel": 1.0
+    },
+    "optimum": 2.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 2.0,
+      "seconds": 0.032374875008827075,
+      "qubo_energy_of_optimum": 2.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.07258108399400953,
+      "best_energy": 2.0,
+      "best_feasible": true,
+      "best_objective": 2.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.09375
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.5254515018388377
+      ],
+      "betas": [
+       0.21278800124132596
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 22,
+      "two_qubit_gates": 39,
+      "sim_seconds": 0.02940862500690855,
+      "shots": 4096,
+      "feasibility_rate": 0.001708984375,
+      "p_opt": 0.00048828125,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.02631578947368421,
+      "mean_qubo_energy": 3421.8515625,
+      "exact": {
+       "expected_qubo_energy": 3405.823046968631,
+       "p_ground_state": 0.0001287043802230966,
+       "feasibility_rate_top4096": 0.0023128243236300995
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.5576588291607327,
+       1.073133041706751
+      ],
+      "betas": [
+       0.3547959849895655,
+       0.5436636423775523
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 34,
+      "two_qubit_gates": 78,
+      "sim_seconds": 0.019866250004270114,
+      "shots": 4096,
+      "feasibility_rate": 0.06982421875,
+      "p_opt": 0.001220703125,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.015093144756979258,
+      "mean_qubo_energy": 1960.904052734375,
+      "exact": {
+       "expected_qubo_energy": 1985.5524810628906,
+       "p_ground_state": 0.0022152228463372566,
+       "feasibility_rate_top4096": 0.06674362614024781
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       1.5646864919112529,
+       1.039419189483017,
+       1.630028773215339
+      ],
+      "betas": [
+       0.38822552390818055,
+       0.3147039792129296,
+       -0.2893199597814859
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 46,
+      "two_qubit_gates": 117,
+      "sim_seconds": 0.02022074999695178,
+      "shots": 4096,
+      "feasibility_rate": 0.134765625,
+      "p_opt": 0.009033203125,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.02971976202654319,
+      "mean_qubo_energy": 1700.56689453125,
+      "exact": {
+       "expected_qubo_energy": 1789.3389152340148,
+       "p_ground_state": 0.008677074385636144,
+       "feasibility_rate_top4096": 0.12537013162390714
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       0.5265949061736634
+      ],
+      "betas": [
+       0.41857837982281254
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 22,
+      "two_qubit_gates": 39,
+      "sim_seconds": 0.008127417007926852,
+      "shots": 4096,
+      "feasibility_rate": 0.382080078125,
+      "p_opt": 0.19091796875,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.057033527696793006,
+      "mean_qubo_energy": 383.367431640625,
+      "exact": {
+       "expected_qubo_energy": 383.33843443833,
+       "p_ground_state": 0.1963783867552592,
+       "feasibility_rate_top4096": 0.37918848358063795
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       0.3416491972307242,
+       1.0405132506654278
+      ],
+      "betas": [
+       0.45924569491382694,
+       0.21822109519913233
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 34,
+      "two_qubit_gates": 78,
+      "sim_seconds": 0.0063731249974807724,
+      "shots": 4096,
+      "feasibility_rate": 0.53515625,
+      "p_opt": 0.316162109375,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.0822884600946017,
+      "mean_qubo_energy": 228.019775390625,
+      "exact": {
+       "expected_qubo_energy": 231.42060196446536,
+       "p_ground_state": 0.3120398874475651,
+       "feasibility_rate_top4096": 0.5310252319257053
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.2615527077540683,
+       0.6421384461399892,
+       1.390251727957894
+      ],
+      "betas": [
+       0.4716000665544639,
+       0.24929785880094607,
+       0.1580624066733354
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 46,
+      "two_qubit_gates": 117,
+      "sim_seconds": 0.005697332991985604,
+      "shots": 4096,
+      "feasibility_rate": 0.615478515625,
+      "p_opt": 0.391845703125,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.11875824382890522,
+      "mean_qubo_energy": 165.418212890625,
+      "exact": {
+       "expected_qubo_energy": 166.5231882255811,
+       "p_ground_state": 0.37963277599689194,
+       "feasibility_rate_top4096": 0.609665640438135
+      }
+     }
+    ],
+    "qubo_ground_state": {
+     "energy": 2.0,
+     "feasible": true,
+     "objective": 2.0,
+     "one_hot": true,
+     "overlap": false,
+     "equals_cpsat_optimum": true
+    },
+    "seconds": 1.744319750010618
+   },
+   {
+    "name": "qa-care-wien-care-s2-d1-v12",
+    "kind": "Q-A",
+    "sha256": "98a1b58bb92380e86ee8c28b97ec14cfe2715faa9d8fd01206a06e1d7da90e7a",
+    "qubits": 12,
+    "penalties": {
+     "A_one_hot": 21.0,
+     "B_overlap": 21.0,
+     "C_travel": 1.0
+    },
+    "optimum": 2.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 2.0,
+      "seconds": 0.0027691249997587875,
+      "qubo_energy_of_optimum": 2.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.08452620801108424,
+      "best_energy": 2.0,
+      "best_feasible": true,
+      "best_objective": 2.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.15625
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.4137367683739073
+      ],
+      "betas": [
+       0.24101521570237583
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 24,
+      "two_qubit_gates": 46,
+      "sim_seconds": 0.07952720900357235,
+      "shots": 4096,
+      "feasibility_rate": 0.004150390625,
+      "p_opt": 0.0,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 0.6666666666666666,
+      "approx_ratio_mean_feasible": 0.22666666666666666,
+      "mean_qubo_energy": 252.435791015625,
+      "exact": {
+       "expected_qubo_energy": 253.3146037768537,
+       "p_ground_state": 0.00017327584588065564,
+       "feasibility_rate_top4096": 0.0029589436600868935
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.4504820591927707,
+       0.9836107136716251
+      ],
+      "betas": [
+       0.3984831941662632,
+       0.9382503712143543
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 37,
+      "two_qubit_gates": 92,
+      "sim_seconds": 0.03050658298889175,
+      "shots": 4096,
+      "feasibility_rate": 0.119140625,
+      "p_opt": 0.0087890625,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.3041445933312559,
+      "mean_qubo_energy": 143.875732421875,
+      "exact": {
+       "expected_qubo_energy": 142.1127546321435,
+       "p_ground_state": 0.00688312753363468,
+       "feasibility_rate_top4096": 0.11144136224677079
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       1.5733897389005784,
+       0.9794888203086819,
+       0.8412457297618526
+      ],
+      "betas": [
+       0.42691308469473954,
+       0.505933251822911,
+       0.3371810750223174
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 50,
+      "two_qubit_gates": 138,
+      "sim_seconds": 0.030149083002470434,
+      "shots": 4096,
+      "feasibility_rate": 0.039794921875,
+      "p_opt": 0.001708984375,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.2915921288014311,
+      "mean_qubo_energy": 159.057861328125,
+      "exact": {
+       "expected_qubo_energy": 156.35802632387322,
+       "p_ground_state": 0.0015897620344130503,
+       "feasibility_rate_top4096": 0.03892758730012302
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       0.49665029711781417
+      ],
+      "betas": [
+       0.4282406179396848
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 24,
+      "two_qubit_gates": 46,
+      "sim_seconds": 0.015352374990470707,
+      "shots": 4096,
+      "feasibility_rate": 0.365234375,
+      "p_opt": 0.18408203125,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.4292682926829268,
+      "mean_qubo_energy": 29.276611328125,
+      "exact": {
+       "expected_qubo_energy": 28.082744660470528,
+       "p_ground_state": 0.18319958088868998,
+       "feasibility_rate_top4096": 0.37065149908998624
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       0.30768180832877073,
+       0.939937154526613
+      ],
+      "betas": [
+       0.4669899150554183,
+       0.2272916786925763
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 37,
+      "two_qubit_gates": 92,
+      "sim_seconds": 0.011718334004399367,
+      "shots": 4096,
+      "feasibility_rate": 0.505615234375,
+      "p_opt": 0.299560546875,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.5094084368466364,
+      "mean_qubo_energy": 17.3427734375,
+      "exact": {
+       "expected_qubo_energy": 17.42945716422243,
+       "p_ground_state": 0.29513670865860175,
+       "feasibility_rate_top4096": 0.5077162649200033
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.24204882613344847,
+       0.5916087241811121,
+       1.2860027433749548
+      ],
+      "betas": [
+       0.4804540597264717,
+       0.25730833839464573,
+       0.15618077023125512
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 50,
+      "two_qubit_gates": 138,
+      "sim_seconds": 0.04459841600328218,
+      "shots": 4096,
+      "feasibility_rate": 0.5712890625,
+      "p_opt": 0.3662109375,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.5453909800722526,
+      "mean_qubo_energy": 13.380859375,
+      "exact": {
+       "expected_qubo_energy": 13.386034741559085,
+       "p_ground_state": 0.36234305566111186,
+       "feasibility_rate_top4096": 0.572035119011308
+      }
+     }
+    ],
+    "qubo_ground_state": {
+     "energy": 2.0,
+     "feasible": true,
+     "objective": 2.0,
+     "one_hot": true,
+     "overlap": false,
+     "equals_cpsat_optimum": true
+    },
+    "seconds": 2.6731754999927944
+   },
+   {
+    "name": "qa-care-noe-care-s3-d1-v17",
+    "kind": "Q-A",
+    "sha256": "42db15dfbb4bfe19342b15a20caf0172273a550429512f3de335d1a36b5fd193",
+    "qubits": 17,
+    "penalties": {
+     "A_one_hot": 668.0,
+     "B_overlap": 668.0,
+     "C_travel": 1.0
+    },
+    "optimum": 4.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 4.0,
+      "seconds": 0.007807332993252203,
+      "qubo_energy_of_optimum": 4.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.10837833299592603,
+      "best_energy": 6.0,
+      "best_feasible": true,
+      "best_objective": 6.0,
+      "approx_ratio": 0.6666666666666666,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.0
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.419264508908394
+      ],
+      "betas": [
+       0.26035642900753697
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 34,
+      "two_qubit_gates": 75,
+      "sim_seconds": 0.2245432080089813,
+      "shots": 4096,
+      "feasibility_rate": 0.0,
+      "p_opt": 0.0,
+      "best_feasible_objective": null,
+      "approx_ratio_best": null,
+      "approx_ratio_mean_feasible": null,
+      "mean_qubo_energy": 11158.921875,
+      "exact": {
+       "expected_qubo_energy": 11120.343192652208,
+       "p_ground_state": 2.283553472284255e-06,
+       "feasibility_rate_top4096": 0.0
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3507669920585523,
+       0.9175089089606114
+      ],
+      "betas": [
+       0.4292317189559291,
+       0.8846821618754618
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 49,
+      "two_qubit_gates": 150,
+      "sim_seconds": 0.28406504199665505,
+      "shots": 4096,
+      "feasibility_rate": 0.017822265625,
+      "p_opt": 0.000732421875,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.03592077746340263,
+      "mean_qubo_energy": 6315.04052734375,
+      "exact": {
+       "expected_qubo_energy": 6390.556596542382,
+       "p_ground_state": 0.0006602972340356106,
+       "feasibility_rate_top4096": 0.01227683632794199
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       1.2897627089266206,
+       0.9085940750800424,
+       1.2350248333799978
+      ],
+      "betas": [
+       0.39725234399947984,
+       0.7484082704820311,
+       -0.36655293432273517
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 65,
+      "two_qubit_gates": 225,
+      "sim_seconds": 0.2769586250069551,
+      "shots": 4096,
+      "feasibility_rate": 0.037109375,
+      "p_opt": 0.00048828125,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.03277981453525987,
+      "mean_qubo_energy": 5342.73828125,
+      "exact": {
+       "expected_qubo_energy": 5331.052925999818,
+       "p_ground_state": 0.00043885630426331577,
+       "feasibility_rate_top4096": 0.03524345089442434
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       0.49380975386875237
+      ],
+      "betas": [
+       0.43340632168228915
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 34,
+      "two_qubit_gates": 75,
+      "sim_seconds": 0.06819633398845326,
+      "shots": 4096,
+      "feasibility_rate": 0.20654296875,
+      "p_opt": 0.093505859375,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.0618409751283785,
+      "mean_qubo_energy": 1219.864501953125,
+      "exact": {
+       "expected_qubo_energy": 1199.2383877701586,
+       "p_ground_state": 0.0906242120667014,
+       "feasibility_rate_top4096": 0.20542494093850325
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       0.3114999739289463,
+       0.9441949339335449
+      ],
+      "betas": [
+       0.47155919584698214,
+       0.22553445837885466
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 49,
+      "two_qubit_gates": 150,
+      "sim_seconds": 0.05443550000200048,
+      "shots": 4096,
+      "feasibility_rate": 0.330078125,
+      "p_opt": 0.1708984375,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.07283109327443639,
+      "mean_qubo_energy": 748.732177734375,
+      "exact": {
+       "expected_qubo_energy": 736.4009850612407,
+       "p_ground_state": 0.16978672609529216,
+       "feasibility_rate_top4096": 0.32914249411149765
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.23641823356422142,
+       0.5966093402318748,
+       1.2953242169515145
+      ],
+      "betas": [
+       0.4897510706709218,
+       0.26390232878372943,
+       0.15490184534852783
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 65,
+      "two_qubit_gates": 225,
+      "sim_seconds": 0.04569400000036694,
+      "shots": 4096,
+      "feasibility_rate": 0.41455078125,
+      "p_opt": 0.23046875,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.08514906100343504,
+      "mean_qubo_energy": 540.544189453125,
+      "exact": {
+       "expected_qubo_energy": 559.2768542631059,
+       "p_ground_state": 0.2235999361361186,
+       "feasibility_rate_top4096": 0.4076291485815483
+      }
+     }
+    ],
+    "qubo_ground_state": {
+     "energy": 4.0,
+     "feasible": true,
+     "objective": 4.0,
+     "one_hot": true,
+     "overlap": false,
+     "equals_cpsat_optimum": true
+    },
+    "seconds": 61.666379292000784
+   },
+   {
+    "name": "qa-care-wien-care-s3-d1-v18",
+    "kind": "Q-A",
+    "sha256": "c79aed479228f49f79ed268fc7afb3632651a73af5423a964e69a0e7f1e356ae",
+    "qubits": 18,
+    "penalties": {
+     "A_one_hot": 37.0,
+     "B_overlap": 37.0,
+     "C_travel": 1.0
+    },
+    "optimum": 4.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 4.0,
+      "seconds": 0.0035144589928677306,
+      "qubo_energy_of_optimum": 4.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.12475379199895542,
+      "best_energy": 4.0,
+      "best_feasible": true,
+      "best_objective": 4.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.03125
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.3531500383168422
+      ],
+      "betas": [
+       0.2831250522797923
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 31,
+      "two_qubit_gates": 83,
+      "sim_seconds": 0.33115374999761116,
+      "shots": 4096,
+      "feasibility_rate": 0.000244140625,
+      "p_opt": 0.0,
+      "best_feasible_objective": 13.0,
+      "approx_ratio_best": 0.3076923076923077,
+      "approx_ratio_mean_feasible": 0.3076923076923077,
+      "mean_qubo_energy": 684.267822265625,
+      "exact": {
+       "expected_qubo_energy": 680.7817326885579,
+       "p_ground_state": 3.7659268544491477e-06,
+       "feasibility_rate_top4096": 0.0
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3215191838579228,
+       0.8970374842794696
+      ],
+      "betas": [
+       0.4222219903885999,
+       0.926809447826158
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 47,
+      "two_qubit_gates": 166,
+      "sim_seconds": 0.3224696659890469,
+      "shots": 4096,
+      "feasibility_rate": 0.025634765625,
+      "p_opt": 0.000732421875,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.3148425787106447,
+      "mean_qubo_energy": 402.442138671875,
+      "exact": {
+       "expected_qubo_energy": 399.2284580895862,
+       "p_ground_state": 0.0006047431228726459,
+       "feasibility_rate_top4096": 0.02873616341969299
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       1.247375603315076,
+       0.8896881157765106,
+       1.1494731885127856
+      ],
+      "betas": [
+       0.39122296121522954,
+       0.7090917704069244,
+       -0.3959666387364403
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 64,
+      "two_qubit_gates": 249,
+      "sim_seconds": 0.23589462500240188,
+      "shots": 4096,
+      "feasibility_rate": 0.03369140625,
+      "p_opt": 0.001220703125,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.34521575984990616,
+      "mean_qubo_energy": 315.53125,
+      "exact": {
+       "expected_qubo_energy": 319.7344998347506,
+       "p_ground_state": 0.000729756483611574,
+       "feasibility_rate_top4096": 0.034053278037104624
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       0.47563439706013866
+      ],
+      "betas": [
+       0.43864111675607403
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 31,
+      "two_qubit_gates": 83,
+      "sim_seconds": 0.07835304200125393,
+      "shots": 4096,
+      "feasibility_rate": 0.2021484375,
+      "p_opt": 0.0869140625,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.4734810578984989,
+      "mean_qubo_energy": 74.269775390625,
+      "exact": {
+       "expected_qubo_energy": 73.18434409653605,
+       "p_ground_state": 0.08432470302149954,
+       "feasibility_rate_top4096": 0.20145356718108418
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       0.296019244157726,
+       0.9045563264146903
+      ],
+      "betas": [
+       0.47478044019489585,
+       0.22823412571939883
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 47,
+      "two_qubit_gates": 166,
+      "sim_seconds": 0.060765707996324636,
+      "shots": 4096,
+      "feasibility_rate": 0.321533203125,
+      "p_opt": 0.16552734375,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.5349852747029552,
+      "mean_qubo_energy": 44.440673828125,
+      "exact": {
+       "expected_qubo_energy": 45.688534478457065,
+       "p_ground_state": 0.16075897835169883,
+       "feasibility_rate_top4096": 0.31816588785909994
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.22098703710061898,
+       0.5531921492855996,
+       1.1995813798768644
+      ],
+      "betas": [
+       0.49965162833953003,
+       0.2725383032892862,
+       0.15621484828953816
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 64,
+      "two_qubit_gates": 249,
+      "sim_seconds": 0.048179749996052124,
+      "shots": 4096,
+      "feasibility_rate": 0.381591796875,
+      "p_opt": 0.217529296875,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.5725799065848521,
+      "mean_qubo_energy": 35.839111328125,
+      "exact": {
+       "expected_qubo_energy": 36.13186078525869,
+       "p_ground_state": 0.21143868037351546,
+       "feasibility_rate_top4096": 0.38167168882626334
+      }
+     }
+    ],
+    "qubo_ground_state": {
+     "energy": 4.0,
+     "feasible": true,
+     "objective": 4.0,
+     "one_hot": true,
+     "overlap": false,
+     "equals_cpsat_optimum": true
+    },
+    "seconds": 88.39058999999543
+   },
+   {
+    "name": "qa-care-wien-care-s4-d1-v24",
+    "kind": "Q-A",
+    "sha256": "144c433b313b270b119692a258b216c90fcfa79fcc1fcf7372737d710bb6f2d6",
+    "qubits": 24,
+    "penalties": {
+     "A_one_hot": 37.0,
+     "B_overlap": 37.0,
+     "C_travel": 1.0
+    },
+    "optimum": 8.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 8.0,
+      "seconds": 0.0477004160056822,
+      "qubo_energy_of_optimum": 8.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.16404170800524298,
+      "best_energy": 8.0,
+      "best_feasible": true,
+      "best_objective": 8.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.0625
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.3531500383168422
+      ],
+      "betas": [
+       0.2831250522797923
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 43,
+      "two_qubit_gates": 136,
+      "sim_seconds": 0.9451704999955837,
+      "shots": 4096,
+      "feasibility_rate": 0.0,
+      "p_opt": 0.0,
+      "best_feasible_objective": null,
+      "approx_ratio_best": null,
+      "approx_ratio_mean_feasible": null,
+      "mean_qubo_energy": 968.715576171875
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3215191838579228,
+       0.8970374842794696
+      ],
+      "betas": [
+       0.4222219903885999,
+       0.926809447826158
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 60,
+      "two_qubit_gates": 272,
+      "sim_seconds": 1.1744007090019295,
+      "shots": 4096,
+      "feasibility_rate": 0.0029296875,
+      "p_opt": 0.0,
+      "best_feasible_objective": 10.0,
+      "approx_ratio_best": 0.8,
+      "approx_ratio_mean_feasible": 0.367816091954023,
+      "mean_qubo_energy": 750.51123046875
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       1.247375603315076,
+       0.8896881157765106,
+       1.1494731885127856
+      ],
+      "betas": [
+       0.39122296121522954,
+       0.7090917704069244,
+       -0.3959666387364403
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 83,
+      "two_qubit_gates": 408,
+      "sim_seconds": 1.9499670840014005,
+      "shots": 4096,
+      "feasibility_rate": 0.009521484375,
+      "p_opt": 0.0,
+      "best_feasible_objective": 9.0,
+      "approx_ratio_best": 0.8888888888888888,
+      "approx_ratio_mean_feasible": 0.4233378561736771,
+      "mean_qubo_energy": 603.472900390625
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       0.47563439706013866
+      ],
+      "betas": [
+       0.43864111675607403
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 43,
+      "two_qubit_gates": 136,
+      "sim_seconds": 0.7584067910065642,
+      "shots": 4096,
+      "feasibility_rate": 0.11572265625,
+      "p_opt": 0.04931640625,
+      "best_feasible_objective": 8.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.5942642219087917,
+      "mean_qubo_energy": 105.691650390625
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       0.296019244157726,
+       0.9045563264146903
+      ],
+      "betas": [
+       0.47478044019489585,
+       0.22823412571939883
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 60,
+      "two_qubit_gates": 272,
+      "sim_seconds": 1.0943403330020374,
+      "shots": 4096,
+      "feasibility_rate": 0.17724609375,
+      "p_opt": 0.09765625,
+      "best_feasible_objective": 8.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6777920410783055,
+      "mean_qubo_energy": 66.510986328125
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.22098703710061898,
+       0.5531921492855996,
+       1.1995813798768644
+      ],
+      "betas": [
+       0.49965162833953003,
+       0.2725383032892862,
+       0.15621484828953816
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 83,
+      "two_qubit_gates": 408,
+      "sim_seconds": 1.5785697090032045,
+      "shots": 4096,
+      "feasibility_rate": 0.21240234375,
+      "p_opt": 0.122802734375,
+      "best_feasible_objective": 8.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6849719515795689,
+      "mean_qubo_energy": 55.774169921875
+     }
+    ],
+    "seconds": 7.882452540987288
+   },
+   {
+    "name": "qa-care-wien-care-s5-d1-v30",
+    "kind": "Q-A",
+    "sha256": "09c667c08002a8e48c60cf2008a43a0758cd60a15178a0b18285f22b52d8ca45",
+    "qubits": 30,
+    "penalties": {
+     "A_one_hot": 53.0,
+     "B_overlap": 53.0,
+     "C_travel": 1.0
+    },
+    "optimum": 12.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 12.0,
+      "seconds": 0.031579333008266985,
+      "qubo_energy_of_optimum": 12.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.21194749999267515,
+      "best_energy": 12.0,
+      "best_feasible": true,
+      "best_objective": 12.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.09375
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.3531500383168422
+      ],
+      "betas": [
+       0.2831250522797923
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 50,
+      "two_qubit_gates": 195,
+      "sim_seconds": 1.4825615829904564,
+      "shots": 4096,
+      "feasibility_rate": 0.0,
+      "p_opt": 0.0,
+      "best_feasible_objective": null,
+      "approx_ratio_best": null,
+      "approx_ratio_mean_feasible": null,
+      "mean_qubo_energy": 1360.881103515625
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3215191838579228,
+       0.8970374842794696
+      ],
+      "betas": [
+       0.4222219903885999,
+       0.926809447826158
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 70,
+      "two_qubit_gates": 390,
+      "sim_seconds": 2.4641862499993294,
+      "shots": 4096,
+      "feasibility_rate": 0.000244140625,
+      "p_opt": 0.0,
+      "best_feasible_objective": 23.0,
+      "approx_ratio_best": 0.5217391304347826,
+      "approx_ratio_mean_feasible": 0.5217391304347826,
+      "mean_qubo_energy": 943.782958984375
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       1.247375603315076,
+       0.8896881157765106,
+       1.1494731885127856
+      ],
+      "betas": [
+       0.39122296121522954,
+       0.7090917704069244,
+       -0.3959666387364403
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 97,
+      "two_qubit_gates": 585,
+      "sim_seconds": 3.3306635420012753,
+      "shots": 4096,
+      "feasibility_rate": 0.0,
+      "p_opt": 0.0,
+      "best_feasible_objective": null,
+      "approx_ratio_best": null,
+      "approx_ratio_mean_feasible": null,
+      "mean_qubo_energy": 502.336669921875
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       0.47563439706013866
+      ],
+      "betas": [
+       0.43864111675607403
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 50,
+      "two_qubit_gates": 195,
+      "sim_seconds": 1.3065697080019163,
+      "shots": 4096,
+      "feasibility_rate": 0.044921875,
+      "p_opt": 0.024169921875,
+      "best_feasible_objective": 12.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6715328467153284,
+      "mean_qubo_energy": 190.11474609375
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       0.296019244157726,
+       0.9045563264146903
+      ],
+      "betas": [
+       0.47478044019489585,
+       0.22823412571939883
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 70,
+      "two_qubit_gates": 390,
+      "sim_seconds": 2.0090983750123996,
+      "shots": 4096,
+      "feasibility_rate": 0.07958984375,
+      "p_opt": 0.049560546875,
+      "best_feasible_objective": 12.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7624244786591308,
+      "mean_qubo_energy": 120.680908203125
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.22098703710061898,
+       0.5531921492855996,
+       1.1995813798768644
+      ],
+      "betas": [
+       0.49965162833953003,
+       0.2725383032892862,
+       0.15621484828953816
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 97,
+      "two_qubit_gates": 585,
+      "sim_seconds": 2.8821509999979753,
+      "shots": 4096,
+      "feasibility_rate": 0.102783203125,
+      "p_opt": 0.07080078125,
+      "best_feasible_objective": 12.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7935909519321395,
+      "mean_qubo_energy": 102.361328125
+     }
+    ],
+    "seconds": 13.837494375009555
+   },
+   {
+    "name": "qa-care-wien-care-s4-d2-v48",
+    "kind": "Q-A",
+    "sha256": "8036e1d326e684fa340f135cb452f8b8a0a049175d35b28c5e030938291adbcc",
+    "qubits": 48,
+    "penalties": {
+     "A_one_hot": 107.0,
+     "B_overlap": 107.0,
+     "C_travel": 1.0
+    },
+    "optimum": 8.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 8.0,
+      "seconds": 0.010218707990134135,
+      "qubo_energy_of_optimum": 8.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.3242440419999184,
+      "best_energy": 20.0,
+      "best_feasible": true,
+      "best_objective": 20.0,
+      "approx_ratio": 0.4,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.0
+     }
+    },
+    "qaoa": [],
+    "seconds": 0.35102154199557845
+   },
+   {
+    "name": "qa-care-wien-care-s7-d5-v210",
+    "kind": "Q-A",
+    "sha256": "818bbb359182473dc68d159bd0542e1bc38d8c9817d6d030aee19709ba5ac248",
+    "qubits": 210,
+    "penalties": {
+     "A_one_hot": 349.0,
+     "B_overlap": 349.0,
+     "C_travel": 1.0
+    },
+    "optimum": 33.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 33.0,
+      "seconds": 0.03166537500510458,
+      "qubo_energy_of_optimum": 33.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 1.7242344580008648,
+      "best_energy": 52.0,
+      "best_feasible": true,
+      "best_objective": 52.0,
+      "approx_ratio": 0.6346153846153846,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.0
+     }
+    },
+    "qaoa": [],
+    "seconds": 1.9400922079948941
+   },
+   {
+    "name": "qa-care-noe-care-s4-d5-v112",
+    "kind": "Q-A",
+    "sha256": "d159da9aa5b774383c5841198f099f34b65fb66a4860950093f873748a5b5a2b",
+    "qubits": 112,
+    "penalties": {
+     "A_one_hot": 948.0,
+     "B_overlap": 948.0,
+     "C_travel": 1.0
+    },
+    "optimum": 8.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 8.0,
+      "seconds": 0.007143833005102351,
+      "qubo_energy_of_optimum": 8.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.8265671669942094,
+      "best_energy": 51.0,
+      "best_feasible": true,
+      "best_objective": 51.0,
+      "approx_ratio": 0.1568627450980392,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.0
+     }
+    },
+    "qaoa": [],
+    "seconds": 0.8801385830010986
+   },
+   {
+    "name": "qb-care-req-e3-s4",
+    "kind": "Q-B",
+    "sha256": "2dd7b806165dc30015d5488735468c84eb4070460b923b68b992f5e75236df4d",
+    "qubits": 9,
+    "penalties": {
+     "A": 2.0,
+     "B": 1.0
+    },
+    "optimum": 2.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 2.0,
+      "seconds": 0.002424874997814186,
+      "qubo_energy_of_optimum": 2.0
+     },
+     "ilp": {
+      "solver": "SCIP 10.0.0 [LP solver: SoPlex 8.0.0]",
+      "optimal": true,
+      "objective": 2.0,
+      "chosen": [
+       "pension-carrier",
+       "insurance-carrier"
+      ],
+      "seconds": 0.010335875005694106
+     },
+     "greedy": {
+      "objective": 2.0,
+      "chosen": [
+       "pension-carrier",
+       "insurance-carrier"
+      ],
+      "approx_ratio": 1.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.06555524999566842,
+      "best_energy": 2.0,
+      "best_feasible": true,
+      "best_objective": 2.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.5
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.690568021843878
+      ],
+      "betas": [
+       1.2958557969446942
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 9,
+      "two_qubit_gates": 13,
+      "sim_seconds": 0.004071416988153942,
+      "shots": 4096,
+      "feasibility_rate": 0.36181640625,
+      "p_opt": 0.162109375,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7540066140931061,
+      "mean_qubo_energy": 9.54931640625,
+      "exact": {
+       "expected_qubo_energy": 9.713397205597236,
+       "p_ground_state": 0.01251457692453358,
+       "feasibility_rate_top4096": 0.35388491644053954
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.4213708325192624,
+       2.01795199550108
+      ],
+      "betas": [
+       1.2634448630819164,
+       1.4633418557117086
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 15,
+      "two_qubit_gates": 26,
+      "sim_seconds": 0.003336042005685158,
+      "shots": 4096,
+      "feasibility_rate": 0.391357421875,
+      "p_opt": 0.14990234375,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7276441216522924,
+      "mean_qubo_energy": 6.99462890625,
+      "exact": {
+       "expected_qubo_energy": 6.988520690491805,
+       "p_ground_state": 0.028146292328565053,
+       "feasibility_rate_top4096": 0.3959858332327488
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       1.0801262454720353,
+       2.011050089708904,
+       2.1713298387145903
+      ],
+      "betas": [
+       1.2075514094539217,
+       1.3887393899838631,
+       1.4534109661995842
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 21,
+      "two_qubit_gates": 39,
+      "sim_seconds": 0.0033659999899100512,
+      "shots": 4096,
+      "feasibility_rate": 0.39990234375,
+      "p_opt": 0.134765625,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7040618955512572,
+      "mean_qubo_energy": 6.8642578125,
+      "exact": {
+       "expected_qubo_energy": 6.833851061843628,
+       "p_ground_state": 0.021122791639647854,
+       "feasibility_rate_top4096": 0.4014408777198613
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       1.465251398080864
+      ],
+      "betas": [
+       0.36164624834822123
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 9,
+      "two_qubit_gates": 13,
+      "sim_seconds": 0.0027697089972207323,
+      "shots": 4096,
+      "feasibility_rate": 0.671142578125,
+      "p_opt": 0.431884765625,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8364521527460825,
+      "mean_qubo_energy": 5.57373046875,
+      "exact": {
+       "expected_qubo_energy": 5.517925308589738,
+       "p_ground_state": 0.22853894711602935,
+       "feasibility_rate_top4096": 0.6637775502130989
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       1.0240326836212776,
+       2.2937055686827272
+      ],
+      "betas": [
+       0.433076466117419,
+       0.20914587762444617
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 15,
+      "two_qubit_gates": 26,
+      "sim_seconds": 0.002632125004311092,
+      "shots": 4096,
+      "feasibility_rate": 0.674072265625,
+      "p_opt": 0.48388671875,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8686487336794084,
+      "mean_qubo_energy": 4.4345703125,
+      "exact": {
+       "expected_qubo_energy": 4.440418869959601,
+       "p_ground_state": 0.32214773597028207,
+       "feasibility_rate_top4096": 0.6771426727656117
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       1.3012151072293214,
+       2.0894651303212752,
+       2.729218420171619
+      ],
+      "betas": [
+       0.4560912654970941,
+       0.26159804694806194,
+       0.24124009728798795
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 21,
+      "two_qubit_gates": 39,
+      "sim_seconds": 0.0031008749938337132,
+      "shots": 4096,
+      "feasibility_rate": 0.691650390625,
+      "p_opt": 0.6015625,
+      "best_feasible_objective": 2.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.9369935505209194,
+      "mean_qubo_energy": 3.136962890625,
+      "exact": {
+       "expected_qubo_energy": 3.1539487479281503,
+       "p_ground_state": 0.5364837632484664,
+       "feasibility_rate_top4096": 0.6967630392548653
+      }
+     }
+    ],
+    "qubo_ground_state": {
+     "energy": 2.0,
+     "feasible": true,
+     "objective": 2.0,
+     "chosen": [
+      "pension-carrier",
+      "insurance-carrier"
+     ],
+     "equals_cpsat_optimum": true
+    },
+    "seconds": 0.7369529580028029
+   },
+   {
+    "name": "qb-care-req-e6-s6",
+    "kind": "Q-B",
+    "sha256": "a1e2bb9659f340439b598b889db0516f1caffbcda1fad1694f9b84e95aa8c734",
+    "qubits": 16,
+    "penalties": {
+     "A": 2.0,
+     "B": 1.0
+    },
+    "optimum": 3.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 3.0,
+      "seconds": 0.0020492089970503002,
+      "qubo_energy_of_optimum": 3.0
+     },
+     "ilp": {
+      "solver": "SCIP 10.0.0 [LP solver: SoPlex 8.0.0]",
+      "optimal": true,
+      "objective": 3.0,
+      "chosen": [
+       "pension-carrier",
+       "insurance-carrier",
+       "civil-registry"
+      ],
+      "seconds": 0.00027804200362879783
+     },
+     "greedy": {
+      "objective": 3.0,
+      "chosen": [
+       "pension-carrier",
+       "insurance-carrier",
+       "civil-registry"
+      ],
+      "approx_ratio": 1.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.12190766699495725,
+      "best_energy": 3.0,
+      "best_feasible": true,
+      "best_objective": 3.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 0.90625,
+      "p_opt": 0.375
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.6098209468662064
+      ],
+      "betas": [
+       1.2980835734986897
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 11,
+      "two_qubit_gates": 26,
+      "sim_seconds": 0.02005012500740122,
+      "shots": 4096,
+      "feasibility_rate": 0.13037109375,
+      "p_opt": 0.02392578125,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.720972097209721,
+      "mean_qubo_energy": 19.315673828125,
+      "exact": {
+       "expected_qubo_energy": 19.230149332209656,
+       "p_ground_state": 0.00010960842340397902,
+       "feasibility_rate_top4096": 0.051335869340225326
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3773060927517482,
+       1.8926916357124655
+      ],
+      "betas": [
+       1.257294372777918,
+       1.4691203420717385
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 18,
+      "two_qubit_gates": 52,
+      "sim_seconds": 0.017342500010272488,
+      "shots": 4096,
+      "feasibility_rate": 0.17333984375,
+      "p_opt": 0.0234375,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6862113402061855,
+      "mean_qubo_energy": 13.306884765625,
+      "exact": {
+       "expected_qubo_energy": 13.306473013402076,
+       "p_ground_state": 0.0006937386603891974,
+       "feasibility_rate_top4096": 0.12268430532719932
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       1.037149661498113,
+       1.9438510231135744,
+       2.073998051902006
+      ],
+      "betas": [
+       1.1747579931771783,
+       1.3649573437344587,
+       1.4482363230144255
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 25,
+      "two_qubit_gates": 78,
+      "sim_seconds": 0.01743908299249597,
+      "shots": 4096,
+      "feasibility_rate": 0.171875,
+      "p_opt": 0.020263671875,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6756238003838771,
+      "mean_qubo_energy": 12.837646484375,
+      "exact": {
+       "expected_qubo_energy": 12.83936090842932,
+       "p_ground_state": 0.0003746673048006921,
+       "feasibility_rate_top4096": 0.14614733925414533
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       1.440137344552524
+      ],
+      "betas": [
+       0.36507175432528516
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 11,
+      "two_qubit_gates": 26,
+      "sim_seconds": 0.01201187500555534,
+      "shots": 4096,
+      "feasibility_rate": 0.507568359375,
+      "p_opt": 0.246826171875,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8260927152317881,
+      "mean_qubo_energy": 10.08740234375,
+      "exact": {
+       "expected_qubo_energy": 10.138806716743709,
+       "p_ground_state": 0.07095308225163845,
+       "feasibility_rate_top4096": 0.4968838272438797
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       1.0037292837974914,
+       2.288259957548624
+      ],
+      "betas": [
+       0.449988906333923,
+       0.22045316453457744
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 18,
+      "two_qubit_gates": 52,
+      "sim_seconds": 0.009996166001656093,
+      "shots": 4096,
+      "feasibility_rate": 0.556640625,
+      "p_opt": 0.3310546875,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8644003538480981,
+      "mean_qubo_energy": 7.91845703125,
+      "exact": {
+       "expected_qubo_energy": 7.90237242071794,
+       "p_ground_state": 0.14699253000722776,
+       "feasibility_rate_top4096": 0.5513464293027629
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       1.177723395855014,
+       1.9781825640046713,
+       2.6259499806421402
+      ],
+      "betas": [
+       0.49528911710039897,
+       0.29666443301281126,
+       0.23681606307409211
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 25,
+      "two_qubit_gates": 78,
+      "sim_seconds": 0.009789999996428378,
+      "shots": 4096,
+      "feasibility_rate": 0.648193359375,
+      "p_opt": 0.5341796875,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.9418233416105002,
+      "mean_qubo_energy": 5.51904296875,
+      "exact": {
+       "expected_qubo_energy": 5.531097301143726,
+       "p_ground_state": 0.4050446518457222,
+       "feasibility_rate_top4096": 0.636328927859856
+      }
+     }
+    ],
+    "qubo_ground_state": {
+     "energy": 3.0,
+     "feasible": true,
+     "objective": 3.0,
+     "chosen": [
+      "pension-carrier",
+      "insurance-carrier",
+      "civil-registry"
+     ],
+     "equals_cpsat_optimum": true
+    },
+    "seconds": 21.53574262499751
+   },
+   {
+    "name": "qb-geringes-einkommen-req-e7-s6",
+    "kind": "Q-B",
+    "sha256": "e6c2b63b597503b11176c3bdc4d0bb870fa7a66fa293a5cd91e5e5e481f69a66",
+    "qubits": 16,
+    "penalties": {
+     "A": 2.0,
+     "B": 1.0
+    },
+    "optimum": 3.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 3.0,
+      "seconds": 0.003148208008497022,
+      "qubo_energy_of_optimum": 3.0
+     },
+     "ilp": {
+      "solver": "SCIP 10.0.0 [LP solver: SoPlex 8.0.0]",
+      "optimal": true,
+      "objective": 3.0,
+      "chosen": [
+       "employer",
+       "civil-registry",
+       "bank"
+      ],
+      "seconds": 0.02954233399941586
+     },
+     "greedy": {
+      "objective": 3.0,
+      "chosen": [
+       "bank",
+       "employer",
+       "civil-registry"
+      ],
+      "approx_ratio": 1.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.11965533300826792,
+      "best_energy": 3.0,
+      "best_feasible": true,
+      "best_objective": 3.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.46875
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.105530548083046
+      ],
+      "betas": [
+       1.457838652206478
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 12,
+      "two_qubit_gates": 26,
+      "sim_seconds": 0.026902416997472756,
+      "shots": 4096,
+      "feasibility_rate": 0.17724609375,
+      "p_opt": 0.019775390625,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6857682619647355,
+      "mean_qubo_energy": 32.28271484375,
+      "exact": {
+       "expected_qubo_energy": 32.33424002289075,
+       "p_ground_state": 1.736690321028989e-05,
+       "feasibility_rate_top4096": 0.017496684007553002
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3986439027120334,
+       1.1020873584585498
+      ],
+      "betas": [
+       1.2529665038489421,
+       1.494444629646069
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 21,
+      "two_qubit_gates": 52,
+      "sim_seconds": 0.023222083007567562,
+      "shots": 4096,
+      "feasibility_rate": 0.185791015625,
+      "p_opt": 0.015625,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.667348728441976,
+      "mean_qubo_energy": 19.837158203125,
+      "exact": {
+       "expected_qubo_energy": 19.760568450788938,
+       "p_ground_state": 0.00011249833439373635,
+       "feasibility_rate_top4096": 0.04998693547082553
+      }
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       0.41863992684878265,
+       1.344148242677995,
+       1.0278098515494856
+      ],
+      "betas": [
+       2.011339134245448,
+       1.1923419981058974,
+       1.5334392367198546
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 30,
+      "two_qubit_gates": 78,
+      "sim_seconds": 0.12986908298626076,
+      "shots": 4096,
+      "feasibility_rate": 0.183349609375,
+      "p_opt": 0.016845703125,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6821071752951862,
+      "mean_qubo_energy": 20.101318359375,
+      "exact": {
+       "expected_qubo_energy": 19.84139140567324,
+       "p_ground_state": 0.00011646622424599556,
+       "feasibility_rate_top4096": 0.04284968764623834
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       1.3018930496360026
+      ],
+      "betas": [
+       0.37049875856472403
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 12,
+      "two_qubit_gates": 26,
+      "sim_seconds": 0.013160542002879083,
+      "shots": 4096,
+      "feasibility_rate": 0.47607421875,
+      "p_opt": 0.196533203125,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7996172772006561,
+      "mean_qubo_energy": 14.732666015625,
+      "exact": {
+       "expected_qubo_energy": 14.296310963043316,
+       "p_ground_state": 0.027748457703564103,
+       "feasibility_rate_top4096": 0.44318374769528085
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       1.0483023821373822,
+       2.7259775875587824
+      ],
+      "betas": [
+       0.37456610421396774,
+       0.2504973602369131
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 21,
+      "two_qubit_gates": 52,
+      "sim_seconds": 0.010858542009373195,
+      "shots": 4096,
+      "feasibility_rate": 0.5283203125,
+      "p_opt": 0.23876953125,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8121090818113585,
+      "mean_qubo_energy": 11.15087890625,
+      "exact": {
+       "expected_qubo_energy": 11.087107750134978,
+       "p_ground_state": 0.06457945684666344,
+       "feasibility_rate_top4096": 0.5126800055577669
+      }
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.9224776796331028,
+       2.3356652215017077,
+       3.3706482698745597
+      ],
+      "betas": [
+       0.43265997574662657,
+       0.25061413718258013,
+       0.2042032222534713
+      ],
+      "params": "trained (exact statevector, COBYLA)",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 30,
+      "two_qubit_gates": 78,
+      "sim_seconds": 0.009763291003764607,
+      "shots": 4096,
+      "feasibility_rate": 0.578125,
+      "p_opt": 0.3193359375,
+      "best_feasible_objective": 3.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8481375358166189,
+      "mean_qubo_energy": 8.935791015625,
+      "exact": {
+       "expected_qubo_energy": 8.884360760185567,
+       "p_ground_state": 0.13900359186754083,
+       "feasibility_rate_top4096": 0.5693741537583757
+      }
+     }
+    ],
+    "qubo_ground_state": {
+     "energy": 3.0,
+     "feasible": true,
+     "objective": 3.0,
+     "chosen": [
+      "employer",
+      "civil-registry",
+      "bank"
+     ],
+     "equals_cpsat_optimum": true
+    },
+    "seconds": 21.044866041003843
+   },
+   {
+    "name": "qb-care-req-e9-s9",
+    "kind": "Q-B",
+    "sha256": "50cc96323e27cdc7aeaca6ae9f0afbf31b037aa5e556cec1e133bb9137691521",
+    "qubits": 24,
+    "penalties": {
+     "A": 2.0,
+     "B": 1.0
+    },
+    "optimum": 4.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 4.0,
+      "seconds": 0.0022629169980064034,
+      "qubo_energy_of_optimum": 4.0
+     },
+     "ilp": {
+      "solver": "SCIP 10.0.0 [LP solver: SoPlex 8.0.0]",
+      "optimal": true,
+      "objective": 4.0,
+      "chosen": [
+       "pension-carrier",
+       "insurance-carrier",
+       "civil-registry",
+       "landlord"
+      ],
+      "seconds": 0.0003814170049736276
+     },
+     "greedy": {
+      "objective": 4.0,
+      "chosen": [
+       "pension-carrier",
+       "civil-registry",
+       "insurance-carrier",
+       "landlord"
+      ],
+      "approx_ratio": 1.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.1821365420037182,
+      "best_energy": 4.0,
+      "best_feasible": true,
+      "best_objective": 4.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.1875
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.105530548083046
+      ],
+      "betas": [
+       1.457838652206478
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 16,
+      "two_qubit_gates": 43,
+      "sim_seconds": 0.4125631670030998,
+      "shots": 4096,
+      "feasibility_rate": 0.0751953125,
+      "p_opt": 0.002197265625,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6298568507157465,
+      "mean_qubo_energy": 45.67626953125
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3986439027120334,
+       1.1020873584585498
+      ],
+      "betas": [
+       1.2529665038489421,
+       1.494444629646069
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 27,
+      "two_qubit_gates": 86,
+      "sim_seconds": 0.6572477089939639,
+      "shots": 4096,
+      "feasibility_rate": 0.095458984375,
+      "p_opt": 0.001953125,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6069072564998059,
+      "mean_qubo_energy": 27.511962890625
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       0.41863992684878265,
+       1.344148242677995,
+       1.0278098515494856
+      ],
+      "betas": [
+       2.011339134245448,
+       1.1923419981058974,
+       1.5334392367198546
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 38,
+      "two_qubit_gates": 129,
+      "sim_seconds": 0.6794155410025269,
+      "shots": 4096,
+      "feasibility_rate": 0.090087890625,
+      "p_opt": 0.0009765625,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.6188679245283019,
+      "mean_qubo_energy": 28.2421875
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       1.3018930496360026
+      ],
+      "betas": [
+       0.37049875856472403
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 16,
+      "two_qubit_gates": 43,
+      "sim_seconds": 0.3373847500042757,
+      "shots": 4096,
+      "feasibility_rate": 0.3701171875,
+      "p_opt": 0.096923828125,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7706188842292541,
+      "mean_qubo_energy": 21.07568359375
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       1.0483023821373822,
+       2.7259775875587824
+      ],
+      "betas": [
+       0.37456610421396774,
+       0.2504973602369131
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 27,
+      "two_qubit_gates": 86,
+      "sim_seconds": 0.5820870000025025,
+      "shots": 4096,
+      "feasibility_rate": 0.424560546875,
+      "p_opt": 0.126220703125,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7900056785917092,
+      "mean_qubo_energy": 15.233642578125
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.9224776796331028,
+       2.3356652215017077,
+       3.3706482698745597
+      ],
+      "betas": [
+       0.43265997574662657,
+       0.25061413718258013,
+       0.2042032222534713
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 38,
+      "two_qubit_gates": 129,
+      "sim_seconds": 0.7625891670031706,
+      "shots": 4096,
+      "feasibility_rate": 0.454833984375,
+      "p_opt": 0.17919921875,
+      "best_feasible_objective": 4.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8256148903168624,
+      "mean_qubo_energy": 12.329345703125
+     }
+    ],
+    "seconds": 3.7666211250034394
+   },
+   {
+    "name": "qb-care-req-e11-s9",
+    "kind": "Q-B",
+    "sha256": "783980ad41349fc6ede42bad0f65b6c18b8de30506b80a31990dd0137fab235c",
+    "qubits": 26,
+    "penalties": {
+     "A": 2.0,
+     "B": 1.0
+    },
+    "optimum": 5.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 5.0,
+      "seconds": 0.0021412499918369576,
+      "qubo_energy_of_optimum": 5.0
+     },
+     "ilp": {
+      "solver": "SCIP 10.0.0 [LP solver: SoPlex 8.0.0]",
+      "optimal": true,
+      "objective": 5.0,
+      "chosen": [
+       "pension-carrier",
+       "insurance-carrier",
+       "employer",
+       "civil-registry",
+       "landlord"
+      ],
+      "seconds": 0.0003370000049471855
+     },
+     "greedy": {
+      "objective": 5.0,
+      "chosen": [
+       "pension-carrier",
+       "civil-registry",
+       "insurance-carrier",
+       "employer",
+       "landlord"
+      ],
+      "approx_ratio": 1.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.22739674999320414,
+      "best_energy": 5.0,
+      "best_feasible": true,
+      "best_objective": 5.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 0.78125,
+      "p_opt": 0.1875
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.105530548083046
+      ],
+      "betas": [
+       1.457838652206478
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 16,
+      "two_qubit_gates": 45,
+      "sim_seconds": 1.5602787919924594,
+      "shots": 4096,
+      "feasibility_rate": 0.03759765625,
+      "p_opt": 0.002685546875,
+      "best_feasible_objective": 5.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7236842105263158,
+      "mean_qubo_energy": 49.2626953125
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3986439027120334,
+       1.1020873584585498
+      ],
+      "betas": [
+       1.2529665038489421,
+       1.494444629646069
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 28,
+      "two_qubit_gates": 90,
+      "sim_seconds": 1.9760925830050837,
+      "shots": 4096,
+      "feasibility_rate": 0.0517578125,
+      "p_opt": 0.003662109375,
+      "best_feasible_objective": 5.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7255304585900069,
+      "mean_qubo_energy": 31.41064453125
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       0.41863992684878265,
+       1.344148242677995,
+       1.0278098515494856
+      ],
+      "betas": [
+       2.011339134245448,
+       1.1923419981058974,
+       1.5334392367198546
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 40,
+      "two_qubit_gates": 135,
+      "sim_seconds": 2.561825582990423,
+      "shots": 4096,
+      "feasibility_rate": 0.04931640625,
+      "p_opt": 0.001953125,
+      "best_feasible_objective": 5.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7178393745557924,
+      "mean_qubo_energy": 31.97509765625
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       1.3018930496360026
+      ],
+      "betas": [
+       0.37049875856472403
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 16,
+      "two_qubit_gates": 45,
+      "sim_seconds": 1.239335582999047,
+      "shots": 4096,
+      "feasibility_rate": 0.30322265625,
+      "p_opt": 0.101318359375,
+      "best_feasible_objective": 5.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8414634146341464,
+      "mean_qubo_energy": 22.765380859375
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       1.0483023821373822,
+       2.7259775875587824
+      ],
+      "betas": [
+       0.37456610421396774,
+       0.2504973602369131
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 28,
+      "two_qubit_gates": 90,
+      "sim_seconds": 1.7221266670094337,
+      "shots": 4096,
+      "feasibility_rate": 0.344482421875,
+      "p_opt": 0.13671875,
+      "best_feasible_objective": 5.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8569172841005708,
+      "mean_qubo_energy": 17.330078125
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.9224776796331028,
+       2.3356652215017077,
+       3.3706482698745597
+      ],
+      "betas": [
+       0.43265997574662657,
+       0.25061413718258013,
+       0.2042032222534713
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/statevector",
+      "transpiled_depth": 40,
+      "two_qubit_gates": 135,
+      "sim_seconds": 2.4827058749942807,
+      "shots": 4096,
+      "feasibility_rate": 0.40283203125,
+      "p_opt": 0.196044921875,
+      "best_feasible_objective": 5.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8844339622641509,
+      "mean_qubo_energy": 13.9697265625
+     }
+    ],
+    "seconds": 11.93645412499609
+   },
+   {
+    "name": "qb-care-req-e14-s10",
+    "kind": "Q-B",
+    "sha256": "13e48f13592ef63b0b587ff47dc142eab04f01738ac8728e5582fb69d575e48f",
+    "qubits": 30,
+    "penalties": {
+     "A": 2.0,
+     "B": 1.0
+    },
+    "optimum": 6.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 6.0,
+      "seconds": 0.002167375001590699,
+      "qubo_energy_of_optimum": 6.0
+     },
+     "ilp": {
+      "solver": "SCIP 10.0.0 [LP solver: SoPlex 8.0.0]",
+      "optimal": true,
+      "objective": 6.0,
+      "chosen": [
+       "pension-carrier",
+       "insurance-carrier",
+       "employer",
+       "civil-registry",
+       "landlord",
+       "sozialministeriumservice"
+      ],
+      "seconds": 0.000334249998559244
+     },
+     "greedy": {
+      "objective": 6.0,
+      "chosen": [
+       "pension-carrier",
+       "civil-registry",
+       "insurance-carrier",
+       "employer",
+       "landlord",
+       "sozialministeriumservice"
+      ],
+      "approx_ratio": 1.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.23545737500535324,
+      "best_energy": 6.0,
+      "best_feasible": true,
+      "best_objective": 6.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 1.0,
+      "p_opt": 0.21875
+     }
+    },
+    "qaoa": [
+     {
+      "variant": "qaoa",
+      "p": 1,
+      "gammas": [
+       1.105530548083046
+      ],
+      "betas": [
+       1.457838652206478
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 16,
+      "two_qubit_gates": 48,
+      "sim_seconds": 0.054529374989215285,
+      "shots": 4096,
+      "feasibility_rate": 0.019287109375,
+      "p_opt": 0.001708984375,
+      "best_feasible_objective": 6.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.751188589540412,
+      "mean_qubo_energy": 55.70751953125
+     },
+     {
+      "variant": "qaoa",
+      "p": 2,
+      "gammas": [
+       1.3986439027120334,
+       1.1020873584585498
+      ],
+      "betas": [
+       1.2529665038489421,
+       1.494444629646069
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 29,
+      "two_qubit_gates": 96,
+      "sim_seconds": 0.0881494159984868,
+      "shots": 4096,
+      "feasibility_rate": 0.026611328125,
+      "p_opt": 0.001708984375,
+      "best_feasible_objective": 6.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7569444444444444,
+      "mean_qubo_energy": 37.45947265625
+     },
+     {
+      "variant": "qaoa",
+      "p": 3,
+      "gammas": [
+       0.41863992684878265,
+       1.344148242677995,
+       1.0278098515494856
+      ],
+      "betas": [
+       2.011339134245448,
+       1.1923419981058974,
+       1.5334392367198546
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 42,
+      "two_qubit_gates": 144,
+      "sim_seconds": 0.24059341600514017,
+      "shots": 4096,
+      "feasibility_rate": 0.0263671875,
+      "p_opt": 0.00146484375,
+      "best_feasible_objective": 6.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.7570093457943926,
+      "mean_qubo_energy": 38.09228515625
+     },
+     {
+      "variant": "warm-start",
+      "p": 1,
+      "gammas": [
+       1.3018930496360026
+      ],
+      "betas": [
+       0.37049875856472403
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 16,
+      "two_qubit_gates": 48,
+      "sim_seconds": 0.052511916001094505,
+      "shots": 4096,
+      "feasibility_rate": 0.2265625,
+      "p_opt": 0.084716796875,
+      "best_feasible_objective": 6.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8706802189210321,
+      "mean_qubo_energy": 26.308349609375
+     },
+     {
+      "variant": "warm-start",
+      "p": 2,
+      "gammas": [
+       1.0483023821373822,
+       2.7259775875587824
+      ],
+      "betas": [
+       0.37456610421396774,
+       0.2504973602369131
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 29,
+      "two_qubit_gates": 96,
+      "sim_seconds": 0.08675899999798276,
+      "shots": 4096,
+      "feasibility_rate": 0.265625,
+      "p_opt": 0.10986328125,
+      "best_feasible_objective": 6.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8819238043771953,
+      "mean_qubo_energy": 20.51318359375
+     },
+     {
+      "variant": "warm-start",
+      "p": 3,
+      "gammas": [
+       0.9224776796331028,
+       2.3356652215017077,
+       3.3706482698745597
+      ],
+      "betas": [
+       0.43265997574662657,
+       0.25061413718258013,
+       0.2042032222534713
+      ],
+      "params": "transferred from the largest trained instance of the family",
+      "backend": "aer_simulator/matrix_product_state(max_bond=32)",
+      "transpiled_depth": 42,
+      "two_qubit_gates": 144,
+      "sim_seconds": 0.19482466699264478,
+      "shots": 4096,
+      "feasibility_rate": 0.3125,
+      "p_opt": 0.15380859375,
+      "best_feasible_objective": 6.0,
+      "approx_ratio_best": 1.0,
+      "approx_ratio_mean_feasible": 0.8996134473468431,
+      "mean_qubo_energy": 16.369140625
+     }
+    ],
+    "seconds": 1.0507390419952571
+   },
+   {
+    "name": "qb-care+geringes-einkommen-req-e21-s10",
+    "kind": "Q-B",
+    "sha256": "037d14b55f2071b897c3041e55ae9ba780e450181e9ec00931a367fb4c1686b5",
+    "qubits": 40,
+    "penalties": {
+     "A": 2.0,
+     "B": 1.0
+    },
+    "optimum": 7.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 7.0,
+      "seconds": 0.002011792006669566,
+      "qubo_energy_of_optimum": 7.0
+     },
+     "ilp": {
+      "solver": "SCIP 10.0.0 [LP solver: SoPlex 8.0.0]",
+      "optimal": true,
+      "objective": 7.0,
+      "chosen": [
+       "pension-carrier",
+       "insurance-carrier",
+       "employer",
+       "civil-registry",
+       "landlord",
+       "bank",
+       "sozialministeriumservice"
+      ],
+      "seconds": 0.0002903749991673976
+     },
+     "greedy": {
+      "objective": 7.0,
+      "chosen": [
+       "pension-carrier",
+       "civil-registry",
+       "insurance-carrier",
+       "bank",
+       "employer",
+       "landlord",
+       "sozialministeriumservice"
+      ],
+      "approx_ratio": 1.0
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.31133295899780933,
+      "best_energy": 7.0,
+      "best_feasible": true,
+      "best_objective": 7.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 0.84375,
+      "p_opt": 0.125
+     }
+    },
+    "qaoa": [],
+    "seconds": 0.31664279199321754
+   },
+   {
+    "name": "qb-care+geringes-einkommen-all-e45-s11",
+    "kind": "Q-B",
+    "sha256": "4d72fd01eec784705bcc86c30c0e6096062328453a8bce861343e76a66c50f0c",
+    "qubits": 71,
+    "penalties": {
+     "A": 2.0,
+     "B": 1.0
+    },
+    "optimum": 10.0,
+    "baselines": {
+     "cpsat": {
+      "status": "OPTIMAL",
+      "objective": 10.0,
+      "seconds": 0.0021865829912712798,
+      "qubo_energy_of_optimum": 10.0
+     },
+     "ilp": {
+      "solver": "SCIP 10.0.0 [LP solver: SoPlex 8.0.0]",
+      "optimal": true,
+      "objective": 10.0,
+      "chosen": [
+       "pension-carrier",
+       "employer",
+       "doctor",
+       "caregiver",
+       "civil-registry",
+       "landlord",
+       "bank",
+       "ams",
+       "sozialministeriumservice",
+       "court"
+      ],
+      "seconds": 0.0002973750088131055
+     },
+     "greedy": {
+      "objective": 11.0,
+      "chosen": [
+       "civil-registry",
+       "pension-carrier",
+       "insurance-carrier",
+       "court",
+       "employer",
+       "landlord",
+       "bank",
+       "doctor",
+       "caregiver",
+       "ams",
+       "sozialministeriumservice"
+      ],
+      "approx_ratio": 0.9090909090909091
+     },
+     "sa": {
+      "sweeps": 1000,
+      "restarts": 32,
+      "seed": 0,
+      "seconds": 0.6202093750034692,
+      "best_energy": 10.0,
+      "best_feasible": true,
+      "best_objective": 10.0,
+      "approx_ratio": 1.0,
+      "feasibility_rate": 0.65625,
+      "p_opt": 0.40625
+     }
+    },
+    "qaoa": [],
+    "seconds": 0.6259546670044074
+   }
+  ],
+  "started_at": "2026-11-06T04:24:14+00:00",
+  "git_sha": "dc7c5cb5df59d257de16068500bc5183785eba38"
+ },
+ "git_sha": "e59b988463fad9e688f57ec1a9e952b3693bf1ad",
+ "package_versions": {
+  "qiskit": "2.6.2",
+  "qiskit-aer": "0.18.2",
+  "qiskit-ibm-runtime": "0.51.0",
+  "qiskit-addon-opt-mapper": "0.1.0",
+  "ortools": "9.15.6755",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "pyyaml": "6.0.3"
+ },
+ "updated_at": "2026-11-06T04:28:15+00:00",
+ "hardware": {
+  "status": "done",
+  "backend": "ibm_marrakesh",
+  "job_id": "dbml92d8ft8s738v2ukg",
+  "submitted_at": "2026-11-06T04:16:09+00:00",
+  "shots": 4096,
+  "circuits": [
+   {
+    "name": "qa-care-noe-care-s2-d1-v11",
+    "sha256": "42a2ace14bf30be5ee3e965536dc50da59318f2f604ca5dddd221a299556b1a5",
+    "kind": "Q-A",
+    "qubits": 11,
+    "variant": "qaoa",
+    "p": 1,
+    "gammas": [
+     1.5254515018388377
+    ],
+    "betas": [
+     0.21278800124132596
+    ],
+    "optimum": 2.0,
+    "transpiled_depth": 282,
+    "two_qubit_gates": 143,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.00439453125,
+    "p_opt": 0.0,
+    "best_feasible_objective": 3.0,
+    "approx_ratio_best": 0.6666666666666666,
+    "approx_ratio_mean_feasible": 0.0332409972299169,
+    "mean_qubo_energy": 3072.105224609375
+   },
+   {
+    "name": "qa-care-noe-care-s2-d1-v11",
+    "sha256": "42a2ace14bf30be5ee3e965536dc50da59318f2f604ca5dddd221a299556b1a5",
+    "kind": "Q-A",
+    "qubits": 11,
+    "variant": "warm-start",
+    "p": 1,
+    "gammas": [
+     0.5284054478126816
+    ],
+    "betas": [
+     0.4182229226438686
+    ],
+    "optimum": 2.0,
+    "transpiled_depth": 287,
+    "two_qubit_gates": 143,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.2138671875,
+    "p_opt": 0.0703125,
+    "best_feasible_objective": 2.0,
+    "approx_ratio_best": 1.0,
+    "approx_ratio_mean_feasible": 0.04295170384898259,
+    "mean_qubo_energy": 850.376220703125
+   },
+   {
+    "name": "qa-care-wien-care-s2-d1-v12",
+    "sha256": "98a1b58bb92380e86ee8c28b97ec14cfe2715faa9d8fd01206a06e1d7da90e7a",
+    "kind": "Q-A",
+    "qubits": 12,
+    "variant": "qaoa",
+    "p": 1,
+    "gammas": [
+     1.4137367683739073
+    ],
+    "betas": [
+     0.24101521570237583
+    ],
+    "optimum": 2.0,
+    "transpiled_depth": 302,
+    "two_qubit_gates": 174,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.003662109375,
+    "p_opt": 0.0,
+    "best_feasible_objective": 4.0,
+    "approx_ratio_best": 0.5,
+    "approx_ratio_mean_feasible": 0.23809523809523808,
+    "mean_qubo_energy": 223.652099609375
+   },
+   {
+    "name": "qa-care-wien-care-s2-d1-v12",
+    "sha256": "98a1b58bb92380e86ee8c28b97ec14cfe2715faa9d8fd01206a06e1d7da90e7a",
+    "kind": "Q-A",
+    "qubits": 12,
+    "variant": "warm-start",
+    "p": 1,
+    "gammas": [
+     0.49665029711781417
+    ],
+    "betas": [
+     0.4282406179396848
+    ],
+    "optimum": 2.0,
+    "transpiled_depth": 309,
+    "two_qubit_gates": 174,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.1728515625,
+    "p_opt": 0.062744140625,
+    "best_feasible_objective": 2.0,
+    "approx_ratio_best": 1.0,
+    "approx_ratio_mean_feasible": 0.4038790644609241,
+    "mean_qubo_energy": 66.512451171875
+   },
+   {
+    "name": "qa-care-noe-care-s3-d1-v17",
+    "sha256": "42db15dfbb4bfe19342b15a20caf0172273a550429512f3de335d1a36b5fd193",
+    "kind": "Q-A",
+    "qubits": 17,
+    "variant": "qaoa",
+    "p": 1,
+    "gammas": [
+     1.419264508908394
+    ],
+    "betas": [
+     0.26035642900753697
+    ],
+    "optimum": 4.0,
+    "transpiled_depth": 596,
+    "two_qubit_gates": 356,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.000244140625,
+    "p_opt": 0.0,
+    "best_feasible_objective": 335.0,
+    "approx_ratio_best": 0.011940298507462687,
+    "approx_ratio_mean_feasible": 0.011940298507462687,
+    "mean_qubo_energy": 9530.62255859375
+   },
+   {
+    "name": "qa-care-noe-care-s3-d1-v17",
+    "sha256": "42db15dfbb4bfe19342b15a20caf0172273a550429512f3de335d1a36b5fd193",
+    "kind": "Q-A",
+    "qubits": 17,
+    "variant": "warm-start",
+    "p": 1,
+    "gammas": [
+     0.49380975386875237
+    ],
+    "betas": [
+     0.43340632168228915
+    ],
+    "optimum": 4.0,
+    "transpiled_depth": 592,
+    "two_qubit_gates": 356,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.037841796875,
+    "p_opt": 0.0126953125,
+    "best_feasible_objective": 4.0,
+    "approx_ratio_best": 1.0,
+    "approx_ratio_mean_feasible": 0.041388518024032046,
+    "mean_qubo_energy": 3703.27734375
+   },
+   {
+    "name": "qb-care-req-e6-s6",
+    "sha256": "a1e2bb9659f340439b598b889db0516f1caffbcda1fad1694f9b84e95aa8c734",
+    "kind": "Q-B",
+    "qubits": 16,
+    "variant": "qaoa",
+    "p": 1,
+    "gammas": [
+     1.6098209468662064
+    ],
+    "betas": [
+     1.2980835734986897
+    ],
+    "optimum": 3.0,
+    "transpiled_depth": 103,
+    "two_qubit_gates": 87,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.143798828125,
+    "p_opt": 0.020751953125,
+    "best_feasible_objective": 3.0,
+    "approx_ratio_best": 1.0,
+    "approx_ratio_mean_feasible": 0.691044192412984,
+    "mean_qubo_energy": 20.19775390625
+   },
+   {
+    "name": "qb-care-req-e6-s6",
+    "sha256": "a1e2bb9659f340439b598b889db0516f1caffbcda1fad1694f9b84e95aa8c734",
+    "kind": "Q-B",
+    "qubits": 16,
+    "variant": "warm-start",
+    "p": 1,
+    "gammas": [
+     1.440137344552524
+    ],
+    "betas": [
+     0.36507175432528516
+    ],
+    "optimum": 3.0,
+    "transpiled_depth": 103,
+    "two_qubit_gates": 87,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.422119140625,
+    "p_opt": 0.233154296875,
+    "best_feasible_objective": 3.0,
+    "approx_ratio_best": 1.0,
+    "approx_ratio_mean_feasible": 0.8496314496314497,
+    "mean_qubo_energy": 12.135986328125
+   },
+   {
+    "name": "qb-geringes-einkommen-req-e7-s6",
+    "sha256": "e6c2b63b597503b11176c3bdc4d0bb870fa7a66fa293a5cd91e5e5e481f69a66",
+    "kind": "Q-B",
+    "qubits": 16,
+    "variant": "qaoa",
+    "p": 1,
+    "gammas": [
+     1.105530548083046
+    ],
+    "betas": [
+     1.457838652206478
+    ],
+    "optimum": 3.0,
+    "transpiled_depth": 148,
+    "two_qubit_gates": 86,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.20751953125,
+    "p_opt": 0.023193359375,
+    "best_feasible_objective": 3.0,
+    "approx_ratio_best": 1.0,
+    "approx_ratio_mean_feasible": 0.6838294448913919,
+    "mean_qubo_energy": 32.1787109375
+   },
+   {
+    "name": "qb-geringes-einkommen-req-e7-s6",
+    "sha256": "e6c2b63b597503b11176c3bdc4d0bb870fa7a66fa293a5cd91e5e5e481f69a66",
+    "kind": "Q-B",
+    "qubits": 16,
+    "variant": "warm-start",
+    "p": 1,
+    "gammas": [
+     1.3018930496360026
+    ],
+    "betas": [
+     0.37049875856472403
+    ],
+    "optimum": 3.0,
+    "transpiled_depth": 149,
+    "two_qubit_gates": 86,
+    "physical_qubits": 156,
+    "shots": 4096,
+    "feasibility_rate": 0.397216796875,
+    "p_opt": 0.118896484375,
+    "best_feasible_objective": 3.0,
+    "approx_ratio_best": 1.0,
+    "approx_ratio_mean_feasible": 0.7619419294411489,
+    "mean_qubo_energy": 16.79638671875
+   }
+  ],
+  "processor_family": "Heron",
+  "final_status": "DONE",
+  "finished_at": "2026-11-06T04:20:33+00:00",
+  "started_at": "2026-11-06T04:15:35+00:00",
+  "git_sha": "bf2fde6fbeaf203f6baca02dce53c7c386e6b404"
+ },
+ "instances": [
+  {
+   "name": "qa-care-noe-care-s2-d1-v11",
+   "kind": "Q-A",
+   "sha256": "42a2ace14bf30be5ee3e965536dc50da59318f2f604ca5dddd221a299556b1a5",
+   "qubits": 11
+  },
+  {
+   "name": "qa-care-wien-care-s2-d1-v12",
+   "kind": "Q-A",
+   "sha256": "98a1b58bb92380e86ee8c28b97ec14cfe2715faa9d8fd01206a06e1d7da90e7a",
+   "qubits": 12
+  },
+  {
+   "name": "qa-care-noe-care-s3-d1-v17",
+   "kind": "Q-A",
+   "sha256": "42db15dfbb4bfe19342b15a20caf0172273a550429512f3de335d1a36b5fd193",
+   "qubits": 17
+  },
+  {
+   "name": "qa-care-wien-care-s3-d1-v18",
+   "kind": "Q-A",
+   "sha256": "c79aed479228f49f79ed268fc7afb3632651a73af5423a964e69a0e7f1e356ae",
+   "qubits": 18
+  },
+  {
+   "name": "qa-care-wien-care-s4-d1-v24",
+   "kind": "Q-A",
+   "sha256": "144c433b313b270b119692a258b216c90fcfa79fcc1fcf7372737d710bb6f2d6",
+   "qubits": 24
+  },
+  {
+   "name": "qa-care-wien-care-s5-d1-v30",
+   "kind": "Q-A",
+   "sha256": "09c667c08002a8e48c60cf2008a43a0758cd60a15178a0b18285f22b52d8ca45",
+   "qubits": 30
+  },
+  {
+   "name": "qa-care-wien-care-s4-d2-v48",
+   "kind": "Q-A",
+   "sha256": "8036e1d326e684fa340f135cb452f8b8a0a049175d35b28c5e030938291adbcc",
+   "qubits": 48
+  },
+  {
+   "name": "qa-care-wien-care-s7-d5-v210",
+   "kind": "Q-A",
+   "sha256": "818bbb359182473dc68d159bd0542e1bc38d8c9817d6d030aee19709ba5ac248",
+   "qubits": 210
+  },
+  {
+   "name": "qa-care-noe-care-s4-d5-v112",
+   "kind": "Q-A",
+   "sha256": "d159da9aa5b774383c5841198f099f34b65fb66a4860950093f873748a5b5a2b",
+   "qubits": 112
+  },
+  {
+   "name": "qb-care-req-e3-s4",
+   "kind": "Q-B",
+   "sha256": "2dd7b806165dc30015d5488735468c84eb4070460b923b68b992f5e75236df4d",
+   "qubits": 9
+  },
+  {
+   "name": "qb-care-req-e6-s6",
+   "kind": "Q-B",
+   "sha256": "a1e2bb9659f340439b598b889db0516f1caffbcda1fad1694f9b84e95aa8c734",
+   "qubits": 16
+  },
+  {
+   "name": "qb-geringes-einkommen-req-e7-s6",
+   "kind": "Q-B",
+   "sha256": "e6c2b63b597503b11176c3bdc4d0bb870fa7a66fa293a5cd91e5e5e481f69a66",
+   "qubits": 16
+  },
+  {
+   "name": "qb-care-req-e9-s9",
+   "kind": "Q-B",
+   "sha256": "50cc96323e27cdc7aeaca6ae9f0afbf31b037aa5e556cec1e133bb9137691521",
+   "qubits": 24
+  },
+  {
+   "name": "qb-care-req-e11-s9",
+   "kind": "Q-B",
+   "sha256": "783980ad41349fc6ede42bad0f65b6c18b8de30506b80a31990dd0137fab235c",
+   "qubits": 26
+  },
+  {
+   "name": "qb-care-req-e14-s10",
+   "kind": "Q-B",
+   "sha256": "13e48f13592ef63b0b587ff47dc142eab04f01738ac8728e5582fb69d575e48f",
+   "qubits": 30
+  },
+  {
+   "name": "qb-care+geringes-einkommen-req-e21-s10",
+   "kind": "Q-B",
+   "sha256": "037d14b55f2071b897c3041e55ae9ba780e450181e9ec00931a367fb4c1686b5",
+   "qubits": 40
+  },
+  {
+   "name": "qb-care+geringes-einkommen-all-e45-s11",
+   "kind": "Q-B",
+   "sha256": "4d72fd01eec784705bcc86c30c0e6096062328453a8bce861343e76a66c50f0c",
+   "qubits": 71
+  }
+ ],
+ "notes": {
+  "framing": "No quantum-advantage claim. Classical solvers are exact or near-exact on every instance; QAOA is reported for the formulation and hardware study.",
+  "approx_ratio": "optimum / objective of a feasible sample (minimisation, 1 = optimal)",
+  "q_a": "Instance builders for Q-A (case scheduling) and Q-B (document set cover).\n\nEverything is derived from packages/knowledge; nothing is sampled at random.\n\nQ-A modelling choices (documented here and copied into results.json):\n- Case steps: process steps of the bundle's benefits whose action needs a visit:\n  ``office.resolve`` -> office visit (60 min), ``documents.checklist`` -> document submission or\n  pickup (30 min), ``appointment.prepare`` -> appointment (60 min). Steps are taken round-robin\n  over the bundle's benefits so consecutive steps sit at different offices.\n- Place: the office from the benefit's ``office_rules`` for the persona facts. If that office has\n  no parseable opening hours, the nearest office of the same carrier and region that has them is\n  used (``substituted_for`` records it). Steps without a usable place are listed as skipped.\n- Slots: weekdays from Monday, candidate starts on a fixed grid (default 08:00, 09:00, 10:00,\n  11:00, 13:00, 14:00); a start is allowed only if [start, start + duration) lies inside an\n  opening interval.\n- Deadlines: no process step in the knowledge base defines a deadline (the process files state\n  that reminders are prompts, not statutory deadlines). We use the reminder ``after_days`` as a\n  soft due day where present and the horizon end otherwise.\n- Travel: straight-line distance between the postcode centroids (GeoNames, data/postcodes-at.json)\n  at 30 km/h, rounded to minutes. Vienna postcodes share one centroid in that file, so most\n  intra-Vienna travel times are 0; the Lower Austria persona has real distances.\n\nQ-B: elements are a bundle's documents[] entries (required ones by default); sets are the\nsources a person would visit or contact (employer, pension carrier, doctor, ...), matched from the\n``obtain_from`` text with fixed patterns. An element belongs to every source its text names.\n",
+  "qubo": "QUBO formulations (lotse-rl.md §9) and bitstring decoding.\n\nA QUBO is an upper-triangular matrix Q (diagonal = linear terms) plus an offset;\nE(x) = sum_{k<=l} Q[k, w] x_k x_l + offset for x in {0,1}^n.\n\nQ-A (case scheduling), x_{i,t} = 1 if step i starts in allowed slot t:\n  H = A sum_i (sum_t x_{i,t} - 1)^2\n    + B sum_{overlapping (i,t),(j,u), i != j} x_{i,t} x_{j,u}\n    + sum_{i,t} lateness_i(t) x_{i,t}\n    + C sum_{consecutive (i,t)->(j,u)} tau(i,j) x_{i,t} x_{j,u}\n  with C = 1 (travel minutes and lateness share one unit) and\n  A = B = 1 + max_k (lateness_k + sum_l C tau_kl [k,w consecutive]), i.e. larger than anything a\n  single variable can gain on the objective terms. For every instance we enumerate (n <= 20) or\n  anneal and check that the QUBO ground state is feasible and equals the CP-SAT optimum.\n  \"Overlapping\" = same day and intersecting [start, end); \"consecutive\" = same day, (j,u) starts\n  at or after the end of (i,t) and no grid start lies in between.\n\nQ-B (minimum set cover, Lucas 2014 §5.1), x_i = 1 if set i is used, y_{a,m} = 1 if element a is\ncovered exactly m times (m = 1..M_a, M_a = number of sets containing a):\n  H = A sum_a (1 - sum_m y_{a,m})^2 + A sum_a (sum_m m y_{a,m} - sum_{i: a in V_i} x_i)^2\n    + B sum_i x_i,   with B = 1 and A = 2 (Lucas requires 0 < B < A).\n  Decoding reads only the set bits; a sample is feasible if the chosen sets cover every element.\n",
+  "qaoa": "QAOA and warm-start QAOA: parameter training on an exact numpy statevector (n <= 20),\nQiskit circuits for sampling on Aer or IBM hardware.\n\nEnergies are divided by the largest absolute QUBO coefficient before building the circuit so\nthat angles are comparable across instances. Plain QAOA starts in |+>^n with the RX mixer.\nWarm-start QAOA (Egger, Marecek, Woerner 2021) starts in prod_k RY(theta_k)|0> with\nsin^2(theta_k/2) = c_k, c_k = eps or 1 - eps from the CP-SAT bits (eps = 0.25), and uses the\nmixer RY(theta_k) RZ(-2 beta) RY(-theta_k). Warm-starting from the exact optimum is the most\nfavourable case for QAOA by construction; we report it as such, not as an independent solver.\n",
+  "git_sha": "aer.git_sha / hardware.git_sha are the commits whose code produced each block (recorded after rebasing onto main; the ml/quantum tree there differs from the top-level git_sha only in run metadata).",
+  "hardware": "IBM Heron (ibm_marrakesh) via qiskit-ibm-runtime SamplerV2, p=1, 4096 shots, optimization_level=3 transpilation; QAOA angles trained on the exact statevector. Hardware results are noisy and are reported for reproducibility, not as evidence of advantage."
+ }
+}
