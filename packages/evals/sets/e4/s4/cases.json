@@ -1,0 +1,3080 @@
+[
+  {
+    "id": "child-01",
+    "kind": "synthetic",
+    "tags": [
+      "synthetic",
+      "nightly",
+      "weekly",
+      "language:de-AT",
+      "standard",
+      "missing_information",
+      "pr"
+    ],
+    "input": {
+      "openingUtterance": "Ich habe ein Kind und möchte wissen, welche Angebote es gibt.",
+      "persona": {
+        "language": "de-AT",
+        "age": 31,
+        "carrier": "ÖGK",
+        "region": "Salzburg",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Ich habe ein Kind und möchte wissen, welche Angebote es gibt.",
+          "actorRole": "parent",
+          "childAgeMonths": 3,
+          "region": "Salzburg",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed",
+          "withheldUntilAsked": ["childAgeMonths", "region"]
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal."
+      },
+      "dimensions": ["standard", "missing_information"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Salzburg residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 2,
+        "requiredSlots": [
+          {
+            "fact": "childAgeMonths",
+            "description": "Ask only for the missing child age to tailor local offers.",
+            "sourceIds": ["questions", "scenario"]
+          },
+          {
+            "fact": "region",
+            "description": "Ask only for the missing residence region to tailor local offers.",
+            "sourceIds": ["questions", "scenario"]
+          }
+        ],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-02",
+    "kind": "synthetic",
+    "tags": [
+      "synthetic",
+      "nightly",
+      "weekly",
+      "language:en",
+      "standard",
+      "missing_information",
+      "pr"
+    ],
+    "input": {
+      "openingUtterance": "I have a child and want to know which offers exist.",
+      "persona": {
+        "language": "en",
+        "age": 32,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "I have a child and want to know which offers exist.",
+          "actorRole": "parent",
+          "childAgeMonths": 8,
+          "region": "Wien",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed",
+          "withheldUntilAsked": ["childAgeMonths", "region"]
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal."
+      },
+      "dimensions": ["standard", "missing_information"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Vienna residence, offer the city MA 11 parent-advice directory for babies and young children. Do not confuse MA 11 with a district administrative office or invent an office ID.",
+          "sourceIds": ["regional_vienna"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 2,
+        "requiredSlots": [
+          {
+            "fact": "childAgeMonths",
+            "description": "Ask only for the missing child age to tailor local offers.",
+            "sourceIds": ["questions", "scenario"]
+          },
+          {
+            "fact": "region",
+            "description": "Ask only for the missing residence region to tailor local offers.",
+            "sourceIds": ["questions", "scenario"]
+          }
+        ],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-03",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "standard"],
+    "input": {
+      "openingUtterance": "Mein Baby ist acht Monate alt. Wir wohnen in Wien. Welche Angebote gibt es für uns als Familie?",
+      "persona": {
+        "language": "de-AT",
+        "age": 29,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Mein Baby ist acht Monate alt. Wir wohnen in Wien. Welche Angebote gibt es für uns als Familie?",
+          "actorRole": "parent",
+          "childAgeMonths": 8,
+          "region": "Wien",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal."
+      },
+      "dimensions": ["standard"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Vienna residence, offer the city MA 11 parent-advice directory for babies and young children. Do not confuse MA 11 with a district administrative office or invent an office ID.",
+          "sourceIds": ["regional_vienna"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-04",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:en", "standard"],
+    "input": {
+      "openingUtterance": "My child is eighteen months old and we live in Graz. Could you give me an overview of support for our family?",
+      "persona": {
+        "language": "en",
+        "age": 35,
+        "carrier": "BVAEB",
+        "region": "Steiermark",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "My child is eighteen months old and we live in Graz. Could you give me an overview of support for our family?",
+          "actorRole": "parent",
+          "childAgeMonths": 18,
+          "region": "Steiermark",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal."
+      },
+      "dimensions": ["standard"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Steiermark residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-05",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "simple", "pr"],
+    "input": {
+      "openingUtterance": "Mein Baby ist sechs Monate alt. Wir leben in Linz. Welche Hilfe gibt es? Bitte einfache Wörter und immer nur einen Schritt.",
+      "persona": {
+        "language": "de-AT",
+        "age": 25,
+        "carrier": "ÖGK",
+        "region": "Oberösterreich",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Mein Baby ist sechs Monate alt. Wir leben in Linz. Welche Hilfe gibt es? Bitte einfache Wörter und immer nur einen Schritt.",
+          "actorRole": "parent",
+          "childAgeMonths": 6,
+          "region": "Oberösterreich",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Request simple language, short sentences and one instruction at a time."
+      },
+      "dimensions": ["simple"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Oberösterreich residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German with short everyday sentences, about B1, and one instruction at a time; check readability in the later transcript evaluation.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": true,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-06",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:en", "simple", "pr"],
+    "input": {
+      "openingUtterance": "My baby is nine months old. We live in Salzburg. What help is there? Please use easy words and one step at a time.",
+      "persona": {
+        "language": "en",
+        "age": 28,
+        "carrier": "SVS",
+        "region": "Salzburg",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "My baby is nine months old. We live in Salzburg. What help is there? Please use easy words and one step at a time.",
+          "actorRole": "parent",
+          "childAgeMonths": 9,
+          "region": "Salzburg",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Request simple language, short sentences and one instruction at a time."
+      },
+      "dimensions": ["simple"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Salzburg residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English with short everyday sentences, about B1, and one instruction at a time; check readability in the later transcript evaluation.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": true,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-07",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "dialect", "pr"],
+    "input": {
+      "openingUtterance": "I hab a kloans Kind, vierzehn Monat. Mir wohnen in Innsbruck. Wos gibt’s denn do für uns?",
+      "persona": {
+        "language": "de-AT",
+        "age": 33,
+        "carrier": "SVS",
+        "region": "Tirol",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "I hab a kloans Kind, vierzehn Monat. Mir wohnen in Innsbruck. Wos gibt’s denn do für uns?",
+          "actorRole": "parent",
+          "childAgeMonths": 14,
+          "region": "Tirol",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Use Austrian dialect naturally in later turns, without caricature."
+      },
+      "dimensions": ["dialect"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Tirol residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-08",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "dialect", "colloquial", "pr"],
+    "input": {
+      "openingUtterance": "Unser Zwerg is elf Monat, mir san in Graz daheim. I blick bei dem Papierkram ned durch. Wos gibt’s für Familien?",
+      "persona": {
+        "language": "de-AT",
+        "age": 30,
+        "carrier": "ÖGK",
+        "region": "Steiermark",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Unser Zwerg is elf Monat, mir san in Graz daheim. I blick bei dem Papierkram ned durch. Wos gibt’s für Familien?",
+          "actorRole": "parent",
+          "childAgeMonths": 11,
+          "region": "Steiermark",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Use Austrian dialect naturally in later turns, without caricature. Use informal everyday phrasing."
+      },
+      "dimensions": ["dialect", "colloquial"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Steiermark residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-09",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "colloquial"],
+    "input": {
+      "openingUtterance": "Unser Kleiner ist zwei, wir wohnen in St. Pölten. Ich steh bei den ganzen Angeboten auf dem Schlauch. Kannst du sie mir sortieren?",
+      "persona": {
+        "language": "de-AT",
+        "age": 37,
+        "carrier": "BVAEB",
+        "region": "Niederösterreich",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Unser Kleiner ist zwei, wir wohnen in St. Pölten. Ich steh bei den ganzen Angeboten auf dem Schlauch. Kannst du sie mir sortieren?",
+          "actorRole": "parent",
+          "childAgeMonths": 24,
+          "region": "Niederösterreich",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Use informal everyday phrasing."
+      },
+      "dimensions": ["colloquial"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Niederösterreich residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-10",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:en", "colloquial"],
+    "input": {
+      "openingUtterance": "Our little one is fifteen months old, we’re in Vienna, and I’m lost in all the family stuff. What’s out there for us?",
+      "persona": {
+        "language": "en",
+        "age": 34,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Our little one is fifteen months old, we’re in Vienna, and I’m lost in all the family stuff. What’s out there for us?",
+          "actorRole": "parent",
+          "childAgeMonths": 15,
+          "region": "Wien",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Use informal everyday phrasing."
+      },
+      "dimensions": ["colloquial"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Vienna residence, offer the city MA 11 parent-advice directory for babies and young children. Do not confuse MA 11 with a district administrative office or invent an office ID.",
+          "sourceIds": ["regional_vienna"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-11",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "helper", "simple", "pr"],
+    "input": {
+      "openingUtterance": "Ich frage für meine Tochter. Ihr Baby ist fünf Monate alt, beide wohnen in Salzburg. Welche Angebote gibt es? Bitte einfach erklären.",
+      "persona": {
+        "language": "de-AT",
+        "age": 61,
+        "carrier": "BVAEB",
+        "region": "Salzburg",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Ich frage für meine Tochter. Ihr Baby ist fünf Monate alt, beide wohnen in Salzburg. Welche Angebote gibt es? Bitte einfach erklären.",
+          "actorRole": "grandparent",
+          "childAgeMonths": 5,
+          "region": "Salzburg",
+          "childLivesWithParent": true,
+          "subject": "The child and the child's parent; I am only helping.",
+          "authority": "No authority to approve, sign or submit for the parent.",
+          "carrierBelongsTo": "helper; the parent's responsible insurer has not been established"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Request simple language, short sentences and one instruction at a time. Keep the helper, parent and child separate; never claim parental consent or authority."
+      },
+      "dimensions": ["helper", "simple"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm that the helper wants an overview for the child's parent and child, without treating the helper as applicant. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Salzburg residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German with short everyday sentences, about B1, and one instruction at a time; check readability in the later transcript evaluation.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": true,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-12",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:en", "helper", "pr"],
+    "input": {
+      "openingUtterance": "I’m asking for my sister and her ten-month-old baby in Vienna. What family offers could I help her find?",
+      "persona": {
+        "language": "en",
+        "age": 42,
+        "carrier": "SVS",
+        "region": "Wien",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "I’m asking for my sister and her ten-month-old baby in Vienna. What family offers could I help her find?",
+          "actorRole": "aunt",
+          "childAgeMonths": 10,
+          "region": "Wien",
+          "childLivesWithParent": true,
+          "subject": "The child and the child's parent; I am only helping.",
+          "authority": "No authority to approve, sign or submit for the parent.",
+          "carrierBelongsTo": "helper; the parent's responsible insurer has not been established"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Keep the helper, parent and child separate; never claim parental consent or authority."
+      },
+      "dimensions": ["helper"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm that the helper wants an overview for the child's parent and child, without treating the helper as applicant. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Vienna residence, offer the city MA 11 parent-advice directory for babies and young children. Do not confuse MA 11 with a district administrative office or invent an office ID.",
+          "sourceIds": ["regional_vienna"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-13",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "missing_information"],
+    "input": {
+      "openingUtterance": "Mein Kind ist sieben Monate alt. Ich möchte wissen, welche Angebote es bei uns in der Nähe gibt.",
+      "persona": {
+        "language": "de-AT",
+        "age": 27,
+        "carrier": "ÖGK",
+        "region": "Kärnten",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Mein Kind ist sieben Monate alt. Ich möchte wissen, welche Angebote es bei uns in der Nähe gibt.",
+          "actorRole": "parent",
+          "childAgeMonths": 7,
+          "region": "Kärnten",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed",
+          "withheldUntilAsked": ["region"]
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal."
+      },
+      "dimensions": ["missing_information"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Kärnten residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 1,
+        "requiredSlots": [
+          {
+            "fact": "region",
+            "description": "Ask only for the missing residence region to tailor local offers.",
+            "sourceIds": ["questions", "scenario"]
+          }
+        ],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-14",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:en", "missing_information", "simple"],
+    "input": {
+      "openingUtterance": "We live in Bregenz and have a young child. What family help can we find? Please keep it simple.",
+      "persona": {
+        "language": "en",
+        "age": 36,
+        "carrier": "BVAEB",
+        "region": "Vorarlberg",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "We live in Bregenz and have a young child. What family help can we find? Please keep it simple.",
+          "actorRole": "parent",
+          "childAgeMonths": 16,
+          "region": "Vorarlberg",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed",
+          "withheldUntilAsked": ["childAgeMonths"]
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Request simple language, short sentences and one instruction at a time."
+      },
+      "dimensions": ["missing_information", "simple"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Vorarlberg residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 1,
+        "requiredSlots": [
+          {
+            "fact": "childAgeMonths",
+            "description": "Ask only for the missing child age to tailor local offers.",
+            "sourceIds": ["questions", "scenario"]
+          }
+        ],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English with short everyday sentences, about B1, and one instruction at a time; check readability in the later transcript evaluation.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": true,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-15",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "contradictory_information", "pr"],
+    "input": {
+      "openingUtterance": "Mein Baby ist vier Monate alt, nein vier Jahre, ich komme durcheinander. Wir wohnen in Wien. Welche Angebote gibt es?",
+      "persona": {
+        "language": "de-AT",
+        "age": 32,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Mein Baby ist vier Monate alt, nein vier Jahre, ich komme durcheinander. Wir wohnen in Wien. Welche Angebote gibt es?",
+          "actorRole": "parent",
+          "childAgeMonths": 4,
+          "region": "Wien",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed",
+          "withheldUntilAsked": [],
+          "correctionWhenAsked": {
+            "childAgeMonths": 4
+          }
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Preserve the opening contradiction until the assistant asks to clarify; then give correctionWhenAsked explicitly. The corrected value is authoritative only after confirmation."
+      },
+      "dimensions": ["contradictory_information"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Vienna residence, offer the city MA 11 parent-advice directory for babies and young children. Do not confuse MA 11 with a district administrative office or invent an office ID.",
+          "sourceIds": ["regional_vienna"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 1,
+        "requiredSlots": [
+          {
+            "fact": "childAgeMonths",
+            "description": "Clarify the conflicting child age and obtain confirmation of the correction before tailoring offers.",
+            "sourceIds": ["questions", "scenario"]
+          }
+        ],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "Clarify the contradictory fact first. After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-16",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:en", "contradictory_information", "pr"],
+    "input": {
+      "openingUtterance": "Our child is twenty months old. We live in Vienna, or Salzburg, I mixed that up. Which family offers can we use nearby?",
+      "persona": {
+        "language": "en",
+        "age": 30,
+        "carrier": "SVS",
+        "region": "Salzburg",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Our child is twenty months old. We live in Vienna, or Salzburg, I mixed that up. Which family offers can we use nearby?",
+          "actorRole": "parent",
+          "childAgeMonths": 20,
+          "region": "Salzburg",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed",
+          "withheldUntilAsked": [],
+          "correctionWhenAsked": {
+            "region": "Salzburg"
+          }
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Preserve the opening contradiction until the assistant asks to clarify; then give correctionWhenAsked explicitly. The corrected value is authoritative only after confirmation."
+      },
+      "dimensions": ["contradictory_information"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Salzburg residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 1,
+        "requiredSlots": [
+          {
+            "fact": "region",
+            "description": "Clarify the conflicting residence region and obtain confirmation of the correction before tailoring offers.",
+            "sourceIds": ["questions", "scenario"]
+          }
+        ],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "Clarify the contradictory fact first. After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-17",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "voice_captions", "simple", "pr"],
+    "input": {
+      "openingUtterance": "Mein Kind ist ein Jahr alt und wir leben in Wien. Ich nutze nur Sprache und Untertitel. Bitte sag mir einfach, welche Angebote es gibt.",
+      "persona": {
+        "language": "de-AT",
+        "age": 28,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "Mein Kind ist ein Jahr alt und wir leben in Wien. Ich nutze nur Sprache und Untertitel. Bitte sag mir einfach, welche Angebote es gibt.",
+          "actorRole": "parent",
+          "childAgeMonths": 12,
+          "region": "Wien",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Request simple language, short sentences and one instruction at a time. Use only spoken interaction and captions. Do not pretend to see a map or click a link. Ask for a spoken next step and confirmation by voice."
+      },
+      "dimensions": ["voice_captions", "simple"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Vienna residence, offer the city MA 11 parent-advice directory for babies and young children. Do not confuse MA 11 with a district administrative office or invent an office ID.",
+          "sourceIds": ["regional_vienna"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful German with short everyday sentences, about B1, and one instruction at a time; check readability in the later transcript evaluation. Speak each choice and next action, mirror it in captions, and accept spoken confirmation; do not require pointing, maps, clicking or reading a link.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": true,
+        "voiceCaptions": true
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-18",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:en", "voice_captions", "pr"],
+    "input": {
+      "openingUtterance": "My child is twenty-two months old and we live in Innsbruck. I only use speech and captions. Talk me through the family offers.",
+      "persona": {
+        "language": "en",
+        "age": 39,
+        "carrier": "BVAEB",
+        "region": "Tirol",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "My child is twenty-two months old and we live in Innsbruck. I only use speech and captions. Talk me through the family offers.",
+          "actorRole": "parent",
+          "childAgeMonths": 22,
+          "region": "Tirol",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed"
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Use only spoken interaction and captions. Do not pretend to see a map or click a link. Ask for a spoken next step and confirmation by voice."
+      },
+      "dimensions": ["voice_captions"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Tirol residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English at the requested conversational level; explain official German benefit names. Speak each choice and next action, mirror it in captions, and accept spoken confirmation; do not require pointing, maps, clicking or reading a link.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": false,
+        "voiceCaptions": true
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-19",
+    "kind": "synthetic",
+    "tags": ["synthetic", "nightly", "weekly", "language:de-AT", "standard"],
+    "input": {
+      "openingUtterance": "Mein Baby ist zwei Monate alt und wir wohnen in Wien. Welche Angebote gibt es? Danach möchte ich wissen, was ich für die Antwort auf den Finanzamtbrief mit der fehlenden IBAN brauche.",
+      "persona": {
+        "language": "de-AT",
+        "age": 34,
+        "carrier": "ÖGK",
+        "region": "Wien",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation. After the overview, get the complete checklist for replying to the missing-information letter; I will complete it myself.",
+        "facts": {
+          "openingUtterance": "Mein Baby ist zwei Monate alt und wir wohnen in Wien. Welche Angebote gibt es? Danach möchte ich wissen, was ich für die Antwort auf den Finanzamtbrief mit der fehlenden IBAN brauche.",
+          "actorRole": "parent",
+          "childAgeMonths": 2,
+          "region": "Wien",
+          "childLivesWithParent": true,
+          "carrierBelongsTo": "parent; Wochengeld and previous insurance history not yet discussed",
+          "childBornInAustria": true,
+          "letter": "Finanzamt information letter asks only for the missing IBAN; no other evidence requested.",
+          "bankDetails": "I will enter my own IBAN myself. I want a checklist, not a completed letter; do not ask me to disclose my account details."
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal."
+      },
+      "dimensions": ["standard"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm the parent wants an overview of offers for the child and family. Then confirm the requested checklist for replying to the missing-IBAN information letter.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Vienna residence, offer the city MA 11 parent-advice directory for babies and young children. Do not confuse MA 11 with a district administrative office or invent an office ID.",
+          "sourceIds": ["regional_vienna"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "Complete checklist for replying to this specific information letter: the letter with the missing bank details supplied. The persona states that no other evidence is requested; do not turn this into a new application or claim a universal Familienbeihilfe checklist.",
+          "sourceIds": ["family_allowance"]
+        },
+        "required": [
+          {
+            "description": "The received Finanzamt information letter, with the requested IBAN completed for review.",
+            "sourceIds": ["family_allowance"],
+            "obtainFrom": "The parent retrieves the received letter from their own correspondence; the issuing Finanzamt can clarify a missing letter."
+          },
+          {
+            "description": "The parent's correct IBAN; never fabricate a bank account or treat the helper's account as the applicant's.",
+            "sourceIds": ["family_allowance"],
+            "obtainFrom": "The parent's own bank account information, supplied and confirmed by the parent."
+          }
+        ],
+        "conditional": [
+          {
+            "description": "Only further evidence explicitly requested by the Finanzamt; none is requested in this persona's letter.",
+            "sourceIds": ["family_allowance"],
+            "obtainFrom": "Follow the received official request; ask the Finanzamt if its evidence requirement is unclear."
+          }
+        ]
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 0,
+        "requiredSlots": [],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "After the overview, give the checklist and explain how the parent can add their own IBAN to the received Finanzamt information letter for their review. The parent will complete it themselves; do not collect account details, submit it, send an email or start a duplicate Familienbeihilfe application.",
+        "sourceIds": ["family_allowance", "actions"]
+      },
+      "communication": {
+        "description": "Use respectful German at the requested conversational level; explain official German benefit names.",
+        "sourceIds": ["language", "scenario"],
+        "language": "de-AT",
+        "simple": false,
+        "voiceCaptions": false
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  },
+  {
+    "id": "child-20",
+    "kind": "synthetic",
+    "tags": [
+      "synthetic",
+      "nightly",
+      "weekly",
+      "language:en",
+      "helper",
+      "voice_captions",
+      "contradictory_information",
+      "pr"
+    ],
+    "input": {
+      "openingUtterance": "I’m helping my daughter with her six-month-old baby. They live in Graz, or Linz, I keep mixing them up. What family offers are there? I can only use speech and captions.",
+      "persona": {
+        "language": "en",
+        "age": 58,
+        "carrier": "ÖGK",
+        "region": "Oberösterreich",
+        "goal": "Get a source-backed administrative overview of family and child offers, with age-appropriate regional navigation and one agreed next step.",
+        "facts": {
+          "openingUtterance": "I’m helping my daughter with her six-month-old baby. They live in Graz, or Linz, I keep mixing them up. What family offers are there? I can only use speech and captions.",
+          "actorRole": "grandparent",
+          "childAgeMonths": 6,
+          "region": "Oberösterreich",
+          "childLivesWithParent": true,
+          "subject": "The child and the child's parent; I am only helping.",
+          "authority": "No authority to approve, sign or submit for the parent.",
+          "carrierBelongsTo": "helper; the parent's responsible insurer has not been established",
+          "correctionWhenAsked": {
+            "region": "Oberösterreich"
+          }
+        },
+        "style": "Begin with the exact openingUtterance. Know only these facts. Reveal withheldUntilAsked facts only when asked; never invent unknown eligibility or document facts. If asked to confirm the understood goal, agree when it matches the overview goal. Preserve the opening contradiction until the assistant asks to clarify; then give correctionWhenAsked explicitly. The corrected value is authoritative only after confirmation. Use only spoken interaction and captions. Do not pretend to see a map or click a link. Ask for a spoken next step and confirmation by voice. Keep the helper, parent and child separate; never claim parental consent or authority."
+      },
+      "dimensions": ["helper", "voice_captions", "contradictory_information"]
+    },
+    "expected": {
+      "goal": {
+        "description": "Confirm that the helper wants an overview for the child's parent and child, without treating the helper as applicant. Obtain confirmation before narrowing the next step.",
+        "sourceIds": ["goal", "scenario"]
+      },
+      "benefits": [
+        {
+          "topic": "examinations",
+          "description": "Identify Eltern-Kind-Pass examinations and the administrative connection between documented examination evidence and Kinderbetreuungsgeld. Do not choose examinations or interpret results.",
+          "sourceIds": ["scenario", "pass"],
+          "catalogRef": null
+        },
+        {
+          "topic": "vaccinations",
+          "description": "Identify the child vaccination programme and the official regional access information. Availability and costs must be checked for the particular programme; no personal vaccine choice or schedule.",
+          "sourceIds": ["scenario", "vaccinations"],
+          "catalogRef": null
+        },
+        {
+          "topic": "child_health",
+          "description": "Identify child health and parent-support information and an official directory of local parent education or advice services; use the child age to narrow the search.",
+          "sourceIds": ["scenario", "parent_services"],
+          "catalogRef": null
+        },
+        {
+          "topic": "movement",
+          "description": "Offer to look up age-appropriate parent-child activity providers. Parent-child exercise courses are published examples for ages three to six; for younger children verify the provider age range before naming a course. No exercise prescription.",
+          "sourceIds": ["scenario", "movement"],
+          "catalogRef": null
+        },
+        {
+          "topic": "nutrition",
+          "description": "Identify Richtig essen von Anfang an (REVAN) as an official information programme with baby and toddler topics, and offer a provider or information lookup without giving a diet. Kinder essen gesund targets ages four to ten; do not present that initiative as infant-specific.",
+          "sourceIds": ["scenario", "parent_services", "nutrition"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_counseling",
+          "description": "Identify free family counseling and offer to find a service by location and topic.",
+          "sourceIds": ["scenario", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "topic": "family_allowance",
+          "description": "Identify Familienbeihilfe outside social insurance. Distinguish automatic processing after a domestic birth from a required application or a request for missing information; do not promise entitlement or payment.",
+          "sourceIds": ["scenario", "family_allowance"],
+          "catalogRef": null
+        },
+        {
+          "topic": "childcare_allowance",
+          "description": "Identify Kinderbetreuungsgeld as a separate application-based benefit through the responsible health insurer. Explain that examination evidence matters administratively; do not promise entitlement or select a payment model.",
+          "sourceIds": ["scenario", "childcare", "pass"],
+          "catalogRef": null
+        }
+      ],
+      "offices": [
+        {
+          "description": "Finanzamt Österreich handles Familienbeihilfe.",
+          "sourceIds": ["family_office"],
+          "catalogRef": "ref:offices/finanzamt-oesterreich"
+        },
+        {
+          "description": "Route Kinderbetreuungsgeld to the insurer responsible under the Wochengeld/current or previous insurance rule. Do not infer that the child's insurer or a helper's insurer is responsible. Clarify insurance history only if preparing this application.",
+          "sourceIds": ["childcare_office"],
+          "catalogRef": null
+        },
+        {
+          "description": "Use the official federal-state vaccination access information and the parent-service directory for the confirmed region; counseling is delivered by the chosen family counseling service, not the Finanzamt.",
+          "sourceIds": ["vaccinations", "parent_services", "counseling"],
+          "catalogRef": null
+        },
+        {
+          "description": "For the confirmed Oberösterreich residence, use the official parent-service directory to find a nearby provider. Do not transplant Vienna-only services or invent a local address, fee or appointment.",
+          "sourceIds": ["parent_services"],
+          "catalogRef": null
+        }
+      ],
+      "documents": {
+        "scope": {
+          "description": "For this overview and local-service lookup no application documents need to be collected. State that a later selected application gets its own sourced, circumstance-specific checklist; do not request financial or medical records for orientation.",
+          "sourceIds": ["questions", "scenario"]
+        },
+        "required": [],
+        "conditional": []
+      },
+      "forms": [
+        {
+          "description": "For an overview no form is required. If a Familienbeihilfe application is actually needed, find Beih100 through the official service; if only an information letter is outstanding, prepare a reply rather than a duplicate application. Kinderbetreuungsgeld needs its own insurer application if the user chooses that process.",
+          "sourceIds": ["family_form", "family_allowance", "childcare"],
+          "catalogRef": null
+        }
+      ],
+      "questions": {
+        "baseline": "authored_next_step_lower_bound",
+        "minimum": 1,
+        "requiredSlots": [
+          {
+            "fact": "region",
+            "description": "Clarify the conflicting residence region and obtain confirmation of the correction before tailoring offers.",
+            "sourceIds": ["questions", "scenario"]
+          }
+        ],
+        "countingRule": "Count independently requested fact slots, even if combined in one sentence. Exclude goal confirmation and the user choice of next action. This is an authored lower bound for this next step; use the real process engine minimum when available, never claim an engine measurement from this fixture.",
+        "sourceIds": ["questions", "scenario"]
+      },
+      "nextAction": {
+        "description": "Clarify the contradictory fact first. After confirming age and region, present the sourced overview and agree which offer to explore first. Prepare only the selected provider lookup or administrative reply; the parent retains all approvals and final actions.",
+        "sourceIds": ["questions", "actions", "scenario"]
+      },
+      "communication": {
+        "description": "Use respectful English at the requested conversational level; explain official German benefit names. Speak each choice and next action, mirror it in captions, and accept spoken confirmation; do not require pointing, maps, clicking or reading a link.",
+        "sourceIds": ["language", "scenario"],
+        "language": "en",
+        "simple": false,
+        "voiceCaptions": true
+      },
+      "citations": {
+        "description": "Every administrative claim and conditional rule must cite its supporting official passage. Preserve source locations in captions and offer to read the source name aloud. Make unknown eligibility and local availability explicit.",
+        "sourceIds": ["transparency"]
+      },
+      "boundary": {
+        "description": "No diagnosis, interpretation of findings, personal risk assessment, therapy, medication, dosage, vaccine selection, examination schedule or diet prescription. Navigate to qualified professionals for individual medical decisions. A documented medical recommendation may only be quoted verbatim with location.",
+        "sourceIds": ["medical_boundary"]
+      }
+    },
+    "source": {
+      "uri": "file:///repo/docs/prd/SV-KI-Lotse-PRD.md",
+      "passage": "| S4 Child | \"I have a child and want to know which offers exist.\" | Eltern-Kind-Pass examinations, vaccinations, child and youth health offers, exercise and nutrition, family counseling, Familienbeihilfe and Kinderbetreuungsgeld, regional offers | Bundles, life situations, reminders |"
+    }
+  }
+]
