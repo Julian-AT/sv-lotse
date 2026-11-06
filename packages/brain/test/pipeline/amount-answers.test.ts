@@ -123,3 +123,27 @@ test("the citation guard accepts a value from a cited table row and rejects an o
     removed: 0,
   });
 });
+
+test("a passage is promoted only when it names the asked benefit", () => {
+  // "bekomme" is not a topic: a Rezeptgebühr passage with a 2026 amount is not about this benefit.
+  const befreiung = {
+    id: "befreiung",
+    text: "Wenn Sie eine Ausgleichszulage bekommen, sind Sie 2026 ab EUR 1.308,39 befreit.",
+  };
+  const fused = [intro, befreiung, table];
+  expect(rankForAmounts(fused, "Wie viel Kinderbetreuungsgeld bekomme ich?", "2026-11-06")).toEqual(
+    fused,
+  );
+  // An inflected question word still matches the passage ("Heilbehelfen" / "Heilbehelfe").
+  const heilbehelfe = {
+    id: "heilbehelfe",
+    text: "Für Heilbehelfe beträgt der Selbstbehalt 2026 mindestens 46,20 Euro.",
+  };
+  expect(
+    rankForAmounts(
+      [intro, heilbehelfe],
+      "Wie hoch ist der Selbstbehalt bei Heilbehelfen?",
+      "2026-11-06",
+    )[0],
+  ).toBe(heilbehelfe);
+});

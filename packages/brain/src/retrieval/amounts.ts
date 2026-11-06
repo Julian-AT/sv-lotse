@@ -26,6 +26,19 @@ const AMOUNT_WORDS = new Set([
   "aktuelle",
   "aktuellen",
   "derzeit",
+  "bekomme",
+  "bekommt",
+  "bekommen",
+  "erhalte",
+  "erhält",
+  "erhalten",
+  "gibt",
+  "zahlt",
+  "zahle",
+  "zahlen",
+  "bezahle",
+  "bezahlt",
+  "bezahlen",
   "much",
   "amount",
   "cost",
@@ -77,14 +90,18 @@ export function amountsAppearIn(claim: string, cited: readonly string[]): boolea
 
 const hasAmount = (text: string): boolean =>
   /\d,\d{2}(?!\d)/u.test(text) || moneyAmounts(text).length > 0;
-/** The words naming what the question is about; a year or a level number names no benefit. */
-const terms = (text: string): string[] => [
-  ...new Set(
-    (text.toLocaleLowerCase("de-AT").match(/[\p{L}\p{N}]{4,}/gu) ?? []).filter(
-      (term) => /\p{L}/u.test(term) && !AMOUNT_WORDS.has(term),
+/**
+ * The words naming what the question is about, without a German inflection ending; a year or a
+ * level number names no benefit. The longest word comes first: it is usually the benefit's name.
+ */
+const terms = (text: string): string[] =>
+  [
+    ...new Set(
+      (text.toLocaleLowerCase("de-AT").match(/[\p{L}\p{N}]{4,}/gu) ?? [])
+        .filter((term) => /\p{L}/u.test(term) && !AMOUNT_WORDS.has(term))
+        .map((term) => (term.length > 6 ? term.replace(/(?:en|es|er|e|n|s)$/u, "") : term)),
     ),
-  ),
-];
+  ].sort((left, right) => right.length - left.length);
 
 /**
  * Orders retrieved passages for an amount question: passages about the asked benefit that state
@@ -100,11 +117,13 @@ export function rankForAmounts<T extends { text: string }>(
   if (!asksForAmount(query)) return [...passages];
   const year = new RegExp(`(?<!\\d)${asOf.slice(0, 4)}(?!\\d)`, "u");
   const topic = terms(query);
+  // About the asked benefit: names its main word and at least half of the question's words.
   const about = (text: string): boolean => {
-    if (topic.length === 0) return false;
     const lower = text.toLocaleLowerCase("de-AT");
-    const matched = topic.filter((term) => lower.includes(term)).length;
-    return matched > 0 && matched * 2 >= topic.length;
+    const matched = topic.filter((term) => lower.includes(term));
+    return (
+      topic[0] !== undefined && matched.includes(topic[0]) && matched.length * 2 >= topic.length
+    );
   };
   const current = passages.filter(
     (passage) => hasAmount(passage.text) && year.test(passage.text) && about(passage.text),
