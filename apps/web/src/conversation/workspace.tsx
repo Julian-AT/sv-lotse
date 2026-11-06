@@ -117,8 +117,7 @@ export function Workspace(): JSX.Element {
         if (first) {
           if (new URLSearchParams(window.location.search).has("caseId")) rememberCase(first.id);
           await select(first);
-        }
-        else if (hasNativeBridge()) {
+        } else if (hasNativeBridge()) {
           const created = z
             .strictObject({ case: CaseSummarySchema })
             .parse(await workspaceFetch(WORKSPACE_CONFIG.casesApi, { method: "POST" }));
