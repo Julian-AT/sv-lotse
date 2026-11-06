@@ -160,7 +160,9 @@ export function recentUserTexts(history: readonly LotseMessage[]): string[] {
 }
 
 /** The conversation is answering an earlier open offer: never offer the same page again. */
-export function answersOffer(history: readonly LotseMessage[]): boolean {
+export function answersOffer(history: readonly LotseMessage[], userText = ""): boolean {
+  // A new where-to question is not an answer to the previous offer.
+  if (GUIDANCE_REQUEST.test(userText)) return false;
   const assistant = history.findLast((message) => message.role === "assistant");
   return (
     assistant?.parts.some(

@@ -273,4 +273,7 @@ it("does not offer again while the user answers an offer", () => {
     ] as never;
   expect(answersOffer(assistant("tool-ui.offerResource"))).toBe(true);
   expect(answersOffer(assistant("tool-kb.search"))).toBe(false);
+  expect(answersOffer(assistant("tool-ui.offerResource"), "Wo beantrage ich Pflegegeld?")).toBe(
+    false,
+  );
 });

@@ -594,7 +594,7 @@ async function runTurn(
           !approvalRequested &&
           !pointed &&
           !resourceCalls &&
-          !answersOffer(prepared.history)
+          !answersOffer(prepared.history, userText)
         ) {
           const offer = await guidanceOffer({
             userTexts: [userText, ...recentUserTexts(prepared.history)],
