@@ -12,6 +12,7 @@ import type { LotseMessage } from "../tools/types.ts";
 import {
   applicantOf,
   askable,
+  cleanLabel,
   emptyValue,
   type FormAnswer,
   type FormMode,
@@ -22,6 +23,7 @@ import {
   handsOverData,
   missingSentence,
   modeRequest,
+  OTHER_PARTY,
   pendingFormQuestion,
   questionKey,
   userTexts,
@@ -188,6 +190,12 @@ function labelsOf(field: FormField): string[] {
     .map(normalize);
 }
 
+/** Whether a spoken field name has a known meaning (phone, birth date, address …). */
+export function knownMeaning(spoken: string): boolean {
+  const query = normalize(spoken).replace(ARTICLES, "").trim();
+  return SYNONYMS.some(([pattern]) => pattern.test(query));
+}
+
 /** The form fields a spoken field name means, robust to label variants and German/English. */
 export function resolveFields(fields: readonly FormField[], spoken: string): FormField[] {
   const query = normalize(spoken).replace(ARTICLES, "").trim();
@@ -199,6 +207,14 @@ export function resolveFields(fields: readonly FormField[], spoken: string): For
       const found = fields.filter((field) => fieldKeys(field).some((item) => wanted.has(item)));
       if (found.length) return found;
     }
+    // Known meaning, unknown field ids (detected forms): the label must say the same, and a
+    // contact person's or facility's block never stands in for the person's own field.
+    const labelled = fields.filter(
+      (field) =>
+        !OTHER_PARTY.test(field.label_de) &&
+        labelsOf(field).some((label) => pattern.test(cleanLabel(label))),
+    );
+    return labelled.slice(0, 1);
   }
   const exact = fields.filter((field) => labelsOf(field).includes(query));
   if (exact.length) return exact.slice(0, 1);
@@ -221,6 +237,7 @@ const copy = {
     unknown: "Welches Feld meinen Sie? Sagen Sie zum Beispiel „Ändere die Telefonnummer auf …“.",
     complete: "Alle Felder, die ich erfragen kann, sind ausgefüllt. Abgeschickt wird nichts.",
     stepMode: "Gut, wir gehen Feld für Feld durch.",
+    noField: (name: string) => `Ein Feld für ${name} hat dieses Formular nicht.`,
     fastNothing: "Aus Ihren bisherigen Angaben kann ich nichts weiter eintragen.",
     empty: "Im Formular steht noch nichts.",
     reads: (entries: string) => `Im Formular steht: ${entries}.`,
@@ -238,6 +255,7 @@ const copy = {
     unknown: "Which field do you mean? For example, say “Change the phone number to …”.",
     complete: "All fields I can ask for are filled in. Nothing is submitted.",
     stepMode: "Fine, we go through it field by field.",
+    noField: (name: string) => `This form has no field for ${name}.`,
     fastNothing: "I cannot fill in anything else from what you told me so far.",
     empty: "The form is still empty.",
     reads: (entries: string) => `The form says: ${entries}.`,
@@ -261,7 +279,7 @@ function list(items: readonly string[], conjunction: string): string {
 }
 
 function spokenLabel(field: FormField, english: boolean): string {
-  return english ? (field.labels?.en ?? field.label_de) : field.label_de;
+  return cleanLabel(english ? (field.labels?.en ?? field.label_de) : field.label_de);
 }
 
 function shown(field: FormField, value: JsonValue, english: boolean): string {
@@ -404,9 +422,20 @@ export async function answerFormEdit(input: {
     fields.filter((field) => editable(field)),
     command.field,
   );
+  // A known field the form does not have is said plainly instead of guessing another field.
+  if (!targets.length && knownMeaning(command.field)) {
+    const answer = ask(
+      strings.noField(command.field.replace(/^(?:die|der|das|the)\s+/iu, "")),
+      pendingIndex - 1,
+    );
+    return answer;
+  }
   // An unknown field name or a value for several fields at once ("Adresse ist …") is left to the
-  // mapping, which splits it onto the right fields.
-  if (!targets.length || (command.kind === "set" && targets.length > 1)) return;
+  // mapping, which splits it onto the right fields. Several fields of one meaning (the patient's
+  // and the insured person's phone) take the first one, which is the person's own.
+  const distinct = new Set(targets.map((field) => fieldKeys(field).at(-1) ?? field.id));
+  if (!targets.length || (command.kind === "set" && distinct.size > 1)) return;
+  if (command.kind === "set") targets.splice(1);
   const locked = targets.filter(
     (field) => values[field.id]?.state === "confirmed" && !command.force,
   );

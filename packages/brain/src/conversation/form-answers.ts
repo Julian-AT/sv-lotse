@@ -54,7 +54,7 @@ const LABEL_KEYS: readonly [RegExp, string][] = [
 /** Which administrative question a field answers, by fact type or (detected forms) by label. */
 // Labels of another party's block (the WG, a facility, a contact or representative): never the
 // person's own name, address or phone.
-const OTHER_PARTY =
+export const OTHER_PARTY =
   /\b(?:wg|partnerorganisation|einrichtung|träger|behandler\w*|kontaktaufnahme|vertretungsbefugt\w*|zustellbevollm\w*|ansprechperson|andere person|weitere person|pflegeperson|krankenhaus|spital|arzt|ärztin)\b/iu;
 
 export function questionKey(field: FormField): string | undefined {
@@ -76,6 +76,8 @@ export function askable(field: FormField): boolean {
     writableField(field) &&
     field.type !== "checkbox" &&
     cleanLabel(field.label_de).length > 1 &&
+    cleanLabel(field.label_de).length <= 48 &&
+    !/^[([]/u.test(field.label_de.trim()) &&
     !/^(?:datum|date|ort,? datum)$/iu.test(cleanLabel(field.label_de))
   );
 }
@@ -83,7 +85,9 @@ export function askable(field: FormField): boolean {
 /** A form label without technical suffixes ("Bei welcher Anstalt2" → "Bei welcher Anstalt"). */
 export function cleanLabel(label: string): string {
   return label
+    .replace(/[\s:.,;]+$/u, "")
     .replace(/[_\s]*\d+$/u, "")
+    .replace(/[\s:,;]+$/u, "")
     .replace(/_/gu, " ")
     .replace(/\s+/gu, " ")
     .trim();
@@ -853,13 +857,14 @@ function squash(text: string): string {
 
 /** Bulk fills type the first fields visibly, the rest quickly, so typing ends with the turn. */
 export function bulkBudget(index: number): number {
-  return index < 5 ? 1_500 : 250;
+  return index < 4 ? 1_200 : 150;
 }
 
 export function missingSentence(missing: readonly FormField[], english: boolean): string {
   const strings = english ? copy.en : copy.de;
-  const names = missing.slice(0, 6).map((field) => fieldNoun(field, english));
-  const rest = missing.length - names.length;
+  const all = [...new Set(missing.map((field) => fieldNoun(field, english)))];
+  const names = all.slice(0, 6);
+  const rest = all.length - names.length;
   const named =
     rest > 0
       ? `${names.join(", ")} ${strings.and} ${rest} ${english ? "more" : "weitere"}`

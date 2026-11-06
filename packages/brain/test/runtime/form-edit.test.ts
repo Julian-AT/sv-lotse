@@ -8,7 +8,7 @@ import {
   modeRequest,
   questionKey,
 } from "../../src/conversation/form-answers.ts";
-import { parseFormEdit, resolveFields } from "../../src/conversation/form-edit.ts";
+import { knownMeaning, parseFormEdit, resolveFields } from "../../src/conversation/form-edit.ts";
 import type { FormField } from "../../src/forms/schema.ts";
 
 function field(id: string, label: string, factType?: string): FormField {
@@ -128,6 +128,16 @@ describe("resolveFields", () => {
     expect(ids("Telefonnummer", reha)).toEqual(["f008"]);
     expect(ids("Geburtsjahr", reha)).toEqual(["f041"]);
     expect(ids("Lieblingsfarbe")).toEqual([]);
+    // Detected labels: same meaning by label, never another party's block.
+    const detected = [
+      field("p1", "Telefon Nr.:", "form.field.y.p1"),
+      field("p2", "Telefonnummer Kontaktaufnahme 4", "contact.delegate_phone"),
+    ];
+    expect(ids("Telefonnummer", detected)).toEqual(["p1"]);
+    expect(ids("Telefonnummer", detected.slice(1))).toEqual([]);
+    expect(knownMeaning("die Telefonnummer")).toBe(true);
+    expect(knownMeaning("Lieblingsfarbe")).toBe(false);
+    expect(cleanLabel("Telefon Nr.:")).toBe("Telefon Nr");
   });
 });
 
