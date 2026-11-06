@@ -1,0 +1,25 @@
+{
+  "reviewedAt": "2026-11-05",
+  "exportUrl": "svbox:/Medikamenten%20Erstattungskodex/medikament.txt",
+  "rulesUrl": "svbox:/Medikamenten%20Erstattungskodex/regeltext.txt",
+  "sources": [
+    {
+      "url": "svbox:/Medikamenten%20Erstattungskodex/Zeichenerkl%C3%A4rungen%20und%20Abk%C3%BCrzungen.pdf#page=2",
+      "asOf": "2024-01-01",
+      "quote": "G    Grüner Bereich des EKO"
+    },
+    {
+      "url": "svbox:/Medikamenten%20Erstattungskodex/Zeichenerkl%C3%A4rungen%20und%20Abk%C3%BCrzungen.pdf#page=3",
+      "asOf": "2024-01-01",
+      "quote": "Die Arzneispezialitäten dürfen erst nach Vorliegen der ärztlichen Bewilligung des chef- und kontrollärztlichen Dienstes abgegeben werden."
+    },
+    {
+      "url": "svbox:/Medikamenten%20Erstattungskodex/Zeichenerkl%C3%A4rungen%20und%20Abk%C3%BCrzungen.pdf#page=5",
+      "asOf": "2024-01-01",
+      "quote": "Für Verordnungen von RE2-Arzneispezialitäten außerhalb der angegebenen Voraussetzungen ist eine ärztliche Bewilligung des chef- und kontrollärztlichen Dienstes einzuholen."
+    }
+  ],
+  "requester": "Die verordnende Ärztin oder der verordnende Arzt beantragt die Bewilligung beim chef- und kontrollärztlichen Dienst der Krankenversicherung.",
+  "conditional": "Bei Verordnungen außerhalb der Bedingungen ist eine Bewilligung erforderlich. Die Bedingungen beurteilt die verordnende Ärztin oder der verordnende Arzt; der Lotse prüft keine persönlichen medizinischen Voraussetzungen.",
+  "subsequentControl": "Für Packungen in RE2 kann bei erfüllten Verwendungs- und Dokumentationsbedingungen eine nachfolgende Kontrolle die vorherige Bewilligung ersetzen."
+}
