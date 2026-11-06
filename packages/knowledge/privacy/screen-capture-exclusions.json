@@ -1,0 +1,36 @@
+{
+  "bundleIdentifiers": [
+    "com.apple.Passwords",
+    "com.1password.1password",
+    "com.agilebits.onepassword7",
+    "com.agilebits.onepassword-osx",
+    "com.bitwarden.desktop",
+    "com.bitwarden.desktop.helper",
+    "org.keepassxc.keepassxc",
+    "com.moneymoney-app.retail"
+  ],
+  "sources": [
+    {
+      "url": "https://github.com/Homebrew/homebrew-cask/blob/master/Casks/1/1password.rb",
+      "quote": "quit:      \"com.1password.1password\""
+    },
+    {
+      "url": "https://formulae.brew.sh/api/cask/bitwarden.json",
+      "quote": "\"quit\":[\"com.bitwarden.desktop\",\"com.bitwarden.desktop.helper\"]"
+    },
+    {
+      "url": "https://github.com/keepassxreboot/keepassxc/blob/develop/share/macosx/Info.plist.cmake",
+      "quote": "org.keepassxc.keepassxc"
+    },
+    {
+      "url": "https://formulae.brew.sh/api/cask/moneymoney.json",
+      "quote": "~/Library/Application Scripts/com.moneymoney-app.retail"
+    },
+    {
+      "url": "file:///System/Applications/Passwords.app/Contents/Info.plist",
+      "quote": "CFBundleIdentifier = com.apple.Passwords"
+    }
+  ],
+  "as_of": "2026-11-06",
+  "scope": "Native application exclusions. Add further bundle identifiers, including entire browsers used for banking, through screenCaptureExcludedBundleIdentifiers. This policy cannot identify banking tabs in a browser."
+}
