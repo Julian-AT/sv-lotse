@@ -1,0 +1,37 @@
+{
+  "asOf": "2026-01-01",
+  "ruleText": "Bei der ÖGK beträgt die Kostenerstattung grundsätzlich 80 % des Betrags, den ein entsprechender Vertragspartner für dieselbe Leistung erhalten hätte, höchstens die tatsächlichen Kosten. Grundlage ist der Vertragstarif, nicht 80 % der privaten Rechnung. Die zuständige Versicherung prüft den persönlichen Anspruch und mögliche Einschränkungen.",
+  "requiredDocuments": [
+    "Bezahlte, detaillierte Honorarnote mit Name, Versicherungsnummer, Wohnadresse, Ausstellungsdatum sowie Leistungen und Leistungsdatum",
+    "Zahlungsnachweis, etwa Zahlungsbestätigung oder Quittung",
+    "Überweisung oder Zuweisung, soweit für die konkrete Leistung erforderlich"
+  ],
+  "onlineUrl": "https://meine.oegk.at/",
+  "submissionText": "Einreichung bei der ÖGK: über Meine ÖGK bzw. die Meine ÖGK-App oder per Post an die zuständige ÖGK-Stelle. Für das Einreichpaket die Honorarnote, den Zahlungsnachweis und gegebenenfalls die erforderliche Überweisung zusammenstellen und vor der eigenen Übermittlung prüfen. Die endgültige Einreichung nehmen Sie selbst vor.",
+  "sources": [
+    {
+      "url": "https://www.oegk.at/cdscontent/?contentid=10007.870516&portal=oegkportal",
+      "asOf": "2026-01-01",
+      "quote": "Die ÖGK erstattet die Kosten eines Wahlarztes oder einer Wahlärztin grundsätzlich in der Höhe von 80 Prozent jenes Betrages, den die ÖGK bei Inanspruchnahme eines entsprechenden Vertragspartners bzw. einer Vertragspartnerin aufwenden hätte müssen, jedoch nicht mehr als die tatsächlichen Kosten."
+    },
+    {
+      "url": "svbox:/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf#page=18",
+      "asOf": "2026-01-01",
+      "quote": "Die Honorarnote muss Vor- und Familiennamen der bzw. des Versicherten, Versicherungsnummer, Wohnadresse, Zahlungsbestätigung, das Ausstellungsdatum und genaue Angaben über die ärztlichen Leistungen samt Datum enthalten."
+    },
+    {
+      "url": "svbox:/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf#page=18",
+      "asOf": "2026-01-01",
+      "quote": "Unser Tipp: Nutzen Sie die Online-Einreichung über Meine ÖGK mittels ID Austria einfach, sicher und bequem von zu Hause aus mit www.meineoegk.at oder mit der Meine ÖGK-App."
+    },
+    {
+      "url": "https://www.oegk.at/cdscontent/?contentid=10007.870516&portal=oegkportal",
+      "asOf": "2026-11-06",
+      "quote": "Fertig ausdrucken und per Post schicken"
+    }
+  ],
+  "rate": 0.8,
+  "scheduleBaseUrl": "svbox:/Leistungskataloge/",
+  "scopeText": "Beispielquellen: ÖGK-Vertragstarife Steiermark, Stand 2025-01-01, und zahnärztliche Vertragstarife Österreich, Stand 2026-01-01. Beträge sind illustrativ und unverbindlich.",
+  "carrier": "ÖGK"
+}
