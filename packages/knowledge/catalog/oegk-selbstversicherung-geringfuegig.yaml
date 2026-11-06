@@ -1,0 +1,101 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 11 (1-basiert), Druckseiten 21–22.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Zuständigkeit nach Beschäftigungsbundesland, nicht Wohnort. Dienstleistungsscheck und Auslandswohnsitz sind Sonderfälle; reguläre Grenze ist keine abschließende Anspruchsprüfung.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-selbstversicherung-geringfuegig
+name_de: Selbstversicherung bei geringfügiger Beschäftigung
+name_simple: Mit einem kleinen Job versichert sein
+area: C
+life_situations:
+  - uninsured
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: minor-employment
+    text_de:
+      "Geringfügige Beschäftigung ohne Pflichtversicherung in Kranken- oder Pensionsversicherung;
+      reguläre Entgeltgrenze 2026: 551,10 Euro monatlich."
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+      quote: Die Voraussetzungen sind, dass Sie nur geringfügig beschäftigt sind und noch keine
+        Pflichtversicherung in der Kranken- und/oder Pensionsversicherung haben. Das Entgelt, das
+        Sie erhalten, darf die jeweils gültige Geringfügigkeitsgrenze nicht übersteigen. Die
+        Geringfügigkeitsgrenze liegt im Jahr 2026 bei 551,10 Euro.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: minor_employment == true and compulsory_cover == false and monthly_income <= 551.10
+    legal_basis: § 19a ASVG (SozDok)
+  - id: contribution
+    text_de: "Monatsbeitrag 2026: 83,49 Euro. Der PDF-Regelfall beschreibt einen Wohnsitz im Inland;
+      Auslandswohnsitz und Dienstleistungsscheck gesondert bei der ÖGK prüfen."
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+      quote: Geringfügig Beschäftigte mit Wohnsitz im Inland können sich in der Kranken- und
+        Pensionsversicherung zu einem monatlichen Beitrag von derzeit 83,49 Euro selbst versichern.
+        Das ist die „Selbstversicherung in der Kranken- und Pensionsversicherung nach § 19a ASVG”.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: application
+    name_de: "Ausgefüllter Antrag auf Selbstversicherung bei geringfügiger Beschäftigung"
+    required: true
+    obtain_from: "ÖGK im Bundesland der geringfügigen Beschäftigung: online über Meine ÖGK (ID Austria) oder als leeres Formular auf oegk.at"
+    source: &doc1
+      url: "https://www.oegk.at/cdscontent/?contentid=10007.870435&portal=oegkportal"
+      quote: "Damit wir Ihren Antrag rasch bearbeiten können, benötigen wir von Ihnen folgende Unterlagen: Ausgefüllten Antrag"
+      retrieved_at: "2026-11-06T03:45:00Z"
+  - id: registration-abroad
+    name_de: "Meldebestätigung, nur bei Wohnsitz im Ausland"
+    required: false
+    obtain_from: "Meldebehörde am ausländischen Wohnsitz"
+    source: &doc2
+      url: "https://www.oegk.at/cdscontent/?contentid=10007.870435&portal=oegkportal"
+      quote: "bei ausländischem Wohnsitz muss eine Meldebestätigung vorgelegt werden."
+      retrieved_at: "2026-11-06T03:45:00Z"
+forms:
+  - search: Selbstversicherung bei geringfügiger Beschäftigung nach § 19a ASVG
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-selbstversicherung-geringfuegig
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+    quote: Die Voraussetzungen sind, dass Sie nur geringfügig beschäftigt sind und noch keine
+      Pflichtversicherung in der Kranken- und/oder Pensionsversicherung haben. Das Entgelt, das Sie
+      erhalten, darf die jeweils gültige Geringfügigkeitsgrenze nicht übersteigen. Die
+      Geringfügigkeitsgrenze liegt im Jahr 2026 bei 551,10 Euro.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+    quote: Geringfügig Beschäftigte mit Wohnsitz im Inland können sich in der Kranken- und
+      Pensionsversicherung zu einem monatlichen Beitrag von derzeit 83,49 Euro selbst versichern.
+      Das ist die „Selbstversicherung in der Kranken- und Pensionsversicherung nach § 19a ASVG”.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870435&portal=oegkportal
+    quote:
+      Den Antrag auf Selbstversicherung bei geringfügiger Beschäftigung (§ 19a ASVG) stellen Sie
+      bei der Österreichischen Gesundheitskasse
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - *doc1
+  - *doc2
+  - url: "https://www.oegk.at/cdscontent/?contentid=10007.870435&portal=oegkportal"
+    quote: "Den Antrag auf Selbstversicherung bei geringfügiger Beschäftigung (§ 19a ASVG) stellen Sie bei der Österreichischen Gesundheitskasse und zwar in jenem Bundesland, in dem Sie geringfügig beschäftigt sind."
+    retrieved_at: "2026-11-06T03:45:00Z"
+as_of: 2026-01-01
