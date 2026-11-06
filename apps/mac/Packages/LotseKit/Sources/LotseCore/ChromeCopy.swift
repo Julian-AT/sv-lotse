@@ -16,6 +16,7 @@ struct ChromeCopy {
     var feedback: String { text("Feedback geben", "Give feedback") }
     var about: String { text("Über SV KI-Lotse", "About SV KI-Lotse") }
     var help: String { text("Hilfe", "Help") }
+    var inviteHelper: String { text("Hilfsperson einladen", "Invite a helper") }
     var pause: String { text("Zuhören pausieren", "Pause listening") }
     var resume: String { text("Zuhören fortsetzen", "Resume listening") }
     var restart: String { text("Neu starten", "Restart") }

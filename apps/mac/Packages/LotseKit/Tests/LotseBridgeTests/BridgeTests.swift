@@ -137,6 +137,7 @@ struct BridgeTests {
     func configuration() throws {
         let config = try WorkspaceConfiguration(environment: [:], info: [:])
         #expect(config.url.absoluteString == "http://localhost:3000")
+        #expect(config.workspaceURL.absoluteString == "http://localhost:3000/workspace")
         let explicitPort = try #require(URL(string: "https://example.at:443/a"))
         let defaultPort = try #require(URL(string: "https://example.at/b"))
         #expect(try WorkspaceOrigin(url: explicitPort) == WorkspaceOrigin(url: defaultPort))

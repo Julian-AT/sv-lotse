@@ -39,8 +39,17 @@ extension WorkspaceWindowController {
 
     public func navigateToCase(_ id: UUID) {
         var components = URLComponents(url: configuration.url, resolvingAgainstBaseURL: false)
-        components?.path = "/workspace"
+        components?.path = WorkspaceConfiguration.workspacePath
         components?.queryItems = [URLQueryItem(name: "caseId", value: id.uuidString)]
+        guard let url = components?.url else { return }
+        resetAndLoad(url)
+    }
+
+    /// Opens the helper invitation view (invite link, admission requests) in the embedded web view.
+    public func navigateToHelpers() {
+        var components = URLComponents(url: configuration.url, resolvingAgainstBaseURL: false)
+        components?.path = WorkspaceConfiguration.helpersPath
+        components?.query = nil
         guard let url = components?.url else { return }
         resetAndLoad(url)
     }

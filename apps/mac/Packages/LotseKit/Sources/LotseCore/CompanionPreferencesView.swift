@@ -183,6 +183,10 @@ public struct CompanionPreferencesView: View {
             Section {
                 action(model.copy.relatives.trimmingCharacters(in: CharacterSet(charactersIn: " …")),
                        symbol: "person.2", button: copy.open) { shell.menu.openRelatives?() }
+                action(copy.inviteHelper, symbol: "link", button: copy.open) {
+                    shell.workspace.navigateToHelpers()
+                    shell.workspace.showWorkspace()
+                }
                 action(copy.help, symbol: "questionmark.circle", button: copy.open) { shell.menu.showHelp?() }
             } footer: {
                 Text(copy.helperHint).foregroundStyle(.secondary)

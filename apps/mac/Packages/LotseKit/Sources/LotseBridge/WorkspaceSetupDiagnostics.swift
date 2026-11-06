@@ -39,7 +39,7 @@ extension WorkspaceWindowController {
             } catch { /* Only aggregate readiness crosses the native boundary. */ }
             return {reachable, session};
             """,
-            arguments: ["workspaceURL": configuration.url.absoluteString,
+            arguments: ["workspaceURL": configuration.workspaceURL.absoluteString,
                         "timeout": WorkspaceSetupConfiguration.requestTimeoutMilliseconds],
             in: nil, contentWorld: .page
         )

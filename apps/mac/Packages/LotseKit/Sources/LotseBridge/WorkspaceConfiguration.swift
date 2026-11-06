@@ -26,6 +26,11 @@ public struct WorkspaceOrigin: Equatable, Sendable {
 }
 
 public struct WorkspaceConfiguration: Sendable {
+    /// Appended to the web view's user agent; the server serves the chat only to this app.
+    public static let userAgentApplicationName = "SVKILotseMac/1"
+    public static let workspacePath = "/workspace"
+    public static let helpersPath = "/workspace/helpers"
+
     public let url: URL
     public let origin: WorkspaceOrigin
     public let dataStoreIdentifier: UUID
@@ -50,6 +55,16 @@ public struct WorkspaceConfiguration: Sendable {
         self.origin = try WorkspaceOrigin(url: url)
         self.url = url
         self.dataStoreIdentifier = dataStoreIdentifier
+    }
+
+    /// The embedded chat; a configured origin root opens the workspace route directly.
+    public var workspaceURL: URL { route(Self.workspacePath) }
+
+    func route(_ path: String) -> URL {
+        guard url.path.isEmpty || url.path == "/",
+              var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return url }
+        components.path = path
+        return components.url ?? url
     }
 }
 

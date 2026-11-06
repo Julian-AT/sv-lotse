@@ -123,13 +123,8 @@ extension MacShellController {
             guard let url = URL(string: CompanionConfiguration.feedbackURL) else { return }
             NSWorkspace.shared.open(url)
         }
-        menu.showHelp = { [weak self] in
-            guard let self else { return }
-            var components = URLComponents(url: workspace.configuration.url, resolvingAgainstBaseURL: false)
-            components?.path = "/setup-guide"
-            components?.query = nil
-            if let url = components?.url { NSWorkspace.shared.open(url) }
-        }
+        // There is no website anymore: help opens the in-app setup assistant.
+        menu.showHelp = { [weak self] in self?.runSetupChecks() }
         menu.restartApp = { [weak self] in self?.restartApplication() }
     }
 

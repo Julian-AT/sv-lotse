@@ -35,6 +35,7 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.websiteDataStore = WKWebsiteDataStore(forIdentifier: configuration.dataStoreIdentifier)
         webConfiguration.preferences.inactiveSchedulingPolicy = .none
+        webConfiguration.applicationNameForUserAgent = WorkspaceConfiguration.userAgentApplicationName
         webConfiguration.userContentController.addScriptMessageHandler(messageHandler, contentWorld: .page, name: "lotse")
         webView = ImportWorkspaceWebView(frame: .zero, configuration: webConfiguration)
         webView.registerForDraggedTypes(ImportPasteboard.types)
@@ -56,7 +57,7 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
     required init?(coder: NSCoder) { nil }
 
     public func load() {
-        resetAndLoad(configuration.url)
+        resetAndLoad(configuration.workspaceURL)
     }
 
     func resetAndLoad(_ url: URL) {
