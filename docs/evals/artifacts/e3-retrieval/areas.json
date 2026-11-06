@@ -1,0 +1,26 @@
+{
+  "A": {
+    "questions": 40,
+    "passed": 37
+  },
+  "B": {
+    "questions": 30,
+    "passed": 30
+  },
+  "C": {
+    "questions": 40,
+    "passed": 37
+  },
+  "D": {
+    "questions": 40,
+    "passed": 40
+  },
+  "E": {
+    "questions": 30,
+    "passed": 29
+  },
+  "F": {
+    "questions": 20,
+    "passed": 19
+  }
+}
