@@ -64,7 +64,11 @@ export async function guardAnswer(
       const result = await generateText({
         model: createModelRouter(config).modelFor("guard"),
         instructions: ANSWER_GUARD_INSTRUCTIONS,
-        prompt: JSON.stringify({ answer: candidate, passages: [...passages.values()] }),
+        // Support is judged against the cited passages only; uncited claims fail regardless.
+        prompt: JSON.stringify({
+          answer: candidate,
+          passages: [...new Set(citationIds(candidate))].flatMap((id) => passages.get(id) ?? []),
+        }),
         output: Output.object({ schema: verdictSchema }),
         maxRetries: 0,
         abortSignal: AbortSignal.any([
