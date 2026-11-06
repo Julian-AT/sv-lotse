@@ -6,6 +6,7 @@ import { z } from "zod";
 import { type BrainConfig, PIPELINE_CONFIG } from "../config/index.ts";
 import { createModelRouter } from "../models/index.ts";
 import { contracts } from "../tools/contracts/index.ts";
+import { rankForAmounts } from "./amounts.ts";
 import { RetrievalError } from "./errors.ts";
 import { expandQuery, fullTextQuery, loadSynonyms, synonymAlternatives } from "./synonyms.ts";
 
@@ -175,8 +176,10 @@ export async function searchKnowledge(
     warnLexicalOnly(vectorResult.reason, abortSignal?.aborted ?? false);
   const fused = reciprocalRankFusion(
     [textResult.value, vectorResult.status === "fulfilled" ? vectorResult.value : []],
-    input.k,
+    2 * PIPELINE_CONFIG.candidateLimit,
     PIPELINE_CONFIG.retrievalWeights,
   );
-  return contracts["kb.search"].output.parse(fused);
+  // An amount question is answered from the current figures, not a law's outdated base amounts.
+  const ranked = rankForAmounts(fused, input.query, at.slice(0, 10)).slice(0, input.k);
+  return contracts["kb.search"].output.parse(ranked);
 }

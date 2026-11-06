@@ -103,7 +103,8 @@ export const PIPELINE_CONFIG = {
   charsPerToken: 4,
   /** The last three exchanges; older turns are summarised by the case block. */
   recentMessages: 6,
-  agentPassageCharacters: 700,
+  /** As much of a passage as the composer reads, so a table's last rows stay visible. */
+  agentPassageCharacters: 1_000,
   retrievalK: 8,
   candidateLimit: 50,
   rrfConstant: 60,
