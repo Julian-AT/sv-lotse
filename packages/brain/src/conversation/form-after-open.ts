@@ -4,6 +4,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { DatabaseClient } from "@lotse/db";
 import { cases, formInstances, formTemplates } from "@lotse/db/schema";
+import { createObjectStorage } from "@lotse/db/storage/s3";
 import {
   type Action,
   ActionSchema,
@@ -191,36 +192,53 @@ async function findTemplate(db: DatabaseClient, formId: string, source: string) 
   return template;
 }
 
+async function localAsset(formId: string, file: string) {
+  if (process.env.NODE_ENV === "production" && !process.env.SVBOX_DIR) return;
+  const root = resolve(repositoryRoot, process.env.SVBOX_DIR ?? "data/svbox");
+  try {
+    const [bytes, raw] = await Promise.all([
+      readFile(/* turbopackIgnore: true */ resolve(root, "Anträge und Formulare", file)),
+      readFile(
+        /* turbopackIgnore: true */ resolve(
+          repositoryRoot,
+          "packages/knowledge/forms",
+          `${formId}.json`,
+        ),
+        "utf8",
+      ),
+    ]);
+    return { bytes, record: JsonObjectSchema.parse(JSON.parse(raw)) };
+  } catch {
+    return;
+  }
+}
+
 /**
- * The registered template for a form id. A database that has not acquired it yet registers the
- * reviewed-candidate schema with its local SV-Box asset (development and explicit mounts only).
+ * The registered template for a form id. Where the SV-Box asset is mounted (development or
+ * SVBOX_DIR), a missing template is registered from the knowledge schema and its asset is
+ * stored for the viewer.
  */
 export async function registeredTemplate(db: DatabaseClient, formId: string) {
   const asset = FORM_ASSETS[formId];
   if (!asset) return;
   const source = `svbox:Anträge und Formulare/${asset.file}`;
   const existing = await findTemplate(db, formId, source);
+  const local = await localAsset(formId, asset.file);
+  if (!local) return existing;
+  const hash = createHash("sha256").update(local.bytes).digest("hex");
+  if (existing && existing.hash !== hash) return existing;
+  const storageKey = existing?.storageKey ?? `forms/original/${hash}.pdf`;
+  const storage = createObjectStorage();
+  try {
+    await storage.put(storageKey, local.bytes, "application/pdf");
+  } finally {
+    storage.close();
+  }
   if (existing) return existing;
-  if (process.env.NODE_ENV === "production" && !process.env.SVBOX_DIR) return;
-  const root = resolve(repositoryRoot, process.env.SVBOX_DIR ?? "data/svbox");
-  const [bytes, raw] = await Promise.all([
-    readFile(/* turbopackIgnore: true */ resolve(root, "Anträge und Formulare", asset.file)),
-    readFile(
-      /* turbopackIgnore: true */ resolve(
-        repositoryRoot,
-        "packages/knowledge/forms",
-        `${formId}.json`,
-      ),
-      "utf8",
-    ),
-  ]).catch(() => [undefined, undefined] as const);
-  if (!bytes || !raw) return;
-  const record = JsonObjectSchema.parse(JSON.parse(raw));
-  const hash = createHash("sha256").update(bytes).digest("hex");
   await db
     .insert(formTemplates)
     .values({
-      ...(typeof record.template_id === "string" ? { id: record.template_id } : {}),
+      ...(typeof local.record.template_id === "string" ? { id: local.record.template_id } : {}),
       title: asset.title,
       publisher: asset.publisher,
       source,
@@ -228,8 +246,8 @@ export async function registeredTemplate(db: DatabaseClient, formId: string) {
       format: "acroform",
       pages: asset.pages,
       status: "auto",
-      schema: record,
-      storageKey: `forms/original/${hash}.pdf`,
+      schema: local.record,
+      storageKey,
     })
     .onConflictDoNothing();
   return findTemplate(db, formId, source);
