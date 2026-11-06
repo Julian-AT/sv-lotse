@@ -16,6 +16,7 @@ Run from the repository root:
 - `bun run --filter @lotse/brain test` — run Vitest under Node.js, excluding `test/**/*.db.test.ts`.
 - `bun run --filter @lotse/brain test -- test/forms/detect` — real SV-Box AcroForm/flattened tests and E13 fixture harness; no provider calls.
 - `RUN_LIVE=1 bun run --filter @lotse/brain test:live -- test/forms/detect` — rasterize an original SV-Box page and detect fields through real OpenAI. Requires `OPENAI_API_KEY`; `FORM_VISION_MODEL` defaults to `gpt-4.1-mini` and can be overridden. Loads root `.env.local` without overwriting exported values.
+- `bun run --filter @lotse/brain test:deadlines:integration` — deadline guard acceptance tests against real Postgres; creates and drops a unique migrated database. Loads root `.env.local` without overriding exported values.
 - `bun run --filter @lotse/brain test:db` — deprecated delegate to `@lotse/db test:db`.
 - `bun run --filter @lotse/brain test:integration` — deprecated delegate to `@lotse/db test:integration`.
 - `bun run --filter @lotse/brain db:generate` — deprecated delegate to `@lotse/db db:generate`.
@@ -62,6 +63,25 @@ and knowledge must never depend on brain. Db remains a leaf workspace package.
   cascading foreign keys; the database rejects UPDATE, DELETE and TRUNCATE.
 - Only `vector` and `pgcrypto` extensions are installed. Embeddings have 1536 dimensions; changing
   this requires a migration and re-embedding. Austrian synonyms expand at query time.
+
+## Deadline guard
+
+- `@lotse/brain/deadlines` is a server-only core API; callers authorize the case before access.
+- Fact values accepted by the guard are explicit `{ title, dueAt }` objects with a confirmed state
+  and a nonempty verbatim `source.quote`. `dueAt` is an ISO date or a timestamp with an explicit
+  offset. Relative deadlines and unstructured text are not inferred.
+- `syncCaseDeadlines` reads facts for the case subject and steps for that case from Postgres.
+  Supply the complete `stepSources` list from process definitions (`stepId`, `title`, `sourceQuote`);
+  steps without a supplied quote are not converted. No process quote is invented from a step key.
+- Reminder identity is the case plus fact/step row id, independent of date/title. Reconciliation
+  locks the case and upserts deterministic UUIDv8 ids. Call it after facts/steps change; obsolete
+  guard reminders are removed, while reminders from other writers are preserved.
+- Date-only deadlines expire at the end of that Vienna day and export as all-day VEVENTs. Timed
+  exports include IANA-derived Vienna observances; the second occurrence of a repeated hour uses
+  UTC because RFC 5545 resolves a local repeated time to its first occurrence. Calendar precision
+  is seconds. UIDs stay stable across edits and exports.
+- Offline calendar tests use a dependency-free RFC 5545 test parser scoped to emitted content lines,
+  components, dates, offsets and TEXT. No calendar dependency or service is added.
 
 ## Evaluation suites
 

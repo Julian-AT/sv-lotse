@@ -10,7 +10,8 @@
     "./db/approvals": "./src/db/approvals.ts",
     "./db/migrations": "./src/db/migrations.ts",
     "./storage/s3": "./src/storage/s3.ts",
-    "./forms/detect": "./src/forms/detect/index.ts"
+    "./forms/detect": "./src/forms/detect/index.ts",
+    "./deadlines": "./src/deadlines/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -19,7 +20,8 @@
     "test:db": "bun run --filter @lotse/db test:db",
     "test:integration": "bun run --filter @lotse/db test:integration",
     "db:generate": "bun run --filter @lotse/db db:generate",
-    "db:migrate": "bun run --filter @lotse/db db:migrate"
+    "db:migrate": "bun run --filter @lotse/db db:migrate",
+    "test:deadlines:integration": "vitest run test/deadlines/persistence.db.test.ts --hookTimeout=30000 --testTimeout=15000"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.109",
