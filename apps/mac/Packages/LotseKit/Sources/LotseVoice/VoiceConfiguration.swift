@@ -22,9 +22,12 @@ public enum VoiceConfiguration {
     public static let segmentTimeout: Duration = .seconds(45)
     /// An answer that starts speaking this soon after the question needs no acknowledgement.
     public static let acknowledgementGrace: Duration = .milliseconds(500)
-    /// The TTS socket opened at the question stays open this long for the answer's first sentence.
-    public static let ttsInactivityTimeoutSeconds = 60
-    public static let warmSocketLifetime: Duration = .seconds(50)
+    /// The documented maximum; the keepalive context resets it while the conversation lasts.
+    public static let ttsInactivityTimeoutSeconds = 180
+    public static let ttsKeepaliveInterval: Duration = .seconds(60)
+    /// The conversation socket closes after this long without a sentence.
+    public static let ttsIdleLimit: Duration = .seconds(600)
+    public static let ttsReopenInterval: Duration = .seconds(10)
     public static let speedChoices: [Double] = [0.5, 0.75, 1, 1.25, 1.5]
     public static let speedPreferenceKey = "speechSpeed"
     public static let minimumSpeed = 0.5

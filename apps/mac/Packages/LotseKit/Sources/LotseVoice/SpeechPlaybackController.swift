@@ -57,7 +57,6 @@ public final class SpeechPlaybackController {
     public func silenceUntilNextVoiceQuestion() {
         gate.closed()
         cancelAcknowledgement()
-        primary.discardWarm()
     }
 
     /// Renders the acknowledgement clips in the configured voice once per language.
@@ -90,6 +89,7 @@ public final class SpeechPlaybackController {
         if acknowledgedTurn == .turn(segment.turnID), AcknowledgementCopy.isStatusLine(segment.text) { return }
         if acknowledging == false { cancelAcknowledgement() }
         queue.append(segment)
+        prefetchQueued()
         if task == nil { drain() }
     }
 
@@ -129,6 +129,7 @@ public final class SpeechPlaybackController {
                 if let acknowledgement { await acknowledgement.value }
                 guard self.generation == generation, Task.isCancelled == false else { return }
                 let segment = queue.removeFirst()
+                prefetchQueued()
                 current = segment
                 let onStart: () -> Void = { [weak self] in
                     guard let self, self.generation == generation else { return }
@@ -154,6 +155,11 @@ public final class SpeechPlaybackController {
                 isActive = acknowledging
             }
         }
+    }
+
+    /// ElevenLabs allows five contexts per socket: the keepalive, the playing sentence and the next two.
+    private func prefetchQueued() {
+        for segment in queue.prefix(2) { primary.prefetch(segment) }
     }
 
     private func acknowledge(language: String) {

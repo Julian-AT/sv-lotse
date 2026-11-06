@@ -2,121 +2,137 @@ import Foundation
 import LotseProtocol
 import os
 
+/// Speaks through one ElevenLabs socket kept for the whole conversation. Each sentence is sent the moment
+/// it arrives (`prefetch`) and plays from its first audio chunk when its turn comes (`speak`).
 @MainActor
 final class ElevenLabsSpeechOutput {
     private let loadToken: VoiceTokenLoader
-    private var pronunciationAliases: [VoiceAlias] = []
-    private var socket: URLSessionWebSocketTask?
-    private var turnID: String?
-    private(set) var voiceID: String?
+    private let connect: @MainActor (URL) -> any TTSTransport
+    private let keepaliveInterval: Duration
+    private let idleLimit: Duration
+    private var connection: Task<TTSStream, Error>?
+    private var connectionLanguage: String?
+    private var live: TTSStream?
+    private var lastReopen: ContinuousClock.Instant?
+    private var prepared: [String: Task<TTSUtterance, Error>] = [:]
+    private var playing: TTSUtterance?
     private var player: PCMStreamingPlayer?
-    private var warm: Task<OpenedSocket?, Never>?
-    private var warmLanguage: String?
+    private(set) var voiceID: String?
     private(set) var didStart = false
-    /// Stage timings of the last segment (token+socket, player, first audio), for the log and live tests.
+    /// Stage timings of the last segment, for the log and live tests.
     private(set) var lastTimings = ""
     private let log = Logger(subsystem: "dev.svkilotse.mac", category: "voice")
 
-    init(loadToken: @escaping VoiceTokenLoader) { self.loadToken = loadToken }
+    init(
+        loadToken: @escaping VoiceTokenLoader,
+        connect: @escaping @MainActor (URL) -> any TTSTransport = { WebSocketTransport(url: $0) },
+        keepaliveInterval: Duration = VoiceConfiguration.ttsKeepaliveInterval,
+        idleLimit: Duration = VoiceConfiguration.ttsIdleLimit
+    ) {
+        self.loadToken = loadToken
+        self.connect = connect
+        self.keepaliveInterval = keepaliveInterval
+        self.idleLimit = idleLimit
+    }
+
+    /// Opens the conversation socket in the background unless it is already open.
+    func prewarm(language: String) { _ = stream(Self.ttsLanguage(language)) }
+
+    /// Sends a queued sentence to ElevenLabs now, so its audio is ready when the sentences before it end.
+    func prefetch(_ segment: SpeechSegment) {
+        let key = Self.key(segment)
+        guard prepared[key] == nil else { return }
+        prepared[key] = request(segment)
+    }
 
     func speak(_ segment: SpeechSegment, speed: Double, onStart: @escaping () -> Void) async throws {
         didStart = false
         let begin = ContinuousClock.now
-        let elapsed = { ScribeRealtimeTranscriptionProvider.milliseconds(ContinuousClock.now - begin) }
-        let socket = try await connection(for: segment)
-        let connected = elapsed()
+        let utterance = try await (prepared.removeValue(forKey: Self.key(segment)) ?? request(segment)).value
+        playing = utterance
+        defer { utterance.cancel(); playing = nil }
         try Task.checkCancellation()
         let player = try PCMStreamingPlayer(speed: speed)
-        let prepared = elapsed()
         self.player = player
         player.onStart = { [weak self] in self?.didStart = true; onStart() }
-        let context = UUID().uuidString
-        let deadline = Task { @MainActor in
-            do { try await Task.sleep(for: VoiceConfiguration.segmentTimeout) } catch { return }
-            socket.cancel(with: .goingAway, reason: nil)
-        }
-        defer { deadline.cancel(); player.stop(); self.player = nil }
-        // One message opens the context, carries the sentence and flushes it. A separate " " initializer
-        // sent to a socket that idled while the brain was thinking is never answered.
-        let text = VoiceVocabulary.replacing(segment.text, aliases: pronunciationAliases) + " "
-        try await sendVoiceMessage(TTSText(text: text, contextID: context), to: socket)
-        var receivedAudio = false
-        while Task.isCancelled == false {
-            let event = try await receiveVoiceMessage(TTSAudio.self, from: socket)
-            if let message = event.error { throw VoiceProviderError(message: String(message.prefix(200))) }
-            guard event.contextId == context || event.contextId == nil else { continue }
-            if let audio = event.audio, audio.isEmpty == false {
-                guard let data = Data(base64Encoded: audio) else { throw VoiceServiceError.invalidAudio }
-                if receivedAudio == false {
-                    lastTimings = "connection \(connected) ms, player \(prepared) ms, first audio \(elapsed()) ms"
-                    log.info("TTS segment \(segment.index, privacy: .public): \(self.lastTimings, privacy: .public)")
-                }
-                try player.append(data)
-                receivedAudio = true
-            }
-            if event.isFinal == true {
-                // An empty final frame is how the multi-context socket refuses a voice (e.g. a library voice
-                // on the free tier); the single-context socket would have said so in an error message.
-                guard receivedAudio else { throw VoiceProviderError(message: "leeres Audio für Stimme \(voiceID ?? "?")") }
-                try await sendVoiceMessage(TTSCloseContext(contextID: context), to: socket)
-                await player.finish()
-                try Task.checkCancellation()
-                return
+        defer { player.stop(); self.player = nil }
+        var received = false
+        for try await chunk in utterance.audio {
+            try player.append(chunk)
+            if received == false {
+                received = true
+                logTimings(segment, utterance, playback: ContinuousClock.now - begin)
             }
         }
-        throw CancellationError()
+        try Task.checkCancellation()
+        guard received else { throw VoiceProviderError(message: "leeres Audio für Stimme \(voiceID ?? "?")") }
+        await player.finish()
+        try Task.checkCancellation()
     }
 
+    /// Barge-in: drops every queued and playing sentence but keeps the socket for the next question.
     func stop() {
-        socket?.cancel(with: .goingAway, reason: nil)
-        socket = nil
-        turnID = nil
+        for task in prepared.values {
+            task.cancel()
+            Task { @MainActor in (try? await task.value)?.cancel() }
+        }
+        prepared.removeAll()
+        playing?.cancel()
+        playing = nil
         player?.stop()
         player = nil
     }
 
-    /// Opens the next turn's TTS socket while the brain is still thinking, so the first sentence skips the
-    /// token request and the TLS/WebSocket handshake (~0.3–0.9 s).
-    func prewarm(language: String) {
-        let language = Self.ttsLanguage(language)
-        if warmLanguage == language, warm != nil { return }
-        discardWarm()
-        warmLanguage = language
-        warm = Task { @MainActor [weak self] in try? await self?.open(language: language) }
-    }
-
-    func discardWarm() {
-        let pending = warm
-        warm = nil
-        warmLanguage = nil
-        Task { @MainActor in (await pending?.value)?.socket.cancel(with: .goingAway, reason: nil) }
-    }
-
-    private func connection(for segment: SpeechSegment) async throws -> URLSessionWebSocketTask {
-        if turnID == segment.turnID, let socket { return socket }
-        stop()
-        let language = Self.ttsLanguage(segment.language)
-        var opened: OpenedSocket?
-        if warmLanguage == language, let pending = warm {
-            warm = nil
-            warmLanguage = nil
-            if let ready = await pending.value {
-                if ContinuousClock.now - ready.opened < VoiceConfiguration.warmSocketLifetime { opened = ready } else {
-                    ready.socket.cancel(with: .goingAway, reason: nil)
-                }
-            }
+    /// Renders short fixed lines on the conversation socket, for playback later without the network.
+    func render(_ lines: [String], language: String) async throws -> (voice: String, clips: [Data]) {
+        let stream = try await openStream(Self.ttsLanguage(language))
+        var clips: [Data] = []
+        for line in lines {
+            var clip = Data()
+            for try await chunk in stream.synthesize(line).audio { clip.append(chunk) }
+            clips.append(clip)
         }
-        let connection: OpenedSocket
-        if let opened { connection = opened } else { connection = try await open(language: language) }
-        try Task.checkCancellation()
-        socket = connection.socket
-        voiceID = connection.voice
-        pronunciationAliases = connection.aliases
-        turnID = segment.turnID
-        return connection.socket
+        return (stream.voice, clips)
     }
 
-    private func open(language: String) async throws -> OpenedSocket {
+    private func request(_ segment: SpeechSegment) -> Task<TTSUtterance, Error> {
+        let language = Self.ttsLanguage(segment.language)
+        let requested = ContinuousClock.now
+        return Task { @MainActor [weak self] in
+            guard let self else { throw CancellationError() }
+            let stream = try await openStream(language)
+            try Task.checkCancellation()
+            return stream.synthesize(segment.text, requested: requested)
+        }
+    }
+
+    private func openStream(_ language: String) async throws -> TTSStream {
+        let pending = stream(language)
+        if let ready = try? await pending.value, ready.isOpen { return ready }
+        if connection == pending { discard() }
+        return try await stream(language).value
+    }
+
+    private func stream(_ language: String) -> Task<TTSStream, Error> {
+        if let connection, connectionLanguage == language { return connection }
+        discard()
+        let task = Task { @MainActor [weak self] in
+            guard let self else { throw CancellationError() }
+            return try await open(language)
+        }
+        connection = task
+        connectionLanguage = language
+        return task
+    }
+
+    private func discard() {
+        live?.close(nil)
+        live = nil
+        connection = nil
+        connectionLanguage = nil
+    }
+
+    private func open(_ language: String) async throws -> TTSStream {
         let token = try await loadToken(.ttsWebsocket, language)
         guard let voice = token.voiceId, let model = token.modelId,
             var url = URLComponents(string: VoiceConfiguration.ttsURL)
@@ -125,68 +141,49 @@ final class ElevenLabsSpeechOutput {
         url.queryItems = [
             .init(name: "single_use_token", value: token.token), .init(name: "model_id", value: model),
             .init(name: "output_format", value: VoiceConfiguration.audioFormat),
-            .init(name: "inactivity_timeout", value: String(VoiceConfiguration.ttsInactivityTimeoutSeconds))
+            .init(name: "inactivity_timeout", value: String(VoiceConfiguration.ttsInactivityTimeoutSeconds)),
+            .init(name: "auto_mode", value: "true")
         ]
         guard let address = url.url else { throw VoiceServiceError.unavailable }
-        let socket = URLSession.shared.webSocketTask(with: address)
-        socket.resume()
-        return OpenedSocket(socket: socket, voice: voice, aliases: token.vocabulary?.pronunciationAliases ?? [], opened: .now)
+        let stream = TTSStream(
+            transport: connect(address), language: language, voice: voice,
+            aliases: token.vocabulary?.pronunciationAliases ?? [],
+            keepaliveInterval: keepaliveInterval, idleLimit: idleLimit
+        )
+        guard connectionLanguage == language else {
+            stream.close(nil)
+            throw CancellationError()
+        }
+        stream.onClose = { [weak self, weak stream] error in
+            guard let self, let stream else { return }
+            closed(stream, error: error)
+        }
+        live = stream
+        voiceID = voice
+        return stream
     }
 
-    /// Renders short fixed lines over one socket of their own, for playback later without the network.
-    func render(_ lines: [String], language: String) async throws -> (voice: String, clips: [Data]) {
-        let connection = try await open(language: Self.ttsLanguage(language))
-        let socket = connection.socket
-        let deadline = Task { @MainActor in
-            do { try await Task.sleep(for: VoiceConfiguration.segmentTimeout) } catch { return }
-            socket.cancel(with: .goingAway, reason: nil)
-        }
-        defer { deadline.cancel(); socket.cancel(with: .normalClosure, reason: nil) }
-        var clips: [Data] = []
-        for line in lines {
-            let context = UUID().uuidString
-            try await sendVoiceMessage(TTSText(text: line + " ", contextID: context), to: socket)
-            var clip = Data()
-            while true {
-                let event = try await receiveVoiceMessage(TTSAudio.self, from: socket)
-                if let message = event.error { throw VoiceProviderError(message: String(message.prefix(200))) }
-                guard event.contextId == context || event.contextId == nil else { continue }
-                if let audio = event.audio, audio.isEmpty == false {
-                    guard let data = Data(base64Encoded: audio) else { throw VoiceServiceError.invalidAudio }
-                    clip.append(data)
-                }
-                if event.isFinal == true { break }
-            }
-            guard clip.isEmpty == false else { throw VoiceProviderError(message: "leeres Audio für Stimme \(connection.voice)") }
-            try await sendVoiceMessage(TTSCloseContext(contextID: context), to: socket)
-            clips.append(clip)
-        }
-        return (connection.voice, clips)
+    /// A socket that dropped mid-conversation is replaced in the background, at most once per interval,
+    /// so the next sentence never waits for the token and handshake.
+    private func closed(_ stream: TTSStream, error: Error?) {
+        guard live === stream else { return }
+        live = nil
+        connection = nil
+        connectionLanguage = nil
+        guard let error else { return }
+        log.error("TTS socket closed: \(error.localizedDescription, privacy: .public)")
+        if let lastReopen, ContinuousClock.now - lastReopen < VoiceConfiguration.ttsReopenInterval { return }
+        lastReopen = .now
+        _ = self.stream(stream.language)
     }
 
+    private func logTimings(_ segment: SpeechSegment, _ utterance: TTSUtterance, playback: Duration) {
+        let firstAudio = (utterance.firstAudio ?? .now) - utterance.requested
+        lastTimings = "text→first audio \(Self.milliseconds(firstAudio)) ms, playback start \(Self.milliseconds(playback)) ms"
+        log.info("TTS segment \(segment.index, privacy: .public): \(self.lastTimings, privacy: .public)")
+    }
+
+    private static func key(_ segment: SpeechSegment) -> String { "\(segment.turnID)#\(segment.index)" }
+    private static func milliseconds(_ duration: Duration) -> Int { ScribeRealtimeTranscriptionProvider.milliseconds(duration) }
     nonisolated static func ttsLanguage(_ language: String) -> String { language.hasPrefix("en") ? "en" : "de" }
-}
-
-private struct OpenedSocket {
-    let socket: URLSessionWebSocketTask
-    let voice: String
-    let aliases: [VoiceAlias]
-    let opened: ContinuousClock.Instant
-}
-private struct TTSText: Encodable {
-    enum CodingKeys: String, CodingKey { case text, contextID = "context_id", flush }
-    let text: String
-    let contextID: String
-    let flush = true
-}
-private struct TTSCloseContext: Encodable {
-    enum CodingKeys: String, CodingKey { case contextID = "context_id", closeContext = "close_context" }
-    let contextID: String
-    let closeContext = true
-}
-struct TTSAudio: Decodable {
-    let audio: String?
-    let contextId: String?
-    let isFinal: Bool?
-    let error: String?
 }
