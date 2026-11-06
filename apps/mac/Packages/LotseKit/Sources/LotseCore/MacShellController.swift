@@ -15,7 +15,7 @@ public final class MacShellController {
     public let menu = MenuBarController()
     public private(set) lazy var dashboard = DashboardModel(workspace: workspace)
     let overlay = OverlayWindowManager()
-    private lazy var overlayBridge = OverlayBridgeController(workspace: workspace, overlay: overlay)
+    lazy var overlayBridge = OverlayBridgeController(workspace: workspace, overlay: overlay)
     lazy var native = NativeCapabilityCoordinator(shell: self, overlay: overlay, speech: speech)
     lazy var relatives: RelativesWindowController = {
         let controller = RelativesWindowController(
@@ -33,6 +33,7 @@ public final class MacShellController {
     var listeningHide: Task<Void, Never>?
     public let settings = CompanionSettingsModel()
     public let guidedPortal = GuidedPortalCapability()
+    public let browserPage = BrowserPageCapability()
     lazy var settingsWindow = CompanionSettingsWindow(model: settings)
     lazy var setupWindow = GuidedSetupWindow(settings, workspace: workspace, menu: menu, settingsWindow: settingsWindow)
     lazy var transcription = FallbackTranscriptionProvider(
@@ -178,6 +179,7 @@ public final class MacShellController {
         menu.speechSpeedChanged = { [weak self] in self?.speech.speed = $0 }
         sourceHighlights.connect(speech: speech, workspace: workspace, overlayBridge: overlayBridge, sentenceActions: sentenceActions)
         sentenceActions.onAction = { [weak self] in self?.performVoiceAction($0) }
+        overlayBridge.externalResolve = { [weak self] target in try await self?.browserPage.resolve(target) }
         workspace.onMessage = { [weak self] message in
             guard let self else { throw WorkspaceError.unsupportedMessage }
             try receiveWorkspaceMessage(message)
@@ -218,6 +220,7 @@ public final class MacShellController {
     public func stop() {
         transcriptSender.cancel()
         guidedPortal.stop()
+        browserPage.stop()
         uploads?.stop()
         relatives.stop()
         sourceHighlights.stop(notify: false)
@@ -304,6 +307,7 @@ extension MacShellController {
         }
     }
     private func receiveWorkspaceMessage(_ message: BridgeToNative) throws {
+        if receiveBrowserMessage(message) { return }
         if guidedPortal.receive(message, language: settings.language.rawValue, workspace: workspace) { return }
         switch message {
         case .speechSegment(let envelope):
@@ -327,7 +331,7 @@ extension MacShellController {
         default: try overlayBridge.receive(message)
         }
     }
-    private func receiveWorkspaceAction(_ envelope: BridgeToNativeAction) throws {
+    func receiveWorkspaceAction(_ envelope: BridgeToNativeAction) throws {
         if envelope.payload.sourceText != nil {
             try sourceHighlights.receive(.action(envelope))
             return
@@ -361,6 +365,10 @@ extension MacShellController {
         }
         try Task.checkCancellation()
         if let captured, captured.page != nil { return captured }
+        if let browserPage = await browserPage.snapshot() {
+            try Task.checkCancellation()
+            return ContextCapsule(focusedRegion: captured?.focusedRegion, page: browserPage, screen: captured?.screen)
+        }
         let portalPage = try? await guidedPortal.snapshot()
         try Task.checkCancellation()
         if let portalPage {

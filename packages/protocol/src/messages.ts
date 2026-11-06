@@ -132,6 +132,7 @@ export const ToolInvocationSchema = z.strictObject({
   toolName: z.enum([
     "ui.fill",
     "context.readScreen",
+    "context.readPage",
     "calendar.createEvent",
     "session.shareWithHelper",
   ]),

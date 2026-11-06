@@ -89,6 +89,12 @@ export function formFieldUiTarget(target: Target): Target | undefined {
   return { kind: "ui", elementId: formFieldElementId(target.fieldId) };
 }
 
+let nativePageOpenedAt = 0;
+/** Mac app: a portal page was opened natively (default browser or guided window) this session. */
+export function nativePageOpen(): boolean {
+  return nativePageOpenedAt > 0;
+}
+
 async function openNative(id: string, target: Target, label?: string): Promise<ActionResult> {
   const action: Action = {
     id,
@@ -110,7 +116,9 @@ async function openNative(id: string, target: Target, label?: string): Promise<A
     payload: action,
   } as BridgeToNative;
   await postNative(envelope);
-  return result;
+  const outcome = await result;
+  if (outcome.success && target.kind === "dom") nativePageOpenedAt = Date.now();
+  return outcome;
 }
 
 function openForm(id: string, formInstanceId: string, mounted: (id: string) => boolean) {

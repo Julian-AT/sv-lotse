@@ -2033,6 +2033,7 @@ public enum JSONValue: Codable, Equatable, Sendable {
 
 public enum ToolName: String, Codable, Equatable, Sendable {
     case calendarCreateEvent = "calendar.createEvent"
+    case contextReadPage = "context.readPage"
     case contextReadScreen = "context.readScreen"
     case sessionShareWithHelper = "session.shareWithHelper"
     case uiFill = "ui.fill"

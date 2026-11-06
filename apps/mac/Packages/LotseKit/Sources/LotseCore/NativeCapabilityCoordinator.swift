@@ -75,6 +75,11 @@ final class NativeCapabilityCoordinator {
                 if error is CancellationError { throw error }
                 throw NativeToolError("SCREEN_CAPTURE_UNAVAILABLE")
             }
+        case .contextReadPage:
+            // The page Lotse opened in the browser (Accessibility), else the guided portal window.
+            var page = await shell?.browserPage.snapshot()
+            if page == nil { page = try? await shell?.guidedPortal.snapshot() }
+            return .contextCapsule(ContextCapsule(focusedRegion: nil, page: page, screen: nil))
         case .sessionShareWithHelper:
             // Opens the consent UI only; sharing starts after the user confirms there.
             guard let shell else { throw NativeToolError("CLIENT_TOOL_UNAVAILABLE") }

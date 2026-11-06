@@ -52,6 +52,7 @@
       "enum": [
         "ui.fill",
         "context.readScreen",
+        "context.readPage",
         "calendar.createEvent",
         "session.shareWithHelper"
       ],

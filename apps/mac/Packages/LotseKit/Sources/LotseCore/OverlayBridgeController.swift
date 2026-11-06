@@ -20,6 +20,8 @@ final class OverlayBridgeController {
     private var screens: [CompanionScreenCapture] = []
     private var capturedAt = Date.distantPast
     private var captureTask: Task<[CompanionScreenCapture], Error>?
+    /// Resolves targets on a page outside the workspace (the default browser) before the ladder below.
+    var externalResolve: ((Target) async throws -> ResolvedTarget?)?
 
     init(workspace: WorkspaceWindowController, overlay: OverlayWindowManager) {
         self.workspace = workspace
@@ -103,6 +105,11 @@ final class OverlayBridgeController {
     }
 
     private func resolve(_ action: NativeOverlayAction) async throws -> ResolvedTarget {
+        switch action.target {
+        case .dom, .text:
+            if let external = try await externalResolve?(action.target) { return external }
+        default: break
+        }
         switch action.target {
         case .ui, .form, .dom:
             guard let window = workspace.webView.window, window.isVisible else { throw TargetResolutionError.unavailable }

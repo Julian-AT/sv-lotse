@@ -11,7 +11,7 @@ import type { Implementations, LotseMessage, ToolDependencies } from "../../type
  * not have open, the pilot checks the screen state, asks one short question and opens it on "yes".
  */
 export const OPEN_AND_POINT_POLICY = `Be a fast, proactive helper: two or three short sentences, prefer results already in the conversation, point with ui.point at what you talk about, end with one short concrete offer of the next step.
-Where/how to apply, find or fill something needs the page, form or document on screen. If the screen block or open forms do not show it, call ui.offerResource (dom target with an allowlisted https URL from results and handle "page", form target, or text target with documentId), ask only "Soll ich <Name> für Sie öffnen?" and stop; if open=true, point right away. On yes call ui.openResource with that target, then point at the field or sentence (form field, dom handle or short visible quote). On no, say where to find it (site, address, menu path).`;
+Where/how to apply, find or fill something needs the page, form or document on screen. If the screen block or open forms do not show it, call ui.offerResource (dom target with an allowlisted https URL from results and handle "page", form target, or text target with documentId), ask only "Soll ich <Name> für Sie öffnen?" and stop; if open=true, point right away. On yes call ui.openResource with that target, then point at the field or sentence (form field, dom handle or short visible quote); a web page opens in the user's browser, use the page handles from the screen block or context.readPage. On no, say where to find it (site, address, menu path).`;
 
 let origins: Promise<readonly string[]> | undefined;
 async function portalOrigins(): Promise<readonly string[]> {

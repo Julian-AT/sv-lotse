@@ -14,7 +14,21 @@ import { hasNativeBridge, postNative } from "../bridge/index.ts";
 import { dispatchFormAction, formViewerMounted } from "../features/form-viewer/workspace.tsx";
 import { WORKSPACE_CONFIG } from "./config.ts";
 import { pointNatively, stopNativePointing, workspaceElement } from "./native-pointer.ts";
-import { formFieldUiTarget, openResource } from "./open-resource.ts";
+import { formFieldUiTarget, nativePageOpen, openResource } from "./open-resource.ts";
+
+/** Mac app: pages opened in the default browser are read and typed into natively. */
+function nativePageTool(toolName: string, input: unknown): boolean {
+  if (!hasNativeBridge()) return false;
+  if (toolName === "context.readPage") return nativePageOpen();
+  if (toolName !== "ui.fill") return false;
+  const target = TargetSchema.safeParse((input as { target?: unknown } | null)?.target);
+  if (!target.success || target.data.kind !== "dom") return false;
+  try {
+    return new URL(target.data.url).origin !== window.location.origin;
+  } catch {
+    return false;
+  }
+}
 
 export function nativeEnvelope<Message extends BridgeToNative["type"]>(
   type: Message,
@@ -56,6 +70,16 @@ export function createClientRuntime(
             openDocument: options.openDocumentHighlight,
           }),
         };
+      if (nativePageTool(toolName, input)) {
+        const invocation = ToolInvocationSchema.safeParse({
+          toolCallId,
+          toolName,
+          input: JsonObjectSchema.parse(input),
+        });
+        if (!invocation.success) return { errorText: "CLIENT_TOOL_UNAVAILABLE" };
+        await postNative(nativeEnvelope("ToolInvocation", invocation.data));
+        return { native: true };
+      }
       if (toolName === "context.readPage")
         return { output: { page: toCapsulePage(pageGuide().snapshot()) } };
       if (toolName === "ui.fill") {

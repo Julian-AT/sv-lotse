@@ -209,7 +209,9 @@ export function useConversation({
           const toolName = pending.current.get(message.payload.toolCallId);
           if (!toolName) return;
           const result = (
-            toolName === "context.readScreen" ? ContextCapsuleSchema : ActionResultSchema
+            toolName === "context.readScreen" || toolName === "context.readPage"
+              ? ContextCapsuleSchema
+              : ActionResultSchema
           ).safeParse(message.payload.output);
           pending.current.delete(message.payload.toolCallId);
           if (!result.success || message.payload.error)

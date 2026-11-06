@@ -7,7 +7,7 @@ import LotseProtocol
 public struct GuidedApprovedFill: Sendable {
     public let approvalID: String
     public let toolCallID: String
-    let action: Action
+    public let action: Action
 }
 
 public enum GuidedFillError: Error, Equatable {
