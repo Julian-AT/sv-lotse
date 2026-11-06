@@ -1,0 +1,344 @@
+id: heilbehelfe-hilfsmittel
+name_de: Heilbehelfe und Hilfsmittel
+name_simple: Hilfe beim Bezahlen von Hilfsmitteln
+area: C
+life_situations:
+  - care
+  - after-hospital
+scope: social_insurance
+carriers: [oegk, svs, bvaeb]
+criteria:
+  - id: verordnung
+    text_de: >-
+      Für den Erstbezug brauchen Sie eine Verordnung. Bei der ÖGK dürfen in
+      bestimmten pflegespezifischen Bereichen auch entsprechend fortgebildete
+      diplomierte Gesundheits- und Krankenpflegepersonen verordnen.
+      Welche Produkte das betrifft, steht in § 32a Abs. 3 der Krankenordnung.
+      Die medizinische Auswahl bleibt bei den verordnenden Fachpersonen.
+    condition: prescription_present == true
+    legal_basis: § 32a Abs. 3 Krankenordnung der ÖGK (SozDok; pflegerische Verordnungen)
+    source: &prescription
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870456
+      quote: >-
+        Sie brauchen eine ärztliche Verordnung oder eine Verordnung von diplomierten
+        Gesundheits- und Krankenpfleger*innen (DKGP).
+        Seit 1. Jänner 2024 sind diplomierte Gesundheits- und Krankenpfleger*innen
+        (kurz: DGKP) in bestimmten pflegespezifischen Bereichen zur Verordnung von
+        Medizinprodukten, zu denen auch bestimmte Heilbehelfe und Hilfsmittel zählen,
+        berechtigt. Voraussetzung für die Verordnung von Heilbehelfen und Hilfsmitteln
+        ist die Absolvierung einer entsprechenden Fortbildung, z.B. beim
+        Österreichischen Gesundheits- und Krankenpflegeverband (ÖGKV).
+        Welche Produkte verordnet werden können, ist in der Krankenordnung der ÖGK
+        (§ 32a Abs. 3) festgelegt.“
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: oegk-einloesefrist
+    text_de: Bei der ÖGK muss die Verordnung innerhalb von 30 Tagen nach dem Ausstellungstag eingelöst werden.
+    source: &oegk-deadline
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870456
+      quote: Die Verordnung muss innerhalb von 30 Tagen nach dem Ausstellungstag eingelöst werden.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: svs-verordnung-und-einloesefrist
+    text_de: >-
+      Bei der SVS ist grundsätzlich eine Verordnung erforderlich. Für dauernd
+      benötigte Behelfe kann nach der Erstverordnung die vertraglich geregelte
+      Abgabe ohne neue Verordnung möglich sein. Für bloße technische Instandsetzung
+      ist keine Verordnung nötig. Der Verordnungsschein muss innerhalb eines Monats
+      nach dem Ausstellungstag oder dem Tag der Bewilligung eingelöst werden.
+    legal_basis: § 23 Abs. 1 SVS-Krankenordnung 2024 (SozDok)
+    source: &svs-deadline
+      url: https://www.ris.bka.gv.at/Dokumente/Avsv/AVSV_2023_0082/AVSV_2023_0082.html
+      quote: >-
+        Dauernd benötigte Heilbehelfe und Hilfsmittel können von Vertragspartnern,
+        soweit berufsrechtlich zulässig und vertraglich vereinbart, nach erfolgter
+        Erstverordnung ohne neuerliche Verordnung abgegeben werden. Maßnahmen der
+        bloßen technischen Instandsetzung bedürfen keiner Verordnung. Der
+        Verordnungsschein wird ungültig, wenn er nicht innerhalb von einem Monat nach
+        dem Ausstellungstag oder nach dem Tag, an dem die SVS die Bewilligung erteilt
+        hat, eingelöst wird.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: bvaeb-einloesefrist
+    text_de: >-
+      Bei der BVAEB gilt die Verordnung einen Monat. Wenn eine vorherige Bewilligung
+      erforderlich ist, beginnt diese Frist mit dem Bewilligungsdatum.
+    source: &bvaeb-deadline
+      url: https://www.bvaeb.at/cdscontent/?contentid=10007.840378&portal=bvaebbportal
+      quote: >-
+        Verordnungen für Heilbehelfe und Hilfsmittel haben eine Gültigkeit von
+        1 Monat. Ist eine vorherige Bewilligung durch die BVAEB erforderlich, so
+        beginnt diese Frist erst mit unserem Bewilligungsdatum zu laufen.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: gueltigkeit-bestaetigt
+    text_de: Lassen Sie den Fachbetrieb die Gültigkeit Ihrer Verordnung vor dem Bezug bestätigen.
+    condition: validity_confirmed == true
+    source: *oegk-deadline
+  - id: oegk-bewilligung
+    text_de: >-
+      Die ÖGK veröffentlicht eine Bewilligungspflicht ab 1.500 Euro. Die Seite
+      nennt auch regionale Unterschiede. Lassen Sie die Bewilligungspflicht für
+      Ihr verordnetes Produkt beim Vertragspartner oder bei Ihrer ÖGK-Stelle
+      klären. Unter 1.500 Euro besteht daraus keine allgemeine Zusage.
+    condition: insurance_carrier != "oegk" or quoted_price_eur < 1500 or approval_received == true
+    source: &oegk-approval
+      url: https://www.oegk.at/cdscontent/?contentid=10007.881096&portal=oegkvpportal
+      quote: ab € 1.500 bewilligungspflichtig
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: svs-bewilligung
+    text_de: >-
+      Bei der SVS ist vor dem Bezug eine Bewilligung nötig, soweit nicht
+      vertragliche Regelungen den Bezug ohne vorherige Kostenübernahmeerklärung
+      erlauben. Ohne Tarifvereinbarung ist ein Kostenvoranschlag des
+      Vertragslieferanten mit dem Verordnungsschein vorzulegen.
+    legal_basis: § 23 Abs. 2 SVS-Krankenordnung 2024 (SozDok)
+    source: &svs-approval
+      url: https://www.ris.bka.gv.at/Dokumente/Avsv/AVSV_2023_0082/AVSV_2023_0082.html
+      quote: >-
+        Für den Bezug von Heilbehelfen und Hilfsmitteln ist eine vorherige
+        Bewilligung der SVS einzuholen, sofern sie nicht auf Grund entsprechender
+        vertraglicher Regelungen bei den Vertragsstellen ohne vorherige
+        Kostenübernahmeerklärung bezogen werden können. Bestehen für Behelfe keine
+        tariflichen Vereinbarungen, so ist mit dem zur Bewilligung eingereichten
+        Verordnungsschein ein Kostenvoranschlag des Vertragslieferanten vorzulegen.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: bvaeb-bewilligung
+    text_de: >-
+      Bei der BVAEB ist für manche Produkte vor dem Bezug eine Bewilligung nötig.
+      Üblicherweise holt sie der Vertragspartner ein. Eine allgemeine Euro-Schwelle
+      wird auf der Bezugsseite nicht genannt; fragen Sie den Vertragspartner.
+    source: &bvaeb-approval
+      url: https://www.bvaeb.at/cdscontent/?contentid=10007.840378&portal=bvaebbportal
+      quote: >-
+        In manchen Fällen ist vor dem Bezug eines Heilbehelfes oder Hilfsmittels
+        eine Bewilligung der BVAEB notwendig. Üblicherweise wird dann die Einholung
+        der Bewilligung durch den Vertragspartner veranlasst.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: bewilligung-vor-bezug
+    text_de: Klären Sie die Bewilligungspflicht vor dem Bezug. Eine erforderliche Bewilligung muss vorliegen.
+    condition: approval_required == false or approval_received == true
+    source: *bvaeb-approval
+  - id: oegk-kostenanteil
+    text_de: >-
+      Bei der ÖGK beträgt der Selbstbehalt grundsätzlich 10 Prozent, mindestens
+      46,20 Euro (2026). Kinder unter 15 Jahren, Kinder mit Anspruch auf erhöhte
+      Familienbeihilfe und Rezeptgebührenbefreite sind ausgenommen; die Befreiung
+      allein wegen der Rezeptgebührenobergrenze zählt nicht. Für Hilfsmittel im
+      Rahmen medizinischer Rehabilitation fällt ebenfalls kein Selbstbehalt an.
+    source: &oegk-cost
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870456
+      quote: >-
+        Für Heilbehelfe und Hilfsmittel bezahlen Sie 10 Prozent der Kosten selbst,
+        mindestens aber EUR 46,20 (Wert 2026).
+        Für folgende Personen gibt es keinen Selbstbehalt:
+        Kinder unter 15 Jahren
+        Kinder, für die Anspruch auf erhöhte Familienbeihilfe besteht (unabhängig vom Alter)
+        Personen, die von der Rezeptgebühr befreit sind. Personen die aufgrund der
+        Rezeptgebührenobergrenze befreit sind, müssen jedoch weiterhin einen Selbstbehalt zahlen.
+        Hilfsmittel, die im Rahmen der medizinischen Rehabilitation gewährt werden.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: svs-kostenanteil-selbstaendige
+    text_de: Bei der SVS beträgt der generelle Selbstbehalt für Gewerbetreibende und Neue Selbständige 20 Prozent.
+    source: &svs-cost
+      url: https://www.svs.at/cdscontent/?contentid=10007.816812&portal=svsportal
+      quote: >-
+        Für Gewerbetreibende und Neue Selbständige gilt:
+        Der generelle Selbstbehalt bei Heilbehelfen beträgt 20 %.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: svs-kostenanteil-bauern
+    text_de: Bei der SVS beträgt der generelle Kostenanteil für Bauern 10 Prozent.
+    source: &svs-farmers-cost
+      url: https://www.svs.at/cdscontent/?contentid=10007.816812&portal=svsportal
+      quote: >-
+        Für Bauern gilt:
+        Der generelle Kostenanteil bei Heilbehelfen beträgt 10 %.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: svs-mindestkostenanteil
+    text_de: >-
+      Bei der SVS gilt grundsätzlich ein Mindestkostenanteil von 46,20 Euro
+      (2026). Liegt der Kassentarif darunter, müssen Sie grundsätzlich alles selbst
+      bezahlen. Lassen Sie Sonderregeln und Befreiungen vor dem Bezug klären.
+    source: &svs-minimum-cost
+      url: https://www.svs.at/cdscontent/?contentid=10007.816812&portal=svsportal
+      quote: >-
+        Grundsätzlich gilt, dass seitens der SVS dann Kosten übernommen werden können,
+        wenn der Kassentarif den Betrag von EUR 46,20 übersteigt
+        (Mindestselbstbehalt bzw. -kostenanteil). Kosten Heilbehelfe weniger,
+        sind diese gänzlich selbst zu zahlen.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: bvaeb-kostenanteil
+    text_de: >-
+      Bei der BVAEB beträgt der Selbstbehalt grundsätzlich 10 Prozent des Tarifs,
+      mindestens 46,20 Euro (2026). Für Brillen und Kontaktlinsen gelten andere
+      Regeln. Für ständig benötigte, nur einmal oder kurzfristig verwendbare
+      Behelfe gilt der Mindestkostenanteil nicht. Befreiungen sind möglich.
+    source: &bvaeb-cost
+      url: https://www.bvaeb.at/cdscontent/?contentid=10007.840381&portal=bvaebbportal
+      quote: >-
+        Der Selbstbehalt bei Heilbehelfen und Hilfsmitteln, der vom Versicherten zu
+        tragen ist, beträgt zehn Prozent der Kosten laut unserem Tarif, gerundet
+        auf Cent, mindestens aber EUR 46,20 (ausgenommen Brillen und Kontaktlinsen).
+        Für ständig benötigte Behelfe, die nur einmal oder nur kurzfristig verwendet
+        werden können, beträgt der Selbstbehalt immer zehn Prozent der tarifmäßigen
+        Kosten. In diesen Fällen kommt der Mindestkostenanteil nicht zur Anwendung.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: oegk-vertragspartner
+    text_de: >-
+      Bei einem ÖGK-Vertragspartner werden Bewilligung und Verrechnung in der Regel
+      direkt abgewickelt. Klären Sie bei einem Betrieb ohne Vertrag die
+      Voraussetzungen für einen Kostenersatz vor einem Kauf mit der ÖGK.
+    source: &oegk-partner
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870456
+      quote: >-
+        Wird ein Heilbehelf oder ein Hilfsmittel bei einem Leistungserbringer
+        erworben, der einen Vertrag mit der ÖGK hat, dann erfolgt die Abwicklung
+        (allenfalls erforderliche Bewilligung, Verrechnung der im Vertrag
+        festgelegten Leistungen, Vorschreibung des Selbstbehaltes, usw.) in der
+        Regel direkt durch die Vertragspartnerin oder den Vertragspartner.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: svs-vertragspartner
+    text_de: >-
+      Ohne SVS-Vertragspartner brauchen Sie für eine Vergütung die Verordnung, die Bewilligung und die
+      Originalrechnung samt Zahlungsbestätigung. Bei einem nicht anerkannten
+      Fachgeschäft gibt es keinen Kostenersatz.
+    source: &svs-partner
+      url: https://www.svs.at/cdscontent/?contentid=10007.816810&portal=svsportal
+      quote: >-
+        Wenn Sie keinen Vertragspartner in Anspruch nehmen, müssen Sie die ärztliche
+        Verordnung, unsere Bewilligung sowie die Originalrechnung samt
+        Zahlungsbestätigung mit einem Antrag auf Vergütung der Kosten bei der SVS
+        einreichen, wobei ein Kostenersatz dann ausgeschlossen ist, wenn es sich um
+        kein anerkanntes Fachgeschäft handelt.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: bvaeb-vertragspartner
+    text_de: >-
+      Ohne BVAEB-Vertrag bezahlen Sie zuerst selbst und können danach einen allfälligen
+      tarifmäßigen Kostenersatz bei Ihrer Kundenservicestelle beantragen.
+    source: &bvaeb-partner
+      url: https://www.bvaeb.at/cdscontent/?contentid=10007.840378&portal=bvaebbportal
+      quote: >-
+        Möchten Sie einen Behelf bei einer zur Abgabe berechtigten Firma beziehen,
+        die in keinem Vertragsverhältnis mit uns steht, so müssen Sie den Behelf
+        zuerst selbst bezahlen und können dann um allfälligen tarifmäßigen
+        Kostenersatz bei Ihrer Kundenservicestelle ansuchen.
+      retrieved_at: 2026-11-05T23:49:33Z
+office_rules:
+  - when: insurance_carrier == "oegk" and residence_state == "Wien"
+    office: ref:offices/oegk-wien
+  - when: insurance_carrier == "oegk" and residence_state == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: insurance_carrier == "oegk" and residence_state == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: insurance_carrier == "oegk" and residence_state == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: insurance_carrier == "oegk" and residence_state == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: insurance_carrier == "oegk" and residence_state == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: insurance_carrier == "oegk" and residence_state == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: insurance_carrier == "oegk" and residence_state == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: insurance_carrier == "oegk" and residence_state == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+  - when: insurance_carrier == "svs" and residence_state == "Wien"
+    office: ref:offices/svs-wien
+  - when: insurance_carrier == "svs" and residence_state == "Niederösterreich"
+    office: ref:offices/svs-niederoesterreich
+  - when: insurance_carrier == "svs" and residence_state == "Burgenland"
+    office: ref:offices/svs-burgenland
+  - when: insurance_carrier == "svs" and residence_state == "Oberösterreich"
+    office: ref:offices/svs-oberoesterreich
+  - when: insurance_carrier == "svs" and residence_state == "Salzburg"
+    office: ref:offices/svs-salzburg
+  - when: insurance_carrier == "svs" and residence_state == "Steiermark"
+    office: ref:offices/svs-steiermark
+  - when: insurance_carrier == "svs" and residence_state == "Kärnten"
+    office: ref:offices/svs-kaernten
+  - when: insurance_carrier == "svs" and residence_state == "Tirol"
+    office: ref:offices/svs-tirol
+  - when: insurance_carrier == "svs" and residence_state == "Vorarlberg"
+    office: ref:offices/svs-vorarlberg
+  - when: insurance_carrier == "bvaeb" and residence_state == "Wien"
+    office: ref:offices/bvaeb-wien
+  - when: insurance_carrier == "bvaeb" and residence_state == "Niederösterreich"
+    office: ref:offices/bvaeb-niederoesterreich
+  - when: insurance_carrier == "bvaeb" and residence_state == "Burgenland"
+    office: ref:offices/bvaeb-burgenland
+  - when: insurance_carrier == "bvaeb" and residence_state == "Oberösterreich"
+    office: ref:offices/bvaeb-oberoesterreich
+  - when: insurance_carrier == "bvaeb" and residence_state == "Salzburg"
+    office: ref:offices/bvaeb-salzburg
+  - when: insurance_carrier == "bvaeb" and residence_state == "Steiermark"
+    office: ref:offices/bvaeb-steiermark
+  - when: insurance_carrier == "bvaeb" and residence_state == "Kärnten"
+    office: ref:offices/bvaeb-kaernten
+  - when: insurance_carrier == "bvaeb" and residence_state == "Tirol"
+    office: ref:offices/bvaeb-tirol
+  - when: insurance_carrier == "bvaeb" and residence_state == "Vorarlberg"
+    office: ref:offices/bvaeb-vorarlberg
+documents:
+  - id: verordnung
+    name_de: Verordnung für den benötigten Heilbehelf oder das Hilfsmittel
+    required: true
+    obtain_from: >-
+      Verordnende Ärztin oder verordnender Arzt; bei der ÖGK in den zugelassenen
+      pflegespezifischen Bereichen auch entsprechend fortgebildete DGKP.
+    source: *prescription
+  - id: kostenvoranschlag
+    name_de: Kostenvoranschlag bei nicht tariflich geregelten Produkten
+    required: false
+    obtain_from: Fachbetrieb; bei fehlender Tarifvereinbarung mit dem Träger vor dem Bezug klären.
+    source: &estimate
+      url: https://www.bvaeb.at/cdscontent/?contentid=10007.840378&portal=bvaebbportal
+      quote: >-
+        Für die Bewilligung eines solchen Produktes benötigen wir eine ärztliche
+        Verordnung und einen detaillierten Kostenvoranschlag.
+      retrieved_at: 2026-11-05T23:49:33Z
+  - id: bewilligung
+    name_de: Bewilligung, wenn für das verordnete Produkt erforderlich
+    required: false
+    obtain_from: Zuständiger Krankenversicherungsträger, üblicherweise über den Vertragspartner.
+    source: *bvaeb-approval
+  - id: bezahlte-rechnung
+    name_de: Rechnung und Zahlungsbestätigung bei Bezug ohne Vertragspartner
+    required: false
+    obtain_from: Abgebender Fachbetrieb; Zahlungsbestätigung vom Fachbetrieb oder eigener Zahlungsnachweis.
+    source: *svs-partner
+forms:
+  - search: Verordnung Heilbehelfe und Hilfsmittel
+    publisher: Österreichische Gesundheitskasse
+  - search: Antrag auf Vergütung der Kosten für Heilbehelfe und Hilfsmittel
+    publisher: Sozialversicherungsanstalt der Selbständigen
+  - search: Kostenersatz Heilbehelfe und Hilfsmittel
+    publisher: Versicherungsanstalt öffentlich Bediensteter, Eisenbahnen und Bergbau
+process: ref:processes/heilbehelfe-hilfsmittel-beziehen
+# No reviewed booking channel is established by the checked benefit pages.
+appointment_channels: []
+sources:
+  - *prescription
+  - *oegk-deadline
+  - *svs-deadline
+  - *bvaeb-deadline
+  - *oegk-approval
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.881096&portal=oegkvpportal
+    quote: >-
+      Dies erklärt einzelne Unterschiede zwischen den Bundesländern, die derzeit
+      noch bestehen, etwa bei der Bewilligung bestimmter Leistungen oder in
+      organisatorischen Fragen (Anträge, Fristen, Wartezeiten etc.).
+    retrieved_at: 2026-11-05T23:49:33Z
+  - *svs-approval
+  - *bvaeb-approval
+  - *oegk-cost
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870456
+    quote: >-
+      Personen, die von der Rezeptgebühr befreit sind. Personen die aufgrund der
+      Rezeptgebührenobergrenze befreit sind, müssen jedoch weiterhin einen
+      Selbstbehalt zahlen.
+    retrieved_at: 2026-11-05T23:49:33Z
+  - *svs-cost
+  - *svs-farmers-cost
+  - *svs-minimum-cost
+  - *bvaeb-cost
+  - *oegk-partner
+  - *svs-partner
+  - *bvaeb-partner
+  - *estimate
+as_of: 2026-11-06
