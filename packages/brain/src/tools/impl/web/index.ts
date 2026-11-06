@@ -10,7 +10,7 @@ import { createModelRouter } from "../../../models/index.ts";
 import { searchKnowledge } from "../../../retrieval/index.ts";
 import { contracts } from "../../contracts/index.ts";
 import type { Implementations, ToolDependencies } from "../../types.ts";
-import { isGuidanceRequest, pageOffer, portalPageAllowed } from "../ui/resource.ts";
+import { isDocumentUrl, isGuidanceRequest, pageOffer, portalPageAllowed } from "../ui/resource.ts";
 
 type PageQuery = z.infer<(typeof contracts)["web.findOfficialPage"]["input"]>;
 export type OfficialPage = { url: string; title: string; snippet: string };
@@ -368,6 +368,80 @@ export async function deepPageOffer(input: {
     target: { kind: "dom", handle: "page", url },
     label: name ? `die Seite „${name}“ auf ${host}` : `die offizielle Seite auf ${host}`,
   };
+}
+
+export type ApplyPage = {
+  /** The official page to open (HTML, never a PDF). */
+  url: string;
+  title: string;
+  /** The on-topic application PDF the page links to, for form.acquire. */
+  formPdf?: string;
+  /** The on-topic apply link on the page (online application or deeper apply page). */
+  apply?: { text: string; href: string };
+};
+
+function chosenApplyPage(page: OfficialPage, read: PageRead | undefined, query: string): ApplyPage {
+  const link = read && applyLink(read, query);
+  const document = link && (link.pdf || isDocumentUrl(link.href));
+  if (link && !document && read?.url !== link.href)
+    return { url: link.href, title: link.text, apply: { text: link.text, href: link.href } };
+  return {
+    url: read?.url ?? page.url,
+    title: read?.title || page.title,
+    ...(link && document ? { formPdf: link.href } : {}),
+    ...(link ? { apply: { text: link.text, href: link.href } } : {}),
+  };
+}
+
+/**
+ * The deepest official page for applying: catalog or ingested pages (`known`) plus one allowlisted
+ * web search, the top {@link MAX_PAGE_READS} read in parallel, and the one leading to an on-topic
+ * application wins. A deeper HTML apply link is opened instead of its overview page; an on-topic
+ * PDF link keeps the page and comes back as `formPdf`.
+ */
+export async function findApplyPage(input: {
+  query: string;
+  carrier?: string | undefined;
+  known?: readonly string[];
+  model: LanguageModel;
+  signal?: AbortSignal | undefined;
+}): Promise<ApplyPage | undefined> {
+  const origins = await allowlistedOrigins();
+  const pages = await findOfficialPages(
+    { query: input.query, ...(input.carrier ? { carrier: input.carrier } : {}) },
+    {
+      model: input.model,
+      origins,
+      known: Promise.resolve((input.known ?? []).map((url) => ({ url, title: "", snippet: "" }))),
+      signal: input.signal,
+    },
+  );
+  const candidates = pages.filter((page) => !isDocumentUrl(page.url)).slice(0, MAX_PAGE_READS);
+  const reads = await Promise.all(
+    candidates.map((page) =>
+      readOfficialPage(page.url, { origins, signal: input.signal }).catch(() => undefined),
+    ),
+  );
+  const options = candidates.map((page, index) => {
+    const read = reads[index];
+    return { page, read, link: read && applyLink(read, input.query) };
+  });
+  const strength = ({ link, read }: (typeof options)[number]) =>
+    (link ? (link.apply ? 4 : 2) : 0) + (read ? 1 : 0);
+  const [chosen] = [...options].sort((left, right) => strength(right) - strength(left));
+  return chosen && chosenApplyPage(chosen.page, chosen.read, input.query);
+}
+
+/** The on-topic application PDF of an opened official page (one read), if it links one. */
+export async function applyPdfOf(
+  url: string,
+  query: string,
+  signal?: AbortSignal,
+): Promise<string | undefined> {
+  const read = await readOfficialPage(url, { origins: await allowlistedOrigins(), signal });
+  if (read.kind === "pdf") return read.url;
+  const link = applyLink(read, query);
+  return link && (link.pdf || isDocumentUrl(link.href)) ? link.href : undefined;
 }
 
 export function implementations(deps: ToolDependencies): Implementations {

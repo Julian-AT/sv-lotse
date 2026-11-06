@@ -14,7 +14,17 @@ import { prefillForm } from "../forms/instances/index.ts";
 import { getTemplate } from "../forms/registry/index.ts";
 import { type FormField, type FormToolResult, templateSchema } from "../forms/schema.ts";
 import { contracts } from "../tools/contracts/index.ts";
+import { applyPdfOf } from "../tools/impl/web/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
+import {
+  type ApplyPageChoice,
+  catalogBenefit,
+  chooseApplyPage,
+  onlineApplyText,
+  openedApplyPage,
+  pageTarget,
+  rememberApplyPage,
+} from "./apply-page.ts";
 import {
   answerManyFields,
   applicantOf,
@@ -75,6 +85,21 @@ const FORM_ASSETS: Readonly<
     publisher: "https://www.fsw.at",
     title: "Beilage Einrichtungswunsch (FSW)",
   },
+};
+
+/** Explicit wish to apply or fill (a bare "ja" only counts for registered forms). */
+const APPLY_REQUEST =
+  /antrag|beantrag|ausf(?:ü|ue)ll|formular|einreich|\bapply\b|application|\bfill\b/iu;
+
+/** Names of the registered forms' benefits for the spoken sentence. */
+const REGISTERED_NAMES: Readonly<Record<string, string>> = {
+  "svbox-pflegegeld": "Pflegegeld",
+  "svbox-fahrtkosten-wien": "Fahrtkosten",
+  "svbox-reha-unfall": "Reha nach einem Unfall",
+  "svbox-kur-reha": "Reha und Kur",
+  "svbox-senioren-wg": "Senioren-WG",
+  "svbox-fsw-foerderung": "FSW-Förderung",
+  "svbox-einrichtungswunsch": "Pflegeplatz",
 };
 
 const BENEFIT_FORMS: readonly (BenefitForm & { pattern: RegExp })[] = [
@@ -304,31 +329,63 @@ export async function prepareFormAfterOpen(input: {
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
   const url = openedPageUrl(input.history);
   if (!url && !input.requested) return;
-  // Requested at L3 with a known official page: open it first so the cursor can show the way; the
-  // form follows on the after-open turn.
-  const official = url ? undefined : officialPage(benefitForm(topicTexts(input.history))?.formId);
-  if (official && !pageOpenedBefore(input.history)) {
-    const id = randomUUID();
-    input.writer.write({ type: "start-step" });
-    input.writer.write({ type: "text-start", id });
-    input.writer.write({ type: "text-delta", id, delta: official.sentence });
-    input.writer.write({ type: "text-end", id });
+  const texts = topicTexts(input.history);
+  // Requested: show the official apply page first (found live, static fallback) so the cursor can
+  // show the way; the form follows on the after-open turn.
+  const model = (input.data ?? input.fill)?.model;
+  if (!url && model && !pageOpenedBefore(input.history)) {
+    const registered = benefitForm(texts);
+    const benefit =
+      registered || APPLY_REQUEST.test(lastUserText(input.history))
+        ? await catalogBenefit(db, texts).catch(() => undefined)
+        : undefined;
+    const choice =
+      registered || benefit
+        ? await chooseApplyPage({
+            benefit,
+            registered: registered && {
+              formId: registered.formId,
+              name: REGISTERED_NAMES[registered.formId] ?? registered.goal,
+            },
+            model,
+            signal: input.signal,
+          })
+        : undefined;
+    if (choice) {
+      rememberApplyPage(choice);
+      writeText(input.writer, choice.sentence);
+      input.writer.write({
+        type: "tool-input-available",
+        toolCallId: randomUUID(),
+        toolName: "ui.openResource",
+        input: { target: pageTarget(choice.url), label: choice.label },
+      });
+      return {};
+    }
+  }
+  const choice = url ? openedApplyPage(url) : undefined;
+  const benefit = choice
+    ? BENEFIT_FORMS.find((entry) => entry.formId === choice.formId)
+    : benefitForm(texts);
+  // An official PDF form outside the registry is acquired (allowlist, size cap) and detected: the
+  // opened PDF itself, or the application PDF the opened page links to.
+  const template =
+    (benefit ? await registeredTemplate(db, benefit.formId) : undefined) ??
+    (url ? await acquireLinkedForm(db, url, choice, input.signal) : undefined);
+  if (!template) {
+    if (!choice) return;
+    writeText(
+      input.writer,
+      onlineApplyText(choice, input.fill?.language.startsWith("en") ?? false),
+    );
     input.writer.write({
-      type: "tool-input-available",
-      toolCallId: randomUUID(),
-      toolName: "ui.openResource",
-      input: { target: { kind: "dom", handle: "page", url: official.url }, label: official.label },
+      type: "source-url",
+      sourceId: randomUUID(),
+      url: choice.apply?.href ?? choice.url,
+      title: choice.apply?.text ?? choice.title,
     });
     return {};
   }
-  const benefit = benefitForm(topicTexts(input.history));
-  // An official PDF form outside the registry is acquired (allowlist, size cap) and detected.
-  const template =
-    (benefit ? await registeredTemplate(db, benefit.formId) : undefined) ??
-    (url && pdfUrl(url)
-      ? await acquireForm(db, url, input.signal).catch(() => undefined)
-      : undefined);
-  if (!template) return;
   if (!url) {
     const [existing] = await db
       .select({ id: formInstances.id })
@@ -345,7 +402,8 @@ export async function prepareFormAfterOpen(input: {
     .where(eq(cases.id, context.caseId));
   const goalConfirmed = record?.confirmedGoal
     ? undefined
-    : (benefit?.goal ?? `${template.title} vorbereiten`);
+    : (benefit?.goal ??
+      (choice ? `${choice.benefit} beantragen` : `${template.title} vorbereiten`));
   if (goalConfirmed)
     await db
       .update(cases)
@@ -447,27 +505,6 @@ export async function formQuestion(input: {
   };
 }
 
-const OFFICIAL_PAGES: Readonly<Record<string, { url: string; label: string }>> = {
-  "svbox-kur-reha": {
-    url: "https://www.pv.at/web/reha-und-praevention/vom-antrag-zu-reha-und-kur",
-    label: "die Seite der PVA zu Reha und Kur",
-  },
-  "svbox-pflegegeld": {
-    url: "https://www.pv.at/web/pflegegeld",
-    label: "die Pflegegeld-Seite der PVA",
-  },
-};
-
-function officialPage(formId: string | undefined) {
-  const page = formId ? OFFICIAL_PAGES[formId] : undefined;
-  return page
-    ? {
-        ...page,
-        sentence: `Ich öffne ${page.label} und zeige Ihnen, wo der Antrag steht. Danach fülle ich das Formular für Sie aus.`,
-      }
-    : undefined;
-}
-
 function pageOpenedBefore(history: readonly LotseMessage[]): boolean {
   return history.some((message) =>
     message.parts.some(
@@ -476,6 +513,30 @@ function pageOpenedBefore(history: readonly LotseMessage[]): boolean {
         JSON.stringify("input" in part ? part.input : {}).includes('"dom"'),
     ),
   );
+}
+
+function writeText(writer: Pick<UIMessageStreamWriter<LotseMessage>, "write">, text: string) {
+  const id = randomUUID();
+  writer.write({ type: "start-step" });
+  writer.write({ type: "text-start", id });
+  writer.write({ type: "text-delta", id, delta: text });
+  writer.write({ type: "text-end", id });
+}
+
+/** The opened PDF, or the on-topic application PDF of a page this flow opened, acquired. */
+async function acquireLinkedForm(
+  db: DatabaseClient,
+  url: string,
+  choice: ApplyPageChoice | undefined,
+  signal: AbortSignal | undefined,
+) {
+  const pdf = pdfUrl(url)
+    ? url
+    : (choice?.formPdf ??
+      (choice && (choice.fallback || choice.url === choice.apply?.href)
+        ? await applyPdfOf(url, `${choice.benefit} Antrag`, signal).catch(() => undefined)
+        : undefined));
+  return pdf ? acquireForm(db, pdf, signal).catch(() => undefined) : undefined;
 }
 
 function lastUserText(history: readonly LotseMessage[]): string {
