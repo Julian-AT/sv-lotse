@@ -1,0 +1,220 @@
+/*
+ * Tailwind v4 theme ported from Vercel's AI Chatbot template (Apache-2.0, see THIRD_PARTY_NOTICES.md).
+ * No preflight, so the existing CSS modules and @lotse/ui styles keep their cascade.
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@source "../components";
+@source "../conversation";
+@source "../../node_modules/streamdown/dist";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-sidebar: var(--sidebar);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.985 0 0);
+  --foreground: oklch(0.12 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0 0);
+  --primary: oklch(0.12 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.965 0 0);
+  --secondary-foreground: oklch(0.38 0 0);
+  --muted: oklch(0.94 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.965 0 0);
+  --accent-foreground: oklch(0.12 0 0);
+  --destructive: oklch(0.55 0.15 25);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.5 0 0);
+  --sidebar: oklch(0.97 0 0);
+  --brand: #008e5c;
+  --shadow-card: 0 1px 3px oklch(0 0 0 / 0.05), 0 1px 1px oklch(0 0 0 / 0.03);
+  --shadow-float: 0 8px 24px -6px oklch(0 0 0 / 0.1), 0 2px 8px -2px oklch(0 0 0 / 0.04);
+  --shadow-composer: 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-composer-focus: 0 0 0 1px oklch(0 0 0 / 0.06), 0 2px 8px -2px oklch(0 0 0 / 0.06);
+  --glass-bg: oklch(0.985 0 0 / 0.72);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: oklch(0.195 0 0);
+    --foreground: oklch(0.94 0 0);
+    --card: oklch(0.225 0 0);
+    --card-foreground: oklch(0.94 0 0);
+    --popover: oklch(0.225 0 0);
+    --popover-foreground: oklch(0.94 0 0);
+    --primary: oklch(0.94 0 0);
+    --primary-foreground: oklch(0.195 0 0);
+    --secondary: oklch(0.26 0 0);
+    --secondary-foreground: oklch(0.75 0 0);
+    --muted: oklch(0.165 0 0);
+    --muted-foreground: oklch(0.68 0 0);
+    --accent: oklch(0.26 0 0);
+    --accent-foreground: oklch(0.94 0 0);
+    --destructive: oklch(0.7 0.15 25);
+    --border: oklch(0.27 0 0);
+    --input: oklch(0.27 0 0);
+    --ring: oklch(0.45 0 0);
+    --sidebar: oklch(0.175 0 0);
+    --brand: #2fbf86;
+    --shadow-card:
+      inset 0 1px 0 oklch(1 0 0 / 0.04), 0 1px 2px oklch(0 0 0 / 0.2),
+      0 0.5px 1px oklch(0 0 0 / 0.15);
+    --shadow-float:
+      0 0 0 1px oklch(1 0 0 / 0.06), 0 16px 48px -6px oklch(0 0 0 / 0.35),
+      0 6px 12px -2px oklch(0 0 0 / 0.2);
+    --shadow-composer: 0 1px 3px oklch(0 0 0 / 0.2), inset 0 1px 0 oklch(1 0 0 / 0.03);
+    --shadow-composer-focus:
+      0 0 0 1px oklch(1 0 0 / 0.1), 0 4px 16px -4px oklch(0 0 0 / 0.3),
+      inset 0 1px 0 oklch(1 0 0 / 0.04);
+    --glass-bg: oklch(0.195 0 0 / 0.72);
+  }
+}
+
+/* Light glass touch on the header and composer only. */
+@utility glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer-text {
+  from {
+    background-position: 100% center;
+  }
+  to {
+    background-position: 0% center;
+  }
+}
+
+@utility shimmer-text {
+  background-image:
+    linear-gradient(90deg, #0000 40%, var(--background) 50%, #0000 60%),
+    linear-gradient(var(--muted-foreground), var(--muted-foreground));
+  background-size:
+    250% 100%,
+    auto;
+  background-repeat: no-repeat, padding-box;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shimmer-text 1.2s linear infinite;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-bg: var(--background);
+  }
+  .glass {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-text {
+    animation: none;
+    color: var(--muted-foreground);
+  }
+}
+
+/* The chat page uses the template's plain background in the browser; the native window stays transparent. */
+html:not([data-native-workspace="true"]):has([data-chat-surface]) body {
+  background: var(--background);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One calm system type scale across the chat, its result cards and the side panel. */
+[data-chat-surface] {
+  font-family: var(--font-sans);
+  color: var(--foreground);
+}
+[data-chat-surface] :is(h2, h3, h4) {
+  font-family: var(--font-sans);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  font-weight: 600;
+}
+[data-chat-surface] :is(h3, h4):not([class*="text-"]) {
+  font-size: 1rem;
+}
+
+/*
+ * Result, approval, safety and form cards from @lotse/ui inherit the template look inside the chat:
+ * their design tokens are remapped to the chatbot theme instead of restyling every component.
+ */
+[data-chat-surface] {
+  --lotse-font-body: var(--font-sans);
+  --lotse-font-heading: var(--font-sans);
+  --lotse-text: var(--foreground);
+  --lotse-muted: var(--muted-foreground);
+  --lotse-surface: var(--card);
+  --lotse-subtle: var(--muted);
+  --lotse-border: var(--border);
+  --lotse-accent: var(--primary);
+  --lotse-on-accent: var(--primary-foreground);
+  --lotse-radius-small: 0.5rem;
+  --lotse-radius-medium: 0.75rem;
+  --lotse-radius-large: 0.75rem;
+  --lotse-elevation-card: var(--shadow-card);
+  --lotse-glass-background: var(--card);
+  --lotse-glass-edge: var(--border);
+  --lotse-glass-shadow: var(--shadow-card);
+  --lotse-glass-filter: none;
+}
+[data-chat-surface] .lotse-button {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
