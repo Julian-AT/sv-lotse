@@ -1,0 +1,163 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 30 (1-basiert), Druckseiten 58–59.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Weitere Voraussetzungen wie Arbeitszeit, Entgelt, Frist, Beratungsnachweis und Ausschlusszeiten prüft die ÖGK; keine Arbeitsfähigkeit selbst beurteilen.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+# Abschluss bestätigt die Verwaltungshilfe bzw. Rückfrage, keinen Leistungsanspruch.
+# Erinnerungen nach 0 Tagen sind Aufgabenhinweise, keine gesetzlichen Fristen.
+id: oegk-wiedereingliederungsgeld
+benefit: ref:catalog/oegk-wiedereingliederungsgeld
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: contact_region
+    type: enum:oegk-region
+    question_hint: In welchem Bundesland befindet sich Ihre zuständige ÖGK-Stelle laut
+      Versicherungsunterlagen? Bei Selbstversicherung mit geringfügiger Beschäftigung nennen Sie das
+      Beschäftigungsbundesland.
+    validation:
+      options:
+        - Wien
+        - Niederösterreich
+        - Burgenland
+        - Oberösterreich
+        - Steiermark
+        - Kärnten
+        - Salzburg
+        - Tirol
+        - Vorarlberg
+  - id: absence_weeks
+    type: number
+    question_hint: Wie viele Wochen dauerte der ärztlich bestätigte durchgehende Krankenstand?
+  - id: employment_months
+    type: number
+    question_hint: Seit wie vielen Monaten besteht Ihr aufrechtes Beschäftigungsverhältnis?
+  - id: documents_ready
+    type: boolean
+    question_hint: Sind die genannten Unterlagen vollständig vorbereitet?
+  - id: contact_done
+    type: boolean
+    question_hint:
+      Haben Sie die Unterlagen selbst übermittelt oder die Abwicklung mit der zuständigen
+      Stelle geklärt?
+  - id: clarification_done
+    type: boolean
+    question_hint:
+      Haben Sie die offenen Voraussetzungen mit der ÖGK geklärt? Eine Leistungszusage kann
+      nur die zuständige Stelle geben.
+  - id: decision_received
+    type: boolean
+    question_hint:
+      Haben Sie die Entscheidung der ÖGK erhalten? Beginnen Sie eine bewilligungspflichtige
+      Leistung erst nach Klärung der Bewilligung.
+steps:
+  - id: check-requirements
+    needs:
+      - contact_region
+      - absence_weeks
+      - employment_months
+    criteria: ref:catalog/oegk-wiedereingliederungsgeld#criteria
+    action: office.resolve
+    outputs:
+      - id: contact-office
+        type: office
+    transitions:
+      - to: prepare
+        when: (absence_weeks >= 6) and (employment_months >= 3)
+      - to: clarify
+        when: not ((absence_weeks >= 6) and (employment_months >= 3))
+  - id: prepare
+    needs:
+      - check-requirements
+      - documents_ready
+    documents: ref:catalog/oegk-wiedereingliederungsgeld#documents
+    action: documents.checklist
+    outputs:
+      - id: administrative-checklist
+        type: checklist
+    transitions:
+      - to: confirm-contact
+        when: documents_ready == true
+    reminders:
+      - after_days: 0
+        text_de:
+          Bitte besorgen Sie die fehlenden Unterlagen bei den genannten Stellen. Medizinische Angaben
+          bleiben bei den behandelnden Fachpersonen.
+        when: documents_ready == false
+  - id: confirm-contact
+    needs:
+      - prepare
+      - contact_done
+    outputs:
+      - id: contact-confirmation
+        type: confirmation
+    transitions:
+      - to: await-decision
+        when: contact_done == true
+  - id: await-decision
+    needs:
+      - confirm-contact
+      - decision_received
+    outputs:
+      - id: carrier-decision
+        type: document
+    transitions:
+      - to: finish
+        when: decision_received == true
+  - id: finish
+    needs:
+      - await-decision
+    outputs:
+      - id: navigation-complete
+        type: confirmation
+  - id: clarify
+    needs:
+      - check-requirements
+      - clarification_done
+    outputs:
+      - id: carrier-clarification
+        type: handoff
+    transitions:
+      - to: finish-clarification
+        when: clarification_done == true
+    reminders:
+      - after_days: 0
+        text_de: Bitte klären Sie die offenen Voraussetzungen mit der ÖGK.
+        when: clarification_done == false
+  - id: finish-clarification
+    needs:
+      - clarify
+    outputs:
+      - id: clarification-complete
+        type: confirmation
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=30
+    quote: Mindestens sechswöchige durchgehende Arbeitsunfähigkeit.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=30
+    quote: Das aufrechte Beschäftigungsverhältnis besteht schon vor Antritt der
+      Wiedereingliederungsteilzeit seit mindestens drei Monaten durchlaufend – keine Änderung des
+      Dienstvertrages.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=30
+    quote: "Bei der Beantragung des Wiedereingliederungsgeldes ist zu beachten: Die
+      Wiedereingliederungsvereinbarung, der Wiedereingliederungsplan und allfällige medizinische
+      Unterlagen sind rechtzeitig vor Antritt der Wiedereingliederungsteilzeit an die ÖGK zu
+      übermitteln bzw. persönlich in einer Kundenservicestelle abzugeben. Die
+      Wiedereingliederungsteilzeit kann frühestens am Tag nach der Zustellung der Bewilligung des
+      Wiedereingliederungsgeldes angetreten werden."
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=30
+    quote: Ärztliche Bestätigung über die wiedererlangte Arbeitsfähigkeit.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.867448&portal=oegkportal
+    quote:
+      Dazu kann eine Teilzeitbeschäftigung mit der Arbeitgeberin oder dem Arbeitgeber vereinbart
+      werden, während dieser die Österreichische Gesundheitskasse (ÖGK) zusätzlich
+      Wiedereingliederungsgeld bezahlt.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
