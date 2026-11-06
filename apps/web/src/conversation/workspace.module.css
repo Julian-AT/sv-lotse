@@ -1,0 +1,74 @@
+.workspace {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+}
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(18rem, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.conversation,
+.sidebar {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.support {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+.sidebar {
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-sans);
+  color: var(--foreground);
+}
+.messages {
+  display: grid;
+  gap: 1rem;
+  overflow-wrap: anywhere;
+}
+.composer {
+  composes: lotse-glass from global;
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+}
+.composer textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 7rem;
+  border: 1px solid var(--lotse-border, #61756b);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font: inherit;
+  color: inherit;
+  background: var(--lotse-surface, #fff);
+  resize: vertical;
+}
+.boundary {
+  color: var(--lotse-muted);
+  font-size: 0.95rem;
+}
+@media (max-width: 800px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sidebar {
+    padding: 1.25rem;
+  }
+}
+
+.caseControls {
+  display: grid;
+  gap: 1rem;
+}
+:global(html[data-native-workspace="true"]) .caseControls {
+  display: none;
+}
