@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{E4 end-to-end scenario batches as recorded in \texttt{docs/evals/results.md}.}
+\label{tab:e4}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.30\linewidth}>{\raggedright\arraybackslash}p{0.26\linewidth}>{\raggedright\arraybackslash}p{0.36\linewidth}}
+\toprule
+Batch & Judged / attempted & Task successes \\
+\midrule
+S3 before response-guard fix & 19/20; 1 execution error & 0/20 attempted; task-success aggregate unavailable because one case lacks metrics \\
+S3 after fixes, same-seed sample & 4/4 & 0/4 (0\%) \\
+S1 helper/voice sample & 2/2 & 0/2 (0\%) \\
+S2 after fixes, same-seed sample & 2/2 & 1/2 (50\%, provisional model judge) \\
+S4 after fixes, same-seed sample & 2/2 & 0/2 (0\%) \\
+\bottomrule
+\end{tabular}
+\par\smallskip{\footnotesize\raggedright S1--S4 are the product's scenario families; successes are scored by an uncalibrated model judge.\par}
+\end{table}

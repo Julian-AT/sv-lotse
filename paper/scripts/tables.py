@@ -458,7 +458,7 @@ def status_table(results, have_quantum: bool) -> tuple[str, list[str]]:
                  r"\texttt{ml/quantum/results.json}" if have_quantum else r"\emph{not run}"])
     if have_quantum:
         measured.append("T9")
-    t = table("tab:status", "Planned experiment tables (Section~\\ref{sec:experiments}) and the result files found when the paper was built.",
+    t = table("tab:status", "Planned experiment tables (Section~\\ref{sec:future}) and the result files found when the paper was built.",
               ["Table", "Content", "Result file"], rows,
               spec=r"l>{\raggedright\arraybackslash}p{0.45\linewidth}>{\raggedright\arraybackslash}p{0.33\linewidth}")
     return t, measured
@@ -522,10 +522,15 @@ def ds_cell(name: str, config: str | None = None) -> str:
 
 
 def data_release(results: list[tuple[Path, object]], macros: dict[str, str]) -> tuple[str, list[Path]]:
-    """Table of the released datasets (Hugging Face) from the datagen and publish result files."""
+    """Compact table of the released datasets (Hugging Face) from the datagen and publish result files."""
     used: list[Path] = []
     rows: list[list[str]] = []
-    hf = "JulianAT/at-benefits"
+
+    def name(config: str) -> str:
+        return r"\texttt{" + tex(config) + "}"
+
+    def ci(lo: object, hi: object) -> str:
+        return f"[{f3(lo)}, {f3(hi)}]" if isinstance(lo, (int, float)) and isinstance(hi, (int, float)) else ""
 
     dlg = newest(results, "datagen-dialogues-")
     if dlg:
@@ -535,15 +540,13 @@ def data_release(results: list[tuple[Path, object]], macros: dict[str, str]) -> 
         langs = len(d.get("per_language", {}))
         macros.update(DataDialogues=fmt(d.get("release_rows")), DataDialoguesO=fmt(tier.get("O")),
                       DataDialoguesA=fmt(tier.get("A")), DataDialoguesB=fmt(tier.get("B")),
-                      DataDialoguesLangs=fmt(langs))
-        rows.append([ds_cell(hf, "dialogues"), fmt(d.get("release_rows")),
-                     f"tier O (oracle) {fmt(tier.get('O'))}; tier A (model-verbalised oracle) {fmt(tier.get('A'))}; "
-                     f"tier B (teacher) {fmt(tier.get('B'))}; tiers A/B in {fmt(langs)} languages",
-                     f"labels and reward from the gym; mean tier A/B reward {fmt(d.get('reward_mean'))}; "
-                     f"boundary flags {fmt(d.get('boundary_flags'))}; LLM judge pass rate over all "
-                     f"{fmt(d.get('tier_A_judged'))} judged tier A attempts "
-                     f"{fmt(d.get('tier_A_judge_pass_rate_all_attempts'))} (only passing rows released)",
-                     src_cell(p)])
+                      DataDialoguesLangs=fmt(langs),
+                      DataDialoguesJudge=fmt(d.get("tier_A_judge_pass_rate_all_attempts")),
+                      DataDialoguesJudgeN=fmt(d.get("tier_A_judged")))
+        rows.append([name("at-benefits/dialogues"), fmt(d.get("release_rows")),
+                     f"tier O {fmt(tier.get('O'))}, A {fmt(tier.get('A'))}, B {fmt(tier.get('B'))}; {fmt(langs)} languages",
+                     f"judge pass {fmt(d.get('tier_A_judge_pass_rate_all_attempts'))} of tier A attempts "
+                     f"($n={fmt(d.get('tier_A_judged'))}$); boundary flags {fmt(d.get('boundary_flags'))}"])
 
     sit = newest(results, "datagen-situations-")
     if sit:
@@ -558,12 +561,9 @@ def data_release(results: list[tuple[Path, object]], macros: dict[str, str]) -> 
         macros.update(DataSituations=fmt(total), DataSituationsLLM=fmt(llm),
                       DataSituationsJudge=f2(jd.get("pass_rate")), DataSituationsJudgeLo=f3(lo),
                       DataSituationsJudgeHi=f3(hi), DataSituationsJudgeN=fmt(jd.get("n")))
-        rows.append([ds_cell(hf, "situations"), fmt(total),
-                     f"personas with situation text: {fmt(total - llm)} template texts, {fmt(llm)} model-rewritten "
-                     f"texts in {fmt(variants)} language variants",
-                     f"engine-computed gold; rewritten texts LLM-judged, pass rate {f2(jd.get('pass_rate'))} "
-                     f"(Wilson 95\\% {f3(lo)}--{f3(hi)}, $n={fmt(jd.get('n'))}$)",
-                     src_cell(p)])
+        rows.append([name("at-benefits/situations"), fmt(total),
+                     f"{fmt(total - llm)} template, {fmt(llm)} LLM-rewritten ({fmt(variants)} variants)",
+                     f"judge pass {f2(jd.get('pass_rate'))} {ci(lo, hi)}, $n={fmt(jd.get('n'))}$"])
 
     docs = card_documents()
     if docs:
@@ -571,26 +571,20 @@ def data_release(results: list[tuple[Path, object]], macros: dict[str, str]) -> 
         macros.update(DataDocuments=fmt(docs["documents"]), DataStatements=fmt(docs["statements"]))
         judge = ""
         if "judge_n" in docs:
-            judge = (f"; LLM judge passed {fmt(docs['judge_passed'])} of {fmt(docs['judge_n'])} model-written "
-                     f"documents ({f2(docs['judge_rate'])}, Wilson 95\\% {f3(docs['judge_lo'])}--{f3(docs['judge_hi'])})")
-        rows.append([ds_cell(hf, "documents"), fmt(docs["documents"]),
-                     f"synthetic letters, {fmt(docs['pages'])} pages; splits {tex(docs['splits'])}",
-                     f"{fmt(docs['statements'])} gold statements placed by the renderer{judge}",
-                     r"dataset card$^{\dagger}$"])
+            judge = (f"judge pass {fmt(docs['judge_passed'])}/{fmt(docs['judge_n'])} "
+                     f"{ci(docs['judge_lo'], docs['judge_hi'])}")
+        rows.append([name("at-benefits/documents") + r"$^{\dagger}$", fmt(docs["documents"]),
+                     f"{fmt(docs['pages'])} pages, {fmt(docs['statements'])} gold statements", judge or "--"])
 
     frm = newest(results, "datagen-forms-")
     if frm:
         p, d = frm
         used.append(p)
-        src = d.get("templates_by_source", {})
         jd = d.get("judge", {})
         macros.update(DataForms=fmt(d.get("instances")), DataFormTemplates=fmt(d.get("templates")))
-        rows.append([ds_cell(hf, "forms"), fmt(d.get("instances")),
-                     f"filled forms from {fmt(d.get('templates'))} templates ({fmt(src.get('svbox'))} SV-Box, "
-                     f"{fmt(src.get('e13'))} SVS); {fmt(dig(d, 'release', 'rows_with_pdf'))} with PDFs",
-                     f"values from the product's prefill policy, none chosen by a model; LLM judge sample "
-                     f"pass rate {fmt(jd.get('pass_rate'))} ($n={fmt(jd.get('n'))}$)",
-                     src_cell(p)])
+        rows.append([name("at-benefits/forms"), fmt(d.get("instances")),
+                     f"{fmt(d.get('templates'))} templates; {fmt(dig(d, 'release', 'rows_with_pdf'))} with PDF",
+                     f"values from prefill policy; judge sample {fmt(jd.get('pass_rate'))}, $n={fmt(jd.get('n'))}$"])
 
     lqa = newest(results, "datagen-legal-qa-")
     if lqa:
@@ -598,14 +592,12 @@ def data_release(results: list[tuple[Path, object]], macros: dict[str, str]) -> 
         used.append(p)
         jd = d.get("judge", {})
         lo, hi = (jd.get("pass_rate_ci95") or [None, None])[:2]
-        macros.update(DataLegalQA=fmt(d.get("final")), DataLegalQAJudge=fmt(jd.get("pass_rate")))
-        rows.append([ds_cell(hf, "legal_qa"), fmt(d.get("final")),
-                     f"retrieval questions over {fmt(len(d.get('by_act', {})))} acts in "
-                     f"{fmt(len(d.get('by_language', {})))} language variants; BM25 recall@10 (German rendering) "
-                     f"{fmt(dig(d, 'bm25_rank_de', 'recall@10'))}",
-                     f"rule checks and LLM judge on every question, pass rate {fmt(jd.get('pass_rate'))} "
-                     f"(95\\% {f3(lo)}--{f3(hi)}, $n={fmt(jd.get('n'))}$)",
-                     src_cell(p)])
+        macros.update(DataLegalQA=fmt(d.get("final")), DataLegalQAJudge=fmt(jd.get("pass_rate")),
+                      DataLegalQABMRecall=fmt(dig(d, "bm25_rank_de", "recall@10")))
+        rows.append([name("at-benefits/legal_qa"), fmt(d.get("final")),
+                     f"{fmt(len(d.get('by_act', {})))} acts, {fmt(len(d.get('by_language', {})))} language variants; "
+                     f"BM25 R@10 {fmt(dig(d, 'bm25_rank_de', 'recall@10'))}",
+                     f"judge pass {fmt(jd.get('pass_rate'))} {ci(lo, hi)}, $n={fmt(jd.get('n'))}$"])
 
     per = newest(results, "publish-personas")
     if per:
@@ -614,12 +606,8 @@ def data_release(results: list[tuple[Path, object]], macros: dict[str, str]) -> 
         sc = d.get("split_counts", {})
         total = sum(v for v in sc.values() if isinstance(v, int))
         macros.update(DataPersonas=fmt(total))
-        rows.append([ds_cell(str(d.get("dataset", "personas"))), fmt(total),
-                     "splits " + ", ".join(f"{tex(k.replace('_', ' '))} {fmt(v)}" for k, v in sc.items()),
-                     f"engine gold; leakage test passed: {fmt(dig(d, 'leakage', 'passed'))} (text F1 "
-                     f"{fmt(dig(d, 'leakage', 'text_f1'))}, card F1 {fmt(dig(d, 'leakage', 'card_f1'))}, "
-                     f"base rate {fmt(dig(d, 'leakage', 'base_rate_f1'))})",
-                     src_cell(p)])
+        rows.append([name("at-benefits-personas"), fmt(total), f"{fmt(len(sc))} splits (Table~\\ref{{tab:personas}})",
+                     f"leakage test passed: {fmt(dig(d, 'leakage', 'passed'))}"])
 
     law = newest(results, "publish-corpus")
     corpus = newest(results, "corpus-")
@@ -630,22 +618,414 @@ def data_release(results: list[tuple[Path, object]], macros: dict[str, str]) -> 
         macros.update(DataLaw=fmt(d.get("records")))
         if attribution:
             macros.update(DataLawAttribution=tex(attribution))
-        rows.append([ds_cell(str(d.get("dataset", "law"))), fmt(d.get("records")),
-                     "sections of consolidated federal social-insurance law from the RIS open-data interface",
-                     f"licence {tex(str(d.get('licence', '')).replace('-', ' '))}; complete: {fmt(d.get('complete'))}",
-                     src_cell(p)])
+        rows.append([name("at-sv-law"), fmt(d.get("records")), "sections of consolidated federal law (RIS)",
+                     f"licence {tex(str(d.get('licence', '')).replace('-', ' '))}; complete: {fmt(d.get('complete'))}"])
 
-    caption = (r"Released datasets on Hugging Face (\url{https://huggingface.co/JulianAT}). Every number is read from "
-               r"the result file in the last column (under \texttt{ml/results/}). $^{\dagger}$The documents counts exist "
-               r"only on the published dataset card, \url{" + CARD_URL + r"}, read from its snapshot "
-               r"\texttt{paper/sources/hf-at-benefits-README.md}" + (f" (sha256 {sha12(CARD)})" if CARD.is_file() else "")
-               + ". Judge pass rates come from uncalibrated LLM judges.")
+    srcs = ", ".join(r"\nolinkurl{" + q.name + "}" for q in used if q != CARD)
+    caption = (r"Released datasets (\url{https://huggingface.co/JulianAT}). Labels are computed by product code; "
+               r"judge pass rates (95\% intervals in brackets) come from uncalibrated LLM judges.")
+    note = (f"Sources: {srcs}. $^{{\\dagger}}$Counts from the published dataset card, snapshot "
+            r"\nolinkurl{paper/sources/hf-at-benefits-README.md}" + (f" (sha256 {sha12(CARD)})." if CARD.is_file() else "."))
     if not rows:
         return not_run("tab:data", caption, ["Dataset", "Rows"], "a dataset release"), used
     pc = r">{\raggedright\arraybackslash}p"
-    spec = f"{pc}{{0.15\\linewidth}}r{pc}{{0.27\\linewidth}}{pc}{{0.31\\linewidth}}{pc}{{0.13\\linewidth}}"
-    return table("tab:data", caption, ["Dataset / config", "Rows", "Composition", "Labels and quality checks", "Source"],
-                 rows, spec=spec, wide=True), used
+    spec = f"{pc}{{0.24\\linewidth}}r{pc}{{0.29\\linewidth}}{pc}{{0.30\\linewidth}}"
+    return compact("tab:data", caption, ["Dataset", "Rows", "Composition", "Quality check"], rows, spec,
+                   note=note, size=r"\footnotesize"), used
+
+
+# ---------------------------------------------------------------- curated tables (v2 layout)
+
+
+def compact(label: str, caption: str, header: list[str], rows: list, spec: str,
+            note: str | None = None, star: bool = False, size: str = r"\small") -> str:
+    """A booktabs table without the resize box, for the curated main-text tables."""
+    env = "table*" if star else "table"
+    lines = [rf"\begin{{{env}}}[t]", r"\centering", size, rf"\caption{{{caption}}}", rf"\label{{{label}}}",
+             r"\setlength{\tabcolsep}{4pt}", rf"\begin{{tabular}}{{{spec}}}", r"\toprule",
+             " & ".join(header) + r" \\", r"\midrule"]
+    for r in rows:
+        lines.append(r if isinstance(r, str) else " & ".join(r) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    if note:
+        lines.append(rf"\par\smallskip{{\footnotesize\raggedright {note}\par}}")
+    lines.append(rf"\end{{{env}}}")
+    return "\n".join(lines) + "\n"
+
+
+def world_compact(macros: dict[str, str]) -> str:
+    cat = KNOWLEDGE / "catalog"
+    records = sorted(cat.glob("*.yaml")) if cat.is_dir() else []
+    areas: dict[str, int] = {}
+    criteria = 0
+    for p in records:
+        text = p.read_text(encoding="utf-8")
+        m = re.search(r"^area:\s*\"?([A-F])\"?\s*$", text, re.M)
+        areas[m.group(1) if m else "?"] = areas.get(m.group(1) if m else "?", 0) + 1
+        block = re.search(r"^criteria:\s*\n((?:[ \-].*\n)+)", text, re.M)
+        if block:
+            criteria += len(re.findall(r"^  - id:", block.group(1), re.M))
+
+    def count(sub: str, *patterns: str) -> int:
+        d = KNOWLEDGE / sub
+        return sum(len(list(d.rglob(pt))) for pt in patterns) if d.is_dir() else 0
+    procs, offices, forms = count("processes", "*.yaml"), count("offices", "*.yaml"), count("forms", "*.json")
+    guards = count("guards", "*.yaml", "*.json")
+    macros.update(WorldRecords=fmt(len(records)), WorldCriteria=fmt(criteria), WorldProcesses=fmt(procs),
+                  WorldOfficeFiles=fmt(offices), WorldForms=fmt(forms), WorldGuardFiles=fmt(guards),
+                  WorldAreas=fmt(len([a for a in areas if a != "?"])))
+    letters = [a for a in "ABCDEF" if a in areas]
+    head = ["Records"] + [f"{a}" for a in letters] + ["Criteria", "Processes", "Office files", "Forms", "Guard rules"]
+    row = [fmt(len(records))] + [fmt(areas[a]) for a in letters] + [fmt(criteria), fmt(procs), fmt(offices), fmt(forms), fmt(guards)]
+    try:
+        sha = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--short=10", "HEAD"],
+                             capture_output=True, text=True, check=True).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        sha = "unknown"
+    span = len(letters)
+    top = (r"& \multicolumn{" + str(span) + r"}{c}{Records per area} & & & & & \\"
+           + r" \cmidrule(lr){2-" + str(span + 1) + "}")
+    lines = [r"\begin{table}[t]", r"\centering", r"\small",
+             rf"\caption{{The rule world, counted from \texttt{{packages/knowledge}} at commit \texttt{{{tex(sha)}}} when the paper "
+             r"was built. Areas: A prevention, B health promotion, C treatment and rehabilitation, D care, "
+             r"E family and social support, F appointments and approvals.}",
+             r"\label{tab:world}", r"\setlength{\tabcolsep}{4.5pt}",
+             r"\begin{tabular}{r" + "r" * span + "rrrrr}", r"\toprule", top,
+             " & ".join(head) + r" \\", r"\midrule", " & ".join(row) + r" \\", r"\bottomrule", r"\end{tabular}",
+             r"\end{table}"]
+    return "\n".join(lines) + "\n"
+
+
+def persona_compact(files: list[tuple[Path, object]], macros: dict[str, str]) -> str:
+    label, caption = "tab:personas", "AT-Benefits persona splits."
+    head = ["Split", "Personas", r"Mean $q_{\min}$", "Mean text length (chars)"]
+    hit = next(((p, d) for p, d in files if isinstance(d, dict) and isinstance(d.get("splits"), dict)), None)
+    if not hit:
+        return not_run(label, caption, head, "the persona generator")
+    path, data = hit
+    rows = []
+    for name, s in data["splits"].items():
+        chars = s.get("mean_text_chars")
+        rows.append([tex(name.replace("_", " ")), fmt(s.get("n")), f2(s.get("min_questions_mean")),
+                     f"{chars:.0f}" if isinstance(chars, (int, float)) else "--"])
+    leak = data.get("leakage") or {}
+    checks = data.get("checks") or {}
+    gen = data.get("generation") or {}
+    macros.update(LeakTextF=f3(leak.get("text_f1")), LeakCardF=f3(leak.get("card_f1")),
+                  LeakBaseF=f3(leak.get("base_rate_f1")), LeakMargin=fmt(leak.get("margin")),
+                  LeakLabels=fmt(leak.get("n_labels")), LeakNTrain=fmt(leak.get("n_train")),
+                  LeakNEval=fmt(leak.get("n_eval")), LeakPassed=fmt(leak.get("passed")),
+                  PersonaHeldoutArea=tex(checks.get("heldout_area") or gen.get("heldout_area") or "--"),
+                  PersonaGoldErrors=fmt(gen.get("gold_errors")), PersonaRequested=fmt(gen.get("n_requested")))
+    for name, s in data["splits"].items():
+        key = "".join(w.capitalize() for w in re.split(r"[^A-Za-z]+", name) if w)
+        macros[f"Persona{key}N"] = fmt(s.get("n"))
+        macros[f"Persona{key}Q"] = f2(s.get("min_questions_mean"))
+    note = (f"Gold for every persona is computed by the engine ({fmt(gen.get('gold_errors'))} errors). "
+            f"$q_{{\\min}}$: the engine's minimum number of questions. Source: \\nolinkurl{{{path.name}}} "
+            f"(sha256 {sha12(path)}).")
+    return compact(label, caption, head, rows, "lrrr", note=note)
+
+
+def selftest_compact(files: list[tuple[Path, object]], macros: dict[str, str]) -> str:
+    label = "tab:selftest"
+    caption = ("Reward self-test. Each perturbation of an engine gold plan must yield the reward predicted by "
+               "Eq.~\\eqref{eq:reward}. This tests the reward and the tool contract, not an agent.")
+    head = ["Episode", r"Expected $R$", r"Observed $R$", "Match"]
+    hit = next(((p, d) for p, d in files if isinstance(d, dict) and isinstance(d.get("checks"), list)), None)
+    if not hit:
+        return not_run(label, caption, head, "the gym self-test")
+    path, data = hit
+    names = {"gold_plan": "engine gold plan", "boundary": "+ boundary violation",
+             "uncited_claim_message": "+ uncited eligibility claim", "uncited_plan": "+ plan without citations",
+             "malformed_tool_call": "+ malformed tool call", "over_asking_by_3": "+ three excess questions",
+             "no_plan": "no plan submitted", "oracle_fake_server": "oracle on a stub tool server"}
+    rows = [[tex(names.get(c.get("name"), c.get("name"))), f2(c.get("want")), f2(c.get("got")),
+             r"\checkmark" if c.get("ok") else r"$\times$"] for c in data["checks"]]
+    live = data.get("live") or {}
+    ok = sum(1 for c in data["checks"] if c.get("ok"))
+    macros.update(SelfTestChecks=fmt(len(data["checks"])), SelfTestOk=fmt(ok),
+                  SelfTestEpisodes=fmt(live.get("episodes")), SelfTestToolErrors=fmt(live.get("tool_errors")),
+                  SelfTestGoldMin=f2(live.get("gold_plan_reward_min")))
+    note = (f"Live run: {fmt(live.get('episodes'))} engine gold plans played through the research tool server, "
+            f"minimum reward {f2(live.get('gold_plan_reward_min'))}, {fmt(live.get('tool_errors'))} tool errors. "
+            f"Source: \\nolinkurl{{{path.name}}} (sha256 {sha12(path)}).")
+    return compact(label, caption, head, rows, "lccc", note=note)
+
+
+def corpus_compact(files: list[tuple[Path, object]], macros: dict[str, str]) -> str:
+    label, caption = "tab:corpus", "Austrian social-insurance law corpus (\\nolinkurl{JulianAT/at-sv-law}) per act."
+    head = ["Act", "Sections", "Characters", "Tokens (est.)"]
+    hit = next(((p, d) for p, d in files if isinstance(d, dict) and isinstance(d.get("per_act"), dict)), None)
+    if not hit:
+        return not_run(label, caption, head, "the corpus build")
+    path, data = hit
+    acts = data["per_act"]
+    rows: list = [[tex(k), fmt(v.get("records")), fmt(v.get("chars")), fmt(v.get("tokens_estimate"))]
+                  for k, v in sorted(acts.items(), key=lambda kv: -int(kv[1].get("records") or 0))]
+    rows.append(r"\midrule")
+    rows.append([r"Total", fmt(data.get("records")), fmt(data.get("chars")), fmt(data.get("tokens_estimate"))])
+    macros.update(CorpusActs=fmt(len(acts)), CorpusTokens=fmt(data.get("tokens_estimate")),
+                  CorpusAsOf=tex(data.get("version_as_of") or ""))
+    note = (f"Source: {tex(data.get('source') or '')}, licence {tex(data.get('licence') or '')}, as of "
+            f"{tex(data.get('version_as_of') or '')}; \\nolinkurl{{{path.name}}} (sha256 {sha12(path)}).")
+    return compact(label, caption, head, rows, "lrrr", note=note)
+
+
+def product_compact() -> str:
+    """Main-text product table: one row per suite with n, result, Wilson interval and target verdict."""
+    label = "tab:product"
+    caption = ("Product evaluation of SV KI-Lotse with its configured frontier model, parsed from "
+               "\\texttt{docs/evals/results.md}. \\textsc{miss}: below the suite's target.")
+    head = ["Suite", "Observations", "Measured result", "95\\% Wilson CI", "Target"]
+    if not EVALS_MD.is_file():
+        return not_run(label, caption, head, "docs/evals/results.md")
+    md = EVALS_MD.read_text(encoding="utf-8")
+    rows: list = []
+    pc = r">{\raggedright\arraybackslash}p"
+
+    def verdict(s: str) -> str:
+        return r"\textsc{miss}" if re.search(r"below|fail", s, re.I) else "met"
+
+    def short(result: str) -> str:
+        parts = [p.strip() for p in result.split(";")
+                 if p.strip() and not re.search(r"normali[sz]ed|blanks", p, re.I)]
+        return tex("; ".join(parts))
+
+    m = re.search(r"Latest full run: \*\*(\d+)/(\d+) passed; (\d+) violations", md)
+    if m:
+        fpr = re.search(r"Benign false-positive rate: \*\*(.+?)\*\* \(95% Wilson ([0-9.]+[–-][0-9.]+%)\)", md, re.S)
+        fnr = re.search(r"False-negative rate: \*\*(.+?)\*\* \(95% Wilson ([0-9.]+[–-][0-9.]+%)\)", md, re.S)
+        res = f"{m.group(3)} violations ({m.group(1)}/{m.group(2)} passed)"
+        ci = []
+        if fpr:
+            res += f"; benign FPR {clean_md(fpr.group(1)).split('=')[0].strip()}"
+            ci.append(f"FPR {fpr.group(2)}")
+        if fnr:
+            res += f"; FNR {clean_md(fnr.group(1)).split('=')[0].strip()}"
+            ci.append(f"FNR {fnr.group(2)}")
+        rows.append([tex("E5 Medical boundary"), tex(m.group(2) + " red-team cases"), tex(res), tex("; ".join(ci)),
+                     "met" if m.group(3) == "0" else r"\textsc{miss}"])
+    order = []
+    for r in md_table_after(md, "| Suite | Observations | Measured result"):
+        if len(r) < 5 or "superseded" in r[0].lower():
+            continue
+        obs = re.sub(r"existing deterministic |labelled |; complete source corpus", "", r[1])
+        name = re.sub(r"\s*\((?:v\d+|second pass)\)|,\s*follow-up", "", r[0])
+        order.append([tex(name), tex(obs), short(r[2]), tex(r[3]), verdict(r[4])])
+    rows.extend(sorted(order, key=lambda x: int(re.sub(r"\D", "", x[0].split()[0]) or 0)))
+    judged = succ = 0
+    for r in md_table_after(md, "| Batch | Judged / attempted | Verified task successes"):
+        j = re.match(r"(\d+)/\d+", r[1]) if len(r) >= 3 else None
+        s = re.match(r"(\d+)/\d+", r[2]) if len(r) >= 3 else None
+        if j and s:
+            judged += int(j.group(1))
+            succ += int(s.group(1))
+    if judged:
+        rows.append([tex("E4 End-to-end scenarios"), f"{judged} judged runs", f"{succ}/{judged} succeed",
+                     "-- (shared personas)", r"\textsc{miss}"])
+    spec = f"{pc}{{0.15\\linewidth}}{pc}{{0.20\\linewidth}}{pc}{{0.28\\linewidth}}{pc}{{0.20\\linewidth}}l"
+    note = (f"Measured with the product's configured frontier model, not with the model of "
+            f"Section~\\ref{{sec:training}}. Per-batch E4 results: Table~\\ref{{tab:e4}}. Source sha256 {sha12(EVALS_MD)}.")
+    return compact(label, caption, head, rows, spec, note=note, size=r"\footnotesize")
+
+
+def e4_table() -> str:
+    label, caption = "tab:e4", "E4 end-to-end scenario batches as recorded in \\texttt{docs/evals/results.md}."
+    head = ["Batch", "Judged / attempted", "Task successes"]
+    if not EVALS_MD.is_file():
+        return not_run(label, caption, head, "docs/evals/results.md")
+    md = EVALS_MD.read_text(encoding="utf-8")
+    rows = [[tex(r[0]), tex(r[1]), tex(r[2])]
+            for r in md_table_after(md, "| Batch | Judged / attempted | Verified task successes") if len(r) >= 3]
+    if not rows:
+        return not_run(label, caption, head, "E4 batches")
+    pc = r">{\raggedright\arraybackslash}p"
+    return compact(label, caption, head, rows, f"{pc}{{0.30\\linewidth}}{pc}{{0.26\\linewidth}}{pc}{{0.36\\linewidth}}",
+                   note="S1--S4 are the product's scenario families; successes are scored by an uncalibrated model judge.",
+                   size=r"\footnotesize")
+
+
+SFT_REPORT = RESULTS / "sft-qwen3-8b-data-report.json"
+SFT_ADAPTER = RESULTS / "sft-qwen3-8b-adapter-config.json"
+SFT_CARD = PAPER / "sources" / "hf-sv-lotse-qwen3-8b-sft-README.md"
+SFT_REPO = "JulianAT/sv-lotse-qwen3-8b-sft"
+
+
+def sft_tables(macros: dict[str, str]) -> tuple[str, str, list[Path]]:
+    """Configuration and data mix of the released Qwen3-8B SFT adapter, and the tool-output
+    truncation sweep from its data report."""
+    used: list[Path] = []
+    head = ["Quantity", "Value"]
+    if not SFT_REPORT.is_file():
+        return (not_run("tab:sft", "SFT run.", head, "an SFT run"),
+                not_run("tab:toollimit", "Tool-output truncation.", head, "an SFT data report"), used)
+    rep = json.loads(SFT_REPORT.read_text(encoding="utf-8"))
+    used.append(SFT_REPORT)
+    ad = json.loads(SFT_ADAPTER.read_text(encoding="utf-8")) if SFT_ADAPTER.is_file() else {}
+    if ad:
+        used.append(SFT_ADAPTER)
+    card = SFT_CARD.read_text(encoding="utf-8") if SFT_CARD.is_file() else ""
+    if card:
+        used.append(SFT_CARD)
+    base = re.search(r"^base_model:\s*(\S+)", card, re.M)
+    loss = re.search(r"Final eval loss:\s*([0-9]+\.[0-9]+)", card)
+    mix = rep.get("train_mix", {})
+    used_tier = rep.get("dialogues_used_by_tier", {})
+    up = rep.get("upsample", {})
+    sit = rep.get("situations_sampled", {})
+    lens = rep.get("train_len_p50_p90_max") or [None, None, None]
+    o_sub = rep.get("tier_O_subsampled", {})
+    langs = sorted(set(rep.get("dialogues_used_by_language", {})) | set(sit.get("by_language", {})))
+    mods = ad.get("target_modules") or []
+    order = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+    mods = [m for m in order if m in mods] + [m for m in mods if m not in order]
+    tok, loss_tok = rep.get("train_tokens"), rep.get("train_loss_tokens")
+    macros.update(
+        SftBase=tex(base.group(1)) if base else "--", SftRepo=tex(SFT_REPO),
+        SftRank=fmt(ad.get("r")), SftAlpha=fmt(ad.get("lora_alpha")), SftDropout=fmt(ad.get("lora_dropout")),
+        SftModules=fmt(len(mods)), SftMaxLen=fmt(rep.get("maxlen")), SftToolChars=fmt(rep.get("tool_output_char_limit")),
+        SftTrain=fmt(rep.get("train_examples")), SftVal=fmt(rep.get("val_examples")),
+        SftMixO=fmt(mix.get("dialogue:O")), SftMixA=fmt(mix.get("dialogue:A")), SftMixB=fmt(mix.get("dialogue:B")),
+        SftMixS=fmt(mix.get("situation:S")), SftUsedA=fmt(used_tier.get("A")), SftUpA=fmt(up.get("A")),
+        SftTokens=fmt(tok), SftLossTokens=fmt(loss_tok), SftTokenBudget=fmt(rep.get("token_budget")),
+        SftRawRows=fmt(rep.get("dialogues_train_rows_raw")),
+        SftDroppedLen=fmt(rep.get("dialogues_dropped_over_maxlen_total")),
+        SftOAvail=fmt(o_sub.get("available")), SftOKept=fmt(o_sub.get("kept")), SftLangs=fmt(len(langs)),
+        SftLenMedian=fmt(lens[0]), SftLenPNinety=fmt(lens[1]), SftLenMax=fmt(lens[2]),
+        SftValLoss=f"{float(loss.group(1)):.4f}" if loss else "--",
+        SftBoundaryDropped=fmt(rep.get("dropped_boundary_flags_nonzero")))
+    if isinstance(loss_tok, int) and isinstance(tok, int) and tok:
+        macros["SftLossShare"] = f"{100 * loss_tok / tok:.0f}\\%"
+    rows: list = [
+        r"\multicolumn{2}{l}{\emph{Model}} \\",
+        ["Base model", r"\nolinkurl{" + (base.group(1) if base else "--") + "}"],
+        ["Adapter", rf"LoRA, $r={fmt(ad.get('r'))}$, $\alpha={fmt(ad.get('lora_alpha'))}$, dropout {fmt(ad.get('lora_dropout'))}"],
+        ["Target modules", tex(", ".join(m.replace("_proj", "") for m in mods)) + " projections"],
+        ["Max.\\ sequence length", fmt(rep.get("maxlen")) + " tokens"],
+        ["Tool outputs", f"truncated to {fmt(rep.get('tool_output_char_limit'))} characters"],
+        r"\midrule \multicolumn{2}{l}{\emph{Training data}} \\",
+        ["Tier O dialogues (oracle)", f"{fmt(mix.get('dialogue:O'))} (of {fmt(o_sub.get('available'))} that fit)"],
+        ["Tier A dialogues (verbalised)", f"{fmt(mix.get('dialogue:A'))} ({fmt(used_tier.get('A'))} dialogues, upsampled $\\times{fmt(up.get('A'))}$)"],
+        ["Tier B dialogues (teacher)", fmt(mix.get("dialogue:B"))],
+        ["Situation $\\rightarrow$ plan", f"{fmt(mix.get('situation:S'))} (model-written, {fmt(len(sit.get('by_language', {})))} languages)"],
+        ["Training examples", fmt(rep.get("train_examples"))],
+        ["Tokens (loss tokens)", f"{fmt(tok)} ({fmt(loss_tok)})"],
+        ["Length p50 / p90 / max", f"{fmt(lens[0])} / {fmt(lens[1])} / {fmt(lens[2])}"],
+        ["Validation examples", fmt(rep.get("val_examples"))],
+        r"\midrule \multicolumn{2}{l}{\emph{Outcome}} \\",
+        ["Final validation loss", macros["SftValLoss"]],
+        ["Task evaluation (gym)", r"\emph{not run}"],
+    ]
+    srcs = ", ".join(r"\nolinkurl{" + p.name + "}" for p in used)
+    t1 = compact("tab:sft", f"Supervised fine-tuning of the released adapter \\nolinkurl{{{SFT_REPO}}}.", head, rows,
+                 r">{\raggedright\arraybackslash}p{0.37\linewidth}>{\raggedright\arraybackslash}p{0.55\linewidth}",
+                 note=f"All values are read from the published artifacts ({srcs}). Loss on assistant and tool-call tokens only.")
+    sweep = rep.get("tool_limit_search") or {}
+    srows = []
+    for lim in sorted(sweep, key=lambda x: -int(x)):
+        s = sweep[lim]
+        srows.append([fmt(int(lim)), f"{100 * s.get('fit_frac', 0):.1f}", fmt(s.get("p50")), fmt(s.get("p90")), fmt(s.get("max"))])
+    if sweep:
+        lo, hi = min(sweep, key=int), max(sweep, key=int)
+        lo_fit = sweep[lo].get("fit_frac")
+        plateau = max(int(k) for k, v in sweep.items() if v.get("fit_frac") == lo_fit)
+        macros["SweepPlateau"] = fmt(plateau)
+        macros.update(SweepFitHi=f"{100 * sweep[hi]['fit_frac']:.1f}\\%", SweepFitLo=f"{100 * sweep[lo]['fit_frac']:.1f}\\%",
+                      SweepLimHi=fmt(int(hi)), SweepLimLo=fmt(int(lo)),
+                      SweepMedHi=fmt(sweep[hi].get("p50")), SweepMedLo=fmt(sweep[lo].get("p50")),
+                      SweepPNinetyLo=fmt(sweep[lo].get("p90")))
+    t2 = compact("tab:toollimit", "Tool-output truncation limit versus the share of sampled training dialogues that fit "
+                 f"the {fmt(rep.get('maxlen'))}-token context, with dialogue length in tokens.",
+                 ["Limit (chars)", "Fit (\\%)", "p50", "p90", "Max"], srows, "rrrrr",
+                 note=f"Source: \\nolinkurl{{{SFT_REPORT.name}}} (sha256 {sha12(SFT_REPORT)}).")
+    return t1, t2, used
+
+
+T1_COLS = [  # (metric key, header, higher is better)
+    ("reward", r"$R$", True), ("f1_benefits", r"F1$_\text{ben}$", True), ("acc_office", r"Acc$_\text{off}$", True),
+    ("f1_documents", r"F1$_\text{doc}$", True), ("cite_valid", "Cite", True), ("next_step_correct", "Next", True),
+    ("excess_questions_median", r"$\tilde{q}_{\text{exc}}$", False), ("boundary_violations", "Viol.", False),
+    ("pass^1", r"pass$^1$", True),
+]
+
+
+def t1_table(results: list[tuple[Path, object]], macros: dict[str, str]) -> tuple[str, list[Path]]:
+    """T1 from ml/results/t1-*.json written by ml/eval/run.py (system, config.mode, metrics.overall)."""
+    files = [(p, d) for p, d in results if p.name.startswith("t1-") and isinstance(d, dict)
+             and isinstance(d.get("metrics"), dict) and isinstance(d["metrics"].get("overall"), dict)]
+    label = "tab:t1"
+    caption = ("Agents in the AT-Benefits gym (T1) on the same test personas and simulated user. "
+               "Engine: the product's tools; no engine: plan submission only. Best value per column in bold.")
+    head = ["System", "Tools", "$n$"] + [h for _, h, _ in T1_COLS]
+    if not files:
+        macros.update(TOneN="0", TOneSentence="Frontier-model baselines in the gym (T1) were still running when this "
+                      "version was built and are reported as pending.")
+        row = [r"\emph{pending}"] + [""] * (len(head) - 1)
+        return compact(label, caption, head, [row], "ll" + "r" * (len(head) - 2), star=True, size=r"\footnotesize",
+                       note="No T1 result file existed when the paper was built."), []
+    recs = []
+    for p, d in files:
+        m = d["metrics"]["overall"]
+        mode = (d.get("config") or {}).get("mode") or ("engine" if "(engine)" in str(d.get("system")) else "no-engine")
+        name = re.sub(r"\s*\((?:no-)?engine\)\s*$", "", str(d.get("system") or p.stem))
+        recs.append({"path": p, "name": name, "mode": mode, "m": m, "errors": len(d.get("errors") or [])})
+    recs.sort(key=lambda r: (r["mode"] != "no-engine", r["name"]))
+    best: dict[str, float] = {}
+    for key, _, hib in T1_COLS:
+        vals = [r["m"].get(key) for r in recs if isinstance(r["m"].get(key), (int, float))]
+        if len(vals) >= 2:
+            best[key] = max(vals) if hib else min(vals)
+    rows = []
+    for r in recs:
+        cells = [tex(r["name"]), "engine" if r["mode"] == "engine" else "no engine", fmt(r["m"].get("n"))]
+        for key, _, _ in T1_COLS:
+            v = r["m"].get(key)
+            s = (fmt(v) if key == "boundary_violations" else f3(v)) if isinstance(v, (int, float)) else "--"
+            if key in best and isinstance(v, (int, float)) and abs(v - best[key]) < 1e-12:
+                s = r"\textbf{" + s + "}"
+            cells.append(s)
+        rows.append(cells)
+    top = max(recs, key=lambda r: r["m"].get("reward") if isinstance(r["m"].get("reward"), (int, float)) else -9)
+    ci = top["m"].get("reward_ci95") or [None, None]
+    errs = sum(r["errors"] for r in recs)
+    macros.update(TOneN=fmt(len(recs)), TOneBestR=f3(top["m"].get("reward")), TOneBestPass=f3(top["m"].get("pass^1")),
+                  TOneErrors=fmt(errs),
+                  TOneSentence=(f"In the gym, the best of {fmt(len(recs))} evaluated agent configurations "
+                                f"({tex(top['name'])}, {'engine tools' if top['mode'] == 'engine' else 'no engine tools'}) "
+                                f"reaches mean reward {f3(top['m'].get('reward'))} "
+                                f"(95\\% CI {f3(ci[0])}--{f3(ci[1])}) and pass$^1$ {f3(top['m'].get('pass^1'))}."))
+    note = (r"Means over episodes; $\tilde{q}_{\text{exc}}$: median excess questions over the engine minimum; "
+            f"Viol.: boundary violations (count). {fmt(errs)} episodes ended in an API or tool error and are excluded. "
+            "Sources: " + "; ".join(r"\nolinkurl{" + r["path"].name + "}" for r in recs) + ".")
+    return compact(label, caption, head, rows, "ll" + "r" * (len(head) - 2), note=note, star=True,
+                   size=r"\footnotesize"), [r["path"] for r in recs]
+
+
+REWARD_PY = ROOT / "ml" / "gym" / "reward.py"
+
+
+def success_threshold(macros: dict[str, str]) -> None:
+    src = ROOT / "ml" / "gym" / "metrics.py"
+    if src.is_file():
+        m = re.search(r"^SUCCESS_THRESHOLD\s*=\s*([0-9.]+)", src.read_text(encoding="utf-8"), re.M)
+        if m:
+            macros["SuccessThreshold"] = m.group(1)
+
+
+def reward_weights(macros: dict[str, str]) -> None:
+    """Weights of the gym reward, read from the module constants of ml/gym/reward.py."""
+    if not REWARD_PY.is_file():
+        return
+    src = REWARD_PY.read_text(encoding="utf-8")
+    names = {"W_BENEFITS": "RwBen", "W_OFFICE": "RwOff", "W_DOCUMENTS": "RwDoc", "W_CITE": "RwCite",
+             "W_NEXT": "RwNext", "P_QUESTION": "RwQ", "P_BOUNDARY": "RwBound", "P_UNCITED": "RwUncited",
+             "P_MALFORMED": "RwMalformed", "SHAPE_FILL": "RwShapeFill", "SHAPE_KNOWN": "RwShapeKnown"}
+    for const, macro in names.items():
+        m = re.search(rf"^{const}\s*=\s*(-?[0-9.]+)", src, re.M)
+        if m:
+            v = float(m.group(1))
+            macros[macro] = f"{abs(v):.2f}" if macro != "RwBound" else f"{abs(v):.1f}"
 
 
 # ---------------------------------------------------------------- numbers for the prose
@@ -737,8 +1117,6 @@ def main() -> int:
     results = load_results()
     used: list[Path] = []
 
-    write("tab_world.tex", world_table())
-
     groups = {
         "personas": (("persona",), ("publish",)),
         "corpus": (("corpus",), ("publish",)),
@@ -747,8 +1125,9 @@ def main() -> int:
         "sft": (("sft",), ()),
     }
     found: dict[str, list] = {}
+    generic = [(p, d) for p, d in results if not p.name.startswith(("t1-", "sft-qwen3-8b-"))]
     for g, (inc, exc) in groups.items():
-        found[g] = pick(results, inc, exc)
+        found[g] = pick(generic, inc, exc)
     # Prefer the combined SFT smoke record over its intermediate train/eval files.
     smoke = [(p, d) for p, d in found["sft"] if isinstance(d, dict) and d.get("stage") == "sft_smoke"]
     if smoke:
@@ -763,14 +1142,19 @@ def main() -> int:
     for g in groups:
         used += [p for p, _ in found[g]]
 
-    write("tab_personas.tex", generic_tables("tab:personas", "AT-Benefits persona statistics.", found["personas"], "the persona generator"))
-    write("tab_corpus.tex", generic_tables("tab:corpus", "Austrian law corpus statistics.", found["corpus"], "the corpus build"))
-    write("tab_selftest.tex", generic_tables("tab:selftest", "Gym self-test: reward checks on engine gold plans and deliberately perturbed plans (not an agent evaluation).", found["selftest"], "the gym self-test"))
-    write("tab_sft.tex", generic_tables("tab:sft", "SFT smoke run: a short LoRA run that tests the pipeline, "
-                                        "evaluated on a single-turn plan proxy rather than the multi-turn gym; "
-                                        "it is not a result of the planned SFT stage.", found["sft"], "an SFT run"))
-
     macros: dict[str, str] = {}
+    write("tab_personas.tex", persona_compact(found["personas"], macros))
+    write("tab_corpus.tex", corpus_compact(found["corpus"], macros))
+    write("tab_selftest.tex", selftest_compact(found["selftest"], macros))
+    sft_tex, toollimit_tex, sft_used = sft_tables(macros)
+    write("tab_sft.tex", sft_tex)
+    write("tab_toollimit.tex", toollimit_tex)
+    used += [p for p in sft_used if p not in used]
+    t1_tex, t1_used = t1_table(results, macros)
+    write("tab_t1.tex", t1_tex)
+    used += [p for p in t1_used if p not in used]
+    write("tab_world.tex", world_compact(macros))
+    write("tab_e4.tex", e4_table())
     data_tex, data_used = data_release(results, macros)
     write("tab_data.tex", data_tex)
     used += [p for p in data_used if p not in used]
@@ -778,6 +1162,8 @@ def main() -> int:
     if stale.exists():
         stale.unlink()
     product_numbers(macros)
+    reward_weights(macros)
+    success_threshold(macros)
 
     quantum: list[tuple[Path, object]] = []
     if QUANTUM.is_file():
@@ -798,8 +1184,8 @@ def main() -> int:
     if quantum and isinstance(quantum[0][1], dict):
         quantum_numbers(quantum[0][1], macros)
 
-    product, have_product = product_table()
-    write("tab_product.tex", product)
+    _, have_product = product_table()
+    write("tab_product.tex", product_compact())
 
     status, measured_tables = status_table(results, bool(quantum))
     write("tab_status.tex", status)
@@ -816,6 +1202,8 @@ def main() -> int:
         have.append("the dataset generators")
     if found["sft"]:
         have.append("an SFT smoke run")
+    if SFT_REPORT in used:
+        have.append("the Qwen3-8B SFT run")
     if quantum:
         have.append("the quantum study")
     trained = any(t in measured_tables for t in ("T1", "T2", "T3"))
@@ -827,7 +1215,11 @@ def main() -> int:
         research = f"Result files from the research lane exist for {join(have)}; their tables are generated from those files."
     else:
         research = "No result files from the research lane existed when this version was built; every research table reads \\emph{not run}."
-    if found["sft"] and not trained:
+    if SFT_REPORT in used and not trained:
+        agents = ("One open model, Qwen3-8B with a LoRA adapter, has been fine-tuned on the released dialogues "
+                  "(Table~\\ref{tab:sft}); its task performance in the gym has not been evaluated, and GRPO and DPO "
+                  "have not been run.")
+    elif found["sft"] and not trained:
         agents = ("An SFT smoke run tests the training pipeline (Table~\\ref{tab:sft}); the trained agent models "
                   "(full SFT, multi-turn GRPO and DPO) and the comparisons T1--T8 have not been run, are described as "
                   "planned work, and no claim about their performance is made.")

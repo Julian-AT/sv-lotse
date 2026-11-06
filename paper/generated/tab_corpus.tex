@@ -1,64 +1,29 @@
-\begin{table}[htbp]
+\begin{table}[t]
 \centering
 \small
-\caption{Austrian law corpus statistics. Source: \texttt{ml/results/corpus-1e10f80a.json} (sha256 6a92bddeeabf).}
+\caption{Austrian social-insurance law corpus (\nolinkurl{JulianAT/at-sv-law}) per act.}
 \label{tab:corpus}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.45\linewidth}>{\raggedright\arraybackslash}p{0.45\linewidth}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrr}
 \toprule
-Quantity & Value \\
+Act & Sections & Characters & Tokens (est.) \\
 \midrule
-dataset & at-sv-law \\
-built\_at & 2026-11-06T04:09:52+00:00 \\
-git\_sha & 1e10f80a \\
-version\_as\_of & 2026-11-06 \\
-source & RIS OGD API v2.6 (Bundesrecht konsolidiert) \\
-licence & CC-BY-4.0 \\
-attribution & Datenquelle: Rechtsinformationssystem des Bun... \\
-records & 2{,}863 \\
-empty\_text & 0 \\
-chars & 4{,}748{,}605 \\
-tokens\_estimate & 1{,}100{,}579 \\
-complete & yes \\
-parquet\_sha256 & 059160a14b43\ldots \\
-content\_sha256 & 5ecdb7005d2e\ldots \\
-sozdok\_local\_join / file & at-sv-law.sozdok-local.parquet \\
-sozdok\_local\_join / published & no \\
-sozdok\_local\_join / matched & 2{,}570 \\
-sozdok\_local\_join / per\_act / ASVG & 1{,}004 \\
-sozdok\_local\_join / per\_act / B-KUVG & 348 \\
-sozdok\_local\_join / per\_act / BPGG & 76 \\
-sozdok\_local\_join / per\_act / BSVG & 491 \\
-sozdok\_local\_join / per\_act / FLAG & 114 \\
-sozdok\_local\_join / per\_act / GSVG & 460 \\
-sozdok\_local\_join / per\_act / KBGG & 61 \\
-sozdok\_local\_join / per\_act / PFG & 16 \\
+ASVG & 1{,}120 & 2{,}163{,}464 & 493{,}796 \\
+BSVG & 530 & 853{,}428 & 201{,}822 \\
+GSVG & 500 & 797{,}382 & 188{,}281 \\
+B-KUVG & 372 & 412{,}918 & 94{,}494 \\
+FLAG & 118 & 185{,}707 & 43{,}689 \\
+BPGG & 78 & 150{,}350 & 34{,}512 \\
+KBGG & 61 & 86{,}458 & 20{,}326 \\
+KUG & 22 & 10{,}816 & 2{,}556 \\
+AufwAnp-2026 & 16 & 16{,}122 & 4{,}888 \\
+PFG & 16 & 33{,}704 & 8{,}051 \\
+Kinder-EinstV & 11 & 11{,}229 & 2{,}518 \\
+SH-GG & 10 & 20{,}548 & 4{,}198 \\
+EinstV & 9 & 6{,}479 & 1{,}443 \\
+\midrule
+Total & 2{,}863 & 4{,}748{,}605 & 1{,}100{,}579 \\
 \bottomrule
 \end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Austrian law corpus statistics. Records \texttt{per\_act} from \texttt{ml/results/corpus-1e10f80a.json}.}
-\label{tab:corpus-list0}
-\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{lrrrrr}
-\toprule
-name & records & chars & tokens\_estimate & listed & fetched \\
-\midrule
-ASVG & 1{,}120 & 2{,}163{,}464 & 493{,}796 & 1{,}121 & 1{,}121 \\
-AufwAnp-2026 & 16 & 16{,}122 & 4{,}888 & 17 & 17 \\
-B-KUVG & 372 & 412{,}918 & 94{,}494 & 373 & 373 \\
-BPGG & 78 & 150{,}350 & 34{,}512 & 79 & 79 \\
-BSVG & 530 & 853{,}428 & 201{,}822 & 531 & 531 \\
-EinstV & 9 & 6{,}479 & 1{,}443 & 10 & 10 \\
-FLAG & 118 & 185{,}707 & 43{,}689 & 119 & 119 \\
-GSVG & 500 & 797{,}382 & 188{,}281 & 501 & 501 \\
-KBGG & 61 & 86{,}458 & 20{,}326 & 62 & 62 \\
-KUG & 22 & 10{,}816 & 2{,}556 & 23 & 23 \\
-Kinder-EinstV & 11 & 11{,}229 & 2{,}518 & 12 & 12 \\
-PFG & 16 & 33{,}704 & 8{,}051 & 17 & 17 \\
-SH-GG & 10 & 20{,}548 & 4{,}198 & 11 & 11 \\
-\bottomrule
-\end{tabular}}
+\par\smallskip{\footnotesize\raggedright Source: RIS OGD API v2.6 (Bundesrecht konsolidiert), licence CC-BY-4.0, as of 2026-11-06; \nolinkurl{corpus-1e10f80a.json} (sha256 6a92bddeeabf).\par}
 \end{table}

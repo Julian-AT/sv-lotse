@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Tool-output truncation limit versus the share of sampled training dialogues that fit the 8{,}192-token context, with dialogue length in tokens.}
+\label{tab:toollimit}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rrrrr}
+\toprule
+Limit (chars) & Fit (\%) & p50 & p90 & Max \\
+\midrule
+1{,}500 & 25.2 & 8{,}852 & 26{,}343 & 26{,}687 \\
+1{,}000 & 51.2 & 7{,}512 & 20{,}610 & 21{,}215 \\
+700 & 58.8 & 6{,}596 & 17{,}296 & 17{,}715 \\
+500 & 58.8 & 6{,}158 & 15{,}357 & 15{,}757 \\
+350 & 58.8 & 5{,}503 & 13{,}080 & 13{,}419 \\
+250 & 58.8 & 5{,}094 & 11{,}389 & 11{,}827 \\
+\bottomrule
+\end{tabular}
+\par\smallskip{\footnotesize\raggedright Source: \nolinkurl{sft-qwen3-8b-data-report.json} (sha256 8f6bcf14dc5b).\par}
+\end{table}

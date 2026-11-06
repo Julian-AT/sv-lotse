@@ -1,0 +1,135 @@
+{
+ "maxlen": 8192,
+ "token_budget": 3000000,
+ "upsample": {
+  "A": 2,
+  "O": 1,
+  "B": 1
+ },
+ "dialogues_train_rows_raw": 5251,
+ "dropped_boundary_flags_nonzero": 0,
+ "tool_limit_search": {
+  "1500": {
+   "fit_frac": 0.25166666666666665,
+   "p50": 8852,
+   "p90": 26343,
+   "max": 26687
+  },
+  "1000": {
+   "fit_frac": 0.5116666666666667,
+   "p50": 7512,
+   "p90": 20610,
+   "max": 21215
+  },
+  "700": {
+   "fit_frac": 0.5883333333333334,
+   "p50": 6596,
+   "p90": 17296,
+   "max": 17715
+  },
+  "500": {
+   "fit_frac": 0.5883333333333334,
+   "p50": 6158,
+   "p90": 15357,
+   "max": 15757
+  },
+  "350": {
+   "fit_frac": 0.5883333333333334,
+   "p50": 5503,
+   "p90": 13080,
+   "max": 13419
+  },
+  "250": {
+   "fit_frac": 0.5883333333333334,
+   "p50": 5094,
+   "p90": 11389,
+   "max": 11827
+  }
+ },
+ "tool_output_char_limit": 250,
+ "tool_messages_compaction": {
+  "raw": 130512,
+  "ok": 13144
+ },
+ "dialogues_dropped_over_maxlen": {
+  "A/de": 77,
+  "A/en": 14,
+  "A/ar": 6,
+  "A/bcs": 5,
+  "A/ro": 7,
+  "A/hu": 5,
+  "A/tr": 5,
+  "A/uk": 5,
+  "A/pl": 2,
+  "O/de": 1496,
+  "O/en": 320,
+  "O/tr": 302
+ },
+ "dialogues_dropped_over_maxlen_total": 2244,
+ "dialogues_fit_by_tier": {
+  "A": 124,
+  "B": 1,
+  "O": 2882
+ },
+ "tier_O_subsampled": {
+  "available": 2882,
+  "kept": 301,
+  "reason": "token budget"
+ },
+ "dialogues_used_by_tier": {
+  "A": 124,
+  "B": 1,
+  "O": 301
+ },
+ "dialogues_used_by_language": {
+  "de": 273,
+  "tr": 58,
+  "en": 60,
+  "hu": 6,
+  "ar": 5,
+  "uk": 10,
+  "ro": 5,
+  "pl": 4,
+  "bcs": 5
+ },
+ "situations_sampled": {
+  "total": 333,
+  "model_written": 333,
+  "by_language": {
+   "de": 116,
+   "ro": 40,
+   "en": 39,
+   "pl": 30,
+   "bcs": 29,
+   "tr": 28,
+   "ar": 23,
+   "hu": 16,
+   "uk": 12
+  },
+  "by_life_situation": {
+   "illness": 161,
+   "family-with-child": 54,
+   "prevention": 52,
+   "after-hospital": 30,
+   "low-income": 24,
+   "uninsured": 12
+  },
+  "dropped_over_maxlen": 0
+ },
+ "train_examples": 883,
+ "train_mix": {
+  "dialogue:O": 301,
+  "dialogue:A": 248,
+  "situation:S": 333,
+  "dialogue:B": 1
+ },
+ "train_tokens": 2765532,
+ "train_loss_tokens": 1234396,
+ "data_sha256": "af973a4a64fd92bc9cc0dfbb2e8ec468521cb8d355ad3cb4cd0c7ece1e43f95c",
+ "train_len_p50_p90_max": [
+  3524,
+  5168,
+  6042
+ ],
+ "val_examples": 172
+}

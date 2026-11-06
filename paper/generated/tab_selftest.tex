@@ -1,72 +1,22 @@
-\begin{table}[htbp]
+\begin{table}[t]
 \centering
 \small
-\caption{Gym self-test: reward checks on engine gold plans and deliberately perturbed plans (not an agent evaluation). Source: \texttt{ml/results/gym-selftest-30060f22.json} (sha256 91602360b4f3).}
+\caption{Reward self-test. Each perturbation of an engine gold plan must yield the reward predicted by Eq.~\eqref{eq:reward}. This tests the reward and the tool contract, not an agent.}
 \label{tab:selftest}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.45\linewidth}>{\raggedright\arraybackslash}p{0.45\linewidth}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccc}
 \toprule
-Quantity & Value \\
+Episode & Expected $R$ & Observed $R$ & Match \\
 \midrule
-git\_sha & 30060f22 \\
-boundary\_rules / version & medical-boundary.v4 \\
-boundary\_rules / patterns & 20 \\
-offline\_ok & yes \\
-live / status & ran \\
-live / personas\_source & ml/data/personas \\
-live / episodes & 20 \\
-live / seconds & 2.1 \\
-live / gold\_plan\_reward\_min & 1 \\
-live / gold\_plan\_all\_one & yes \\
-live / office\_consistent\_rate & 1 \\
-live / tool\_errors & 0 \\
-live / rewards & 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 ... \\
+engine gold plan & 1.00 & 1.00 & \checkmark \\
++ boundary violation & 0.00 & 0.00 & \checkmark \\
++ uncited eligibility claim & 0.50 & 0.50 & \checkmark \\
++ plan without citations & 0.40 & 0.40 & \checkmark \\
++ malformed tool call & 0.80 & 0.80 & \checkmark \\
++ three excess questions & 0.85 & 0.85 & \checkmark \\
+no plan submitted & 0.00 & 0.00 & \checkmark \\
+oracle on a stub tool server & 1.00 & 1.00 & \checkmark \\
 \bottomrule
 \end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Gym self-test: reward checks on engine gold plans and deliberately perturbed plans (not an agent evaluation). Records \texttt{checks} from \texttt{ml/results/gym-selftest-30060f22.json}.}
-\label{tab:selftest-list0}
-\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{lrrr}
-\toprule
-name & got & want & ok \\
-\midrule
-gold\_plan & 1 & 1 & yes \\
-boundary & 0 & 0 & yes \\
-uncited\_claim\_message & 0.5 & 0.5 & yes \\
-uncited\_plan & 0.4 & 0.4 & yes \\
-malformed\_tool\_call & 0.8 & 0.8 & yes \\
-over\_asking\_by\_3 & 0.85 & 0.85 & yes \\
-no\_plan & 0 & 0 & yes \\
-oracle\_fake\_server & 1 & 1 & yes \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{Gym self-test: reward checks on engine gold plans and deliberately perturbed plans (not an agent evaluation). Records \texttt{live.metrics} from \texttt{ml/results/gym-selftest-30060f22.json}.}
-\label{tab:selftest-list1}
-\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{lrrrr}
-\toprule
-Metric & overall & by\_language/de & by\_language/en & by\_language/tr \\
-\midrule
-n & 20 & 10 & 6 & 4 \\
-reward & 1 & 1 & 1 & 1 \\
-f1\_benefits & 1 & 1 & 1 & 1 \\
-acc\_office & 1 & 1 & 1 & 1 \\
-f1\_documents & 1 & 1 & 1 & 1 \\
-cite\_valid & 1 & 1 & 1 & 1 \\
-next\_step\_correct & 1 & 1 & 1 & 1 \\
-excess\_questions\_median & 0 & 0 & 0 & 0 \\
-excess\_questions\_p90 & 0 & 0 & 0 & 0 \\
-boundary\_violations & 0 & 0 & 0 & 0 \\
-pass\textasciicircum{}1 & 1 & 1 & 1 & 1 \\
-\bottomrule
-\end{tabular}}
+\par\smallskip{\footnotesize\raggedright Live run: 20 engine gold plans played through the research tool server, minimum reward 1.00, 0 tool errors. Source: \nolinkurl{gym-selftest-30060f22.json} (sha256 91602360b4f3).\par}
 \end{table}

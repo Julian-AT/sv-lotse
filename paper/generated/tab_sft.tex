@@ -1,14 +1,32 @@
-\begin{table}[htbp]
+\begin{table}[t]
 \centering
 \small
-\caption{SFT smoke run: a short LoRA run that tests the pipeline, evaluated on a single-turn plan proxy rather than the multi-turn gym; it is not a result of the planned SFT stage.}
+\caption{Supervised fine-tuning of the released adapter \nolinkurl{JulianAT/sv-lotse-qwen3-8b-sft}.}
 \label{tab:sft}
-\begin{tabular}{ll}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.37\linewidth}>{\raggedright\arraybackslash}p{0.55\linewidth}}
 \toprule
 Quantity & Value \\
 \midrule
-\emph{not run} &  \\
+\multicolumn{2}{l}{\emph{Model}} \\
+Base model & \nolinkurl{Qwen/Qwen3-8B} \\
+Adapter & LoRA, $r=64$, $\alpha=128$, dropout 0.05 \\
+Target modules & q, k, v, o, gate, up, down projections \\
+Max.\ sequence length & 8{,}192 tokens \\
+Tool outputs & truncated to 250 characters \\
+\midrule \multicolumn{2}{l}{\emph{Training data}} \\
+Tier O dialogues (oracle) & 301 (of 2{,}882 that fit) \\
+Tier A dialogues (verbalised) & 248 (124 dialogues, upsampled $\times2$) \\
+Tier B dialogues (teacher) & 1 \\
+Situation $\rightarrow$ plan & 333 (model-written, 9 languages) \\
+Training examples & 883 \\
+Tokens (loss tokens) & 2{,}765{,}532 (1{,}234{,}396) \\
+Length p50 / p90 / max & 3{,}524 / 5{,}168 / 6{,}042 \\
+Validation examples & 172 \\
+\midrule \multicolumn{2}{l}{\emph{Outcome}} \\
+Final validation loss & 0.0359 \\
+Task evaluation (gym) & \emph{not run} \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.95\linewidth}{\footnotesize No result file for an SFT run existed when the paper was built.}
+\par\smallskip{\footnotesize\raggedright All values are read from the published artifacts (\nolinkurl{sft-qwen3-8b-data-report.json}, \nolinkurl{sft-qwen3-8b-adapter-config.json}, \nolinkurl{hf-sv-lotse-qwen3-8b-sft-README.md}). Loss on assistant and tool-call tokens only.\par}
 \end{table}

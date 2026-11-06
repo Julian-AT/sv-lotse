@@ -1,108 +1,18 @@
-\begin{table}[htbp]
+\begin{table}[t]
 \centering
 \small
-\caption{AT-Benefits persona statistics. Source: \texttt{ml/results/personas-49c52cd4.json} (sha256 ebf59fa23839).}
+\caption{AT-Benefits persona splits.}
 \label{tab:personas}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.45\linewidth}>{\raggedright\arraybackslash}p{0.45\linewidth}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrr}
 \toprule
-Quantity & Value \\
+Split & Personas & Mean $q_{\min}$ & Mean text length (chars) \\
 \midrule
-vocab\_source & catalog/summary \\
-checks / ids\_disjoint & yes \\
-checks / heldout\_area & D \\
-checks / heldout\_life\_situations\_disjoint & yes \\
-checks / heldout\_area\_absent\_outside\_heldout\_gold & yes \\
-checks / heldout\_split\_all\_gold\_in\_area & yes \\
-checks / heldout\_styles\_only\_in\_test & yes \\
-checks / test\_has\_heldout\_styles & yes \\
-checks / schema\_failures & 0 \\
-checks / gold\_name\_in\_text & 0 \\
-checks / text\_overlap\_train\_test & 4 \\
-checks / text\_overlap\_train\_val & 16 \\
-checks / gold\_missing & 0 \\
-checks / gold\_with\_warnings & 0 \\
-checks / passed & yes \\
-generation / n\_requested & 55{,}000 \\
-generation / seed & 20{,}261{,}106 \\
-generation / heldout\_area & D \\
-generation / vocab\_source & catalog/summary \\
-generation / gold & yes \\
-generation / gold\_errors & 0 \\
-generation / seconds & 193.2 \\
-leakage / eval\_split & test \\
-leakage / n\_train & 20{,}000 \\
-leakage / n\_eval & 2{,}000 \\
-leakage / n\_labels & 44 \\
-leakage / metric & micro-F1 over gold benefits \\
-leakage / text\_f1 & 0.9764 \\
-leakage / card\_f1 & 1 \\
-leakage / base\_rate\_f1 & 0.3404 \\
-leakage / margin & 0.02 \\
-leakage / passed & yes \\
-leakage / classifier & OneVsRest LogisticRegression(C=4); text: TF-I... \\
-git\_sha & 49c52cd4 \\
+train & 50{,}000 & 1.84 & 231 \\
+val & 2{,}000 & 1.81 & 233 \\
+test & 2{,}000 & 1.92 & 229 \\
+heldout family & 1{,}000 & 2.23 & 295 \\
 \bottomrule
 \end{tabular}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{AT-Benefits persona statistics. Records \texttt{splits} from \texttt{ml/results/personas-49c52cd4.json}.}
-\label{tab:personas-list0}
-\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{lrrrr}
-\toprule
-Metric & train & val & test & heldout\_family \\
-\midrule
-n & 50{,}000 & 2{,}000 & 2{,}000 & 1{,}000 \\
-schema\_failures & 0 & 0 & 0 & 0 \\
-gold\_missing & 0 & 0 & 0 & 0 \\
-gold\_empty & 0 & 0 & 0 & 0 \\
-gold\_empty\_share & 0 & 0 & 0 & 0 \\
-gold\_name\_in\_text & 0 & 0 & 0 & 0 \\
-gold\_with\_warnings & 0 & 0 & 0 & 0 \\
-gold\_with\_warnings\_share & 0 & 0 & 0 & 0 \\
-min\_questions\_mean & 1.839 & 1.812 & 1.921 & 2.225 \\
-mean\_text\_chars & 231.2 & 232.9 & 228.9 & 294.6 \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{AT-Benefits persona statistics. Records \texttt{files} from \texttt{ml/results/personas-49c52cd4.json}.}
-\label{tab:personas-list1}
-\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{lrr}
-\toprule
-name & sha256 & bytes \\
-\midrule
-train.jsonl & 655d2b0997e6\ldots & 701{,}557{,}150 \\
-train.parquet & 78e52b4f4368\ldots & 91{,}037{,}505 \\
-val.jsonl & 66c4deffeb63\ldots & 27{,}917{,}450 \\
-val.parquet & e606efe98cee\ldots & 2{,}978{,}337 \\
-test.jsonl & 28ab1d41c835\ldots & 28{,}319{,}839 \\
-test.parquet & 2232229f7dbb\ldots & 3{,}101{,}823 \\
-heldout\_family.jsonl & 99d98d7bc234\ldots & 22{,}287{,}069 \\
-heldout\_family.parquet & 3efc1f29a309\ldots & 938{,}439 \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\small
-\caption{AT-Benefits persona statistics. Records \texttt{generation} from \texttt{ml/results/personas-49c52cd4.json}.}
-\label{tab:personas-list2}
-\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
-\begin{tabular}{lrrrrr}
-\toprule
-name & train & val & test & heldout\_family & render\_failed \\
-\midrule
-split\_counts & 50{,}000 & 2{,}000 & 2{,}000 & 1{,}000 & -- \\
-stats & -- & -- & -- & -- & 0 \\
-\bottomrule
-\end{tabular}}
+\par\smallskip{\footnotesize\raggedright Gold for every persona is computed by the engine (0 errors). $q_{\min}$: the engine's minimum number of questions. Source: \nolinkurl{personas-49c52cd4.json} (sha256 ebf59fa23839).\par}
 \end{table}

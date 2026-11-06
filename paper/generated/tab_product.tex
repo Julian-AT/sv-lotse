@@ -1,25 +1,22 @@
-\begin{table}[htbp]
+\begin{table}[t]
 \centering
-\small
-\caption{Product evaluation suites of SV KI-Lotse, measured on the product (its engine, guards and configured frontier models), parsed from \texttt{docs/evals/results.md}. These are product evaluations, not results of the trained research models.}
+\footnotesize
+\caption{Product evaluation of SV KI-Lotse with its configured frontier model, parsed from \texttt{docs/evals/results.md}. \textsc{miss}: below the suite's target.}
 \label{tab:product}
-\begin{tabular}{>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.42\linewidth}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.15\linewidth}>{\raggedright\arraybackslash}p{0.20\linewidth}>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.20\linewidth}l}
 \toprule
-Suite & Observations & Measured result \\
+Suite & Observations & Measured result & 95\% Wilson CI & Target \\
 \midrule
-E5 Safety (latest guard run) & 500 labelled red-team cases & 500/500 passed; 0 violations; 0 model-judged unsafe outputs; 0 execution errors; benign FPR 0/200 = 0.00\%; FNR 0/240 = 0.00\% \\
-E1 Engine & 81 existing deterministic tests & 81/81 passed, 100\% \\
-E3 Retrieval & 200 questions; complete source corpus & Recall@10 96.00\% (192/200); nDCG@10 0.74698 \\
-E7 Form prefill, follow-up & 7 forms $\times$ 3 personas; 218 expected values & Exact 100\% (218/218); normalized 100\% (218/218); expected blanks 100\% (1,030/1,030) \\
-E11 Slot extraction probe & 300 utterances & 255/300 exact slot maps, 85.00\% \\
-E12 Document extraction (v2) & 15 documents; 125 gold annotations & Precision 99.19\% (123/124); recall 98.40\% (123/125) \\
-E13 Form detection (second pass) & 20 forms; 539 gold fields; 552 detections & Recall 94.43\% (509/539); precision 92.21\% (509/552) \\
-E4 S3 before response-guard fix & judged/attempted: 19/20; 1 execution error & 0/20 attempted; task-success aggregate unavailable because one case lacks metrics \\
-E4 S3 after fixes, same-seed sample & judged/attempted: 4/4 & 0/4 (0\%) \\
-E4 S1 helper/voice sample & judged/attempted: 2/2 & 0/2 (0\%) \\
-E4 S2 after fixes, same-seed sample & judged/attempted: 2/2 & 1/2 (50\%, provisional model judge) \\
-E4 S4 after fixes, same-seed sample & judged/attempted: 2/2 & 0/2 (0\%) \\
+E5 Medical boundary & 500 red-team cases & 0 violations (500/500 passed); benign FPR 0/200; FNR 0/240 & FPR 0.00--1.88\%; FNR 0.00--1.58\% & met \\
+E1 Engine & 81 tests & 81/81 passed, 100\% & 95.47--100\% & met \\
+E3 Retrieval & 200 questions & Recall@10 96.00\% (192/200); nDCG@10 0.74698 & Recall: 92.31--97.96\% & met \\
+E7 Form prefill & 7 forms $\times$ 3 personas; 218 expected values & Exact 100\% (218/218) & Values: 98.27--100\%; blanks: 99.63--100\% & met \\
+E11 Slot extraction probe & 300 utterances & 255/300 exact slot maps, 85.00\% & 80.52--88.60\% & \textsc{miss} \\
+E12 Document extraction & 15 documents; 125 gold annotations & Precision 99.19\% (123/124); recall 98.40\% (123/125) & Precision: 95.57--99.86\%; recall: 94.35--99.56\% & met \\
+E13 Form detection & 20 forms; 539 gold fields; 552 detections & Recall 94.43\% (509/539); precision 92.21\% (509/552) & Recall: 92.17--96.07\%; precision: 89.67--94.17\% & \textsc{miss} \\
+E4 End-to-end scenarios & 29 judged runs & 1/29 succeed & -- (shared personas) & \textsc{miss} \\
 \bottomrule
 \end{tabular}
-\par\smallskip\parbox{0.95\linewidth}{\footnotesize Source sha256 0ce618f1f4a6. Intervals, targets and caveats for every suite are in the source document.}
+\par\smallskip{\footnotesize\raggedright Measured with the product's configured frontier model, not with the model of Section~\ref{sec:training}. Per-batch E4 results: Table~\ref{tab:e4}. Source sha256 0ce618f1f4a6.\par}
 \end{table}
