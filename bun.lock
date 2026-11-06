@@ -49,6 +49,7 @@
         "@lotse/protocol": "workspace:*",
         "ai": "^7",
         "canonicalize": "^5.1.0",
+        "drizzle-orm": "^0.45.4",
         "pdf-lib": "^1.17.1",
         "pdfjs-dist": "^6.5.438",
         "yaml": "^2.9.1",

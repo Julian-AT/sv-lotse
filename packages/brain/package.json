@@ -16,9 +16,9 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests --exclude 'test/**/*.db.test.ts' --exclude 'test/**/*.live.test.ts'",
-    "test:live": "node test/forms/detect/live.mjs",
+    "test:live": "node test/runtime/live.mjs",
     "test:db": "bun run --filter @lotse/db test:db",
-    "test:integration": "bun run --filter @lotse/db test:integration",
+    "test:integration": "bun run --filter @lotse/db test:integration && vitest run test/runtime/turn.db.test.ts test/runtime/persistence.db.test.ts --hookTimeout=30000 --testTimeout=30000",
     "db:generate": "bun run --filter @lotse/db db:generate",
     "db:migrate": "bun run --filter @lotse/db db:migrate",
     "test:deadlines:integration": "vitest run test/deadlines/persistence.db.test.ts --hookTimeout=30000 --testTimeout=15000"
@@ -30,6 +30,7 @@
     "@lotse/protocol": "workspace:*",
     "ai": "^7",
     "canonicalize": "^5.1.0",
+    "drizzle-orm": "^0.45.4",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.5.438",
     "yaml": "^2.9.1",
