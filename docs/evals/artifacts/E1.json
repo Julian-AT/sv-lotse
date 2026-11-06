@@ -1,0 +1,606 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E1",
+    "name": "Existing deterministic engine/catalog/form-policy tests",
+    "gate": {
+      "kind": "blocking",
+      "metric": "passRate",
+      "threshold": 1,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 81
+  },
+  "selection": {
+    "seed": "baseline-2026-11-06"
+  },
+  "counts": {
+    "total": 81,
+    "passed": 81,
+    "failed": 0,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 1
+  },
+  "wilson95": {
+    "lower": 0.9547219144978831,
+    "upper": 1,
+    "confidence": 0.95
+  },
+  "gateVerdict": "passed",
+  "modelVersion": "deterministic-existing-tests/1",
+  "judgeVersions": [],
+  "gitSha": "18ae38884bc498765fbf7025e802ce292c7c4377",
+  "startedAt": "2026-11-06T02:09:49.752Z",
+  "finishedAt": "2026-11-06T02:09:49.755Z",
+  "cases": [
+    {
+      "caseId": "engine-1",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.9632080000001224,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-10",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.7086669999998776,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-11",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.5884579999997186,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-12",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.5520830000000387,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-13",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.5203329999999369,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-14",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.4984169999997903,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-15",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.4804579999999987,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-16",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.46404100000017934,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-17",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.45495800000026065,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-18",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.4641670000000886,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-19",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.3960829999996349,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-2",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.365291999999954,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-20",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.23683300000038798,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-21",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.20583399999986796,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-22",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.1866250000002765,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-23",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.16920800000025338,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-24",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.1517079999998714,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-25",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.13520900000003166,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-26",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.11904199999980847,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-27",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.10325000000011642,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-28",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.08370800000011513,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-29",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.06787499999973079,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-3",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.051833999999871594,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-30",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.03466699999989942,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-31",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.38341600000012477,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-32",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.3657079999998132,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-33",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.32958300000018426,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-34",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.3136669999998958,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-35",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.298041000000012,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-36",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.28312499999992724,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-37",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.2618330000000242,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-38",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.24874999999974534,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-39",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.23087500000019645,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-4",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.15762500000028012,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-40",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.08362499999975626,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-41",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.05150000000003274,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-42",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.24745800000027884,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-43",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.21349999999983993,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-44",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.18558299999995143,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-45",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.16483400000015536,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-46",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.1477500000000873,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-47",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.1322920000002341,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-48",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.11625000000003638,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-49",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.10100000000011278,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-5",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.07841700000017227,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-50",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.0619579999997768,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-51",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.047625000000152795,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-52",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.03320800000028612,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-53",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.19079199999987395,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-54",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.1738749999999527,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-55",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.15945899999996982,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-56",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.14429199999995035,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-57",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.1300840000003518,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-58",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.11591600000019753,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-59",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.10208299999976589,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-6",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.08820800000012241,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-60",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.07395799999994779,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-61",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.0595829999997477,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-62",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.04562500000020009,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-63",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.031749999999647116,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-64",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.17808299999978772,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-65",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.16312500000003638,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-66",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.14920900000015536,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-67",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.135707999999795,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-68",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.12345800000002782,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-69",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.11099999999987631,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-7",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.09804200000007768,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-70",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.08462499999995998,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-71",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.07045799999968949,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-72",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.055833000000347965,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-73",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.042792000000190455,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-74",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.029750000000149157,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-75",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.1520829999999478,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-76",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.13675000000012005,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-77",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.12254099999972823,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-78",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.1007089999998243,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-79",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.08649999999988722,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-8",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.07249999999976353,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-80",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.0591669999998885,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-81",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.04579199999989214,
+      "metrics": {}
+    },
+    {
+      "caseId": "engine-9",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 0.03241600000001199,
+      "metrics": {}
+    }
+  ]
+}
