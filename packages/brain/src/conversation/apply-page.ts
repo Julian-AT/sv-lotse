@@ -262,15 +262,15 @@ export function openedApplyPage(caseId: string, url: string): ApplyPageChoice | 
   return opened.get(`${caseId} ${url}`);
 }
 
-/** No form to fill here: where and how to apply on the opened page, quoting its link. */
+/** No form to fill here: where to apply on the opened page, quoting its apply link. */
 export function onlineApplyText(choice: ApplyPageChoice, english: boolean): string {
   const host = new URL(choice.url).hostname.replace(/^www\./u, "");
   const link = choice.apply?.text.replace(/[„“"]/gu, "").slice(0, 80);
   if (english)
     return link
-      ? `On this page (${host}) you apply for ${choice.benefit} via “${link}”. There is no form for me to fill in; you sign in there yourself. I do not sign in or submit anything.`
-      : `This page (${host}) explains how to apply for ${choice.benefit}. There is no form for me to fill in here. I do not sign in or submit anything.`;
+      ? `On this page (${host}) you find the application for ${choice.benefit}: “${link}”. There is no form here that I can fill in. I do not sign in or submit anything.`
+      : `This page (${host}) explains how to apply for ${choice.benefit}. There is no form here that I can fill in. I do not sign in or submit anything.`;
   return link
-    ? `Auf dieser Seite (${host}) beantragen Sie ${choice.benefit} über „${link}“. Ein Formular zum Ausfüllen gibt es dafür nicht; dort melden Sie sich selbst an. Ich melde mich nicht an und schicke nichts ab.`
-    : `Auf dieser Seite (${host}) steht, wie Sie ${choice.benefit} beantragen. Ein Formular zum Ausfüllen gibt es hier nicht. Ich melde mich nicht an und schicke nichts ab.`;
+    ? `Auf dieser Seite (${host}) finden Sie den Antrag für ${choice.benefit}: „${link}“. Ein Formular, das ich hier ausfüllen kann, gibt es dafür nicht. Ich melde mich nicht an und schicke nichts ab.`
+    : `Auf dieser Seite (${host}) steht, wie Sie ${choice.benefit} beantragen. Ein Formular, das ich hier ausfüllen kann, gibt es dafür nicht. Ich melde mich nicht an und schicke nichts ab.`;
 }

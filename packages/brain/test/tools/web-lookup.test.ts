@@ -2,6 +2,7 @@ import { MockLanguageModelV4 } from "ai/test";
 import { afterEach, expect, test, vi } from "vitest";
 import {
   deepPageOffer,
+  findApplyPage,
   findOfficialPages,
   implementations,
   MAX_PAGE_READS,
@@ -270,5 +271,33 @@ test("prefers the page that carries the topic's application form", async () => {
   ).resolves.toEqual({
     target: { kind: "dom", handle: "page", url: "https://www.pv.at/web/pflegegeld" },
     label: "die Seite „Pflegegeld | PV“ auf pv.at",
+  });
+});
+
+test("apply page: stays on the page for downloads, follows HTML apply pages, keeps the PDF", async () => {
+  const sms = "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflegekarenz.html";
+  const pages: Record<string, string> = {
+    [sms]: `<title>Pflegekarenzgeld</title><main>
+<a href="/Downloads/Antrag_Pflegekarenzgeld.doc">Antrag Pflegekarenzgeld (DOC)</a></main>`,
+    "https://www.pv.at/web/pflegegeld": `<title>Pflegegeld</title><main>
+<a href="https://www.pv.at/web/pflegegeld/antrag">Pflegegeld online beantragen</a></main>`,
+    "https://www.pv.at/web/reha": `<title>Reha</title><main>
+<a href="https://www.pv.at/cdscontent/load?contentid=1">Antrag auf Rehabilitation (PDF)</a></main>`,
+  };
+  vi.stubGlobal("fetch", async (url: string) => htmlResponse(pages[url] ?? ""));
+  const find = (query: string, page: string) =>
+    findApplyPage({ query, model: searchModel("", [page]).model });
+
+  await expect(find("Pflegekarenzgeld Antrag", sms)).resolves.toMatchObject({
+    url: sms,
+    apply: { text: "Antrag Pflegekarenzgeld (DOC)" },
+  });
+  await expect(find("Pflegekarenzgeld Antrag", sms)).resolves.not.toHaveProperty("formPdf");
+  await expect(
+    find("Pflegegeld Antrag", "https://www.pv.at/web/pflegegeld"),
+  ).resolves.toMatchObject({ url: "https://www.pv.at/web/pflegegeld/antrag" });
+  await expect(find("Rehabilitation Antrag", "https://www.pv.at/web/reha")).resolves.toMatchObject({
+    url: "https://www.pv.at/web/reha",
+    formPdf: "https://www.pv.at/cdscontent/load?contentid=1",
   });
 });

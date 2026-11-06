@@ -168,7 +168,7 @@ describe("page copy", () => {
       },
       false,
     );
-    expect(text).toContain("über „FinanzOnline“");
+    expect(text).toContain("„FinanzOnline“");
     expect(text).toContain("schicke nichts ab");
   });
 });

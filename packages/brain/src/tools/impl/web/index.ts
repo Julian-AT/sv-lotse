@@ -382,15 +382,28 @@ export type ApplyPage = {
   apply?: { text: string; href: string };
 };
 
+/** Files and form redirects (PDF, Word, `linkresolution/form`) are downloads, never pages. */
+export function isDownloadUrl(raw: string): boolean {
+  if (isDocumentUrl(raw)) return true;
+  try {
+    const path = new URL(raw).pathname.toLowerCase();
+    return (
+      /\.(?:docx?|odt|rtf|xlsx?|ods|zip)$/u.test(path) || path.includes("/linkresolution/form/")
+    );
+  } catch {
+    return false;
+  }
+}
+
 function chosenApplyPage(page: OfficialPage, read: PageRead | undefined, query: string): ApplyPage {
   const link = read && applyLink(read, query);
-  const document = link && (link.pdf || isDocumentUrl(link.href));
+  const document = link && (link.pdf || isDownloadUrl(link.href));
   if (link && !document && read?.url !== link.href)
     return { url: link.href, title: link.text, apply: { text: link.text, href: link.href } };
   return {
     url: read?.url ?? page.url,
     title: read?.title || page.title,
-    ...(link && document ? { formPdf: link.href } : {}),
+    ...(link && (link.pdf || isDocumentUrl(link.href)) ? { formPdf: link.href } : {}),
     ...(link ? { apply: { text: link.text, href: link.href } } : {}),
   };
 }
@@ -418,7 +431,7 @@ export async function findApplyPage(input: {
       signal: input.signal,
     },
   );
-  const candidates = pages.filter((page) => !isDocumentUrl(page.url)).slice(0, MAX_PAGE_READS);
+  const candidates = pages.filter((page) => !isDownloadUrl(page.url)).slice(0, MAX_PAGE_READS);
   const readSignal = AbortSignal.any([
     AbortSignal.timeout(APPLY_READ_TIMEOUT_MS),
     ...(input.signal ? [input.signal] : []),
