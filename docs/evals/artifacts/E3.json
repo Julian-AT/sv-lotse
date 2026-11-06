@@ -1,0 +1,2041 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E3",
+    "name": "Source-derived retrieval gold questions",
+    "gate": {
+      "kind": "informational",
+      "metric": "recall@10",
+      "threshold": 0.9,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 200
+  },
+  "selection": {
+    "seed": "baseline-2026-11-06"
+  },
+  "counts": {
+    "total": 200,
+    "passed": 11,
+    "failed": 189,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0.055,
+    "recall@10": 0.05499999999999999,
+    "ndcg@10": 0.046309297535714576
+  },
+  "wilson95": {
+    "lower": 0.03098534168937951,
+    "upper": 0.09578699881292212,
+    "confidence": 0.95
+  },
+  "gateVerdict": "failed",
+  "modelVersion": "hybrid/text-embedding-3-small;reranker=none",
+  "judgeVersions": [],
+  "gitSha": "18ae38884bc498765fbf7025e802ce292c7c4377",
+  "startedAt": "2026-11-06T02:09:49.833Z",
+  "finishedAt": "2026-11-06T02:09:53.975Z",
+  "cases": [
+    {
+      "caseId": "e3-a-001",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 430.6575829999997,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-002",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 448.61816699999963,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-003",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 429.3092919999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-004",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 428.7936249999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-005",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 446.0101669999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-006",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 445.5382920000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-007",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 427.8580000000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-008",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 510.25854200000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-009",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 532.8998749999996,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-010",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 479.0412080000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-011",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 522.1019580000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-012",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 558.1814999999997,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-013",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 215.1837499999997,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-014",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 165.1627910000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-015",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 185.75258299999996,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-016",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 212.7693330000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-017",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 187.67541600000004,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-018",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 222.09279199999992,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-019",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 184.41566699999976,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-020",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 196.112666,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-021",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 211.85899999999992,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-022",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 200.30154100000027,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-023",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 213.64479200000005,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-024",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 230.5406250000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-025",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 159.90083300000015,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-026",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 177.54433300000028,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-027",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 207.81224999999995,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-028",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 173.71312499999976,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-029",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 163.596,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-030",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 634.1140839999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-031",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 209.93187500000022,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-032",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 164.5497919999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-033",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 225.32620899999984,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-034",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 226.277916,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-035",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 194.76774999999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-036",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 403.56341599999996,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-037",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 183.7792919999997,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-038",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 191.44045799999958,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-039",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 175.79750000000013,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-a-040",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 170.89770899999985,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-001",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 554.6648329999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-002",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 181.65041599999995,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-003",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 201.70337500000005,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-004",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 170.70766700000013,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-005",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 213.21375000000035,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-006",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 179.1507499999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-007",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 225.79112499999974,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-008",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 168.626667,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-009",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 149.90645799999993,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-010",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 309.92270800000006,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-011",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 199.6263329999997,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-012",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 226.47387500000013,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-013",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 227.96883300000036,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-014",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 161.59916699999985,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-015",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 205.02925000000005,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-016",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 175.983209,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-017",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 182.17562499999985,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-018",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 191.61908399999993,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-019",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 205.13908300000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-020",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 210.16104200000018,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-021",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 162.9345840000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-022",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 193.80475000000024,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-023",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 247.49916600000006,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-024",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 236.10541700000022,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-025",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 163.7309580000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-026",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 223.34287500000028,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-027",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 169.64541700000018,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-028",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 180.82620799999995,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-029",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 173.91383300000007,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-b-030",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 169.9739999999997,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-001",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 165.65312500000027,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-002",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 189.14791699999978,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-003",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 188.15870899999982,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-004",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 158.760542,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-005",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 201.84891700000026,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-006",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 170.9682499999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-007",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 293.3054579999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-008",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 164.69000000000005,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-009",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 159.94491700000026,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-010",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 175.1274580000004,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-011",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 218.33595800000012,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-012",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 186.56908399999975,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-013",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 179.47916600000008,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-014",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 166.53150000000005,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-015",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 167.52120800000012,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-016",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 161.2615410000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-017",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 159.82574999999997,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-018",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 216.2347920000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-019",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 170.11824999999953,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-020",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 194.17208300000038,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-021",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 166.26558299999942,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-022",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 215.0782909999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-023",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 554.8717080000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-024",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 194.14475000000039,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-025",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 203.3678749999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-026",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 169.48025000000052,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-027",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 177.35758300000043,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-028",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 224.06029200000012,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-029",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 184.22487499999988,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-030",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 546.7906659999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-031",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 305.2491250000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-032",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 208.04808400000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-033",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 162.31345800000054,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-034",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 220.49987500000043,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-035",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 194.85041699999965,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-036",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 178.61945800000012,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-037",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 175.76970899999924,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-038",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 193.93008400000053,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-039",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 169.93545899999936,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-c-040",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 277.65958300000057,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-001",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 216.6871659999997,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-002",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 169.28337499999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.6309297535714575
+      }
+    },
+    {
+      "caseId": "e3-d-003",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 566.0281249999998,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-004",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 236.53791700000056,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-005",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 181.11583300000075,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-006",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 164.49229099999957,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-007",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 176.53783300000032,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-008",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 185.94087500000023,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-009",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 150.15250000000015,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-010",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 195.45929200000046,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-d-011",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 171.6088750000008,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-012",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 165.4707499999995,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-013",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 205.6993339999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-014",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 178.06024999999954,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-015",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 220.06120900000042,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-016",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 193.19545899999957,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-017",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 190.9374170000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-018",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 156.60420899999917,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-019",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 210.7303750000001,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-020",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 589.7804999999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-021",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 181.73320799999965,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-022",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 165.91812500000015,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-023",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 221.19949999999972,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-024",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 177.1828749999995,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-025",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 194.42304200000035,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-026",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 180.31416699999954,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-027",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 174.61449999999968,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-028",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 182.32104100000015,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-029",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 211.58137500000066,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-030",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 219.55375000000004,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-031",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 175.2073330000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-032",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 182.85866700000042,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-033",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 161.97579200000018,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-034",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 165.6909169999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-035",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 176.0562090000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-036",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 244.3145830000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-037",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 185.24099999999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-038",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 182.43320799999947,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-039",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 322.6128749999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-d-040",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 164.386708,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-001",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 178.7016250000006,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-002",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 182.2227499999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-003",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 217.88866700000017,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-004",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 164.16399999999976,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-005",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 177.54029199999968,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-006",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 172.8885420000006,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-007",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 299.8982909999995,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-008",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 264.09099999999944,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-009",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 159.454291,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-010",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 149.62616699999944,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-011",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 180.46054099999947,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-012",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 183.13279200000034,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-013",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 182.32487499999934,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-e-014",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 182.5383750000001,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-015",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 172.19066699999985,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-016",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 195.2338749999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-017",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 176.01658300000054,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-018",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 218.50750000000062,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-019",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 201.23358299999927,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 0.5
+      }
+    },
+    {
+      "caseId": "e3-e-020",
+      "status": "passed",
+      "attempts": 1,
+      "durationMs": 190.00029099999938,
+      "metrics": {
+        "recall@10": 1,
+        "ndcg@10": 1
+      }
+    },
+    {
+      "caseId": "e3-e-021",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 207.25666600000022,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-022",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 162.45237499999985,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-023",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 221.55820800000038,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-024",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 201.5313329999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-025",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 179.52562500000022,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-026",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 178.95820899999944,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-027",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 216.87266699999964,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-028",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 193.97441600000002,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-029",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 159.5757079999994,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-e-030",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 179.37408400000004,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-001",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 284.4364169999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-002",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 152.733792,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-003",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 209.1855000000005,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-004",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 209.91495899999973,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-005",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 178.9858750000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-006",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 148.5766250000006,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-007",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 183.93212499999936,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-008",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 146.05979099999968,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-009",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 157.78249999999935,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-010",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 207.94174999999996,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-011",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 174.35012499999993,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-012",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 326.4583339999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-013",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 157.25629200000003,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-014",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 183.0418749999999,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-015",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 160.38966699999946,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-016",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 179.44395899999927,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-017",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 170.2847499999998,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-018",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 212.98449999999957,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-019",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 169.6857919999993,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    },
+    {
+      "caseId": "e3-f-020",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 557.0104999999994,
+      "metrics": {
+        "recall@10": 0,
+        "ndcg@10": 0
+      }
+    }
+  ]
+}
