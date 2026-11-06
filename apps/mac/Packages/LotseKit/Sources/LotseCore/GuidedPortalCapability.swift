@@ -13,7 +13,27 @@ public final class GuidedPortalCapability {
     /// Guided downloads enter the same preview as every other import (FR-D1).
     private var previewDownload: ((UUID) -> Void)?
 
+    /// How long `ui.openResource` waits for the portal page before reporting a failure.
+    public var openTimeout: Duration = .seconds(30)
+    /// Builds the guided window; tests inject a controller with their own origin policy.
+    var makeController: (String, EncryptedUploadQueue) throws -> GuidedWindowController = { language, queue in
+        try GuidedWindowController(originPolicy: GuidedWindowResources.originPolicy(), queue: queue, language: language)
+    }
+
     public init() {}
+
+    /// Polls the window's navigation state until the page is ready, failed or the timeout passed.
+    static func awaitLoad(_ portal: some GuidedPageLoading, id: String, timeout: Duration) async -> ActionResult {
+        let clock = ContinuousClock()
+        let deadline = clock.now.advanced(by: timeout)
+        while clock.now < deadline {
+            if portal.isReady { return ActionResult(actionID: id, confidence: 1, failureReason: nil, resolvedBy: .dom, success: true) }
+            if portal.loadFailed { break }
+            try? await Task.sleep(for: .milliseconds(100))
+        }
+        let reason = portal.loadFailed ? "load-failed" : "load-timeout"
+        return ActionResult(actionID: id, confidence: 0, failureReason: reason, resolvedBy: .dom, success: false)
+    }
 
     /// Shares the import queue so downloads reach the import preview and `/api/documents`.
     public func connectImports(queue: EncryptedUploadQueue, preview: @escaping (UUID) -> Void) {
@@ -38,7 +58,7 @@ public final class GuidedPortalCapability {
             }
             return true
         case .action(let envelope):
-            guard let (_, target) = Self.destination(envelope.payload), case .dom = target else { return false }
+            guard let (_, target) = Self.destination(envelope.payload), claims(target) else { return false }
             let action = envelope.payload
             Task { @MainActor [weak self, weak workspace] in
                 guard let self, let workspace, let result = await handle(action, language: language) else { return }
@@ -78,15 +98,27 @@ public final class GuidedPortalCapability {
         return ToolOutput(error: nil, output: .actionResult(outcome), toolCallID: id)
     }
 
+    /// DOM targets always; a page quote only while the guided portal page is open and visible,
+    /// so "point there" after `ui.openResource` lands in the portal instead of the screen overlay.
+    func claims(_ target: Target) -> Bool {
+        switch target {
+        case .dom: return true
+        case .text(let text):
+            return text.documentID == nil && window?.isReady == true && window?.window?.isVisible == true
+        default: return false
+        }
+    }
+
     public func handle(_ action: Action, language: String) async -> ActionResult? {
-        guard let (id, target) = Self.destination(action), case .dom(let dom) = target else { return nil }
+        guard let (id, target) = Self.destination(action), claims(target) else { return nil }
         do {
             try action.validate()
             if case .openResource = action {
-                guard let url = URL(string: dom.url) else { throw GuidedOriginError.invalidOrigin }
+                guard case .dom(let dom) = target, let url = URL(string: dom.url) else { throw GuidedOriginError.invalidOrigin }
                 let portal = try makeWindow(language: language)
                 try portal.open(url)
-                return result(id, success: true)
+                // ui.openResource reports back only once the page has loaded (or failed).
+                return await Self.awaitLoad(portal, id: id, timeout: openTimeout)
             }
             guard let window else { throw GuidedWindowError.notReady }
             return try await window.execute([action]).first
@@ -112,11 +144,9 @@ public final class GuidedPortalCapability {
     private func makeWindow(language: String) throws -> GuidedWindowController {
         if let window { return window }
         let queue = try uploadQueue ?? EncryptedUploadQueue()
-        let controller = try GuidedWindowController(
-            originPolicy: GuidedWindowResources.originPolicy(), queue: queue, language: language
-        )
-        controller.downloads.onQueued = previewDownload
+        let controller = try makeController(language, queue)
         uploadQueue = queue
+        controller.downloads.onQueued = previewDownload
         window = controller
         return controller
     }
@@ -137,3 +167,12 @@ public final class GuidedPortalCapability {
         }
     }
 }
+
+/// Navigation state of a page window, for waiting on `ui.openResource`.
+@MainActor
+protocol GuidedPageLoading {
+    var isReady: Bool { get }
+    var loadFailed: Bool { get }
+}
+
+extension GuidedWindowController: GuidedPageLoading {}
