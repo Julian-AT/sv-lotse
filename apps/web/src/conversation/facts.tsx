@@ -158,9 +158,11 @@ export function FactsReview({
 }): JSX.Element | null {
   const { t } = useI18n();
   const heading = useId();
-  if (!error && facts.length === 0) return null;
-  const open = facts.filter((fact) => !fact.confirmed).length;
-  const rows: ReactNode[] = facts.map((fact, index) => (
+  // Confirmed facts belong to the person, not the chat; only new proposals need a review here.
+  const pending = facts.filter((fact) => !fact.confirmed);
+  if (!error && pending.length === 0) return null;
+  const open = pending.length;
+  const rows: ReactNode[] = pending.map((fact, index) => (
     <div key={fact.id} className="grid gap-3">
       {index > 0 && <Separator />}
       <ReviewFact fact={fact} onSaved={() => onSaved(fact)} />
