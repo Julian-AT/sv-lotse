@@ -1,0 +1,18 @@
+export const voiceConfig = {
+  tokenEndpoint: "/api/voice/token",
+  tokenApi: "https://api.elevenlabs.io/v1/single-use-token/",
+  ttsSocket: "wss://api.elevenlabs.io/v1/text-to-speech/",
+  scribeModel: "scribe_v2_realtime",
+  ttsModel: "eleven_flash_v2_5",
+  outputFormat: "pcm_24000",
+  sampleRate: 24_000,
+  providerTimeoutMs: 10_000,
+  transcriptTimeoutMs: 8_000,
+  playbackLeadSeconds: 0.03,
+  tokenLifetimeSeconds: 900,
+  minSpeed: 0.5,
+  maxSpeed: 1.5,
+  speedStep: 0.1,
+  defaultSpeed: 1,
+  turnEndpoint: "/api/turn",
+} as const;
