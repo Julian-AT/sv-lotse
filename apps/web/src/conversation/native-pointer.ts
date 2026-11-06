@@ -1,3 +1,4 @@
+import { workspaceTargets } from "@lotse/brain/workspace/targets";
 import { type Action, PROTOCOL_VERSION, type Target, type TargetRect } from "@lotse/protocol";
 import { hasNativeBridge, postNative } from "../bridge/index.ts";
 import { measureFieldTarget } from "../features/form-viewer/bridge.ts";
@@ -36,8 +37,14 @@ export function workspaceElement(
   root: Document = document,
 ): HTMLElement | undefined {
   switch (target.kind) {
-    case "ui":
-      return root.getElementById(target.elementId) ?? undefined;
+    case "ui": {
+      const element = root.getElementById(target.elementId);
+      if (element || !target.elementId.startsWith(workspaceTargets.resultPrefix))
+        return element ?? undefined;
+      // A tool without a result card still shows its tool row.
+      const callId = target.elementId.slice(workspaceTargets.resultPrefix.length);
+      return root.getElementById(workspaceTargets.toolRow(callId)) ?? undefined;
+    }
     case "form":
       return root.getElementById(formFieldElementId(target.fieldId)) ?? undefined;
     case "text":

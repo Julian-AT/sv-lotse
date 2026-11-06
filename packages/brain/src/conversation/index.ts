@@ -66,6 +66,7 @@ import {
 } from "../telemetry/product-events.ts";
 import { contracts, isToolName } from "../tools/contracts/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
+import { pointedToolCall, resultPointAction } from "../workspace/targets.ts";
 import { approvedResultCheckpoint } from "./approved-results.ts";
 import { TurnError, turnStreamError } from "./errors.ts";
 import {
@@ -573,6 +574,9 @@ async function runTurn(
       let speculative: Promise<Awaited<ReturnType<typeof compose>> | undefined> | undefined;
       let toolCalled = false;
       let offered = false;
+      // Without an explicit pointer, the cursor shows the result card the answer is about.
+      let pointed = false;
+      const results: { toolCallId: string; toolName: string }[] = [];
       const finalize = async (): Promise<void> => {
         const id = draft.id;
         if (id === undefined) return output.finish();
@@ -582,6 +586,8 @@ async function runTurn(
               (!toolCalled && speculative ? await speculative : undefined) ?? (await compose(true));
             timings.composeMs = composed.ms;
             if (composed.text.trim()) {
+              const card = pointed ? undefined : pointedToolCall(results);
+              if (card) output.action(resultPointAction(randomUUID(), card));
               await writeAnswer(id, composed.text);
               // The response guard and citation verifier run beside the answer guard.
               return output.finish(async (text) => {
@@ -609,8 +615,10 @@ async function runTurn(
       const guardedWriter = createGuardedDataWriter(
         {
           write: (part) => {
-            if (part.type === "data-action") output.action(ActionSchema.parse(part.data));
-            else writer.write(part);
+            if (part.type === "data-action") {
+              pointed = true;
+              output.action(ActionSchema.parse(part.data));
+            } else writer.write(part);
           },
         },
         guard,
@@ -702,6 +710,7 @@ async function runTurn(
               call?.toolName === "ui.offerResource"
                 ? contracts["ui.offerResource"].output.safeParse(part.output)
                 : undefined;
+            if (call) results.push({ toolCallId: part.toolCallId, toolName: call.toolName });
             if (offer?.success && !offer.data.open) {
               output.offer(offer.data.label);
               offered = true;

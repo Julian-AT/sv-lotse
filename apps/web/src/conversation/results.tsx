@@ -1,6 +1,7 @@
 "use client";
 
 import type { LotseMessage } from "@lotse/brain";
+import { workspaceTargets } from "@lotse/brain/workspace/targets";
 import {
   Badge,
   Button,
@@ -416,7 +417,9 @@ export function ToolResultCards({
   return (
     <>
       {results.map((result) => (
-        <ResultCard key={result.callId} result={result} context={context} />
+        <div key={result.callId} id={workspaceTargets.resultCard(result.callId)}>
+          <ResultCard result={result} context={context} />
+        </div>
       ))}
     </>
   );

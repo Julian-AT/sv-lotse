@@ -2,6 +2,7 @@
 // elements are the template's; the parts are SV KI-Lotse's (sourced cards, approvals, safety notices).
 "use client";
 
+import { workspaceTargets } from "@lotse/brain/workspace/targets";
 import type { ApprovalContext } from "@lotse/protocol";
 import { CitationChip, SafetyNotice } from "@lotse/ui";
 import type { ToolUIPart } from "ai";
@@ -194,7 +195,11 @@ export const PreviewMessage = ({
       const toolPart = part as ToolUIPart;
       const approval = approvalFor(toolPart.toolCallId);
       return (
-        <div className="w-[min(100%,450px)]" key={toolPart.toolCallId}>
+        <div
+          className="w-[min(100%,450px)]"
+          key={toolPart.toolCallId}
+          id={workspaceTargets.toolRow(toolPart.toolCallId)}
+        >
           <Tool className="w-full" defaultOpen={toolPart.state === "approval-requested"}>
             <ToolHeader
               state={toolPart.state}

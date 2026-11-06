@@ -13,7 +13,7 @@ import { z } from "zod";
 import { hasNativeBridge, postNative } from "../bridge/index.ts";
 import { dispatchFormAction, formViewerMounted } from "../features/form-viewer/workspace.tsx";
 import { WORKSPACE_CONFIG } from "./config.ts";
-import { pointNatively, stopNativePointing } from "./native-pointer.ts";
+import { pointNatively, stopNativePointing, workspaceElement } from "./native-pointer.ts";
 import { formFieldUiTarget, openResource } from "./open-resource.ts";
 
 export function nativeEnvelope<Message extends BridgeToNative["type"]>(
@@ -139,6 +139,15 @@ export function createClientRuntime(
       }
       const formField = formFieldUiTarget(action.target);
       if (formField) return pageGuide().execute({ ...action, target: formField } as Action);
+      const element = action.target.kind === "ui" ? workspaceElement(action.target) : undefined;
+      if (element?.id && action.target.kind === "ui" && element.id !== action.target.elementId) {
+        element.scrollIntoView({ block: "center", behavior: "smooth" });
+        return pageGuide().execute({
+          ...action,
+          target: { kind: "ui", elementId: element.id },
+        } as Action);
+      }
+      if (element) element.scrollIntoView({ block: "center", behavior: "smooth" });
       return pageGuide().execute(action);
     },
     clear: () => {

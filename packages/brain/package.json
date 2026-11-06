@@ -18,6 +18,7 @@
     "./catalog": "./src/catalog/index.ts",
     "./workspace": "./src/workspace/index.ts",
     "./workspace/schema": "./src/workspace/schema.ts",
+    "./workspace/targets": "./src/workspace/targets.ts",
     "./resolve": "./src/resolve/index.ts",
     "./autonomy": "./src/autonomy/index.ts",
     "./autonomy/schema": "./src/autonomy/schema.ts",
