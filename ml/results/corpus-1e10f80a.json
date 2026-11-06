@@ -1,0 +1,124 @@
+{
+  "dataset": "at-sv-law",
+  "built_at": "2026-11-06T04:09:52+00:00",
+  "git_sha": "1e10f80a",
+  "version_as_of": "2026-11-06",
+  "source": "RIS OGD API v2.6 (Bundesrecht konsolidiert)",
+  "licence": "CC-BY-4.0",
+  "attribution": "Datenquelle: Rechtsinformationssystem des Bundes (RIS), Bundeskanzleramt Österreich",
+  "records": 2863,
+  "empty_text": 0,
+  "chars": 4748605,
+  "tokens_estimate": 1100579,
+  "per_act": {
+    "ASVG": {
+      "records": 1120,
+      "chars": 2163464,
+      "tokens_estimate": 493796,
+      "listed": 1121,
+      "fetched": 1121
+    },
+    "AufwAnp-2026": {
+      "records": 16,
+      "chars": 16122,
+      "tokens_estimate": 4888,
+      "listed": 17,
+      "fetched": 17
+    },
+    "B-KUVG": {
+      "records": 372,
+      "chars": 412918,
+      "tokens_estimate": 94494,
+      "listed": 373,
+      "fetched": 373
+    },
+    "BPGG": {
+      "records": 78,
+      "chars": 150350,
+      "tokens_estimate": 34512,
+      "listed": 79,
+      "fetched": 79
+    },
+    "BSVG": {
+      "records": 530,
+      "chars": 853428,
+      "tokens_estimate": 201822,
+      "listed": 531,
+      "fetched": 531
+    },
+    "EinstV": {
+      "records": 9,
+      "chars": 6479,
+      "tokens_estimate": 1443,
+      "listed": 10,
+      "fetched": 10
+    },
+    "FLAG": {
+      "records": 118,
+      "chars": 185707,
+      "tokens_estimate": 43689,
+      "listed": 119,
+      "fetched": 119
+    },
+    "GSVG": {
+      "records": 500,
+      "chars": 797382,
+      "tokens_estimate": 188281,
+      "listed": 501,
+      "fetched": 501
+    },
+    "KBGG": {
+      "records": 61,
+      "chars": 86458,
+      "tokens_estimate": 20326,
+      "listed": 62,
+      "fetched": 62
+    },
+    "KUG": {
+      "records": 22,
+      "chars": 10816,
+      "tokens_estimate": 2556,
+      "listed": 23,
+      "fetched": 23
+    },
+    "Kinder-EinstV": {
+      "records": 11,
+      "chars": 11229,
+      "tokens_estimate": 2518,
+      "listed": 12,
+      "fetched": 12
+    },
+    "PFG": {
+      "records": 16,
+      "chars": 33704,
+      "tokens_estimate": 8051,
+      "listed": 17,
+      "fetched": 17
+    },
+    "SH-GG": {
+      "records": 10,
+      "chars": 20548,
+      "tokens_estimate": 4198,
+      "listed": 11,
+      "fetched": 11
+    }
+  },
+  "complete": true,
+  "parquet_sha256": "059160a14b439e9ae7e005e8486b102110ee7f0c00149617bf46bc91f09ffec8",
+  "content_sha256": "5ecdb7005d2edf55f26fef08470e50009e7da368ff4c7ec8ad06b5224d1e596e",
+  "sozdok_local_join": {
+    "file": "at-sv-law.sozdok-local.parquet",
+    "published": false,
+    "matched": 2570,
+    "per_act": {
+      "ASVG": 1004,
+      "B-KUVG": 348,
+      "BPGG": 76,
+      "BSVG": 491,
+      "FLAG": 114,
+      "GSVG": 460,
+      "KBGG": 61,
+      "PFG": 16
+    }
+  }
+}

@@ -1,0 +1,569 @@
+{
+  "natural": {
+    "generated": 500,
+    "accepted": 425,
+    "acceptance_rate": 0.85,
+    "reject_reasons": {
+      "judge": 58,
+      "leak": 8,
+      "numbers": 9
+    },
+    "rule_pass_rate": 0.966,
+    "judge": {
+      "n": 483,
+      "passed": 425,
+      "pass_rate": 0.8799,
+      "wilson_95": [
+        0.8479,
+        0.9059
+      ],
+      "criterion_means": {
+        "faithful": 4.65,
+        "no_leakage": 4.913,
+        "language": 4.892,
+        "register": 4.089,
+        "natural": 4.07,
+        "concern": 4.273
+      },
+      "gate": {
+        "faithful": 4,
+        "no_leakage": 4,
+        "language": 4
+      },
+      "pass_rate_by_variant": {
+        "ar": 0.8286,
+        "bcs": 0.8511,
+        "de": 0.9029,
+        "de-AT-dialect": 0.7941,
+        "de-easy": 0.875,
+        "en": 0.9298,
+        "hu": 0.8636,
+        "pl": 0.925,
+        "ro": 0.8824,
+        "tr": 0.8667,
+        "uk": 0.8824
+      },
+      "rubric": {
+        "instructions": "The item has a persona card, a template reference message, the target language/variant, and the generated message. Judge ONLY the generated message.",
+        "criteria": [
+          {
+            "id": "faithful",
+            "description": "States only facts that are on the card or in the reference message; invents nothing (no new illnesses, amounts, people, dates)."
+          },
+          {
+            "id": "no_leakage",
+            "description": "Names no benefit, allowance, programme, leave scheme, authority or office (insurer short names like ÖGK/SVS/BVAEB/PVA are allowed)."
+          },
+          {
+            "id": "language",
+            "description": "Written in the requested language and variant (dialect, plain language, BCS variant) consistently."
+          },
+          {
+            "id": "register",
+            "description": "Matches the requested style, register and literacy."
+          },
+          {
+            "id": "natural",
+            "description": "Reads like a real person's message, not like a template or an AI."
+          },
+          {
+            "id": "concern",
+            "description": "Keeps the speaker's concern from the reference message."
+          }
+        ],
+        "pass_rule": "faithful, no_leakage and language at least 4 (register, natural and concern are reported but do not decide)",
+        "min_score": 1
+      }
+    },
+    "tokens": {
+      "prompt": 338520,
+      "completion": 66104
+    },
+    "per_variant": {
+      "ar": {
+        "n": 29,
+        "distinct_1": 0.4264,
+        "distinct_2": 0.7981,
+        "length": {
+          "n": 29,
+          "mean_words": 50.86,
+          "p05": 35,
+          "p50": 51,
+          "p95": 69,
+          "min": 23,
+          "max": 87
+        },
+        "readability_mean": {
+          "words_per_sentence": 10.5
+        }
+      },
+      "bs": {
+        "n": 13,
+        "distinct_1": 0.4193,
+        "distinct_2": 0.8106,
+        "length": {
+          "n": 13,
+          "mean_words": 59.08,
+          "p05": 40,
+          "p50": 57,
+          "p95": 86,
+          "min": 40,
+          "max": 86
+        },
+        "readability_mean": {
+          "flesch_style": 34.87,
+          "syllables_per_word": 1.91,
+          "words_per_sentence": 10.07
+        }
+      },
+      "de": {
+        "n": 93,
+        "distinct_1": 0.1327,
+        "distinct_2": 0.4673,
+        "length": {
+          "n": 93,
+          "mean_words": 64.58,
+          "p05": 41,
+          "p50": 61,
+          "p95": 100,
+          "min": 30,
+          "max": 112
+        },
+        "readability_mean": {
+          "syllables_per_word": 1.58,
+          "wiener_sachtextformel": 3.58,
+          "words_per_sentence": 10.26
+        }
+      },
+      "de-AT-dialect": {
+        "n": 27,
+        "distinct_1": 0.2475,
+        "distinct_2": 0.6845,
+        "length": {
+          "n": 27,
+          "mean_words": 67.33,
+          "p05": 46,
+          "p50": 68,
+          "p95": 92,
+          "min": 41,
+          "max": 113
+        },
+        "readability_mean": {
+          "syllables_per_word": 1.41,
+          "wiener_sachtextformel": 1.76,
+          "words_per_sentence": 10.43
+        }
+      },
+      "de-easy": {
+        "n": 28,
+        "distinct_1": 0.2545,
+        "distinct_2": 0.6178,
+        "length": {
+          "n": 28,
+          "mean_words": 53.89,
+          "p05": 33,
+          "p50": 52,
+          "p95": 83,
+          "min": 32,
+          "max": 96
+        },
+        "readability_mean": {
+          "syllables_per_word": 1.57,
+          "wiener_sachtextformel": 2.95,
+          "words_per_sentence": 7.81
+        }
+      },
+      "en": {
+        "n": 53,
+        "distinct_1": 0.1567,
+        "distinct_2": 0.4984,
+        "length": {
+          "n": 53,
+          "mean_words": 64.91,
+          "p05": 36,
+          "p50": 62,
+          "p95": 109,
+          "min": 25,
+          "max": 113
+        },
+        "readability_mean": {
+          "syllables_per_word": 1.42,
+          "flesch_reading_ease": 73.85,
+          "words_per_sentence": 12.99
+        }
+      },
+      "hr": {
+        "n": 20,
+        "distinct_1": 0.3403,
+        "distinct_2": 0.7273,
+        "length": {
+          "n": 20,
+          "mean_words": 62.6,
+          "p05": 42,
+          "p50": 61,
+          "p95": 89,
+          "min": 36,
+          "max": 89
+        },
+        "readability_mean": {
+          "flesch_style": 26.97,
+          "syllables_per_word": 2.01,
+          "words_per_sentence": 10.04
+        }
+      },
+      "hu": {
+        "n": 19,
+        "distinct_1": 0.4158,
+        "distinct_2": 0.7684,
+        "length": {
+          "n": 19,
+          "mean_words": 51.89,
+          "p05": 35,
+          "p50": 48,
+          "p95": 84,
+          "min": 35,
+          "max": 84
+        },
+        "readability_mean": {
+          "flesch_style": 14.76,
+          "syllables_per_word": 2.16,
+          "words_per_sentence": 8.83
+        }
+      },
+      "pl": {
+        "n": 37,
+        "distinct_1": 0.2646,
+        "distinct_2": 0.6557,
+        "length": {
+          "n": 37,
+          "mean_words": 57.51,
+          "p05": 38,
+          "p50": 59,
+          "p95": 83,
+          "min": 34,
+          "max": 89
+        },
+        "readability_mean": {
+          "flesch_style": 35.68,
+          "syllables_per_word": 1.91,
+          "words_per_sentence": 9.57
+        }
+      },
+      "ro": {
+        "n": 45,
+        "distinct_1": 0.1907,
+        "distinct_2": 0.5467,
+        "length": {
+          "n": 45,
+          "mean_words": 69.69,
+          "p05": 45,
+          "p50": 63,
+          "p95": 101,
+          "min": 41,
+          "max": 104
+        },
+        "readability_mean": {
+          "flesch_style": 51.73,
+          "syllables_per_word": 1.71,
+          "words_per_sentence": 9.99
+        }
+      },
+      "sr": {
+        "n": 7,
+        "distinct_1": 0.5218,
+        "distinct_2": 0.8667,
+        "length": {
+          "n": 7,
+          "mean_words": 58.86,
+          "p05": 48,
+          "p50": 57,
+          "p95": 79,
+          "min": 48,
+          "max": 79
+        },
+        "readability_mean": {
+          "flesch_style": 31.23,
+          "syllables_per_word": 1.95,
+          "words_per_sentence": 10.84
+        }
+      },
+      "tr": {
+        "n": 39,
+        "distinct_1": 0.3383,
+        "distinct_2": 0.7123,
+        "length": {
+          "n": 39,
+          "mean_words": 47.97,
+          "p05": 28,
+          "p50": 47,
+          "p95": 84,
+          "min": 19,
+          "max": 86
+        },
+        "readability_mean": {
+          "flesch_style": -14.22,
+          "syllables_per_word": 2.53,
+          "words_per_sentence": 6.66
+        }
+      },
+      "uk": {
+        "n": 15,
+        "distinct_1": 0.3991,
+        "distinct_2": 0.7887,
+        "length": {
+          "n": 15,
+          "mean_words": 57.47,
+          "p05": 37,
+          "p50": 60,
+          "p95": 83,
+          "min": 37,
+          "max": 83
+        },
+        "readability_mean": {
+          "flesch_style": 24.74,
+          "syllables_per_word": 2.03,
+          "words_per_sentence": 10.53
+        }
+      }
+    }
+  },
+  "counts": {
+    "heldout_family/llm": 26,
+    "heldout_family/template": 18156,
+    "test/llm": 35,
+    "test/template": 36329,
+    "train/llm": 333,
+    "train/template": 908757,
+    "validation/llm": 31,
+    "validation/template": 36333
+  },
+  "languages": {
+    "llm/ar": 29,
+    "llm/bs": 13,
+    "llm/de": 93,
+    "llm/de-AT-dialect": 27,
+    "llm/de-easy": 28,
+    "llm/en": 53,
+    "llm/hr": 20,
+    "llm/hu": 19,
+    "llm/pl": 37,
+    "llm/ro": 45,
+    "llm/sr": 7,
+    "llm/tr": 39,
+    "llm/uk": 15,
+    "template/de": 699558,
+    "template/en": 150062,
+    "template/tr": 149955
+  },
+  "leakage": [
+    {
+      "set": "template_texts_3pct_sample",
+      "n_train": 20000,
+      "n_eval": 2145,
+      "n_labels": 44,
+      "text_f1": 0.985,
+      "card_f1": 0.9999,
+      "base_rate_f1": 0.3328,
+      "margin": 0.02,
+      "passed": true
+    },
+    {
+      "set": "llm_texts",
+      "n_train": 333,
+      "n_eval": 66,
+      "n_labels": 42,
+      "text_f1": 0.5833,
+      "card_f1": 0.9952,
+      "base_rate_f1": 0.329,
+      "margin": 0.02,
+      "passed": true
+    }
+  ],
+  "family": "situations",
+  "version": "v0.2",
+  "seed": 202611071,
+  "sha": "d89a5bfa",
+  "built_at": "2026-11-06T06:41:50+0100",
+  "ledger": {
+    "tranche_tokens": 60000000,
+    "committed_tokens": 23388705,
+    "used_tokens": 23241379,
+    "rows": [
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6-luna",
+        "status": "released",
+        "entries": 76,
+        "requests": 76,
+        "reserved_tokens": 1387262,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6-luna",
+        "status": "settled",
+        "entries": 1466,
+        "requests": 1466,
+        "reserved_tokens": 22456997,
+        "input_tokens": 8227575,
+        "cached_tokens": 238080,
+        "output_tokens": 770928,
+        "list_price_usd": 1.1867943
+      },
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6-sol",
+        "status": "released",
+        "entries": 37,
+        "requests": 37,
+        "reserved_tokens": 686652,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6-sol",
+        "status": "settled",
+        "entries": 1195,
+        "requests": 1195,
+        "reserved_tokens": 21598448,
+        "input_tokens": 11112638,
+        "cached_tokens": 0,
+        "output_tokens": 329594,
+        "list_price_usd": 25.521216
+      },
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6.1-sol",
+        "status": "settled",
+        "entries": 97,
+        "requests": 97,
+        "reserved_tokens": 1144757,
+        "input_tokens": 524255,
+        "cached_tokens": 427264,
+        "output_tokens": 13521,
+        "list_price_usd": 0.3719184
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-luna",
+        "status": "reserved",
+        "entries": 1,
+        "requests": 1,
+        "reserved_tokens": 8608,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-luna",
+        "status": "settled",
+        "entries": 472,
+        "requests": 472,
+        "reserved_tokens": 2475268,
+        "input_tokens": 445841,
+        "cached_tokens": 0,
+        "output_tokens": 142595,
+        "list_price_usd": 0.1158816
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-sol",
+        "status": "released",
+        "entries": 13,
+        "requests": 13,
+        "reserved_tokens": 47514,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-sol",
+        "status": "reserved",
+        "entries": 4,
+        "requests": 4,
+        "reserved_tokens": 14433,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-sol",
+        "status": "settled",
+        "entries": 368,
+        "requests": 368,
+        "reserved_tokens": 1394954,
+        "input_tokens": 471345,
+        "cached_tokens": 0,
+        "output_tokens": 111682,
+        "list_price_usd": 2.05951
+      },
+      {
+        "pool": "situations",
+        "family": "situations",
+        "model": "gpt-6-luna",
+        "status": "reserved",
+        "entries": 56,
+        "requests": 56,
+        "reserved_tokens": 124285,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "situations",
+        "family": "situations",
+        "model": "gpt-6-luna",
+        "status": "settled",
+        "entries": 628,
+        "requests": 628,
+        "reserved_tokens": 1402105,
+        "input_tokens": 425568,
+        "cached_tokens": 0,
+        "output_tokens": 84136,
+        "list_price_usd": 0.0846248
+      },
+      {
+        "pool": "situations",
+        "family": "situations",
+        "model": "gpt-6-sol",
+        "status": "settled",
+        "entries": 579,
+        "requests": 579,
+        "reserved_tokens": 1326899,
+        "input_tokens": 451151,
+        "cached_tokens": 0,
+        "output_tokens": 130550,
+        "list_price_usd": 2.207802
+      }
+    ]
+  },
+  "seconds": 45.0,
+  "spotcheck": {
+    "file": "spotcheck.jsonl",
+    "n": 167,
+    "strata": "text_variant x split, up to 6 each, seed 11"
+  }
+}

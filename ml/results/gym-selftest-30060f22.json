@@ -1,0 +1,307 @@
+{
+  "git_sha": "30060f22",
+  "boundary_rules": {
+    "version": "medical-boundary.v4",
+    "patterns": 20
+  },
+  "offline_ok": true,
+  "checks": [
+    {
+      "name": "gold_plan",
+      "got": 1.0,
+      "want": 1.0,
+      "ok": true
+    },
+    {
+      "name": "boundary",
+      "got": 0.0,
+      "want": 0.0,
+      "ok": true
+    },
+    {
+      "name": "uncited_claim_message",
+      "got": 0.5,
+      "want": 0.5,
+      "ok": true
+    },
+    {
+      "name": "uncited_plan",
+      "got": 0.4,
+      "want": 0.4,
+      "ok": true
+    },
+    {
+      "name": "malformed_tool_call",
+      "got": 0.8,
+      "want": 0.8,
+      "ok": true
+    },
+    {
+      "name": "over_asking_by_3",
+      "got": 0.85,
+      "want": 0.85,
+      "ok": true
+    },
+    {
+      "name": "no_plan",
+      "got": 0.0,
+      "want": 0.0,
+      "ok": true
+    },
+    {
+      "name": "oracle_fake_server",
+      "got": 1.0,
+      "want": 1.0,
+      "ok": true
+    }
+  ],
+  "live": {
+    "status": "ran",
+    "personas_source": "/Users/julianschmidt/Developer/sv-lotse/ml/data/personas",
+    "episodes": 20,
+    "errors": [],
+    "seconds": 2.1,
+    "gold_plan_reward_min": 1.0,
+    "gold_plan_all_one": true,
+    "office_consistent_rate": 1.0,
+    "tool_errors": 0,
+    "metrics": {
+      "overall": {
+        "n": 20,
+        "personas": 20,
+        "reward": 1.0,
+        "reward_ci95": [
+          1.0,
+          1.0
+        ],
+        "f1_benefits": 1.0,
+        "f1_benefits_ci95": [
+          1.0,
+          1.0
+        ],
+        "acc_office": 1.0,
+        "acc_office_ci95": [
+          1.0,
+          1.0
+        ],
+        "f1_documents": 1.0,
+        "f1_documents_ci95": [
+          1.0,
+          1.0
+        ],
+        "cite_valid": 1.0,
+        "cite_valid_ci95": [
+          1.0,
+          1.0
+        ],
+        "next_step_correct": 1.0,
+        "next_step_correct_ci95": [
+          1.0,
+          1.0
+        ],
+        "boundary": 0.0,
+        "boundary_ci95": [
+          0.0,
+          0.0
+        ],
+        "uncited": 0.0,
+        "uncited_ci95": [
+          0.0,
+          0.0
+        ],
+        "malformed": 0.0,
+        "malformed_ci95": [
+          0.0,
+          0.0
+        ],
+        "excess_questions_median": 0.0,
+        "excess_questions_p90": 0.0,
+        "boundary_violations": 0,
+        "pass^1": 1.0
+      },
+      "by_language": {
+        "de": {
+          "n": 10,
+          "personas": 10,
+          "reward": 1.0,
+          "reward_ci95": [
+            1.0,
+            1.0
+          ],
+          "f1_benefits": 1.0,
+          "f1_benefits_ci95": [
+            1.0,
+            1.0
+          ],
+          "acc_office": 1.0,
+          "acc_office_ci95": [
+            1.0,
+            1.0
+          ],
+          "f1_documents": 1.0,
+          "f1_documents_ci95": [
+            1.0,
+            1.0
+          ],
+          "cite_valid": 1.0,
+          "cite_valid_ci95": [
+            1.0,
+            1.0
+          ],
+          "next_step_correct": 1.0,
+          "next_step_correct_ci95": [
+            1.0,
+            1.0
+          ],
+          "boundary": 0.0,
+          "boundary_ci95": [
+            0.0,
+            0.0
+          ],
+          "uncited": 0.0,
+          "uncited_ci95": [
+            0.0,
+            0.0
+          ],
+          "malformed": 0.0,
+          "malformed_ci95": [
+            0.0,
+            0.0
+          ],
+          "excess_questions_median": 0.0,
+          "excess_questions_p90": 0.0,
+          "boundary_violations": 0,
+          "pass^1": 1.0
+        },
+        "en": {
+          "n": 6,
+          "personas": 6,
+          "reward": 1.0,
+          "reward_ci95": [
+            1.0,
+            1.0
+          ],
+          "f1_benefits": 1.0,
+          "f1_benefits_ci95": [
+            1.0,
+            1.0
+          ],
+          "acc_office": 1.0,
+          "acc_office_ci95": [
+            1.0,
+            1.0
+          ],
+          "f1_documents": 1.0,
+          "f1_documents_ci95": [
+            1.0,
+            1.0
+          ],
+          "cite_valid": 1.0,
+          "cite_valid_ci95": [
+            1.0,
+            1.0
+          ],
+          "next_step_correct": 1.0,
+          "next_step_correct_ci95": [
+            1.0,
+            1.0
+          ],
+          "boundary": 0.0,
+          "boundary_ci95": [
+            0.0,
+            0.0
+          ],
+          "uncited": 0.0,
+          "uncited_ci95": [
+            0.0,
+            0.0
+          ],
+          "malformed": 0.0,
+          "malformed_ci95": [
+            0.0,
+            0.0
+          ],
+          "excess_questions_median": 0.0,
+          "excess_questions_p90": 0.0,
+          "boundary_violations": 0,
+          "pass^1": 1.0
+        },
+        "tr": {
+          "n": 4,
+          "personas": 4,
+          "reward": 1.0,
+          "reward_ci95": [
+            1.0,
+            1.0
+          ],
+          "f1_benefits": 1.0,
+          "f1_benefits_ci95": [
+            1.0,
+            1.0
+          ],
+          "acc_office": 1.0,
+          "acc_office_ci95": [
+            1.0,
+            1.0
+          ],
+          "f1_documents": 1.0,
+          "f1_documents_ci95": [
+            1.0,
+            1.0
+          ],
+          "cite_valid": 1.0,
+          "cite_valid_ci95": [
+            1.0,
+            1.0
+          ],
+          "next_step_correct": 1.0,
+          "next_step_correct_ci95": [
+            1.0,
+            1.0
+          ],
+          "boundary": 0.0,
+          "boundary_ci95": [
+            0.0,
+            0.0
+          ],
+          "uncited": 0.0,
+          "uncited_ci95": [
+            0.0,
+            0.0
+          ],
+          "malformed": 0.0,
+          "malformed_ci95": [
+            0.0,
+            0.0
+          ],
+          "excess_questions_median": 0.0,
+          "excess_questions_p90": 0.0,
+          "boundary_violations": 0,
+          "pass^1": 1.0
+        }
+      }
+    },
+    "rewards": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  }
+}

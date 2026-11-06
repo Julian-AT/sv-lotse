@@ -1,0 +1,785 @@
+{
+  "family": "dialogues",
+  "kept": 352,
+  "kept_unique": 352,
+  "near_duplicates": 0,
+  "rejected": 142,
+  "reject_reasons": [
+    [
+      "question_without_question_mark",
+      7
+    ],
+    [
+      "missing_safety_turn",
+      7
+    ],
+    [
+      "not_kept",
+      6
+    ],
+    [
+      "turn_count 2 != 1",
+      3
+    ],
+    [
+      "turn_count 4 != 3",
+      2
+    ],
+    [
+      "turn_count 3 != 2",
+      2
+    ],
+    [
+      "judge_failed: The pilot makes unsupported claims about the named vaccines and says no documents are needed despite the tool listing an e-card or ID.",
+      1
+    ],
+    [
+      "judge_failed: The pilot names two specific vaccines not supported by the shown tool outputs.",
+      1
+    ],
+    [
+      "judge_failed: The pilot does not establish where the vaccinations are given or whether the pneumococcal vaccine costs money, and its answer is more bureaucratic than helpful.",
+      1
+    ],
+    [
+      "judge_failed: The pilot incorrectly says the hospital doctor decides on follow-up treatment applications; the sources say doctors submit the application.",
+      1
+    ],
+    [
+      "judge_failed: The pilot names a pneumococcal program and cites [13] without support in the shown outputs, then gives a mechanical follow-up after the user has thanked it.",
+      1
+    ],
+    [
+      "judge_failed: The claim that the application can be submitted no earlier than the child’s birth is not supported by the shown tool outputs.",
+      1
+    ],
+    [
+      "judge_failed: The pilot names a specific social center and district assignment that are not supported by the shown tool outputs.",
+      1
+    ],
+    [
+      "judge_failed: The advice matches the shown sources, but it leaves insurance terms such as “compulsory insurance” and “marginal” unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The opening question about birth-related procedures feels out of place in response to a question about disability benefits.",
+      1
+    ],
+    [
+      "turn_count 2 != 0",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks a long series of premature administrative questions before addressing the user's request.",
+      1
+    ],
+    [
+      "judge_failed: The pilot names pneumococcal vaccination as part of the program, but the shown tool outputs do not support that claim.",
+      1
+    ],
+    [
+      "judge_failed: The tool calls change Weiz to another district and assume an insurer and insurance status the user did not provide.",
+      1
+    ],
+    [
+      "judge_failed: The answer follows the shown sources, but long sentences and unexplained terms such as “Honorarnote” make it too difficult for B1 readers.",
+      1
+    ],
+    [
+      "judge_failed: The pilot directs the user to the ÖGK without qualifying that the user does not know which insurer they have.",
+      1
+    ],
+    [
+      "judge_failed: The medical handoff and benefit guidance are sound, but the pilot repeats its advice after the user has ended the conversation.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks many premature treatment questions, adds an unsupported location in its tool call, and cites source links not shown in the tool outputs.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about residence in Vienna, despite clear answers that the user lives in Salzburg, make the dialogue unnatural.",
+      1
+    ],
+    [
+      "judge_failed: The pilot uses unexplained legal and administrative terms, including § 19a ASVG, that make the dialogue harder to understand.",
+      1
+    ],
+    [
+      "judge_failed: The pilot repeatedly asks about details the user does not know, gives unexplained official terms, and cites two URLs not shown in the tool outputs.",
+      1
+    ],
+    [
+      "judge_failed: The pilot stays within the sources and medical boundaries, but adds unrelated offers and repeats advice after the user has thanked it.",
+      1
+    ],
+    [
+      "judge_failed: The pilot names a specific Vienna office without a supporting office lookup or enough location information to establish that it is the user's office.",
+      1
+    ],
+    [
+      "judge_failed: The answer follows the sources but adds distracting, unrelated benefits and uses unexplained official terms.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks a long series of premature administrative questions instead of responding naturally to the user's request.",
+      1
+    ],
+    [
+      "judge_failed: The repeated, premature questions about treatment paperwork make the exchange feel unnatural, although the benefit guidance broadly matches the shown outputs and the pilot respects medical boundaries.",
+      1
+    ],
+    [
+      "judge_failed: The pilot names vaccines absent from the shown sources and incorrectly says the health portal confirms insurance coverage.",
+      1
+    ],
+    [
+      "judge_failed: The questioning is mechanical, and the claim about direct ÖGK billing is not supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks a long series of premature, technical questions instead of responding naturally to the user's need.",
+      1
+    ],
+    [
+      "judge_failed: The advice matches the shown sources, but several official terms are left unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot incorrectly implies that the Sozialministeriumservice checks eligibility for all the listed options, although the office lookup assigns different offices to some of them.",
+      1
+    ],
+    [
+      "judge_failed: The pilot stays faithful to the sources and handles the medical question safely, but leaves several technical terms unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot omits the women-only condition for mammography and leaves key medical and official terms unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot stays within the sources and medical boundary, but uses unexplained official terms such as “Anspruchsnachweis” instead of consistently plain language.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks a long series of treatment-specific questions before establishing that treatment is planned, and two cited URLs are absent from the shown sources.",
+      1
+    ],
+    [
+      "judge_failed: The questioning feels mechanical, and the final answer names the Vienna office although the lookup assigns Pflegekarenz to the Styrian office.",
+      1
+    ],
+    [
+      "judge_failed: The pilot adds unrelated benefits and presents shingles coverage as established, although the shown sources confirm only an age threshold.",
+      1
+    ],
+    [
+      "judge_failed: The pilot assumes SVS coverage despite the user not knowing the insurer, cites an unseen source, and ends with advice about aids rather than the requested care subsidy.",
+      1
+    ],
+    [
+      "judge_failed: The advice follows the shown tools, but unexplained official terms and a long, dense sentence make it less accessible.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks a long series of technical questions before addressing the user's immediate concern, making the exchange feel unnatural.",
+      1
+    ],
+    [
+      "judge_failed: The shown sources support the flu-vaccine cost, but do not establish the stated pneumococcal-vaccine eligibility.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about Vienna sound unnatural, and the pilot does not address that the listed health-cost fund is for insured people while the user says she is uninsured.",
+      1
+    ],
+    [
+      "judge_failed: The shown tool outputs do not establish that the age-60 vaccination programme includes shingles vaccination.",
+      1
+    ],
+    [
+      "judge_failed: The pilot makes an unsupported claim about the two vaccines and gives an awkward follow-up after the user has finished.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about Vienna and age make the dialogue feel unnatural despite otherwise source-grounded guidance.",
+      1
+    ],
+    [
+      "judge_failed: The advice matches the shown sources and respects the medical boundary, but several official terms are not explained in plain language.",
+      1
+    ],
+    [
+      "judge_failed: The pilot incorrectly says the ÖGK pays the patient's share and leaves several official terms unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot incorrectly says the mammography rule does not fit a 71-year-old, although the cited age range is 45–74.",
+      1
+    ],
+    [
+      "judge_failed: The tool calls assume SVS insurance and employment despite the user not providing either fact.",
+      1
+    ],
+    [
+      "judge_failed: The response is largely source-faithful, but unrelated benefits, unexplained official terms, and an awkward follow-up make it less natural and harder to understand.",
+      1
+    ],
+    [
+      "judge_failed: The advice matches the shown sources, but unexplained legal terms and dense sentences fall short of B1 plain language.",
+      1
+    ],
+    [
+      "judge_failed: The income-related option is not supported by the shown tool outputs, and the response does not distinguish the offices responsible for the two payments.",
+      1
+    ],
+    [
+      "judge_failed: The birth-related question and emergency medical response feel out of place in a conversation about an 18-year-old student.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks a long series of premature, repetitive questions before addressing the user's request.",
+      1
+    ],
+    [
+      "judge_failed: The pilot cites a source URL not shown in the tool outputs and leaves key official terms unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot cites a source not shown in the tool outputs, despite otherwise largely matching them.",
+      1
+    ],
+    [
+      "judge_failed: The pilot adds an unsupported claim about prior approval and uses unexplained official terms.",
+      1
+    ],
+    [
+      "judge_failed: Several questions feel unnecessary, the three-month insurance requirement is not supported by the shown outputs, and some official terms go unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The plan names Leoben despite the user living in Weiz, the final office is not supported by the shown lookup, and several official terms are unexplained.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about Vienna sound unnatural, and the final advice treats a health-cost fund as a next step without establishing relevant costs.",
+      1
+    ],
+    [
+      "judge_failed: The pilot cites sources not shown in the tool outputs and makes a claim about direct billing that the shown quotes do not establish.",
+      1
+    ],
+    [
+      "judge_failed: The pilot repeatedly asks about treatment paperwork before any treatment has begun, making the exchange unnatural.",
+      1
+    ],
+    [
+      "judge_failed: The pilot names pneumococcal and shingles vaccinations, but those details are not supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks several irrelevant, repetitive questions and directs the user to ÖGK despite her insurance provider being unknown.",
+      1
+    ],
+    [
+      "judge_failed: The pilot incorrectly presents physiotherapy as the main benefit for speech training, making its answer confusing and less faithful to the shown sources.",
+      1
+    ],
+    [
+      "judge_failed: The pilot omits that voluntary breast-screening registration at age 43 is for women, although the user's eligibility is unknown.",
+      1
+    ],
+    [
+      "judge_failed: The final reply uses unnatural internal-plan wording and gives little practical help, though its benefit and office information is supported.",
+      1
+    ],
+    [
+      "judge_failed: The pilot implies the health portal can decide which screening suits the user instead of referring that personal medical question to a doctor.",
+      1
+    ],
+    [
+      "judge_failed: After the user says thanks, the pilot abruptly pivots from speech therapy to physiotherapy instead of closing the exchange.",
+      1
+    ],
+    [
+      "judge_failed: The pilot does not answer the cost question, calls an information portal the responsible office, and uses official terms without explaining them.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks several premature, repetitive questions about treatment the user has not started.",
+      1
+    ],
+    [
+      "judge_failed: The pilot stays within the sources and handles the medical question safely, but leaves several official benefit and office names unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot’s central 24-hour-care claims rely on sources absent from the shown tool outputs, and its final reply does not address the user’s main question.",
+      1
+    ],
+    [
+      "turn_count 1 != 0",
+      1
+    ],
+    [
+      "judge_failed: The shown sources do not establish that the pneumococcal vaccine is covered by the public program, and some program names and terms are left unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The tool calls assign an unprovided insurer and employment status, despite the user saying they do not know the insurer.",
+      1
+    ],
+    [
+      "judge_failed: The shown sources do not establish that pneumococcal vaccination is included in the public programme.",
+      1
+    ],
+    [
+      "judge_failed: The claim that stays without prior pension-insurance approval are generally not covered is not supported by the shown tool outputs.",
+      1
+    ],
+    [
+      "judge_failed: The pilot presents use of the last Pflegegeldgutachten as definite, although the shown checklist says to provide it only if possible.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about Vienna after the user clearly established they live in Upper Austria make the dialogue unnatural.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks several premature, repetitive questions and cites URLs not shown in the tool outputs.",
+      1
+    ],
+    [
+      "judge_failed: The closing reply wrongly says documents were not listed, although the tool listed them, and treats ÖGK as the user's insurer without confirmation.",
+      1
+    ],
+    [
+      "judge_failed: The plan names a district office that the office lookup did not return.",
+      1
+    ],
+    [
+      "judge_failed: The pilot gives mostly supported information but does not address the user's age in relation to mammography and adds several unrelated services.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about Vienna and an irrelevant Wiener Mindestsicherung question make the dialogue unnatural.",
+      1
+    ],
+    [
+      "judge_failed: The pilot makes unsupported claims about the vaccination program and promises that a health portal will provide costs and document requirements.",
+      1
+    ],
+    [
+      "judge_failed: The pilot cites a source not shown in the tool outputs and asks the user to prepare an e-card that is not in the document checklist.",
+      1
+    ],
+    [
+      "judge_failed: The pilot gives unqualified dental-prosthesis and ÖGK instructions although the user did not specify the type of prosthesis or confirm the insurer.",
+      1
+    ],
+    [
+      "judge_failed: The response follows the sources but sounds catalog-driven and distracts from the question about braces with unrelated benefits.",
+      1
+    ],
+    [
+      "judge_failed: The pilot stays within the sources and medical boundaries, but long sentences and unexplained official terms make the answer too difficult for B1.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about Vienna feel unnatural, and terms such as Kassenleistung and Richtsatz are left unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks awkward questions, makes an eligibility claim not supported by the shown tool outputs, and uses dense wording.",
+      1
+    ],
+    [
+      "judge_failed: The pilot foregrounds physiotherapy instead of the requested speech therapy and incorrectly presents a paid invoice as a general prerequisite.",
+      1
+    ],
+    [
+      "judge_failed: The assistant overlooks the user's need for help with meals and household tasks and adds benefits unrelated to the immediate question.",
+      1
+    ],
+    [
+      "judge_failed: The guidance is grounded in the shown tools, but the Arabic contains several noticeable grammatical errors.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks a long series of technical questions before addressing the user's request, making the exchange feel unnatural.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks for bank details, which are not supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: The final reply specifies a doctor-completed application and a hospital form, neither of which is supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about Vienna make the exchange unnatural, although the benefit information is qualified and no medical boundary is crossed.",
+      1
+    ],
+    [
+      "judge_failed: The repeated questions and follow-up after the user says thanks feel unnatural, and the final document requirements are not supported by the shown tool outputs.",
+      1
+    ],
+    [
+      "judge_failed: The pilot adds an unsupported document request and uses several unexplained technical terms.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks a long series of technical questions before addressing the request and assumes ÖGK coverage despite the user's uncertainty.",
+      1
+    ],
+    [
+      "judge_failed: The final instruction to prepare a doctor-completed rehabilitation application is not supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: The final reply specifies application documents that are not supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: The pilot adds an unsupported IBAN/BIC requirement and leaves key administrative terms unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The final answer specifies a hospital form and an application completed by a doctor, neither of which is supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: The unsolicited final reply feels awkward, and it leaves the German office name and e-card unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The repeated questions feel mechanical, and the pilot incorrectly directs the user to the Sozialministeriumservice for Pflegekarenz rather than clearly distinguishing it from Pflegekarenzgeld.",
+      1
+    ],
+    [
+      "judge_failed: The answer adds unrelated offers and gives unsolicited follow-up advice after the user has closed the exchange.",
+      1
+    ],
+    [
+      "judge_failed: The pilot tells the user how to obtain a pass immediately after the user says they already have one.",
+      1
+    ],
+    [
+      "judge_failed: Repeated, highly specific questions make the exchange feel unnatural despite an otherwise helpful response.",
+      1
+    ],
+    [
+      "judge_failed: The Romanian is correct and the advice stays within bounds, but the catalogue-like response and repeated closing sound unnatural.",
+      1
+    ],
+    [
+      "judge_failed: The medical handoff is appropriate, but the reimbursement percentage and final document requirements are not supported by the shown tool outputs, and several official terms are unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot gives an indirect answer, adds unrelated offers, and attributes advice about vaccination locations and required documents to a portal without support in the shown outputs.",
+      1
+    ],
+    [
+      "judge_failed: The pilot adds unsupported document requirements and leaves several technical terms unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot asks an implausible question about the father being a minor and directs the user to the Steiermark office despite the shown lookup specifying Niederösterreich.",
+      1
+    ],
+    [
+      "judge_failed: The 80% reimbursement figure and BIC requirement are not supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: Repeated questions about Vienna despite the user’s clear answers make the dialogue unnatural.",
+      1
+    ],
+    [
+      "judge_failed: The pilot is faithful and stays within medical boundaries, but leaves several official terms unexplained.",
+      1
+    ],
+    [
+      "judge_failed: The pilot gives a specific 80% reimbursement formula that is not supported by the tool outputs shown.",
+      1
+    ],
+    [
+      "judge_failed: The specific claim about half Krankengeld is not supported by the tool outputs or source quotes shown.",
+      1
+    ],
+    [
+      "judge_failed: The advice stays within the sources and medical boundaries, but the follow-up is awkward and uses an unexplained German office name.",
+      1
+    ],
+    [
+      "judge_failed: The repeated questions sound unnatural, the named Sozialzentrum is not supported by the shown tool outputs, and several official terms go unexplained.",
+      1
+    ]
+  ],
+  "counts": {
+    "A/heldout_family/ar": 1,
+    "A/heldout_family/bcs": 1,
+    "A/heldout_family/de": 13,
+    "A/heldout_family/en": 2,
+    "A/heldout_family/hu": 1,
+    "A/heldout_family/pl": 4,
+    "A/heldout_family/ro": 1,
+    "A/heldout_family/tr": 3,
+    "A/heldout_family/uk": 4,
+    "A/test/ar": 1,
+    "A/test/de": 18,
+    "A/test/en": 1,
+    "A/test/hu": 3,
+    "A/test/pl": 2,
+    "A/test/ro": 4,
+    "A/test/tr": 4,
+    "A/test/uk": 1,
+    "A/train/ar": 11,
+    "A/train/bcs": 10,
+    "A/train/de": 140,
+    "A/train/en": 32,
+    "A/train/hu": 11,
+    "A/train/pl": 6,
+    "A/train/ro": 12,
+    "A/train/tr": 13,
+    "A/train/uk": 15,
+    "A/val/ar": 4,
+    "A/val/bcs": 1,
+    "A/val/de": 19,
+    "A/val/en": 3,
+    "A/val/hu": 1,
+    "A/val/pl": 4,
+    "A/val/ro": 2,
+    "A/val/tr": 3,
+    "B/train/de": 1
+  },
+  "per_tier": {
+    "A": 351,
+    "B": 1,
+    "O": 10000
+  },
+  "per_language": {
+    "de": 191,
+    "ar": 17,
+    "en": 38,
+    "pl": 16,
+    "tr": 23,
+    "bcs": 12,
+    "hu": 16,
+    "uk": 20,
+    "ro": 19
+  },
+  "per_split": {
+    "train": 251,
+    "test": 34,
+    "heldout_family": 30,
+    "val": 37
+  },
+  "safety_injected": 54,
+  "plain_language": 118,
+  "dialect": 55,
+  "reward_mean": 0.9975,
+  "boundary_flags": 0,
+  "language_match_mean": 0.9776,
+  "judge_n": 351,
+  "judge_pass_rate": 1.0,
+  "judge_mean": {
+    "naturalness": 4.0085,
+    "faithfulness": 4.3818,
+    "language_correctness": 4.8205,
+    "boundary_compliance": 4.9943,
+    "plain_language": 4.0169
+  },
+  "tokens": 5139429,
+  "tranche": 1,
+  "tier_O": {
+    "train/O": 5000,
+    "val/O": 2000,
+    "test/O": 2000,
+    "heldout_family/O": 1000
+  },
+  "tier_A_judged": 476,
+  "tier_A_judge_pass_rate_all_attempts": 0.7374,
+  "near_duplicates_dropped": 0,
+  "shards": {
+    "heldout_family/A": 30,
+    "test/A": 34,
+    "train/A": 250,
+    "train/B": 1,
+    "val/A": 37,
+    "train/O": 5000,
+    "val/O": 2000,
+    "test/O": 2000,
+    "heldout_family/O": 1000
+  },
+  "parquet_bytes": 25881954,
+  "git_sha": "5883eff5",
+  "budget_start_tokens": 20807431.0,
+  "budget_remaining_tokens": 21489.0,
+  "ledger": {
+    "tranche_tokens": 60000000,
+    "committed_tokens": 22167286,
+    "used_tokens": 22043247,
+    "rows": [
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6-luna",
+        "status": "released",
+        "entries": 76,
+        "requests": 76,
+        "reserved_tokens": 1387262,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6-luna",
+        "status": "settled",
+        "entries": 1466,
+        "requests": 1466,
+        "reserved_tokens": 22456997,
+        "input_tokens": 8227575,
+        "cached_tokens": 238080,
+        "output_tokens": 770928,
+        "list_price_usd": 1.1867943
+      },
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6-sol",
+        "status": "released",
+        "entries": 37,
+        "requests": 37,
+        "reserved_tokens": 686652,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6-sol",
+        "status": "settled",
+        "entries": 1195,
+        "requests": 1195,
+        "reserved_tokens": 21598448,
+        "input_tokens": 11112638,
+        "cached_tokens": 0,
+        "output_tokens": 329594,
+        "list_price_usd": 25.521216
+      },
+      {
+        "pool": "dialogues",
+        "family": "dialogues",
+        "model": "gpt-6.1-sol",
+        "status": "settled",
+        "entries": 97,
+        "requests": 97,
+        "reserved_tokens": 1144757,
+        "input_tokens": 524255,
+        "cached_tokens": 427264,
+        "output_tokens": 13521,
+        "list_price_usd": 0.3719184
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-luna",
+        "status": "reserved",
+        "entries": 1,
+        "requests": 1,
+        "reserved_tokens": 8608,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-luna",
+        "status": "settled",
+        "entries": 236,
+        "requests": 236,
+        "reserved_tokens": 1199202,
+        "input_tokens": 213520,
+        "cached_tokens": 0,
+        "output_tokens": 68825,
+        "list_price_usd": 0.0557645
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-sol",
+        "status": "released",
+        "entries": 13,
+        "requests": 13,
+        "reserved_tokens": 47514,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "documents",
+        "family": "documents",
+        "model": "gpt-6-sol",
+        "status": "settled",
+        "entries": 180,
+        "requests": 180,
+        "reserved_tokens": 666829,
+        "input_tokens": 222553,
+        "cached_tokens": 0,
+        "output_tokens": 55373,
+        "list_price_usd": 0.998836
+      },
+      {
+        "pool": "situations",
+        "family": "situations",
+        "model": "gpt-6-luna",
+        "status": "reserved",
+        "entries": 52,
+        "requests": 52,
+        "reserved_tokens": 115431,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "situations",
+        "family": "situations",
+        "model": "gpt-6-luna",
+        "status": "settled",
+        "entries": 300,
+        "requests": 300,
+        "reserved_tokens": 670108,
+        "input_tokens": 203311,
+        "cached_tokens": 0,
+        "output_tokens": 40806,
+        "list_price_usd": 0.0407341
+      },
+      {
+        "pool": "situations",
+        "family": "situations",
+        "model": "gpt-6-sol",
+        "status": "settled",
+        "entries": 259,
+        "requests": 259,
+        "reserved_tokens": 594795,
+        "input_tokens": 202287,
+        "cached_tokens": 0,
+        "output_tokens": 58061,
+        "list_price_usd": 0.985184
+      }
+    ]
+  },
+  "release_rows": 10352
+}

@@ -1,0 +1,304 @@
+{
+  "family": "forms",
+  "git_sha": "0653e934",
+  "templates": 27,
+  "templates_by_source": {
+    "svbox": 7,
+    "e13": 20
+  },
+  "instances": 15120,
+  "instances_by_split": {
+    "train": 13770,
+    "test": 535,
+    "val": 534,
+    "heldout_family": 281
+  },
+  "name_origin": {
+    "uk": 734,
+    "de": 7288,
+    "en": 451,
+    "tr": 2976,
+    "pl": 462,
+    "ro": 980,
+    "ar": 767,
+    "bcs": 1034,
+    "hu": 428
+  },
+  "field_status": {
+    "missing:unmapped": 353400,
+    "filled": 91880,
+    "missing:ambiguous": 284,
+    "signature": 18600,
+    "missing:no_fact": 20947,
+    "missing:iban_not_stated": 630,
+    "provider_hospital": 4620,
+    "provider_doctor": 31800,
+    "provider_office": 9000,
+    "missing:invalid_value": 259
+  },
+  "writable_fields": 467400,
+  "filled_share_of_writable": 0.1966,
+  "per_template": {
+    "e13-svs-000": {
+      "instances": 600,
+      "missing": 21621,
+      "filled": 1779,
+      "signature": 600
+    },
+    "e13-svs-004": {
+      "instances": 600,
+      "missing": 18751,
+      "filled": 4049,
+      "signature": 600
+    },
+    "e13-svs-008": {
+      "instances": 600,
+      "filled": 5183,
+      "signature": 600,
+      "missing": 217
+    },
+    "e13-svs-009": {
+      "instances": 600,
+      "missing": 8609,
+      "filled": 2791,
+      "signature": 600
+    },
+    "e13-svs-010": {
+      "instances": 600,
+      "missing": 8400,
+      "signature": 2400
+    },
+    "e13-svs-011": {
+      "instances": 600,
+      "missing": 7200,
+      "filled": 2400,
+      "signature": 1200
+    },
+    "e13-svs-012": {
+      "instances": 600,
+      "missing": 39600,
+      "signature": 600
+    },
+    "e13-svs-014": {
+      "instances": 600,
+      "missing": 9000,
+      "signature": 2400
+    },
+    "e13-svs-016": {
+      "instances": 600,
+      "missing": 15164,
+      "filled": 4636,
+      "signature": 600
+    },
+    "e13-svs-017": {
+      "instances": 600,
+      "missing": 1800,
+      "filled": 1800,
+      "signature": 600
+    },
+    "e13-svs-021": {
+      "instances": 600,
+      "missing": 22877,
+      "filled": 2923,
+      "signature": 600
+    },
+    "e13-svs-022": {
+      "instances": 600,
+      "missing": 6000,
+      "filled": 3000,
+      "signature": 1200
+    },
+    "e13-svs-027": {
+      "instances": 600,
+      "filled": 4994,
+      "missing": 7606,
+      "signature": 1200
+    },
+    "e13-svs-035": {
+      "instances": 60,
+      "provider_hospital": 1080
+    },
+    "e13-svs-049": {
+      "instances": 600,
+      "filled": 3578,
+      "missing": 21022,
+      "signature": 600
+    },
+    "e13-svs-053": {
+      "instances": 600,
+      "missing": 21600,
+      "provider_doctor": 3000,
+      "provider_office": 9000,
+      "filled": 600,
+      "signature": 600
+    },
+    "e13-svs-058": {
+      "instances": 600,
+      "filled": 1795,
+      "missing": 4205,
+      "signature": 600
+    },
+    "e13-svs-067": {
+      "instances": 600,
+      "filled": 2794,
+      "missing": 2606,
+      "signature": 600
+    },
+    "e13-svs-125": {
+      "instances": 600,
+      "filled": 1200,
+      "missing": 11400,
+      "signature": 600
+    },
+    "e13-svs-126": {
+      "instances": 600,
+      "filled": 1200,
+      "missing": 11400,
+      "signature": 600
+    },
+    "svbox-einrichtungswunsch": {
+      "instances": 600,
+      "filled": 5802,
+      "missing": 1998
+    },
+    "svbox-fahrtkosten-wien": {
+      "instances": 600,
+      "filled": 6907,
+      "missing": 893
+    },
+    "svbox-fsw-foerderung": {
+      "instances": 600,
+      "filled": 16116,
+      "missing": 55284,
+      "signature": 1800
+    },
+    "svbox-kur-reha": {
+      "instances": 600,
+      "provider_doctor": 28800,
+      "filled": 5809,
+      "missing": 19991
+    },
+    "svbox-pflegegeld": {
+      "instances": 600,
+      "missing": 48878,
+      "filled": 9322
+    },
+    "svbox-reha-unfall": {
+      "instances": 60,
+      "provider_hospital": 3540
+    },
+    "svbox-senioren-wg": {
+      "instances": 600,
+      "missing": 9398,
+      "filled": 3202
+    }
+  },
+  "render_plan": {
+    "svbox-kur-reha": 37,
+    "svbox-fahrtkosten-wien": 16,
+    "svbox-senioren-wg": 163,
+    "svbox-einrichtungswunsch": 73,
+    "svbox-pflegegeld": 32,
+    "svbox-reha-unfall": 56,
+    "svbox-fsw-foerderung": 10,
+    "e13-svs-000": 90,
+    "e13-svs-004": 228,
+    "e13-svs-008": 298,
+    "e13-svs-009": 292,
+    "e13-svs-010": 293,
+    "e13-svs-011": 294,
+    "e13-svs-012": 230,
+    "e13-svs-014": 274,
+    "e13-svs-016": 208,
+    "e13-svs-017": 135,
+    "e13-svs-021": 224,
+    "e13-svs-022": 229,
+    "e13-svs-027": 311,
+    "e13-svs-035": 224,
+    "e13-svs-049": 271,
+    "e13-svs-053": 381,
+    "e13-svs-058": 600,
+    "e13-svs-067": 279,
+    "e13-svs-125": 549,
+    "e13-svs-126": 550
+  },
+  "detection_records": {
+    "flat": 5080,
+    "scan": 1004
+  },
+  "detection_boxes": 166127,
+  "pdf_bytes": 1127969545,
+  "pdf_gb": 1.128,
+  "checks": {
+    "svnr_valid": "10800/10800",
+    "iban_valid": "1881/1881",
+    "duplicate_value_signatures": 540,
+    "render_errors": {
+      "Error: WinAnsi cannot encode \"ń\"": 41,
+      "Error: WinAnsi cannot encode \"ć\"": 215,
+      "Error: WinAnsi cannot encode \"ı\"": 208,
+      "Error: WinAnsi cannot encode \"ą\"": 14,
+      "Error: WinAnsi cannot encode \"İ\"": 23,
+      "Error: WinAnsi cannot encode \"Ț\"": 32,
+      "Error: WinAnsi cannot encode \"Đ\"": 25,
+      "Error: WinAnsi cannot encode \"č\"": 26,
+      "Error: WinAnsi cannot encode \"ğ\"": 54,
+      "Error: WinAnsi cannot encode \"ź\"": 14,
+      "Error: WinAnsi cannot encode \"Ş\"": 112,
+      "Error: WinAnsi cannot encode \"ș\"": 43,
+      "Error: WinAnsi cannot encode \"ő\"": 13,
+      "Error: WinAnsi cannot encode \"ś\"": 11,
+      "Error: WinAnsi cannot encode \"Ș\"": 39,
+      "Error: WinAnsi cannot encode \"ş\"": 49,
+      "Error: WinAnsi cannot encode \"ł\"": 18,
+      "Error: WinAnsi cannot encode \"Ł\"": 3
+    },
+    "e7_parity": {
+      "cases": 21,
+      "expected_nonempty": 218,
+      "nonempty_exact": 218,
+      "prefill_accuracy": 1.0,
+      "expected_blank": 1030,
+      "blank_correct": 1030
+    }
+  },
+  "llm_tokens": 0,
+  "cost_usd": 0.0,
+  "elapsed_s": 52.8,
+  "bridge_errors": 0,
+  "release": {
+    "rows": {
+      "train": 13770,
+      "test": 535,
+      "val": 534,
+      "heldout_family": 281
+    },
+    "rows_with_pdf": 4924,
+    "shards": {
+      "train": 6,
+      "test": 1,
+      "val": 1,
+      "heldout_family": 1
+    }
+  },
+  "judge": {
+    "n": 110,
+    "passed": 96,
+    "pass_rate": 0.8727,
+    "pass_rate_ci95": [
+      0.7976,
+      0.9227
+    ],
+    "mean_scores": {
+      "label_fit": 4.873,
+      "consistency": 4.845,
+      "boundary": 4.545
+    },
+    "judge_errors": 0,
+    "remaining": {
+      "family": 6943449,
+      "total": 57943449,
+      "unit": "tokens"
+    }
+  }
+}

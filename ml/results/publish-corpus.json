@@ -1,0 +1,12 @@
+{
+  "dataset": "JulianAT/at-sv-law",
+  "url": "https://huggingface.co/datasets/JulianAT/at-sv-law",
+  "published_at": "2026-11-06T04:34:58+00:00",
+  "hf_commit": "38203a26fa6a11e6055eee0a287d10741403c498",
+  "records": 2863,
+  "complete": true,
+  "git_sha": "1e10f80a",
+  "parquet_sha256": "059160a14b439e9ae7e005e8486b102110ee7f0c00149617bf46bc91f09ffec8",
+  "licence": "CC-BY-4.0",
+  "contains_sozdok": false
+}

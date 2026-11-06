@@ -1,0 +1,125 @@
+{
+  "family": "documents",
+  "documents": 319,
+  "by_split": {
+    "heldout_family": 24,
+    "test": 16,
+    "train": 266,
+    "val": 13
+  },
+  "by_doc_type": {
+    "discharge_letter": 33,
+    "decision": 100,
+    "reminder": 44,
+    "document_request": 102,
+    "wahlarzt_invoice": 21,
+    "prescription": 19
+  },
+  "by_register": {
+    "standard": 254,
+    "plain": 65
+  },
+  "pages": 349,
+  "statements": 3026,
+  "statements_by_type": {
+    "administrative_fact": 2965,
+    "documented_recommendation": 61
+  },
+  "statements_by_fact_type": {
+    "institution": 355,
+    "case_number": 319,
+    "document_date": 319,
+    "insurance_number": 311,
+    "open_task": 307,
+    "deadline": 246,
+    "requested_document": 215,
+    "next_step": 146,
+    "decision": 141,
+    "named_medicine": 135,
+    "appeal_info": 100,
+    "visit_date": 82,
+    "amount": 75,
+    "carrier": 73,
+    "documented_recommendation": 61,
+    "admission_date": 33,
+    "discharge_date": 33,
+    "follow_up": 33,
+    "payment_date": 18,
+    "prescribed_item": 13,
+    "care_level": 8,
+    "appointment_date": 3
+  },
+  "rule_checks": {
+    "documents_checked": 319,
+    "failures": {},
+    "note": "Every released document also passed render-time verification against the PDF text layer (pdfium): quotes verbatim, offsets, words, boxes inside the page."
+  },
+  "near_duplicates": {
+    "threshold": 0.85,
+    "count": 0
+  },
+  "judge": {
+    "rubric": [
+      "realism",
+      "consistency",
+      "boundary",
+      "german",
+      "gold"
+    ],
+    "judged": 383,
+    "passed": 300,
+    "pass_rate": 0.7833,
+    "pass_rate_wilson95": [
+      0.7393,
+      0.8216
+    ],
+    "released_mean_scores": {
+      "realism": 4.22,
+      "consistency": 4.947,
+      "boundary": 5.0,
+      "german": 4.497,
+      "gold": 4.94
+    },
+    "policy": "Every model-written document is judged; only passing documents are released."
+  },
+  "scans": {
+    "scanned_documents": 103,
+    "ocr_quote_recall_mean": 0.898,
+    "ocr_mean_confidence": 92.195
+  },
+  "readability_wiener_sachtextformel": {
+    "standard": 10.807,
+    "plain": 8.459
+  },
+  "tokens": {
+    "prompt": 295151,
+    "completion": 87973,
+    "ledger_documents_family": {
+      "gpt-6-luna": {
+        "requests": 601,
+        "input_tokens": 570001,
+        "output_tokens": 185036
+      },
+      "gpt-6-sol": {
+        "requests": 492,
+        "input_tokens": 621180,
+        "output_tokens": 143797
+      }
+    }
+  },
+  "generation_runs": [
+    {
+      "at": "2026-11-06T06:25:55",
+      "written": 25,
+      "invalid": 0,
+      "render_fail": 0,
+      "dup": 0,
+      "tokens": 53282,
+      "judged": 39,
+      "judge_pass": 24,
+      "judge_fail": 15,
+      "judge_error": 0
+    }
+  ],
+  "disk_gb": 0.089
+}

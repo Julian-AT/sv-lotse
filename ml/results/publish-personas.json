@@ -1,0 +1,46 @@
+{
+  "dataset": "JulianAT/at-benefits-personas",
+  "url": "https://huggingface.co/datasets/JulianAT/at-benefits-personas",
+  "published_at": "2026-11-06T04:35:27+00:00",
+  "hf_commit": "c6a449c795c1c32eb47427d55a1c3a2da91d1b07",
+  "split_counts": {
+    "train": 50000,
+    "val": 2000,
+    "test": 2000,
+    "heldout_family": 1000
+  },
+  "validation_report": "personas-49c52cd4.json",
+  "git_sha": "49c52cd4",
+  "files": {
+    "data/train.parquet": {
+      "sha256": "78e52b4f43680894940193b8a1d8c67d5a9f61b6e3d496381a3a12b160dcf5bb",
+      "bytes": 91037505
+    },
+    "data/val.parquet": {
+      "sha256": "e606efe98ceee0ad4aab71d0d3a707a7b004acaf109923969b349104d96f64d3",
+      "bytes": 2978337
+    },
+    "data/test.parquet": {
+      "sha256": "2232229f7dbb25d74f5750c3fff75523a4a142bb8443a56f416bad7b7a0cb7ca",
+      "bytes": 3101823
+    },
+    "data/heldout_family.parquet": {
+      "sha256": "3efc1f29a3093ef810b0aa47797ec4d3f01ac07f970d1279bcaced96b367a8f5",
+      "bytes": 938439
+    }
+  },
+  "leakage": {
+    "eval_split": "test",
+    "n_train": 20000,
+    "n_eval": 2000,
+    "n_labels": 44,
+    "metric": "micro-F1 over gold benefits",
+    "text_f1": 0.9764,
+    "card_f1": 1.0,
+    "base_rate_f1": 0.3404,
+    "margin": 0.02,
+    "passed": true,
+    "classifier": "OneVsRest LogisticRegression(C=4); text: TF-IDF 1-2 grams; card: one-hot"
+  },
+  "licence": "cc-by-4.0"
+}

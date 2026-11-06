@@ -1,0 +1,239 @@
+{
+  "family": "legal_qa",
+  "git_sha": "b2ba28a2",
+  "sections_total": 2863,
+  "sections_eligible": 2668,
+  "sections_planned": 2668,
+  "generation": {},
+  "assembly": {
+    "generated": 415,
+    "sections_unusable": 39
+  },
+  "generated": 415,
+  "rule_failures": {
+    "length": 3,
+    "verbatim": 3,
+    "verbatim_de": 1,
+    "no_citation": 2,
+    "answer": 0,
+    "absatz": 0,
+    "evidence": 0,
+    "language": 0,
+    "near_dup": 0
+  },
+  "near_duplicates": 0,
+  "after_rules": 407,
+  "judged": 407,
+  "unjudged_dropped": 0,
+  "judge": {
+    "n": 407,
+    "pass_rate": 0.9926,
+    "pass_rate_ci95": [
+      0.9786,
+      0.9975
+    ],
+    "mean_scores": {
+      "answerable": 4.971,
+      "correct": 4.978,
+      "self_contained": 4.993,
+      "natural": 4.877,
+      "copies_section": 0.0
+    },
+    "pass_by_language": {
+      "ar": 1.0,
+      "bcs": 1.0,
+      "de": 0.986,
+      "de-AT-dialect": 1.0,
+      "de-easy": 1.0,
+      "en": 0.964,
+      "hu": 1.0,
+      "pl": 1.0,
+      "ro": 1.0,
+      "tr": 1.0,
+      "uk": 1.0
+    },
+    "pass_by_difficulty": {
+      "easy": 0.995,
+      "hard": 0.987,
+      "medium": 0.993
+    }
+  },
+  "judge_dropped": 3,
+  "final": 404,
+  "by_split": {
+    "test": 32,
+    "train": 359,
+    "val": 13
+  },
+  "by_language": {
+    "de": 138,
+    "tr": 30,
+    "de-easy": 37,
+    "de-AT-dialect": 40,
+    "pl": 16,
+    "bcs": 31,
+    "en": 27,
+    "ro": 19,
+    "hu": 17,
+    "ar": 29,
+    "uk": 20
+  },
+  "by_difficulty": {
+    "easy": 184,
+    "medium": 144,
+    "hard": 76
+  },
+  "by_style": {
+    "formal": 228,
+    "plain": 94,
+    "colloquial": 82
+  },
+  "by_act": {
+    "BSVG": 80,
+    "GSVG": 75,
+    "FLAG": 13,
+    "ASVG": 156,
+    "BPGG": 26,
+    "B-KUVG": 31,
+    "KBGG": 18,
+    "KUG": 5
+  },
+  "absatz_coverage": 0.8441,
+  "bm25_rank_de": {
+    "no_overlap": 14,
+    "recall@1": 0.3663,
+    "recall@10": 0.6757,
+    "recall@100": 0.896,
+    "median": 3
+  },
+  "budget_remaining": {
+    "family": 6480910,
+    "total": 57480910,
+    "unit": "tokens"
+  },
+  "ledger": {
+    "tranche_tokens": 60000000,
+    "committed_tokens": 2519090,
+    "used_tokens": 1479520,
+    "rows": [
+      {
+        "pool": "forms_legal_qa",
+        "family": "forms",
+        "model": "gpt-6-sol",
+        "status": "released",
+        "entries": 38,
+        "requests": 38,
+        "reserved_tokens": 84000,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "forms_legal_qa",
+        "family": "forms",
+        "model": "gpt-6-sol",
+        "status": "reserved",
+        "entries": 48,
+        "requests": 48,
+        "reserved_tokens": 98112,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "forms_legal_qa",
+        "family": "forms",
+        "model": "gpt-6-sol",
+        "status": "settled",
+        "entries": 196,
+        "requests": 196,
+        "reserved_tokens": 411367,
+        "input_tokens": 125096,
+        "cached_tokens": 0,
+        "output_tokens": 39756,
+        "list_price_usd": 0.647752
+      },
+      {
+        "pool": "forms_legal_qa",
+        "family": "legal_qa",
+        "model": "gpt-6-luna",
+        "status": "reserved",
+        "entries": 96,
+        "requests": 96,
+        "reserved_tokens": 509228,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "forms_legal_qa",
+        "family": "legal_qa",
+        "model": "gpt-6-luna",
+        "status": "settled",
+        "entries": 192,
+        "requests": 192,
+        "reserved_tokens": 1028910,
+        "input_tokens": 251206,
+        "cached_tokens": 0,
+        "output_tokens": 89423,
+        "list_price_usd": 0.0698321
+      },
+      {
+        "pool": "forms_legal_qa",
+        "family": "legal_qa",
+        "model": "gpt-6-sol",
+        "status": "settled",
+        "entries": 330,
+        "requests": 330,
+        "reserved_tokens": 1201652,
+        "input_tokens": 399417,
+        "cached_tokens": 1152,
+        "output_tokens": 79662,
+        "list_price_usd": 1.5933804
+      },
+      {
+        "pool": "forms_legal_qa",
+        "family": "legal_qa",
+        "model": "gpt-6.1-sol",
+        "status": "released",
+        "entries": 55,
+        "requests": 55,
+        "reserved_tokens": 309885,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "forms_legal_qa",
+        "family": "legal_qa",
+        "model": "gpt-6.1-sol",
+        "status": "reserved",
+        "entries": 76,
+        "requests": 76,
+        "reserved_tokens": 432230,
+        "input_tokens": 0,
+        "cached_tokens": 0,
+        "output_tokens": 0,
+        "list_price_usd": 0.0
+      },
+      {
+        "pool": "forms_legal_qa",
+        "family": "legal_qa",
+        "model": "gpt-6.1-sol",
+        "status": "settled",
+        "entries": 241,
+        "requests": 241,
+        "reserved_tokens": 1347822,
+        "input_tokens": 337678,
+        "cached_tokens": 24192,
+        "output_tokens": 157282,
+        "list_price_usd": 2.2022112
+      }
+    ]
+  },
+  "elapsed_s": 2.2
+}
