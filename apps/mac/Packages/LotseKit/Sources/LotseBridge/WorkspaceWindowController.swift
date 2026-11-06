@@ -39,6 +39,9 @@ public final class WorkspaceWindowController: NSWindowController, NSWindowDelega
         webConfiguration.userContentController.addScriptMessageHandler(messageHandler, contentWorld: .page, name: "lotse")
         webView = ImportWorkspaceWebView(frame: .zero, configuration: webConfiguration)
         webView.registerForDraggedTypes(ImportPasteboard.types)
+        // The page is transparent inside the app; the native glass behind the web view shows through.
+        webView.setValue(false, forKey: "drawsBackground")
+        webView.underPageBackgroundColor = .clear
         let window = WorkspaceWindow(
             contentRect: NSRect(x: 0, y: 0, width: 1100, height: 760),
             styleMask: [.titled, .closable, .miniaturizable, .resizable], backing: .buffered, defer: false

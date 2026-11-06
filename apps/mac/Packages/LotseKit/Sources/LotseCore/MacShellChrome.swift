@@ -23,20 +23,20 @@ extension MacShellController {
     func configureDashboard() {
         guard let window = workspace.window else { return }
         // Native unified toolbar: the split view's sidebar gets the system (Liquid Glass) sidebar material on
-        // macOS 26; the window itself stays opaque so the detail never shows the desktop through it.
+        // macOS 26; the detail's behind-window material shows through the transparent chat page.
         window.styleMask.insert(.fullSizeContentView)
         window.titlebarAppearsTransparent = false
         window.titleVisibility = .hidden
         window.toolbarStyle = .unified
-        window.isOpaque = true
-        window.backgroundColor = .windowBackgroundColor
+        window.isOpaque = false
+        window.backgroundColor = .clear
         window.minSize = NSSize(width: 820, height: 600)
         let host = NSHostingView(rootView: DashboardView(model: dashboard, settings: settings) { [weak self] in
             self?.menu.openImport?()
         })
         host.sceneBridgingOptions = [.toolbars, .title]
         window.contentView = host
-        workspace.webView.underPageBackgroundColor = .windowBackgroundColor
+        workspace.webView.underPageBackgroundColor = .clear
         workspace.onStateChanged = { [weak self] in
             guard let self else { return }
             dashboard.workspaceReady = workspace.isReady

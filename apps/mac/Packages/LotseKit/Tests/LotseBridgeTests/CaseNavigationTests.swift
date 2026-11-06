@@ -1,5 +1,8 @@
+import AppKit
 import Foundation
 import Testing
+
+import LotseProtocol
 
 @testable import LotseBridge
 
@@ -24,5 +27,18 @@ struct CaseNavigationTests {
         #expect(WorkspaceCaseNavigation.decision(current: workspace, ready: false) == .load)
         #expect(WorkspaceCaseNavigation.decision(current: nil, ready: true) == .load)
         #expect(WorkspaceCaseNavigation.decision(current: URL(string: "http://localhost:3000/workspace/helpers")!, ready: true) == .load)
+    }
+
+    @Test @MainActor func theWorkspaceWebViewIsTransparentForTheNativeGlass() throws {
+        let configuration = try WorkspaceConfiguration(url: URL(string: "http://localhost:3000")!, dataStoreIdentifier: UUID())
+        _ = NSApplication.shared
+        let hello = BridgeHello(
+            appVersion: "test",
+            capabilities: .init(accessibility: false, ocr: false, onDeviceContextSize: 0, onDeviceModel: false, overlay: true),
+            protocolVersion: .the100
+        )
+        let controller = WorkspaceWindowController(configuration: configuration, hello: hello)
+        #expect(controller.webView.value(forKey: "drawsBackground") as? Bool == false)
+        #expect(controller.webView.underPageBackgroundColor.alphaComponent == 0)
     }
 }
