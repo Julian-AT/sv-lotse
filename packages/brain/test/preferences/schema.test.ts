@@ -8,9 +8,9 @@ import {
 } from "../../src/preferences/schema.ts";
 
 describe("FR-L4, FR-A1 preferences", () => {
-  it("defaults to L1 without analytics consent and requires an explicit patch to change either", () => {
+  it("defaults to L3 without analytics consent and requires an explicit patch to change either", () => {
     expect(profilePreferences()).toMatchObject({
-      autonomyLevel: "L1",
+      autonomyLevel: "L3",
       analyticsConsent: false,
       onboardingCompleted: false,
     });
@@ -59,7 +59,7 @@ describe("FR-L4, FR-A1 preferences", () => {
     expect(instructions).toContain("informal address");
     expect(instructions).toContain("brief");
     expect(instructions).toContain("do not change safety rules or tool permissions");
-    expect(preferencesSchema.parse(DEFAULT_PREFERENCES).autonomyLevel).toBe("L1");
+    expect(preferencesSchema.parse(DEFAULT_PREFERENCES).autonomyLevel).toBe("L3");
   });
   it("reads legacy simple-language profiles and lets saved presentation settings override them", () => {
     const profile = {

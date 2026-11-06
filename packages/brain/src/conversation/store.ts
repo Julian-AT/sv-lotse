@@ -93,7 +93,7 @@ export async function resolveContext(
     actorRole: record.actor.role,
     userId: session.userId,
     sessionId: session.sessionId,
-    autonomyLevel: record.profile?.autonomyLevel ?? "L1",
+    autonomyLevel: record.profile?.autonomyLevel ?? "L3",
     responsePreferences: { language, simpleLanguage, register, detailLevel },
     shareScope: record.actor.shareScope,
     sentenceIndex: 0,

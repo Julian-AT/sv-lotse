@@ -25,7 +25,7 @@ export function AutonomySettings({
   const copy = autonomyCopy[language];
   const id = useId();
   const [current, setCurrent] = useState<Level | undefined>(initialLevel);
-  const [selected, setSelected] = useState<Level>(initialLevel ?? "L1");
+  const [selected, setSelected] = useState<Level>(initialLevel ?? "L3");
   const [pending, setPending] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [status, setStatus] = useState<"saved" | "error">();

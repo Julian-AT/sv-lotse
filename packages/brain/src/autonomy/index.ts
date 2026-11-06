@@ -35,7 +35,7 @@ export function createAutonomyService(db: DatabaseClient, userId: string): Auton
         .leftJoin(profiles, eq(profiles.userId, users.id))
         .where(eq(users.id, userId));
       if (!record) throw new AutonomyError("AUTONOMY_ACCESS_DENIED");
-      return { autonomyLevel: record.autonomyLevel ?? "L1" };
+      return { autonomyLevel: record.autonomyLevel ?? "L3" };
     },
     async change(input) {
       const parsed = autonomyChangeSchema.safeParse(input);

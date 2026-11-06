@@ -63,7 +63,7 @@ function workspaceService(db: DatabaseClient, userId: string, sessionId?: string
             .filter((row) => row.role === "subject" || effectiveShareScope(row.scope).case)
             .map(({ role: _role, scope: _scope, ...row }) => ({
               ...row,
-              autonomyLevel: row.autonomyLevel ?? "L1",
+              autonomyLevel: row.autonomyLevel ?? "L3",
             })),
         );
     },
@@ -95,7 +95,7 @@ function workspaceService(db: DatabaseClient, userId: string, sessionId?: string
           subjectId: created.subjectId,
           confirmedGoal: created.confirmedGoal,
           status: created.status,
-          autonomyLevel: profile?.autonomyLevel ?? "L1",
+          autonomyLevel: profile?.autonomyLevel ?? "L3",
         };
       });
     },

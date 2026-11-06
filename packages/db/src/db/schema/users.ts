@@ -84,7 +84,7 @@ export const profiles = pgTable("profile", {
   language: text("language").default("de-AT").notNull(),
   register: languageRegister("register").default("formal").notNull(),
   detailLevel: detailLevel("detail_level").default("standard").notNull(),
-  autonomyLevel: autonomyLevel("autonomy_level").default("L1").notNull(),
+  autonomyLevel: autonomyLevel("autonomy_level").default("L3").notNull(),
   preferences: jsonb("preferences").$type<JsonRecord>().default({}).notNull(),
   carrier: text("carrier"),
   region: text("region"),

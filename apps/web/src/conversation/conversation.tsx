@@ -49,7 +49,7 @@ export function DraftConversation({
         aria-labelledby="conversation-title"
         className="flex min-w-0 flex-1 flex-col bg-page-sidebar"
       >
-        <ChatHeader level="" showSidebarToggle={showSidebarToggle} title={t("workspace.title")} />
+        <ChatHeader showSidebarToggle={showSidebarToggle} title={t("workspace.title")} />
         <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-page md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40 native:md:border-0">
           <Messages
             busyLabel={t("workspace.busy")}
@@ -195,11 +195,7 @@ export function Conversation({
           aria-labelledby="conversation-title"
           className="flex min-w-0 flex-1 flex-col bg-page-sidebar"
         >
-          <ChatHeader
-            level={t("workspace.level", { level: selectedCase.autonomyLevel })}
-            showSidebarToggle={showSidebarToggle}
-            title={t("workspace.title")}
-          />
+          <ChatHeader showSidebarToggle={showSidebarToggle} title={t("workspace.title")} />
 
           <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-page md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40 native:md:border-0">
             <Messages

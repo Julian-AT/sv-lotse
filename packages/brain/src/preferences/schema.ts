@@ -24,7 +24,7 @@ export const DEFAULT_PREFERENCES: Readonly<Preferences> = {
   language: "de",
   register: "formal",
   detailLevel: "standard",
-  autonomyLevel: "L1",
+  autonomyLevel: "L3",
   simpleLanguage: false,
   analyticsConsent: false,
   onboardingCompleted: false,
