@@ -39,6 +39,10 @@ const DOCKED_STYLE = {
 const POPUP_STYLE = { width: "calc(100% - 2rem)", maxWidth: "42rem", minWidth: 0 };
 /** Share of the space above the reply area the narrow popup may take; the rest shows the chat. */
 const POPUP_SHARE = 0.66;
+/** Space kept between the latest assistant message and the reply chips. */
+const REPLY_GAP_PX = 16;
+/** Stays below the chat's 100 px "at bottom" threshold, so new messages keep auto-scrolling. */
+const MAX_LIFT_PX = 90;
 
 function useWidth(element: Element | null | undefined): number | undefined {
   const [width, setWidth] = useState<number>();
@@ -83,11 +87,27 @@ function useReplyAreaTop(surface: Element | null | undefined, active: boolean): 
   return top;
 }
 
-/** Keeps the latest assistant message in view when the form opens or changes its layout. */
-function scrollChatToEnd(surface: Element | null | undefined): () => void {
+/**
+ * Keeps the latest assistant message in view when the form opens or changes its layout: its end
+ * sits just above the reply area, so the question being asked stays readable below the popup.
+ */
+function scrollChatToEnd(surface: Element | null | undefined, popup: boolean): () => void {
   const scroll = (): void => {
     const log = surface?.querySelector('[role="log"]');
-    log?.scrollTo({ top: log.scrollHeight });
+    if (!log) return;
+    log.scrollTo({ top: log.scrollHeight });
+    if (!popup) return;
+    const latest = [...log.querySelectorAll('[data-role="assistant"]')].at(-1);
+    const area = surface?.querySelector("[data-chat-reply-area]");
+    const replyTop = Math.min(
+      ...[...(area?.children ?? [])]
+        .map((child) => child.getBoundingClientRect())
+        .filter((rect) => rect.height > 0)
+        .map((rect) => rect.top),
+    );
+    const gap =
+      latest && Number.isFinite(replyTop) ? replyTop - latest.getBoundingClientRect().bottom : 0;
+    if (gap > REPLY_GAP_PX) log.scrollBy({ top: -Math.min(gap - REPLY_GAP_PX, MAX_LIFT_PX) });
   };
   const frame = requestAnimationFrame(scroll);
   const timer = setTimeout(scroll, 260);
@@ -213,9 +233,8 @@ export function ConversationForm({
   const surfaceWidth = useWidth(surface);
   const docked = surfaceWidth !== undefined && surfaceWidth >= DOCK_MIN_WIDTH_PX;
   const replyTop = useReplyAreaTop(surface, open && !docked);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: docking reflows the chat, so re-scroll
   useEffect(() => {
-    if (open && id) return scrollChatToEnd(surface);
+    if (open && id) return scrollChatToEnd(surface, !docked);
   }, [open, id, docked, surface]);
   if (!id) return null;
   const surfaceTop = surface?.getBoundingClientRect().top ?? 0;

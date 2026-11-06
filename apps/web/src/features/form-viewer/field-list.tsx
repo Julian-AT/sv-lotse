@@ -290,8 +290,12 @@ function FormField(props: FieldProps): JSX.Element {
         </div>
       ) : (
         <>
-          <div className="flex min-h-4 items-start gap-1.5">
-            <Label htmlFor={inputId} className="min-w-0 text-xs leading-snug" title={label}>
+          <div className="flex min-h-4 flex-wrap items-start gap-1.5">
+            <Label
+              htmlFor={inputId}
+              className="min-w-0 flex-[1_1_8rem] text-xs leading-snug"
+              title={label}
+            >
               <span className="[overflow-wrap:anywhere]">{label}</span>
             </Label>
             {meta}
