@@ -1,0 +1,9 @@
+# verl interaction config: the gym's simulated user (lotse-rl.md §5.3) served on GPU 0.
+interaction:
+  - name: gym_user
+    class_name: rl.interaction.GymUserInteraction
+    config:
+      max_user_turns: 12
+      simulator:
+        model: Qwen/Qwen3-32B
+        base_url: http://127.0.0.1:8001/v1   # vLLM on GPU 0, shared with the policy rollouts
