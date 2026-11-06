@@ -1,0 +1,309 @@
+{
+  "id": "svbox-senioren-wg",
+  "template_id": "ddfb3f53-0b5f-5fcf-8881-d2c529635c06",
+  "status": "auto",
+  "fields": [
+    {
+      "id": "f000",
+      "label_de": "Name Partnerorganisation",
+      "labels": {
+        "en": "Name Partnerorganisation"
+      },
+      "help_text": "Partnerorganisation",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f000",
+      "acro_field": "Name Partnerorganisation",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f001",
+      "label_de": "Familienname Kundin",
+      "labels": {
+        "en": "Familienname Kundin"
+      },
+      "help_text": "Familienname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.family_name",
+      "acro_field": "Familienname Kundin",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f002",
+      "label_de": "Vorname Kundin",
+      "labels": {
+        "en": "Vorname Kundin"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.given_name",
+      "acro_field": "Vorname Kundin",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f003",
+      "label_de": "Akademischer Grad Titel Kundin",
+      "labels": {
+        "en": "Akademischer Grad Titel Kundin"
+      },
+      "help_text": "keine Angabe",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.title",
+      "acro_field": "Akademischer Grad Titel Kundin",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f004",
+      "label_de": "Geburtsdatum Kundin",
+      "labels": {
+        "en": "Geburtsdatum Kundin"
+      },
+      "help_text": "Geburtsdatum (TT.MM.JJJJ)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.birth_date",
+      "acro_field": "Geburtsdatum Kundin",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f005",
+      "label_de": "FSW Plegegeldstufe",
+      "labels": {
+        "en": "FSW Plegegeldstufe"
+      },
+      "help_text": "Pflegegeldstufe",
+      "type": "text",
+      "validation": {},
+      "fact_type": "care.level",
+      "acro_field": "FSW Plegegeldstufe",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f006",
+      "label_de": "FSW Kundinnennummer  1",
+      "labels": {
+        "en": "FSW Kundinnennummer  1"
+      },
+      "help_text": "FSW-Kund:innennummer (falls vorhanden)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "care.customer_number",
+      "acro_field": "FSW Kundinnennummer  1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f007",
+      "label_de": "Strassenname der Adresse WG",
+      "labels": {
+        "en": "Strassenname der Adresse WG"
+      },
+      "help_text": "Straße",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f007",
+      "acro_field": "Strassenname der Adresse WG",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f008",
+      "label_de": "PLZ der Adresse WG",
+      "labels": {
+        "en": "PLZ der Adresse WG"
+      },
+      "help_text": "PLZ",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f008",
+      "acro_field": "PLZ der Adresse WG",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f009",
+      "label_de": "Ort der Adresse WG",
+      "labels": {
+        "en": "Ort der Adresse WG"
+      },
+      "help_text": "Ort",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f009",
+      "acro_field": "Ort der Adresse WG",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f010",
+      "label_de": "Ansprechperson",
+      "labels": {
+        "en": "Ansprechperson"
+      },
+      "help_text": "Ansprechperson",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f010",
+      "acro_field": "Ansprechperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f011",
+      "label_de": "Hausnr der Adresse WG",
+      "labels": {
+        "en": "Hausnr der Adresse WG"
+      },
+      "help_text": "Hausnr.",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f011",
+      "acro_field": "Hausnr der Adresse WG",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f012",
+      "label_de": "Stiege der Adresse WG",
+      "labels": {
+        "en": "Stiege der Adresse WG"
+      },
+      "help_text": "Stiege",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f012",
+      "acro_field": "Stiege der Adresse WG",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f013",
+      "label_de": "Tuernr der Adresse WG",
+      "labels": {
+        "en": "Tuernr der Adresse WG"
+      },
+      "help_text": "Türnr.",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f013",
+      "acro_field": "Tuernr der Adresse WG",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f014",
+      "label_de": "Geschlecht Kundin",
+      "labels": {
+        "en": "Geschlecht Kundin"
+      },
+      "help_text": "divers/inter/offen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f014",
+      "acro_field": "Geschlecht Kundin",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f015",
+      "label_de": "Kundin selbststaendig Hilfe",
+      "labels": {
+        "en": "Kundin selbststaendig Hilfe"
+      },
+      "help_text": "Nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f015",
+      "acro_field": "Kundin selbststaendig Hilfe",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f016",
+      "label_de": "Kundin Mobilitaet Notsituation",
+      "labels": {
+        "en": "Kundin Mobilitaet Notsituation"
+      },
+      "help_text": "Nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f016",
+      "acro_field": "Kundin Mobilitaet Notsituation",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f017",
+      "label_de": "Kundin Unterstuetzung",
+      "labels": {
+        "en": "Kundin Unterstuetzung"
+      },
+      "help_text": "Der:Die Kund:in benötigt in folgenden Bereichen Unterstützung:",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f017",
+      "acro_field": "Kundin Unterstuetzung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f018",
+      "label_de": "Begruendung Einzug",
+      "labels": {
+        "en": "Begruendung Einzug"
+      },
+      "help_text": "Begründung für den Einzug in die Senior:innen-Wohngemeinschaft",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.ddfb3f53-0b5f-5fcf-8881-d2c529635c06.f018",
+      "acro_field": "Begruendung Einzug",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f019",
+      "label_de": "Datum 7",
+      "labels": {
+        "en": "Datum 7"
+      },
+      "help_text": "Datum",
+      "type": "text",
+      "validation": {},
+      "fact_type": "application.date",
+      "acro_field": "Datum 7",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f020",
+      "label_de": "Unterschrift der betroffenen Person oder einer für diese zur Vertretung befugten Person 4",
+      "labels": {
+        "en": "Unterschrift der betroffenen Person oder einer für diese zur Vertretung befugten Person 4"
+      },
+      "help_text": "Name der unterschreibenden Person in BLOCKBUCHSTABEN",
+      "type": "text",
+      "validation": {},
+      "fact_type": "signatory.printed_name",
+      "acro_field": "Unterschrift der betroffenen Person oder einer für diese zur Vertretung befugten Person 4",
+      "owner": "applicant",
+      "signature": "none"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.fsw.at",
+      "quote": "Partnerorganisation",
+      "retrieved_at": "2026-11-06T02:20:00Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}
