@@ -529,6 +529,19 @@ async function runTurn(
             ms: Math.round(ms),
           }),
         );
+        // Only cited tool sources join the evidence the guards see; retrieved passages already do.
+        for (const source of toolEvidence) {
+          if (!composed.text.includes(`[passage:${source.id}]`) || passages.has(source.id))
+            continue;
+          passages.set(source.id, {
+            id: source.id,
+            text: source.text,
+            url: source.url,
+            validFrom: source.validFrom ?? new Date().toISOString().slice(0, 10),
+            validTo: null,
+          });
+          guardPassages.push({ id: source.id, text: source.text, url: source.url });
+        }
         const checked = await dropUnsupportedSentences(
           composed.text,
           guardPassages,
@@ -703,17 +716,7 @@ async function runTurn(
                 );
               }
             } else {
-              for (const source of toolSources(part.toolCallId, part.output)) {
-                passages.set(source.id, {
-                  id: source.id,
-                  text: source.text,
-                  url: source.url,
-                  validFrom: source.validFrom ?? new Date().toISOString().slice(0, 10),
-                  validTo: null,
-                });
-                guardPassages.push({ id: source.id, text: source.text, url: source.url });
-                toolEvidence.push(source);
-              }
+              toolEvidence.push(...toolSources(part.toolCallId, part.output));
             }
           }
           if (part.type === "finish-step" || part.type === "finish") {

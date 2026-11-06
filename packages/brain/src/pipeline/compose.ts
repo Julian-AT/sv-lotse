@@ -40,7 +40,7 @@ export type ComposedAnswer = z.infer<typeof composedAnswerSchema>;
 
 export const COMPOSER_INSTRUCTIONS = `You write the final user-facing answer of SV KI-Lotse, a guide through Austria's health and social insurance administration.
 Return JSON sentences. Every sentence of kind "fact" states one administrative fact (amount, rule, deadline, office, step, document, eligibility condition) and lists in passageIds the ids of the supplied sources that directly support it. Use only ids from the supplied sources; never invent ids or URLs, never write [passage:...] markers or URLs into the text.
-If no supplied source supports a statement, do not state it: either omit it, or write one sentence of kind "unknown" that says plainly what you cannot confirm from the sources and who can clarify it. A sentence of kind "question" asks the user exactly one specific missing detail or offers one concrete administrative next step; it contains no factual claim.
+If no supplied source supports a statement, do not state it: either omit it, or write one sentence of kind "unknown" that says plainly what you cannot confirm from the sources and who can clarify it. When a detail is missing, first give the supported facts that already help with the request, then ask. A sentence of kind "question" asks the user exactly one specific missing detail or offers one concrete administrative next step; it contains no factual claim.
 Each fact sentence restates one statement of one source closely, in plain words: do not merge statements from different sources into one sentence, do not generalise, add conditions, numbers or conclusions the source does not state, and do not add summary sentences. Never answer with a bare "Ja"/"Nein"; state the fact itself.
 Answer the latest user message directly, first sentence first, with at most ${COMPOSER_CONFIG.maxSentences} short sentences that work when spoken aloud. Use the draft only as a hint for what the assistant intended; every fact must still come from the sources. Respect confirmed facts and the case context; do not repeat personal data needlessly.
 Never diagnose, interpret findings, assess medical risk or urgency, recommend or compare therapies or medicines, or advise on dosages; never infer eligibility from medical facts. For such requests answer only with this sentence (kind "unknown", no ids): German: ${guardCopy.de.handoff} English: ${guardCopy.en.handoff}
@@ -50,6 +50,24 @@ function cap(text: string): string {
   return text.length > COMPOSER_CONFIG.maxSourceCharacters
     ? `${text.slice(0, COMPOSER_CONFIG.maxSourceCharacters)}…`
     : text;
+}
+
+const tokens = (text: string): Set<string> =>
+  new Set(text.toLowerCase().match(/[\p{L}\p{N}]{4,}/gu) ?? []);
+/** The sources sharing most terms with the request and draft; ties keep retrieval order. */
+export function topSources<T extends ComposerSource>(sources: readonly T[], query: string): T[] {
+  const wanted = tokens(query);
+  return sources
+    .map((source, index) => {
+      const terms = tokens(source.text);
+      let matches = 0;
+      for (const token of terms) if (wanted.has(token)) matches++;
+      // Long tool summaries must not win by size alone.
+      return { source, index, score: matches / Math.sqrt(Math.max(terms.size, 1)) };
+    })
+    .sort((left, right) => right.score - left.score || left.index - right.index)
+    .slice(0, COMPOSER_CONFIG.maxSources)
+    .map((item) => item.source);
 }
 
 /** Renders structured sentences into the existing [passage:ID] marker format; drops unsupported facts. */
@@ -95,7 +113,7 @@ export async function composeAnswer(options: {
   administrativeOnly?: boolean;
   abortSignal?: AbortSignal;
 }): Promise<{ text: string; dropped: number; cited: number }> {
-  const sources = options.sources.slice(0, COMPOSER_CONFIG.maxSources);
+  const sources = topSources(options.sources, `${options.userText}\n${options.draft ?? ""}`);
   const { output } = await generateText({
     model: options.model,
     instructions: [
@@ -136,6 +154,7 @@ export async function composeAnswer(options: {
 /** Sourced tool outputs ({ sources: [{ url, quote }] } anywhere in the result) become citable evidence. */
 export function toolSources(toolCallId: string, output: unknown): ComposerSource[] {
   const found: ComposerSource[] = [];
+  const seen = new Set<string>();
   const visit = (value: unknown, depth: number): void => {
     if (depth > 6 || value === null || typeof value !== "object") return;
     if (Array.isArray(value)) {
@@ -147,6 +166,8 @@ export function toolSources(toolCallId: string, output: unknown): ComposerSource
     const { sources: _sources, ...rest } = record;
     const summary = JSON.stringify(rest);
     for (const source of sources) {
+      if (seen.has(JSON.stringify(source))) continue;
+      seen.add(JSON.stringify(source));
       const parsed = z
         .object({ url: z.url(), quote: z.string().min(1), asOf: z.iso.date().optional() })
         .safeParse(source);
