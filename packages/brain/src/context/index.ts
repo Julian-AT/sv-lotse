@@ -45,9 +45,11 @@ export function budgetBlock(
 export function recentHistory(history: LotseMessage[]): LotseMessage[] {
   const selected: LotseMessage[] = [];
   for (const message of history.slice(-PIPELINE_CONFIG.recentMessages).reverse()) {
+    // The newest message always stays, even alone over budget, so a long reply never blocks a turn.
     if (
+      selected.length > 0 &&
       tokenEstimate(JSON.stringify([message, ...selected])) >
-      (PIPELINE_CONFIG.contextTokens * CONTEXT_SHARES.history) / 100
+        (PIPELINE_CONFIG.contextTokens * CONTEXT_SHARES.history) / 100
     )
       break;
     selected.unshift(message);

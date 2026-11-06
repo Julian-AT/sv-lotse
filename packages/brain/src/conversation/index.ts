@@ -311,7 +311,15 @@ async function runTurn(
     onError: (error) => {
       failed = true;
       checkpoint.fail(error);
-      return turnStreamError(error);
+      const code = turnStreamError(error);
+      console.error(
+        JSON.stringify({
+          event: "turn_error",
+          code,
+          detail: error instanceof Error && "code" in error ? String(error.code) : undefined,
+        }),
+      );
+      return code;
     },
     onStepEnd: async ({ messages: history }) => {
       await save(history);
