@@ -71,6 +71,7 @@ import {
 } from "../telemetry/product-events.ts";
 import { contracts, isToolName } from "../tools/contracts/index.ts";
 import {
+  AFTER_OPEN_POLICY,
   answersOffer,
   guidanceOffer,
   offerChunks,
@@ -825,12 +826,13 @@ async function runTurn(
       const goalInstructions = pipeline.goalOpen
         ? "\nNo case goal is confirmed yet. Answer the question directly with read-only lookups; do not ask the user to confirm a goal and do not start a process or change the case."
         : "";
+      const afterOpen = openedResource(prepared.history) ? AFTER_OPEN_POLICY : "";
       const agent = createLotseAgent({
         context: prepared.context,
         administrativeOnly,
         config: turnConfig,
         telemetry,
-        instructions: pipeline.instructions + citationInstructions + goalInstructions,
+        instructions: pipeline.instructions + citationInstructions + goalInstructions + afterOpen,
         irrelevantTools: irrelevantToolNames({
           texts: [userText, pipeline.blocks.case, pipeline.blocks.screen],
           history: prepared.history,

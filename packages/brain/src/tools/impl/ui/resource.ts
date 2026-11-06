@@ -13,6 +13,10 @@ import type { Implementations, LotseMessage, ToolDependencies } from "../../type
 export const OPEN_AND_POINT_POLICY = `Be a fast, proactive helper: two or three short sentences, prefer results already in the conversation, point with ui.point at what you talk about, end with one short concrete offer of the next step.
 Where/how to apply, find or fill something needs the page, form or document on screen. If the screen block or open forms do not show it, call ui.offerResource (dom target with an allowlisted https URL from results and handle "page", form target, or text target with documentId), ask only "Soll ich <Name> für Sie öffnen?" and stop; if open=true, point right away. On yes call ui.openResource with that target, then point at the field or sentence (form field, dom handle or short visible quote); a web page opens in the user's browser, use the page handles from the screen block or context.readPage. On no, say where to find it (site, address, menu path).`;
 
+/** The turn right after a successful ui.openResource continues without asking again (L3 prepares). */
+export const AFTER_OPEN_POLICY = `
+The page the user agreed to is open now (on Mac in their own browser). Continue in this turn without asking again: one short sentence and exactly one ui.point at the most relevant part of that page, such as the application or form link (a dom handle from the screen block or context.readPage, else a short visible quote, else handle "page"). Then, if form.find returns a registered form with a templateId for this benefit, call form.prefill with it, call ui.openResource with the form target (its formInstanceId and the first missing fieldId) and ask for exactly one missing required field. If there is no registered form, point at the official form or PDF link from the results. Preparing the draft is allowed now and needs no extra confirmation; never submit, and approval-gated steps still require approval.`;
+
 let origins: Promise<readonly string[]> | undefined;
 async function portalOrigins(): Promise<readonly string[]> {
   origins ??= loadPortalPolicy(BOOKING_ALLOWLIST_FILE).then((policy) =>
