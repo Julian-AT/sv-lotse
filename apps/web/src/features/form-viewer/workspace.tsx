@@ -99,6 +99,7 @@ export function FormViewerWorkspace(props: {
    * and interrupt the running turn, rejecting its continuation (CONTINUATION_REJECTED).
    */
   embedded?: boolean;
+  onClose?: (() => void) | undefined;
 }): JSX.Element {
   const [actions, setActions] = useState<Action[]>([]);
   const [refreshVersion, setRefreshVersion] = useState(0);
@@ -185,6 +186,7 @@ export function FormViewerWorkspace(props: {
         approval={props.approval ?? approval?.request}
         onApprovalDecision={props.onApprovalDecision ?? approval?.respond}
         onInstanceLoaded={loaded}
+        onClose={props.onClose}
         onActionResult={(result) => {
           completed.set(result.actionId, result);
           for (const resolve of results.get(result.actionId) ?? []) resolve(result);

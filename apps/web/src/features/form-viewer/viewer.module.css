@@ -117,52 +117,6 @@
   box-shadow: 0 0 0 2px #fff;
   pointer-events: none;
 }
-.fieldList ul {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: 1rem;
-}
-.fieldRow {
-  padding: 1rem;
-  border: 1px solid currentColor;
-  border-radius: 0.5rem;
-  scroll-margin-top: 8rem;
-}
-.fieldRow > span {
-  margin-inline-start: 1rem;
-}
-.fieldRow blockquote {
-  margin-inline: 0;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-.fieldRow form {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-}
-.fieldRow label {
-  flex-basis: 100%;
-}
-.package {
-  padding: 1rem;
-  border: 1px solid currentColor;
-  border-radius: 0.5rem;
-}
-.package button,
-.package a,
-.package label {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  gap: 0.5rem;
-}
-.coverLetter {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
 @media (prefers-reduced-motion: reduce) {
   .viewer * {
     scroll-behavior: auto;

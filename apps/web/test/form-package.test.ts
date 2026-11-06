@@ -21,7 +21,7 @@ test("FR-D6 one action displays the checklist, personalised letter and confirmed
   vi.stubGlobal("fetch", fetcher);
   render(createElement(FormPackage, { formInstanceId: id, language: "de", blocked: false }));
   expect(fetcher).not.toHaveBeenCalled();
-  fireEvent.click(screen.getByRole("button", { name: "Paket erstellen" }));
+  fireEvent.click(screen.getByRole("button", { name: "PDF vorbereiten" }));
   await screen.findByRole("link", { name: "PDF herunterladen" });
   expect(screen.getByRole("link", { name: "PDF herunterladen" }).getAttribute("href")).toBe(
     formExportUrl(id),
@@ -42,10 +42,10 @@ test("FR-D6 package creation waits during typing and does not offer a download o
   const view = render(
     createElement(FormPackage, { formInstanceId: id, language: "en", blocked: true }),
   );
-  fireEvent.click(screen.getByRole("button", { name: "Create package" }));
+  fireEvent.click(screen.getByRole("button", { name: "Prepare PDF" }));
   expect(fetcher).not.toHaveBeenCalled();
   view.rerender(createElement(FormPackage, { formInstanceId: id, language: "en", blocked: false }));
-  fireEvent.click(screen.getByRole("button", { name: "Create package" }));
+  fireEvent.click(screen.getByRole("button", { name: "Prepare PDF" }));
   expect(await screen.findByRole("alert")).toBeTruthy();
   expect(screen.queryByRole("link")).toBeNull();
 });
@@ -60,8 +60,8 @@ test("FR-D6 a pending request cannot be duplicated and empty checklists remain e
   );
   vi.stubGlobal("fetch", fetcher);
   render(createElement(FormPackage, { formInstanceId: id, language: "en", blocked: false }));
-  fireEvent.click(screen.getByRole("button", { name: "Create package" }));
-  fireEvent.click(screen.getByRole("button", { name: "Creating package …" }));
+  fireEvent.click(screen.getByRole("button", { name: "Prepare PDF" }));
+  fireEvent.click(screen.getByRole("button", { name: "Preparing PDF …" }));
   expect(fetcher).toHaveBeenCalledTimes(1);
   await act(async () => finish(Response.json({ ...content, attachmentChecklist: [] })));
   expect(screen.getByText(/No required attachments recorded/)).toBeTruthy();
@@ -73,7 +73,7 @@ test("FR-D6 rejects a returned URL that is not this instance's authenticated PDF
     vi.fn(async () => Response.json({ ...content, pdfUrl: "https://example.org/private.pdf" })),
   );
   render(createElement(FormPackage, { formInstanceId: id, language: "en", blocked: false }));
-  fireEvent.click(screen.getByRole("button", { name: "Create package" }));
+  fireEvent.click(screen.getByRole("button", { name: "Prepare PDF" }));
   expect(await screen.findByRole("alert")).toBeTruthy();
   expect(screen.queryByRole("link")).toBeNull();
 });

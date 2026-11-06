@@ -2,11 +2,21 @@
 
 import {
   type FieldCorrection,
+  isEditableField,
   type ViewerInstance,
   ViewerInstanceSchema,
 } from "@lotse/brain/forms/viewer/schema";
 import type { Action, ActionResult, TargetRect } from "@lotse/protocol";
+import { FileTextIcon, ListIcon, SquareIcon, XIcon, ZoomInIcon, ZoomOutIcon } from "lucide-react";
 import { type JSX, useCallback, useEffect, useRef, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Spinner } from "@/components/ui/spinner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { useWorkspacePreferences } from "../settings/speech-preferences.ts";
 import {
   type ApprovalResponder,
@@ -16,7 +26,7 @@ import {
 import { measureFieldTarget, reportFormTargetRect, subscribeFormViewerBridge } from "./bridge.ts";
 import { FORM_VIEWER_CONFIG, formInstanceUrl } from "./config.ts";
 import { type FormViewerLanguage, formViewerCopy } from "./copy.ts";
-import { FormFieldList } from "./field-list.tsx";
+import { FormFieldList, filledFieldCount } from "./field-list.tsx";
 import { FormPage } from "./form-page.tsx";
 import { FormReview } from "./form-review.tsx";
 import { FormPackage } from "./package.tsx";
@@ -37,6 +47,7 @@ export interface FormViewerProps {
   onTargetRect?: ((rect: TargetRect) => void | Promise<void>) | undefined;
   /** Increment when form.prefill / form.commitGroup produces a persisted tool result. */
   refreshVersion?: number;
+  onClose?: (() => void) | undefined;
   onInstanceLoaded?: ((instance: ViewerInstance) => void) | undefined;
 }
 
@@ -67,6 +78,7 @@ function FormViewerSession({
   const [pdf, setPdf] = useState<LoadedFormPdf | null>(null);
   const [error, setError] = useState(false);
   const [loadRequest, setLoadRequest] = useState({ id: formInstanceId });
+  const [view, setView] = useState<"fields" | "pdf">("fields");
   const [zoom, setZoom] = useState<number>(1);
   const [slow, setSlow] = useState(false);
   const [largeCursor, setLargeCursor] = useState(false);
@@ -87,7 +99,11 @@ function FormViewerSession({
   const live = useLiveFill({
     instance,
     actions,
-    ready: Boolean(!reviewing && pdf && readyPages.size === pdf.document.numPages),
+    ready: Boolean(
+      instance &&
+        !reviewing &&
+        (view === "fields" || (pdf && readyPages.size === pdf.document.numPages)),
+    ),
     elements: elements.current,
     language,
     slow,
@@ -140,8 +156,16 @@ function FormViewerSession({
     };
   }, [loadRequest]);
 
+  const surface =
+    view === "fields"
+      ? instance
+        ? "fields"
+        : ""
+      : readyPages.size
+        ? `pdf-${readyPages.size}`
+        : "";
   useEffect(() => {
-    if (readyPages.size === 0) return;
+    if (!surface) return;
     let frame = 0;
     const report = (): void => {
       cancelAnimationFrame(frame);
@@ -177,7 +201,7 @@ function FormViewerSession({
         ).catch(() => {});
       }
     };
-  }, [readyPages, props.onTargetRect]);
+  }, [surface, props.onTargetRect]);
 
   const edit = (id: string | null): void => {
     live.stop();
@@ -193,145 +217,256 @@ function FormViewerSession({
     if (!response.ok) throw new Error("FORM_CORRECTION_FAILED");
     setInstance(ViewerInstanceSchema.parse(await response.json()));
   };
+  const filled = instance ? filledFieldCount(instance) : 0;
+  const editableCount = instance?.schema.fields.filter(isEditableField).length ?? 0;
+  const status = reviewSaved
+    ? reviewCopy[language].saved
+    : live.caption ||
+      (instance ? copy.progress(filled, editableCount) : error ? copy.error : copy.loading);
+  const zoomBy = (step: number): void =>
+    setZoom((value) =>
+      Math.min(FORM_VIEWER_CONFIG.maxZoom, Math.max(FORM_VIEWER_CONFIG.minZoom, value + step)),
+    );
   return (
-    <section className={styles.viewer} aria-label={copy.title}>
-      <h1>{instance?.title ?? copy.title}</h1>
-      <div className={styles.toolbar}>
-        <button
-          type="button"
-          disabled={!instance || !pdf || reviewing}
-          onClick={() => {
-            live.stop();
-            setReviewSaved(false);
-            setReviewing(true);
-          }}
-        >
-          {reviewCopy[language].open}
-        </button>
-        <button type="button" onClick={live.stop}>
-          {copy.stop}
-        </button>
-        <button
-          type="button"
-          disabled={zoom <= FORM_VIEWER_CONFIG.minZoom}
-          onClick={() =>
-            setZoom((value) =>
-              Math.max(FORM_VIEWER_CONFIG.minZoom, value - FORM_VIEWER_CONFIG.zoomStep),
-            )
-          }
-        >
-          {copy.zoomOut}
-        </button>
-        <output>{Math.round(zoom * 100)}%</output>
-        <button
-          type="button"
-          disabled={zoom >= FORM_VIEWER_CONFIG.maxZoom}
-          onClick={() =>
-            setZoom((value) =>
-              Math.min(FORM_VIEWER_CONFIG.maxZoom, value + FORM_VIEWER_CONFIG.zoomStep),
-            )
-          }
-        >
-          {copy.zoomIn}
-        </button>
-        <label>
-          <input
-            type="checkbox"
-            checked={slow}
-            onChange={(event) => setSlow(event.target.checked)}
-          />
-          {copy.slow}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={largeCursor}
-            onChange={(event) => setLargeCursor(event.target.checked)}
-          />
-          {copy.largeCursor}
-        </label>
-      </div>
-      <p role="status" aria-live="polite" aria-atomic="true">
-        {reviewSaved ? reviewCopy[language].saved : live.caption || copy.ready}
-      </p>
-      {error ? (
-        <div role="alert">
-          <p>{copy.error}</p>
-          <button
-            type="button"
-            onClick={() => {
-              live.stop();
-              setLoadRequest({ id: formInstanceId });
-            }}
-          >
-            {copy.retry}
-          </button>
-        </div>
-      ) : !instance || !pdf ? (
-        <p role="status">{copy.loading}</p>
-      ) : reviewing ? (
-        <FormReview
-          instance={instance}
-          document={pdf.document}
-          zoom={zoom}
-          language={language}
-          onCancel={() => setReviewing(false)}
-          onSaved={async () => {
-            await reload();
-            setReviewing(false);
-            setReviewSaved(true);
-          }}
-        />
-      ) : (
-        <>
-          <div className={styles.pages}>
-            {Array.from({ length: pdf.document.numPages }, (_, index) => index + 1).map(
-              (pageNumber) => (
-                <FormPage
-                  key={pageNumber}
-                  document={pdf.document}
-                  pageNumber={pageNumber}
-                  zoom={zoom}
-                  instance={instance}
-                  language={language}
-                  preview={live.preview}
-                  activeField={live.activeField}
-                  largeCursor={largeCursor}
-                  cursorSize={preferences.cursorSize}
-                  elements={elements.current}
-                  onReady={onReady}
-                  onError={onError}
-                  onEdit={edit}
+    <TooltipProvider delayDuration={200}>
+      <section className="flex min-h-0 flex-1 flex-col" aria-label={copy.title}>
+        <header className="flex items-start gap-3 border-b border-border px-5 pt-4 pb-3">
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="m-0 text-base leading-tight font-semibold">
+                {instance?.title ?? copy.title}
+              </h2>
+              <Badge variant="secondary">{copy.draftBadge}</Badge>
+            </div>
+            <p
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              className="m-0 line-clamp-2 text-xs text-muted-foreground"
+            >
+              {status}
+            </p>
+          </div>
+          {props.onClose && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              aria-label={copy.close}
+              onClick={props.onClose}
+            >
+              <XIcon aria-hidden="true" />
+            </Button>
+          )}
+        </header>
+        <div className="flex flex-wrap items-center gap-2 border-b border-border px-5 py-2">
+          <ButtonGroup>
+            <Button
+              type="button"
+              size="xs"
+              variant={view === "fields" ? "secondary" : "outline"}
+              aria-pressed={view === "fields"}
+              onClick={() => setView("fields")}
+            >
+              <ListIcon aria-hidden="true" />
+              {copy.viewFields}
+            </Button>
+            <Button
+              type="button"
+              size="xs"
+              variant={view === "pdf" ? "secondary" : "outline"}
+              aria-pressed={view === "pdf"}
+              disabled={!pdf}
+              onClick={() => setView("pdf")}
+            >
+              <FileTextIcon aria-hidden="true" />
+              {copy.viewPdf}
+            </Button>
+          </ButtonGroup>
+          {view === "pdf" && (
+            <>
+              <ButtonGroup>
+                <Button
+                  type="button"
+                  size="icon-xs"
+                  variant="outline"
+                  aria-label={copy.zoomOut}
+                  disabled={zoom <= FORM_VIEWER_CONFIG.minZoom}
+                  onClick={() => zoomBy(-FORM_VIEWER_CONFIG.zoomStep)}
+                >
+                  <ZoomOutIcon aria-hidden="true" />
+                </Button>
+                <Button
+                  type="button"
+                  size="icon-xs"
+                  variant="outline"
+                  aria-label={copy.zoomIn}
+                  disabled={zoom >= FORM_VIEWER_CONFIG.maxZoom}
+                  onClick={() => zoomBy(FORM_VIEWER_CONFIG.zoomStep)}
+                >
+                  <ZoomInIcon aria-hidden="true" />
+                </Button>
+              </ButtonGroup>
+              <output className="text-xs text-muted-foreground tabular-nums">
+                {Math.round(zoom * 100)}%
+              </output>
+              <Button
+                type="button"
+                size="xs"
+                variant="ghost"
+                disabled={!instance || !pdf || reviewing}
+                onClick={() => {
+                  live.stop();
+                  setReviewSaved(false);
+                  setReviewing(true);
+                }}
+              >
+                {reviewCopy[language].open}
+              </Button>
+            </>
+          )}
+          <div className="ml-auto flex items-center gap-3">
+            {view === "pdf" && (
+              <Label className="text-xs font-normal">
+                <Checkbox
+                  checked={largeCursor}
+                  onCheckedChange={(checked) => setLargeCursor(checked === true)}
                 />
-              ),
+                {copy.largeCursor}
+              </Label>
+            )}
+            <Label className="text-xs font-normal">
+              <Checkbox checked={slow} onCheckedChange={(checked) => setSlow(checked === true)} />
+              {copy.slow}
+            </Label>
+            {live.isFilling && (
+              <Button type="button" size="xs" variant="outline" onClick={live.stop}>
+                <SquareIcon aria-hidden="true" />
+                {copy.stop}
+              </Button>
             )}
           </div>
-          {props.approval && props.onApprovalDecision && (
-            <FormGroupConfirmation
-              key={props.approval.context.approvalId}
-              instance={instance}
-              approval={props.approval}
-              language={language}
-              respond={props.onApprovalDecision}
-              reload={reload}
-              blocked={live.isFilling}
-            />
-          )}
-          <FormFieldList
-            instance={instance}
-            language={language}
-            editing={editing}
-            onEdit={edit}
-            onSave={save}
-          />
+        </div>
+        <ScrollArea className="min-h-0 flex-1">
+          <div className="flex flex-col gap-4 px-4 py-4">
+            {props.approval && props.onApprovalDecision && instance && (
+              <div className="lotse-legacy">
+                <FormGroupConfirmation
+                  key={props.approval.context.approvalId}
+                  instance={instance}
+                  approval={props.approval}
+                  language={language}
+                  respond={props.onApprovalDecision}
+                  reload={reload}
+                  blocked={live.isFilling}
+                />
+              </div>
+            )}
+            {error ? (
+              <div role="alert" className="flex flex-col items-start gap-2 text-sm">
+                <p className="m-0">{copy.error}</p>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    live.stop();
+                    setLoadRequest({ id: formInstanceId });
+                  }}
+                >
+                  {copy.retry}
+                </Button>
+              </div>
+            ) : !instance ? (
+              <p
+                role="status"
+                className="m-0 flex items-center gap-2 text-sm text-muted-foreground"
+              >
+                <Spinner aria-hidden="true" />
+                {copy.loading}
+              </p>
+            ) : view === "fields" ? (
+              <FormFieldList
+                instance={instance}
+                language={language}
+                preview={live.preview}
+                activeField={live.activeField}
+                elements={elements.current}
+                onEdit={edit}
+                onSave={save}
+              />
+            ) : !pdf ? (
+              <p
+                role="status"
+                className="m-0 flex items-center gap-2 text-sm text-muted-foreground"
+              >
+                <Spinner aria-hidden="true" />
+                {copy.loading}
+              </p>
+            ) : (
+              <div className={`lotse-legacy ${styles.viewer}`}>
+                {reviewing ? (
+                  <FormReview
+                    instance={instance}
+                    document={pdf.document}
+                    zoom={zoom}
+                    language={language}
+                    onCancel={() => setReviewing(false)}
+                    onSaved={async () => {
+                      await reload();
+                      setReviewing(false);
+                      setReviewSaved(true);
+                    }}
+                  />
+                ) : (
+                  <div className={styles.pages}>
+                    {Array.from({ length: pdf.document.numPages }, (_, index) => index + 1).map(
+                      (pageNumber) => (
+                        <FormPage
+                          key={pageNumber}
+                          document={pdf.document}
+                          pageNumber={pageNumber}
+                          zoom={zoom}
+                          instance={instance}
+                          language={language}
+                          preview={live.preview}
+                          activeField={live.activeField}
+                          largeCursor={largeCursor}
+                          cursorSize={preferences.cursorSize}
+                          elements={elements.current}
+                          onReady={onReady}
+                          onError={onError}
+                          onEdit={(id) => {
+                            live.stop();
+                            setView("fields");
+                            requestAnimationFrame(() =>
+                              elements.current.get(id)?.scrollIntoView({ block: "center" }),
+                            );
+                          }}
+                        />
+                      ),
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </ScrollArea>
+        {instance && (
           <FormPackage
             key={JSON.stringify(instance.fields)}
             formInstanceId={instance.id}
             language={language}
             blocked={live.isFilling || editing !== null}
-          />
-        </>
-      )}
-    </section>
+          >
+            {props.onClose && (
+              <Button type="button" size="sm" variant="outline" onClick={props.onClose}>
+                {copy.close}
+              </Button>
+            )}
+          </FormPackage>
+        )}
+      </section>
+    </TooltipProvider>
   );
 }
