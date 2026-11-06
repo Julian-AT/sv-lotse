@@ -23,6 +23,7 @@ import {
   handsOverData,
   missingSentence,
   modeRequest,
+  nextAskable,
   OTHER_PARTY,
   pendingFormQuestion,
   questionKey,
@@ -332,9 +333,7 @@ function nextMissing(
   after: number,
   done: ReadonlySet<string> = new Set(),
 ): FormField | undefined {
-  const open = (field: FormField) =>
-    askable(field) && emptyValue(values[field.id]) && !done.has(field.id);
-  return fields.find((field, index) => index > after && open(field)) ?? fields.find(open);
+  return nextAskable(fields, values, after, done);
 }
 
 /**
@@ -388,7 +387,8 @@ export async function answerFormEdit(input: {
     };
   };
 
-  if (command.kind === "next") return ask("", pendingIndex);
+  if (command.kind === "next")
+    return ask("", pendingIndex, pending ? new Set([pending.fieldId]) : undefined);
   if (command.kind === "continue") return ask("", pendingIndex - 1);
   if (command.kind === "mode" && command.mode === "step") return ask(strings.stepMode, -1);
   if (command.kind === "mode") {

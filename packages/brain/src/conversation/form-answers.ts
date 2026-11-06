@@ -82,6 +82,26 @@ export function askable(field: FormField): boolean {
   );
 }
 
+/**
+ * The next field to ask in step mode: the person's own administrative fields first (name, birth
+ * date, insurance number, address, phone), then the remaining text fields, each in form order
+ * after the current one. Fields in `skip` (just answered or skipped) are not asked again.
+ */
+export function nextAskable(
+  fields: readonly FormField[],
+  values: Readonly<Record<string, { value: unknown } | undefined>>,
+  after = -1,
+  skip: ReadonlySet<string> = new Set(),
+): FormField | undefined {
+  const open = fields
+    .map((field, index) => ({ field, index }))
+    .filter(({ field }) => askable(field) && emptyValue(values[field.id]) && !skip.has(field.id));
+  const known = open.filter(({ field }) => QUESTIONS[questionKey(field) ?? ""]);
+  const other = open.filter(({ field }) => !QUESTIONS[questionKey(field) ?? ""]);
+  const pick = (list: typeof open) => (list.find(({ index }) => index > after) ?? list[0])?.field;
+  return pick(known) ?? pick(other);
+}
+
 /** A form label without technical suffixes ("Bei welcher Anstalt2" → "Bei welcher Anstalt"). */
 export function cleanLabel(label: string): string {
   return label
@@ -526,10 +546,7 @@ export async function answerFormQuestion(input: {
     );
     lead = strings.filled(parsed.readBack);
   }
-  const next = fields.find(
-    (candidate, position) =>
-      position > index && askable(candidate) && emptyValue(values[candidate.id]),
-  );
+  const next = nextAskable(fields, values, index, new Set([field.id]));
   if (next) actions.push(...fieldActions(instance.id, next.id));
   return {
     text: `${lead} ${next ? fieldQuestion(next, applicant, english) : strings.done}`,
@@ -819,9 +836,7 @@ export async function answerManyFields(input: {
     ),
   );
   const done = new Set(written.map(({ field }) => field.id));
-  const next = fields.find(
-    (field) => askable(field) && emptyValue(values[field.id]) && !done.has(field.id),
-  );
+  const next = nextAskable(fields, values, -1, done);
   const strings = english ? copy.en : copy.de;
   const applicant = applicantOf(input.topics, english);
   const pairs = written.map(({ field, parsed }) =>
@@ -937,7 +952,7 @@ export async function openedFormTurn(input: {
   const mode = formMode(texts);
   const handedOver = handsOverData(texts.at(-1) ?? "");
   const missing = fields.filter((field) => askable(field) && emptyValue(values[field.id]));
-  const next = missing[0];
+  const next = nextAskable(fields, values);
   const question = next ? fieldQuestion(next, applicant, english) : strings.done;
   const pointNext = next ? fieldActions(instance.id, next.id) : [];
   const filled = fields.filter(
