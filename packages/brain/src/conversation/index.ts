@@ -323,6 +323,17 @@ async function runTurn(
           event: "turn_error",
           code,
           detail: error instanceof Error && "code" in error ? String(error.code) : undefined,
+          // Provider failures: status and error type only, never request or response content.
+          status:
+            error instanceof Error && "statusCode" in error ? Number(error.statusCode) : undefined,
+          providerError:
+            error instanceof Error && "responseBody" in error
+              ? String(error.responseBody).match(/"(?:type|code)"\s*:\s*"([^"]{1,60})"/u)?.[1]
+              : undefined,
+          message:
+            error instanceof Error && error.name !== "AI_APICallError"
+              ? error.message.slice(0, 160)
+              : undefined,
         }),
       );
       return code;
