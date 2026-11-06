@@ -1,0 +1,15 @@
+{
+  "version": "portal-login-pages/1",
+  "as_of": "2026-11-06",
+  "url_patterns": [
+    "(?:^|[^\\p{L}\\p{N}])(?:log[-_]?in|log[-_]?on|sign[-_]?in|sign[-_]?on|einloggen)(?:$|[^\\p{L}\\p{N}])",
+    "(?:^|[^\\p{L}\\p{N}])(?:sso|auth|authenticate|authentication|authorize|oauth2?|openid|oidc|saml2?|idp)(?:$|[^\\p{L}\\p{N}])",
+    "(?:^|[^\\p{L}\\p{N}])(?:id[-_]?austria|handysignatur|b(?:ü|ue)rgerkarte|passwor[dt]|kennwort)(?:$|[^\\p{L}\\p{N}])"
+  ],
+  "sources": [
+    {
+      "path": "docs/prd/SV-KI-Lotse-PRD.md",
+      "quote": "Across all levels the pilot never submits forms, sends messages, places calls, books paid services or enters credentials."
+    }
+  ]
+}
