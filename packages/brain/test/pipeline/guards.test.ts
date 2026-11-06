@@ -264,3 +264,13 @@ it("an unsourced claim loses its text but keeps the pointer for the first senten
     }),
   );
 });
+
+it("keeps only the cited sentences when an answer mixes cited and uncited claims", async () => {
+  const { citedSentences } = await import("../../src/pipeline/guards.ts");
+  expect(
+    citedSentences(
+      "Die Gebühr beträgt 7,55 Euro [passage:a]. Das gilt sicher für alle. Soll ich das Formular öffnen?",
+    ),
+  ).toBe("Die Gebühr beträgt 7,55 Euro [passage:a].");
+  expect(citedSentences("Ohne Beleg.")).toBeUndefined();
+});

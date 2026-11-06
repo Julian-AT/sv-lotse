@@ -996,7 +996,14 @@ async function runTurn(
             timings.totalMs = performance.now() - pipelineStarted;
           }
           const status = statusPart(part, announce, prepared.turnId);
-          if (status) writer.write(status);
+          if (status) {
+            writer.write(status);
+            // A voice turn hears the fixed, claim-free status line right away as its first sentence.
+            if (parsed.inputKind === "transcript") {
+              output.emit(randomUUID(), status.data.text);
+              speechSegments.splice(0, speechSegments.length, ...output.segments);
+            }
+          }
           if (
             part.type === "tool-input-start" &&
             isToolName(part.toolName) &&

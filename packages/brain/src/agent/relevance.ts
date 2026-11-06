@@ -72,8 +72,6 @@ const READ_ONLY_TOOLS: ReadonlySet<ToolName> = new Set<ToolName>([
   "fees.explainReimbursement",
   "form.find",
   "context.queryFacts",
-  "context.readScreen",
-  "context.readPage",
   "ui.point",
   "ui.highlight",
   "ui.annotate",

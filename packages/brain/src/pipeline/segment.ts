@@ -173,9 +173,17 @@ export function createSegmentWriter(options: {
         original.trim() && alsoCheck ? alsoCheck(original) : Promise.resolve(undefined),
       ]);
       let verdict = checked;
-      if (checked === inspected && replacement !== undefined && replacement !== original) {
+      // The answer guard's own fixed copies win; a shortened answer (uncited sentences removed)
+      // still yields to the response guard's verdict on the original.
+      const fixedCopy = Object.values(copyFor(options.language)).includes(checked);
+      if (!fixedCopy && replacement !== undefined && replacement !== original) {
         // A replacement drops the original prose and its actions; it passes the answer guard too.
-        verdict = await answerGuard(replacement);
+        // The response guard's fixed handoff and unknown copies are emitted as written.
+        verdict = (Object.values(guardCopy[guardLocale(options.language)]) as string[]).includes(
+          replacement,
+        )
+          ? replacement
+          : await answerGuard(replacement);
       }
       options.onGuard?.(performance.now() - started);
       actions.length = 0;
