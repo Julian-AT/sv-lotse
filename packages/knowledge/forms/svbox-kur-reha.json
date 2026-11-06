@@ -1,0 +1,1373 @@
+{
+  "id": "svbox-kur-reha",
+  "template_id": "d84de9d5-fc18-584b-9457-f48db6edd337",
+  "status": "auto",
+  "fields": [
+    {
+      "id": "f000",
+      "label_de": "VSNR_1",
+      "labels": {
+        "en": "VSNR_1"
+      },
+      "help_text": "Versicherungsnummer",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f000",
+      "acro_field": "VSNR_1",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f001",
+      "label_de": "Geschlecht",
+      "labels": {
+        "en": "Geschlecht"
+      },
+      "help_text": "männlich",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f001",
+      "acro_field": "Geschlecht",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f002",
+      "label_de": "VSNR_2",
+      "labels": {
+        "en": "VSNR_2"
+      },
+      "help_text": "(Nur auszufüllen, wenn Patient(in) ein(e) Angehörige(r) ist)",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "insured.insurance_number",
+      "acro_field": "VSNR_2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f003",
+      "label_de": "Versicherte(r)",
+      "labels": {
+        "en": "Versicherte(r)"
+      },
+      "help_text": "(Nur auszufüllen, wenn Patient(in) ein(e) Angehörige(r) ist)",
+      "type": "text",
+      "validation": {
+        "max_length": 44
+      },
+      "fact_type": "insured.name",
+      "acro_field": "Versicherte(r)",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f004",
+      "label_de": "Versicherte(r) beschäftigt",
+      "labels": {
+        "en": "Versicherte(r) beschäftigt"
+      },
+      "help_text": "Versicherte(r) beschäftigt bei",
+      "type": "text",
+      "validation": {
+        "max_length": 44
+      },
+      "fact_type": "insured.employer",
+      "acro_field": "Versicherte(r) beschäftigt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f005",
+      "label_de": "zuständiger SV-träger",
+      "labels": {
+        "en": "zuständiger SV-träger"
+      },
+      "help_text": "Zuständiger Sozialversicherungsträger:",
+      "type": "text",
+      "validation": {
+        "max_length": 40
+      },
+      "fact_type": "insurance.carrier",
+      "acro_field": "zuständiger SV-träger",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f006",
+      "label_de": "Patient(in)",
+      "labels": {
+        "en": "Patient(in)"
+      },
+      "help_text": "Patient(in)",
+      "type": "text",
+      "validation": {
+        "max_length": 44
+      },
+      "fact_type": "person.name",
+      "acro_field": "Patient(in)",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f007",
+      "label_de": "Personenstand",
+      "labels": {
+        "en": "Personenstand"
+      },
+      "help_text": "Personenstand:",
+      "type": "text",
+      "validation": {
+        "max_length": 15
+      },
+      "fact_type": "person.marital_status",
+      "acro_field": "Personenstand",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f008",
+      "label_de": "Telefonnummer",
+      "labels": {
+        "en": "Telefonnummer"
+      },
+      "help_text": "Telefon Nr.:",
+      "type": "text",
+      "validation": {
+        "max_length": 15
+      },
+      "fact_type": "contact.phone",
+      "acro_field": "Telefonnummer",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f009",
+      "label_de": "Anschrift Patient(in)",
+      "labels": {
+        "en": "Anschrift Patient(in)"
+      },
+      "help_text": "Anschrift",
+      "type": "text",
+      "validation": {
+        "max_length": 44
+      },
+      "fact_type": "address.full",
+      "acro_field": "Anschrift Patient(in)",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f010",
+      "label_de": "Pensionsversicherung",
+      "labels": {
+        "en": "Pensionsversicherung"
+      },
+      "help_text": "aus der Pensionsversicherung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f010",
+      "acro_field": "Pensionsversicherung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f011",
+      "label_de": "Arbeitslosenversicherung",
+      "labels": {
+        "en": "Arbeitslosenversicherung"
+      },
+      "help_text": "aus der Arbeitslosenversicherung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f011",
+      "acro_field": "Arbeitslosenversicherung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f012",
+      "label_de": "Unfallversicherung",
+      "labels": {
+        "en": "Unfallversicherung"
+      },
+      "help_text": "aus der Unfallversicherung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f012",
+      "acro_field": "Unfallversicherung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f013",
+      "label_de": "Bundesamt",
+      "labels": {
+        "en": "Bundesamt"
+      },
+      "help_text": "vom Bundesamt für Soziales und",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f013",
+      "acro_field": "Bundesamt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f014",
+      "label_de": "Sozialhilfeträger",
+      "labels": {
+        "en": "Sozialhilfeträger"
+      },
+      "help_text": "von einem Sozialhilfeträger",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f014",
+      "acro_field": "Sozialhilfeträger",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f015",
+      "label_de": "öffentlich-rechtl. DVH",
+      "labels": {
+        "en": "öffentlich-rechtl. DVH"
+      },
+      "help_text": "aus einem öffentlich-rechtlichen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f015",
+      "acro_field": "öffentlich-rechtl. DVH",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f016",
+      "label_de": "Pensionsantrag",
+      "labels": {
+        "en": "Pensionsantrag"
+      },
+      "help_text": "Bei welcher Anstalt",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f016",
+      "acro_field": "Pensionsantrag",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f017",
+      "label_de": "freiwillig versichert",
+      "labels": {
+        "en": "freiwillig versichert"
+      },
+      "help_text": "Sind Sie in der Pensionsver-",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f017",
+      "acro_field": "freiwillig versichert",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f018",
+      "label_de": "Pflegegeld",
+      "labels": {
+        "en": "Pflegegeld"
+      },
+      "help_text": "Von welcher",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f018",
+      "acro_field": "Pflegegeld",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f019",
+      "label_de": "Anschrift",
+      "labels": {
+        "en": "Anschrift"
+      },
+      "help_text": "Anschrift:",
+      "type": "text",
+      "validation": {
+        "max_length": 38
+      },
+      "fact_type": "insured.address",
+      "acro_field": "Anschrift",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f020",
+      "label_de": "Pensionsversicherungsträger",
+      "labels": {
+        "en": "Pensionsversicherungsträger"
+      },
+      "help_text": "Pensionsversicherungsträger",
+      "type": "text",
+      "validation": {
+        "max_length": 35
+      },
+      "fact_type": "insurance.pension_carrier",
+      "acro_field": "Pensionsversicherungsträger",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f021",
+      "label_de": "Geschäftsstelle AMS",
+      "labels": {
+        "en": "Geschäftsstelle AMS"
+      },
+      "help_text": "Geschäftsstelle des AMS",
+      "type": "text",
+      "validation": {
+        "max_length": 38
+      },
+      "fact_type": "insurance.ams_office",
+      "acro_field": "Geschäftsstelle AMS",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f022",
+      "label_de": "Unfallversicherungsanstalt",
+      "labels": {
+        "en": "Unfallversicherungsanstalt"
+      },
+      "help_text": "Anstalt",
+      "type": "text",
+      "validation": {
+        "max_length": 50
+      },
+      "fact_type": "insurance.accident_carrier",
+      "acro_field": "Unfallversicherungsanstalt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f023",
+      "label_de": "Von welcher Stelle",
+      "labels": {
+        "en": "Von welcher Stelle"
+      },
+      "help_text": "on welcher Stelle",
+      "type": "text",
+      "validation": {
+        "max_length": 42
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f023",
+      "acro_field": "Von welcher Stelle",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f024",
+      "label_de": "Bei welcher Anstalt2",
+      "labels": {
+        "en": "Bei welcher Anstalt2"
+      },
+      "help_text": "Bei welcher Anstalt",
+      "type": "text",
+      "validation": {
+        "max_length": 42
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f024",
+      "acro_field": "Bei welcher Anstalt2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f025",
+      "label_de": "Bei welcher Anstalt1",
+      "labels": {
+        "en": "Bei welcher Anstalt1"
+      },
+      "help_text": "Bei welcher Anstalt",
+      "type": "text",
+      "validation": {
+        "max_length": 42
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f025",
+      "acro_field": "Bei welcher Anstalt1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f026",
+      "label_de": "Stufe1",
+      "labels": {
+        "en": "Stufe1"
+      },
+      "help_text": "Welche Stufe",
+      "type": "text",
+      "validation": {
+        "max_length": 1
+      },
+      "fact_type": "care.level",
+      "acro_field": "Stufe1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f027",
+      "label_de": "Stufe2",
+      "labels": {
+        "en": "Stufe2"
+      },
+      "help_text": "Welche Stufe",
+      "type": "text",
+      "validation": {
+        "max_length": 25
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f027",
+      "acro_field": "Stufe2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f028",
+      "label_de": "Von welcher Anstalt2",
+      "labels": {
+        "en": "Von welcher Anstalt2"
+      },
+      "help_text": "Von welcher Anstalt",
+      "type": "text",
+      "validation": {
+        "max_length": 35
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f028",
+      "acro_field": "Von welcher Anstalt2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f029",
+      "label_de": "Bei welcher Anstalt4",
+      "labels": {
+        "en": "Bei welcher Anstalt4"
+      },
+      "help_text": "Bei welcher Anstalt",
+      "type": "text",
+      "validation": {
+        "max_length": 35
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f029",
+      "acro_field": "Bei welcher Anstalt4",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f030",
+      "label_de": "Bei welcher Anstalt3",
+      "labels": {
+        "en": "Bei welcher Anstalt3"
+      },
+      "help_text": "Bei welcher Anstalt",
+      "type": "text",
+      "validation": {
+        "max_length": 35
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f030",
+      "acro_field": "Bei welcher Anstalt3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f031",
+      "label_de": "Von welcher Anstalt",
+      "labels": {
+        "en": "Von welcher Anstalt"
+      },
+      "help_text": "Anstalt",
+      "type": "text",
+      "validation": {
+        "max_length": 26
+      },
+      "fact_type": "care.paying_office",
+      "acro_field": "Von welcher Anstalt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f032",
+      "label_de": "zuletzt beschäftigt bis",
+      "labels": {
+        "en": "zuletzt beschäftigt bis"
+      },
+      "help_text": "zuletzt beschäftigt bis",
+      "type": "text",
+      "validation": {
+        "max_length": 29
+      },
+      "fact_type": "employment.end_date",
+      "acro_field": "zuletzt beschäftigt bis",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f033",
+      "label_de": "Pensionsbezug",
+      "labels": {
+        "en": "Pensionsbezug"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f033",
+      "acro_field": "Pensionsbezug",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f034",
+      "label_de": "Pflegegeld1",
+      "labels": {
+        "en": "Pflegegeld1"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f034",
+      "acro_field": "Pflegegeld1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f035",
+      "label_de": "Aufenthalt innerhalb von  Jahren",
+      "labels": {
+        "en": "Aufenthalt innerhalb von  Jahren"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f035",
+      "acro_field": "Aufenthalt innerhalb von  Jahren",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f036",
+      "label_de": "Verwandschaftsverhältnis",
+      "labels": {
+        "en": "Verwandschaftsverhältnis"
+      },
+      "help_text": "Verwandtschaftsverhältnis",
+      "type": "text",
+      "validation": {
+        "max_length": 25
+      },
+      "fact_type": "insured.relationship",
+      "acro_field": "Verwandschaftsverhältnis",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f037",
+      "label_de": "Wann1",
+      "labels": {
+        "en": "Wann1"
+      },
+      "help_text": "Wann",
+      "type": "text",
+      "validation": {
+        "max_length": 20
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f037",
+      "acro_field": "Wann1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f038",
+      "label_de": "Wo1",
+      "labels": {
+        "en": "Wo1"
+      },
+      "help_text": "Wo",
+      "type": "text",
+      "validation": {
+        "max_length": 21
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f038",
+      "acro_field": "Wo1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f039",
+      "label_de": "Wo2",
+      "labels": {
+        "en": "Wo2"
+      },
+      "help_text": "Wo",
+      "type": "text",
+      "validation": {
+        "max_length": 21
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f039",
+      "acro_field": "Wo2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f040",
+      "label_de": "Von welcher Stelle2",
+      "labels": {
+        "en": "Von welcher Stelle2"
+      },
+      "help_text": "Von welcher Stelle",
+      "type": "text",
+      "validation": {
+        "max_length": 52
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f040",
+      "acro_field": "Von welcher Stelle2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f041",
+      "label_de": "Geburtsjahr",
+      "labels": {
+        "en": "Geburtsjahr"
+      },
+      "help_text": "Zutreffende Felder bitte ankreuzen",
+      "type": "text",
+      "validation": {
+        "max_length": 4
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f041",
+      "acro_field": "Geburtsjahr",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f042",
+      "label_de": "Vorname",
+      "labels": {
+        "en": "Vorname"
+      },
+      "help_text": "Zutreffende Felder bitte ankreuzen",
+      "type": "text",
+      "validation": {
+        "max_length": 21
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f042",
+      "acro_field": "Vorname",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f043",
+      "label_de": "Gewicht",
+      "labels": {
+        "en": "Gewicht"
+      },
+      "help_text": "Gewicht",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f043",
+      "acro_field": "Gewicht",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f044",
+      "label_de": "RR",
+      "labels": {
+        "en": "RR"
+      },
+      "help_text": "RR",
+      "type": "text",
+      "validation": {
+        "max_length": 15
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f044",
+      "acro_field": "RR",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f045",
+      "label_de": "Rehabilitation",
+      "labels": {
+        "en": "Rehabilitation"
+      },
+      "help_text": "Stationäre",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f045",
+      "acro_field": "Rehabilitation",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f046",
+      "label_de": "Atemwegserkrankungen",
+      "labels": {
+        "en": "Atemwegserkrankungen"
+      },
+      "help_text": "Atemwegserkrankungen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f046",
+      "acro_field": "Atemwegserkrankungen",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f047",
+      "label_de": "Neurol. Formenkreis",
+      "labels": {
+        "en": "Neurol. Formenkreis"
+      },
+      "help_text": "Neurol. Formenkreis",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f047",
+      "acro_field": "Neurol. Formenkreis",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f048",
+      "label_de": "Rheumat. Formenkreis",
+      "labels": {
+        "en": "Rheumat. Formenkreis"
+      },
+      "help_text": "Rheumat. Formenkreis",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f048",
+      "acro_field": "Rheumat. Formenkreis",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f049",
+      "label_de": "Ort",
+      "labels": {
+        "en": "Ort"
+      },
+      "help_text": "in",
+      "type": "text",
+      "validation": {
+        "max_length": 43
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f049",
+      "acro_field": "Ort",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f050",
+      "label_de": "heimfähig",
+      "labels": {
+        "en": "heimfähig"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f050",
+      "acro_field": "heimfähig",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f051",
+      "label_de": "kurfähig",
+      "labels": {
+        "en": "kurfähig"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f051",
+      "acro_field": "kurfähig",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f052",
+      "label_de": "benötigt Diät",
+      "labels": {
+        "en": "benötigt Diät"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f052",
+      "acro_field": "benötigt Diät",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f053",
+      "label_de": "Größe",
+      "labels": {
+        "en": "Größe"
+      },
+      "help_text": "Größe",
+      "type": "text",
+      "validation": {
+        "max_length": 13
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f053",
+      "acro_field": "Größe",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f054",
+      "label_de": "gehfähig",
+      "labels": {
+        "en": "gehfähig"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f054",
+      "acro_field": "gehfähig",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f055",
+      "label_de": "mit Hilfsmittel",
+      "labels": {
+        "en": "mit Hilfsmittel"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f055",
+      "acro_field": "mit Hilfsmittel",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f056",
+      "label_de": "Rollstuhl",
+      "labels": {
+        "en": "Rollstuhl"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f056",
+      "acro_field": "Rollstuhl",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f057",
+      "label_de": "Begleitperson",
+      "labels": {
+        "en": "Begleitperson"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f057",
+      "acro_field": "Begleitperson",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f058",
+      "label_de": "Transport",
+      "labels": {
+        "en": "Transport"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f058",
+      "acro_field": "Transport",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f059",
+      "label_de": "fremde Hilfe",
+      "labels": {
+        "en": "fremde Hilfe"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f059",
+      "acro_field": "fremde Hilfe",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f060",
+      "label_de": "für die Anreise",
+      "labels": {
+        "en": "für die Anreise"
+      },
+      "help_text": "für die Anreise",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f060",
+      "acro_field": "für die Anreise",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f061",
+      "label_de": "für den Aufenthalt",
+      "labels": {
+        "en": "für den Aufenthalt"
+      },
+      "help_text": "für den Aufenthalt",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f061",
+      "acro_field": "für den Aufenthalt",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f062",
+      "label_de": "Rettungswagen",
+      "labels": {
+        "en": "Rettungswagen"
+      },
+      "help_text": "Tragsessel)",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f062",
+      "acro_field": "Rettungswagen",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f063",
+      "label_de": "Ambulanzwagen",
+      "labels": {
+        "en": "Ambulanzwagen"
+      },
+      "help_text": "Ambulanzwagen (ohne Sanitäter)",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f063",
+      "acro_field": "Ambulanzwagen",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f064",
+      "label_de": "priv. PKW, Taxi",
+      "labels": {
+        "en": "priv. PKW, Taxi"
+      },
+      "help_text": "Datum, Unterschrift und Stempel des/der Arztes/Ärztin bzw. der Krankenanstalt",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f064",
+      "acro_field": "priv. PKW, Taxi",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f065",
+      "label_de": "Diätart",
+      "labels": {
+        "en": "Diätart"
+      },
+      "help_text": "Art",
+      "type": "text",
+      "validation": {
+        "max_length": 19
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f065",
+      "acro_field": "Diätart",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f066",
+      "label_de": "PKW priv., Taxi",
+      "labels": {
+        "en": "PKW priv., Taxi"
+      },
+      "help_text": ". PKW, Taxi)",
+      "type": "text",
+      "validation": {
+        "max_length": 19
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f066",
+      "acro_field": "PKW priv., Taxi",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f067",
+      "label_de": "Familienname",
+      "labels": {
+        "en": "Familienname"
+      },
+      "help_text": "für",
+      "type": "text",
+      "validation": {
+        "max_length": 34
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f067",
+      "acro_field": "Familienname",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f068",
+      "label_de": "Aktuelle Vorgeschichte",
+      "labels": {
+        "en": "Aktuelle Vorgeschichte"
+      },
+      "help_text": "(Beginn, Arbeitsunfall, Berufserkrankung, Privatunfall, Vorbehandlung sowie Spitalsaufenthalte und Operationen mit",
+      "type": "text",
+      "validation": {
+        "max_length": 270
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f068",
+      "acro_field": "Aktuelle Vorgeschichte",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f069",
+      "label_de": "Antragsrelevante Diagnose",
+      "labels": {
+        "en": "Antragsrelevante Diagnose"
+      },
+      "help_text": "Antragsrelevante Diagnose",
+      "type": "text",
+      "validation": {
+        "max_length": 180
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f069",
+      "acro_field": "Antragsrelevante Diagnose",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f070",
+      "label_de": "Befunde",
+      "labels": {
+        "en": "Befunde"
+      },
+      "help_text": "a)",
+      "type": "text",
+      "validation": {
+        "max_length": 180
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f070",
+      "acro_field": "Befunde",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f071",
+      "label_de": "Wann2",
+      "labels": {
+        "en": "Wann2"
+      },
+      "help_text": "Wann",
+      "type": "text",
+      "validation": {
+        "max_length": 20
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f071",
+      "acro_field": "Wann2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f072",
+      "label_de": "freiwillig versichert1",
+      "labels": {
+        "en": "freiwillig versichert1"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f072",
+      "acro_field": "freiwillig versichert1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f073",
+      "label_de": "pensions- unfallversichert",
+      "labels": {
+        "en": "pensions- unfallversichert"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f073",
+      "acro_field": "pensions- unfallversichert",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f074",
+      "label_de": "Landaufenthalt",
+      "labels": {
+        "en": "Landaufenthalt"
+      },
+      "help_text": "Landaufenthalt",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f074",
+      "acro_field": "Landaufenthalt",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f075",
+      "label_de": "Amb",
+      "labels": {
+        "en": "Amb"
+      },
+      "help_text": "Ambulante Rehabilitation",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f075",
+      "acro_field": "Amb",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f076",
+      "label_de": "Kur/GVA",
+      "labels": {
+        "en": "Kur/GVA"
+      },
+      "help_text": "K",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f076",
+      "acro_field": "Kur/GVA",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f077",
+      "label_de": "Erholung",
+      "labels": {
+        "en": "Erholung"
+      },
+      "help_text": "Erholung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f077",
+      "acro_field": "Erholung",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f078",
+      "label_de": "Genesung",
+      "labels": {
+        "en": "Genesung"
+      },
+      "help_text": "Genesung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f078",
+      "acro_field": "Genesung",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f079",
+      "label_de": "Sonstige Erkrankungen",
+      "labels": {
+        "en": "Sonstige Erkrankungen"
+      },
+      "help_text": "Sonstige",
+      "type": "text",
+      "validation": {
+        "max_length": 52
+      },
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f079",
+      "acro_field": "Sonstige Erkrankungen",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f080",
+      "label_de": "Stoffwechselerkrankungen",
+      "labels": {
+        "en": "Stoffwechselerkrankungen"
+      },
+      "help_text": "S",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f080",
+      "acro_field": "Stoffwechselerkrankungen",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f081",
+      "label_de": "Hauterkrankungen",
+      "labels": {
+        "en": "Hauterkrankungen"
+      },
+      "help_text": "Hauterkrankungen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f081",
+      "acro_field": "Hauterkrankungen",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f082",
+      "label_de": "Herz-/Kreislauf",
+      "labels": {
+        "en": "Herz-/Kreislauf"
+      },
+      "help_text": "Herz-/Kreislauf",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f082",
+      "acro_field": "Herz-/Kreislauf",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f083",
+      "label_de": "Onkologie",
+      "labels": {
+        "en": "Onkologie"
+      },
+      "help_text": "Onkologie",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f083",
+      "acro_field": "Onkologie",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f084",
+      "label_de": "Sonstige",
+      "labels": {
+        "en": "Sonstige"
+      },
+      "help_text": "Sonstige",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f084",
+      "acro_field": "Sonstige",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f085",
+      "label_de": "Psychische Erkrankungen",
+      "labels": {
+        "en": "Psychische Erkrankungen"
+      },
+      "help_text": "Psychische Erkrankungen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f085",
+      "acro_field": "Psychische Erkrankungen",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f086",
+      "label_de": "Bewegungs-/Stützapparat",
+      "labels": {
+        "en": "Bewegungs-/Stützapparat"
+      },
+      "help_text": "Bewegungs-/Stützapparat",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f086",
+      "acro_field": "Bewegungs-/Stützapparat",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f087",
+      "label_de": "andere wichtige Hinweise",
+      "labels": {
+        "en": "andere wichtige Hinweise"
+      },
+      "help_text": "b)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f087",
+      "acro_field": "andere wichtige Hinweise",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f088",
+      "label_de": "Begründung",
+      "labels": {
+        "en": "Begründung"
+      },
+      "help_text": "Begründung für die vorgeschlagene Maßnahme (Berufsbild, medizinische, berufliche oder soziale Zielsetzung)",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f088",
+      "acro_field": "Begründung",
+      "owner": "doctor",
+      "signature": "none"
+    },
+    {
+      "id": "f089",
+      "label_de": "Datum",
+      "labels": {
+        "en": "Datum"
+      },
+      "help_text": "Haben Sie in den letzten fünf Jahren Rehabilitations-, Kur-, Land-, Erholungsaufenthalte mit Kostenbeteiligung eines Versicherungs-",
+      "type": "text",
+      "validation": {},
+      "fact_type": "application.date",
+      "acro_field": "Datum",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f090",
+      "label_de": "Datum1",
+      "labels": {
+        "en": "Datum1"
+      },
+      "help_text": "Datum1",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.d84de9d5-fc18-584b-9457-f48db6edd337.f090",
+      "acro_field": "Datum1",
+      "owner": "doctor",
+      "signature": "none"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.oegk.at",
+      "quote": "Zuständiger Sozialversicherungsträger:",
+      "retrieved_at": "2026-11-06T02:20:00Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}

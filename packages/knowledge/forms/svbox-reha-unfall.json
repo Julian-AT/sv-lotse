@@ -1,0 +1,897 @@
+{
+  "id": "svbox-reha-unfall",
+  "template_id": "c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2",
+  "status": "auto",
+  "fields": [
+    {
+      "id": "f000",
+      "label_de": "VSNR_1",
+      "labels": {
+        "en": "VSNR_1"
+      },
+      "help_text": "Versicherungsnummer",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f000",
+      "acro_field": "VSNR_1",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f001",
+      "label_de": "Geschlecht",
+      "labels": {
+        "en": "Geschlecht"
+      },
+      "help_text": "weibl.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f001",
+      "acro_field": "Geschlecht",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f002",
+      "label_de": "Begleitperson",
+      "labels": {
+        "en": "Begleitperson"
+      },
+      "help_text": "Begleitperson",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f002",
+      "acro_field": "Begleitperson",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f003",
+      "label_de": "Transport",
+      "labels": {
+        "en": "Transport"
+      },
+      "help_text": "Transport",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f003",
+      "acro_field": "Transport",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f004",
+      "label_de": "zuständiger SV-träger",
+      "labels": {
+        "en": "zuständiger SV-träger"
+      },
+      "help_text": "Zuständiger Kranken- bzw. Pensionsversicherungsträger:",
+      "type": "text",
+      "validation": {
+        "max_length": 45
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f004",
+      "acro_field": "zuständiger SV-träger",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f005",
+      "label_de": "Telefonnummer",
+      "labels": {
+        "en": "Telefonnummer"
+      },
+      "help_text": "Telefon/Fax",
+      "type": "text",
+      "validation": {
+        "max_length": 17
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f005",
+      "acro_field": "Telefonnummer",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f006",
+      "label_de": "Anschrift",
+      "labels": {
+        "en": "Anschrift"
+      },
+      "help_text": "Anschrift (Int. KFZ-K., PLZ, Ort, Straße, Nr.)",
+      "type": "text",
+      "validation": {
+        "max_length": 60
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f006",
+      "acro_field": "Anschrift",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f007",
+      "label_de": "Aufnahme im Krankenhaus",
+      "labels": {
+        "en": "Aufnahme im Krankenhaus"
+      },
+      "help_text": "Aufnahme im Krankenhaus:",
+      "type": "text",
+      "validation": {
+        "max_length": 20
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f007",
+      "acro_field": "Aufnahme im Krankenhaus",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f008",
+      "label_de": "Entlassungstag",
+      "labels": {
+        "en": "Entlassungstag"
+      },
+      "help_text": "Voraussichtlicher Entlassungstag:",
+      "type": "text",
+      "validation": {
+        "max_length": 15
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f008",
+      "acro_field": "Entlassungstag",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f009",
+      "label_de": "Rehab-Einrichtung",
+      "labels": {
+        "en": "Rehab-Einrichtung"
+      },
+      "help_text": "Vorgeschlagene Rehab-Einrichtung:",
+      "type": "text",
+      "validation": {
+        "max_length": 150
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f009",
+      "acro_field": "Rehab-Einrichtung",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f010",
+      "label_de": "Unfalltag",
+      "labels": {
+        "en": "Unfalltag"
+      },
+      "help_text": "Unfalltag:",
+      "type": "text",
+      "validation": {
+        "max_length": 33
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f010",
+      "acro_field": "Unfalltag",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f011",
+      "label_de": "Arbeitsunfall",
+      "labels": {
+        "en": "Arbeitsunfall"
+      },
+      "help_text": "Berufskrankeit",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f011",
+      "acro_field": "Arbeitsunfall",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f012",
+      "label_de": "ohne fremde Hilfe",
+      "labels": {
+        "en": "ohne fremde Hilfe"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f012",
+      "acro_field": "ohne fremde Hilfe",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f013",
+      "label_de": "Körperpflege",
+      "labels": {
+        "en": "Körperpflege"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f013",
+      "acro_field": "Körperpflege",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f014",
+      "label_de": "baden/duschen",
+      "labels": {
+        "en": "baden/duschen"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f014",
+      "acro_field": "baden/duschen",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f015",
+      "label_de": "aus- und anziehen",
+      "labels": {
+        "en": "aus- und anziehen"
+      },
+      "help_text": "sich alleine aus- und anziehen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f015",
+      "acro_field": "aus- und anziehen",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f016",
+      "label_de": "Medikamente einnehmen",
+      "labels": {
+        "en": "Medikamente einnehmen"
+      },
+      "help_text": "seine/ihre Medikamente einnehmen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f016",
+      "acro_field": "Medikamente einnehmen",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f017",
+      "label_de": "selbständig gehen",
+      "labels": {
+        "en": "selbständig gehen"
+      },
+      "help_text": "m)",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f017",
+      "acro_field": "selbständig gehen",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f018",
+      "label_de": "Gehen mit Hilfsmittel",
+      "labels": {
+        "en": "Gehen mit Hilfsmittel"
+      },
+      "help_text": "Gehen mit Hilfsmittel",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f018",
+      "acro_field": "Gehen mit Hilfsmittel",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f019",
+      "label_de": "Gehen ohne Hilfsmittel",
+      "labels": {
+        "en": "Gehen ohne Hilfsmittel"
+      },
+      "help_text": "Gehen ohne Hilfsmittel",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f019",
+      "acro_field": "Gehen ohne Hilfsmittel",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f020",
+      "label_de": "Treppe",
+      "labels": {
+        "en": "Treppe"
+      },
+      "help_text": "reppe auf- bzw. absteigen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f020",
+      "acro_field": "Treppe",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f021",
+      "label_de": "Orientierungsstörungen",
+      "labels": {
+        "en": "Orientierungsstörungen"
+      },
+      "help_text": "Orientierungsstörungen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f021",
+      "acro_field": "Orientierungsstörungen",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f022",
+      "label_de": "Harninkontinenz",
+      "labels": {
+        "en": "Harninkontinenz"
+      },
+      "help_text": "Harninkontinenz",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f022",
+      "acro_field": "Harninkontinenz",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f023",
+      "label_de": "Stuhlinkontinenz",
+      "labels": {
+        "en": "Stuhlinkontinenz"
+      },
+      "help_text": "Stuhlinkontinenz",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f023",
+      "acro_field": "Stuhlinkontinenz",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f024",
+      "label_de": "Rollstuhlbenutzer",
+      "labels": {
+        "en": "Rollstuhlbenutzer"
+      },
+      "help_text": "Rollstuhlbenutzer",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f024",
+      "acro_field": "Rollstuhlbenutzer",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f025",
+      "label_de": "Transfer/Rollstuhl",
+      "labels": {
+        "en": "Transfer/Rollstuhl"
+      },
+      "help_text": "Transfer/Rollstuhl",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f025",
+      "acro_field": "Transfer/Rollstuhl",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f026",
+      "label_de": "öffentliche Verkehrsmittel",
+      "labels": {
+        "en": "öffentliche Verkehrsmittel"
+      },
+      "help_text": "erkehrsmitteln anreisen",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f026",
+      "acro_field": "öffentliche Verkehrsmittel",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f027",
+      "label_de": "Anreise",
+      "labels": {
+        "en": "Anreise"
+      },
+      "help_text": "falls nein, wird für die Anreise benötigt",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f027",
+      "acro_field": "Anreise",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f028",
+      "label_de": "sitzend",
+      "labels": {
+        "en": "sitzend"
+      },
+      "help_text": "sitzend",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f028",
+      "acro_field": "sitzend",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f029",
+      "label_de": "Begleitperson für Aufenthalt",
+      "labels": {
+        "en": "Begleitperson für Aufenthalt"
+      },
+      "help_text": "benötigt Begleitperson für Aufenthalt",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f029",
+      "acro_field": "Begleitperson für Aufenthalt",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f030",
+      "label_de": "liegend",
+      "labels": {
+        "en": "liegend"
+      },
+      "help_text": "liegend",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f030",
+      "acro_field": "liegend",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f031",
+      "label_de": "mit Sanitäter",
+      "labels": {
+        "en": "mit Sanitäter"
+      },
+      "help_text": "mit Sanitäter",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f031",
+      "acro_field": "mit Sanitäter",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f032",
+      "label_de": "ohne Sanitäter",
+      "labels": {
+        "en": "ohne Sanitäter"
+      },
+      "help_text": "ohne Sanitäter",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f032",
+      "acro_field": "ohne Sanitäter",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f033",
+      "label_de": "sonstige Transportmittel",
+      "labels": {
+        "en": "sonstige Transportmittel"
+      },
+      "help_text": "(PKW, Taxi)",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f033",
+      "acro_field": "sonstige Transportmittel",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f034",
+      "label_de": "Antritt Reha",
+      "labels": {
+        "en": "Antritt Reha"
+      },
+      "help_text": "d. Rehab-Aufenthaltes:",
+      "type": "text",
+      "validation": {
+        "max_length": 22
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f034",
+      "acro_field": "Antritt Reha",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f035",
+      "label_de": "PKW, Taxi",
+      "labels": {
+        "en": "PKW, Taxi"
+      },
+      "help_text": "(PKW, Taxi)",
+      "type": "text",
+      "validation": {
+        "max_length": 27
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f035",
+      "acro_field": "PKW, Taxi",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f036",
+      "label_de": "e-mail",
+      "labels": {
+        "en": "e-mail"
+      },
+      "help_text": "e-mail",
+      "type": "text",
+      "validation": {
+        "max_length": 45
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f036",
+      "acro_field": "e-mail",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f037",
+      "label_de": "Fax Arzt",
+      "labels": {
+        "en": "Fax Arzt"
+      },
+      "help_text": "Fax:",
+      "type": "text",
+      "validation": {
+        "max_length": 31
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f037",
+      "acro_field": "Fax Arzt",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f038",
+      "label_de": "Familienname",
+      "labels": {
+        "en": "Familienname"
+      },
+      "help_text": "Familienname",
+      "type": "text",
+      "validation": {
+        "max_length": 48
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f038",
+      "acro_field": "Familienname",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f039",
+      "label_de": "Vorname",
+      "labels": {
+        "en": "Vorname"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {
+        "max_length": 33
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f039",
+      "acro_field": "Vorname",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f040",
+      "label_de": "Pflegegeld",
+      "labels": {
+        "en": "Pflegegeld"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f040",
+      "acro_field": "Pflegegeld",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f041",
+      "label_de": "Antrag Pension",
+      "labels": {
+        "en": "Antrag Pension"
+      },
+      "help_text": "auf Pensionsleistung",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f041",
+      "acro_field": "Antrag Pension",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f042",
+      "label_de": "Antrag Pflegegeld",
+      "labels": {
+        "en": "Antrag Pflegegeld"
+      },
+      "help_text": "auf Pflegegeld",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f042",
+      "acro_field": "Antrag Pflegegeld",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f043",
+      "label_de": "Patienteneinverständnis",
+      "labels": {
+        "en": "Patienteneinverständnis"
+      },
+      "help_text": "eneinverständnis zum Antrag",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f043",
+      "acro_field": "Patienteneinverständnis",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f044",
+      "label_de": "Diagnose",
+      "labels": {
+        "en": "Diagnose"
+      },
+      "help_text": "Akutereignisses",
+      "type": "text",
+      "validation": {
+        "max_length": 522
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f044",
+      "acro_field": "Diagnose",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f045",
+      "label_de": "Erkrankungen",
+      "labels": {
+        "en": "Erkrankungen"
+      },
+      "help_text": "Zusätzliche Erkrankungen und Behinderungen mit Angabe der Funktionseinschränkung:",
+      "type": "text",
+      "validation": {
+        "max_length": 261
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f045",
+      "acro_field": "Erkrankungen",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f046",
+      "label_de": "Krankheitsbeginn",
+      "labels": {
+        "en": "Krankheitsbeginn"
+      },
+      "help_text": "Krankheitsbeginn und -verlauf, Komplikationen:",
+      "type": "text",
+      "validation": {
+        "max_length": 174
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f046",
+      "acro_field": "Krankheitsbeginn",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f047",
+      "label_de": "Weitere Maßnahmen",
+      "labels": {
+        "en": "Weitere Maßnahmen"
+      },
+      "help_text": "Erforderliche weitere diagnostische Maßnahmen:",
+      "type": "text",
+      "validation": {
+        "max_length": 348
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f047",
+      "acro_field": "Weitere Maßnahmen",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f048",
+      "label_de": "Befunde",
+      "labels": {
+        "en": "Befunde"
+      },
+      "help_text": "Wesentliche klinische und med. techn. Befunde:",
+      "type": "text",
+      "validation": {
+        "max_length": 261
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f048",
+      "acro_field": "Befunde",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f049",
+      "label_de": "Therapien",
+      "labels": {
+        "en": "Therapien"
+      },
+      "help_text": "Bisherige Therapien (medikamentös, physikalisch):",
+      "type": "text",
+      "validation": {
+        "max_length": 194
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f049",
+      "acro_field": "Therapien",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f050",
+      "label_de": "Rehabilitationsziel",
+      "labels": {
+        "en": "Rehabilitationsziel"
+      },
+      "help_text": "Angaben zum Rehabilitationsziel:",
+      "type": "text",
+      "validation": {
+        "max_length": 194
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f050",
+      "acro_field": "Rehabilitationsziel",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f051",
+      "label_de": "e-mail Arzt",
+      "labels": {
+        "en": "e-mail Arzt"
+      },
+      "help_text": "e-mail:",
+      "type": "text",
+      "validation": {
+        "max_length": 45
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f051",
+      "acro_field": "e-mail Arzt",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f052",
+      "label_de": "Stelle Pensionsleistung",
+      "labels": {
+        "en": "Stelle Pensionsleistung"
+      },
+      "help_text": "von welcher Stelle:",
+      "type": "text",
+      "validation": {
+        "max_length": 32
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f052",
+      "acro_field": "Stelle Pensionsleistung",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f053",
+      "label_de": "welche Stelle",
+      "labels": {
+        "en": "welche Stelle"
+      },
+      "help_text": "von welcher Stelle:",
+      "type": "text",
+      "validation": {
+        "max_length": 32
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f053",
+      "acro_field": "welche Stelle",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f054",
+      "label_de": "Datum_1",
+      "labels": {
+        "en": "Datum_1"
+      },
+      "help_text": "Datum_1",
+      "type": "text",
+      "validation": {},
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f054",
+      "acro_field": "Datum_1",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f055",
+      "label_de": "Telefonnummer Arzt",
+      "labels": {
+        "en": "Telefonnummer Arzt"
+      },
+      "help_text": "Telefon/DW:",
+      "type": "text",
+      "validation": {
+        "max_length": 26
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f055",
+      "acro_field": "Telefonnummer Arzt",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f056",
+      "label_de": "Arzt",
+      "labels": {
+        "en": "Arzt"
+      },
+      "help_text": "Name des zuständigen Arztes/der zuständigen Ärztin:",
+      "type": "text",
+      "validation": {
+        "max_length": 50
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f056",
+      "acro_field": "Arzt",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f057",
+      "label_de": "Stelle Pflegegeld",
+      "labels": {
+        "en": "Stelle Pflegegeld"
+      },
+      "help_text": "von welcher Stelle:",
+      "type": "text",
+      "validation": {
+        "max_length": 32
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f057",
+      "acro_field": "Stelle Pflegegeld",
+      "owner": "hospital",
+      "signature": "none"
+    },
+    {
+      "id": "f058",
+      "label_de": "Stufe",
+      "labels": {
+        "en": "Stufe"
+      },
+      "help_text": "welche Stufe:",
+      "type": "text",
+      "validation": {
+        "max_length": 1
+      },
+      "fact_type": "form.field.c55aa1bd-6fb8-5711-b150-4e4d0da8e3e2.f058",
+      "acro_field": "Stufe",
+      "owner": "hospital",
+      "signature": "none"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.pv.at",
+      "quote": "Zuständiger Kranken- bzw. Pensionsversicherungsträger:",
+      "retrieved_at": "2026-11-06T02:20:00Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}

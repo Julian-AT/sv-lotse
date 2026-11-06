@@ -1,0 +1,1495 @@
+{
+  "id": "svbox-pflegegeld",
+  "template_id": "13b3f4f2-3bb4-5d90-9dad-b17860605781",
+  "status": "auto",
+  "fields": [
+    {
+      "id": "f000",
+      "label_de": "Antrag Pflg",
+      "labels": {
+        "en": "Antrag Pflg"
+      },
+      "help_text": "ZUERKENNUNG /",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f000",
+      "acro_field": "Antrag Pflg",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f001",
+      "label_de": "Fam.Name",
+      "labels": {
+        "en": "Fam.Name"
+      },
+      "help_text": "Familienname",
+      "type": "text",
+      "validation": {
+        "max_length": 66
+      },
+      "fact_type": "person.family_name",
+      "acro_field": "Fam.Name",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f002",
+      "label_de": "Vorname",
+      "labels": {
+        "en": "Vorname"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {
+        "max_length": 30
+      },
+      "fact_type": "person.given_name",
+      "acro_field": "Vorname",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f003",
+      "label_de": "Titel",
+      "labels": {
+        "en": "Titel"
+      },
+      "help_text": "Titel",
+      "type": "text",
+      "validation": {
+        "max_length": 18
+      },
+      "fact_type": "person.title",
+      "acro_field": "Titel",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f004",
+      "label_de": "frühere Namen",
+      "labels": {
+        "en": "frühere Namen"
+      },
+      "help_text": "Frühere Namen",
+      "type": "text",
+      "validation": {
+        "max_length": 30
+      },
+      "fact_type": "person.previous_names",
+      "acro_field": "frühere Namen",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f005",
+      "label_de": "Geburtsdatum",
+      "labels": {
+        "en": "Geburtsdatum"
+      },
+      "help_text": "Geburtsdatum",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.birth_date",
+      "acro_field": "Geburtsdatum",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f006",
+      "label_de": "Geschlecht",
+      "labels": {
+        "en": "Geschlecht"
+      },
+      "help_text": "Geschlecht",
+      "type": "text",
+      "validation": {
+        "max_length": 47
+      },
+      "fact_type": "person.gender",
+      "acro_field": "Geschlecht",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f007",
+      "label_de": "Stabü",
+      "labels": {
+        "en": "Stabü"
+      },
+      "help_text": "Österreich",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f007",
+      "acro_field": "Stabü",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f008",
+      "label_de": "andere Staatsbürgerschaft",
+      "labels": {
+        "en": "andere Staatsbürgerschaft"
+      },
+      "help_text": "Österreich",
+      "type": "text",
+      "validation": {
+        "max_length": 40
+      },
+      "fact_type": "person.other_nationality",
+      "acro_field": "andere Staatsbürgerschaft",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f009",
+      "label_de": "Personenstand seit",
+      "labels": {
+        "en": "Personenstand seit"
+      },
+      "help_text": "Personenstand",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "person.marital_status_since",
+      "acro_field": "Personenstand seit",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f010",
+      "label_de": "Personenstand",
+      "labels": {
+        "en": "Personenstand"
+      },
+      "help_text": "ledig",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f010",
+      "acro_field": "Personenstand",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f011",
+      "label_de": "Adresse Straße",
+      "labels": {
+        "en": "Adresse Straße"
+      },
+      "help_text": "Straße / Gasse / Platz",
+      "type": "text",
+      "validation": {
+        "max_length": 42
+      },
+      "fact_type": "address.street",
+      "acro_field": "Adresse Straße",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f012",
+      "label_de": "Hausnummer, Stiege, Tür",
+      "labels": {
+        "en": "Hausnummer, Stiege, Tür"
+      },
+      "help_text": "Hausnr. / Stiege / Tür",
+      "type": "text",
+      "validation": {
+        "max_length": 26
+      },
+      "fact_type": "address.building_unit",
+      "acro_field": "Hausnummer, Stiege, Tür",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f013",
+      "label_de": "PLZ",
+      "labels": {
+        "en": "PLZ"
+      },
+      "help_text": "Postleitzahl",
+      "type": "text",
+      "validation": {
+        "max_length": 6
+      },
+      "fact_type": "address.postcode",
+      "acro_field": "PLZ",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f014",
+      "label_de": "Ort",
+      "labels": {
+        "en": "Ort"
+      },
+      "help_text": "Ort",
+      "type": "text",
+      "validation": {
+        "max_length": 27
+      },
+      "fact_type": "address.city",
+      "acro_field": "Ort",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f015",
+      "label_de": "Land",
+      "labels": {
+        "en": "Land"
+      },
+      "help_text": "Land",
+      "type": "text",
+      "validation": {
+        "max_length": 22
+      },
+      "fact_type": "address.country",
+      "acro_field": "Land",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f016",
+      "label_de": "voruebergehend",
+      "labels": {
+        "en": "voruebergehend"
+      },
+      "help_text": "z.B. Heim, Krankenhaus, bei Familienangehörigen; Bitte geben Sie die genaue Adresse bekannt.",
+      "type": "text",
+      "validation": {
+        "max_length": 72
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f016",
+      "acro_field": "voruebergehend",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f017",
+      "label_de": "Telefon",
+      "labels": {
+        "en": "Telefon"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {
+        "max_length": 22
+      },
+      "fact_type": "contact.phone",
+      "acro_field": "Telefon",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f018",
+      "label_de": "Email",
+      "labels": {
+        "en": "Email"
+      },
+      "help_text": "E-Mail",
+      "type": "text",
+      "validation": {
+        "max_length": 39
+      },
+      "fact_type": "contact.email",
+      "acro_field": "Email",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f019",
+      "label_de": "Andere Person",
+      "labels": {
+        "en": "Andere Person"
+      },
+      "help_text": "mit der gesetzlichen Vertretung betraut",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f019",
+      "acro_field": "Andere Person",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f020",
+      "label_de": "Nachweis",
+      "labels": {
+        "en": "Nachweis"
+      },
+      "help_text": "liegt bei",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f020",
+      "acro_field": "Nachweis",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f021",
+      "label_de": "Familienname andere",
+      "labels": {
+        "en": "Familienname andere"
+      },
+      "help_text": "Familienname",
+      "type": "text",
+      "validation": {
+        "max_length": 66
+      },
+      "fact_type": "representative.family_name",
+      "acro_field": "Familienname andere",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f022",
+      "label_de": "Vorname andere Person",
+      "labels": {
+        "en": "Vorname andere Person"
+      },
+      "help_text": "Vorname",
+      "type": "text",
+      "validation": {
+        "max_length": 30
+      },
+      "fact_type": "representative.given_name",
+      "acro_field": "Vorname andere Person",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f023",
+      "label_de": "Titel2",
+      "labels": {
+        "en": "Titel2"
+      },
+      "help_text": "Titel",
+      "type": "text",
+      "validation": {
+        "max_length": 18
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f023",
+      "acro_field": "Titel2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f024",
+      "label_de": "Adresse Straße 1",
+      "labels": {
+        "en": "Adresse Straße 1"
+      },
+      "help_text": "Straße / Gasse / Platz",
+      "type": "text",
+      "validation": {
+        "max_length": 42
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f024",
+      "acro_field": "Adresse Straße 1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f025",
+      "label_de": "Hausnummer, Stiege, Tür2",
+      "labels": {
+        "en": "Hausnummer, Stiege, Tür2"
+      },
+      "help_text": "Hausnr. / Stiege / Tür",
+      "type": "text",
+      "validation": {
+        "max_length": 26
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f025",
+      "acro_field": "Hausnummer, Stiege, Tür2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f026",
+      "label_de": "PLZ 1",
+      "labels": {
+        "en": "PLZ 1"
+      },
+      "help_text": "Postleitzahl",
+      "type": "text",
+      "validation": {
+        "max_length": 6
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f026",
+      "acro_field": "PLZ 1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f027",
+      "label_de": "Ort 1",
+      "labels": {
+        "en": "Ort 1"
+      },
+      "help_text": "Ort",
+      "type": "text",
+      "validation": {
+        "max_length": 27
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f027",
+      "acro_field": "Ort 1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f028",
+      "label_de": "Land2",
+      "labels": {
+        "en": "Land2"
+      },
+      "help_text": "Land",
+      "type": "text",
+      "validation": {
+        "max_length": 22
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f028",
+      "acro_field": "Land2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f029",
+      "label_de": "Telefon 1",
+      "labels": {
+        "en": "Telefon 1"
+      },
+      "help_text": "Telefonnummer",
+      "type": "text",
+      "validation": {
+        "max_length": 22
+      },
+      "fact_type": "representative.phone",
+      "acro_field": "Telefon 1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f030",
+      "label_de": "Email2",
+      "labels": {
+        "en": "Email2"
+      },
+      "help_text": "E-Mail",
+      "type": "text",
+      "validation": {
+        "max_length": 39
+      },
+      "fact_type": "representative.email",
+      "acro_field": "Email2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f031",
+      "label_de": "VSNR_1",
+      "labels": {
+        "en": "VSNR_1"
+      },
+      "help_text": "Versicherungsnummer",
+      "type": "text",
+      "validation": {},
+      "fact_type": "person.insurance_number",
+      "acro_field": "VSNR_1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f032",
+      "label_de": "Leiden",
+      "labels": {
+        "en": "Leiden"
+      },
+      "help_text": "Krankheiten bzw. gesundheitliche Beeinträchtigungen:",
+      "type": "text",
+      "validation": {
+        "max_length": 80
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f032",
+      "acro_field": "Leiden",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f033",
+      "label_de": "Leiden2",
+      "labels": {
+        "en": "Leiden2"
+      },
+      "help_text": "Krankheiten bzw. gesundheitliche Beeinträchtigungen:",
+      "type": "text",
+      "validation": {
+        "max_length": 80
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f033",
+      "acro_field": "Leiden2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f034",
+      "label_de": "körperl. Einschränkung",
+      "labels": {
+        "en": "körperl. Einschränkung"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f034",
+      "acro_field": "körperl. Einschränkung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f035",
+      "label_de": "Rollstuhlfahrer",
+      "labels": {
+        "en": "Rollstuhlfahrer"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f035",
+      "acro_field": "Rollstuhlfahrer",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f036",
+      "label_de": "Sehbehinderung",
+      "labels": {
+        "en": "Sehbehinderung"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f036",
+      "acro_field": "Sehbehinderung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f037",
+      "label_de": "geistige Beeinträchtigung",
+      "labels": {
+        "en": "geistige Beeinträchtigung"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f037",
+      "acro_field": "geistige Beeinträchtigung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f038",
+      "label_de": "Demenz",
+      "labels": {
+        "en": "Demenz"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f038",
+      "acro_field": "Demenz",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f039",
+      "label_de": "psychische Erkrankung",
+      "labels": {
+        "en": "psychische Erkrankung"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f039",
+      "acro_field": "psychische Erkrankung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f040",
+      "label_de": "regelm. Medikamente",
+      "labels": {
+        "en": "regelm. Medikamente"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f040",
+      "acro_field": "regelm. Medikamente",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f041",
+      "label_de": "Medikamente",
+      "labels": {
+        "en": "Medikamente"
+      },
+      "help_text": "Nehmen Sie regelmäßig Medikamente?",
+      "type": "text",
+      "validation": {
+        "max_length": 69
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f041",
+      "acro_field": "Medikamente",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f042",
+      "label_de": "Medikamente2",
+      "labels": {
+        "en": "Medikamente2"
+      },
+      "help_text": "ja, welche: ..........................................................................................................................................",
+      "type": "text",
+      "validation": {
+        "max_length": 80
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f042",
+      "acro_field": "Medikamente2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f043",
+      "label_de": "Hausbesuch",
+      "labels": {
+        "en": "Hausbesuch"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f043",
+      "acro_field": "Hausbesuch",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f044",
+      "label_de": "Name weitere Person",
+      "labels": {
+        "en": "Name weitere Person"
+      },
+      "help_text": "nein",
+      "type": "text",
+      "validation": {
+        "max_length": 75
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f044",
+      "acro_field": "Name weitere Person",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f045",
+      "label_de": "Adresse weitere Person",
+      "labels": {
+        "en": "Adresse weitere Person"
+      },
+      "help_text": "ja, ........................................................................................................................................................",
+      "type": "text",
+      "validation": {
+        "max_length": 80
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f045",
+      "acro_field": "Adresse weitere Person",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f046",
+      "label_de": "Betreuung durch andere Person",
+      "labels": {
+        "en": "Betreuung durch andere Person"
+      },
+      "help_text": "ja, bitte um weitere Angaben",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f046",
+      "acro_field": "Betreuung durch andere Person",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f047",
+      "label_de": "Person Stelle Pflegeperson",
+      "labels": {
+        "en": "Person Stelle Pflegeperson"
+      },
+      "help_text": "Pflegeperson(en)",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f047",
+      "acro_field": "Person Stelle Pflegeperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f048",
+      "label_de": "Name und Adresse Pflegeperson",
+      "labels": {
+        "en": "Name und Adresse Pflegeperson"
+      },
+      "help_text": "Name(n) und Adresse(n)",
+      "type": "text",
+      "validation": {
+        "max_length": 24
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f048",
+      "acro_field": "Name und Adresse Pflegeperson",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f049",
+      "label_de": "Name und Adresse Pflegeperson2",
+      "labels": {
+        "en": "Name und Adresse Pflegeperson2"
+      },
+      "help_text": "Name(n) und Adresse(n)",
+      "type": "text",
+      "validation": {
+        "max_length": 24
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f049",
+      "acro_field": "Name und Adresse Pflegeperson2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f050",
+      "label_de": "Name und Adresse Pflegeperson3",
+      "labels": {
+        "en": "Name und Adresse Pflegeperson3"
+      },
+      "help_text": "Familienname(n) und Vorname(n) sowie Adresse der Pflegeperson",
+      "type": "text",
+      "validation": {
+        "max_length": 24
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f050",
+      "acro_field": "Name und Adresse Pflegeperson3",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f051",
+      "label_de": "Familienhospiz",
+      "labels": {
+        "en": "Familienhospiz"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f051",
+      "acro_field": "Familienhospiz",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f052",
+      "label_de": "Familienhospiz seit",
+      "labels": {
+        "en": "Familienhospiz seit"
+      },
+      "help_text": "Erfolgt die notwendige BETREUUNG UND HILFE von einer anderen Person / Stelle?",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f052",
+      "acro_field": "Familienhospiz seit",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f053",
+      "label_de": "Familienhospiz bis",
+      "labels": {
+        "en": "Familienhospiz bis"
+      },
+      "help_text": "Erfolgt die notwendige BETREUUNG UND HILFE von einer anderen Person / Stelle?",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f053",
+      "acro_field": "Familienhospiz bis",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f054",
+      "label_de": "Pflegekarenz/-teilzeit",
+      "labels": {
+        "en": "Pflegekarenz/-teilzeit"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f054",
+      "acro_field": "Pflegekarenz/-teilzeit",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f055",
+      "label_de": "Pflegekarenz seit",
+      "labels": {
+        "en": "Pflegekarenz seit"
+      },
+      "help_text": "ja, von ................... bis ......................",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f055",
+      "acro_field": "Pflegekarenz seit",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f056",
+      "label_de": "Pflegekarenz bis",
+      "labels": {
+        "en": "Pflegekarenz bis"
+      },
+      "help_text": "ja, von ................... bis ......................",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f056",
+      "acro_field": "Pflegekarenz bis",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f057",
+      "label_de": "24 Stunden Betreuuung",
+      "labels": {
+        "en": "24 Stunden Betreuuung"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f057",
+      "acro_field": "24 Stunden Betreuuung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f058",
+      "label_de": "mobile Dienste",
+      "labels": {
+        "en": "mobile Dienste"
+      },
+      "help_text": "mobile Dienste",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f058",
+      "acro_field": "mobile Dienste",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f059",
+      "label_de": "Name mobiler Dienst",
+      "labels": {
+        "en": "Name mobiler Dienst"
+      },
+      "help_text": "Hauskrankenpflege, Essen auf Rädern",
+      "type": "text",
+      "validation": {
+        "max_length": 75
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f059",
+      "acro_field": "Name mobiler Dienst",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f060",
+      "label_de": "Person Stelle ambulant teilstationär",
+      "labels": {
+        "en": "Person Stelle ambulant teilstationär"
+      },
+      "help_text": "ambulante / teilstationäre",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f060",
+      "acro_field": "Person Stelle ambulant teilstationär",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f061",
+      "label_de": "ambulante teilstationäre Einrichtung, Kostenträger",
+      "labels": {
+        "en": "ambulante teilstationäre Einrichtung, Kostenträger"
+      },
+      "help_text": "Einrichtung sowie Adresse, Kostenträger",
+      "type": "text",
+      "validation": {
+        "max_length": 75
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f061",
+      "acro_field": "ambulante teilstationäre Einrichtung, Kostenträger",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f062",
+      "label_de": "Wohnsituation",
+      "labels": {
+        "en": "Wohnsituation"
+      },
+      "help_text": "dauernde Unterbringung in",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f062",
+      "acro_field": "Wohnsituation",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f063",
+      "label_de": "dauernde Einrichtung, Kostenträger",
+      "labels": {
+        "en": "dauernde Einrichtung, Kostenträger"
+      },
+      "help_text": "Einrichtung sowie Adresse, Kostenträger",
+      "type": "text",
+      "validation": {
+        "max_length": 75
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f063",
+      "acro_field": "dauernde Einrichtung, Kostenträger",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f064",
+      "label_de": "Krankenhaus",
+      "labels": {
+        "en": "Krankenhaus"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f064",
+      "acro_field": "Krankenhaus",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f065",
+      "label_de": "KH von",
+      "labels": {
+        "en": "KH von"
+      },
+      "help_text": "Aufenthaltsdauer",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f065",
+      "acro_field": "KH von",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f066",
+      "label_de": "KH bis",
+      "labels": {
+        "en": "KH bis"
+      },
+      "help_text": "ja, bitte um weitere Angaben",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f066",
+      "acro_field": "KH bis",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f067",
+      "label_de": "Spital",
+      "labels": {
+        "en": "Spital"
+      },
+      "help_text": "Krankenanstalt / Einrichtung",
+      "type": "text",
+      "validation": {
+        "max_length": 45
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f067",
+      "acro_field": "Spital",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f068",
+      "label_de": "KH von 2",
+      "labels": {
+        "en": "KH von 2"
+      },
+      "help_text": "von ......................... bis ........................",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f068",
+      "acro_field": "KH von 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f069",
+      "label_de": "KH bis 2",
+      "labels": {
+        "en": "KH bis 2"
+      },
+      "help_text": "von ......................... bis ........................",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f069",
+      "acro_field": "KH bis 2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f070",
+      "label_de": "Spital2",
+      "labels": {
+        "en": "Spital2"
+      },
+      "help_text": "in ...........................................................................................",
+      "type": "text",
+      "validation": {
+        "max_length": 45
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f070",
+      "acro_field": "Spital2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f071",
+      "label_de": "Unfall",
+      "labels": {
+        "en": "Unfall"
+      },
+      "help_text": "ja, bitte um weitere Angaben",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f071",
+      "acro_field": "Unfall",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f072",
+      "label_de": "Datum Unfall",
+      "labels": {
+        "en": "Datum Unfall"
+      },
+      "help_text": "ja, bitte um weitere Angaben",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f072",
+      "acro_field": "Datum Unfall",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f073",
+      "label_de": "Unfallhergang",
+      "labels": {
+        "en": "Unfallhergang"
+      },
+      "help_text": "Wie ist der Unfall passiert? Bitte kurze Schilderung in Stichworten.",
+      "type": "text",
+      "validation": {
+        "max_length": 80
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f073",
+      "acro_field": "Unfallhergang",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f074",
+      "label_de": "Unfallhergang2",
+      "labels": {
+        "en": "Unfallhergang2"
+      },
+      "help_text": "Wie ist der Unfall passiert? Bitte kurze Schilderung in Stichworten.",
+      "type": "text",
+      "validation": {
+        "max_length": 80
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f074",
+      "acro_field": "Unfallhergang2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f075",
+      "label_de": "Unfallschuld",
+      "labels": {
+        "en": "Unfallschuld"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f075",
+      "acro_field": "Unfallschuld",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f076",
+      "label_de": "Arbeitsunfall",
+      "labels": {
+        "en": "Arbeitsunfall"
+      },
+      "help_text": "ja",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f076",
+      "acro_field": "Arbeitsunfall",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f077",
+      "label_de": "Unfallanzeige",
+      "labels": {
+        "en": "Unfallanzeige"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f077",
+      "acro_field": "Unfallanzeige",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f078",
+      "label_de": "Anzeige wo?",
+      "labels": {
+        "en": "Anzeige wo?"
+      },
+      "help_text": "nein",
+      "type": "text",
+      "validation": {
+        "max_length": 30
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f078",
+      "acro_field": "Anzeige wo?",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f079",
+      "label_de": "andere Leistung",
+      "labels": {
+        "en": "andere Leistung"
+      },
+      "help_text": "ja, bitte um weitere Angaben",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f079",
+      "acro_field": "andere Leistung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f080",
+      "label_de": "andere Leistung beantragt",
+      "labels": {
+        "en": "andere Leistung beantragt"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f080",
+      "acro_field": "andere Leistung beantragt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f081",
+      "label_de": "Art der Leistung?",
+      "labels": {
+        "en": "Art der Leistung?"
+      },
+      "help_text": "ja, bitte um weitere Angaben",
+      "type": "text",
+      "validation": {
+        "max_length": 40
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f081",
+      "acro_field": "Art der Leistung?",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f082",
+      "label_de": "Art der Leistung seit",
+      "labels": {
+        "en": "Art der Leistung seit"
+      },
+      "help_text": "Art der Leistung seit",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f082",
+      "acro_field": "Art der Leistung seit",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f083",
+      "label_de": "auszahlende Stelle",
+      "labels": {
+        "en": "auszahlende Stelle"
+      },
+      "help_text": "Auszahlende Stelle und Aktenzeichen: ...................................................................................................",
+      "type": "text",
+      "validation": {
+        "max_length": 75
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f083",
+      "acro_field": "auszahlende Stelle",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f084",
+      "label_de": "Pflegesachleistung",
+      "labels": {
+        "en": "Pflegesachleistung"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f084",
+      "acro_field": "Pflegesachleistung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f085",
+      "label_de": "Pflegesachleistung aus EU",
+      "labels": {
+        "en": "Pflegesachleistung aus EU"
+      },
+      "help_text": "z.B. Hilfe bei der Haushaltsführung, Hilfe bei der Körperpflege",
+      "type": "text",
+      "validation": {
+        "max_length": 75
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f085",
+      "acro_field": "Pflegesachleistung aus EU",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f086",
+      "label_de": "ausländische Pension",
+      "labels": {
+        "en": "ausländische Pension"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f086",
+      "acro_field": "ausländische Pension",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f087",
+      "label_de": "ausländische Pension benatragt",
+      "labels": {
+        "en": "ausländische Pension benatragt"
+      },
+      "help_text": "nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f087",
+      "acro_field": "ausländische Pension benatragt",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f088",
+      "label_de": "Art der ausl. Leistung",
+      "labels": {
+        "en": "Art der ausl. Leistung"
+      },
+      "help_text": "ja, bitte um weitere Angaben",
+      "type": "text",
+      "validation": {
+        "max_length": 34
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f088",
+      "acro_field": "Art der ausl. Leistung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f089",
+      "label_de": "Art der Leistung seit2",
+      "labels": {
+        "en": "Art der Leistung seit2"
+      },
+      "help_text": "Art der Leistung: .......................................................................",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f089",
+      "acro_field": "Art der Leistung seit2",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f090",
+      "label_de": "ausl. Leistung Stelle",
+      "labels": {
+        "en": "ausl. Leistung Stelle"
+      },
+      "help_text": "Auszahlende Stelle und Aktenzeichen: ...................................................................................................",
+      "type": "text",
+      "validation": {
+        "max_length": 75
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f090",
+      "acro_field": "ausl. Leistung Stelle",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f091",
+      "label_de": "Pflegeberatung",
+      "labels": {
+        "en": "Pflegeberatung"
+      },
+      "help_text": "Nein",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f091",
+      "acro_field": "Pflegeberatung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f092",
+      "label_de": "Antragstellung andere Person",
+      "labels": {
+        "en": "Antragstellung andere Person"
+      },
+      "help_text": "Ja, ich habe bei der pflegebedürftigen Person die Zustimmung eingeholt, dass ihre",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f092",
+      "acro_field": "Antragstellung andere Person",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f093",
+      "label_de": "Anweisung",
+      "labels": {
+        "en": "Anweisung"
+      },
+      "help_text": "Anweisung auf ein Konto wird gewünscht.",
+      "type": "checkbox",
+      "validation": {},
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f093",
+      "acro_field": "Anweisung",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f094",
+      "label_de": "Datum_1",
+      "labels": {
+        "en": "Datum_1"
+      },
+      "help_text": "Datum",
+      "type": "text",
+      "validation": {
+        "max_length": 10
+      },
+      "fact_type": "application.date",
+      "acro_field": "Datum_1",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f095",
+      "label_de": "Unterlagen",
+      "labels": {
+        "en": "Unterlagen"
+      },
+      "help_text": "Folgende Unterlagen liegen bei:",
+      "type": "text",
+      "validation": {
+        "max_length": 80
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f095",
+      "acro_field": "Unterlagen",
+      "owner": "applicant",
+      "signature": "none"
+    },
+    {
+      "id": "f096",
+      "label_de": "Unterlagen2",
+      "labels": {
+        "en": "Unterlagen2"
+      },
+      "help_text": "Folgende Unterlagen liegen bei:",
+      "type": "text",
+      "validation": {
+        "max_length": 80
+      },
+      "fact_type": "form.field.13b3f4f2-3bb4-5d90-9dad-b17860605781.f096",
+      "acro_field": "Unterlagen2",
+      "owner": "applicant",
+      "signature": "none"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www.pv.at",
+      "quote": "ZUERKENNUNG /",
+      "retrieved_at": "2026-11-06T02:20:00Z"
+    }
+  ],
+  "as_of": "2026-11-06"
+}
