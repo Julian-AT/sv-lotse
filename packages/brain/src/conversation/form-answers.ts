@@ -52,10 +52,16 @@ const LABEL_KEYS: readonly [RegExp, string][] = [
 ];
 
 /** Which administrative question a field answers, by fact type or (detected forms) by label. */
+// Labels of another party's block (the WG, a facility, a contact or representative): never the
+// person's own name, address or phone.
+const OTHER_PARTY =
+  /\b(?:wg|partnerorganisation|einrichtung|träger|behandler\w*|kontaktaufnahme|vertretungsbefugt\w*|zustellbevollm\w*|ansprechperson|andere person|weitere person|pflegeperson|krankenhaus|spital|arzt|ärztin)\b/iu;
+
 export function questionKey(field: FormField): string | undefined {
   if (!writableField(field)) return;
   if (field.fact_type && QUESTIONS[field.fact_type]) return field.fact_type;
   if (field.fact_type && !field.fact_type.startsWith("form.field.")) return;
+  if (OTHER_PARTY.test(field.label_de)) return;
   const label = `${field.label_de} ${field.help_text ?? ""}`;
   return LABEL_KEYS.find(([pattern]) => pattern.test(label))?.[1];
 }
@@ -345,6 +351,8 @@ const copy = {
       "Aus Ihren bisherigen Angaben kann ich nichts weiter eintragen. Sagen Sie mir einfach alles auf einmal oder fügen Sie einen Brief ein.",
     and: "und",
     review: "Bitte prüfen Sie den Entwurf.",
+    providerPart:
+      "Dieses Formular füllt großteils das Spital oder die Ärztin aus; aus einem Brief kann ich die Angaben übernehmen.",
   },
   en: {
     filled: (value: string) => `Thanks, filled in: ${value}.`,
@@ -365,6 +373,8 @@ const copy = {
       "I cannot fill in anything else from what you told me so far. Just tell me everything at once or paste a letter.",
     and: "and",
     review: "Please review the draft.",
+    providerPart:
+      "Most of this form is filled in by the hospital or the doctor; I can take the details from a letter.",
   },
 } as const;
 
@@ -658,7 +668,9 @@ export async function answerManyFields(input: {
       "only the surname for Familienname/Nachname, " +
       "date of birth as DD.MM.YYYY, insurance number as 10 digits without spaces, the patient's own " +
       "address and phone only if stated as theirs. Copy values as written; never guess. Never use " +
-      "names, addresses or phone numbers of hospitals, clinics, doctors or nurses. " +
+      "names, addresses or phone numbers of hospitals, clinics, doctors or nurses. Fields that " +
+      "belong to another party (a WG, facility, partner organisation, contact or representative " +
+      "person) get only that party's data when the text states it, never the patient's. " +
       "Medical fields (diagnosis, findings, proposed measure, justification) may be filled, but only " +
       "with statements taken from the text, copied or minimally shortened, never invented or " +
       "interpreted beyond it. Tick a checkbox (value true) only when the text explicitly supports it " +
@@ -934,8 +946,8 @@ export async function openedFormTurn(input: {
     actions,
     ...(next ? { next: { formInstanceId: instance.id, fieldId: next.id } } : {}),
   });
-  if (mode === "step" && !handedOver)
-    return result(`${strings.invite} ${strings.first(question)}`, pointNext);
+  const opening = `${strings.invite} ${next ? strings.first(question) : strings.providerPart}`;
+  if (mode === "step" && !handedOver) return result(opening, pointNext);
   const typed = filled.flatMap((field, index) => {
     const entry = values[field.id];
     const provenance = ProvenanceSchema.safeParse(entry?.provenance);
@@ -948,7 +960,7 @@ export async function openedFormTurn(input: {
         )
       : [];
   });
-  if (!filled.length) return result(`${strings.invite} ${strings.first(question)}`, pointNext);
+  if (!filled.length) return result(opening, pointNext);
   const lead = strings.openedFilled(filled.length);
   if (!next) return result(`${lead} ${strings.review}`, typed);
   return result(

@@ -6,6 +6,7 @@ import {
   formMode,
   handsOverData,
   modeRequest,
+  questionKey,
 } from "../../src/conversation/form-answers.ts";
 import { parseFormEdit, resolveFields } from "../../src/conversation/form-edit.ts";
 import type { FormField } from "../../src/forms/schema.ts";
@@ -183,5 +184,10 @@ describe("snippets and step walking", () => {
     expect(cleanLabel("VSNR_1")).toBe("VSNR");
     expect(askable({ ...field("f001", "Pflegegeld"), type: "checkbox" } as FormField)).toBe(false);
     expect(askable({ ...field("f067", "Familienname"), owner: "doctor" } as FormField)).toBe(false);
+    // The WG's address block is not the person's address.
+    expect(questionKey(field("f007", "Strassenname der Adresse WG", "form.field.x.f007"))).toBe(
+      undefined,
+    );
+    expect(questionKey(field("f049", "Straße", "form.field.x.f049"))).toBe("address.street");
   });
 });
