@@ -1,0 +1,55 @@
+# AT-Benefits v1 dataset pipeline (datagen). Read by datagen.config; DATAGEN_CONFIG overrides the path.
+version: v0.2
+hf_repo: JulianAT/at-benefits
+# Backend: an OpenAI-compatible endpoint. Credentials come from env_file (dotenv_values, never
+# printed): DATAGEN_OPENAI_BASE_URL, DATAGEN_OPENAI_API_KEY, DATAGEN_MODEL_BULK/STRONG/JUDGE
+# (the model env vars override `models` below). DATAGEN_ENV_FILE overrides the path.
+env_file: /Users/julianschmidt/.claude/jobs/a3250876/tmp/datagen.env
+# Batch API: auto (probe once, cache the answer), on, off (concurrent sync calls instead).
+batch_api: auto
+# Fallback concurrency per family process for sync "batches" (adaptive: halves on 429/5xx,
+# grows back to max). Capped at 4: the proxy is shared with the live app.
+concurrency: {start: 4, max: 4, min: 1}
+# Budget is in TOKENS (prompt + completion, reasoning included) for this tranche, across all
+# families. The subscription-backed proxy has no per-token billing; USD is recorded only as an
+# informational list-price equivalent when the model has a price in datagen/pricing.py.
+tranche_tokens: 60000000
+# Optional hard USD cap on the list-price equivalent (null = off).
+cap_usd: null
+# Percent of tranche_tokens per budget pool. Families map to pools via `pools` below.
+shares:
+  situations: 25
+  dialogues: 35
+  documents: 20
+  forms_legal_qa: 15
+  reserve: 5
+# family name -> budget pool (families not listed use a pool of their own name)
+pools:
+  forms: forms_legal_qa
+  legal_qa: forms_legal_qa
+  check: reserve
+# Model per role (plain GPT ids only). Prices in datagen/pricing.py are informational.
+# reasoning_effort is sent when not null; temperature only when temperature: true (GPT-5+/6
+# reasoning models reject custom temperatures).
+models:
+  bulk:   {model: gpt-6-luna,  reasoning_effort: null, temperature: false}
+  strong: {model: gpt-6.1-sol, reasoning_effort: null, temperature: false}
+  judge:  {model: gpt-6-sol,   reasoning_effort: null, temperature: false}
+# Worst-case input token estimate: chars / chars_per_token (conservative for non-Latin scripts).
+chars_per_token: 2.0
+# Languages of the release. share = target fraction of generated texts (situations family).
+languages:
+  - {code: de,    name: German (Austrian standard),          share: 0.22}
+  - {code: de-AT-dialect, name: German (Austrian dialect / colloquial), share: 0.08, base: de}
+  - {code: de-easy, name: German plain language (B1),         share: 0.06, base: de}
+  - {code: en,    name: English,                              share: 0.12}
+  - {code: tr,    name: Turkish,                              share: 0.09}
+  - {code: bcs,   name: Bosnian/Croatian/Serbian (Latin script), share: 0.09}
+  - {code: ro,    name: Romanian,                             share: 0.08}
+  - {code: hu,    name: Hungarian,                            share: 0.07}
+  - {code: pl,    name: Polish,                               share: 0.07}
+  - {code: uk,    name: Ukrainian,                            share: 0.06}
+  - {code: ar,    name: Arabic,                               share: 0.06}
+# Relative to ml/. ml/data/ is git-ignored. Keep under max_disk_gb.
+output_root: data/datagen
+max_disk_gb: 5
