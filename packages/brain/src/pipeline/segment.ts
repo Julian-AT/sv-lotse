@@ -7,6 +7,7 @@ import {
 import type { UIMessageChunk, UIMessageStreamWriter } from "ai";
 import type { RuntimeContext } from "../agent/context.ts";
 import type { BrainConfig } from "../config/index.ts";
+import { guardCopy, guardLocale } from "../guards/copy.ts";
 import { checkBoundaryRules } from "../guards/rules.ts";
 import type { Passage } from "../retrieval/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
@@ -65,6 +66,8 @@ export interface SegmentWriter {
   finish: (alsoCheck?: (text: string) => Promise<string | undefined>) => Promise<void>;
   /** An unopened resource was offered: the reply becomes only the short "open it?" question. */
   offer: (label: string) => void;
+  /** This turn continues after a page was opened on request. */
+  opened: () => void;
 }
 export function createSegmentWriter(options: {
   writer: Pick<UIMessageStreamWriter<LotseMessage>, "write">;
@@ -83,6 +86,7 @@ export function createSegmentWriter(options: {
   const completed: { id: string; text: string; actions: Action[] }[] = [];
   let nextIndex = options.context.sentenceIndex;
   let offered: string | undefined;
+  let opened = false;
   const emit = (id: string, text: string): void => {
     const pending = actions
       .splice(0)
@@ -117,6 +121,9 @@ export function createSegmentWriter(options: {
     emit,
     action: (action: Action): void => {
       actions.push(ActionSchema.parse(action));
+    },
+    opened: (): void => {
+      opened = true;
     },
     offer: (label: string): void => {
       offered = label.replace(/[?.!\s]+$/u, "").trim();
@@ -153,7 +160,16 @@ export function createSegmentWriter(options: {
       options.onGuard?.(performance.now() - started);
       actions.length = 0;
       if (verdict !== inspected) {
-        emit(completed[0]?.id ?? options.turnId, verdict);
+        // An unsourced claim loses its text, not its pointer: the cursor still shows the place.
+        // Medical handoffs drop every action.
+        const handoff =
+          verdict === copyFor(options.language).handoff ||
+          verdict === guardCopy[guardLocale(options.language)].handoff ||
+          checkBoundaryRules(inspected).length > 0;
+        if (!handoff) actions.push(...allActions);
+        // Right after opening a page, an unsourced explanation becomes a short claim-free line.
+        const text = !handoff && opened ? copyFor(options.language).opened : verdict;
+        emit(completed[0]?.id ?? options.turnId, text);
       } else {
         // All text is verified after the loop. Preserve the following-sentence binding
         // recorded while consuming each text part; never dispatch before verification.

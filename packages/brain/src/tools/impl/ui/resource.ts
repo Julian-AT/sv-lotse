@@ -159,6 +159,18 @@ export function recentUserTexts(history: readonly LotseMessage[]): string[] {
     );
 }
 
+/** The latest assistant message opened a resource successfully (the turn continues after it). */
+export function openedResource(history: readonly LotseMessage[]): boolean {
+  const last = history.at(-1);
+  if (last?.role !== "assistant") return false;
+  return last.parts.some(
+    (part) =>
+      part.type === "tool-ui.openResource" &&
+      "output" in part &&
+      (part.output as { success?: unknown } | undefined)?.success === true,
+  );
+}
+
 /** The conversation is answering an earlier open offer: never offer the same page again. */
 export function answersOffer(history: readonly LotseMessage[], userText = ""): boolean {
   // A new where-to question is not an answer to the previous offer.

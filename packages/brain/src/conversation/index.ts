@@ -71,6 +71,7 @@ import {
   answersOffer,
   guidanceOffer,
   offerChunks,
+  openedResource,
   recentUserTexts,
 } from "../tools/impl/ui/resource.ts";
 import type { LotseMessage } from "../tools/types.ts";
@@ -595,6 +596,7 @@ async function runTurn(
       let pointed = false;
       const results: { toolCallId: string; toolName: string }[] = [];
       const finalize = async (): Promise<void> => {
+        if (openedResource(prepared.history)) output.opened();
         const resourceCalls = [...inputs.values()].some((call) =>
           call.toolName.endsWith("Resource"),
         );

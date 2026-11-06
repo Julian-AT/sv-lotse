@@ -217,3 +217,50 @@ it("an unopened resource offer becomes only the short open question", async () =
     "Soll ich das Pflegegeld-Antragsformular für Sie öffnen?",
   ]);
 });
+
+it("an unsourced claim loses its text but keeps the pointer for the first sentence", async () => {
+  generate.mockResolvedValue({ output: { medicalViolation: false, unsupportedClaim: true } });
+  const writes: { type: string; data?: { kind?: string } }[] = [];
+  const output = createSegmentWriter({
+    writer: { write: (part) => void writes.push(part as { type: string }) },
+    context: {
+      caseId: randomUUID(),
+      subjectId: randomUUID(),
+      actorId: randomUUID(),
+      userId: randomUUID(),
+      sessionId: randomUUID(),
+      actorRole: "subject",
+      autonomyLevel: "L1",
+      shareScope: {},
+      sentenceIndex: 0,
+    },
+    turnId: randomUUID(),
+    language: "de-AT",
+    config,
+    passages: new Map(),
+  });
+  output.action({
+    id: randomUUID(),
+    kind: "point",
+    target: { kind: "text", quote: "Antrag auf Pflegegeld" },
+    sentenceIndex: 0,
+    payload: { label: "Hier" },
+  });
+  await output.write({ type: "text-start", id: "answer" });
+  await output.write({ type: "text-delta", id: "answer", delta: "Den Antrag stellen Sie hier." });
+  await output.write({ type: "text-end", id: "answer" });
+  output.opened();
+  await output.finish();
+  expect(writes).toContainEqual(
+    expect.objectContaining({
+      type: "data-action",
+      data: expect.objectContaining({ kind: "point" }),
+    }),
+  );
+  expect(writes).toContainEqual(
+    expect.objectContaining({
+      type: "text-delta",
+      delta: "Die Seite ist jetzt geöffnet. Ich zeige Ihnen, wo es steht.",
+    }),
+  );
+});
