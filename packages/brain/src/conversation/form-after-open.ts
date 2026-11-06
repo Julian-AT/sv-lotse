@@ -1,12 +1,22 @@
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { DatabaseClient } from "@lotse/db";
 import { cases, formTemplates } from "@lotse/db/schema";
-import { type Action, ActionSchema, ProvenanceSchema, type Target } from "@lotse/protocol";
+import {
+  type Action,
+  ActionSchema,
+  JsonObjectSchema,
+  ProvenanceSchema,
+  type Target,
+} from "@lotse/protocol";
 import type { UIMessageStreamWriter } from "ai";
 import { desc, eq, sql } from "drizzle-orm";
 import type { RuntimeContext } from "../agent/context.ts";
 import { FORM_TYPE_PACE_MS } from "../config/index.ts";
 import { prefillForm } from "../forms/instances/index.ts";
+import { getTemplate } from "../forms/registry/index.ts";
 import { templateSchema } from "../forms/schema.ts";
 import type { LotseMessage } from "../tools/types.ts";
 
@@ -14,6 +24,54 @@ export interface BenefitForm {
   formId: string;
   goal: string;
 }
+
+/** Original SV-Box assets of the registered forms (see packages/evals/sets/e7/forms.json). */
+const FORM_ASSETS: Readonly<
+  Record<string, { file: string; pages: number; publisher: string; title: string }>
+> = {
+  "svbox-pflegegeld": {
+    file: "PAL080_0125_Mpfl_052026.pdf",
+    pages: 8,
+    publisher: "https://www.pv.at",
+    title: "Antrag auf Pflegegeld (PVA)",
+  },
+  "svbox-fahrtkosten-wien": {
+    file: "Antrag-auf-Zuschuss-zu-Fahrtkosten_Wien.pdf",
+    pages: 2,
+    publisher: "https://www.oegk.at",
+    title: "Antrag auf Zuschuss zu Fahrtkosten (ÖGK Wien)",
+  },
+  "svbox-reha-unfall": {
+    file: "Reha_n_Unfall_052026.pdf",
+    pages: 2,
+    publisher: "https://www.pv.at",
+    title: "Antrag auf Rehabilitation nach Unfall (PVA)",
+  },
+  "svbox-kur-reha": {
+    file: "Antrag Kur und Reha.pdf",
+    pages: 2,
+    publisher: "https://www.oegk.at",
+    title: "Antrag auf Kur und Rehabilitation (ÖGK)",
+  },
+  "svbox-senioren-wg": {
+    file: "Bedarfsmeldung-Senior_innen-Wohngemeinschaft_Basispaket.1736522017.pdf",
+    pages: 2,
+    publisher: "https://www.fsw.at",
+    title: "Bedarfsmeldung Senior*innen-Wohngemeinschaft (FSW)",
+  },
+  "svbox-fsw-foerderung": {
+    file: "fsw-antrag-auf-foerderung-von-leistungen.1779095804.pdf",
+    pages: 13,
+    publisher: "https://www.fsw.at",
+    title: "Antrag auf Förderung von Leistungen (FSW)",
+  },
+  "svbox-einrichtungswunsch": {
+    file: "FSW-Antrag-Beilage-Einrichtungswunsch.1779345450.pdf",
+    pages: 2,
+    publisher: "https://www.fsw.at",
+    title: "Beilage Einrichtungswunsch (FSW)",
+  },
+};
 
 const BENEFIT_FORMS: readonly (BenefitForm & { pattern: RegExp })[] = [
   { pattern: /pflegegeld/iu, formId: "svbox-pflegegeld", goal: "Pflegegeld beantragen" },
@@ -103,14 +161,60 @@ export function formAlreadyPrepared(history: readonly LotseMessage[]): boolean {
   return last?.role === "assistant" && last.parts.some((part) => part.type === "tool-form.prefill");
 }
 
-async function registeredTemplate(db: DatabaseClient, formId: string) {
+const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../../../");
+
+async function findTemplate(db: DatabaseClient, formId: string, source: string) {
   const [template] = await db
     .select()
     .from(formTemplates)
-    .where(sql`${formTemplates.schema}->>'id' = ${formId}`)
+    .where(sql`${formTemplates.schema}->>'id' = ${formId} OR ${formTemplates.source} = ${source}`)
     .orderBy(desc(formTemplates.retrievedAt))
     .limit(1);
   return template;
+}
+
+/**
+ * The registered template for a form id. A database that has not acquired it yet registers the
+ * reviewed-candidate schema with its local SV-Box asset (development and explicit mounts only).
+ */
+export async function registeredTemplate(db: DatabaseClient, formId: string) {
+  const asset = FORM_ASSETS[formId];
+  if (!asset) return;
+  const source = `svbox:Anträge und Formulare/${asset.file}`;
+  const existing = await findTemplate(db, formId, source);
+  if (existing) return existing;
+  if (process.env.NODE_ENV === "production" && !process.env.SVBOX_DIR) return;
+  const root = resolve(repositoryRoot, process.env.SVBOX_DIR ?? "data/svbox");
+  const [bytes, raw] = await Promise.all([
+    readFile(/* turbopackIgnore: true */ resolve(root, "Anträge und Formulare", asset.file)),
+    readFile(
+      /* turbopackIgnore: true */ resolve(
+        repositoryRoot,
+        "packages/knowledge/forms",
+        `${formId}.json`,
+      ),
+      "utf8",
+    ),
+  ]).catch(() => [undefined, undefined] as const);
+  if (!bytes || !raw) return;
+  const record = JsonObjectSchema.parse(JSON.parse(raw));
+  const hash = createHash("sha256").update(bytes).digest("hex");
+  await db
+    .insert(formTemplates)
+    .values({
+      ...(typeof record.template_id === "string" ? { id: record.template_id } : {}),
+      title: asset.title,
+      publisher: asset.publisher,
+      source,
+      hash,
+      format: "acroform",
+      pages: asset.pages,
+      status: "auto",
+      schema: record,
+      storageKey: `forms/original/${hash}.pdf`,
+    })
+    .onConflictDoNothing();
+  return findTemplate(db, formId, source);
 }
 
 const copy = {
@@ -176,7 +280,7 @@ export async function prepareFormAfterOpen(input: {
     subjectId: context.subjectId,
   };
   const prefilled = await prefillForm(db, prefillInput, context, input.signal);
-  const schema = templateSchema(template);
+  const schema = templateSchema(await getTemplate(db, template.id));
   const missing = new Set(prefilled.missingFields);
   const asked = schema.fields.find(
     (field) => missing.has(field.id) && field.fact_type && ASKABLE_FACT.test(field.fact_type),
