@@ -1,0 +1,32 @@
+{
+  "id": "rz-st-radegund",
+  "name_de": "Reha-Zentrum St. Radegund",
+  "type": "rehabilitation",
+  "region": "Steiermark",
+  "address": {
+    "street": "Quellenstraße 1",
+    "postal_code": "8061",
+    "locality": "St. Radegund bei Graz",
+    "country": "AT"
+  },
+  "location": {
+    "latitude": 47.1819041,
+    "longitude": 15.4835043
+  },
+  "phone": "+43 3132 2351-0",
+  "url": "https://www.rz-st-radegund.at/web/kontakt-und-service/kontakt",
+  "sources": [
+    {
+      "url": "https://www.rz-st-radegund.at/web/kontakt-und-service/kontakt",
+      "quote": "Reha-Zentrum St. Radegund\nQuellenstraße 1\n8061 St. Radegund bei Graz\nTelefon: +43 (0)3132 23 51-0\nE-Mail: rz-st-radegund@pv.at",
+      "retrieved_at": "2026-11-06T01:36:33.054140Z"
+    },
+    {
+      "url": "https://www.rz-st-radegund.at/web/anreise-und-aufenthalt/anreise",
+      "quote": "https://www.google.com/maps/dir//Quellenstra%C3%9Fe+1,+8061+St.+Radegund+bei+Graz/@47.1819077,15.4809294,17z/data=!4m8!4m7!1m0!1m5!1m1!1s0x476e37f45555efb7:0x525b0ad2c53e3502!2m2!1d15.4835043!2d47.1819041?entry=ttu",
+      "retrieved_at": "2026-11-06T01:36:33.054140Z"
+    }
+  ],
+  "as_of": "2026-11-06",
+  "email": "rz-st-radegund@pv.at"
+}
