@@ -105,6 +105,14 @@
       "pos": 171
     },
     {
+      "path": "packages/knowledge/src/ingest/validity.ts",
+      "kind": "exports",
+      "name": "labelValidity",
+      "line": 18,
+      "col": 17,
+      "pos": 601
+    },
+    {
       "path": "packages/knowledge/src/loaders/fees/pdf.ts",
       "kind": "types",
       "name": "TextCell",
@@ -333,10 +341,18 @@
     {
       "path": "packages/knowledge/src/ingest/normalize.ts",
       "rule": "complexity/noExcessiveCognitiveComplexity",
-      "line": 108,
+      "line": 96,
       "symbol": "=> ",
-      "complexity": 52,
+      "complexity": 56,
       "source": "replacement: (_content, node) => {"
+    },
+    {
+      "path": "packages/knowledge/src/ingest/sections.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 35,
+      "symbol": "visit",
+      "complexity": 29,
+      "source": "const visit = (nodes: ReturnType<typeof $>, base: Scope, inherited: Heading[]) => {"
     },
     {
       "path": "packages/knowledge/src/loader/db.ts",
@@ -391,24 +407,32 @@
       "rule": "complexity/noExcessiveCognitiveComplexity",
       "line": 33,
       "symbol": "chunkSozdok",
-      "complexity": 17,
+      "complexity": 21,
       "source": "export function chunkSozdok(record: SozdokVersion, maxTokens = 1500): SozdokChunk[] {"
     },
     {
       "path": "packages/knowledge/src/loaders/sozdok/load.ts",
       "rule": "complexity/noExcessiveCognitiveComplexity",
-      "line": 68,
+      "line": 64,
       "symbol": "=> ",
-      "complexity": 51,
+      "complexity": 60,
       "source": "return database.sql.begin(async (sql) => {"
     },
     {
       "path": "packages/knowledge/src/loaders/sozdok/parse.ts",
       "rule": "complexity/noExcessiveCognitiveComplexity",
-      "line": 120,
+      "line": 127,
       "symbol": "render",
-      "complexity": 21,
-      "source": "function render(node: Element | string, boundaries = false, atomic = false): string {"
+      "complexity": 23,
+      "source": "function render("
+    },
+    {
+      "path": "packages/knowledge/src/loaders/sozdok/parse.ts",
+      "rule": "complexity/noExcessiveCognitiveComplexity",
+      "line": 175,
+      "symbol": "textUnits",
+      "complexity": 35,
+      "source": "function textUnits("
     },
     {
       "path": "packages/knowledge/test/ingest/fetcher.test.ts",

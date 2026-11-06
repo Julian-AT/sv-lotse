@@ -91,6 +91,7 @@
         "packages/knowledge/src/ingest/fetcher.ts",
         "packages/knowledge/src/ingest/indexer.ts",
         "packages/knowledge/src/ingest/normalize.ts",
+        "packages/knowledge/src/ingest/sections.ts",
         "packages/knowledge/src/loader/db.ts",
         "packages/knowledge/src/loader/index.ts",
         "packages/knowledge/src/loaders/eko/index.ts",

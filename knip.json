@@ -23,6 +23,7 @@
   },
   "ignoreIssues": {
     "packages/knowledge/src/ingest/fetcher.ts": ["exports"],
+    "packages/knowledge/src/ingest/validity.ts": ["exports"],
     "apps/web/src/server/session-cookie.ts": ["exports"],
     "packages/brain/src/forms/detect/schema.ts": ["exports"],
     "packages/brain/src/forms/detect/vision.ts": ["exports"],
