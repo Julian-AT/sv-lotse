@@ -1,0 +1,42 @@
+# Awaiting human review; administrative access only.
+id: praevention-ernaehrungsberatung
+benefit: ref:catalog/praevention-ernaehrungsberatung
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: region
+    type: string
+    question_hint: In welchem Bundesland suchen Sie ein Angebot?
+steps:
+  - id: programme-information
+    needs: []
+    criteria: ref:catalog/praevention-ernaehrungsberatung#criteria
+    outputs:
+      - id: published-programme
+        type: document
+    transitions:
+      - to: prepare-access
+  - id: prepare-access
+    needs:
+      - region
+    outputs:
+      - id: official-access
+        type: document
+    transitions:
+      - to: finish
+  - id: finish
+    needs: []
+    outputs:
+      - id: access-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+sources:
+  - &a1
+    url: https://pflege.gv.at/de/diaetologie
+    quote: Viele Angebote können Sie kostenlos über Ihre Krankenversicherung nutzen.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - *a1
+as_of: 2026-11-06

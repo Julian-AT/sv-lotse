@@ -1,0 +1,42 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: praevention-ernaehrungsberatung
+name_de: Ernährungsberatung – Zugang und regionale Angebote
+name_simple: Beratungsangebote zu Ernährung finden
+area: B
+life_situations:
+  - prevention
+  - family-with-child
+scope: social_insurance
+criteria:
+  - id: published-access
+    text_de: Bei Ihrer Krankenversicherung nach regionalen Angeboten, Kosten und
+      einer allfälligen Überweisung fragen. Die individuelle Ernährungsberatung
+      erfolgt durch Fachpersonen; der Lotse bereitet nur den Zugang vor.
+    source: &a1
+      url: https://pflege.gv.at/de/diaetologie
+      quote: Viele Angebote können Sie kostenlos über Ihre Krankenversicherung nutzen.
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers:
+  - oegk
+  - svs
+  - bvaeb
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents:
+  - id: referral
+    name_de: "Überweisung, wenn die Sozialversicherung sie verlangt"
+    required: false
+    obtain_from: "Hausärztin oder Hausarzt; ob sie nötig ist, bei der Sozialversicherung erfragen"
+    source: &doc1
+      url: "https://pflege.gv.at/de/diaetologie"
+      quote: "Oft benötigen Sie für eine Ernährungs- oder Diätberatung eine Überweisung von Ihrer Hausärztin oder Ihrem Hausarzt."
+      retrieved_at: "2026-11-06T03:45:00Z"
+forms: []
+process: ref:processes/praevention-ernaehrungsberatung
+appointment_channels: []
+sources:
+  - *a1
+  - *a1
+  - *doc1
+as_of: 2026-11-06
