@@ -325,8 +325,8 @@ function applyLink(page: PageRead, query: string): PageRead["links"][number] | u
 
 /**
  * Server-side offer for a where-to-apply request: among the deepest official pages from the turn's
- * sources and a web search (read in parallel), the first one that leads to an on-topic application
- * is offered, or its on-topic apply page when that is a web page rather than a PDF form.
+ * sources and a web search (read in parallel), the one that leads to an on-topic application is
+ * offered, or its on-topic apply page when that is a web page rather than a PDF form.
  */
 export async function deepPageOffer(input: {
   userTexts: readonly string[];
@@ -356,7 +356,9 @@ export async function deepPageOffer(input: {
     const read = reads[index];
     return { page, read, link: read && applyLink(read, query) };
   });
-  const chosen = options.find((option) => option.link) ?? options[0];
+  // An application link beats a generic form search; ties keep the search ranking.
+  const strength = ({ link }: (typeof options)[number]) => (link ? (link.apply ? 2 : 1) : 0);
+  const [chosen] = [...options].sort((left, right) => strength(right) - strength(left));
   if (!chosen) return pageOffer(input.sources);
   const link = chosen.link && !chosen.link.pdf ? chosen.link : undefined;
   const url = link?.href ?? chosen.read?.url ?? chosen.page.url;

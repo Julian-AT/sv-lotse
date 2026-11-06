@@ -254,7 +254,8 @@ test("prefers the page that carries the topic's application form", async () => {
   vi.stubGlobal("fetch", async (url: string) =>
     htmlResponse(
       url.includes("sozialministerium")
-        ? `<title>Pflegegeld in Österreich</title><main><a href="/reform">Pflegereform</a></main>`
+        ? `<title>Pflegegeld in Österreich</title><main><a href="/reform">Pflegereform</a>
+<a href="/formsearch/?q=pflegegeld">Formulare</a></main>`
         : `<title>Pflegegeld | PV</title><main>
 <a href="https://www.pv.at/cdscontent/load?contentid=1">Antrag (PDF)</a></main>`,
     ),
