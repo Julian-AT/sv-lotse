@@ -1,0 +1,101 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 18 (1-basiert), Druckseiten 34–35.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Erstattung richtet sich nach Vertragstarif, nicht Rechnungsbetrag; keine individuelle Erstattungssumme berechnen.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-wahlarzt-kostenerstattung
+name_de: Kostenerstattung für Wahlärztinnen und Wahlärzte
+name_simple: Geld für eine Arztrechnung zurückbekommen
+area: C
+life_situations:
+  - oegk-wahlarzt-kostenerstattung-navigation
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: paid
+    text_de: Das Honorar ist zunächst selbst zu bezahlen; eine saldierte Honorarnote ist einzureichen.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+      quote: Versicherte müssen das Honorar zunächst selbst bezahlen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: invoice_paid == true
+  - id: tariff
+    text_de: Grundsätzlich 80 Prozent des entsprechenden Vertragstarifs, höchstens die tatsächlichen
+      Kosten; nicht 80 Prozent der privaten Rechnung.
+    source:
+      url: https://www.oegk.at/cdscontent/?contentid=10007.870516&portal=oegkportal
+      quote:
+        Die ÖGK erstattet die Kosten eines Wahlarztes oder einer Wahlärztin grundsätzlich in der Höhe
+        von 80 Prozent jenes Betrages, den die ÖGK bei Inanspruchnahme eines entsprechenden
+        Vertragspartners bzw. einer Vertragspartnerin aufwenden hätte müssen, jedoch nicht mehr als
+        die tatsächlichen Kosten.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    legal_basis: § 131 Abs. 1 und 2 ASVG (SozDok); § 23 Satzung der ÖGK; § 37 Krankenordnung der ÖGK
+  - id: invoice-details
+    text_de: Die Honorarnote enthält Namen, Versicherungsnummer, Wohnadresse, Zahlungsbestätigung,
+      Ausstellungsdatum und Leistungen samt Datum.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+      quote:
+        Die Honorarnote muss Vor- und Familiennamen der bzw. des Versicherten, Versicherungsnummer,
+        Wohnadresse, Zahlungsbestätigung, das Ausstellungsdatum und genaue Angaben über die
+        ärztlichen Leistungen samt Datum enthalten.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: invoice
+    name_de: Detaillierte Honorarnote mit Zahlungsbestätigung
+    required: true
+    obtain_from: Wahlärztin oder Wahlarzt; Zahlungsnachweis von der eigenen Bank oder als Quittung
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+      quote:
+        Die Honorarnote muss Vor- und Familiennamen der bzw. des Versicherten, Versicherungsnummer,
+        Wohnadresse, Zahlungsbestätigung, das Ausstellungsdatum und genaue Angaben über die
+        ärztlichen Leistungen samt Datum enthalten.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Kostenerstattung Wahlarzt Honorarnote
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-wahlarzt-kostenerstattung
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+    quote: Versicherte müssen das Honorar zunächst selbst bezahlen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870516&portal=oegkportal
+    quote:
+      Die ÖGK erstattet die Kosten eines Wahlarztes oder einer Wahlärztin grundsätzlich in der Höhe
+      von 80 Prozent jenes Betrages, den die ÖGK bei Inanspruchnahme eines entsprechenden
+      Vertragspartners bzw. einer Vertragspartnerin aufwenden hätte müssen, jedoch nicht mehr als
+      die tatsächlichen Kosten.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+    quote:
+      Die Honorarnote muss Vor- und Familiennamen der bzw. des Versicherten, Versicherungsnummer,
+      Wohnadresse, Zahlungsbestätigung, das Ausstellungsdatum und genaue Angaben über die ärztlichen
+      Leistungen samt Datum enthalten.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870516&portal=oegkportal
+    quote: In den meisten Fällen erstattet Ihnen die ÖGK einen Teil der Kosten zurück.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01

@@ -1,0 +1,109 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 27 (1-basiert), Druckseiten 53–58.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Kein gesonderter Antrag für reguläre Auszahlung; Unterlagen und Bankverbindung reichen. Besonderes Krankengeld gesondert mit ÖGK klären (PDF S. 56–58).
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-krankengeld
+name_de: Krankengeld
+name_simple: Geld im Krankenstand erhalten
+area: C
+life_situations:
+  - oegk-krankengeld-navigation
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: earnings
+    text_de: Krankengeld ersetzt entfallenden Arbeitsverdienst unter Berücksichtigung der
+      Entgeltfortzahlung. Bei halbem Lohnanspruch wird halbes Krankengeld geleistet.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+      quote: "Dabei gilt: Halber Lohn-/Gehaltsanspruch bedeutet halbes Krankengeld."
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: notification
+    text_de: Der Anspruch ruht, solange die Arbeitsunfähigkeit der ÖGK nicht gemeldet ist.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+      quote:
+        wenn und solange die Arbeitsunfähigkeit der ÖGK nicht gemeldet wird. Das wird in der Regel
+        von der Ärztin bzw. vom Arzt für Sie erledigt.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: sick_note_reported == true
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: sick-note
+    name_de: Ärztliche Krankmeldung
+    required: true
+    obtain_from: Behandelnde Ärztin oder behandelnder Arzt
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+      quote:
+        "Um Ihnen das Krankengeld auszahlen zu können, benötigen wir von Ihnen folgende Unterlagen: y
+        Krankmeldung y Eine „Arbeits- und Entgeltbestätigung”, die Angaben über die Einkommenshöhe
+        und die Dauer einer eventuellen Entgeltfortzahlung enthält. Diese wird von der Dienstgeberin
+        bzw. dem Dienstgeber ausgestellt."
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: earnings
+    name_de: Arbeits- und Entgeltbestätigung bei Beschäftigung
+    required: false
+    obtain_from: Arbeitgeber; bei AMS-Bezug übermittelt das AMS die Daten elektronisch
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+      quote:
+        "Um Ihnen das Krankengeld auszahlen zu können, benötigen wir von Ihnen folgende Unterlagen: y
+        Krankmeldung y Eine „Arbeits- und Entgeltbestätigung”, die Angaben über die Einkommenshöhe
+        und die Dauer einer eventuellen Entgeltfortzahlung enthält. Diese wird von der Dienstgeberin
+        bzw. dem Dienstgeber ausgestellt."
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: bank-details
+    name_de: Eigene Bankverbindung
+    required: true
+    obtain_from: Eigene Konto-Unterlagen
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+      quote: Vergessen Sie bitte auch nicht, uns Ihre Bankverbindung bekanntzugeben.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms: []
+process: ref:processes/oegk-krankengeld
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+    quote: "Dabei gilt: Halber Lohn-/Gehaltsanspruch bedeutet halbes Krankengeld."
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+    quote:
+      wenn und solange die Arbeitsunfähigkeit der ÖGK nicht gemeldet wird. Das wird in der Regel
+      von der Ärztin bzw. vom Arzt für Sie erledigt.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+    quote:
+      "Um Ihnen das Krankengeld auszahlen zu können, benötigen wir von Ihnen folgende Unterlagen: y
+      Krankmeldung y Eine „Arbeits- und Entgeltbestätigung”, die Angaben über die Einkommenshöhe und
+      die Dauer einer eventuellen Entgeltfortzahlung enthält. Diese wird von der Dienstgeberin bzw.
+      dem Dienstgeber ausgestellt."
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=29
+    quote: Vergessen Sie bitte auch nicht, uns Ihre Bankverbindung bekanntzugeben.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.867467&portal=oegkportal
+    quote: Krankengeld gebührt frühestens ab dem vierten Tag eines Krankenstandes.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01

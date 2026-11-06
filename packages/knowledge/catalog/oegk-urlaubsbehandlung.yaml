@@ -1,0 +1,80 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 21 (1-basiert), Druckseiten 40–42.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Vor Reisebeginn Zielland mit der ÖGK klären: Türkei benötigt Urlaubskrankenschein; in Bosnien-Herzegowina, Serbien und Montenegro EKVK gegen lokalen Behandlungsschein tauschen. Keine geplante Auslandsbehandlung (PDF S. 41–42).
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-urlaubsbehandlung
+name_de: Ärztliche Behandlung im Urlaub
+name_simple: Krankenversicherung im Urlaub klären
+area: C
+life_situations:
+  - oegk-urlaubsbehandlung-navigation
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: contract-abroad
+    text_de: Die EKVK gilt für medizinisch notwendige Sachleistungen bei abrechnungsberechtigten
+      Vertragspartnern im Ausland; länderspezifische Regeln beachten.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+      quote:
+        Mit der EKVK bekommen Sie direkt bei Vertragspartnerinnen und Vertragspartnern im Ausland
+        medizinisch notwendige Sachleistungen. Legen Sie dafür die EKVK den Leistungserbringern
+        (Ärztin oder Arzt, Krankenanstalt usw.) vor.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: copayment
+    text_de: Selbstbehalte nach den Vorschriften des Behandlungsstaats sind selbst zu bezahlen.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+      quote: Sie müssen Selbstbehalte nach den Rechtsvorschriften des Behandlungsstaats selbst bezahlen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: ekvk
+    name_de: Europäische Krankenversicherungskarte (EKVK)
+    required: true
+    obtain_from: Rückseite der e-card; bei fehlendem Anspruchsnachweis ÖGK kontaktieren
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+      quote: Auf der Rückseite der e-card befindet sich die Europäische Krankenversicherungskarte (EKVK).
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms: []
+process: ref:processes/oegk-urlaubsbehandlung
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+    quote: Mit der EKVK bekommen Sie direkt bei Vertragspartnerinnen und Vertragspartnern im Ausland
+      medizinisch notwendige Sachleistungen. Legen Sie dafür die EKVK den Leistungserbringern
+      (Ärztin oder Arzt, Krankenanstalt usw.) vor.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+    quote: Sie müssen Selbstbehalte nach den Rechtsvorschriften des Behandlungsstaats selbst bezahlen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+    quote: Auf der Rückseite der e-card befindet sich die Europäische Krankenversicherungskarte (EKVK).
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870663&portal=oegkportal
+    quote:
+      Sie sind bei der Österreichischen Gesundheitskasse (ÖGK) versichert und planen eine Reise im
+      Inland oder ins Ausland?
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01

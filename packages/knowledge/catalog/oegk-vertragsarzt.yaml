@@ -1,0 +1,82 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 18 (1-basiert), Druckseiten 34.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+#
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-vertragsarzt
+name_de: Ärztliche Hilfe bei Vertragsärztinnen und Vertragsärzten
+name_simple: Mit der e-card zum Arzt gehen
+area: C
+life_situations:
+  - oegk-vertragsarzt-navigation
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: contract
+    text_de:
+      Die genannten Vertragsleistungen werden für Versicherte zuzahlungsfrei übernommen; e-card
+      oder Überweisungs-/Zuweisungsschein vorlegen.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+      quote:
+        Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei
+        von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder
+        Zuweisungsschein vorlegen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: ecard
+    name_de: e-card
+    required: true
+    obtain_from: ÖGK
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+      quote:
+        Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei
+        von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder
+        Zuweisungsschein vorlegen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: referral
+    name_de: Überweisung oder Zuweisung, soweit erforderlich
+    required: false
+    obtain_from: Behandelnde Ärztin oder behandelnder Arzt
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+      quote:
+        Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei
+        von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder
+        Zuweisungsschein vorlegen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms: []
+process: ref:processes/oegk-vertragsarzt
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=18
+    quote:
+      Die Behandlung bei den oben genannten Leistungserbringern wird für Versicherte zuzahlungsfrei
+      von der ÖGK übernommen. Sie müssen Ihre e-card oder einen Überweisungs- oder Zuweisungsschein
+      vorlegen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870522&portal=oegkportal
+    quote: Nehmen Sie immer Ihre e-card mit!
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01

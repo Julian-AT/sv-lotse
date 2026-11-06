@@ -1,0 +1,94 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 11 (1-basiert), Druckseiten 21.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Keine abschließende Anspruchsberechnung aus dem PDF: Einkommens- und Studiengrenzen durch ÖGK prüfen lassen.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-selbstversicherung-studierende
+name_de: Selbstversicherung für Studierende
+name_simple: Als Student oder Studentin krankenversichert sein
+area: C
+life_situations:
+  - oegk-selbstversicherung-studierende-navigation
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: student-cover
+    text_de:
+      "Studierendenversicherung: gewöhnlicher Aufenthalt im Inland; keine Wartezeit; Beitrag 2026
+      monatlich 78,84 Euro."
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+      quote:
+        "Für Studierende gibt es zusätzliche Erleichterungen. Einerseits entfällt die Wartezeit,
+        andererseits genügt der gewöhnliche Aufenthalt im Inland. Außerdem gilt: Der monatliche
+        Beitrag beträgt 78,84 Euro. Die begünstigte Studentenversicherung ist an Einkommensgrenzen
+        und Studiendauer gebunden."
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: domestic_stay == true
+    legal_basis: § 16 ASVG (SozDok)
+  - id: study-limits
+    text_de:
+      Die begünstigte Versicherung ist an Einkommensgrenzen und Studiendauer gebunden. Die ÖGK
+      prüft diese Voraussetzungen.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+      quote:
+        "Für Studierende gibt es zusätzliche Erleichterungen. Einerseits entfällt die Wartezeit,
+        andererseits genügt der gewöhnliche Aufenthalt im Inland. Außerdem gilt: Der monatliche
+        Beitrag beträgt 78,84 Euro. Die begünstigte Studentenversicherung ist an Einkommensgrenzen
+        und Studiendauer gebunden."
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: study-proof
+    name_de: Aktuelle Fortsetzungsbestätigung oder Studienblatt
+    required: true
+    obtain_from: Universität oder Hochschule
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=12
+      quote:
+        Studierende müssen bei Antragstellung und in der Folge jährlich spätestens bis 31.12. eines
+        jeden Kalenderjahres eine Fortsetzungsbestätigung bzw. ein Studienblatt des aktuellen
+        Semesters vorlegen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Selbstversicherung für Studierende
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-selbstversicherung-studierende
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=11
+    quote: "Für Studierende gibt es zusätzliche Erleichterungen. Einerseits entfällt die Wartezeit,
+      andererseits genügt der gewöhnliche Aufenthalt im Inland. Außerdem gilt: Der monatliche
+      Beitrag beträgt 78,84 Euro. Die begünstigte Studentenversicherung ist an Einkommensgrenzen und
+      Studiendauer gebunden."
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=12
+    quote:
+      Studierende müssen bei Antragstellung und in der Folge jährlich spätestens bis 31.12. eines
+      jeden Kalenderjahres eine Fortsetzungsbestätigung bzw. ein Studienblatt des aktuellen
+      Semesters vorlegen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.868713&portal=oegkportal
+    quote: Die Selbstversicherung kostet 2026 monatlich EUR 78,84.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01

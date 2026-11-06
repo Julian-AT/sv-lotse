@@ -1,0 +1,73 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 19 (1-basiert), Druckseiten 36–38.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Keine automatische Zusage einer Kostenübernahme; Privatbehandlungen und Drittstaaten werden nach Einreichen der Unterlagen auf Kostenerstattung geprüft (PDF S. 37–38).
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-geplante-auslandsbehandlung
+name_de: Bewilligung einer geplanten Behandlung im Ausland
+name_simple: Kosten vor einer Behandlung im Ausland klären
+area: C
+life_situations:
+  - oegk-geplante-auslandsbehandlung-navigation
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: prior-approval
+    text_de: Für eine Kostenübernahme ist vorab eine Bewilligung nach medizinischer Prüfung
+      erforderlich. Die medizinische Prüfung erfolgt durch die ÖGK.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19
+      quote:
+        Für eine Kostenübernahme einer geplanten Behandlung im Ausland muss vorab eine Bewilligung
+        nach medizinischer Prüfung vorliegen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: hospital-form
+    name_de: Vom österreichischen Schwerpunkt- oder Zentralkrankenhaus ausgefülltes Formular
+    required: true
+    obtain_from: Behandelndes österreichisches Schwerpunkt- oder Zentralkrankenhaus
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19
+      quote: Übermitteln Sie uns das von einem österreichischen Schwerpunkt- bzw. Zentralkrankenhaus
+        ausgefüllte Formular. Sie finden das Formular auf unserer Homepage.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Geplante Behandlung im Ausland Antrag Kostenübernahme
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-geplante-auslandsbehandlung
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19
+    quote:
+      Für eine Kostenübernahme einer geplanten Behandlung im Ausland muss vorab eine Bewilligung
+      nach medizinischer Prüfung vorliegen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19
+    quote: Übermitteln Sie uns das von einem österreichischen Schwerpunkt- bzw. Zentralkrankenhaus
+      ausgefüllte Formular. Sie finden das Formular auf unserer Homepage.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870660&portal=oegkportal
+    quote: Bitte nehmen Sie mindestens zwei Wochen vor dem geplanten Antritt einer Behandlung oder
+      Untersuchung im Ausland mit uns Kontakt auf.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01

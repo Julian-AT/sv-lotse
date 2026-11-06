@@ -1,0 +1,103 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 21 (1-basiert), Druckseiten 40–42.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Vor Reisebeginn Zielland mit der ÖGK klären: Türkei benötigt Urlaubskrankenschein; in Bosnien-Herzegowina, Serbien und Montenegro EKVK gegen lokalen Behandlungsschein tauschen. Keine geplante Auslandsbehandlung (PDF S. 41–42).
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+# Abschluss bestätigt die Verwaltungshilfe bzw. Rückfrage, keinen Leistungsanspruch.
+# Erinnerungen nach 0 Tagen sind Aufgabenhinweise, keine gesetzlichen Fristen.
+id: oegk-urlaubsbehandlung
+benefit: ref:catalog/oegk-urlaubsbehandlung
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: contact_region
+    type: enum:oegk-region
+    question_hint: In welchem Bundesland befindet sich Ihre zuständige ÖGK-Stelle laut
+      Versicherungsunterlagen? Bei Selbstversicherung mit geringfügiger Beschäftigung nennen Sie das
+      Beschäftigungsbundesland.
+    validation:
+      options:
+        - Wien
+        - Niederösterreich
+        - Burgenland
+        - Oberösterreich
+        - Steiermark
+        - Kärnten
+        - Salzburg
+        - Tirol
+        - Vorarlberg
+  - id: documents_ready
+    type: boolean
+    question_hint: Sind die genannten Unterlagen vollständig vorbereitet?
+  - id: contact_done
+    type: boolean
+    question_hint:
+      Haben Sie die Unterlagen selbst übermittelt oder die Abwicklung mit der zuständigen
+      Stelle geklärt?
+steps:
+  - id: check-requirements
+    needs:
+      - contact_region
+    criteria: ref:catalog/oegk-urlaubsbehandlung#criteria
+    action: office.resolve
+    outputs:
+      - id: contact-office
+        type: office
+    transitions:
+      - to: prepare
+  - id: prepare
+    needs:
+      - check-requirements
+      - documents_ready
+    documents: ref:catalog/oegk-urlaubsbehandlung#documents
+    action: documents.checklist
+    outputs:
+      - id: administrative-checklist
+        type: checklist
+    transitions:
+      - to: confirm-contact
+        when: documents_ready == true
+    reminders:
+      - after_days: 0
+        text_de:
+          Bitte besorgen Sie die fehlenden Unterlagen bei den genannten Stellen. Medizinische Angaben
+          bleiben bei den behandelnden Fachpersonen.
+        when: documents_ready == false
+  - id: confirm-contact
+    needs:
+      - prepare
+      - contact_done
+    outputs:
+      - id: contact-confirmation
+        type: confirmation
+    transitions:
+      - to: finish
+        when: contact_done == true
+  - id: finish
+    needs:
+      - confirm-contact
+    outputs:
+      - id: navigation-complete
+        type: confirmation
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+    quote: Mit der EKVK bekommen Sie direkt bei Vertragspartnerinnen und Vertragspartnern im Ausland
+      medizinisch notwendige Sachleistungen. Legen Sie dafür die EKVK den Leistungserbringern
+      (Ärztin oder Arzt, Krankenanstalt usw.) vor.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+    quote: Sie müssen Selbstbehalte nach den Rechtsvorschriften des Behandlungsstaats selbst bezahlen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=21
+    quote: Auf der Rückseite der e-card befindet sich die Europäische Krankenversicherungskarte (EKVK).
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870663&portal=oegkportal
+    quote:
+      Sie sind bei der Österreichischen Gesundheitskasse (ÖGK) versichert und planen eine Reise im
+      Inland oder ins Ausland?
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01

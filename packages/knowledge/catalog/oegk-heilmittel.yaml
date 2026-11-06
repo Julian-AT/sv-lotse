@@ -1,0 +1,81 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 22 (1-basiert), Druckseiten 42.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Nur administrative Abwicklung eines bestehenden Rezepts. Keine Arzneimittel-, Therapie- oder Dosierungsempfehlung. Rezeptgebührenbefreiung ist außerhalb dieses Pakets.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-heilmittel
+name_de: Heilmittel auf ärztliches Rezept
+name_simple: Ein Rezept bei der Apotheke einlösen
+area: C
+life_situations:
+  - oegk-heilmittel-navigation
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: prescription
+    text_de: Ärztlich verschriebene Heilmittel werden auf Rezept in einer öffentlichen Apotheke oder
+      Hausapotheke eingelöst.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=22
+      quote: Diese verschreibt Ihnen Ihre Ärztin bzw. Ihr Arzt und speichert das e-Rezept im
+        e-card-System. Das Rezept können Sie in jeder öffentlichen Apotheke oder Hausapotheke auf
+        Kosten der ÖGK einlösen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: prescription_present == true
+  - id: approval
+    text_de: Für bewilligungspflichtige Arzneien holt die Ärztin oder der Arzt eine Genehmigung des
+      Medizinischen Dienstes der ÖGK ein.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=22
+      quote:
+        Darüber hinaus gibt es bewilligungspflichtige Arzneien, für die Ihre Ärztin bzw. Ihr Arzt
+        eine Genehmigung des Medizinischen Dienstes der ÖGK einholt.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: prescription
+    name_de: Ärztliches Rezept oder e-Rezept
+    required: true
+    obtain_from: Verschreibende Ärztin oder verschreibender Arzt
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=22
+      quote: Diese verschreibt Ihnen Ihre Ärztin bzw. Ihr Arzt und speichert das e-Rezept im
+        e-card-System. Das Rezept können Sie in jeder öffentlichen Apotheke oder Hausapotheke auf
+        Kosten der ÖGK einlösen.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms: []
+process: ref:processes/oegk-heilmittel
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=22
+    quote: Diese verschreibt Ihnen Ihre Ärztin bzw. Ihr Arzt und speichert das e-Rezept im
+      e-card-System. Das Rezept können Sie in jeder öffentlichen Apotheke oder Hausapotheke auf
+      Kosten der ÖGK einlösen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=22
+    quote: Darüber hinaus gibt es bewilligungspflichtige Arzneien, für die Ihre Ärztin bzw. Ihr Arzt
+      eine Genehmigung des Medizinischen Dienstes der ÖGK einholt.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870460&portal=oegkportal
+    quote: Viele Medikamente müssen ärztlich verschrieben werden.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
