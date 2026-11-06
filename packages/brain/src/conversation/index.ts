@@ -459,6 +459,10 @@ async function runTurn(
               turnId: prepared.turnId,
               language: formLanguage,
               topics: topicTexts(prepared.history),
+              model:
+                options?.languageModel ??
+                options?.model ??
+                createModelRouter(config).modelFor("extractor"),
             })
           : undefined);
       if (formTurn) {

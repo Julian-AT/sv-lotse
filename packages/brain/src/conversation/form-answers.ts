@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import type { DatabaseClient } from "@lotse/db";
 import { facts, formFields, formInstances } from "@lotse/db/schema";
 import { type Action, ActionSchema, type JsonValue } from "@lotse/protocol";
+import { generateText, type LanguageModel, Output } from "ai";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import type { RuntimeContext } from "../agent/context.ts";
@@ -197,12 +198,14 @@ const SKIP = /^(?:überspringen|weiter|weiß (?:ich )?nicht|keine ahnung|skip|i 
 const copy = {
   de: {
     filled: (value: string) => `Danke, eingetragen: ${value}.`,
+    filledMany: (values: string) => `Danke, eingetragen: ${values}.`,
     unclear: "Das habe ich nicht sicher verstanden.",
     skipped: "Gut, das lasse ich leer.",
     done: "Die Felder, die ich erfragen kann, sind eingetragen. Bitte prüfen Sie den Entwurf; abgeschickt wird nichts.",
   },
   en: {
     filled: (value: string) => `Thanks, filled in: ${value}.`,
+    filledMany: (values: string) => `Thanks, filled in: ${values}.`,
     unclear: "I did not catch that for sure.",
     skipped: "Fine, I will leave that empty.",
     done: "The fields I can ask for are filled in. Please review the draft; nothing is submitted.",
@@ -228,13 +231,17 @@ export async function answerFormQuestion(input: {
   turnId: string;
   language: string;
   topics: readonly string[];
+  model?: LanguageModel;
 }): Promise<FormAnswer | undefined> {
   const { db, context } = input;
   const answer = input.userText.trim();
-  if (!answer || answer.length > 80 || answer.includes("?")) return;
+  if (!answer) return;
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
   const pending = pendingFormQuestion(input.history.slice(0, -1));
   if (!pending) return;
+  if (answer.length > 80 || MANY.test(answer))
+    return answerManyFields({ ...input, pending, answer });
+  if (answer.includes("?")) return;
   const [instance] = await db
     .select()
     .from(formInstances)
@@ -304,6 +311,124 @@ export async function answerFormQuestion(input: {
     (candidate, position) =>
       position > index && askable(candidate) && values[candidate.id] === undefined,
   );
+  return {
+    text: `${lead} ${next ? fieldQuestion(next, applicant, english) : strings.done}`,
+    actions,
+    ...(next ? { next: { formInstanceId: instance.id, fieldId: next.id } } : {}),
+  };
+}
+
+// Several values in one message ("Maria Müller, geb. 12.3.1948, Hauptstraße 5, 1100 Wien").
+const MANY = /[\n;]|,.*,|:\s*\S.*:/u;
+const extraction = z.object({
+  values: z.array(z.object({ fieldId: z.string(), value: z.string() })),
+});
+
+/**
+ * Several values in one message fill every matching askable field at once. A model maps the
+ * person's own text onto the open fields; each value still passes the field's own validation, is
+ * stored as the person's statement and typed live. Nothing matched leaves the turn to the agent.
+ */
+async function answerManyFields(input: {
+  db: DatabaseClient;
+  context: RuntimeContext;
+  turnId: string;
+  language: string;
+  topics: readonly string[];
+  model?: LanguageModel;
+  pending: { formInstanceId: string; fieldId: string };
+  answer: string;
+}): Promise<FormAnswer | undefined> {
+  const { db, context, pending, answer } = input;
+  if (!input.model) return;
+  const [instance] = await db
+    .select()
+    .from(formInstances)
+    .where(
+      and(
+        eq(formInstances.id, pending.formInstanceId),
+        eq(formInstances.caseId, context.caseId),
+        eq(formInstances.subjectId, context.subjectId),
+      ),
+    );
+  if (!instance) return;
+  const fields = templateSchema(await getTemplate(db, instance.templateId)).fields;
+  const values = formFields.parse(instance.fields);
+  const open = fields.filter((field) => askable(field) && values[field.id] === undefined);
+  if (!open.length) return;
+  const english = input.language.startsWith("en");
+  const result = await generateText({
+    model: input.model,
+    output: Output.object({ schema: extraction }),
+    system:
+      "Map the person's own text onto form fields. Return only values the text states explicitly, " +
+      "copied as written; never guess, infer or add medical information. Dates as DD.MM.YYYY.",
+    prompt: JSON.stringify({
+      fields: open.map((field) => ({
+        fieldId: field.id,
+        label: field.label_de,
+        kind: questionKey(field),
+      })),
+      text: answer,
+    }),
+    abortSignal: AbortSignal.timeout(15_000),
+    // A failed or slow extraction leaves the message to the agent instead of failing the turn.
+  }).catch(() => undefined);
+  if (!result) return;
+  const filled = result.output.values.flatMap((item) => {
+    const field = open.find((candidate) => candidate.id === item.fieldId);
+    const parsed = field ? fieldValue(field, item.value, english) : undefined;
+    return field && parsed ? [{ field, parsed }] : [];
+  });
+  const unique = filled.filter(
+    (item, index) => filled.findIndex((other) => other.field.id === item.field.id) === index,
+  );
+  if (!unique.length) return;
+  const source = { kind: "statement" as const, turnId: input.turnId, quote: answer.slice(0, 500) };
+  const written = unique.map((item) => ({ ...item, provenance: { factId: randomUUID(), source } }));
+  await db.transaction(async (tx) => {
+    for (const { field, parsed, provenance } of written)
+      await tx.insert(facts).values({
+        id: provenance.factId,
+        subjectId: context.subjectId,
+        type: field.fact_type ?? `form.field.${instance.templateId}.${field.id}`,
+        value: parsed.value,
+        turnId: input.turnId,
+        source,
+        confidence: 1,
+        confirmed: true,
+      });
+    await tx
+      .update(formInstances)
+      .set({
+        fields: formFields.parse({
+          ...values,
+          ...Object.fromEntries(
+            written.map(({ field, parsed, provenance }) => [
+              field.id,
+              { value: parsed.value, provenance, state: "draft", approvalId: null },
+            ]),
+          ),
+        }),
+      })
+      .where(eq(formInstances.id, instance.id));
+  });
+  const actions = written.map(({ field, parsed, provenance }) =>
+    ActionSchema.parse({
+      id: randomUUID(),
+      kind: "type",
+      sentenceIndex: 0,
+      target: { kind: "form", formInstanceId: instance.id, fieldId: field.id },
+      payload: { value: String(parsed.value), provenance, pace: FORM_TYPE_PACE_MS },
+    }),
+  );
+  const done = new Set(written.map(({ field }) => field.id));
+  const next = fields.find(
+    (field) => askable(field) && values[field.id] === undefined && !done.has(field.id),
+  );
+  const strings = english ? copy.en : copy.de;
+  const applicant = applicantOf(input.topics, english);
+  const lead = strings.filledMany(written.map(({ parsed }) => parsed.readBack).join(", "));
   return {
     text: `${lead} ${next ? fieldQuestion(next, applicant, english) : strings.done}`,
     actions,
