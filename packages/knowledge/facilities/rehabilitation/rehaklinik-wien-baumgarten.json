@@ -1,0 +1,27 @@
+{
+  "id": "rehaklinik-wien-baumgarten",
+  "name_de": "Rehaklinik Wien Baumgarten",
+  "type": "rehabilitation",
+  "region": "Wien",
+  "address": {
+    "street": "Reizenpfenninggasse 1",
+    "postal_code": "1140",
+    "locality": "Wien",
+    "country": "AT"
+  },
+  "location": {
+    "latitude": 48.211253,
+    "longitude": 16.2853689
+  },
+  "phone": "+43 1 41500",
+  "url": "https://www.rehawienbaumgarten.at/kontakt/",
+  "sources": [
+    {
+      "url": "https://www.rehawienbaumgarten.at/kontakt/",
+      "quote": "Rehaklinik Wien Baumgarten Betriebs-GmbH\nReizenpfenninggasse 1\n1140 Wien\nÖsterreich\nTel.: +43 (0) 1 41500\nE-Mail: office@rehawienbaumgarten.at",
+      "retrieved_at": "2026-11-06T01:36:33.054140Z"
+    }
+  ],
+  "as_of": "2026-11-06",
+  "email": "office@rehawienbaumgarten.at"
+}
