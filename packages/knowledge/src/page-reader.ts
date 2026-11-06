@@ -19,7 +19,7 @@ export type PageStructure = {
 const MAX_TEXT = 1_500;
 const MAX_LINKS = 40;
 const MAX_FIELDS = 30;
-const FORM = /formular|form\b|vordruck/iu;
+const FORM = /formular|\bforms?\b|vordruck/iu;
 const APPLY = /antrag|beantrag|online.?beantragen|einreich/iu;
 const SKIPPED_FIELDS = new Set([
   "hidden",
@@ -70,7 +70,7 @@ export function readPageStructure(
     const link = {
       text: label.slice(0, 120),
       href: href.href,
-      pdf: /\.pdf$/iu.test(href.pathname),
+      pdf: /\.pdf$/iu.test(href.pathname) || /\bpdf\b/iu.test(label),
       form: FORM.test(haystack),
       apply: APPLY.test(haystack),
     };

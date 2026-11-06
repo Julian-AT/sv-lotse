@@ -302,17 +302,19 @@ export async function readOfficialPage(
   throw new Error("PAGE_REDIRECT_LIMIT");
 }
 
-/** The on-topic apply or form link of a read page; generic "Formulare" menus do not count. */
+/**
+ * The on-topic apply or form link of a read page. Generic "Formulare" menus do not count; on a
+ * page about the topic, its application PDF does.
+ */
 function applyLink(page: PageRead, query: string): PageRead["links"][number] | undefined {
   const words = queryWords(query);
+  const about = (value: string) =>
+    words.filter((word) => value.toLowerCase().includes(word)).length;
+  const onTopic = about(`${page.title} ${page.url}`) > 0;
   return page.links
     .filter((link) => link.apply || link.form)
-    .map((link) => ({
-      link,
-      matches: words.filter((word) => `${link.text} ${link.href}`.toLowerCase().includes(word))
-        .length,
-    }))
-    .filter(({ matches }) => matches > 0)
+    .map((link) => ({ link, matches: about(`${link.text} ${link.href}`) }))
+    .filter(({ link, matches }) => matches > 0 || (onTopic && link.apply && link.pdf))
     .sort(
       (left, right) =>
         right.matches - left.matches ||
@@ -322,8 +324,9 @@ function applyLink(page: PageRead, query: string): PageRead["links"][number] | u
 }
 
 /**
- * Server-side offer for a where-to-apply request: the deepest official page among the turn's
- * sources and a web search, followed one link further to its on-topic apply page when it has one.
+ * Server-side offer for a where-to-apply request: among the deepest official pages from the turn's
+ * sources and a web search (read in parallel), the first one that leads to an on-topic application
+ * is offered, or its on-topic apply page when that is a web page rather than a PDF form.
  */
 export async function deepPageOffer(input: {
   userTexts: readonly string[];
@@ -334,7 +337,7 @@ export async function deepPageOffer(input: {
   if (!isGuidanceRequest(input.userTexts)) return;
   const query = input.userTexts.slice(0, 2).join(" ").slice(0, 300);
   const origins = await allowlistedOrigins();
-  const [best] = await findOfficialPages(
+  const pages = await findOfficialPages(
     { query },
     {
       model: input.model,
@@ -343,13 +346,21 @@ export async function deepPageOffer(input: {
       signal: input.signal,
     },
   );
-  if (!best) return pageOffer(input.sources);
-  const page = await readOfficialPage(best.url, { origins, signal: input.signal }).catch(
-    () => undefined,
+  if (!pages.length) return pageOffer(input.sources);
+  const reads = await Promise.all(
+    pages.map((page) =>
+      readOfficialPage(page.url, { origins, signal: input.signal }).catch(() => undefined),
+    ),
   );
-  const link = page && applyLink(page, query);
-  const url = link?.href ?? page?.url ?? best.url;
-  const name = (link?.text ?? page?.title ?? "").slice(0, 80);
+  const options = pages.map((page, index) => {
+    const read = reads[index];
+    return { page, read, link: read && applyLink(read, query) };
+  });
+  const chosen = options.find((option) => option.link) ?? options[0];
+  if (!chosen) return pageOffer(input.sources);
+  const link = chosen.link && !chosen.link.pdf ? chosen.link : undefined;
+  const url = link?.href ?? chosen.read?.url ?? chosen.page.url;
+  const name = (link?.text ?? chosen.read?.title ?? "").slice(0, 80);
   const host = new URL(url).hostname.replace(/^www\./u, "");
   return {
     target: { kind: "dom", handle: "page", url },

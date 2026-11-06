@@ -249,3 +249,25 @@ test("stays on the best page when its apply links are about something else", asy
     deepPageOffer({ userTexts: ["Wo beantrage ich Pflegegeld?"], sources: [], model }),
   ).resolves.toMatchObject({ target: { url: "https://www.pv.at/web/pflegegeld" } });
 });
+
+test("prefers the page that carries the topic's application form", async () => {
+  vi.stubGlobal("fetch", async (url: string) =>
+    htmlResponse(
+      url.includes("sozialministerium")
+        ? `<title>Pflegegeld in Österreich</title><main><a href="/reform">Pflegereform</a></main>`
+        : `<title>Pflegegeld | PV</title><main>
+<a href="https://www.pv.at/cdscontent/load?contentid=1">Antrag (PDF)</a></main>`,
+    ),
+  );
+  const { model } = searchModel("", [
+    "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html",
+    "https://www.pv.at/web/pflegegeld",
+  ]);
+
+  await expect(
+    deepPageOffer({ userTexts: ["Wo beantrage ich Pflegegeld?"], sources: [], model }),
+  ).resolves.toEqual({
+    target: { kind: "dom", handle: "page", url: "https://www.pv.at/web/pflegegeld" },
+    label: "die Seite „Pflegegeld | PV“ auf pv.at",
+  });
+});
