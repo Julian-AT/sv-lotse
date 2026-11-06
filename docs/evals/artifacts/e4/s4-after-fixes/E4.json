@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E4",
+    "name": "Persisted multi-turn administrative scenarios",
+    "gate": {
+      "kind": "informational",
+      "metric": "taskSuccess",
+      "threshold": 0.9,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 300
+  },
+  "selection": {
+    "sample": 2,
+    "seed": "e4-2026-11-06"
+  },
+  "counts": {
+    "total": 2,
+    "passed": 0,
+    "failed": 2,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0,
+    "taskSuccess": 0,
+    "goal_confirmed": 0.5,
+    "benefits": 0.5,
+    "office": 0.5,
+    "documents": 0.5,
+    "question_efficiency": 0,
+    "next_action": 0.5,
+    "tone_language": 1,
+    "citations": 0.5,
+    "boundary": 1,
+    "questionBaselineAvailable": 0,
+    "pipelineFailed": 0
+  },
+  "wilson95": {
+    "lower": 0,
+    "upper": 0.6576197728563925,
+    "confidence": 0.95
+  },
+  "gateVerdict": "insufficient_data",
+  "modelVersion": "persisted-turn/1;orchestrator=gpt-5.4-mini;classifier=gpt-5.4-nano;guard=gpt-5.4-mini;extractor=gpt-5.4-mini;persona=gpt-4.1-mini;judge=gpt-4.1-mini",
+  "judgeVersions": [
+    {
+      "model": "gpt-4.1-mini-2025-04-14",
+      "rubricId": "child_scenario",
+      "rubricVersion": "1",
+      "promptVersion": "1"
+    }
+  ],
+  "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+  "startedAt": "2026-11-06T02:39:31.676Z",
+  "finishedAt": "2026-11-06T02:42:11.865Z",
+  "cases": [
+    {
+      "caseId": "child-06",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 160189.28512500002,
+      "metrics": {
+        "goal_confirmed": 1,
+        "benefits": 1,
+        "office": 1,
+        "documents": 1,
+        "question_efficiency": 0,
+        "next_action": 1,
+        "tone_language": 1,
+        "citations": 1,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "child_scenario",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 1,
+            "rationale": "The assistant consistently restates and confirms the user's goal as obtaining clear, simple information about family benefits in Salzburg and agreeing on one next step, addressing the user as a helper and asking for confirmation multiple times."
+          },
+          "benefits": {
+            "score": 1,
+            "rationale": "The assistant focuses mainly on Familienbeihilfe, correctly stating its automatic processing after a birth in Austria and the requirement to send missing data if needed. However, the assistant does not identify all eight expected benefit topics including the Eltern-Kind-Pass examinations, vaccinations, nutrition, family counseling, childcare allowance, movement, or child health services for the age group and region, thus missing some coverage as per the expected outcome."
+          },
+          "office": {
+            "score": 1,
+            "rationale": "The assistant correctly identifies Finanzamt Österreich as the responsible office for Familienbeihilfe, based on official sources, and advises confirmation with the responsible office without inventing other local contacts. The assistant does not misroute or misuse insurer responsibility information."
+          },
+          "documents": {
+            "score": 1,
+            "rationale": "The assistant provides a checklist-like outline of questions to ask the responsible office but does not list mandatory documents nor invents required ones. It correctly states that for the overview no documents need to be collected yet, and that further specific checklists apply once an application step is known. The assistant avoids prematurely requesting documents."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "The assistant repeatedly states that it does not have enough verified sources to answer and prompts for the user to confirm requirements with the office, resulting in multiple repeated requests and redundant questions about the goal. This shows excess question iterations beyond the minimum and leaves facts unresolved, reducing efficiency."
+          },
+          "next_action": {
+            "score": 1,
+            "rationale": "The assistant ultimately provides a clear next step: preparing a short, simple email question draft for the responsible office to clarify the user's requirements, matching the user's age and region, and focusing on Familie benefits in Salzburg."
+          },
+          "tone_language": {
+            "score": 1,
+            "rationale": "The assistant uses respectful and clear English, with generally short sentences, but some replies are repetitive and lack the single-instruction-at-a-time structure expected for simple language. There is no explicit readability measurement or voice/caption interface described."
+          },
+          "citations": {
+            "score": 1,
+            "rationale": "The assistant provides citations from official sources for the Familienbeihilfe responsible office (Finanzamt Österreich) and the procedure for automatic family allowance processing after birth. It clearly references sources consistent with the case provenance."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant refrains from diagnosing, interpreting medical findings, or giving medical recommendations, explicitly deferring health questions to doctors, thus respecting the medical boundary."
+          }
+        }
+      }
+    },
+    {
+      "caseId": "child-11",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 69617.896708,
+      "metrics": {
+        "goal_confirmed": 0,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 1,
+        "citations": 0,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 0
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "child_scenario",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 0,
+            "rationale": "The assistant repeatedly restates the goal but fails to confirm the correct parent-child relationship. The user clarifies the inquiry is for a grandchild, but the assistant does not explicitly recognize the helper role and clarify the parent as applicant. There is no final confirmation of the goal or selection of next step."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant does not provide any overview or mention any of the eight expected benefit topics such as Eltern-Kind-Pass examinations, vaccinations, family counseling, Familienbeihilfe, Kinderbetreuungsgeld, nutrition, movement, or childcare-related offers. The conversation remains at the goal confirmation stage with no benefits identified or explained."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "There is no mention of any responsible office such as Finanzamt Österreich for Familienbeihilfe or the insurer for Kinderbetreuungsgeld. The assistant does not route any inquiry to the correct office or identify locality-specific contacts as required."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "The assistant does not provide any checklist or mention required or optional documents for any administrative step. There is no statement that no documents are needed for an overview, nor is there any offer of sourced document lists for potential applications."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "The assistant asks only repeated goal confirmation questions but no actual missing factual questions or clarifications relevant to next steps. No questions are asked about age, residency, or insurance status, which would be needed to proceed. This absence of efficient questioning on facts relevant for next steps causes a zero score."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "The assistant does not present any actionable next step matched to the child's confirmed age and region or offer to explore a sourced overview. No application preparation or provider search is offered, and no option or selection by the parent is made."
+          },
+          "tone_language": {
+            "score": 1,
+            "rationale": "The assistant uses respectful German and simple everyday sentences appropriate for the brief goal confirmation replies. However, since no detailed explanations, term definitions, or single-step instructions are provided, the assistant cannot be rated higher. The use of language is neutral and appropriate but minimal."
+          },
+          "citations": {
+            "score": 0,
+            "rationale": "No administrative claims or explanations about offers, eligibility, offices or benefits are made, so no citations are provided. The assistant does not supply any reference source or location for its claims."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant stays strictly within administrative navigation and does not provide any medical advice, diagnosis, treatment, or personal risk assessment. It keeps within the allowed boundaries."
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,271 @@
+{
+  "adapterVersion": "persisted-turn/1",
+  "corpus": {
+    "benefits": 49,
+    "processes": 49,
+    "chunks": 419
+  },
+  "runs": [
+    {
+      "caseId": "child-11",
+      "scenario": "s4",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "56bbbcc7-5992-46c7-a4db-16238383252a",
+        "goalConfirmed": false,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          }
+        ],
+        "tools": [],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    },
+    {
+      "caseId": "child-06",
+      "scenario": "s4",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "4",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "b6bf0b32-6400-4b67-98ed-5348bde7c368",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-kb.search",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-documents.checklist",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": null,
+        "questionBaselineCount": 0
+      }
+    }
+  ]
+}
