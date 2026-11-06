@@ -1,0 +1,51 @@
+# Awaiting human review; administrative access only.
+id: praevention-darmkrebs-frueherkennung
+benefit: ref:catalog/praevention-darmkrebs-frueherkennung
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: region
+    type: string
+    question_hint: In welchem Bundesland suchen Sie ein Angebot?
+steps:
+  - id: programme-information
+    needs: []
+    criteria: ref:catalog/praevention-darmkrebs-frueherkennung#criteria
+    outputs:
+      - id: published-programme
+        type: document
+    transitions:
+      - to: prepare-access
+  - id: prepare-access
+    needs:
+      - region
+    outputs:
+      - id: official-access
+        type: document
+    transitions:
+      - to: finish
+  - id: finish
+    needs: []
+    outputs:
+      - id: access-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html
+    quote: "In Österreich können Personen ab 45 Jahren diese beiden
+      Früherkennungsuntersuchungen gratis durchführen lassen:"
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html
+    quote: Ärztinnen und Ärzte können Polypen bei einer Darmspiegelung entdecken und
+      dabei auch gleich entfernen. So kann verhindert werden, dass daraus Krebs
+      wird.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html
+    quote: Im Rahmen der Vorsorgeuntersuchung wird alle zwei Jahre ein Test auf
+      nicht sichtbares Blut im Stuhl oder alle zehn Jahre eine Darmspiegelung
+      angeboten.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06

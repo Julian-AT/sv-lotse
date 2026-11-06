@@ -1,0 +1,52 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: praevention-darmkrebs-frueherkennung
+name_de: Darmkrebsvorsorge
+name_simple: Information zur Darmkrebs-Früherkennung
+area: A
+life_situations:
+  - prevention
+scope: social_insurance
+criteria:
+  - id: published-access
+    text_de: Kostenloser Zugang ab 45 Jahren. Welche Untersuchung und welcher
+      Zeitpunkt passen, besprechen Sie mit Ihrer Ärztin oder Ihrem Arzt. Befunde
+      werden hier nicht bewertet.
+    source: &a1
+      url: https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html
+      quote: "In Österreich können Personen ab 45 Jahren diese beiden
+        Früherkennungsuntersuchungen gratis durchführen lassen:"
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers:
+  - oegk
+  - svs
+  - bvaeb
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents: []
+forms: []
+process: ref:processes/praevention-darmkrebs-frueherkennung
+appointment_channels: []
+sources:
+  - *a1
+  - &a2
+    url: https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html
+    quote: Ärztinnen und Ärzte können Polypen bei einer Darmspiegelung entdecken und
+      dabei auch gleich entfernen. So kann verhindert werden, dass daraus Krebs
+      wird.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.gesundheit.gv.at/krankheiten/krebs/darmkrebs/frueherkennung-diagnose.html
+    quote: Im Rahmen der Vorsorgeuntersuchung wird alle zwei Jahre ein Test auf
+      nicht sichtbares Blut im Stuhl oder alle zehn Jahre eine Darmspiegelung
+      angeboten.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
+target_group:
+  age_min: 45
+  sex: all
+  interval: Stuhltest alle zwei Jahre oder Darmspiegelung alle zehn Jahre;
+    individuelle Entscheidung ärztlich klären
+  rationale_text: Ärztinnen und Ärzte können Polypen bei einer Darmspiegelung
+    entdecken und dabei auch gleich entfernen. So kann verhindert werden, dass
+    daraus Krebs wird.
+  rationale_source: *a2
