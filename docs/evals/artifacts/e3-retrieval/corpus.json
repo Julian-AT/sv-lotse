@@ -1,0 +1,219 @@
+{
+  "generatedAt": "2026-11-06T02:29:09.066Z",
+  "corpus": {
+    "chunks": 419,
+    "sources": 39
+  },
+  "embeddingModels": [
+    "text-embedding-3-small"
+  ],
+  "goldSources": 25,
+  "indexedGoldSources": 25,
+  "goldPassages": 139,
+  "intactPassages": 139,
+  "questions": 200,
+  "coveredQuestions": 200,
+  "uncoveredQuestionIds": [],
+  "sources": [
+    {
+      "url": "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html",
+      "chunks": 27,
+      "activeChunks": 27,
+      "passages": 5,
+      "intactPassages": 5,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.843994",
+      "chunks": 2,
+      "activeChunks": 2,
+      "passages": 3,
+      "intactPassages": 3,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.gesundheit.gv.at/leben/eltern/eltern-kind-pass/eltern-kind-pass-untersuchungen.html",
+      "chunks": 23,
+      "activeChunks": 23,
+      "passages": 8,
+      "intactPassages": 8,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.840428",
+      "chunks": 15,
+      "activeChunks": 15,
+      "passages": 5,
+      "intactPassages": 5,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.bewegt-im-park.at/wie-funktioniert-bewegt-im-park/",
+      "chunks": 11,
+      "activeChunks": 11,
+      "passages": 8,
+      "intactPassages": 8,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/?contentid=10007.817066&portal=svsportal",
+      "chunks": 2,
+      "activeChunks": 2,
+      "passages": 7,
+      "intactPassages": 7,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/?contentid=10007.817082&viewmode=content",
+      "chunks": 5,
+      "activeChunks": 5,
+      "passages": 3,
+      "intactPassages": 3,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialministerium.gv.at/Themen/Soziales/Sozialversicherung/Medizinische-Rehabilitationsma%C3%9Fnahmen.html",
+      "chunks": 12,
+      "activeChunks": 12,
+      "passages": 6,
+      "intactPassages": 6,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.gesundheit.gv.at/gesundheitsleistungen/heilbehelfe-hilfsmittel.html",
+      "chunks": 14,
+      "activeChunks": 14,
+      "passages": 8,
+      "intactPassages": 8,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870516",
+      "chunks": 23,
+      "activeChunks": 23,
+      "passages": 8,
+      "intactPassages": 8,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.881097",
+      "chunks": 11,
+      "activeChunks": 11,
+      "passages": 5,
+      "intactPassages": 5,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html",
+      "chunks": 10,
+      "activeChunks": 10,
+      "passages": 8,
+      "intactPassages": 8,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.oesterreich.gv.at/de/themen/pflege/4/1/Seite.360517",
+      "chunks": 6,
+      "activeChunks": 6,
+      "passages": 4,
+      "intactPassages": 4,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.859005",
+      "chunks": 3,
+      "activeChunks": 3,
+      "passages": 1,
+      "intactPassages": 1,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/Pflegekarenz_und_-teilzeit/Pflegekarenz_und_-teilzeit.de.html",
+      "chunks": 19,
+      "activeChunks": 19,
+      "passages": 7,
+      "intactPassages": 7,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html",
+      "chunks": 8,
+      "activeChunks": 8,
+      "passages": 6,
+      "intactPassages": 6,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.fsw.at/p/pflege-betreuung",
+      "chunks": 4,
+      "activeChunks": 4,
+      "passages": 3,
+      "intactPassages": 3,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.fsw.at/antrag",
+      "chunks": 10,
+      "activeChunks": 10,
+      "passages": 2,
+      "intactPassages": 2,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+      "chunks": 14,
+      "activeChunks": 14,
+      "passages": 8,
+      "intactPassages": 8,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal",
+      "chunks": 28,
+      "activeChunks": 28,
+      "passages": 9,
+      "intactPassages": 9,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.oesterreich.gv.at/.syndication?pageId=aca34dfd-9b8a-473c-8b8c-3c3e17703b04",
+      "chunks": 1,
+      "activeChunks": 1,
+      "passages": 4,
+      "intactPassages": 4,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.bmf.gv.at/themen/steuern/familienbeihilfe-faqs.html",
+      "chunks": 32,
+      "activeChunks": 32,
+      "passages": 6,
+      "intactPassages": 6,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.gesundheit.gv.at/gesundheitsleistungen/arztbesuch/ueberweisung-facharzt1.html",
+      "chunks": 12,
+      "activeChunks": 12,
+      "passages": 7,
+      "intactPassages": 7,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.839579",
+      "chunks": 28,
+      "activeChunks": 28,
+      "passages": 6,
+      "intactPassages": 6,
+      "missingPassageIndexes": []
+    },
+    {
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870715",
+      "chunks": 13,
+      "activeChunks": 13,
+      "passages": 2,
+      "intactPassages": 2,
+      "missingPassageIndexes": []
+    }
+  ]
+}
