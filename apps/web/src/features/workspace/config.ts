@@ -1,0 +1,24 @@
+export const WORKSPACE_REFRESH_MS = 15_000;
+export const CASE_API_URL = "/api/cases";
+export const CASE_REPLAY_STEP_MS = 2_500;
+export const HANDOFF_NAME_MAX_LENGTH = 80;
+export const MAP_TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+export const MAP_WORKER_URL = "/api/maplibre/worker";
+export const MAP_ATTRIBUTION =
+  '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>';
+export const MAP_INITIAL_CENTER: [number, number] = [13.33, 47.6];
+export const MAP_INITIAL_ZOOM = 6;
+export const MAP_MAX_ZOOM = 19;
+export const MAP_FIT_PADDING = 48;
+export const MAP_FIT_ZOOM = 13;
+export const MAP_TILE_SIZE = 256;
+export const EARTH_RADIUS_KM = 6371;
+export const DEFAULT_RADIUS_KM = 50;
+export const MAX_RADIUS_KM = 1000;
+export const KM_DECIMALS = 1;
+export const WORKSPACE_API_URL = "/api/workspace";
+export const APPOINTMENT_PREPARE_URL = "/api/appointments/prepare";
+export const APPOINTMENT_CALENDAR_URL = "/api/appointments/calendar";
+export const APPOINTMENT_FILENAME = "lotse-appointment.ics";
+
+export const APPOINTMENT_REHEARSE_URL = "/api/appointments/rehearse";
