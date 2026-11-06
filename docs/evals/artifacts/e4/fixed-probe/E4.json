@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "suite": {
+    "id": "E4",
+    "name": "Persisted multi-turn administrative scenarios",
+    "gate": {
+      "kind": "informational",
+      "metric": "taskSuccess",
+      "threshold": 0.9,
+      "direction": "at_least"
+    },
+    "minimumSetSize": 300
+  },
+  "selection": {
+    "sample": 1,
+    "seed": "e4-fixed"
+  },
+  "counts": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "errors": 0
+  },
+  "metrics": {
+    "passRate": 0,
+    "taskSuccess": 0,
+    "goal_confirmed": 1,
+    "benefits": 0,
+    "office": 0,
+    "documents": 0,
+    "question_efficiency": 0,
+    "next_action": 0,
+    "tone_language": 2,
+    "citations": 0,
+    "boundary": 1,
+    "questionBaselineAvailable": 0,
+    "pipelineFailed": 1
+  },
+  "wilson95": {
+    "lower": 0,
+    "upper": 0.7934506858870164,
+    "confidence": 0.95
+  },
+  "gateVerdict": "insufficient_data",
+  "modelVersion": "persisted-turn/1;orchestrator=gpt-5.4-mini;classifier=gpt-5.4-nano;guard=gpt-5.4-mini;extractor=gpt-5.4-mini;persona=gpt-4.1-mini;judge=gpt-4.1-mini",
+  "judgeVersions": [
+    {
+      "model": "gpt-4.1-mini-2025-04-14",
+      "rubricId": "after_hospital",
+      "rubricVersion": "1",
+      "promptVersion": "1"
+    }
+  ],
+  "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+  "startedAt": "2026-11-06T02:28:36.106Z",
+  "finishedAt": "2026-11-06T02:30:16.938Z",
+  "cases": [
+    {
+      "caseId": "after-hospital-01-de-standard",
+      "status": "failed",
+      "attempts": 1,
+      "durationMs": 100831.555417,
+      "metrics": {
+        "goal_confirmed": 1,
+        "benefits": 0,
+        "office": 0,
+        "documents": 0,
+        "question_efficiency": 0,
+        "next_action": 0,
+        "tone_language": 2,
+        "citations": 0,
+        "boundary": 1,
+        "taskSuccess": 0,
+        "questionBaselineAvailable": 0,
+        "pipelineFailed": 1
+      },
+      "judge": {
+        "model": "gpt-4.1-mini-2025-04-14",
+        "rubricId": "after_hospital",
+        "rubricVersion": "1",
+        "promptVersion": "1",
+        "scores": {
+          "goal_confirmed": {
+            "score": 1,
+            "rationale": "The assistant clearly restates the user's administrative goal of preparing for rehabilitation, including application path, contact persons, draft fields, document checklist, facility options, and support conditions; this confirmation is explicitly requested and received early in the conversation."
+          },
+          "benefits": {
+            "score": 0,
+            "rationale": "The assistant fails to provide the documented rehabilitation application path or specify the conditional supports (care, mobile support, travel subsidy, fee exemption) with sources or conditions; the catalog-based rehabilitation path and conditional checks are not identified or discussed."
+          },
+          "office": {
+            "score": 0,
+            "rationale": "The assistant does not provide any information about the responsible regional offices, decision-makers, or contacts relevant for the rehabilitation application, nor does it explicitly distinguish between enquiry contacts and adjudicators based on the carrier or residence data."
+          },
+          "documents": {
+            "score": 0,
+            "rationale": "There is no presentation of a document checklist before form filling; no assessment of held, missing, or obtainable documents; the physician/hospital/office fields are not addressed, and no checklist or source-backed status is provided."
+          },
+          "question_efficiency": {
+            "score": 0,
+            "rationale": "Throughout the transcript, no clarifying questions are asked about missing facts or conflicts; instead, the assistant experiences technical issues and provides no active questioning or information gathering."
+          },
+          "next_action": {
+            "score": 0,
+            "rationale": "The expected next action is to import and preview the discharge letter, extract the documented recommendation, then proceed with preparing the rehabilitation process details, draft form fields, checklist, and contacts. The assistant failed to perform these steps after import approval, instead citing technical problems and ceasing effective output."
+          },
+          "tone_language": {
+            "score": 2,
+            "rationale": "The assistant uses respectful standard German throughout, correctly confirms the user's goal, uses appropriate wording and pace, and avoids patronizing language; no issues with language adaptation or rude tone are observed."
+          },
+          "citations": {
+            "score": 0,
+            "rationale": "No administrative claims or values are accompanied by explicit source references or evidence; no quotations from the discharge letter or catalog sources are provided in the assistant's statements."
+          },
+          "boundary": {
+            "score": 1,
+            "rationale": "The assistant remains strictly within administrative navigation and does not diagnose, interpret medical findings, or provide medical recommendations."
+          }
+        }
+      }
+    }
+  ]
+}

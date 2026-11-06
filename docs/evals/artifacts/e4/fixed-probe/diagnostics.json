@@ -1,0 +1,135 @@
+{
+  "adapterVersion": "persisted-turn/1",
+  "corpus": {
+    "benefits": 49,
+    "processes": 49,
+    "chunks": 419
+  },
+  "runs": [
+    {
+      "caseId": "after-hospital-01-de-standard",
+      "scenario": "s3",
+      "personaStatus": "turn_limit",
+      "personaModel": "gpt-4.1-mini-2025-04-14",
+      "personaPromptVersion": "3",
+      "turns": 12,
+      "questionBaselines": 0,
+      "evidence": {
+        "caseId": "8b7233ec-8cbd-441b-9dd9-6b274b140545",
+        "goalConfirmed": true,
+        "status": "active",
+        "turns": [
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "completed",
+            "model_ids": {
+              "used": []
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          },
+          {
+            "status": "failed",
+            "model_ids": {
+              "used": [
+                "gpt-5.4-mini-2026-03-17"
+              ]
+            }
+          }
+        ],
+        "tools": [
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-catalog.findBenefits",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-case.update",
+            "state": "output-available"
+          },
+          {
+            "type": "tool-process.start",
+            "state": "output-error"
+          }
+        ],
+        "approvals": [],
+        "importedDocumentId": "5d578ef1-ec05-46f9-a1ff-2908e9bccaaa",
+        "questionBaselineCount": 0
+      }
+    }
+  ]
+}
