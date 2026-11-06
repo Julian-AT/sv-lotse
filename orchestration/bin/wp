@@ -886,7 +886,25 @@ save_followups() {
 
 # Build commits from the worker's suggested_commits; stop when a file is left over or a message is
 # invalid, so the orchestrator can split by hand.
+# Fast mode fallback: one commit with the brief's pr_title when the suggested split does not apply.
+single_commit() {
+  local id="$1" wt b refs msg title
+  wt="$(require_wt "$id")"; b="$(brief_path "$id")"
+  git -C "$wt" reset -q --soft "$(git -C "$wt" merge-base HEAD "$(base_ref)")" 2>/dev/null || true
+  git -C "$wt" add -A -- . ':!**/test-results/**' ':!**/*.tsbuildinfo' ':!**/.turbo/**' 2>/dev/null || git -C "$wt" add -A
+  git -C "$wt" diff --cached --quiet && return 1
+  title="$(fm_get "$b" pr_title)"; refs="$id$(fm_list "$b" fr | head -n 3 | sed 's/^/, /' | tr -d '\n')"
+  msg="$(mktemp)"
+  printf '%s\n\n%s\n\nRefs: %s\n' "$title" "$(fm_get "$b" title). Landed in fast mode as one commit." "$refs" > "$msg"
+  git -C "$wt" commit -q -F "$msg"; local rc=$?; rm -f "$msg"; return $rc
+}
+
 auto_commit() {
+  if [ "$FAST_MODE" = 1 ]; then auto_commit_split "$@" || single_commit "$1"; return; fi
+  auto_commit_split "$@"
+}
+
+auto_commit_split() {
   local id="$1" run="$2" wt b refs n i files msg
   wt="$(require_wt "$id")"
   b="$(brief_path "$id")"
