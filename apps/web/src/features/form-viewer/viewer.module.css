@@ -1,0 +1,281 @@
+.viewer {
+  max-width: 100%;
+  color: var(--lotse-text, #172b36);
+}
+.toolbar {
+  composes: lotse-glass from global;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: 0.75rem;
+}
+.viewer button,
+.viewer input:not([type="checkbox"]),
+.viewer select {
+  min-height: 44px;
+  min-width: 44px;
+  font: inherit;
+}
+.viewer button {
+  cursor: pointer;
+}
+.toolbar label {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 0.5rem;
+}
+.viewer :focus-visible {
+  outline: 3px solid var(--lotse-focus, #005f73);
+  outline-offset: 3px;
+}
+.pages {
+  overflow: auto;
+  max-height: 75vh;
+  background: #dce1e5;
+  padding: 1rem;
+  border: 1px solid #58646c;
+}
+.pageSection {
+  margin: 0 auto 1rem;
+  width: max-content;
+}
+.page {
+  position: relative;
+  background: #fff;
+  color: #172b36;
+  isolation: isolate;
+}
+.canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.field {
+  position: absolute;
+  min-width: 1px;
+  min-height: 1px;
+}
+.field :global(.lotse-overlay) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 2px;
+  min-inline-size: 0;
+  font-size: 12px;
+  line-height: 1.1;
+  border: 2px dashed var(--lotse-color-brand, #008e5c);
+  background: color-mix(in srgb, var(--lotse-color-brand, #008e5c) 8%, #fff);
+  border-radius: 2px;
+}
+.field :global(.lotse-overlay[data-state="confirmed"]) {
+  border: 2px solid var(--lotse-color-brand, #008e5c);
+  background: color-mix(in srgb, var(--lotse-color-brand, #008e5c) 12%, #fff);
+}
+.field :global(legend),
+.field :global(.lotse-badge),
+.field :global(.lotse-citation) {
+  display: none;
+}
+.field :global(.lotse-text) {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: inherit;
+  color: #172b36;
+}
+.fieldEdit {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+.fieldEdit:hover,
+.fieldEdit:focus-visible {
+  background: color-mix(in srgb, var(--lotse-color-brand, #008e5c) 8%, transparent);
+  outline: 3px solid var(--lotse-color-brand, #008e5c);
+}
+.field[data-active] {
+  z-index: 2;
+  outline: 3px solid var(--lotse-color-brand, #008e5c);
+}
+.cursor {
+  display: block;
+  position: absolute;
+  right: -1rem;
+  top: -1rem;
+  aspect-ratio: 1;
+  border: 3px solid var(--lotse-color-brand, #008e5c);
+  border-radius: 50%;
+  background: var(--lotse-color-brand, #008e5c);
+  box-shadow: 0 0 0 2px #fff;
+  pointer-events: none;
+}
+.fieldList ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+.fieldRow {
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  scroll-margin-top: 8rem;
+}
+.fieldRow > span {
+  margin-inline-start: 1rem;
+}
+.fieldRow blockquote {
+  margin-inline: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.fieldRow form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+.fieldRow label {
+  flex-basis: 100%;
+}
+.package {
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+}
+.package button,
+.package a,
+.package label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 0.5rem;
+}
+.coverLetter {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+@media (prefers-reduced-motion: reduce) {
+  .viewer * {
+    scroll-behavior: auto;
+    transition: none;
+    animation: none;
+  }
+}
+
+.field :global(.lotse-citation) {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+  background: #fff;
+  color: var(--lotse-color-brand-pressed, #006d47);
+  padding: 0.25rem;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+.field:hover :global(.lotse-citation),
+.field:focus-within :global(.lotse-citation),
+.field[data-active] :global(.lotse-citation) {
+  opacity: 1;
+  pointer-events: auto;
+}
+.field:hover,
+.field:focus-within {
+  z-index: 3;
+}
+
+.reviewOverlay {
+  position: absolute;
+  inset: 0;
+}
+.reviewBox {
+  position: absolute;
+  border: 2px dashed #674000;
+  box-sizing: border-box;
+  background: #fff6;
+}
+.reviewBox[data-confirmed] {
+  border-style: solid;
+  border-color: #006d47;
+}
+.reviewBox[data-selected] {
+  outline: 3px solid #005f73;
+  z-index: 2;
+}
+.viewer .reviewMove {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  color: #172b36;
+  background: #ffffffe6;
+  touch-action: none;
+  cursor: move;
+  font-size: 12px;
+  text-align: left;
+}
+.reviewBadge {
+  display: block;
+}
+.reviewResize {
+  position: absolute;
+  right: -22px;
+  bottom: -22px;
+  border: 2px solid #005f73;
+  background: white;
+  color: #005f73;
+  touch-action: none;
+  cursor: nwse-resize;
+}
+.drawSurface {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #005f73;
+  background: #005f730d;
+  touch-action: none;
+  cursor: crosshair;
+  z-index: 3;
+}
+.reviewControls {
+  min-inline-size: 0;
+  border: 0;
+  padding: 0;
+}
+.reviewControls > button {
+  margin: 0.5rem;
+}
+.reviewEditor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: end;
+}
+.reviewEditor label {
+  display: grid;
+  gap: 0.25rem;
+}
+.reviewEditor input[type="number"] {
+  width: 7rem;
+}
+.reviewFieldList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+}
