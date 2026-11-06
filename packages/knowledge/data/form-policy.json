@@ -1,0 +1,10 @@
+{
+  "iban_pattern": "(?:iban|bank[._ -]?(?:account|verbindung|konto)|kontonummer)",
+  "discovery_pattern": "(?:formular|antr[aä]g|download)",
+  "sources": [
+    {
+      "path": "docs/prd/SV-KI-Lotse-PRD.md",
+      "quote": "IBAN only from the user's own statement; hospital and doctor sections are never filled"
+    }
+  ]
+}

@@ -1,0 +1,393 @@
+{
+  "as_of": "2026-11-06",
+  "sources": [
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.727922&version=1674629427",
+      "quote": "Sind Sie verheiratet?"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.728127&version=1663737386",
+      "quote": "Unterschrift des Antragstellers"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.766882&version=1757320704",
+      "quote": "Bestätigung der Krankenanstalt"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.773195&version=1673606482",
+      "quote": "Ärztliche Bestätigung bei medizin."
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.773195&version=1673606482",
+      "quote": "von der SVS auszufüllen"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.727922&version=1674629427",
+      "quote": "Daten des Ehepartners:"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.728129&version=1663737411",
+      "quote": "auf Verminderung der Beitragsgrundlage in der Pensionsversicherung (§ 33a BSVG)"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.762939&version=1767336498",
+      "quote": "Stufe 1.........tgl. Beitragsgrundlage:"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.728059&version=1663737283",
+      "quote": "Bezug von erhöhter Familienbeihilfe/Pflegegeld (7)"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.766566&version=1744261619",
+      "quote": "Daten übermittelt werden im Sinne des Art. 6 Abs. 1 lit a und Art. 9 Abs. 2 lit a DSGVO für"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.728513&version=1782192215",
+      "quote": "Sind Sie noch bei einem anderen Sozialversicherungsträger versichert?"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.773195&version=1673606482",
+      "quote": "Begleitperson"
+    },
+    {
+      "url": "https://www.svs.at/cdscontent/load?contentid=10008.728754&version=1581497348",
+      "quote": "Bestätigung der Schule"
+    }
+  ],
+  "contextualOptions": [
+    "^(?:ja|nein)(?:,.*)?$",
+    "^wird (?:beigelegt|ehestens nachgereicht)$",
+    "^(?:Dauerantrag für die folgenden Jahre|Antrag nur für dieses Jahr)$"
+  ],
+  "labelRules": [
+    {
+      "pattern": "^Unterschrift (?:des|der) (?:Antragstellers|Antragstellerin|Versicherten)$",
+      "replacement": "Unterschrift"
+    },
+    {
+      "pattern": "^Wenn ja:\\s*",
+      "replacement": ""
+    },
+    {
+      "pattern": "\\s*\\(§[^)]*\\)",
+      "replacement": ""
+    },
+    {
+      "pattern": "^auf (Verminderung der Beitragsgrundlage.*)$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^auf Rückerstattung von Beiträgen.*in der (Pensionsversicherung|Krankenversicherung)$",
+      "replacement": "Rückerstattung von Beiträgen – $1"
+    },
+    {
+      "pattern": "^Ich beantrage, das (Guthaben.*)\\.$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^Ich beantrage, das (Guthaben.*)$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^.*\\b(ab dem Kalenderjahr)$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^Unterschrift des Betriebsführers$",
+      "replacement": "Unterschrift"
+    },
+    {
+      "pattern": "^Unterschrift des \\(der\\) Geschädigten$",
+      "replacement": "Unterschrift"
+    },
+    {
+      "pattern": "^Unterschrift des$",
+      "replacement": "Unterschrift"
+    },
+    {
+      "pattern": "^Stufe ([123])\\.{3,}.*$",
+      "replacement": "Stufe $1"
+    },
+    {
+      "pattern": "^(Höherversicherung Stufe I{1,2}) .*$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^Wird eine Tierzucht betrieben.*$",
+      "replacement": "Wird eine Tierzucht betrieben"
+    },
+    {
+      "pattern": "^Ärztliche Bestätigung bei medizin\\. Notwendigkeit.*$",
+      "replacement": "Ärztliche Bestätigung bei medizinischer Notwendigkeit"
+    },
+    {
+      "pattern": "^das Kind sich in einer (Schul- oder Berufsausbildung).*$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^das Kind eine Tätigkeit nach dem Freiwilligengesetz.*$",
+      "replacement": "Tätigkeit nach dem Freiwilligengesetz"
+    },
+    {
+      "pattern": "^.*Ein (ärztliches Attest liegt bei)\\.$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^Sonstiges: _+$",
+      "replacement": "Sonstiges"
+    },
+    {
+      "pattern": "^des (Melde-, Versicherungs- und Beitragswesens)$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^der ((?:Kranken|Unfall|Pensions)versicherung)$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^.*\\((Zustellvollmacht|Geldvollmacht)\\)\\.$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^der bevollmächtigten Person.*Daten übermittelt.*$",
+      "replacement": "Datenübermittlung"
+    },
+    {
+      "pattern": "^Familienrechtliche Beziehung zum Betriebsführer.*$",
+      "replacement": "Familienrechtliche Beziehung zum Betriebsführer"
+    },
+    {
+      "pattern": "^Kranken- und$",
+      "replacement": "Krankenversicherung"
+    },
+    {
+      "pattern": "^Unter welcher Versicherungs- nummer",
+      "replacement": "Unter welcher Versicherungsnummer"
+    },
+    {
+      "pattern": "^Kulturart bzw\\. Nutzungsart.*$",
+      "replacement": "Kulturart bzw. Nutzungsart"
+    },
+    {
+      "pattern": "^Dauerauftrag \\(.*$",
+      "replacement": "Dauerauftrag"
+    },
+    {
+      "pattern": "^Unterschrift des Betriebsführers.*$",
+      "replacement": "Unterschrift"
+    },
+    {
+      "pattern": "^a\\) der auf Rechnung .*bewirtschafteten Flächen\\?$",
+      "replacement": "Einheitswert der bewirtschafteten Flächen"
+    },
+    {
+      "pattern": "^b\\) (verpachteter, übergebener bzw\\. zur Bewirtschaftung überlassener Flächen)\\?$",
+      "replacement": "Einheitswert $1"
+    },
+    {
+      "pattern": "^(von|bis) \\(Tag, Monat, Jahr\\)$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^.*(?:Unselbständige|Selbständige) Erwerbstätigkeit.*Art der Tätigkeit$",
+      "replacement": "Art der Tätigkeit"
+    },
+    {
+      "pattern": "^(Anschrift anderer land\\(forst\\)wirtschaftlicher Betriebe).*$",
+      "replacement": "$1"
+    }
+  ],
+  "owners": [
+    {
+      "owner": "hospital",
+      "patterns": ["^bestätigung der krankenanstalt"]
+    },
+    {
+      "owner": "doctor",
+      "patterns": ["^ärztliche bestätigung"]
+    },
+    {
+      "owner": "office",
+      "patterns": ["^(?:nur )?von der svs auszufüllen"]
+    }
+  ],
+  "contextRules": [
+    {
+      "pattern": "auf Rückerstattung von Beiträgen.*Krankenversicherung",
+      "replacement": "Krankenversicherung Rückerstattung",
+      "labels": ["^(?:Dauerantrag|Antrag nur)"],
+      "distance": 100
+    },
+    {
+      "pattern": "Daten des (?:geschiedenen )?Ehepartners",
+      "replacement": "$&",
+      "labels": ["^(?:Name|VSNR)$"],
+      "distance": 45
+    },
+    {
+      "pattern": "Begleitperson\\s+erforderlich",
+      "replacement": "Begleitperson erforderlich",
+      "labels": ["^(?:ja|nein)$"],
+      "distance": 180
+    },
+    {
+      "pattern": "Gemeinsamer Haushalt mit Ehepartner/in bzw\\. eingetragenem/r Partner/in",
+      "replacement": "Gemeinsamer Haushalt mit Ehepartner/in bzw. eingetragenem/r Partner/in",
+      "labels": ["^(?:ja|nein)$"],
+      "distance": 55
+    },
+    {
+      "pattern": "Bestätigung der Schule",
+      "replacement": "Bestätigung der Schule",
+      "labels": ["^wird "],
+      "distance": 45
+    },
+    {
+      "pattern": "Lehrvertrag",
+      "replacement": "Lehrvertrag",
+      "labels": ["^wird "],
+      "distance": 45
+    },
+    {
+      "pattern": "Vereinbarung",
+      "replacement": "Vereinbarung",
+      "labels": ["^wird "],
+      "distance": 45
+    },
+    {
+      "pattern": "auf (?:Verminderung der Beitragsgrundlage|Rückerstattung von Beiträgen).*Krankenversicherung",
+      "replacement": "Krankenversicherung",
+      "labels": ["^(?:Dauerantrag|Antrag nur)"],
+      "distance": 100
+    },
+    {
+      "pattern": "auf Rückerstattung von Beiträgen.*Pensionsversicherung",
+      "replacement": "Pensionsversicherung",
+      "labels": ["^(?:Dauerantrag|Antrag nur)"],
+      "distance": 100
+    },
+    {
+      "pattern": "Sind Sie noch bei einem anderen Sozialversicherungsträger versichert",
+      "replacement": "anderer gesetzlicher Sozialversicherungsträger",
+      "labels": ["^(?:Nein|Ja|bei)$"],
+      "distance": 45
+    },
+    {
+      "pattern": "Sind Sie privat krankenversichert",
+      "replacement": "privat krankenversichert",
+      "labels": ["^(?:Nein|Ja|bei)$"],
+      "distance": 45
+    },
+    {
+      "pattern": "Haben Sie von der Privatversicherung Leistungen in Bezug auf die angeführten Kosten erhalten",
+      "replacement": "private Krankenversicherung – Kostenersatz erhalten",
+      "labels": ["^(?:Nein|Ja)$"],
+      "distance": 45
+    },
+    {
+      "pattern": "Haben Sie bei einer anderen Stelle einen Leistungs- oder Unterstützungsantrag gestellt",
+      "replacement": "andere Stellen",
+      "labels": ["^(?:Nein|Ja|bei)$"],
+      "distance": 45
+    },
+    {
+      "pattern": "Körperl\\. oder geistige Behinderung",
+      "replacement": "Körperl. oder geistige Behinderung",
+      "labels": ["^(?:ja|nein|seit)$"],
+      "distance": 50
+    },
+    {
+      "pattern": "Bezug von erhöhter Familienbeihilfe/Pflegegeld",
+      "replacement": "Bezug von erhöhter Familienbeihilfe/Pflegegeld",
+      "labels": ["^(?:ja|nein|seit)$"],
+      "distance": 50
+    },
+    {
+      "pattern": "Geschlecht",
+      "replacement": "Geschlecht",
+      "labels": ["^(?:männlich|weiblich)$"],
+      "distance": 30
+    },
+    {
+      "pattern": "Beschädigung von Betriebseinrichtungen durch Unwetter/Hochwasser",
+      "replacement": "Beschädigung von Betriebseinrichtungen durch Unwetter/Hochwasser",
+      "labels": ["^(?:ja|nein)$"],
+      "distance": 50
+    },
+    {
+      "pattern": "Unselbständige Erwerbstätigkeit",
+      "replacement": "Unselbständige Erwerbstätigkeit",
+      "labels": ["^(?:ja|nein|Art der Tätigkeit|von|bis)$"],
+      "distance": 100
+    },
+    {
+      "pattern": "Selbständige Erwerbstätigkeit",
+      "replacement": "Selbständige Erwerbstätigkeit",
+      "labels": ["^(?:ja|nein|Art der Tätigkeit|von|bis)$"],
+      "distance": 100
+    },
+    {
+      "pattern": "Pachtdauer",
+      "replacement": "Pachtdauer",
+      "labels": ["^(?:von|bis)$"],
+      "distance": 100
+    },
+    {
+      "pattern": "verpachtet",
+      "replacement": "verpachtet",
+      "labels": ["^(?:vom|bis)$"],
+      "distance": 400
+    },
+    {
+      "pattern": "Haben Sie Einkünfte",
+      "replacement": "Antragsteller",
+      "labels": ["^Einheitswert "],
+      "distance": 180
+    },
+    {
+      "pattern": "Hat Ihr Ehepartner Einkünfte",
+      "replacement": "Ehepartner",
+      "labels": ["^Einheitswert "],
+      "distance": 180
+    },
+    {
+      "pattern": "Hat der geschiedene Ehepartner Einkünfte",
+      "replacement": "geschiedener Ehepartner",
+      "labels": ["^Einheitswert "],
+      "distance": 180
+    },
+    {
+      "pattern": "Ab wann beantragen Sie die freiwillige Selbstversicherung\\?",
+      "replacement": "$&",
+      "labels": ["^(?:Datum|freiwillige|Selbstversicherung\\?)$"],
+      "distance": 40
+    },
+    {
+      "pattern": "Beschädigung von Betriebseinrichtungen durch Unwetter/Hochwasser",
+      "replacement": "Beschädigung von Betriebseinrichtungen durch Unwetter/Hochwasser",
+      "labels": ["^(?:ja|nein)$"],
+      "distance": 120
+    }
+  ],
+  "checkboxRules": [
+    {
+      "pattern": "^((?:verheiratet|verwitwet|geschieden|in eingetragener Partnerschaft lebend|hinterbliebener eingetragener Partner|aufgelöste eingetragene Partnerschaft)) seit.*$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": ",\\s*(?:bei|seit|in Höhe).*$",
+      "replacement": ""
+    }
+  ],
+  "ignoredLabels": ["^EUR$", "^Euro$", "^Bitte ", "^\\(auch ", "^\\(Bitte ", "^Postleitzahl – Ort"],
+  "inputRules": [
+    {
+      "pattern": "^ja, (seit|bei)$",
+      "replacement": "$1"
+    },
+    {
+      "pattern": "^Chemo-/Strahlentherapie mit (Behandlungsbeginn ab)$",
+      "replacement": "$1"
+    }
+  ]
+}

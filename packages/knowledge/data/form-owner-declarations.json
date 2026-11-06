@@ -1,0 +1,13 @@
+[
+  {
+    "owner": "applicant",
+    "patterns": ["^ich bestätige, dass die angaben richtig sind"],
+    "sources": [
+      {
+        "path": "data/svbox/Anträge und Formulare/Antrag-auf-Zuschuss-zu-Fahrtkosten_Wien.pdf",
+        "page": 1,
+        "quote": "Ich bestätige, dass die Angaben richtig sind, und dass ich von der Rezeptgebühr befreit bin."
+      }
+    ]
+  }
+]
