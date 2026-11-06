@@ -1,0 +1,72 @@
+# Task reminders are immediate prompts, not calculated statutory deadlines.
+id: "pflegeberatung-wien"
+benefit: "ref:catalog/pflegeberatung-wien"
+actor_roles:
+  - "subject"
+  - "helper"
+slots:
+  - id: "residence_region"
+    type: "enum:residence-region"
+    question_hint: "In welchem Bundesland wohnt die Person, für die Sie Hilfe suchen?"
+    validation:
+      options:
+        - "Wien"
+        - "Niederösterreich"
+        - "Burgenland"
+        - "Oberösterreich"
+        - "Steiermark"
+        - "Kärnten"
+        - "Salzburg"
+        - "Tirol"
+        - "Vorarlberg"
+        - "Ausland"
+  - id: "contact_made"
+    type: "boolean"
+    question_hint: "Haben Sie selbst mit dem FSW Kontakt aufgenommen?"
+  - id: "advice_received"
+    type: "boolean"
+    question_hint: "Haben Sie die Beratung zu Ihren Fragen erhalten?"
+steps:
+  - id: "contact"
+    needs:
+      - "residence_region"
+      - "contact_made"
+    criteria: "ref:catalog/pflegeberatung-wien#criteria"
+    action: "office.resolve"
+    outputs:
+      - id: "advice-contact"
+        type: "office"
+    reminders:
+      - after_days: 0
+        text_de: "Für Beratung in Wien können Sie selbst den FSW unter 01/24 5 24 anrufen oder persönlich vorbeikommen."
+        when: 'residence_region == "Wien" and contact_made == false'
+    transitions:
+      - to: "consultation"
+        when: 'residence_region == "Wien" and contact_made == true'
+  - id: "consultation"
+    needs:
+      - "contact"
+      - "advice_received"
+    outputs:
+      - id: "advice-next-actions"
+        type: "checklist"
+    transitions:
+      - to: "finish"
+        when: "advice_received == true"
+  - id: "finish"
+    needs:
+      - "consultation"
+completion:
+  evidence:
+    - "user_statement"
+sources:
+  - url: "https://www.fsw.at/p/pflege-betreuung"
+    quote: "Beim FSW-Kund:innenservice werden Sie kostenlos beraten. Und Sie bekommen Hilfe dabei, den Antrag auf Förderung zu stellen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/pflege-betreuung"
+    quote: "Rufen Sie einfach beim FSW-Kund:innentelefon unter 01/24 5 24 an oder kommen Sie persönlich bei uns im FSW-Kund:innenservice vorbei."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/pflege-betreuung"
+    quote: "Sie möchten wissen, welche Pflege- und Betreuungsangebote es in Wien gibt? Der Fonds Soziales Wien berät Sie und sorgt dafür, dass Sie genau die Unterstützung bekommen, die Sie brauchen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"
