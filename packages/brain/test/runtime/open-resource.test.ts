@@ -214,3 +214,11 @@ describe("open the right page, then point", () => {
     );
   });
 });
+
+it("the pilot policy stays inside its context budget", async () => {
+  const { CONTEXT_SHARES, PIPELINE_CONFIG } = await import("../../src/config/index.ts");
+  const { tokenEstimate } = await import("../../src/context/index.ts");
+  expect(tokenEstimate(POLICY)).toBeLessThanOrEqual(
+    (PIPELINE_CONFIG.contextTokens * CONTEXT_SHARES.policy) / 100,
+  );
+});
