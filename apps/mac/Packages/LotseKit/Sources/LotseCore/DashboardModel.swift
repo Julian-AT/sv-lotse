@@ -72,9 +72,7 @@ public final class DashboardModel {
     func select(_ id: UUID) {
         guard cases.contains(where: { $0.id == id }) else { return }
         selectedID = id
-        let current = workspace.webView.url.flatMap { URLComponents(url: $0, resolvingAgainstBaseURL: false) }?
-            .queryItems?.first(where: { $0.name == "caseId" })?.value
-        if current?.lowercased() != id.uuidString.lowercased() { workspace.navigateToCase(id) }
+        workspace.navigateToCase(id)
     }
 
     func create() async {
