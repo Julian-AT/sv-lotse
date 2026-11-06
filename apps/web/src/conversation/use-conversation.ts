@@ -17,7 +17,7 @@ import {
   lastAssistantMessageIsCompleteWithToolCalls,
 } from "ai";
 import { useEffect, useRef, useState } from "react";
-import { postNative, subscribeBridge } from "../bridge/index.ts";
+import { postNative, reportBridgeError, subscribeBridge } from "../bridge/index.ts";
 import { AUTONOMY_CHANGED_EVENT } from "../features/autonomy/config.ts";
 import { receiveFormViewerBridgeMessage } from "../features/form-viewer/bridge.ts";
 import { stopFormFilling } from "../features/form-viewer/config.ts";
@@ -29,6 +29,10 @@ import {
   receiveNativePage,
 } from "./open-resource.ts";
 import { createTurnTransport, type TurnState } from "./transport.ts";
+
+export function openingResource(pending: ReadonlyMap<string, string>): boolean {
+  return [...pending.values()].includes("ui.openResource");
+}
 
 type Options = {
   caseId: string;
@@ -157,8 +161,12 @@ export function useConversation({
               break;
           }
         })
-        .catch(() => setBridgeError(true));
+        .catch((error: unknown) => {
+          reportBridgeError(`data part ${part.type}`, error);
+          setBridgeError(true);
+        });
     },
+    onError: (error) => reportBridgeError("conversation stream", error),
   });
   output.current = chat.addToolOutput;
   const currentChat = useRef(chat);
@@ -242,7 +250,9 @@ export function useConversation({
           turnState.actionResults.push(message.payload);
           break;
         case "SpeechControl":
-          if (message.payload.stop) {
+          // A speech stop while a page is opening must not abort the turn: the open result
+          // continues the conversation, and an aborted turn never sends its tool output.
+          if (message.payload.stop && !openingResource(pending.current)) {
             generation.current++;
             await current.stop();
             stopFormFilling();
@@ -273,7 +283,10 @@ export function useConversation({
     if (turnState.hello)
       await postNative(
         nativeEnvelope("SpeechControl", { stop: true, state: "idle", segmentIndex: 0 }),
-      ).catch(() => setBridgeError(true));
+      ).catch((error: unknown) => {
+        reportBridgeError("SpeechControl", error);
+        setBridgeError(true);
+      });
   };
   const send = async (text: string): Promise<void> => {
     setStatusLine("");

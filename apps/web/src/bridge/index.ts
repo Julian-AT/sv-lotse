@@ -15,12 +15,28 @@ declare global {
   }
 }
 
+const reportedBridgeErrors = new Set<string>();
+/** Logs each distinct bridge or stream failure once, so a red banner is traceable. */
+export function reportBridgeError(where: string, error: unknown): void {
+  const reason = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  const key = `${where}|${reason}`;
+  if (reportedBridgeErrors.has(key)) return;
+  reportedBridgeErrors.add(key);
+  console.error(`[lotse] ${where} failed: ${reason.slice(0, 500)}`);
+}
+
 /** The native host waits for this receiver before sending BridgeHello. No DOM-message channel. */
 export function installBridge(receiver: Receiver): () => void {
   const previous = window.__lotse;
   const endpoint = {
     async receive(raw: unknown): Promise<void> {
-      await receiver(BridgeToWorkspaceSchema.parse(raw));
+      const parsed = BridgeToWorkspaceSchema.safeParse(raw);
+      if (!parsed.success) {
+        const type = (raw as { type?: unknown } | null)?.type;
+        reportBridgeError(`native message ${String(type)}`, parsed.error);
+        throw parsed.error;
+      }
+      await receiver(parsed.data);
     },
   };
   window.__lotse = endpoint;
@@ -39,7 +55,12 @@ export function hasNativeBridge(): boolean {
 export async function postNative(message: BridgeToNative): Promise<void> {
   const handler = window.webkit?.messageHandlers?.lotse;
   if (!handler) throw new Error("NATIVE_UNAVAILABLE");
-  await handler.postMessage(BridgeToNativeSchema.parse(message));
+  try {
+    await handler.postMessage(BridgeToNativeSchema.parse(message));
+  } catch (error) {
+    reportBridgeError(`postNative ${message.type}`, error);
+    throw error;
+  }
 }
 
 export type BridgeSession = { hello?: BridgeHello };
