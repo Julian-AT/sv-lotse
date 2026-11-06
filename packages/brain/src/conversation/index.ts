@@ -145,6 +145,24 @@ function checkpoints() {
   };
 }
 
+/** Reason codes and durations only, one line per turn, so the critical path is visible in logs. */
+function logTurnTimings(status: string, timings: Record<string, number>, metrics: TurnMetrics) {
+  const rounded = (values: Record<string, number>) =>
+    Object.fromEntries(Object.entries(values).map(([key, value]) => [key, Math.round(value)]));
+  console.info(
+    JSON.stringify({
+      event: "turn_timings",
+      status,
+      ...rounded(timings),
+      stages: rounded(metrics.stageLatencies),
+      modelCalls: metrics.modelCalls,
+      modelMs: Math.round(metrics.modelMs),
+      toolMs: Math.round(metrics.toolMs),
+      latencyMs: Math.round(metrics.latencyMs),
+    }),
+  );
+}
+
 async function runTurn(
   request: TurnRequest,
   latestMessage: unknown,
@@ -310,6 +328,7 @@ async function runTurn(
         throw error;
       } finally {
         telemetry.end(outcome());
+        logTurnTimings(outcome(), timings, telemetry.snapshot());
         if (!failed && !isAborted && !isCancelled) {
           try {
             await options?.onTurnComplete?.(telemetry.snapshot());
@@ -424,6 +443,10 @@ async function runTurn(
       const onGuard = (durationMs: number): void => {
         timings.guardMs = (timings.guardMs ?? 0) + durationMs;
       };
+      const onAnswerGuard = (durationMs: number): void => {
+        timings.answerGuardMs ??= durationMs;
+        timings.answerGuardDoneAtMs ??= performance.now() - pipelineStarted;
+      };
       const administrativeOnly = prepared.history.some((message) =>
         message.parts.some((part) => part.type === "data-safety-notice"),
       );
@@ -466,6 +489,7 @@ async function runTurn(
         passages,
         onSpeech,
         onGuard,
+        onAnswerGuard,
         ...(options?.abortSignal ? { abortSignal: options.abortSignal } : {}),
       });
       const guardContext = {
@@ -527,13 +551,20 @@ async function runTurn(
       const guardText = (text: string): ReturnType<typeof guard> => {
         let checked = responseChecks.get(text);
         if (!checked) {
+          const started = performance.now();
           checked = guard({
             ...guardContext,
             text,
             claims: extractCitedClaims(text, guardPassages),
           });
           responseChecks.set(text, checked);
-          checked.catch(() => responseChecks.delete(text));
+          checked.then(
+            () => {
+              timings.responseGuardMs ??= performance.now() - started;
+              timings.responseGuardDoneAtMs ??= performance.now() - pipelineStarted;
+            },
+            () => responseChecks.delete(text),
+          );
         }
         return checked;
       };
@@ -581,6 +612,7 @@ async function runTurn(
           ...(options?.abortSignal ? { abortSignal: options.abortSignal } : {}),
         });
         const ms = performance.now() - started;
+        if (!withDraft) timings.speculativeComposeMs ??= ms;
         console.info(
           JSON.stringify({
             event: "answer_composed",
@@ -607,6 +639,7 @@ async function runTurn(
         // The guards check the candidate while its sentences are verified; a sentence removal
         // only re-runs them for the shortened text.
         if (!retry) prefetchGuards(composed.text);
+        const checkStarted = performance.now();
         const checked = await dropUnsupportedSentences(
           composed.text,
           guardPassages,
@@ -614,6 +647,7 @@ async function runTurn(
           language,
           options?.abortSignal,
         );
+        timings.citationCheckMs ??= performance.now() - checkStarted;
         if (checked.removed > 0) {
           console.info(
             JSON.stringify({ event: "answer_sentences_removed", removed: checked.removed }),
@@ -630,6 +664,7 @@ async function runTurn(
       recompose = async () => {
         if (!userText.trim() || approvalRequested) return undefined;
         const composed = await compose(true, gateOffer, true);
+        timings.repairMs = (timings.repairMs ?? 0) + composed.ms;
         return composed.cited > 0 ? composed.text : undefined;
       };
       // Candidates are composed from the evidence as it arrives: the retrieved passages at the
@@ -902,6 +937,7 @@ async function runTurn(
         draftless();
       const release = async (): Promise<void> => {
         timings.earlyReleaseStep = step;
+        timings.releaseAtMs = performance.now() - pipelineStarted;
         draft.id ??= randomUUID();
         if (step < 0) writer.write({ type: "start-step" });
         await guardedWriter.flush();
@@ -987,6 +1023,8 @@ async function runTurn(
             }
           }
           if (part.type === "finish-step" || part.type === "finish") {
+            if (part.type === "finish-step")
+              timings[`step${step}DoneAtMs`] = performance.now() - pipelineStarted;
             await guardedWriter.flush();
           }
           // New lookup results: compose the next candidate beside the agent's next step.
@@ -1059,6 +1097,7 @@ async function runTurn(
           }
           if (part.type === "start-step") {
             step++;
+            timings[`step${step}AtMs`] = performance.now() - pipelineStarted;
             stepTools = false;
             stepResults = false;
             if (step >= lastStep && toolCalled && releasable()) {

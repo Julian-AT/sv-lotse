@@ -81,6 +81,7 @@ export function createSegmentWriter(options: {
   abortSignal?: AbortSignal;
   onSpeech?: () => void;
   onGuard?: (durationMs: number) => void;
+  onAnswerGuard?: (durationMs: number) => void;
 }): SegmentWriter {
   const texts = new Map<string, string>();
   const actions: Action[] = [];
@@ -93,6 +94,7 @@ export function createSegmentWriter(options: {
   const answerGuard = (text: string): Promise<string> => {
     let verdict = verdicts.get(text);
     if (!verdict) {
+      const started = performance.now();
       verdict = guardAnswer(
         options.config,
         text,
@@ -102,7 +104,10 @@ export function createSegmentWriter(options: {
       );
       verdicts.set(text, verdict);
       // A failed check is never reused; the caller that awaits it sees the error.
-      verdict.catch(() => verdicts.delete(text));
+      verdict.then(
+        () => options.onAnswerGuard?.(performance.now() - started),
+        () => verdicts.delete(text),
+      );
     }
     return verdict;
   };
