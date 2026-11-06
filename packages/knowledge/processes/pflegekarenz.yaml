@@ -1,0 +1,107 @@
+# Task reminders are immediate prompts, not calculated statutory deadlines.
+id: "pflegekarenz"
+benefit: "ref:catalog/pflegekarenz"
+actor_roles:
+  - "subject"
+  - "helper"
+slots:
+  - id: "close_relative_confirmed"
+    type: "boolean"
+    question_hint: "Ist die Person eine nahe Angehörige oder ein naher Angehöriger nach den veröffentlichten Regeln? Bei Unsicherheit bitte mit Arbeitgeber oder SMS klären."
+  - id: "care_level"
+    type: "number"
+    question_hint: "Welche Pflegegeldstufe steht im Bescheid der nahestehenden Person?"
+    validation:
+      min: 0
+      max: 7
+  - id: "minor_relative"
+    type: "boolean"
+    question_hint: "Ist die nahestehende Person minderjährig?"
+  - id: "documented_dementia"
+    type: "boolean"
+    question_hint: "Ist Demenz bereits in vorhandenen Unterlagen dokumentiert? Bitte keine Beschwerden bewerten."
+  - id: "employment_months"
+    type: "number"
+    question_hint: "Wie viele Monate besteht Ihr Arbeitsverhältnis ohne Unterbrechung?"
+    validation:
+      min: 0
+  - id: "company_employees"
+    type: "number"
+    question_hint: "Wie viele Beschäftigte hat Ihr Betrieb?"
+    validation:
+      min: 0
+  - id: "access_route"
+    type: "enum:leave-route"
+    question_hint: "Geht es um eine schriftliche Vereinbarung oder den gesetzlichen Anspruch von zunächst zwei Wochen?"
+    validation:
+      options:
+        - "agreement"
+        - "statutory"
+  - id: "arrangement_confirmed"
+    type: "boolean"
+    question_hint: "Haben Sie die Vereinbarung abgeschlossen oder den Arbeitgeber über den gesetzlichen Anspruch verständigt?"
+steps:
+  - id: "check"
+    needs:
+      - "close_relative_confirmed"
+      - "care_level"
+      - "minor_relative"
+      - "documented_dementia"
+      - "employment_months"
+    criteria: "ref:catalog/pflegekarenz#criteria"
+    outputs:
+      - id: "employment-conditions"
+        type: "checklist"
+    transitions:
+      - to: "arrange"
+        when: "close_relative_confirmed == true and employment_months >= 3 and (care_level >= 3 or (care_level >= 1 and (minor_relative == true or documented_dementia == true)))"
+  - id: "arrange"
+    needs:
+      - "check"
+      - "company_employees"
+      - "access_route"
+      - "arrangement_confirmed"
+    documents: "ref:catalog/pflegekarenz#documents"
+    signature: "subject"
+    outputs:
+      - id: "employer-arrangement"
+        type: "document"
+    reminders:
+      - after_days: 0
+        text_de: "Bitte sprechen Sie selbst mit Ihrem Arbeitgeber. Für das Pflegekarenzgeld ist ein eigener Antrag beim SMS nötig."
+        when: "arrangement_confirmed == false"
+    transitions:
+      - to: "finish"
+        when: 'arrangement_confirmed == true and (access_route == "agreement" or (access_route == "statutory" and company_employees > 5))'
+  - id: "finish"
+    needs:
+      - "arrange"
+    outputs:
+      - id: "cash-benefit-next-action"
+        type: "checklist"
+completion:
+  evidence:
+    - "user_statement"
+sources:
+  - url: "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html"
+    quote: "Voraussetzung für den Antritt einer Pflegekarenz oder einer Pflegeteilzeit ist eine schriftliche Vereinbarung zwischen Arbeitnehmerinnen- bzw. Arbeitnehmer- und Arbeitgeberinnen- bzw. Arbeitgeberseite. Diese Vereinbarung kann getroffen werden, wenn das Arbeitsverhältnis seit ununterbrochen zumindest drei Monaten besteht."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html"
+    quote: "nahe Angehörige, denen zum Zeitpunkt des Antritts Pflegegeld ab Stufe 3 nach dem Bundespflegegeldgesetz (BPGG) mit Bescheid zuerkannt wurde."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html"
+    quote: "demenziell erkrankte oder minderjährige nahe Angehörige ab Pflegegeld Stufe 1."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html"
+    quote: "Arbeitnehmerinnen und Arbeitnehmer haben ab 1. Jänner 2020 einen Rechtsanspruch auf zwei Wochen Pflegekarenz/Pflegeteilzeit."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html"
+    quote: "Der Rechtsanspruch gilt in Betrieben mit mehr als fünf Arbeitsnehmerinnen und Arbeitnehmern."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Arbeit/Arbeitsrecht/Karenz-und-Teilzeit/Pflegekarenz-und-Pflegeteilzeit.html"
+    quote: "Kommt währenddessen keine Vereinbarung über eine Pflegekarenz/Pflegeteilzeit zustande, so besteht ein Anspruch auf Pflegekarenz/Pflegeteilzeit für bis zu weiteren zwei Wochen (insgesamt vier Wochen)."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/Pflegekarenz_und_-teilzeit/Pflegekarenz_und_-teilzeit.de.html"
+    quote: "Die Bearbeitung der Anträge erfolgt österreichweit durch das Sozialministeriumservice - Landestelle Steiermark."
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"
