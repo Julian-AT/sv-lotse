@@ -627,8 +627,11 @@ export async function answerManyFields(input: {
       accepted: filled.map((item) => item.field.id),
     }),
   );
+  // A value already in the draft is not entered again (and not read back as new).
   const unique = filled.filter(
-    (item, index) => filled.findIndex((other) => other.field.id === item.field.id) === index,
+    (item, index) =>
+      filled.findIndex((other) => other.field.id === item.field.id) === index &&
+      values[item.field.id]?.value !== item.parsed.value,
   );
   if (!unique.length) return;
   const source = { kind: "statement" as const, turnId: input.turnId, quote: answer.slice(0, 500) };
@@ -695,7 +698,7 @@ export async function answerManyFields(input: {
   };
 }
 
-function missingSentence(missing: readonly FormField[], english: boolean): string {
+export function missingSentence(missing: readonly FormField[], english: boolean): string {
   const strings = english ? copy.en : copy.de;
   const names = missing.slice(0, 6).map((field) => fieldNoun(field, english));
   const rest = missing.length - names.length;

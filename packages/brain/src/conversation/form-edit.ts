@@ -16,11 +16,11 @@ import {
   type FormAnswer,
   type FormMode,
   fieldActions,
-  fieldNoun,
   fieldQuestion,
   fieldValue,
   fillOpenedForm,
   handsOverData,
+  missingSentence,
   modeRequest,
   pendingFormQuestion,
   questionKey,
@@ -219,9 +219,6 @@ const copy = {
       `„${label}“ ist schon bestätigt. Wenn ich es trotzdem ändern soll, sagen Sie bitte „trotzdem“ dazu.`,
     unclear: (label: string) => `Das habe ich für „${label}“ nicht sicher verstanden.`,
     unknown: "Welches Feld meinen Sie? Sagen Sie zum Beispiel „Ändere die Telefonnummer auf …“.",
-    missing: (names: string) => `Es fehlen noch: ${names}.`,
-    more: (count: number) =>
-      `Außerdem ${count === 1 ? "ist 1 weiteres Feld" : `sind ${count} weitere Felder`} leer.`,
     complete: "Alle Felder, die ich erfragen kann, sind ausgefüllt. Abgeschickt wird nichts.",
     stepMode: "Gut, wir gehen Feld für Feld durch.",
     fastNothing: "Aus Ihren bisherigen Angaben kann ich nichts weiter eintragen.",
@@ -239,8 +236,6 @@ const copy = {
       `“${label}” is already confirmed. If I should change it anyway, please say “anyway”.`,
     unclear: (label: string) => `I did not catch the value for “${label}” for sure.`,
     unknown: "Which field do you mean? For example, say “Change the phone number to …”.",
-    missing: (names: string) => `Still missing: ${names}.`,
-    more: (count: number) => `${count} more ${count === 1 ? "field is" : "fields are"} empty.`,
     complete: "All fields I can ask for are filled in. Nothing is submitted.",
     stepMode: "Fine, we go through it field by field.",
     fastNothing: "I cannot fill in anything else from what you told me so far.",
@@ -381,22 +376,7 @@ export async function answerFormEdit(input: {
   }
   if (command.kind === "missing") {
     const missing = fields.filter((field) => askable(field) && emptyValue(values[field.id]));
-    const others = fields.filter(
-      (field) =>
-        editable(field) &&
-        field.owner === "applicant" &&
-        !askable(field) &&
-        field.type !== "checkbox" &&
-        emptyValue(values[field.id]),
-    ).length;
-    const names = missing.slice(0, 6).map((field) => fieldNoun(field, english));
-    const lead = [
-      missing.length ? strings.missing(list(names, strings.and)) : "",
-      others ? strings.more(others) : "",
-    ]
-      .filter(Boolean)
-      .join(" ");
-    return ask(lead, -1);
+    return ask(missing.length ? missingSentence(missing, english) : "", -1);
   }
   if (command.kind === "read") {
     const filled = fields.filter(
