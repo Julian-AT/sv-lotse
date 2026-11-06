@@ -7,7 +7,9 @@ import {
   chooseApplyPage,
   matchBenefit,
   onlineApplyText,
+  openedApplyPage,
   pageOwner,
+  rememberApplyPage,
   requestHead,
 } from "../../src/conversation/apply-page.ts";
 
@@ -85,14 +87,51 @@ describe("chooseApplyPage", () => {
     expect(failed).toMatchObject({ url: "https://www.pv.at/web/pflegegeld", fallback: true });
     const started = Date.now();
     const slow = await chooseApplyPage({
-      benefit: pflegegeld,
-      registered: { formId: "svbox-pflegegeld", name: "Pflegegeld" },
+      benefit: matchBenefit(records, ["Reha"]),
       model,
       budgetMs: 50,
       find: () => new Promise(() => {}),
     });
     expect(Date.now() - started).toBeLessThan(1_000);
-    expect(slow).toMatchObject({ url: "https://www.pv.at/web/pflegegeld", fallback: true });
+    expect(slow).toMatchObject({
+      url: "https://www.pv.at/web/reha-und-praevention/vom-antrag-zu-reha-und-kur",
+      fallback: true,
+    });
+  });
+
+  it("opens a registered form's verified page at once, named after the form", async () => {
+    const find = () => Promise.reject(new Error("no lookup for registered forms"));
+    await expect(
+      chooseApplyPage({
+        benefit: matchBenefit(records, ["Rehabilitation"]),
+        registered: { formId: "svbox-pflegegeld", name: "Pflegegeld" },
+        model,
+        find,
+      }),
+    ).resolves.toMatchObject({
+      url: "https://www.pv.at/web/pflegegeld",
+      formId: "svbox-pflegegeld",
+      sentence:
+        "Ich öffne die Seite der PVA zu Pflegegeld und zeige Ihnen, wo der Antrag steht. Danach fülle ich das Formular für Sie aus.",
+    });
+    await expect(
+      chooseApplyPage({
+        registered: { formId: "svbox-fahrtkosten-wien", name: "Fahrtkosten" },
+        model,
+        find,
+      }),
+    ).resolves.toBeUndefined();
+  });
+
+  it("remembers an opened page per case", async () => {
+    const choice = await chooseApplyPage({
+      registered: { formId: "svbox-kur-reha", name: "Reha und Kur" },
+      model,
+    });
+    if (!choice) throw new Error("no choice");
+    rememberApplyPage("case-a", choice);
+    expect(openedApplyPage("case-a", choice.url)?.formId).toBe("svbox-kur-reha");
+    expect(openedApplyPage("case-b", choice.url)).toBeUndefined();
   });
 
   it("never opens a page off the allowlist or invents one", async () => {

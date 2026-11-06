@@ -321,17 +321,18 @@ export async function prepareFormAfterOpen(input: {
     // The request lines name the benefit; a pasted letter below may mention others.
     const heads = texts.map(requestHead);
     const explicit = APPLY_REQUEST.test(lastUserText(input.history));
-    const lookup = async (candidates: readonly string[]) => {
+    // A registered form wins and needs no catalog lookup; its verified page opens at once.
+    const resolve = async (candidates: readonly string[]) => {
       const registered = benefitForm(candidates);
       const benefit =
-        registered || explicit
-          ? await catalogBenefit(db, candidates).catch(() => undefined)
-          : undefined;
+        registered || !explicit
+          ? undefined
+          : await catalogBenefit(db, candidates).catch(() => undefined);
       return { registered, benefit };
     };
-    const fromHeads = await lookup(heads);
+    const fromHeads = await resolve(heads);
     const { registered, benefit } =
-      fromHeads.registered || fromHeads.benefit ? fromHeads : await lookup(texts);
+      fromHeads.registered || fromHeads.benefit ? fromHeads : await resolve(texts);
     const choice =
       registered || benefit
         ? await chooseApplyPage({
@@ -345,7 +346,7 @@ export async function prepareFormAfterOpen(input: {
           })
         : undefined;
     if (choice) {
-      rememberApplyPage(choice);
+      rememberApplyPage(context.caseId, choice);
       writeText(input.writer, choice.sentence);
       input.writer.write({
         type: "tool-input-available",
@@ -356,7 +357,7 @@ export async function prepareFormAfterOpen(input: {
       return {};
     }
   }
-  const choice = url ? openedApplyPage(url) : undefined;
+  const choice = url ? openedApplyPage(context.caseId, url) : undefined;
   const benefit = choice
     ? BENEFIT_FORMS.find((entry) => entry.formId === choice.formId)
     : benefitForm(texts);

@@ -22,6 +22,8 @@ const READ_TIMEOUT_MS = 5_000;
 const MAX_PAGE_BYTES = 2 * 1024 * 1024;
 const MAX_REDIRECTS = 3;
 export const MAX_PAGE_READS = 2;
+/** Reads behind the apply-page step stay short; an unread page is still opened. */
+const APPLY_READ_TIMEOUT_MS = 2_500;
 const APPLY = /antrag|beantrag|formular/iu;
 const STOPWORDS = new Set(["antragsformular", "offizielle", "seite", "online"]);
 const CARRIER_HOSTS: Record<string, string> = {
@@ -417,9 +419,13 @@ export async function findApplyPage(input: {
     },
   );
   const candidates = pages.filter((page) => !isDocumentUrl(page.url)).slice(0, MAX_PAGE_READS);
+  const readSignal = AbortSignal.any([
+    AbortSignal.timeout(APPLY_READ_TIMEOUT_MS),
+    ...(input.signal ? [input.signal] : []),
+  ]);
   const reads = await Promise.all(
     candidates.map((page) =>
-      readOfficialPage(page.url, { origins, signal: input.signal }).catch(() => undefined),
+      readOfficialPage(page.url, { origins, signal: readSignal }).catch(() => undefined),
     ),
   );
   const options = candidates.map((page, index) => {

@@ -175,9 +175,28 @@ export type ApplyPageChoice = ApplyPage & {
 
 const LOOKUP_BUDGET_MS = 6_500;
 
+function choiceFor(
+  page: ApplyPage,
+  name: string,
+  registered: { formId: string } | undefined,
+  fallback: boolean,
+): ApplyPageChoice {
+  const owner = pageOwner(page.url);
+  const fills = registered !== undefined || page.formPdf !== undefined;
+  return {
+    ...page,
+    benefit: name,
+    ...(registered ? { formId: registered.formId } : {}),
+    label: `${owner} zu ${name}`,
+    sentence: `Ich öffne ${owner} zu ${name} und zeige Ihnen, wo der Antrag steht.${fills ? " Danach fülle ich das Formular für Sie aus." : ""}`,
+    fallback,
+  };
+}
+
 /**
- * The official page to show before filling: the deepest apply page found live (catalog sources plus
- * an allowlisted search, at most two reads) within the budget, else the verified static page.
+ * The official page to show before filling. A registered form uses its verified page at once (no
+ * lookup; none means the form opens directly). Any other benefit gets the deepest apply page found
+ * live (catalog sources plus an allowlisted search, at most two reads) within the budget.
  */
 export async function chooseApplyPage(input: {
   benefit?: CatalogBenefit | undefined;
@@ -187,9 +206,14 @@ export async function chooseApplyPage(input: {
   budgetMs?: number;
   find?: typeof findApplyPage;
 }): Promise<ApplyPageChoice | undefined> {
-  const name = input.benefit?.name ?? input.registered?.name;
-  if (!name) return;
-  const query = `${name} Antrag`;
+  if (input.registered) {
+    const url = STATIC_PAGES[input.registered.formId];
+    return url
+      ? choiceFor({ url, title: "" }, input.registered.name, input.registered, true)
+      : undefined;
+  }
+  const benefit = input.benefit;
+  if (!benefit) return;
   const timeout = new AbortController();
   const timer = setTimeout(() => timeout.abort(), input.budgetMs ?? LOOKUP_BUDGET_MS);
   const signal = AbortSignal.any([timeout.signal, ...(input.signal ? [input.signal] : [])]);
@@ -197,9 +221,9 @@ export async function chooseApplyPage(input: {
   try {
     found = await Promise.race([
       (input.find ?? findApplyPage)({
-        query,
-        carrier: input.benefit?.carrier,
-        known: input.benefit?.sources ?? [],
+        query: `${benefit.name} Antrag`,
+        carrier: benefit.carrier,
+        known: benefit.sources,
         model: input.model,
         signal,
       }),
@@ -214,20 +238,9 @@ export async function chooseApplyPage(input: {
     clearTimeout(timer);
   }
   if (found && !(await openResourceAllowed({ target: pageTarget(found.url) }))) found = undefined;
-  const staticUrl =
-    STATIC_PAGES[input.benefit?.id ?? ""] ?? STATIC_PAGES[input.registered?.formId ?? ""];
-  const page = found ?? (staticUrl ? { url: staticUrl, title: "" } : undefined);
-  if (!page) return;
-  const owner = pageOwner(page.url);
-  const fills = input.registered !== undefined || page.formPdf !== undefined;
-  return {
-    ...page,
-    benefit: name,
-    ...(input.registered ? { formId: input.registered.formId } : {}),
-    label: `${owner} zu ${name}`,
-    sentence: `Ich öffne ${owner} zu ${name} und zeige Ihnen, wo der Antrag steht.${fills ? " Danach fülle ich das Formular für Sie aus." : ""}`,
-    fallback: !found,
-  };
+  if (found) return choiceFor(found, benefit.name, undefined, false);
+  const url = STATIC_PAGES[benefit.id];
+  return url ? choiceFor({ url, title: "" }, benefit.name, undefined, true) : undefined;
 }
 
 export function pageTarget(url: string) {
@@ -236,14 +249,17 @@ export function pageTarget(url: string) {
 
 const opened = new Map<string, ApplyPageChoice>();
 
-/** Remembers the page this flow opened, so the after-open turn knows its form or apply link. */
-export function rememberApplyPage(choice: ApplyPageChoice): void {
-  if (opened.size > 200) opened.delete(opened.keys().next().value ?? "");
-  opened.set(choice.url, choice);
+/**
+ * Remembers the page this flow opened for one case, so that case's after-open turn knows its form
+ * or apply link. Keyed by case and URL: parallel cases opening the same page never share it.
+ */
+export function rememberApplyPage(caseId: string, choice: ApplyPageChoice): void {
+  if (opened.size > 500) opened.delete(opened.keys().next().value ?? "");
+  opened.set(`${caseId} ${choice.url}`, choice);
 }
 
-export function openedApplyPage(url: string): ApplyPageChoice | undefined {
-  return opened.get(url);
+export function openedApplyPage(caseId: string, url: string): ApplyPageChoice | undefined {
+  return opened.get(`${caseId} ${url}`);
 }
 
 /** No form to fill here: where and how to apply on the opened page, quoting its link. */
