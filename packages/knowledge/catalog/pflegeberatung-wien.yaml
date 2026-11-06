@@ -1,0 +1,47 @@
+# Awaiting human review. Empty booking channels do not imply an unavailable service.
+id: "pflegeberatung-wien"
+name_de: "Pflegeberatung durch den Fonds Soziales Wien"
+name_simple: "Beratung zu Pflege in Wien"
+area: "D"
+life_situations:
+  - "care"
+scope: "municipality"
+carriers: []
+criteria:
+  - id: "information"
+    text_de: "Der FSW berät zu Pflege- und Betreuungsangeboten in Wien."
+    source:
+      url: "https://www.fsw.at/p/pflege-betreuung"
+      quote: "Sie möchten wissen, welche Pflege- und Betreuungsangebote es in Wien gibt? Der Fonds Soziales Wien berät Sie und sorgt dafür, dass Sie genau die Unterstützung bekommen, die Sie brauchen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+    condition: 'residence_region == "Wien"'
+  - id: "free-advice"
+    text_de: "Die Beratung ist kostenlos. Der FSW hilft auch beim Förderantrag."
+    source:
+      url: "https://www.fsw.at/p/pflege-betreuung"
+      quote: "Beim FSW-Kund:innenservice werden Sie kostenlos beraten. Und Sie bekommen Hilfe dabei, den Antrag auf Förderung zu stellen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "contact"
+    text_de: "Sie können selbst anrufen oder persönlich zum FSW-Kund:innenservice kommen."
+    source:
+      url: "https://www.fsw.at/p/pflege-betreuung"
+      quote: "Rufen Sie einfach beim FSW-Kund:innentelefon unter 01/24 5 24 an oder kommen Sie persönlich bei uns im FSW-Kund:innenservice vorbei."
+      retrieved_at: "2026-11-06T00:06:59Z"
+office_rules:
+  - when: 'residence_region == "Wien"'
+    office: "ref:offices/fsw-pflege-und-betreuung-1150"
+documents: []
+forms: []
+process: "ref:processes/pflegeberatung-wien"
+appointment_channels: []
+sources:
+  - url: "https://www.fsw.at/p/pflege-betreuung"
+    quote: "Sie möchten wissen, welche Pflege- und Betreuungsangebote es in Wien gibt? Der Fonds Soziales Wien berät Sie und sorgt dafür, dass Sie genau die Unterstützung bekommen, die Sie brauchen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/pflege-betreuung"
+    quote: "Beim FSW-Kund:innenservice werden Sie kostenlos beraten. Und Sie bekommen Hilfe dabei, den Antrag auf Förderung zu stellen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/pflege-betreuung"
+    quote: "Rufen Sie einfach beim FSW-Kund:innentelefon unter 01/24 5 24 an oder kommen Sie persönlich bei uns im FSW-Kund:innenservice vorbei."
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"

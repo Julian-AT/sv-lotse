@@ -1,0 +1,159 @@
+# Awaiting human review. Empty booking channels do not imply an unavailable service.
+id: "pflegegeld"
+name_de: "Pflegegeld"
+name_simple: "Geld für Pflege beantragen"
+area: "D"
+life_situations:
+  - "care"
+scope: "federal"
+carriers:
+  - "pva"
+  - "svs"
+  - "bvaeb"
+criteria:
+  - id: "duration"
+    text_de: "Pflegegeld setzt einen voraussichtlich mindestens sechs Monate dauernden Betreuungs- und Hilfsbedarf voraus. Die Fachperson beurteilt den Bedarf; wir leiten ihn nicht aus Beschwerden ab."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "ständiger Betreuungs- und Hilfsbedarf wegen einer körperlichen, geistigen oder psychischen Behinderung beziehungsweise einer Sinnesbehinderung, die voraussichtlich mindestens sechs Monate andauern wird,"
+      retrieved_at: "2026-11-06T00:06:59Z"
+    legal_basis: "§ 4 Abs. 1 BPGG (SozDok, in Kraft seit 01.01.2015)"
+  - id: "hours"
+    text_de: "Der festgestellte Pflegebedarf muss mehr als 65 Stunden im Monat betragen. Die Begutachtung stellt die Stunden fest."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "ständiger Pflegebedarf von monatlich mehr als 65 Stunden,"
+      retrieved_at: "2026-11-06T00:06:59Z"
+    legal_basis: "§ 4 Abs. 2 BPGG (SozDok, in Kraft seit 01.01.2015)"
+  - id: "residence"
+    text_de: "Gewöhnlicher Aufenthalt in Österreich. Ausnahmen für EWR und Schweiz mit dem Träger klären."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "gewöhnlicher Aufenthalt in Österreich (unter bestimmten Voraussetzungen kann das Pflegegeld auch in einen EWR-Staat oder in der Schweiz geleistet werden)"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "levels"
+    text_de: "Es gibt sieben Pflegegeldstufen. Über die Stufe entscheidet der Träger oder das Gericht, nicht diese Anwendung."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "Pflegegeld wird – je nach Ausmaß des erforderlichen Pflegebedarfes und unabhängig von Alter und Ursache der Pflegebedürftigkeit – in sieben Stufen gewährt."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "assessment"
+    text_de: "Der Träger kündigt einen Besuch durch eine Ärztin, einen Arzt oder eine diplomierte Pflegeperson an."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "Die Betroffenen werden zu Hause, im Pflegeheim oder, falls unumgänglich, im Krankenhaus von einer Ärztin/einem Arzt oder von einer diplomierten Gesundheits-und Krankenpflegeperson aufgesucht. Dieser Hausbesuch ist vorher anzukündigen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "pension-source"
+    text_de: "Bei Pension oder Rente ist der auszahlende Träger zuständig: ASVG → PVA; öffentliche Pension, Eisenbahn oder Bergbau → BVAEB; GSVG/BSVG → SVS. Andere Renten und mehrere Bezüge mit der Stelle klären."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "bei ASVG-Pension die Pensionsversicherungsanstalt (PVA) , bei Bundespension, Beamtenpension eines Landes oder einer Gemeinde sowie Pension bei Eisenbahnen und Bergbau, die Versicherungsanstalt Öffentlich Bediensteter, Eisenbahnen und Bergbau (BVAEB) bei GSVG-Pension (Gewerbetreibende) und BSVG-Pension (Bauern) die Sozialversicherungsanstalt der Selbständigen (SVS)"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "without-pension"
+    text_de: "Berufstätige, Mitversicherte sowie Personen mit Mindestsicherung oder Rehabilitationsgeld wenden sich an die PVA."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "Berufstätige Personen, mitversicherte Angehörige (zum Beispiel als Hausfrau oder Kind) und Bezieherinnen und Bezieher einer Mindestsicherung oder eines Rehabilitationsgeldes können das Pflegegeld bei der Pensionsversicherungsanstalt beantragen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "trusted-person"
+    text_de: "Auf Wunsch kann eine Vertrauensperson bei der Begutachtung dabei sein."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "Auf persönlichen Wunsch ist bei der ärztlichen Untersuchung auch die Anwesenheit und Anhörung einer Vertrauensperson (z.B. die Pflegeperson) zu ermöglichen, um Angaben zur konkreten Pflegesituation zu machen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "published-amounts"
+    text_de: "Monatliches Pflegegeld 2026: Stufe 1: 206,20 Euro; Stufe 2: 380,30 Euro; Stufe 3: 592,60 Euro; Stufe 4: 888,50 Euro; Stufe 5: 1.206,90 Euro; Stufe 6: 1.685,40 Euro; Stufe 7: 2.214,80 Euro. Maßgeblich ist die zuerkannte Stufe im Bescheid."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+      quote: "Pflegebedarf in Stunden pro Monat Stufe Betrag in Euro (monatlich, 2026) mehr als 65 Stunden 1 206,20 mehr als 95 Stunden 2 380,30 mehr als 120 Stunden 3 592,60 mehr als 160 Stunden 4 888,50 mehr als 180 Stunden, wenn ein außergewöhnlicher Pflegeaufwand erforderlich ist 5 1.206,90 mehr als 180 Stunden, wenn zeitlich unkoordinierbare Betreuungsmaßnahmen erforderlich sind und diese regelmäßig während des Tages und der Nacht zu erbringen sind oder die dauernde Anwesenheit einer Pflegeperson während des Tages und der Nacht erforderlich ist, weil die Wahrscheinlichkeit einer Eigen- oder Fremdgefährdung gegeben ist 6 1.685,40 mehr als 180 Stunden, wenn keine zielgerichteten Bewegungen der vier Extremitäten mit funktioneller Umsetzung möglich sind oder ein gleichzuachtender Zustand vorliegt 7 2.214,80"
+      retrieved_at: "2026-11-06T00:06:59Z"
+office_rules:
+  - when: 'pension_source == "asvg" and residence_region == "Wien"'
+    office: "ref:offices/pva-wien"
+  - when: 'pension_source == "asvg" and residence_region == "Niederösterreich"'
+    office: "ref:offices/pva-niederoesterreich"
+  - when: 'pension_source == "asvg" and residence_region == "Burgenland"'
+    office: "ref:offices/pva-burgenland"
+  - when: 'pension_source == "asvg" and residence_region == "Oberösterreich"'
+    office: "ref:offices/pva-oberoesterreich"
+  - when: 'pension_source == "asvg" and residence_region == "Steiermark"'
+    office: "ref:offices/pva-steiermark"
+  - when: 'pension_source == "asvg" and residence_region == "Kärnten"'
+    office: "ref:offices/pva-kaernten"
+  - when: 'pension_source == "asvg" and residence_region == "Salzburg"'
+    office: "ref:offices/pva-salzburg"
+  - when: 'pension_source == "asvg" and residence_region == "Tirol"'
+    office: "ref:offices/pva-tirol"
+  - when: 'pension_source == "asvg" and residence_region == "Vorarlberg"'
+    office: "ref:offices/pva-vorarlberg"
+  - when: 'pension_source == "asvg" and residence_region == "Ausland"'
+    office: "ref:offices/pva-wien"
+  - when: 'pension_source == "none" and residence_region == "Wien"'
+    office: "ref:offices/pva-wien"
+  - when: 'pension_source == "none" and residence_region == "Niederösterreich"'
+    office: "ref:offices/pva-niederoesterreich"
+  - when: 'pension_source == "none" and residence_region == "Burgenland"'
+    office: "ref:offices/pva-burgenland"
+  - when: 'pension_source == "none" and residence_region == "Oberösterreich"'
+    office: "ref:offices/pva-oberoesterreich"
+  - when: 'pension_source == "none" and residence_region == "Steiermark"'
+    office: "ref:offices/pva-steiermark"
+  - when: 'pension_source == "none" and residence_region == "Kärnten"'
+    office: "ref:offices/pva-kaernten"
+  - when: 'pension_source == "none" and residence_region == "Salzburg"'
+    office: "ref:offices/pva-salzburg"
+  - when: 'pension_source == "none" and residence_region == "Tirol"'
+    office: "ref:offices/pva-tirol"
+  - when: 'pension_source == "none" and residence_region == "Vorarlberg"'
+    office: "ref:offices/pva-vorarlberg"
+  - when: 'pension_source == "gsvg-bsvg"'
+    office: "ref:offices/svs-hauptstelle"
+  - when: 'pension_source == "public-rail-mining"'
+    office: "ref:offices/bvaeb-hauptstelle"
+documents: []
+forms:
+  - search: "Antrag auf Zuerkennung oder Erhöhung des Pflegegeldes"
+    publisher: "Zuständiger Pensionsversicherungsträger"
+process: "ref:processes/pflegegeld"
+appointment_channels: []
+sources:
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "ständiger Betreuungs- und Hilfsbedarf wegen einer körperlichen, geistigen oder psychischen Behinderung beziehungsweise einer Sinnesbehinderung, die voraussichtlich mindestens sechs Monate andauern wird,"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "ständiger Pflegebedarf von monatlich mehr als 65 Stunden,"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "gewöhnlicher Aufenthalt in Österreich (unter bestimmten Voraussetzungen kann das Pflegegeld auch in einen EWR-Staat oder in der Schweiz geleistet werden)"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Pflegegeld wird – je nach Ausmaß des erforderlichen Pflegebedarfes und unabhängig von Alter und Ursache der Pflegebedürftigkeit – in sieben Stufen gewährt."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Die Betroffenen werden zu Hause, im Pflegeheim oder, falls unumgänglich, im Krankenhaus von einer Ärztin/einem Arzt oder von einer diplomierten Gesundheits-und Krankenpflegeperson aufgesucht. Dieser Hausbesuch ist vorher anzukündigen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "bei ASVG-Pension die Pensionsversicherungsanstalt (PVA) , bei Bundespension, Beamtenpension eines Landes oder einer Gemeinde sowie Pension bei Eisenbahnen und Bergbau, die Versicherungsanstalt Öffentlich Bediensteter, Eisenbahnen und Bergbau (BVAEB) bei GSVG-Pension (Gewerbetreibende) und BSVG-Pension (Bauern) die Sozialversicherungsanstalt der Selbständigen (SVS)"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Berufstätige Personen, mitversicherte Angehörige (zum Beispiel als Hausfrau oder Kind) und Bezieherinnen und Bezieher einer Mindestsicherung oder eines Rehabilitationsgeldes können das Pflegegeld bei der Pensionsversicherungsanstalt beantragen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Auf persönlichen Wunsch ist bei der ärztlichen Untersuchung auch die Anwesenheit und Anhörung einer Vertrauensperson (z.B. die Pflegeperson) zu ermöglichen, um Angaben zur konkreten Pflegesituation zu machen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Antragsformulare für Zuerkennung oder Erhöhung des Pflegegeldes erhalten Sie beim jeweiligen Pensionsversicherungsträger oder auf oesterreich.gv.at ."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Die Entscheidung über die gebührende Pflegestufe ist eine Rechtsfrage und trifft der Sozialversicherungsträger oder das Gericht."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Bezieherinnen und Bezieher einer Pension oder Rente bringen den Antrag auf Pflegegeld beim zuständigen Versicherungsträger ein. Das ist jene Stelle, die auch die Pension bzw. Rente auszahlt, zum Beispiel"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.pv.at/web/service-und-kontakt/kontakt"
+    quote: "Die Zuständigkeit der Landesstellen richtet sich ausschließlich nach dem Wohnort , bei Wohnsitz im Ausland ist die Landesstelle Wien zuständig."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html"
+    quote: "Pflegebedarf in Stunden pro Monat Stufe Betrag in Euro (monatlich, 2026) mehr als 65 Stunden 1 206,20 mehr als 95 Stunden 2 380,30 mehr als 120 Stunden 3 592,60 mehr als 160 Stunden 4 888,50 mehr als 180 Stunden, wenn ein außergewöhnlicher Pflegeaufwand erforderlich ist 5 1.206,90 mehr als 180 Stunden, wenn zeitlich unkoordinierbare Betreuungsmaßnahmen erforderlich sind und diese regelmäßig während des Tages und der Nacht zu erbringen sind oder die dauernde Anwesenheit einer Pflegeperson während des Tages und der Nacht erforderlich ist, weil die Wahrscheinlichkeit einer Eigen- oder Fremdgefährdung gegeben ist 6 1.685,40 mehr als 180 Stunden, wenn keine zielgerichteten Bewegungen der vier Extremitäten mit funktioneller Umsetzung möglich sind oder ein gleichzuachtender Zustand vorliegt 7 2.214,80"
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"

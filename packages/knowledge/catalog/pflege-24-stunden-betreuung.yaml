@@ -1,0 +1,211 @@
+# Awaiting human review. Empty booking channels do not imply an unavailable service.
+id: "pflege-24-stunden-betreuung"
+name_de: "Förderung der 24-Stunden-Betreuung"
+name_simple: "Geld für Betreuung zu Hause beantragen"
+area: "D"
+life_situations:
+  - "care"
+scope: "federal"
+carriers: []
+criteria:
+  - id: "level"
+    text_de: "Pflegegeldbezug ab Stufe 3 ist nötig."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+      quote: "Bezug von Pflegegeld ab der Stufe 3"
+      retrieved_at: "2026-11-06T00:06:59Z"
+    condition: "care_level >= 3"
+    legal_basis: "§ 21b Abs. 2 Z 3 BPGG (SozDok, in Kraft seit 20.07.2024)"
+  - id: "need"
+    text_de: "Bedarf an 24-Stunden-Betreuung muss feststehen. Bei Stufe 3 und 4 stellt SMS die Notwendigkeit gesondert anhand des letzten Pflegegeldgutachtens fest."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Bezieht die pflegebedürftige Person ein Pflegegeld der Stufen 3 oder 4, ist die Notwendigkeit einer 24-Stunden-Betreuung durch das Sozialministeriumservice gesondert festzustellen. Die Entscheidung erfolgt auf Basis des zuletzt erstellten Pflegegeldgutachtens."
+      retrieved_at: "2026-11-06T00:06:59Z"
+    legal_basis: "§ 21b Abs. 2 Z 2 BPGG (SozDok, in Kraft seit 20.07.2024)"
+  - id: "relationship"
+    text_de: "Ein Betreuungsverhältnis nach dem Hausbetreuungsgesetz muss vorliegen."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+      quote: "Vorliegen eines Betreuungsverhältnisses zur pflegebedürftigen Person, zu einem Angehörigen oder zu einem gemeinnützigen Anbieter"
+      retrieved_at: "2026-11-06T00:06:59Z"
+    legal_basis: "§ 21b Abs. 2 Z 1 BPGG (SozDok, in Kraft seit 20.07.2024)"
+  - id: "qualification"
+    text_de: "Die Betreuungsperson braucht einen Ausbildungsnachweis, sechs Monate sachgerechte Betreuung dieser Person oder eine fachspezifische Ermächtigung. SMS prüft die Nachweise."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+      quote: "Die Betreuungspersonen müssen entweder eine theoretische Ausbildung nachweisen, die im Wesentlichen derjenigen Heimhilfe entspricht, oder seit mindestens sechs Monaten die Betreuung der pflegebedürftigen Person sachgerecht durchgeführt haben. Alternativ dazu muss eine fachspezifische Ermächtigung (Delegation) der Betreuungsperson zu pflegerischen Tätigkeiten vorliegen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+    legal_basis: "§ 21b Abs. 2 Z 5 BPGG (SozDok, in Kraft seit 20.07.2024)"
+  - id: "income"
+    text_de: "Die Grundgrenze liegt bei 2.500 Euro netto monatlich. Pflegegeld, Sonderzahlungen, Familienbeihilfe, Kinderbetreuungsgeld und Wohnbeihilfe zählen dabei nicht mit."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+      quote: "Die Einkommensgrenze beträgt 2.500 Euro netto monatlich, wobei Leistungen wie Pflegegeld, Sonderzahlungen, Familienbeihilfe, Kinderbetreuungsgeld und Wohnbeihilfen unberücksichtigt bleiben."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "dependants"
+    text_de: "Die Einkommensgrenze erhöht sich pro unterhaltsberechtigter Person um 400 Euro, bei Behinderung um 600 Euro. SMS prüft auch schwankendes Einkommen."
+    source:
+      url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+      quote: "Für unterhaltsberechtigte Angehörige erhöht sich die Einkommensgrenze um 400 Euro bzw. um 600 Euro für unterhaltsberechtigte Angehörige mit Behinderung."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "amount"
+    text_de: "Die Förderung beträgt höchstens 800 Euro monatlich für selbständige oder 1.600 Euro für unselbständige Betreuung. Der Betrag hängt von der konkreten Betreuung ab."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Die Förderung kann monatlich bis zu EUR 1.600,- bei unselbständigen Arbeitsverhältnissen oder bis zu EUR 800,- bei Werkverträgen von selbständigen Betreuungskräften betragen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "timing"
+    text_de: "Das Ansuchen möglichst vor Beginn stellen, spätestens im Folgemonat nach Betreuungsbeginn. Bei späterem Eingang ist die Förderung frühestens ab Beginn des Monats vor Antragstellung möglich."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Zeitliche Nähe ist dann gegeben, wenn das Ansuchen spätestens in dem Monat einlangt, der auf den Beginn des Betreuungsverhältnisses folgt."
+      retrieved_at: "2026-11-06T00:06:59Z"
+office_rules:
+  - when: 'residence_region == "Wien"'
+    office: "ref:offices/sms-wien"
+  - when: 'residence_region == "Niederösterreich"'
+    office: "ref:offices/sms-niederoesterreich"
+  - when: 'residence_region == "Burgenland"'
+    office: "ref:offices/sms-burgenland"
+  - when: 'residence_region == "Oberösterreich"'
+    office: "ref:offices/sms-oberoesterreich"
+  - when: 'residence_region == "Steiermark"'
+    office: "ref:offices/sms-steiermark"
+  - when: 'residence_region == "Kärnten"'
+    office: "ref:offices/sms-kaernten"
+  - when: 'residence_region == "Salzburg"'
+    office: "ref:offices/sms-salzburg"
+  - when: 'residence_region == "Tirol"'
+    office: "ref:offices/sms-tirol"
+  - when: 'residence_region == "Vorarlberg"'
+    office: "ref:offices/sms-vorarlberg"
+documents:
+  - id: "care-proof"
+    name_de: "Nachweis über Pflegegeld"
+    required: true
+    obtain_from: "Eigene Unterlagen oder auszahlender Pflegegeldträger."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Nachweis über Pflegegeld"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "care-report"
+    name_de: "Bei Stufe 3 oder 4: letztes Pflegegeldgutachten, wenn möglich"
+    required: false
+    obtain_from: "Bei der Stelle anfordern, die über das Pflegegeld entschieden hat."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Bei Bezug eines Pflegegeldes der Stufen 3 und 4: Das zuletzt erstellte Pflegegeldgutachten (wenn möglich)"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "income"
+    name_de: "Einkommensnachweise der pflegebedürftigen Person"
+    required: true
+    obtain_from: "Auszahlende Pensionsstelle, eigene Kontoauszüge und Steuerunterlagen."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Einkommensnachweise der pflegebedürftigen Person (Pensionsbescheid oder Kontoauszüge, letzter Einkommenssteuerbescheid, letzter Einheitswertbescheid)"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "registration"
+    name_de: "Meldezettel der Betreuungskräfte"
+    required: true
+    obtain_from: "Betreuungskraft; zuständige Meldebehörde."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Meldezettel der Betreuungskraft/-kräfte"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "business"
+    name_de: "Bei selbständiger Betreuung: Gewerbenachweis"
+    required: false
+    obtain_from: "Betreuungskraft; Gewerbebehörde oder Gewerberegister."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Gewerbeschein oder Gewerberegisterauszug der Betreungskraft/kräfte"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "insurance"
+    name_de: "Nachweis der Vollversicherung der Betreuungskraft"
+    required: true
+    obtain_from: "Betreuungskraft und zuständiger Sozialversicherungsträger."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Nachweis der Vollversicherung in der Sozialversicherung"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "foreign-insurance"
+    name_de: "Bei Versicherung in einem anderen EU-Staat: A1/E101-Nachweis"
+    required: false
+    obtain_from: "Betreuungskraft und zuständiger ausländischer Sozialversicherungsträger."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Bei einer Betreuungskraft, die in einem anderen EU-Mitgliedstaat sozialversichert ist, ein entsprechender Nachweis (insbesondere Formular A1/E101)"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "training"
+    name_de: "Ausbildungsnachweis oder Pflegeermächtigung, wenn vorhanden"
+    required: false
+    obtain_from: "Betreuungskraft, Ausbildungsstelle oder ausstellende Fachperson; wenn fehlend, SMS zum Hausbesuch fragen."
+    source:
+      url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+      quote: "Ausbildungsnachweis oder Pflegeermächtigung (wenn vorhanden, nach Möglichkeit übersetzt), ansonsten erfolgt Hausbesuch durch Qualitätszentrum für Pflege (SVS Bauern)"
+      retrieved_at: "2026-11-06T00:06:59Z"
+forms:
+  - search: "Ansuchen auf Gewährung eines Zuschusses zur Unterstützung der 24-Stunden-Betreuung"
+    publisher: "Sozialministeriumservice"
+process: "ref:processes/pflege-24-stunden-betreuung"
+appointment_channels: []
+sources:
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Bezug von Pflegegeld ab der Stufe 3"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Bezieht die pflegebedürftige Person ein Pflegegeld der Stufen 3 oder 4, ist die Notwendigkeit einer 24-Stunden-Betreuung durch das Sozialministeriumservice gesondert festzustellen. Die Entscheidung erfolgt auf Basis des zuletzt erstellten Pflegegeldgutachtens."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Vorliegen eines Betreuungsverhältnisses zur pflegebedürftigen Person, zu einem Angehörigen oder zu einem gemeinnützigen Anbieter"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Die Betreuungspersonen müssen entweder eine theoretische Ausbildung nachweisen, die im Wesentlichen derjenigen Heimhilfe entspricht, oder seit mindestens sechs Monaten die Betreuung der pflegebedürftigen Person sachgerecht durchgeführt haben. Alternativ dazu muss eine fachspezifische Ermächtigung (Delegation) der Betreuungsperson zu pflegerischen Tätigkeiten vorliegen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Die Einkommensgrenze beträgt 2.500 Euro netto monatlich, wobei Leistungen wie Pflegegeld, Sonderzahlungen, Familienbeihilfe, Kinderbetreuungsgeld und Wohnbeihilfen unberücksichtigt bleiben."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html"
+    quote: "Für unterhaltsberechtigte Angehörige erhöht sich die Einkommensgrenze um 400 Euro bzw. um 600 Euro für unterhaltsberechtigte Angehörige mit Behinderung."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Die Förderung kann monatlich bis zu EUR 1.600,- bei unselbständigen Arbeitsverhältnissen oder bis zu EUR 800,- bei Werkverträgen von selbständigen Betreuungskräften betragen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Zeitliche Nähe ist dann gegeben, wenn das Ansuchen spätestens in dem Monat einlangt, der auf den Beginn des Betreuungsverhältnisses folgt."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Nachweis über Pflegegeld"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Bei Bezug eines Pflegegeldes der Stufen 3 und 4: Das zuletzt erstellte Pflegegeldgutachten (wenn möglich)"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Einkommensnachweise der pflegebedürftigen Person (Pensionsbescheid oder Kontoauszüge, letzter Einkommenssteuerbescheid, letzter Einheitswertbescheid)"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Meldezettel der Betreuungskraft/-kräfte"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Gewerbeschein oder Gewerberegisterauszug der Betreungskraft/kräfte"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Nachweis der Vollversicherung in der Sozialversicherung"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Bei einer Betreuungskraft, die in einem anderen EU-Mitgliedstaat sozialversichert ist, ein entsprechender Nachweis (insbesondere Formular A1/E101)"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Ausbildungsnachweis oder Pflegeermächtigung (wenn vorhanden, nach Möglichkeit übersetzt), ansonsten erfolgt Hausbesuch durch Qualitätszentrum für Pflege (SVS Bauern)"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/24-Stunden-Betreuung/24-Stunden-Betreuung.de.html"
+    quote: "Bei später einlangenden Ansuchen ist eine Förderung frühestens mit Beginn des Monates vor der Ansuchenstellung möglich."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Ueber_uns/Sozialministeriumservice/Landesstellen/Landesstellen_des_Sozialministeriumservice.de.html"
+    quote: "Die Landesstellen des Sozialministeriumservice sind die regionale Anlaufstellen in den Bundesländern."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Ueber_uns/Sozialministeriumservice/Landesstellen/Landesstellen_des_Sozialministeriumservice.de.html"
+    quote: "Auch alle Anträge können hier gestellt werden."
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"

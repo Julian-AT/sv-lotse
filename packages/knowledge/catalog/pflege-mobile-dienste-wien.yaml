@@ -1,0 +1,204 @@
+# Awaiting human review. Empty booking channels do not imply an unavailable service.
+id: "pflege-mobile-dienste-wien"
+name_de: "FSW-Förderung für mobile Pflege und Betreuung in Wien"
+name_simple: "Hilfe zu Hause in Wien"
+area: "D"
+life_situations:
+  - "care"
+scope: "municipality"
+carriers: []
+criteria:
+  - id: "location"
+    text_de: "Dieser Antrag betrifft Pflege und Betreuung zu Hause in Wien."
+    source:
+      url: "https://www.fsw.at/p/pflege-betreuung"
+      quote: "Sie möchten wissen, welche Pflege- und Betreuungsangebote es in Wien gibt? Der Fonds Soziales Wien berät Sie und sorgt dafür, dass Sie genau die Unterstützung bekommen, die Sie brauchen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+    condition: 'residence_region == "Wien"'
+  - id: "needs-heimhilfe"
+    text_de: "Den individuellen Bedarf an Heimhilfe stellt das FSW-Kund:innenservice fest."
+    source:
+      url: "https://www.fsw.at/p/heimhilfe-pflege-betreuung"
+      quote: "Das FSW-Kund:innenservice stellt den individuellen Bedarf fest."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "needs-nursing"
+    text_de: "Den individuellen Bedarf an Hauskrankenpflege stellt das FSW-Kund:innenservice fest."
+    source:
+      url: "https://www.fsw.at/p/hauskrankenpflege"
+      quote: "Die Mitarbeiter:innen des FSW-Kund:innenservice stellen den individuellen Bedarf fest."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "costs"
+    text_de: "Der Kostenbeitrag hängt von Einkommen, Unterhalt, Miet- und Wohnkosten, Pflegegeld und genutzten Leistungen ab. Der FSW berechnet ihn."
+    source:
+      url: "https://www.fsw.at/p/hauskrankenpflege"
+      quote: "Der Kostenbeitrag für Kund:innen ist abhängig von ihrem Einkommen, ihren Unterhaltspflichten bzw. -berechtigungen, den Miet- und Wohnkosten, dem Pflegegeld und den in Anspruch genommenen Leistungen."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "application"
+    text_de: "Den aktuellen Antrag unterschreiben und selbst über MeinFSW, per E-Mail oder Post einreichen; persönliche Abgabe ist ebenfalls möglich."
+    source:
+      url: "https://www.fsw.at/antrag"
+      quote: "Den ausgefüllten und unterschriebenen Antrag können Sie direkt auf MeinFSW einreichen. Sie können den Antrag auch gemeinsam mit den notwendigen Beilagen und Unterlagen per E-Mail oder Post an den FSW schicken."
+      retrieved_at: "2026-11-06T00:06:59Z"
+office_rules:
+  - when: 'residence_region == "Wien"'
+    office: "ref:offices/fsw-pflege-und-betreuung-1150"
+documents:
+  - id: "photo-id"
+    name_de: "Amtlicher Lichtbildausweis (Kopie)"
+    required: true
+    obtain_from: "Eigene Unterlagen; bei Verlust bei der Ausweisbehörde neu beantragen."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Amtlicher Lichtbildausweis. Zum Beispiel: Führerschein, Reisepass, Personalausweis"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "citizenship"
+    name_de: "Nachweis der Staatsbürgerschaft (Kopie)"
+    required: true
+    obtain_from: "Eigener Reisepass, Personalausweis oder Staatsbürgerschaftsnachweis; zuständige Ausweis- oder Staatsbürgerschaftsbehörde."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Nachweis der Staatsbürgerschaft. Zum Beispiel: Staatsbürgerschaftsnachweis, Reisepass, Personalausweis"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "residence-status"
+    name_de: "Bei nicht österreichischer Staatsbürgerschaft: Aufenthaltsnachweis (Kopie)"
+    required: false
+    obtain_from: "Eigene Unterlagen oder zuständige Aufenthaltsbehörde."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Wenn Sie keine österreichische Staatsbürgerschaft haben: Nachweis über Ihren Aufenthaltsstatus"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "income"
+    name_de: "Aktuelle Einkommensnachweise (Kopien)"
+    required: true
+    obtain_from: "Auszahlende Stelle: Arbeitgeber, Pensionsversicherung, AMS oder andere Einkommensstelle; bei Selbständigkeit Steuerunterlagen."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Aktuelle Nachweise über Ihr Einkommen. Zum Beispiel:"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "rent"
+    name_de: "Aufschlüsselung von Hauptmietzins und Betriebskosten"
+    required: true
+    obtain_from: "Vermietung oder Hausverwaltung; eigene Mietunterlagen."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "aufgeschlüsselten Nachweis über Hauptmietzins und Betriebskosten von Ihrer Wohnung oder Ihrem Haus."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "expenses"
+    name_de: "Nachweise über pflegebezogene Ausgaben, soweit vorhanden"
+    required: false
+    obtain_from: "Eigene Rechnungen der jeweiligen Anbieter."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Nachweise über pflegebezogene Ausgaben, zum Beispiel Pflegebett, Notrufsystem."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "representation"
+    name_de: "Bei Vertretung: Nachweis der Vertretungsbefugnis"
+    required: false
+    obtain_from: "Vollmacht der vertretenen Person oder Beschluss des zuständigen Gerichts."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Wenn Sie von einer anderen Person vertreten werden: Nachweis der Vertretungsbefugnis."
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "maintenance"
+    name_de: "Bei Unterhaltsbeziehungen: Beilage Angehörige und Nachweise"
+    required: false
+    obtain_from: "Aktuelle Beilage vom FSW; eigene Nachweise oder zuständiges Gericht."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Wenn Sie unterhaltsverpflichtete oder unterhaltsberechtigte Angehörige haben:"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "marriage"
+    name_de: "Falls zutreffend: Heirats- oder Partnerschaftsurkunde"
+    required: false
+    obtain_from: "Eigene Urkunden oder Standesamt."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Wenn Sie verheiratet oder verpartnert sind: Heiratsurkunde oder Urkunde über die eingetragene Partnerschaft"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "divorce"
+    name_de: "Falls zutreffend: Scheidungsunterlagen oder Auflösung der Partnerschaft"
+    required: false
+    obtain_from: "Eigene Unterlagen oder zuständiges Gericht."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Wenn Sie geschieden sind oder Ihre eingetragene Partnerschaft aufgelöst wurde: Scheidungsurteil oder Scheidungsbeschluss"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "death"
+    name_de: "Falls zutreffend: Sterbeurkunde der Partnerin oder des Partners"
+    required: false
+    obtain_from: "Eigene Unterlagen oder Standesamt."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Wenn Ihr:e Partner:in gestorben ist: Sterbeurkunde von dem:der Ehepartner:in oder eingetragenen Partner:in"
+      retrieved_at: "2026-11-06T00:06:59Z"
+  - id: "minor"
+    name_de: "Bei Minderjährigen: Geburtsurkunde, Geburtsdaten beider Eltern und vorhandener Obsorgenachweis"
+    required: false
+    obtain_from: "Eigene Urkunden, Standesamt und gegebenenfalls zuständiges Gericht."
+    source:
+      url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+      quote: "Bei Minderjährigen müssen Sie zusätzlich folgende Unterlagen beilegen:"
+      retrieved_at: "2026-11-06T00:06:59Z"
+forms:
+  - search: "Antrag auf Förderung von Leistungen – Pflege und Betreuung zu Hause (aktuelle Version)"
+    publisher: "Fonds Soziales Wien"
+  - search: "Beilage Angehörige für Leistungen Pflege und Betreuung"
+    publisher: "Fonds Soziales Wien"
+process: "ref:processes/pflege-mobile-dienste-wien"
+appointment_channels: []
+sources:
+  - url: "https://www.fsw.at/p/pflege-betreuung"
+    quote: "Sie möchten wissen, welche Pflege- und Betreuungsangebote es in Wien gibt? Der Fonds Soziales Wien berät Sie und sorgt dafür, dass Sie genau die Unterstützung bekommen, die Sie brauchen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/heimhilfe-pflege-betreuung"
+    quote: "Das FSW-Kund:innenservice stellt den individuellen Bedarf fest."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/hauskrankenpflege"
+    quote: "Die Mitarbeiter:innen des FSW-Kund:innenservice stellen den individuellen Bedarf fest."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/p/hauskrankenpflege"
+    quote: "Der Kostenbeitrag für Kund:innen ist abhängig von ihrem Einkommen, ihren Unterhaltspflichten bzw. -berechtigungen, den Miet- und Wohnkosten, dem Pflegegeld und den in Anspruch genommenen Leistungen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/antrag"
+    quote: "Den ausgefüllten und unterschriebenen Antrag können Sie direkt auf MeinFSW einreichen. Sie können den Antrag auch gemeinsam mit den notwendigen Beilagen und Unterlagen per E-Mail oder Post an den FSW schicken."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Amtlicher Lichtbildausweis. Zum Beispiel: Führerschein, Reisepass, Personalausweis"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Nachweis der Staatsbürgerschaft. Zum Beispiel: Staatsbürgerschaftsnachweis, Reisepass, Personalausweis"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Wenn Sie keine österreichische Staatsbürgerschaft haben: Nachweis über Ihren Aufenthaltsstatus"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Aktuelle Nachweise über Ihr Einkommen. Zum Beispiel:"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "aufgeschlüsselten Nachweis über Hauptmietzins und Betriebskosten von Ihrer Wohnung oder Ihrem Haus."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Nachweise über pflegebezogene Ausgaben, zum Beispiel Pflegebett, Notrufsystem."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Wenn Sie von einer anderen Person vertreten werden: Nachweis der Vertretungsbefugnis."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Wenn Sie unterhaltsverpflichtete oder unterhaltsberechtigte Angehörige haben:"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Wenn Sie verheiratet oder verpartnert sind: Heiratsurkunde oder Urkunde über die eingetragene Partnerschaft"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Wenn Sie geschieden sind oder Ihre eingetragene Partnerschaft aufgelöst wurde: Scheidungsurteil oder Scheidungsbeschluss"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Wenn Ihr:e Partner:in gestorben ist: Sterbeurkunde von dem:der Ehepartner:in oder eingetragenen Partner:in"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/downloads/foerderwesen_anerkennung/foerderansuchen/subjektfoerderung/fsw-antrag-auf-foerderung-von-leistungen.pdf"
+    quote: "Bei Minderjährigen müssen Sie zusätzlich folgende Unterlagen beilegen:"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.fsw.at/antrag"
+    quote: "Es sind immer die aktuellen Formulare von dieser Seite zu verwenden."
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"
