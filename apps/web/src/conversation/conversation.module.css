@@ -1,0 +1,56 @@
+.conversation {
+  max-width: 48rem;
+}
+.conversation h1 {
+  text-wrap: balance;
+}
+.messages {
+  list-style: none;
+  padding: 0;
+}
+.messages > li {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--lotse-border);
+}
+.messages p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.approval {
+  composes: lotse-glass from global;
+  padding: 1rem;
+}
+.approval pre {
+  overflow: auto;
+  max-height: 20rem;
+}
+.conversation form {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 1.5rem;
+}
+.conversation textarea {
+  min-height: 6rem;
+  padding: 0.75rem;
+  font: inherit;
+}
+.conversation button {
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+.conversation label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.conversation input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-inline-end: 0.5rem;
+}
+.conversation progress {
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
