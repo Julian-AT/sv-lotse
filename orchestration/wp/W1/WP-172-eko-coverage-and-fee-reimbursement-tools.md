@@ -5,7 +5,7 @@ wave: W1
 lane: brain
 risk: normal
 codex_effort: high
-depends_on: [WP-014, WP-153, WP-154]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-M1, FR-M2]
 owns:
   - packages/brain/test/eko/**
@@ -21,6 +21,8 @@ gates:
   - bun run --filter @lotse/brain test
 pr_title: "feat(brain): add eko coverage and fee reimbursement tools"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-172: EKO coverage and fee reimbursement tools
 

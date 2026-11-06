@@ -5,7 +5,7 @@ wave: W0
 lane: bridge
 risk: high
 codex_effort: xhigh
-depends_on: [WP-007, WP-008, WP-012]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-C3, FR-C9, NFR-1, NFR-3]
 owns:
   - apps/mac/Packages/LotseKit/Sources/LotseBridge/**
@@ -32,6 +32,8 @@ gates:
   - bash apps/mac/E2E/run-bridge-e2e.sh
 pr_title: "feat(bridge): connect mac app to the live workspace end to end"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-009: Bridge end to end with the real workspace and a live turn
 

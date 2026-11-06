@@ -5,7 +5,7 @@ wave: W1
 lane: brain
 risk: normal
 codex_effort: high
-depends_on: [WP-014, WP-155, WP-156]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-O1, FR-O2]
 owns:
   - packages/brain/src/geo/**
@@ -22,6 +22,8 @@ gates:
   - bun run --filter @lotse/brain test
 pr_title: "feat(brain): add office resolution and facility search"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-116: Offices and facilities with office.resolve and facility.search
 

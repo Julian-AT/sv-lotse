@@ -5,7 +5,7 @@ wave: W1
 lane: brain
 risk: normal
 codex_effort: high
-depends_on: [WP-116]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-O3, FR-O5]
 owns:
   - packages/brain/test/appointment/**
@@ -21,6 +21,8 @@ gates:
   - bun run --filter @lotse/brain test
 pr_title: "feat(brain): add appointment search and preparation"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-117: Appointments with appointment.search and appointment.prepare
 

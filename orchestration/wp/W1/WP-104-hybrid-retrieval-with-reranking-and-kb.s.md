@@ -5,7 +5,7 @@ wave: W1
 lane: retrieval
 risk: normal
 codex_effort: high
-depends_on: [WP-103, WP-014, WP-173, WP-174]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-G2, FR-G4, E3]
 owns:
   - packages/brain/src/retrieval/**
@@ -23,6 +23,8 @@ gates:
   - RUN_LIVE=1 bun run --filter @lotse/brain test:live
 pr_title: "feat(retrieval): add hybrid search with reranking and kb.search"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-104: Hybrid retrieval with reranking and kb.search
 

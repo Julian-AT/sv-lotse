@@ -5,7 +5,7 @@ wave: W1
 lane: brain
 risk: high
 codex_effort: xhigh
-depends_on: [WP-006, WP-102, WP-104, WP-105, WP-107, WP-115, WP-116, WP-117, WP-118, WP-172]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-A1, FR-A2, NFR-17]
 owns:
   - packages/brain/src/tools/impl/**
@@ -23,6 +23,8 @@ gates:
   - RUN_LIVE=1 bun run --filter @lotse/brain test:live
 pr_title: "feat(brain): register w1 tool groups on the agent runtime"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-180: Register the W1 tool groups on the agent runtime
 

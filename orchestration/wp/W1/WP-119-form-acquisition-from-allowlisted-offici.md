@@ -5,7 +5,7 @@ wave: W1
 lane: forms
 risk: normal
 codex_effort: high
-depends_on: [WP-115]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-D10]
 owns:
   - packages/brain/src/forms/acquire/**
@@ -24,6 +24,8 @@ gates:
   - RUN_LIVE=1 bun run --filter @lotse/brain test:live
 pr_title: "feat(forms): find and acquire official forms from allowlisted sites"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-119: Form acquisition from allowlisted official sites
 

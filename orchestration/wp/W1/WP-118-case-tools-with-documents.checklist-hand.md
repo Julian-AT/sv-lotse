@@ -5,7 +5,7 @@ wave: W1
 lane: brain
 risk: normal
 codex_effort: high
-depends_on: [WP-102]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-D9, FR-K3, FR-K5]
 owns:
   - packages/brain/test/case/**
@@ -21,6 +21,8 @@ gates:
   - bun run --filter @lotse/brain test
 pr_title: "feat(brain): add document checklist, handoff and case tools"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-118: Case tools with documents.checklist, handoff.compose and step wiring
 

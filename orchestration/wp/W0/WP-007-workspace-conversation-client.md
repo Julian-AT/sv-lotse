@@ -4,7 +4,7 @@ title: Workspace conversation client and bridge (web side)
 wave: W0
 lane: workspace
 risk: normal
-depends_on: [WP-006, WP-181]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-C9, FR-L4, FR-A2, FR-P3, NFR-6]
 owns:
   - apps/web/src/app/(workspace)/**
@@ -27,6 +27,8 @@ gates:
   - RUN_LIVE=1 bun run --filter @lotse/web e2e --grep @conversation
 pr_title: "feat(workspace): add conversation client with approvals and bridge"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-007: Workspace conversation client and bridge (web side)
 

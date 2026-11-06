@@ -5,7 +5,7 @@ wave: W1
 lane: forms
 risk: high
 codex_effort: xhigh
-depends_on: [WP-014, WP-168]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-D5, FR-D6, E7]
 owns:
   - packages/brain/src/forms/registry/**
@@ -27,6 +27,8 @@ gates:
   - RUN_LIVE=1 bun run --filter @lotse/brain test:live
 pr_title: "feat(forms): add form registry, prefill, commits and package build"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-115: Form engine core with registry, prefill, drafts, commit and package build
 

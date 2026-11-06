@@ -5,7 +5,7 @@ wave: W1
 lane: engine
 risk: normal
 codex_effort: high
-depends_on: [WP-014]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-G3, FR-G7, FR-K5, E1]
 owns:
   - packages/brain/src/engine/**
@@ -22,6 +22,8 @@ gates:
   - bun run --filter @lotse/brain test
 pr_title: "feat(engine): add process engine and process tools"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-102: Process engine and process tools
 

@@ -5,7 +5,7 @@ wave: W1
 lane: pipeline
 risk: high
 codex_effort: xhigh
-depends_on: [WP-102, WP-104, WP-105, WP-180, WP-192]
+depends_on: [SUPERSEDED-BY-VERTICAL-SLICES]
 fr: [FR-G7, NFR-1]
 owns:
   - packages/brain/src/pipeline/**
@@ -24,6 +24,8 @@ gates:
   - RUN_LIVE=1 bun run --filter @lotse/brain test:live
 pr_title: "feat(pipeline): add turn pipeline with context assembly and segmenter"
 ---
+
+> Superseded on 2026-11-06 by the W2 vertical slices (WP-V1 to WP-V7).
 
 # WP-106: Turn pipeline, context assembly, segmenter and goal confirmation
 
