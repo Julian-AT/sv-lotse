@@ -17,6 +17,21 @@ const OPEN_TOOL_STATES: readonly string[] = [
   "input-available",
 ];
 
+/**
+ * A new user message supersedes client-side calls that are still waiting for the app (a page read,
+ * a pointer). They end as interrupted; calls awaiting or holding an approval stay untouched.
+ */
+export function interruptPendingClientCalls(message: LotseMessage): LotseMessage {
+  return {
+    ...message,
+    parts: message.parts.map((part) =>
+      isToolUIPart(part) && part.state === "input-available" && !part.approval
+        ? { ...part, state: "output-error" as const, errorText: "TOOL_INTERRUPTED" }
+        : part,
+    ),
+  };
+}
+
 export function hasOpenToolCall(message: LotseMessage | undefined): boolean {
   return (
     message?.parts.some((part) => isToolUIPart(part) && OPEN_TOOL_STATES.includes(part.state)) ??
@@ -54,7 +69,11 @@ export async function mergeLatest(
   if (latest.role === "user") {
     if (history.some((message) => message.id === latest.id)) rejectContinuation();
     const last = history.at(-1);
-    if (last?.role === "assistant" && hasOpenToolCall(last)) rejectContinuation();
+    if (last?.role === "assistant" && hasOpenToolCall(last)) {
+      const settled = interruptPendingClientCalls(last);
+      if (hasOpenToolCall(settled)) rejectContinuation();
+      return { history: [...history.slice(0, -1), settled, latest], dispatch: [] as string[] };
+    }
     return { history: [...history, latest], dispatch: [] as string[] };
   }
   const stored = history.at(-1);

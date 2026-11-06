@@ -99,6 +99,7 @@ export function useConversation({
         return;
       if (pending.current.has(toolCall.toolCallId)) return;
       pending.current.set(toolCall.toolCallId, toolCall.toolName);
+      const started = generation.current;
       try {
         const result = await runtime.current?.execute(
           toolCall.toolCallId,
@@ -107,6 +108,8 @@ export function useConversation({
         );
         if (result && "native" in result) return;
         pending.current.delete(toolCall.toolCallId);
+        // A newer message superseded this call on the server; its late output must not resend.
+        if (generation.current !== started) return;
         if (result && "output" in result)
           void output.current({
             tool: toolCall.toolName,
@@ -279,6 +282,7 @@ export function useConversation({
 
   const stop = async (): Promise<void> => {
     generation.current++;
+    pending.current.clear();
     stopFormFilling();
     await chat.stop();
     runtime.current?.clear();
