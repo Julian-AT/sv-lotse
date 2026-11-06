@@ -83,7 +83,8 @@ import { pointedToolCall, resultPointAction } from "../workspace/targets.ts";
 import { approvedResultCheckpoint } from "./approved-results.ts";
 import { awaitPreviousTurn } from "./continuation-wait.ts";
 import { TurnError, turnStreamError } from "./errors.ts";
-import { formQuestion, prepareFormAfterOpen } from "./form-after-open.ts";
+import { formQuestion, prepareFormAfterOpen, topicTexts } from "./form-after-open.ts";
+import { answerFormQuestion } from "./form-answers.ts";
 import {
   hasOpenToolCall,
   loadMessages,
@@ -436,8 +437,26 @@ async function runTurn(
         history: prepared.history,
         language: formLanguage,
       });
-      if (question) {
+      const formTurn =
+        question ??
+        (latest.role === "user"
+          ? await answerFormQuestion({
+              db,
+              context: prepared.context,
+              history: prepared.history,
+              userText,
+              turnId: prepared.turnId,
+              language: formLanguage,
+              topics: topicTexts(prepared.history),
+            })
+          : undefined);
+      if (formTurn) {
         writer.write({ type: "start-step" });
+        if (formTurn.next)
+          writer.write({
+            type: "message-metadata",
+            messageMetadata: { formQuestion: formTurn.next },
+          });
         const output = createSegmentWriter({
           writer,
           context: prepared.context,
@@ -446,8 +465,8 @@ async function runTurn(
           config,
           passages: new Map(),
         });
-        for (const action of question.actions) output.action(action);
-        output.emit(randomUUID(), question.text);
+        for (const action of formTurn.actions) output.action(action);
+        output.emit(randomUUID(), formTurn.text);
         speechSegments.push(...output.segments);
         timings.totalMs = performance.now() - pipelineStarted;
         writer.write({ type: "finish-step" });

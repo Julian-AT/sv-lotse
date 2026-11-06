@@ -21,6 +21,7 @@ import { getTemplate } from "../forms/registry/index.ts";
 import { type FormField, type FormToolResult, templateSchema } from "../forms/schema.ts";
 import { contracts } from "../tools/contracts/index.ts";
 import type { LotseMessage } from "../tools/types.ts";
+import { applicantOf, askable, type FormAnswer, fieldQuestion } from "./form-answers.ts";
 
 export interface BenefitForm {
   formId: string;
@@ -118,11 +119,6 @@ export function benefitForm(texts: readonly string[]): BenefitForm | undefined {
   }
   return undefined;
 }
-
-// Only administrative identity, address and contact fields are asked for; medical sections stay
-// empty and are never inferred.
-const ASKABLE_FACT =
-  /^(?:person\.(?:family_name|given_name|birth_date|insurance_number)|address\.(?:street|building_unit|postcode|city)|contact\.(?:phone|email))$/u;
 
 type Part = LotseMessage["parts"][number];
 
@@ -259,7 +255,6 @@ const copy = {
       filled > 0
         ? `Ich habe das Formular „${title}“ geöffnet und ${filled} ${filled === 1 ? "Feld" : "Felder"} aus Ihren bestätigten Angaben eingetragen. Abgeschickt wird nichts.`
         : `Ich habe das Formular „${title}“ geöffnet. Abgeschickt wird nichts.`,
-    ask: (label: string) => `Was soll ich im Feld „${label}“ eintragen?`,
     done: "Die Felder, die ich aus Ihren Angaben kenne, sind eingetragen. Bitte prüfen Sie den Entwurf.",
   },
   en: {
@@ -267,7 +262,6 @@ const copy = {
       filled > 0
         ? `I opened the form “${title}” and filled ${filled} ${filled === 1 ? "field" : "fields"} from your confirmed details. Nothing is submitted.`
         : `I opened the form “${title}”. Nothing is submitted.`,
-    ask: (label: string) => `What should I enter in the field “${label}”?`,
     done: "The fields I know from your details are filled in. Please review the draft.",
   },
 } as const;
@@ -341,9 +335,7 @@ export async function prepareFormAfterOpen(input: {
 
 function askedField(fields: readonly FormField[], missingFields: readonly string[]) {
   const missing = new Set(missingFields);
-  return fields.find(
-    (field) => missing.has(field.id) && field.fact_type && ASKABLE_FACT.test(field.fact_type),
-  );
+  return fields.find((field) => missing.has(field.id) && askable(field));
 }
 
 /** Once the viewer is open: type the prefilled fields and ask for exactly one missing field. */
@@ -352,7 +344,7 @@ export async function formQuestion(input: {
   context: RuntimeContext;
   history: readonly LotseMessage[];
   language: string;
-}): Promise<{ text: string; actions: Action[] } | undefined> {
+}): Promise<FormAnswer | undefined> {
   const prepared = preparedFormAwaitingQuestion(input.history);
   if (!prepared) return;
   const [instance] = await input.db
@@ -380,11 +372,14 @@ export async function formQuestion(input: {
       },
     }),
   );
-  const strings = input.language.startsWith("en") ? copy.en : copy.de;
-  const label = asked ? asked.help_text?.trim() || asked.label_de : undefined;
-  const text = [
-    strings.opened(template.title, prepared.proposals.length),
-    label ? strings.ask(label) : strings.done,
-  ].join(" ");
-  return { text, actions };
+  const english = input.language.startsWith("en");
+  const strings = english ? copy.en : copy.de;
+  const question = asked
+    ? fieldQuestion(asked, applicantOf(topicTexts(input.history), english), english)
+    : strings.done;
+  return {
+    text: `${strings.opened(template.title, prepared.proposals.length)} ${question}`,
+    actions,
+    ...(asked ? { next: { formInstanceId: prepared.formInstanceId, fieldId: asked.id } } : {}),
+  };
 }

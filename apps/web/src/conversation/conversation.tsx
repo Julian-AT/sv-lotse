@@ -170,11 +170,11 @@ export function Conversation({
       active = false;
     };
   }, [selectedCase.id, selectedCase.subjectId, busy]);
-  const submit = (text: string): void => {
+  const submit = (text: string, reply = false): void => {
     if (!text.trim() || busy || awaiting) return;
     setInput("");
     chat.clearError();
-    void chat.send(text.trim());
+    void chat.send(text.trim(), reply);
   };
   const started = useRef(false);
   useEffect(() => {
@@ -280,7 +280,9 @@ export function Conversation({
                   )}
                 </div>
               )}
-              {!busy && !awaiting && <OpenOfferReplies messages={chat.messages} onReply={submit} />}
+              {!busy && !awaiting && (
+                <OpenOfferReplies messages={chat.messages} onReply={(text) => submit(text, true)} />
+              )}
               <MultimodalInput
                 disabled={awaiting}
                 hasMessages={chat.messages.length > 0}

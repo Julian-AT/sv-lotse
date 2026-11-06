@@ -47,7 +47,7 @@ export function useConversation({
   initialMessages,
   onSettled,
 }: Options): ReturnType<typeof useChat<LotseMessage>> & {
-  send: (text: string) => Promise<void>;
+  send: (text: string, reply?: boolean) => Promise<void>;
   partial: string;
   bridgeError: boolean;
   statusLine: string;
@@ -290,11 +290,11 @@ export function useConversation({
         setBridgeError(true);
       });
   };
-  const send = async (text: string): Promise<void> => {
+  const send = async (text: string, reply = false): Promise<void> => {
     setStatusLine("");
     await stop();
     turnState.actionResults.push(...guidanceRef.current.takeActionResults());
-    turnState.inputKind = "text";
+    turnState.inputKind = sentInputKind(turnState.inputKind, reply);
     turnState.capsule = await nativePageCapsule();
     await chat.sendMessage({ text });
   };
@@ -309,6 +309,14 @@ export function useConversation({
     bridgeError,
     statusLine: chat.status === "ready" || chat.status === "error" ? "" : statusLine,
   };
+}
+
+/** Typed messages are silent; a reply chip ("Ja, öffnen") keeps a spoken conversation spoken. */
+export function sentInputKind(
+  current: TurnState["inputKind"],
+  reply: boolean,
+): TurnState["inputKind"] {
+  return reply ? current : "text";
 }
 
 /** Only turns asked by voice (⌥⌘, „Meine SV“, the mic button) are read aloud. */
