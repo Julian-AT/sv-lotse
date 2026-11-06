@@ -1,0 +1,124 @@
+# Task reminders are immediate prompts, not calculated statutory deadlines.
+id: "pflegekarenzgeld"
+benefit: "ref:catalog/pflegekarenzgeld"
+actor_roles:
+  - "subject"
+  - "helper"
+slots:
+  - id: "employment_months"
+    type: "number"
+    question_hint: "Wie viele Monate waren Sie unmittelbar vorher ununterbrochen beschäftigt?"
+    validation:
+      min: 0
+  - id: "fully_insured"
+    type: "boolean"
+    question_hint: "Waren Sie dabei vollversichert?"
+  - id: "ams_deregistered"
+    type: "boolean"
+    question_hint: "Haben Sie sich für die Pflegekarenz beim AMS vom Bezug abgemeldet?"
+  - id: "marginal_employment"
+    type: "boolean"
+    question_hint: "Waren Sie davor nur geringfügig beschäftigt?"
+  - id: "predominant_care"
+    type: "boolean"
+    question_hint: "Übernehmen Sie die Pflege während dieser Zeit überwiegend selbst?"
+  - id: "leave_start"
+    type: "date"
+    question_hint: "An welchem Datum beginnt Ihre Pflegekarenz oder Pflegeteilzeit?"
+  - id: "leave_end"
+    type: "date"
+    question_hint: "An welchem Datum endet sie? Bei gesetzlichem Kurzanspruch gilt eine kürzere Antragsfrist."
+  - id: "application_ready"
+    type: "boolean"
+    question_hint: "Sind der Antrag und die für Ihren Zugangsweg nötigen Nachweise fertig?"
+  - id: "application_submitted"
+    type: "boolean"
+    question_hint: "Haben Sie den Antrag selbst beim Sozialministeriumservice eingereicht?"
+  - id: "decision_received"
+    type: "boolean"
+    question_hint: "Haben Sie die Mitteilung des Sozialministeriumservice zum Pflegekarenzgeld erhalten?"
+steps:
+  - id: "check"
+    needs:
+      - "employment_months"
+      - "fully_insured"
+      - "ams_deregistered"
+      - "marginal_employment"
+      - "predominant_care"
+      - "leave_start"
+      - "leave_end"
+    criteria: "ref:catalog/pflegekarenzgeld#criteria"
+    action: "office.resolve"
+    outputs:
+      - id: "sms-intake"
+        type: "office"
+    reminders:
+      - after_days: 0
+        text_de: "Bitte beantragen Sie das Geld möglichst sofort. Für Rückwirkung gilt grundsätzlich zwei Monate ab Beginn; bei gesetzlichem Kurzanspruch ohne weitere Vereinbarung spätestens bis zum Ende."
+        when: "true"
+    transitions:
+      - to: "prepare"
+        when: "((employment_months >= 3 and fully_insured == true) or ams_deregistered == true) and marginal_employment == false and predominant_care == true"
+  - id: "prepare"
+    needs:
+      - "check"
+      - "application_ready"
+    documents: "ref:catalog/pflegekarenzgeld#documents"
+    action: "documents.checklist"
+    signature: "subject"
+    outputs:
+      - id: "application-checklist"
+        type: "checklist"
+    reminders:
+      - after_days: 0
+        text_de: "Bitte prüfen Sie die Unterlagen mit der zuständigen Stelle. Sie reichen den Antrag selbst ein."
+        when: "application_ready == false"
+    transitions:
+      - to: "confirm-submission"
+        when: "application_ready == true"
+  - id: "confirm-submission"
+    needs:
+      - "prepare"
+      - "application_submitted"
+    transitions:
+      - to: "decision"
+        when: "application_submitted == true"
+  - id: "decision"
+    needs:
+      - "confirm-submission"
+      - "decision_received"
+    outputs:
+      - id: "cash-benefit-decision"
+        type: "decision"
+    transitions:
+      - to: "finish"
+        when: "decision_received == true"
+  - id: "finish"
+    needs:
+      - "decision"
+completion:
+  evidence:
+    - "user_statement"
+sources:
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/Pflegekarenz_und_-teilzeit/Pflegekarenz_und_-teilzeit.de.html"
+    quote: "Die Bearbeitung der Anträge erfolgt österreichweit durch das Sozialministeriumservice - Landestelle Steiermark."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.oesterreich.gv.at/de/themen/pflege/5/1/Seite.360529"
+    quote: "Erfolgt die Antragstellung auf Pflegekarenzgeld innerhalb von zwei Monaten ab Beginn der Pflegekarenz, Pflegeteilzeit oder Familienhospizkarenz, so gebührt das Pflegekarenzgeld bereits ab Beginn dieser Maßnahme."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.oesterreich.gv.at/de/themen/pflege/5/1/Seite.360529"
+    quote: "Wird der Antrag nach dieser Frist, jedoch vor dem Ende der Karenzierung gestellt, gebührt das Pflegekarenzgeld ab dem Tag der Antragstellung . Anträge, die nach dem Ende der Maßnahme gestellt werden, werden als verspätet zurückgewiesen."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.oesterreich.gv.at/de/themen/pflege/5/1/Seite.360529"
+    quote: "In Fällen, in denen eine Pflegekarenz oder Pflegeteilzeit aufgrund eines Rechtsanspruchs in Anspruch genommen wurde und es zu keiner weiteren Vereinbarung gekommen ist, ist die Beantragung des Pflegekarenzgeldes bis zur Beendigung der Maßnahme, längstens jedoch zwei Monate nach Beginn der Maßnahme, zulässig."
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.oesterreich.gv.at/de/themen/pflege/5/1/Seite.360529"
+    quote: "Vorliegen einer Vollversicherung (Krankenversicherung, Unfallversicherung und Pensionsversicherung) aufgrund eines unmittelbar vor Inanspruchnahme der Pflegekarenz oder Pflegeteilzeit liegenden, ununterbrochenen Arbeitsverhältnisses von zumindest drei Monaten"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.oesterreich.gv.at/de/themen/pflege/5/1/Seite.360529"
+    quote: "Abmeldung beim AMS vom Bezug des Arbeitslosengeldes und der Notstandshilfe"
+    retrieved_at: "2026-11-06T00:06:59Z"
+  - url: "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/Pflegekarenz_und_-teilzeit/Pflegekarenz_und_-teilzeit.de.html"
+    quote: "Erklärung der überwiegenden Pflege und Betreuung für die Dauer der Pflegekarenz oder Pflegeteilzeit"
+    retrieved_at: "2026-11-06T00:06:59Z"
+as_of: "2026-11-06"
