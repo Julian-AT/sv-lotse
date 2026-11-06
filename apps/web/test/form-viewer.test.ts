@@ -434,3 +434,28 @@ test("FR-D5 keyboard corrections can dismiss a stale group to request a fresh re
     approved: false,
   });
 });
+
+test("FR-D5 reloads the persisted drafts once typing finishes so filled fields stay visible", async () => {
+  vi.useFakeTimers();
+  vi.stubGlobal("matchMedia", () => ({ matches: false }));
+  const element = document.createElement("div");
+  document.body.append(element);
+  element.scrollIntoView = vi.fn();
+  const filled = vi.fn();
+  const options = {
+    instance,
+    actions: [action, { ...action, id: "action-b" }],
+    ready: true,
+    elements: new Map([[field.id, element]]),
+    language: "de" as const,
+    slow: false,
+    onTargetRect: vi.fn(),
+    onSettled: filled,
+  };
+  renderHook((props) => useLiveFill(props), { initialProps: options });
+  await act(async () => {
+    await vi.runAllTimersAsync();
+  });
+  expect(filled).toHaveBeenCalledTimes(1);
+  element.remove();
+});

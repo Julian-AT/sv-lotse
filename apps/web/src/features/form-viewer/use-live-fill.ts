@@ -24,6 +24,8 @@ export interface LiveFillOptions {
   reducedMotion?: boolean;
   onTargetRect: (rect: ReturnType<typeof measureFieldTarget>) => void | Promise<void>;
   onActionResult?: ((result: ActionResult) => void) | undefined;
+  /** Typed values are persisted drafts; reload them when typing ends or stops so they stay visible. */
+  onSettled?: (() => void) | undefined;
 }
 
 export function useLiveFill(options: LiveFillOptions): {
@@ -69,12 +71,14 @@ export function useLiveFill(options: LiveFillOptions): {
     }
     setPreview({});
     setCaption(formViewerCopy[latest.current.language].stopped);
+    latest.current.onSettled?.();
   }, []);
 
   const run = useCallback(async (): Promise<void> => {
     if (busy.current) return;
     busy.current = true;
     setIsFilling(queue.current.length > 0);
+    let filled = false;
     try {
       while (queue.current.length > 0) {
         const action = queue.current.shift();
@@ -119,6 +123,7 @@ export function useLiveFill(options: LiveFillOptions): {
           setActiveField(null);
           controller.current = null;
         }
+        filled ||= !failureReason;
         current.onActionResult?.({
           actionId: action.id,
           resolvedBy: "ui",
@@ -131,6 +136,7 @@ export function useLiveFill(options: LiveFillOptions): {
       busy.current = false;
       setIsFilling(false);
     }
+    if (filled) latest.current.onSettled?.();
   }, []);
 
   useEffect(() => {

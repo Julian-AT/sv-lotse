@@ -110,6 +110,7 @@ function FormViewerSession({
     reducedMotion: preferences.reducedMotion,
     onTargetRect: props.onTargetRect ?? reportFormTargetRect,
     onActionResult: props.onActionResult,
+    onSettled: () => void reload().catch(() => setError(true)),
   });
   useEffect(() => {
     if (instance) props.onInstanceLoaded?.(instance);
