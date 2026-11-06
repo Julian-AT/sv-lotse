@@ -479,7 +479,19 @@ async function runTurn(
         }
         return part.type === "text-end";
       };
-      const toolEvidence: ComposerSource[] = [];
+      // Sourced results of earlier turns (catalog, offices, knowledge) stay citable in follow-ups.
+      const toolEvidence: ComposerSource[] = prepared.history.flatMap((message) =>
+        message.parts.flatMap((part) => {
+          if (!isToolUIPart(part) || part.state !== "output-available") return [];
+          if (getToolName(part) === "kb.search") {
+            const retrieved = contracts["kb.search"].output.safeParse(part.output);
+            return retrieved.success
+              ? retrieved.data.map(({ id, text, url, validFrom }) => ({ id, text, url, validFrom }))
+              : [];
+          }
+          return toolSources(part.toolCallId, part.output);
+        }),
+      );
       const searchEvidence: ComposerSource[] = [];
       let approvalRequested = false;
       const guardText = async (text: string) =>
