@@ -13,9 +13,12 @@ body {
   min-height: 100dvh;
   background-image: var(--lotse-canvas-decoration);
 }
-a {
-  color: var(--lotse-accent);
-  text-underline-offset: 0.25em;
+/* In the base layer so component utilities (the chat's shadcn buttons and chips) set link colours. */
+@layer base {
+  a {
+    color: var(--lotse-accent);
+    text-underline-offset: 0.25em;
+  }
 }
 /* Element defaults sit in the base layer so component utilities (AI Elements) can override them. */
 @layer base {

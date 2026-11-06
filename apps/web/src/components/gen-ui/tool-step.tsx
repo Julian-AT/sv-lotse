@@ -6,6 +6,8 @@
 import type { ToolUIPart } from "ai";
 import { BanIcon, CheckIcon, LoaderCircleIcon, ShieldAlertIcon, XIcon } from "lucide-react";
 import type { JSX } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Shimmer } from "../ai-elements/shimmer";
@@ -41,13 +43,13 @@ function StepIcon({ state }: { state: State }): JSX.Element {
     case "output-available":
     case "approval-responded":
       return (
-        <span className={cn(base, "bg-brand-soft text-brand-text")}>
+        <span className={cn(base, "bg-muted text-foreground")}>
           <CheckIcon aria-hidden="true" className="size-3" strokeWidth={2.5} />
         </span>
       );
     case "approval-requested":
       return (
-        <span className={cn(base, "bg-caution-soft text-caution")}>
+        <span className={cn(base, "bg-muted text-foreground")}>
           <ShieldAlertIcon aria-hidden="true" className="size-3" />
         </span>
       );
@@ -110,14 +112,18 @@ export function ToolStep({
             title
           )}
         </span>
-        <span
-          className={cn(
-            "ml-auto shrink-0 text-[11px]",
-            state === "approval-requested" ? "font-medium text-caution" : "text-muted-foreground",
-          )}
+        <Badge
+          variant={
+            state === "output-error"
+              ? "destructive"
+              : state === "approval-requested"
+                ? "outline"
+                : "secondary"
+          }
+          className="ml-auto shrink-0 font-normal"
         >
           {status[state]}
-        </span>
+        </Badge>
       </div>
       {state === "output-error" && errorText && (
         <p className="m-0 ml-7 text-xs text-destructive">{errorText}</p>
@@ -130,11 +136,7 @@ export function ToolStep({
 /** Card-shaped placeholder, after Medlyn's ToolSkeleton. */
 export function ResultSkeleton({ label }: { label: string }): JSX.Element {
   return (
-    <div
-      role="img"
-      aria-label={label}
-      className="grid w-full gap-3 rounded-2xl border border-border bg-card p-4 shadow-[var(--shadow-card)]"
-    >
+    <Card role="img" aria-label={label} className="w-full gap-3 px-4">
       <div className="flex items-center gap-3">
         <Skeleton className="size-8 rounded-lg" />
         <div className="grid flex-1 gap-1.5">
@@ -147,6 +149,6 @@ export function ResultSkeleton({ label }: { label: string }): JSX.Element {
         <Skeleton className="h-10 w-full rounded-xl" />
         <Skeleton className="h-10 w-full rounded-xl" />
       </div>
-    </div>
+    </Card>
   );
 }

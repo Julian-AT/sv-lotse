@@ -108,6 +108,8 @@ test("§6 workspace persists case selection, reviews facts and uploads actual do
     await expect(
       page.getByText("Wir können die Verwaltungsunterlagen gemeinsam prüfen.", { exact: true }),
     ).toBeVisible();
+    // Sources open from the answer's "Warum?" button (no side panel).
+    await page.getByRole("button", { name: /^Warum\?/u }).first().click();
     await expect(page.getByRole("heading", { name: "Warum?" })).toBeVisible();
     await expect(
       page.getByRole("link", { name: "www.sozialversicherung.at" }).first(),

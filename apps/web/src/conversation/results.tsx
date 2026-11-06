@@ -17,6 +17,9 @@ import {
 import { type JSX, type ReactNode, useId } from "react";
 import { FactTable, ResultCard, WhyPanel } from "@/components/gen-ui/result-card.tsx";
 import { SourceChips, safeHref } from "@/components/gen-ui/source-chips.tsx";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { INTL_LOCALES } from "../i18n/config.ts";
 import { WORKSPACE_CONFIG } from "./config.ts";
@@ -44,13 +47,13 @@ interface Context {
   scope: { subjectId: string } | undefined;
 }
 
-// Eligibility states after Medlyn's claim lines: an icon and a colour per state, never colour alone.
+// Eligibility states after Medlyn's claim lines: an icon and a label per state, never colour alone.
 const STATUS_STYLE: Readonly<
-  Record<CriterionStatus, { icon: typeof CheckCircle2Icon; text: string; bar: string }>
+  Record<CriterionStatus, { icon: typeof CheckCircle2Icon; badge: "secondary" | "outline" }>
 > = {
-  met: { icon: CheckCircle2Icon, text: "text-brand-text", bar: "bg-brand" },
-  unknown: { icon: CircleHelpIcon, text: "text-caution", bar: "bg-caution" },
-  not_met: { icon: XCircleIcon, text: "text-muted-foreground", bar: "bg-muted-foreground/40" },
+  met: { icon: CheckCircle2Icon, badge: "secondary" },
+  unknown: { icon: CircleHelpIcon, badge: "outline" },
+  not_met: { icon: XCircleIcon, badge: "outline" },
 };
 
 function cite(
@@ -79,28 +82,11 @@ function Chips({
   );
 }
 
-/** Segmented bar: share of met, open and unmet criteria (or documents). */
-function Meter({
-  parts,
-  label,
-}: {
-  parts: readonly { key: string; count: number; className: string }[];
-  label: string;
-}): JSX.Element {
-  const total = parts.reduce((sum, part) => sum + part.count, 0) || 1;
+/** Share of met criteria (or available documents) with its count as text. */
+function Meter({ value, total, label }: { value: number; total: number; label: string }) {
   return (
     <div className="grid gap-1.5">
-      <div aria-hidden="true" className="flex h-1.5 w-full gap-0.5 overflow-hidden rounded-full">
-        {parts
-          .filter((part) => part.count > 0)
-          .map((part) => (
-            <span
-              key={part.key}
-              className={cn("h-full rounded-full", part.className)}
-              style={{ width: `${(part.count / total) * 100}%` }}
-            />
-          ))}
-      </div>
+      <Progress value={total ? (value / total) * 100 : 0} aria-label={label} />
       <p className="m-0 text-xs text-muted-foreground tabular-nums">{label}</p>
     </div>
   );
@@ -122,20 +108,18 @@ function CriterionGroup({
   const Icon = style.icon;
   return (
     <section aria-labelledby={heading} className="grid gap-1.5" data-status={status}>
-      <h4
-        id={heading}
-        className={cn("m-0 flex items-center gap-1.5 text-xs font-semibold", style.text)}
-      >
-        <Icon aria-hidden="true" className="size-3.5" />
-        <span>
-          {context.copy.criteria[status]} ({criteria.length})
-        </span>
+      <h4 id={heading} className="m-0 flex items-center gap-1 text-xs font-medium">
+        <Badge variant={style.badge} className="gap-1">
+          <Icon aria-hidden="true" />
+          {context.copy.criteria[status]}
+        </Badge>{" "}
+        <span className="text-muted-foreground">({criteria.length})</span>
       </h4>
       <ul className="m-0 grid list-none gap-2 p-0">
         {criteria.map((criterion) => (
           <li
             key={criterion.id}
-            className="grid gap-1.5 rounded-xl border border-border/70 bg-background/60 px-3 py-2.5"
+            className="grid gap-1.5 rounded-lg border border-border px-3 py-2.5"
           >
             <p className="m-0 leading-relaxed">{criterionText(criterion)}</p>
             {criterion.legalBasis && (
@@ -178,9 +162,9 @@ function BenefitCard({
       title={benefit.title}
       aside={
         benefit.scope && (
-          <span className="inline-flex h-5 items-center rounded-full border border-border px-2 text-[11px] font-medium text-muted-foreground">
+          <Badge variant="outline" className="rounded-full font-normal text-muted-foreground">
             {context.copy.scopes[benefit.scope]}
-          </span>
+          </Badge>
         )
       }
       footer={<Chips citations={cite(benefit.sources, prefix, context)} context={context} />}
@@ -203,12 +187,9 @@ function BenefitCard({
     >
       {benefit.criteria.length > 0 && (
         <Meter
+          value={groups.met.length}
+          total={benefit.criteria.length}
           label={context.copy.criteriaSummary(groups.met.length, benefit.criteria.length)}
-          parts={CRITERION_STATUSES.map((status) => ({
-            key: status,
-            count: groups[status].length,
-            className: STATUS_STYLE[status].bar,
-          }))}
         />
       )}
       {CRITERION_STATUSES.filter((status) => groups[status].length > 0).map((status) => (
@@ -244,9 +225,9 @@ function BenefitResults({
 }
 
 const DOCUMENT_STYLE = {
-  have: { icon: CheckCircle2Icon, text: "text-brand-text", bar: "bg-brand" },
-  obtainable: { icon: CircleDashedIcon, text: "text-caution", bar: "bg-caution" },
-  missing: { icon: XCircleIcon, text: "text-destructive", bar: "bg-destructive/70" },
+  have: { icon: CheckCircle2Icon, badge: "secondary" },
+  obtainable: { icon: CircleDashedIcon, badge: "outline" },
+  missing: { icon: XCircleIcon, badge: "destructive" },
 } as const;
 
 function ChecklistCard({
@@ -281,12 +262,9 @@ function ChecklistCard({
       }}
     >
       <Meter
+        value={count("have")}
+        total={items.length}
         label={`${context.copy.documentStatus.missing}: ${count("missing")} · ${context.copy.documentStatus.obtainable}: ${count("obtainable")}`}
-        parts={(["have", "obtainable", "missing"] as const).map((status) => ({
-          key: status,
-          count: count(status),
-          className: DOCUMENT_STYLE[status].bar,
-        }))}
       />
       <ul className="m-0 grid list-none gap-0 divide-y divide-border p-0">
         {entries.map(({ item, citations }) => {
@@ -294,13 +272,11 @@ function ChecklistCard({
           const Icon = style.icon;
           return (
             <li key={item.type} className="flex items-start gap-2.5 py-2.5 first:pt-0 last:pb-0">
-              <Icon aria-hidden="true" className={cn("mt-0.5 size-4 shrink-0", style.text)} />
+              <Icon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
               <div className="grid min-w-0 flex-1 gap-1">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1">
                   <strong className="font-medium">{item.title ?? item.type}</strong>
-                  <span className={cn("text-[11px] font-medium", style.text)}>
-                    {context.copy.documentStatus[item.status]}
-                  </span>
+                  <Badge variant={style.badge}>{context.copy.documentStatus[item.status]}</Badge>
                 </div>
                 {item.whereToObtain && item.status !== "have" && (
                   <p className="m-0 text-xs text-muted-foreground">
@@ -317,23 +293,14 @@ function ChecklistCard({
   );
 }
 
-const BOX_DOT: Readonly<Record<NonNullable<Coverage["box"]>, string>> = {
-  green: "bg-[#008e5c]",
-  yellow_re1: "bg-[#e0a800]",
-  yellow_re2: "bg-[#e0a800]",
-  red: "bg-[#d64545]",
-};
-
 function Pill({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <span
-      className={cn(
-        "inline-flex h-5 items-center gap-1.5 rounded-full border border-border bg-background px-2 text-[11px] font-medium",
-        className,
-      )}
+    <Badge
+      variant="outline"
+      className={cn("h-6 gap-1.5 rounded-full bg-background px-2.5", className)}
     >
       {children}
-    </span>
+    </Badge>
   );
 }
 
@@ -370,7 +337,7 @@ function CoverageCard({
       }}
     >
       <div className="flex flex-wrap gap-1.5">
-        <Pill className={coverage.listed ? "text-brand-text" : "text-caution"}>
+        <Pill>
           {coverage.listed ? (
             <CheckCircle2Icon aria-hidden="true" className="size-3" />
           ) : (
@@ -380,7 +347,6 @@ function CoverageCard({
         </Pill>
         {coverage.box && (
           <Pill>
-            <span aria-hidden="true" className={cn("size-2 rounded-full", BOX_DOT[coverage.box])} />
             <span>{copy.boxes[coverage.box]}</span>
           </Pill>
         )}
@@ -422,15 +388,12 @@ function ReimbursementCard({
       footer={
         <>
           {online && (
-            <a
-              href={online}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-7 items-center gap-1.5 rounded-full bg-primary px-3 text-xs font-medium text-primary-foreground! transition-colors hover:bg-primary/90"
-            >
-              {copy.submitOnline}
-              <ExternalLinkIcon aria-hidden="true" className="size-3" />
-            </a>
+            <Button asChild size="xs" className="rounded-full">
+              <a href={online} target="_blank" rel="noopener noreferrer">
+                {copy.submitOnline}
+                <ExternalLinkIcon aria-hidden="true" />
+              </a>
+            </Button>
           )}
           <Chips citations={citations} context={context} />
         </>
@@ -448,7 +411,7 @@ function ReimbursementCard({
       }}
     >
       {amount && (
-        <div className="flex items-baseline justify-between gap-3 rounded-xl bg-muted/50 px-3 py-2.5">
+        <div className="flex items-baseline justify-between gap-3 rounded-lg border border-border px-3 py-2.5">
           <span className="text-xs text-muted-foreground">{copy.illustrativeAmount}</span>
           <span className="text-xl font-semibold tracking-tight tabular-nums">{amount}</span>
         </div>

@@ -5,6 +5,9 @@ import { de } from "@lotse/ui";
 import { ShieldCheckIcon } from "lucide-react";
 import { type JSX, useId } from "react";
 import { SourceChip } from "@/components/gen-ui/source-chips.tsx";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 /**
  * Server-side approval request in the chatbot template's tool approval style
@@ -30,68 +33,71 @@ export function ApprovalPanel({
   const id = useId();
   const copy = { ...de, ...labels };
   return (
-    <section
-      aria-busy={pending || undefined}
-      aria-labelledby={`${id}-title`}
-      className="fade-up w-full overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
-    >
-      <div className="flex items-center gap-2.5 border-b border-border bg-caution-soft px-4 py-2.5">
-        <span className="flex size-6 items-center justify-center rounded-full bg-card text-caution shadow-[var(--shadow-card)]">
-          <ShieldCheckIcon className="size-3.5" aria-hidden="true" />
-        </span>
-        <h4 className="m-0 font-semibold text-[13px]" id={`${id}-title`}>
-          {title}
-        </h4>
-      </div>
-      <div className="space-y-3 px-4 py-3 text-sm">
-        <ul className="m-0 grid list-none gap-1.5 p-0">
-          {[...new Set(changes)].map((change) => (
-            <li
-              className="rounded-xl border border-border/70 bg-background/60 px-3 py-2 text-[13px] leading-relaxed"
-              key={change}
-            >
-              {change}
-            </li>
-          ))}
-        </ul>
-        {provenance.length > 0 && (
-          <ul aria-label={copy.sources} className="m-0 grid list-none gap-2 p-0 text-xs">
-            {provenance.map((source) => (
-              <li className="grid gap-1.5" key={source.id}>
-                <SourceChip source={source} labels={copy} className="w-fit" />
-                {source.quote && (
-                  <blockquote className="m-0 border-l-2 border-brand/60 pl-3 text-muted-foreground leading-relaxed">
-                    {source.quote}
-                  </blockquote>
-                )}
+    <section aria-busy={pending || undefined} aria-labelledby={`${id}-title`} className="w-full">
+      <Card className="fade-up gap-3 pb-0">
+        <CardHeader className="flex items-center gap-3">
+          <span
+            aria-hidden="true"
+            className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/60"
+          >
+            <ShieldCheckIcon className="size-4" />
+          </span>
+          <CardTitle className="flex-1" id={`${id}-title`} role="heading" aria-level={4}>
+            {title}
+          </CardTitle>
+          <Badge variant="outline">{copy.pending}</Badge>
+        </CardHeader>
+        <CardContent className="grid gap-3 text-sm">
+          <ul className="m-0 grid list-none gap-1.5 p-0">
+            {[...new Set(changes)].map((change) => (
+              <li
+                className="rounded-lg border border-border px-3 py-2 text-[13px] leading-relaxed"
+                key={change}
+              >
+                {change}
               </li>
             ))}
           </ul>
-        )}
-        <p className="m-0 text-[11px] text-muted-foreground" id={`${id}-hint`}>
-          {copy.keyboardHint} {copy.voiceHint}
-        </p>
-      </div>
-      <div className="flex items-center justify-end gap-2 border-t border-border bg-muted/40 px-4 py-2.5">
-        <button
-          aria-describedby={`${id}-hint`}
-          className="h-8 rounded-full px-3.5 text-muted-foreground text-[13px] font-medium transition-colors hover:bg-background hover:text-foreground disabled:opacity-50"
-          disabled={pending}
-          onClick={onDecline}
-          type="button"
-        >
-          {copy.decline}
-        </button>
-        <button
-          aria-describedby={`${id}-hint`}
-          className="h-8 rounded-full bg-primary px-4 text-primary-foreground text-[13px] font-medium shadow-[var(--shadow-card)] transition-colors hover:bg-primary/90 disabled:opacity-50"
-          disabled={pending}
-          onClick={onApprove}
-          type="button"
-        >
-          {copy.approve}
-        </button>
-      </div>
+          {provenance.length > 0 && (
+            <ul aria-label={copy.sources} className="m-0 grid list-none gap-2 p-0 text-xs">
+              {provenance.map((source) => (
+                <li className="grid gap-1.5" key={source.id}>
+                  <SourceChip source={source} labels={copy} className="w-fit" />
+                  {source.quote && (
+                    <blockquote className="m-0 border-l-2 border-border pl-3 leading-relaxed text-muted-foreground">
+                      {source.quote}
+                    </blockquote>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+          <p className="m-0 text-[11px] text-muted-foreground" id={`${id}-hint`}>
+            {copy.keyboardHint} {copy.voiceHint}
+          </p>
+        </CardContent>
+        <CardFooter className="justify-end gap-2 border-t border-border py-3">
+          <Button
+            aria-describedby={`${id}-hint`}
+            disabled={pending}
+            onClick={onDecline}
+            type="button"
+            variant="outline"
+            size="sm"
+          >
+            {copy.decline}
+          </Button>
+          <Button
+            aria-describedby={`${id}-hint`}
+            disabled={pending}
+            onClick={onApprove}
+            type="button"
+            size="sm"
+          >
+            {copy.approve}
+          </Button>
+        </CardFooter>
+      </Card>
     </section>
   );
 }

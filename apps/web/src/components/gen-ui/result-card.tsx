@@ -5,6 +5,16 @@
 import type { Citation, Labels } from "@lotse/ui";
 import { ChevronDownIcon, type LucideIcon } from "lucide-react";
 import { type JSX, type ReactNode, useId, useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { safeHref } from "./source-chips";
 
@@ -31,59 +41,56 @@ export function ResultCard({
   const [open, setOpen] = useState(false);
   const panel = useId();
   return (
-    <article
-      className={cn(
-        "fade-up w-full min-w-0 overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]",
-        className,
-      )}
+    <Card
+      className={cn("fade-up w-full min-w-0 gap-3 pb-0", !(footer || why) && "pb-4", className)}
     >
-      <header className="flex items-start gap-3 px-4 pt-4 pb-3">
+      <CardHeader className="flex items-start gap-3">
         <span
           aria-hidden="true"
-          className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand-text"
+          className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-muted/60 text-foreground"
         >
           <Icon className="size-4" />
         </span>
         <div className="grid min-w-0 flex-1 gap-0.5">
           {eyebrow && (
-            <p className="m-0 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-              {eyebrow}
-            </p>
+            <CardDescription className="text-[11px] font-medium">{eyebrow}</CardDescription>
           )}
-          <h3 className="m-0 text-[15px] font-semibold leading-snug tracking-tight break-words">
+          <CardTitle className="break-words" role="heading" aria-level={3}>
             {title}
-          </h3>
+          </CardTitle>
         </div>
         {aside && <div className="flex shrink-0 flex-wrap justify-end gap-1.5">{aside}</div>}
-      </header>
-      {children && <div className="grid min-w-0 gap-3 px-4 pb-4 text-[13px]">{children}</div>}
+      </CardHeader>
+      {children && <CardContent className="grid min-w-0 gap-3 text-[13px]">{children}</CardContent>}
       {(footer || why) && (
-        <footer className="flex flex-wrap items-center gap-2 border-t border-border bg-muted/40 px-4 py-2.5">
+        <CardFooter className="mt-1 flex-wrap gap-2 border-t border-border py-2.5">
           {footer}
           {why && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="xs"
               aria-expanded={open}
               aria-controls={panel}
               aria-label={`${why.label} ${why.subject}`}
               onClick={() => setOpen((current) => !current)}
-              className="ml-auto inline-flex h-7 items-center gap-1 rounded-full px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+              className="ml-auto rounded-full text-muted-foreground"
             >
               {why.label}
               <ChevronDownIcon
                 aria-hidden="true"
-                className={cn("size-3.5 transition-transform", open && "rotate-180")}
+                className={cn("transition-transform", open && "rotate-180")}
               />
-            </button>
+            </Button>
           )}
-        </footer>
+        </CardFooter>
       )}
       {why && (
         <div id={panel} hidden={!open} className="border-t border-border px-4 py-3">
           {open ? why.panel() : null}
         </div>
       )}
-    </article>
+    </Card>
   );
 }
 
@@ -109,17 +116,20 @@ export function WhyPanel({
         {sources.map((source) => {
           const href = safeHref(source.url);
           return (
-            <div key={source.id} className="grid gap-1.5 rounded-xl bg-muted/50 px-3 py-2.5">
+            <div
+              key={source.id}
+              className="grid gap-1.5 rounded-lg border border-border px-3 py-2.5"
+            >
               <a
                 href={href}
                 {...(href && /^https?:/u.test(href)
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
-                className="w-fit text-xs font-medium text-brand-text! underline-offset-2 hover:underline"
+                className="w-fit text-xs font-medium text-foreground underline underline-offset-2 hover:no-underline"
               >
                 {source.title}
               </a>
-              <blockquote className="m-0 border-l-2 border-brand/60 pl-3 leading-relaxed">
+              <blockquote className="m-0 border-l-2 border-border pl-3 leading-relaxed">
                 {source.quote}
               </blockquote>
               <dl className="m-0 flex flex-wrap gap-x-4 gap-y-0.5 text-[11px] text-muted-foreground">
@@ -165,16 +175,19 @@ export function WhyPanel({
 /** Label/value rows as a compact two-column table (EKO, fees). */
 export function FactTable({ rows }: { rows: readonly (readonly [string, ReactNode])[] }) {
   return (
-    <dl className="m-0 grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)] overflow-hidden rounded-xl border border-border text-[13px]">
-      {rows.map(([term, value], index) => (
-        <div
-          key={term}
-          className={cn("contents", index > 0 && "[&>*]:border-t [&>*]:border-border")}
-        >
-          <dt className="bg-muted/40 px-3 py-2 text-muted-foreground">{term}</dt>
-          <dd className="m-0 px-3 py-2 break-words">{value}</dd>
-        </div>
-      ))}
-    </dl>
+    <div className="overflow-hidden rounded-xl border border-border">
+      <Table>
+        <TableBody>
+          {rows.map(([term, value]) => (
+            <TableRow key={term}>
+              <TableHead scope="row" className="w-[38%] bg-muted/40">
+                {term}
+              </TableHead>
+              <TableCell>{value}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

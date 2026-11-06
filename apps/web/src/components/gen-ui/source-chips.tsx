@@ -5,6 +5,7 @@
 import type { Citation } from "@lotse/ui";
 import { FileTextIcon, GlobeIcon } from "lucide-react";
 import type { JSX } from "react";
+import { Badge } from "@/components/ui/badge";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
 
@@ -40,22 +41,24 @@ export function SourceChip({
   return (
     <HoverCard openDelay={250} closeDelay={100}>
       <HoverCardTrigger asChild>
-        <a
-          href={href}
-          {...(external(href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          className={cn(
-            "inline-flex h-6 max-w-[15rem] items-center gap-1 rounded-full border border-border bg-background px-2 text-[11px] font-medium text-muted-foreground! transition-colors hover:border-foreground/20 hover:text-foreground! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
-            className,
-          )}
+        <Badge
+          asChild
+          variant="outline"
+          className={cn("h-6 max-w-[15rem] gap-1 font-normal text-muted-foreground", className)}
         >
-          <Icon className="size-3 shrink-0" aria-hidden="true" />
-          <span className="truncate">{source.title}</span>
-        </a>
+          <a
+            href={href}
+            {...(external(href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          >
+            <Icon className="shrink-0" aria-hidden="true" />
+            <span className="truncate">{source.title}</span>
+          </a>
+        </Badge>
       </HoverCardTrigger>
       {source.quote ? (
-        <HoverCardContent className="glass w-80 max-w-[calc(100vw-2rem)] border p-4" align="start">
+        <HoverCardContent className="chatbot-root w-80 max-w-[calc(100vw-2rem)] p-4" align="start">
           <p className="m-0 text-xs font-medium text-foreground">{source.title}</p>
-          <blockquote className="mt-2 border-l-2 border-brand pl-3 text-[13px] leading-relaxed text-foreground/90">
+          <blockquote className="mt-2 border-l-2 border-border pl-3 text-[13px] leading-relaxed text-foreground/90">
             {source.quote}
           </blockquote>
           {(source.asOf || source.legalBasis) && (

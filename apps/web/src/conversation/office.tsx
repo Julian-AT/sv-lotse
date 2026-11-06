@@ -16,6 +16,7 @@ import type { JSX, ReactNode } from "react";
 import { z } from "zod";
 import { ResultCard, WhyPanel } from "@/components/gen-ui/result-card.tsx";
 import { safeHref } from "@/components/gen-ui/source-chips.tsx";
+import { Button } from "@/components/ui/button";
 import { resultCopy } from "./result-copy.ts";
 
 const httpUrl = z.url({ protocol: /^https?$/u });
@@ -48,19 +49,21 @@ function Channel({
   if (!href) return null;
   const external = /^https?:/u.test(href);
   return (
-    <a
-      href={href}
-      aria-label={children ? undefined : label}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={
-        primary
-          ? "inline-flex h-8 items-center gap-1.5 rounded-full bg-primary px-3 text-xs font-medium text-primary-foreground! transition-colors hover:bg-primary/90"
-          : "inline-flex h-8 items-center gap-1.5 rounded-full border border-border bg-background px-3 text-xs font-medium text-foreground! transition-colors hover:bg-muted"
-      }
+    <Button
+      asChild
+      size="sm"
+      variant={primary ? "default" : "outline"}
+      className="h-8 rounded-full px-3 text-xs"
     >
-      <Icon aria-hidden="true" className="size-3.5" />
-      {children ?? label}
-    </a>
+      <a
+        href={href}
+        aria-label={children ? undefined : label}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      >
+        <Icon aria-hidden="true" className="size-3.5" />
+        {children ?? label}
+      </a>
+    </Button>
   );
 }
 

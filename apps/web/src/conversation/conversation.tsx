@@ -2,7 +2,6 @@
 
 import type { LotseMessage } from "@lotse/brain";
 import type { Fact } from "@lotse/protocol";
-import { Button, Heading, Stack, WhyPanel } from "@lotse/ui";
 import { type JSX, useEffect, useRef, useState } from "react";
 import { ChatHeader } from "@/components/chat/chat-header";
 import { Messages } from "@/components/chat/messages";
@@ -10,13 +9,12 @@ import { MultimodalInput } from "@/components/chat/multimodal-input";
 import { Button as UiButton } from "@/components/ui/button";
 import { useI18n } from "../i18n/provider.tsx";
 import { extractFacts, loadFacts } from "./api.ts";
-import { workspaceLabels } from "./copy.ts";
-import { ReviewFact } from "./facts.tsx";
+import { FactsReview } from "./facts.tsx";
 import { ConversationForm } from "./form.tsx";
 import { OpenOfferReplies } from "./open-offer.tsx";
 import { retryUserText } from "./retry.ts";
 import type { CaseSummary, ReviewableFact } from "./schemas.ts";
-import { messageCitations, passageDates } from "./sources.ts";
+import { passageDates } from "./sources.ts";
 import { DocumentDropZone, type DocumentImport, useDocumentImport } from "./upload.tsx";
 import { approvalContexts, useConversation } from "./use-conversation.ts";
 
@@ -89,19 +87,6 @@ export function DraftConversation({
   );
 }
 
-/** Wide windows show the form viewer, facts and Why panel beside the chat (the template's artifact slot). */
-function useWideLayout(): boolean {
-  const [wide, setWide] = useState(false);
-  useEffect(() => {
-    const query = window.matchMedia("(min-width: 1180px)");
-    const update = (): void => setWide(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-  return wide;
-}
-
 // Chat shell from Vercel's chatbot template (Apache-2.0, see THIRD_PARTY_NOTICES.md).
 export function Conversation({
   selectedCase,
@@ -150,13 +135,6 @@ export function Conversation({
     last?.parts.some((part) => "state" in part && part.state === "approval-requested") ?? false;
   const contexts = approvalContexts(chat.messages);
   const dates = passageDates(chat.messages);
-  const sources = [
-    ...new Map(
-      chat.messages
-        .flatMap((message) => messageCitations(message, dates))
-        .map((source) => [source.id, source]),
-    ).values(),
-  ];
   const refreshFacts = async (): Promise<void> => {
     setFacts(await loadFacts(selectedCase.subjectId, selectedCase.id));
     setFactsError(false);
@@ -209,57 +187,7 @@ export function Conversation({
       void chat.send(autoStart.text);
     }
   }, [autoStart, importer, chat, onAutoStarted]);
-  const wide = useWideLayout();
   const status = chat.status;
-  const support = (
-    <div className="lotse-legacy grid min-w-0 gap-4">
-      <ConversationForm
-        messages={chat.messages}
-        language={i18n.locale === "en" ? "en" : "de"}
-        contexts={contexts}
-        onApprovalDecision={(decision) => {
-          void chat.addToolApprovalResponse(decision);
-        }}
-      />
-      <section aria-labelledby="facts-title" className="grid gap-3">
-        <Heading id="facts-title">{t("workspace.facts")}</Heading>
-        {factsError && (
-          <>
-            <p role="alert">{t("workspace.error")}</p>
-            <Button
-              disabled={extracting}
-              onClick={() => {
-                if (lastUpload) void extractUploaded(lastUpload);
-                else void refreshFacts().catch(() => setFactsError(true));
-              }}
-            >
-              {t("workspace.retry")}
-            </Button>
-          </>
-        )}
-        {!factsError && facts.length === 0 && proposals.length === 0 && (
-          <p>{t("workspace.noFacts")}</p>
-        )}
-        <Stack>
-          {[...facts, ...proposals].map((fact) => (
-            <ReviewFact
-              key={fact.id}
-              fact={fact}
-              onSaved={async () => {
-                await refreshFacts();
-                setProposals((current) => current.filter((proposal) => proposal.id !== fact.id));
-              }}
-            />
-          ))}
-        </Stack>
-      </section>
-      <WhyPanel
-        sources={sources}
-        unknowns={sources.length === 0 ? [t("workspace.whyEmpty")] : []}
-        labels={workspaceLabels(i18n)}
-      />
-    </div>
-  );
   return (
     <div className="flex h-dvh w-full flex-row overflow-hidden" data-chat-surface="">
       <DocumentDropZone importer={importer} className="flex min-w-0 flex-1">
@@ -270,7 +198,7 @@ export function Conversation({
           <ChatHeader
             level={t("workspace.level", { level: selectedCase.autonomyLevel })}
             showSidebarToggle={showSidebarToggle}
-            title={selectedCase.confirmedGoal || t("workspace.title")}
+            title={t("workspace.title")}
           />
 
           <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
@@ -309,9 +237,29 @@ export function Conversation({
                   {t("workspace.busy")}
                 </p>
               )}
-              {!wide && chat.messages.length > 0 && (
-                <div className="border-t border-border/40 pt-6">{support}</div>
-              )}
+              <div className="grid gap-3 pl-10">
+                <ConversationForm
+                  messages={chat.messages}
+                  language={i18n.locale === "en" ? "en" : "de"}
+                  contexts={contexts}
+                  onApprovalDecision={(decision) => {
+                    void chat.addToolApprovalResponse(decision);
+                  }}
+                />
+              </div>
+              <FactsReview
+                facts={[...facts, ...proposals]}
+                error={factsError}
+                retrying={extracting}
+                onRetry={() => {
+                  if (lastUpload) void extractUploaded(lastUpload);
+                  else void refreshFacts().catch(() => setFactsError(true));
+                }}
+                onSaved={async (fact) => {
+                  await refreshFacts();
+                  setProposals((current) => current.filter((proposal) => proposal.id !== fact.id));
+                }}
+              />
             </Messages>
 
             <div className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-background from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto">
@@ -354,11 +302,6 @@ export function Conversation({
           </div>
         </section>
       </DocumentDropZone>
-      {wide && (
-        <aside className="no-scrollbar w-[380px] shrink-0 overflow-y-auto border-l border-border/40 bg-sidebar p-4">
-          {support}
-        </aside>
-      )}
     </div>
   );
 }

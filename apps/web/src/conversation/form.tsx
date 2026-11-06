@@ -3,8 +3,11 @@
 import type { LotseMessage } from "@lotse/brain";
 import type { ApprovalContext } from "@lotse/protocol";
 import { getToolName, isToolUIPart } from "ai";
+import { FileTextIcon, XIcon } from "lucide-react";
+import { Dialog as SheetPrimitive } from "radix-ui";
 import { type JSX, useEffect, useRef, useState } from "react";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
   type ApprovalResponder,
   FormGroupApprovalSchema,
@@ -113,5 +116,59 @@ export function ConversationForm({
   useEffect(() => {
     if (id && (commits > 0 || prefills > 1)) refreshFormViewer(id);
   }, [id, commits, prefills]);
-  return id ? <FormViewerWorkspace key={id} formInstanceId={id} language={language} /> : null;
+  // The viewer opens as a sheet: by itself for a new form, a live fill or a pending group approval
+  // (its listeners must be mounted), and from the "Formular öffnen" button afterwards.
+  const [sheet, setSheet] = useState(false);
+  const needsViewer = Boolean(serializedApproval);
+  useEffect(() => {
+    if (id) setSheet(true);
+  }, [id]);
+  useEffect(() => {
+    if (needsViewer) setSheet(true);
+  }, [needsViewer]);
+  if (!id) return null;
+  const copy =
+    language === "en"
+      ? { open: "Open form", title: "Form", close: "Close form" }
+      : { open: "Formular öffnen", title: "Formular", close: "Formular schließen" };
+  return (
+    <>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className="w-fit rounded-full"
+        onClick={() => setSheet(true)}
+      >
+        <FileTextIcon aria-hidden="true" />
+        {copy.open}
+      </Button>
+      {/* Kept mounted (hidden when closed) so live fills and group approvals reach the viewer. */}
+      <SheetPrimitive.Root open={sheet} onOpenChange={setSheet} modal={false}>
+        <SheetPrimitive.Portal forceMount>
+          <SheetPrimitive.Content
+            forceMount
+            aria-describedby={undefined}
+            onInteractOutside={(event) => event.preventDefault()}
+            onOpenAutoFocus={(event) => event.preventDefault()}
+            className="chatbot-root fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col border-l border-border bg-background shadow-2xl data-[state=closed]:hidden sm:max-w-xl data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full data-[state=open]:duration-300"
+          >
+            <div className="flex items-center justify-between gap-2 border-b border-border px-5 py-3">
+              <SheetPrimitive.Title className="m-0 text-[15px] font-semibold">
+                {copy.title}
+              </SheetPrimitive.Title>
+              <SheetPrimitive.Close asChild>
+                <Button variant="ghost" size="icon-sm" aria-label={copy.close}>
+                  <XIcon aria-hidden="true" />
+                </Button>
+              </SheetPrimitive.Close>
+            </div>
+            <div className="lotse-legacy min-h-0 flex-1 overflow-y-auto p-4">
+              <FormViewerWorkspace key={id} formInstanceId={id} language={language} />
+            </div>
+          </SheetPrimitive.Content>
+        </SheetPrimitive.Portal>
+      </SheetPrimitive.Root>
+    </>
+  );
 }

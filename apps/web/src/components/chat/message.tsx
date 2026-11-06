@@ -4,9 +4,9 @@
 
 import { workspaceTargets } from "@lotse/brain/workspace/targets";
 import type { ApprovalContext } from "@lotse/protocol";
-import { CitationChip, SafetyNotice } from "@lotse/ui";
 import type { ToolUIPart } from "ai";
 import { getToolName, isToolUIPart } from "ai";
+import { PhoneIcon, TriangleAlertIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { ApprovalPanel } from "@/conversation/approval-card.tsx";
 import { workspaceLabels } from "@/conversation/copy.ts";
@@ -29,6 +29,11 @@ import { cn, sanitizeText } from "@/lib/utils";
 import { MessageContent, MessageResponse } from "../ai-elements/message";
 import { Shimmer } from "../ai-elements/shimmer";
 import { ToolStep } from "../gen-ui/tool-step";
+import { WhyPopover } from "../gen-ui/why-popover";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { Progress } from "../ui/progress";
 import { SparklesIcon } from "./icons";
 import { MessageActions } from "./message-actions";
 import { MessageReasoning } from "./message-reasoning";
@@ -269,29 +274,50 @@ export const PreviewMessage = ({
 
     if (type === "data-safety-notice")
       return (
-        <SafetyNotice
+        <Alert
           key={part.id ?? `${message.id}-safety`}
-          title={t("workspace.safety")}
-          text={part.data.text}
-          contacts={part.data.numbers}
-        />
+          variant="destructive"
+          aria-labelledby={`${message.id}-safety-title`}
+          className="w-[min(100%,560px)]"
+        >
+          <TriangleAlertIcon aria-hidden="true" />
+          <AlertTitle id={`${message.id}-safety-title`} role="heading" aria-level={2}>
+            {t("workspace.safety")}
+          </AlertTitle>
+          <AlertDescription className="text-foreground">
+            <p className="m-0">{part.data.text}</p>
+            <div className="mt-1 flex flex-wrap gap-1.5">
+              {part.data.numbers.map((contact) => (
+                <Button
+                  asChild
+                  key={contact.number}
+                  size="sm"
+                  variant="destructive"
+                  className="rounded-full"
+                >
+                  <a href={`tel:${contact.number.replace(/[^\d+]/gu, "")}`}>
+                    <PhoneIcon aria-hidden="true" />
+                    <strong>
+                      {contact.label} {contact.number}
+                    </strong>
+                  </a>
+                </Button>
+              ))}
+            </div>
+          </AlertDescription>
+        </Alert>
       );
 
     if (type === "data-job-progress")
       return (
-        <div
+        <Card
           key={part.data.jobId}
           role="status"
-          className="grid w-[min(100%,450px)] gap-2 rounded-md border px-3 py-2.5 text-[13px]"
+          className="w-[min(100%,560px)] gap-2 px-4 py-3 text-[13px]"
         >
           {part.data.message}
-          <progress
-            className="h-1.5 w-full accent-foreground"
-            value={part.data.progress}
-            max={1}
-            aria-label={part.data.message}
-          />
-        </div>
+          <Progress value={Math.round(part.data.progress * 100)} aria-label={part.data.message} />
+        </Card>
       );
 
     return null;
@@ -310,17 +336,11 @@ export const PreviewMessage = ({
   );
 
   const sources = citations.length > 0 && (
-    <ul
-      aria-label={labels.sources}
-      className="m-0 flex list-none flex-wrap gap-1.5 p-0 text-xs"
-      data-testid="message-sources"
-    >
-      {citations.map((source) => (
-        <li key={source.id}>
-          <CitationChip source={source} />
-        </li>
-      ))}
-    </ul>
+    <WhyPopover
+      citations={citations}
+      label={labels.why ?? "Warum?"}
+      sourcesLabel={labels.sources ?? "Quellen"}
+    />
   );
 
   const cards = isAssistant && (

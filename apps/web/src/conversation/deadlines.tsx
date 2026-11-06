@@ -6,6 +6,8 @@ import { CalendarClockIcon, CalendarPlusIcon } from "lucide-react";
 import type { JSX } from "react";
 import { z } from "zod";
 import { ResultCard } from "@/components/gen-ui/result-card.tsx";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { INTL_LOCALES } from "../i18n/config.ts";
 
@@ -144,7 +146,7 @@ export function DeadlineResults({
                       className={cn(
                         "mt-1 size-3 rounded-full border-2",
                         current
-                          ? "border-brand bg-brand shadow-[0_0_0_4px_var(--brand-soft)]"
+                          ? "border-primary bg-primary ring-4 ring-muted"
                           : past
                             ? "border-muted-foreground/40 bg-muted"
                             : "border-border bg-card",
@@ -153,7 +155,7 @@ export function DeadlineResults({
                     <div
                       className={cn(
                         "grid min-w-0 gap-1",
-                        current && "rounded-xl bg-brand-soft -mx-2 -mt-1.5 px-2 py-1.5",
+                        current && "-mx-2 -mt-1.5 rounded-lg bg-muted px-2 py-1.5",
                       )}
                     >
                       <div className="flex flex-wrap items-baseline gap-x-2">
@@ -163,11 +165,7 @@ export function DeadlineResults({
                         >
                           {format.format(new Date(`${day}T12:00:00`))}
                         </time>
-                        {current && (
-                          <span className="text-[11px] font-semibold text-brand-text">
-                            {text.next}
-                          </span>
-                        )}
+                        {current && <Badge variant="secondary">{text.next}</Badge>}
                         {past && (
                           <span className="text-[11px] text-muted-foreground">{text.past}</span>
                         )}
@@ -181,14 +179,12 @@ export function DeadlineResults({
                         </blockquote>
                       )}
                       {!past && (
-                        <a
-                          href={icsHref(item)}
-                          download={`${day}-frist.ics`}
-                          className="mt-0.5 inline-flex h-7 w-fit items-center gap-1.5 rounded-full border border-border bg-background px-2.5 text-xs font-medium text-foreground! transition-colors hover:bg-muted"
-                        >
-                          <CalendarPlusIcon aria-hidden="true" className="size-3.5" />
-                          {text.calendar}
-                        </a>
+                        <Button asChild variant="outline" size="xs" className="mt-0.5 w-fit">
+                          <a href={icsHref(item)} download={`${day}-frist.ics`}>
+                            <CalendarPlusIcon aria-hidden="true" />
+                            {text.calendar}
+                          </a>
+                        </Button>
                       )}
                     </div>
                   </li>
