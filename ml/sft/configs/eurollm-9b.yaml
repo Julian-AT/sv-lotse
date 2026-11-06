@@ -1,0 +1,25 @@
+# S2 SFT cold start for SV-Lotse-Euro-9B, full fine-tune (lotse-rl.md §7.1). Launch on 3×H100:
+#   accelerate launch --config_file sft/configs/accelerate-fsdp.yaml -m sft.train --base eurollm-9b
+run: sft-eurollm-9b
+model: utter-project/EuroLLM-9B-Instruct
+seed: 0
+max_length: 16384
+gradient_checkpointing: true
+attn_implementation: sdpa
+assistant_start: "<|im_start|>assistant\n"
+turn_end: "<|im_end|>"
+lora: null
+data:
+  oracle: data/sft/oracle.jsonl
+  personas: data/personas
+  splits: [train]
+  eval_fraction: 0.02
+train:
+  epochs: 2
+  lr: 1.0e-5
+  scheduler: cosine
+  warmup_ratio: 0.03
+  per_device_batch: 1
+  grad_accum: 16
+  logging_steps: 10
+  eval_steps: 200

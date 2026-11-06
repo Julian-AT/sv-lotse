@@ -1,0 +1,32 @@
+# Smoke run: proves the pipeline end to end on one GPU in minutes. Not a paper model.
+run: sft-qwen3-1.7b-smoke
+model: Qwen/Qwen3-1.7B
+seed: 0
+max_length: 4096
+gradient_checkpointing: true
+attn_implementation: sdpa
+chat_template_kwargs: { enable_thinking: false }
+assistant_start: "<|im_start|>assistant\n"
+turn_end: "<|im_end|>"
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: all-linear
+data:
+  oracle: data/sft/oracle.jsonl
+  personas: data/personas
+  splits: [train]
+  max_examples: 4000
+  eval_fraction: 0.02
+train:
+  epochs: 1
+  max_steps: 200
+  max_minutes: 25
+  lr: 2.0e-4
+  scheduler: cosine
+  warmup_ratio: 0.03
+  per_device_batch: 8
+  grad_accum: 2
+  logging_steps: 5
+  eval_steps: 50

@@ -1,0 +1,29 @@
+# Dense control (lotse-rl.md §6): Qwen3-8B with LoRA. Fits one H100 at seq 16k with checkpointing.
+run: sft-qwen3-8b
+model: Qwen/Qwen3-8B
+seed: 0
+max_length: 16384
+gradient_checkpointing: true
+attn_implementation: sdpa
+chat_template_kwargs: { enable_thinking: false }
+assistant_start: "<|im_start|>assistant\n"
+turn_end: "<|im_end|>"
+lora:
+  r: 64
+  alpha: 128
+  dropout: 0.05
+  target_modules: all-linear
+data:
+  oracle: data/sft/oracle.jsonl
+  personas: data/personas
+  splits: [train]
+  eval_fraction: 0.02
+train:
+  epochs: 2
+  lr: 1.0e-4
+  scheduler: cosine
+  warmup_ratio: 0.03
+  per_device_batch: 2
+  grad_accum: 8
+  logging_steps: 10
+  eval_steps: 200

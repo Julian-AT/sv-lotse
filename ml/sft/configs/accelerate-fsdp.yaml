@@ -1,0 +1,12 @@
+# 3×H100, FSDP full shard, bf16 (used for qwen3-30b-a3b LoRA and eurollm-9b full SFT).
+compute_environment: LOCAL_MACHINE
+distributed_type: FSDP
+num_processes: 3
+num_machines: 1
+mixed_precision: bf16
+fsdp_config:
+  fsdp_version: 2
+  fsdp_auto_wrap_policy: TRANSFORMER_BASED_WRAP
+  fsdp_state_dict_type: SHARDED_STATE_DICT
+  fsdp_cpu_ram_efficient_loading: true
+  fsdp_reshard_after_forward: true
