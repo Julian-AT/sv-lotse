@@ -17,7 +17,7 @@ import {
   FORM_PDF_FONT_HEIGHT_RATIO,
   FORM_PDF_FONT_SIZE,
 } from "../../config/index.ts";
-import { validFieldValue, writableField } from "../policy.ts";
+import { identityField, validFieldValue, writableField } from "../policy.ts";
 import { FormError, type FormField, type FormSchema, INSURANCE_NUMBER } from "../schema.ts";
 
 function clearField(field: PDFField): void {
@@ -100,7 +100,10 @@ export async function renderFormPdf(
   // Shared identity fields (the insurance number) stay writable; see templateSchema.
   const shared = new Set(
     schema.fields
-      .filter((field) => writableField(field) && INSURANCE_NUMBER.test(field.label_de))
+      .filter(
+        (field) =>
+          identityField(field) || (writableField(field) && INSURANCE_NUMBER.test(field.label_de)),
+      )
       .map((field) => field.acro_field),
   );
   const restricted = new Set(
@@ -116,7 +119,7 @@ export async function renderFormPdf(
     if (
       (entry?.state !== "confirmed" && !sourced) ||
       !entry ||
-      !writableField(field) ||
+      !(writableField(field) || identityField(field)) ||
       (field.acro_field && restricted.has(field.acro_field))
     )
       continue;

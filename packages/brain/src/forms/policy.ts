@@ -102,3 +102,18 @@ export function proposeFields(
   }
   return { proposals, missingFields };
 }
+
+const IDENTITY_LABEL =
+  /^(?:vorname|familienname|nachname|zuname|geburtsjahr|geburtsdatum|vsnr|versicherungsnummer|männlich|weiblich)/iu;
+
+/**
+ * Personal identity entries (name, birth year, sex, insurance number) carry no medical content,
+ * so they may be filled even inside a provider section; assessments and diagnoses never are.
+ */
+export function identityField(field: FormField): boolean {
+  return (
+    field.signature === "none" &&
+    field.type !== "signature" &&
+    IDENTITY_LABEL.test(field.label_de.trim())
+  );
+}

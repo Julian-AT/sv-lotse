@@ -7,7 +7,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import type { RuntimeContext } from "../agent/context.ts";
 import { FORM_TYPE_PACE_MS } from "../config/index.ts";
-import { validFieldValue, writableField } from "../forms/policy.ts";
+import { identityField, validFieldValue, writableField } from "../forms/policy.ts";
 import { getTemplate } from "../forms/registry/index.ts";
 import { type FormField, templateSchema } from "../forms/schema.ts";
 import type { LotseMessage } from "../tools/types.ts";
@@ -396,7 +396,10 @@ export async function answerManyFields(input: {
   // Empty fields and the person's own drafts can be (re)filled; confirmed values stay untouched.
   // Every applicant-writable field; doctor and hospital sections are excluded by writableField.
   const open = fields.filter(
-    (field) => writableField(field) && values[field.id]?.state !== "confirmed",
+    (field) =>
+      (field.type === "checkbox"
+        ? identityField(field)
+        : writableField(field) || identityField(field)) && values[field.id]?.state !== "confirmed",
   );
   if (!open.length) return;
   const english = input.language.startsWith("en");
@@ -416,11 +419,14 @@ export async function answerManyFields(input: {
       "Fill an application form for the person concerned (the patient) from the given text, which " +
       "may be a pasted letter such as a hospital discharge letter, and from the listed document " +
       "facts. For each form field whose meaning matches a value stated in the text, return it: " +
-      "the patient's full name for name fields (person.name, insured.name, family/given name), " +
+      "the full name for name fields (person.name, insured.name), only the first name for Vorname, " +
+      "only the surname for Familienname/Nachname, " +
       "date of birth as DD.MM.YYYY, insurance number as 10 digits without spaces, the patient's own " +
       "address and phone only if stated as theirs. Copy values as written; never guess. Never use " +
-      "names, addresses or phone numbers of hospitals, clinics, doctors or nurses. Skip checkboxes " +
-      "and anything medical. Set factId to the document fact's id when the value comes from it.",
+      "names, addresses or phone numbers of hospitals, clinics, doctors or nurses. " +
+      "Skip anything medical. For a birth year field return only the year. For the sex checkboxes " +
+      "(männlich/weiblich) return true only for the one the text states (e.g. Patientin = weiblich). " +
+      "Set factId to the document fact's id when the value comes from it.",
     prompt: JSON.stringify({
       fields: open.map((field) => ({
         fieldId: field.id,
@@ -440,7 +446,14 @@ export async function answerManyFields(input: {
   if (!result) return;
   const filled = result.output.values.flatMap((item) => {
     const field = open.find((candidate) => candidate.id === item.fieldId);
-    const parsed = field ? fieldValue(field, item.value, english) : undefined;
+    const parsed =
+      field?.type === "checkbox"
+        ? /^(?:true|ja|yes|x|1)$/iu.test(item.value.trim()) && validFieldValue(field, true)
+          ? { value: true, readBack: field.label_de }
+          : undefined
+        : field
+          ? fieldValue(field, item.value, english)
+          : undefined;
     const documentFact = documentFacts.find((fact) => fact.id === item.factId);
     return field && parsed ? [{ field, parsed, documentFact }] : [];
   });
