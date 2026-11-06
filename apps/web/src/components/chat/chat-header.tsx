@@ -19,7 +19,7 @@ function PureChatHeader({
   const { toggleSidebar } = useSidebar();
 
   return (
-    <header className="sticky top-0 flex h-14 items-center gap-2 bg-sidebar/80 px-3 backdrop-blur-xl">
+    <header className="sticky top-0 flex h-14 items-center gap-2 bg-page-sidebar/80 px-3 backdrop-blur-xl">
       {showSidebarToggle && (
         <Button
           aria-label="Seitenleiste umschalten"
@@ -33,14 +33,14 @@ function PureChatHeader({
       )}
 
       <h1
-        className="m-0 truncate px-1 text-[13px] font-medium text-foreground"
+        className="m-0 truncate px-1 text-[0.8125rem] font-medium text-foreground"
         id="conversation-title"
       >
         {title}
       </h1>
 
       {level ? (
-        <span className="ml-auto rounded-lg border border-border/50 px-2.5 py-1 text-[12px] text-muted-foreground">
+        <span className="ml-auto rounded-lg border border-border/50 px-2.5 py-1 text-[0.75rem] text-muted-foreground">
           {level}
         </span>
       ) : null}

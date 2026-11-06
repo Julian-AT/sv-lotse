@@ -13,6 +13,7 @@
 @source "../../node_modules/streamdown/dist/index.js";
 
 @custom-variant dark (&:is(.dark, .dark *));
+@custom-variant native (&:where([data-native-workspace="true"], [data-native-workspace="true"] *));
 
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
@@ -91,6 +92,9 @@
 }
 
 @theme inline {
+  --color-page: var(--page);
+  --color-page-sidebar: var(--page-sidebar);
+  --color-page-fade: var(--page-fade);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -252,7 +256,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    @apply bg-background text-foreground;
+    @apply bg-page text-foreground;
   }
 }
 
@@ -538,14 +542,27 @@
   min-height: 2.25rem;
 }
 
-/* Inside the Mac app the window's native glass shows through: page surfaces are clear and cards and
-   the composer are translucent over it, in the system's light or dark appearance. Normal browsers never
-   carry the attribute. */
+/* Page surfaces. Inside the Mac app they are clear: the native window background behind the web view
+   is the page colour, so the chat meets the sidebar and toolbar without a seam. Colour tokens stay intact
+   (text-background, bg-foreground and friends must keep contrast). Normal browsers never carry the attribute. */
+:root {
+  --page: var(--background);
+  --page-sidebar: var(--sidebar);
+  --page-fade: var(--background);
+}
 html[data-native-workspace="true"] {
-  --background: transparent;
-  --sidebar: transparent;
+  --page: transparent;
+  --page-sidebar: transparent;
+  --page-fade: transparent;
   --card: oklch(1 0 0 / 0.6);
   --glass: oklch(1 0 0 / 0.55);
+  /* 13px chat body text becomes 15px; spacing scales with it. */
+  font-size: calc(100% * 15 / 13);
+}
+@supports (color: -apple-system-window-background) {
+  html[data-native-workspace="true"] {
+    --page-fade: -apple-system-window-background;
+  }
 }
 html[data-native-workspace="true"].dark {
   --card: oklch(0.225 0 0 / 0.6);

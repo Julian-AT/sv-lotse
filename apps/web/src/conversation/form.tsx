@@ -154,7 +154,7 @@ export function ConversationForm({
             className="chatbot-root fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col border-l border-border bg-background shadow-2xl data-[state=closed]:hidden sm:max-w-xl data-[state=open]:animate-in data-[state=open]:slide-in-from-right-full data-[state=open]:duration-300"
           >
             <div className="flex items-center justify-between gap-2 border-b border-border px-5 py-3">
-              <SheetPrimitive.Title className="m-0 text-[15px] font-semibold">
+              <SheetPrimitive.Title className="m-0 text-[0.9375rem] font-semibold">
                 {copy.title}
               </SheetPrimitive.Title>
               <SheetPrimitive.Close asChild>

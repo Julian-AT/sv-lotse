@@ -66,7 +66,7 @@ export function ReviewFact({
             {fact.confirmed ? labels.confirmed : labels.draft}
           </Badge>
         </div>
-        <p className="m-0 text-[14px] font-medium leading-snug">{factValue}</p>
+        <p className="m-0 text-[0.875rem] font-medium leading-snug">{factValue}</p>
         {source.quote && (
           <blockquote className="m-0 border-l-2 border-border pl-3 text-xs leading-relaxed text-muted-foreground">
             {source.quote}

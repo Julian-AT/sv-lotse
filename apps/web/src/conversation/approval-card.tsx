@@ -51,7 +51,7 @@ export function ApprovalPanel({
           <ul className="m-0 grid list-none gap-1.5 p-0">
             {[...new Set(changes)].map((change) => (
               <li
-                className="rounded-lg border border-border px-3 py-2 text-[13px] leading-relaxed"
+                className="rounded-lg border border-border px-3 py-2 text-[0.8125rem] leading-relaxed"
                 key={change}
               >
                 {change}
@@ -72,7 +72,7 @@ export function ApprovalPanel({
               ))}
             </ul>
           )}
-          <p className="m-0 text-[11px] text-muted-foreground" id={`${id}-hint`}>
+          <p className="m-0 text-[0.6875rem] text-muted-foreground" id={`${id}-hint`}>
             {copy.keyboardHint} {copy.voiceHint}
           </p>
         </CardContent>

@@ -51,7 +51,7 @@ const RESULT_TOOLS = new Set([
 
 function WaitingText({ label }: { label: string }) {
   return (
-    <div className="flex min-h-[calc(13px*1.65)] min-w-0 items-center text-[13px] leading-[1.65]">
+    <div className="flex min-h-[calc(0.8125rem*1.65)] min-w-0 items-center text-[0.8125rem] leading-[1.65]">
       <Shimmer as="span" className="font-medium whitespace-normal break-words" duration={1}>
         {label}
       </Shimmer>
@@ -202,7 +202,7 @@ export const PreviewMessage = ({
       return (
         <MessageContent
           aria-label={isUser ? labels.user : labels.assistant}
-          className={cn("text-[13px] leading-[1.65]", {
+          className={cn("text-[0.8125rem] leading-[1.65]", {
             "w-fit max-w-[min(80%,56ch)] overflow-hidden break-words rounded-2xl rounded-br-lg border border-border/30 bg-gradient-to-br from-secondary to-muted px-3.5 py-2 shadow-[var(--shadow-card)]":
               message.role === "user",
           })}
@@ -313,7 +313,7 @@ export const PreviewMessage = ({
         <Card
           key={part.data.jobId}
           role="status"
-          className="w-[min(100%,560px)] gap-2 px-4 py-3 text-[13px]"
+          className="w-[min(100%,560px)] gap-2 px-4 py-3 text-[0.8125rem]"
         >
           {part.data.message}
           <Progress value={Math.round(part.data.progress * 100)} aria-label={part.data.message} />
@@ -326,7 +326,7 @@ export const PreviewMessage = ({
   const spoken = !hasText && segments.length > 0 && (
     <MessageContent
       aria-label={isUser ? labels.user : labels.assistant}
-      className={cn("text-[13px] leading-[1.65]", {
+      className={cn("text-[0.8125rem] leading-[1.65]", {
         "w-fit max-w-[min(80%,56ch)] overflow-hidden break-words rounded-2xl rounded-br-lg border border-border/30 bg-gradient-to-br from-secondary to-muted px-3.5 py-2 shadow-[var(--shadow-card)]":
           isUser,
       })}

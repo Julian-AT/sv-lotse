@@ -58,11 +58,11 @@ export function SourceChip({
       {source.quote ? (
         <HoverCardContent className="chatbot-root w-80 max-w-[calc(100vw-2rem)] p-4" align="start">
           <p className="m-0 text-xs font-medium text-foreground">{source.title}</p>
-          <blockquote className="mt-2 border-l-2 border-border pl-3 text-[13px] leading-relaxed text-foreground/90">
+          <blockquote className="mt-2 border-l-2 border-border pl-3 text-[0.8125rem] leading-relaxed text-foreground/90">
             {source.quote}
           </blockquote>
           {(source.asOf || source.legalBasis) && (
-            <p className="mt-2 text-[11px] text-muted-foreground">
+            <p className="mt-2 text-[0.6875rem] text-muted-foreground">
               {source.asOf && (
                 <>
                   {labels.asOf} <time dateTime={source.asOf}>{source.asOf}</time>

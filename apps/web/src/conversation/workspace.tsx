@@ -171,7 +171,7 @@ export function Workspace(): JSX.Element {
     <>
       {loading && !starting && (
         <div
-          className="flex h-dvh w-full items-center justify-center bg-background text-[13px] text-muted-foreground"
+          className="flex h-dvh w-full items-center justify-center bg-page text-[0.8125rem] text-muted-foreground"
           role="status"
         >
           {t("workspace.ui.assistant")} …
@@ -179,7 +179,7 @@ export function Workspace(): JSX.Element {
       )}
       {failed && (
         <div
-          className="flex h-dvh w-full flex-col items-center justify-center gap-3 bg-background text-[13px]"
+          className="flex h-dvh w-full flex-col items-center justify-center gap-3 bg-page text-[0.8125rem]"
           role="alert"
         >
           <p className="m-0">{t("workspace.loadError")}</p>
@@ -205,7 +205,7 @@ export function Workspace(): JSX.Element {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange enableSystem>
       <TooltipProvider>
-        <div className="chatbot-root fixed inset-0 z-50 bg-sidebar font-sans text-foreground antialiased">
+        <div className="chatbot-root fixed inset-0 z-50 bg-page-sidebar font-sans text-foreground antialiased">
           <SidebarProvider defaultOpen={!native}>
             {!native && (
               <AppSidebar
@@ -217,7 +217,7 @@ export function Workspace(): JSX.Element {
                 onSelect={(item) => void select(item)}
               />
             )}
-            <SidebarInset className="bg-sidebar">
+            <SidebarInset className="bg-page-sidebar">
               <Toaster
                 position="top-center"
                 theme="system"

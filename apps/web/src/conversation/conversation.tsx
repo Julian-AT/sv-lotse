@@ -47,10 +47,10 @@ export function DraftConversation({
     <div className="flex h-dvh w-full flex-row overflow-hidden" data-chat-surface="">
       <section
         aria-labelledby="conversation-title"
-        className="flex min-w-0 flex-1 flex-col bg-sidebar"
+        className="flex min-w-0 flex-1 flex-col bg-page-sidebar"
       >
         <ChatHeader level="" showSidebarToggle={showSidebarToggle} title={t("workspace.title")} />
-        <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
+        <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-page md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40 native:md:border-0">
           <Messages
             busyLabel={t("workspace.busy")}
             contexts={[]}
@@ -62,7 +62,7 @@ export function DraftConversation({
             status={starting ? "submitted" : "ready"}
             subjectId=""
           />
-          <div className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-background from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto">
+          <div className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-page-fade from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto">
             <MultimodalInput
               disabled={starting}
               hasMessages={false}
@@ -77,7 +77,7 @@ export function DraftConversation({
               status={starting ? "submitted" : "ready"}
               stop={() => {}}
             />
-            <p className="m-0 text-center text-[11px] text-muted-foreground/70">
+            <p className="m-0 text-center text-[0.6875rem] text-muted-foreground/70">
               {t("workspace.boundary")}
             </p>
           </div>
@@ -193,7 +193,7 @@ export function Conversation({
       <DocumentDropZone importer={importer} className="flex min-w-0 flex-1">
         <section
           aria-labelledby="conversation-title"
-          className="flex min-w-0 flex-1 flex-col bg-sidebar"
+          className="flex min-w-0 flex-1 flex-col bg-page-sidebar"
         >
           <ChatHeader
             level={t("workspace.level", { level: selectedCase.autonomyLevel })}
@@ -201,7 +201,7 @@ export function Conversation({
             title={t("workspace.title")}
           />
 
-          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40">
+          <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-page md:rounded-tl-[12px] md:border-t md:border-l md:border-border/40 native:md:border-0">
             <Messages
               busyLabel={chat.statusLine || t("workspace.busy")}
               contexts={contexts}
@@ -226,7 +226,7 @@ export function Conversation({
               {chat.partial && (
                 <p
                   aria-label={t("workspace.partial")}
-                  className="m-0 whitespace-pre-wrap pl-10 text-[13px] text-muted-foreground"
+                  className="m-0 whitespace-pre-wrap pl-10 text-[0.8125rem] text-muted-foreground"
                   role="status"
                 >
                   {chat.partial}
@@ -262,10 +262,10 @@ export function Conversation({
               />
             </Messages>
 
-            <div className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-background from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto">
+            <div className="pointer-events-none sticky bottom-0 z-1 mx-auto -mt-14 flex w-full max-w-4xl flex-col gap-2 border-t-0 bg-gradient-to-t from-page-fade from-55% to-transparent px-2 pt-14 pb-3 md:px-4 md:pb-4 [&>*]:pointer-events-auto">
               {(chat.error || chat.bridgeError) && (
                 <div
-                  className="flex items-center justify-between gap-3 rounded-xl border border-destructive/20 bg-destructive/5 px-3.5 py-2 text-[13px] text-foreground"
+                  className="flex items-center justify-between gap-3 rounded-xl border border-destructive/20 bg-destructive/5 px-3.5 py-2 text-[0.8125rem] text-foreground"
                   role="alert"
                 >
                   <span>{t("workspace.error")}</span>
@@ -295,7 +295,7 @@ export function Conversation({
                 status={status}
                 stop={() => void chat.stop()}
               />
-              <p className="m-0 text-center text-[11px] text-muted-foreground/70">
+              <p className="m-0 text-center text-[0.6875rem] text-muted-foreground/70">
                 {t("workspace.boundary")}
               </p>
             </div>

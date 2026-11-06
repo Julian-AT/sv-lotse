@@ -91,7 +91,7 @@ export function AppSidebar({
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  className="h-8 rounded-lg border border-sidebar-border text-[13px] text-sidebar-foreground/70 transition-colors duration-150 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                  className="h-8 rounded-lg border border-sidebar-border text-[0.8125rem] text-sidebar-foreground/70 transition-colors duration-150 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
                   disabled={disabled}
                   onClick={handleNewChat}
                   tooltip={labels.newChat}
@@ -104,12 +104,12 @@ export function AppSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-          <SidebarGroupLabel className="text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/70">
+          <SidebarGroupLabel className="text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/70">
             {labels.history}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             {cases.length === 0 ? (
-              <div className="flex w-full flex-row items-center justify-center gap-2 px-2 text-[13px] text-sidebar-foreground/60">
+              <div className="flex w-full flex-row items-center justify-center gap-2 px-2 text-[0.8125rem] text-sidebar-foreground/60">
                 {labels.empty}
               </div>
             ) : (
@@ -120,7 +120,7 @@ export function AppSidebar({
                     <SidebarMenuItem key={item.id}>
                       <SidebarMenuButton
                         aria-current={isActive ? "page" : undefined}
-                        className="h-8 rounded-none text-[13px] text-sidebar-foreground/50 transition-all duration-150 hover:bg-transparent hover:text-sidebar-foreground data-active:bg-transparent data-active:font-normal data-active:text-sidebar-foreground/50 data-[active=true]:text-sidebar-foreground data-[active=true]:font-medium data-[active=true]:border-b data-[active=true]:border-dashed data-[active=true]:border-sidebar-foreground/50"
+                        className="h-8 rounded-none text-[0.8125rem] text-sidebar-foreground/50 transition-all duration-150 hover:bg-transparent hover:text-sidebar-foreground data-active:bg-transparent data-active:font-normal data-active:text-sidebar-foreground/50 data-[active=true]:text-sidebar-foreground data-[active=true]:font-medium data-[active=true]:border-b data-[active=true]:border-dashed data-[active=true]:border-sidebar-foreground/50"
                         disabled={disabled}
                         isActive={isActive}
                         onClick={() => {
@@ -143,7 +143,7 @@ export function AppSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="h-8 rounded-lg text-[13px] text-sidebar-foreground/60 hover:text-sidebar-foreground"
+              className="h-8 rounded-lg text-[0.8125rem] text-sidebar-foreground/60 hover:text-sidebar-foreground"
               tooltip={labels.home}
             >
               <Link href="/workspace" onClick={closeMobile}>

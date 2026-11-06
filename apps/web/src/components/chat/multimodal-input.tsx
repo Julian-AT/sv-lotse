@@ -117,7 +117,7 @@ function PureMultimodalInput({
           {t("workspace.message")}
         </label>
         <PromptInputTextarea
-          className="min-h-24 text-[13px] leading-relaxed px-4 pt-3.5 pb-1.5 placeholder:text-muted-foreground/35"
+          className="min-h-24 text-[0.8125rem] leading-relaxed px-4 pt-3.5 pb-1.5 placeholder:text-muted-foreground/35"
           data-testid="multimodal-input"
           disabled={disabled}
           id="workspace-message"
@@ -145,12 +145,12 @@ function PureMultimodalInput({
               <PaperclipIcon size={14} style={{ height: 14, width: 14 }} />
             </Button>
             {uploadStatus === "stored" && (
-              <span className="text-[12px] text-muted-foreground" role="status">
+              <span className="text-[0.75rem] text-muted-foreground" role="status">
                 {t("workspace.uploaded")}
               </span>
             )}
             {uploadStatus === "rejected" && (
-              <span className="text-[12px] text-destructive" role="alert">
+              <span className="text-[0.75rem] text-destructive" role="alert">
                 {t("workspace.uploadError")}
               </span>
             )}

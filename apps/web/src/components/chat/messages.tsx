@@ -53,7 +53,7 @@ function PureMessages({
   const busy = status === "submitted" || status === "streaming";
 
   return (
-    <div className="relative flex-1 bg-background">
+    <div className="relative flex-1 bg-page">
       {messages.length === 0 && (
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
           <Greeting subtitle={greeting.subtitle} title={greeting.title} />
@@ -63,7 +63,7 @@ function PureMessages({
         aria-busy={busy}
         className={cn(
           "absolute inset-0 touch-pan-y overflow-y-auto",
-          messages.length > 0 ? "bg-background" : "bg-transparent",
+          messages.length > 0 ? "bg-page" : "bg-transparent",
         )}
         ref={messagesContainerRef}
         role="log"
@@ -99,7 +99,7 @@ function PureMessages({
 
       <button
         aria-label="Nach unten scrollen"
-        className={`absolute bottom-16 left-1/2 z-10 flex -translate-x-1/2 items-center rounded-full border border-border/50 bg-card/90 px-3.5 shadow-[var(--shadow-float)] backdrop-blur-lg transition-all duration-200 h-7 text-[10px] ${
+        className={`absolute bottom-16 left-1/2 z-10 flex -translate-x-1/2 items-center rounded-full border border-border/50 bg-card/90 px-3.5 shadow-[var(--shadow-float)] backdrop-blur-lg transition-all duration-200 h-7 text-[0.625rem] ${
           isAtBottom
             ? "pointer-events-none scale-90 opacity-0"
             : "pointer-events-auto scale-100 opacity-100"

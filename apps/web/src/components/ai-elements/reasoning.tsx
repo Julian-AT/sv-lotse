@@ -169,7 +169,7 @@ export const ReasoningTrigger = memo(
     return (
       <CollapsibleTrigger
         className={cn(
-          "flex w-full items-center gap-2 text-muted-foreground text-[13px] leading-[1.65] transition-colors hover:text-foreground",
+          "flex w-full items-center gap-2 text-muted-foreground text-[0.8125rem] leading-[1.65] transition-colors hover:text-foreground",
           className,
         )}
         {...props}
@@ -212,7 +212,7 @@ export const ReasoningContent = memo(({ className, children, ...props }: Reasoni
       )}
     >
       <div
-        className="max-h-[200px] overflow-y-auto rounded-lg border border-border/20 bg-muted/30 px-3 py-2 text-[11px] leading-relaxed"
+        className="max-h-[200px] overflow-y-auto rounded-lg border border-border/20 bg-muted/30 px-3 py-2 text-[0.6875rem] leading-relaxed"
         ref={scrollRef}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >

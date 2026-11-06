@@ -167,7 +167,9 @@ export function DeadlineResults({
                         </time>
                         {current && <Badge variant="secondary">{text.next}</Badge>}
                         {past && (
-                          <span className="text-[11px] text-muted-foreground">{text.past}</span>
+                          <span className="text-[0.6875rem] text-muted-foreground">
+                            {text.past}
+                          </span>
                         )}
                       </div>
                       <p className={cn("m-0 font-medium", past && "text-muted-foreground")}>
