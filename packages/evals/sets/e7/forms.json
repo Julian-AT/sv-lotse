@@ -1,0 +1,51 @@
+[
+  {
+    "schema": "svbox-kur-reha.json",
+    "path": "Anträge und Formulare/Antrag Kur und Reha.pdf",
+    "sha256": "45c4d2ae292b2167163af22f9e5b6cb7762580f850b57c6801f360240344e155",
+    "pages": 2,
+    "publisher": "https://www.oegk.at"
+  },
+  {
+    "schema": "svbox-fahrtkosten-wien.json",
+    "path": "Anträge und Formulare/Antrag-auf-Zuschuss-zu-Fahrtkosten_Wien.pdf",
+    "sha256": "60b5a65fff292df62bb3f1f6d947ff97eafb226ac9886476f74f721a1e405830",
+    "pages": 2,
+    "publisher": "https://www.oegk.at"
+  },
+  {
+    "schema": "svbox-senioren-wg.json",
+    "path": "Anträge und Formulare/Bedarfsmeldung-Senior_innen-Wohngemeinschaft_Basispaket.1736522017.pdf",
+    "sha256": "b20c818f9d2e1bc96fc83df1bb87b5388964b0607bbdabe91633a545dcbb0eec",
+    "pages": 2,
+    "publisher": "https://www.fsw.at"
+  },
+  {
+    "schema": "svbox-einrichtungswunsch.json",
+    "path": "Anträge und Formulare/FSW-Antrag-Beilage-Einrichtungswunsch.1779345450.pdf",
+    "sha256": "5bb8a3fa5e4730e96beb50ae4fee5fc3865164347df13794151737ddf4fc40fd",
+    "pages": 2,
+    "publisher": "https://www.fsw.at"
+  },
+  {
+    "schema": "svbox-pflegegeld.json",
+    "path": "Anträge und Formulare/PAL080_0125_Mpfl_052026.pdf",
+    "sha256": "c12f29f6bd732ded90a43d64a1579235fa86ef9689e45291966b822a7926b2ce",
+    "pages": 8,
+    "publisher": "https://www.pv.at"
+  },
+  {
+    "schema": "svbox-reha-unfall.json",
+    "path": "Anträge und Formulare/Reha_n_Unfall_052026.pdf",
+    "sha256": "bcddb76fbd36b42af84816d9e346a40775862815e2d3af7e3cfc02c45ae662c2",
+    "pages": 2,
+    "publisher": "https://www.pv.at"
+  },
+  {
+    "schema": "svbox-fsw-foerderung.json",
+    "path": "Anträge und Formulare/fsw-antrag-auf-foerderung-von-leistungen.1779095804.pdf",
+    "sha256": "ae20ab1c963a2e98c30e7b29bc8e5a974619180cc7b337b568bffee00876582b",
+    "pages": 13,
+    "publisher": "https://www.fsw.at"
+  }
+]
