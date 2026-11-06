@@ -1,0 +1,76 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 19 (1-basiert), Druckseiten 35–36.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Der PDF-Satz setzt sich auf Druckseite 36 fort und nennt die Leistung einer Heilmasseurin bzw. eines Heilmasseurs. Keine Empfehlung einer Behandlung.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-heilmassage
+name_de: Heilmassage
+name_simple: Kosten für verordnete Heilmassage klären
+area: C
+life_situations:
+  - illness
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: prescription
+    text_de: Für eine Heilmassage ist eine ärztliche Verordnung erforderlich.
+    source:
+      url: https://www.oegk.at/cdscontent/?contentid=10007.906197&portal=oegkportal
+      quote: Für eine Heilmassage benötigen Sie eine Verordnung (Zuweisung).
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+    condition: prescription_present == true
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: prescription
+    name_de: Ärztliche Verschreibung
+    required: true
+    obtain_from: Behandelnde Ärztin oder behandelnder Arzt
+    source:
+      url: https://www.oegk.at/cdscontent/?contentid=10007.906197&portal=oegkportal
+      quote: Für eine Heilmassage benötigen Sie eine Verordnung (Zuweisung).
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+  - id: invoice
+    name_de: "Bei privater Rechnung: detaillierte bezahlte Honorarnote und Zahlungsnachweis"
+    required: false
+    obtain_from: Behandelnde Fachperson; eigene Bank oder Zahlungsquittung
+    source:
+      url: https://www.oegk.at/cdscontent/?contentid=10007.906197&portal=oegkportal
+      quote: die bezahlte Honorarnote (Original oder Duplikat)
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Kostenzuschuss Heilmassage
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-heilmassage
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=19
+    quote:
+      des gehobenen medizinisch-technischen Dienstes sowie eine Leistung einer Heilmasseurin bzw.
+      eines Heilmasseurs.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.906197&portal=oegkportal
+    quote: Für eine Heilmassage benötigen Sie eine Verordnung (Zuweisung).
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.906197&portal=oegkportal
+    quote: die bezahlte Honorarnote (Original oder Duplikat)
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
