@@ -4,7 +4,7 @@
   <a href="paper/lotse-rl.pdf"><img alt="Paper" src="https://img.shields.io/badge/Paper-Lotse--RL%20(PDF)-B31B1B?style=for-the-badge&logo=arxiv&logoColor=white" /></a>
   <a href="https://huggingface.co/datasets/JulianAT/at-benefits"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-AT--Benefits-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" /></a>
   <a href="ml/sft/"><img alt="Model" src="https://img.shields.io/badge/Model-Qwen3--8B%20SFT%20(training%20pending)-6B7280?style=for-the-badge&logo=huggingface&logoColor=white" /></a>
-</p>
+
 
 ![Bun 1.4](https://img.shields.io/badge/Bun-1.4-000000?style=flat-square&logo=bun&logoColor=white)
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white)
@@ -22,6 +22,8 @@
 [Law corpus](https://huggingface.co/datasets/JulianAT/at-sv-law) ·
 [Personas](https://huggingface.co/datasets/JulianAT/at-benefits-personas) ·
 [Model training recipe](ml/sft/) · [Product requirements](docs/prd/SV-KI-Lotse-PRD.md)
+
+</p>
 
 ## What it does
 
