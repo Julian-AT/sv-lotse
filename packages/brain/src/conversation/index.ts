@@ -87,6 +87,10 @@ import { approvedResultCheckpoint } from "./approved-results.ts";
 import { awaitPreviousTurn } from "./continuation-wait.ts";
 import { TurnError, turnStreamError } from "./errors.ts";
 import { formQuestion, prepareFormAfterOpen, topicTexts } from "./form-after-open.ts";
+
+const FILL_INTENT =
+  /ausf(?:ü|ue)ll|formular|antrag (?:stellen|vorbereiten)|beantrag|unterst(?:ü|ue)tz|schritt f(?:ü|ue)r schritt|^(?:ja|ja,? bitte|gerne)\b|fill (?:in|out)|apply/iu;
+
 import { answerFormQuestion } from "./form-answers.ts";
 import {
   hasOpenToolCall,
@@ -425,6 +429,7 @@ async function runTurn(
         context: prepared.context,
         history: prepared.history,
         writer,
+        requested: latest.role === "user" && FILL_INTENT.test(userText),
         ...(options?.abortSignal ? { signal: options.abortSignal } : {}),
       });
       if (formFill) {

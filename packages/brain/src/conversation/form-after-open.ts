@@ -293,17 +293,31 @@ export async function prepareFormAfterOpen(input: {
   history: readonly LotseMessage[];
   writer: Pick<UIMessageStreamWriter<LotseMessage>, "write">;
   signal?: AbortSignal;
+  /** The person asked to fill in or apply; open the registered form without a page first. */
+  requested?: boolean;
 }): Promise<{ goalConfirmed?: string } | undefined> {
   const { db, context } = input;
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
   const url = openedPageUrl(input.history);
-  if (!url) return;
+  if (!url && !input.requested) return;
   const benefit = benefitForm(topicTexts(input.history));
   // An official PDF form outside the registry is acquired (allowlist, size cap) and detected.
   const template =
     (benefit ? await registeredTemplate(db, benefit.formId) : undefined) ??
-    (pdfUrl(url) ? await acquireForm(db, url, input.signal).catch(() => undefined) : undefined);
+    (url && pdfUrl(url)
+      ? await acquireForm(db, url, input.signal).catch(() => undefined)
+      : undefined);
   if (!template) return;
+  if (!url) {
+    const [existing] = await db
+      .select({ id: formInstances.id })
+      .from(formInstances)
+      .where(
+        and(eq(formInstances.caseId, context.caseId), eq(formInstances.templateId, template.id)),
+      )
+      .limit(1);
+    if (existing) return;
+  }
   const [record] = await db
     .select({ confirmedGoal: cases.confirmedGoal })
     .from(cases)
