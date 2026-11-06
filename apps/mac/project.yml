@@ -30,6 +30,15 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: $(LOTSE_BUNDLE_IDENTIFIER)
         CODE_SIGN_ENTITLEMENTS: App/SVKILotse.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      # Same signature as Scripts/install.sh, so Xcode runs keep the privacy grants. Hardened runtime's
+      # library validation rejects the vendor-signed LiveKitWebRTC framework in a development build.
+      configs:
+        Debug:
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: Apple Development
+          DEVELOPMENT_TEAM: ZP2PFF43D2
+          PROVISIONING_PROFILE_SPECIFIER: ""
+          ENABLE_HARDENED_RUNTIME: NO
     dependencies:
       - package: LotseKit
         products:
