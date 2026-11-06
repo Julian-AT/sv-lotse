@@ -1,0 +1,54 @@
+.viewer {
+  composes: lotse-glass from global;
+  margin-block: 1.5rem;
+  padding: 1rem;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.toolbar button,
+.conversation button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5rem 0.75rem;
+}
+.scroll {
+  max-height: 70vh;
+  overflow: auto;
+}
+.page {
+  position: relative;
+  isolation: isolate;
+  background: white;
+}
+.page canvas {
+  display: block;
+}
+.box {
+  position: absolute;
+  pointer-events: none;
+  background: #ffcd0055;
+  border-bottom: 2px solid #855800;
+  z-index: 2;
+}
+.quote {
+  border-inline-start: 4px solid #855800;
+  padding-inline-start: 1rem;
+  white-space: pre-wrap;
+}
+.conversation {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 1rem;
+}
+.conversation textarea {
+  min-height: 90px;
+  padding: 0.75rem;
+}
+.caption {
+  white-space: pre-wrap;
+}
