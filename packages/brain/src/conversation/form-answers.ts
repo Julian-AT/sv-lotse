@@ -6,7 +6,7 @@ import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import type { RuntimeContext } from "../agent/context.ts";
 import { FORM_TYPE_PACE_MS } from "../config/index.ts";
-import { validFieldValue } from "../forms/policy.ts";
+import { validFieldValue, writableField } from "../forms/policy.ts";
 import { getTemplate } from "../forms/registry/index.ts";
 import { type FormField, templateSchema } from "../forms/schema.ts";
 import type { LotseMessage } from "../tools/types.ts";
@@ -29,8 +29,32 @@ const QUESTIONS: Readonly<Record<string, { de: string; en: string }>> = {
   "contact.email": { de: "die E-Mail-Adresse", en: "the email address" },
 };
 
+// Detected forms (acquired PDFs) carry no administrative fact types; their applicant fields are
+// recognized by label for asking only, never for prefilling.
+const LABEL_KEYS: readonly [RegExp, string][] = [
+  [/familienname|nachname|zuname/iu, "person.family_name"],
+  [/vorname/iu, "person.given_name"],
+  [/geburtsdatum|geb\.\s*datum/iu, "person.birth_date"],
+  [/versicherungsnummer|vsnr|sv-?nummer/iu, "person.insurance_number"],
+  [/postleitzahl|\bplz\b/iu, "address.postcode"],
+  [/stra(?:ß|ss)e|gasse/iu, "address.street"],
+  [/hausnummer|stiege|\btür\b/iu, "address.building_unit"],
+  [/\bort\b|wohnort/iu, "address.city"],
+  [/telefon/iu, "contact.phone"],
+  [/e-?mail/iu, "contact.email"],
+];
+
+/** Which administrative question a field answers, by fact type or (detected forms) by label. */
+export function questionKey(field: FormField): string | undefined {
+  if (!writableField(field)) return;
+  if (field.fact_type && QUESTIONS[field.fact_type]) return field.fact_type;
+  if (field.fact_type && !field.fact_type.startsWith("form.field.")) return;
+  const label = `${field.label_de} ${field.help_text ?? ""}`;
+  return LABEL_KEYS.find(([pattern]) => pattern.test(label))?.[1];
+}
+
 export function askable(field: FormField): boolean {
-  return Boolean(field.fact_type && QUESTIONS[field.fact_type]);
+  return questionKey(field) !== undefined;
 }
 
 const RELATIVES: Readonly<Record<string, { de: string; en: string }>> = {
@@ -60,13 +84,14 @@ export function applicantOf(texts: readonly string[], english: boolean): string 
 }
 
 export function fieldQuestion(field: FormField, applicant: string, english: boolean): string {
-  const noun = QUESTIONS[field.fact_type ?? ""];
+  const key = questionKey(field);
+  const noun = QUESTIONS[key ?? ""];
   if (!noun)
     return english
       ? `What should I enter for “${field.label_de}”?`
       : `Was soll ich bei „${field.label_de}“ eintragen?`;
   if (english) return `What is ${noun.en} of ${applicant}?`;
-  return field.fact_type === "address.building_unit"
+  return key === "address.building_unit"
     ? `Wie lauten Hausnummer, Stiege und Tür ${applicant}?`
     : `Wie lautet ${noun.de} ${applicant}?`;
 }
@@ -127,7 +152,8 @@ export function fieldValue(
     .trim()
     .replace(/[.!]+$/u, "")
     .trim();
-  if (field.fact_type === "person.birth_date" || field.type === "date") {
+  const key = questionKey(field);
+  if (key === "person.birth_date" || field.type === "date") {
     const date = parseDate(text);
     if (!date) return;
     const pad = (value: number) => String(value).padStart(2, "0");
@@ -143,17 +169,15 @@ export function fieldValue(
   }
   const stripped = text.replace(LEAD_IN, "").trim();
   const value =
-    field.fact_type === "person.insurance_number" ||
-    field.fact_type === "address.postcode" ||
-    field.fact_type === "contact.phone"
+    key === "person.insurance_number" || key === "address.postcode" || key === "contact.phone"
       ? stripped.replace(/(?<=\d)[\s/-]+(?=\d)/gu, "")
       : stripped;
-  if (field.fact_type === "person.insurance_number" && !/^\d{10}$/u.test(value)) return;
-  if (field.fact_type === "address.postcode" && !/^\d{4,5}$/u.test(value)) return;
-  if (field.fact_type === "contact.email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(value)) return;
+  if (key === "person.insurance_number" && !/^\d{10}$/u.test(value)) return;
+  if (key === "address.postcode" && !/^\d{4,5}$/u.test(value)) return;
+  if (key === "contact.email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(value)) return;
   // A sentence ("Sie hat Demenz") is not a field value; names stay names.
   if (SENTENCE.test(value) || value.split(/\s+/u).length > 5) return;
-  if (/^person\.(?:family|given)_name$/u.test(field.fact_type ?? "") && !NAME.test(value)) return;
+  if (/^person\.(?:family|given)_name$/u.test(key ?? "") && !NAME.test(value)) return;
   if (!validFieldValue(field, value)) return;
   return { value, readBack: value };
 }
@@ -227,7 +251,7 @@ export async function answerFormQuestion(input: {
   const fields = templateSchema(await getTemplate(db, instance.templateId)).fields;
   const index = fields.findIndex((field) => field.id === pending.fieldId);
   const field = fields[index];
-  if (!field?.fact_type || !askable(field)) return;
+  if (!field || !askable(field)) return;
   const english = input.language.startsWith("en");
   const strings = english ? copy.en : copy.de;
   const applicant = applicantOf(input.topics, english);
@@ -250,7 +274,7 @@ export async function answerFormQuestion(input: {
       await tx.insert(facts).values({
         id: factId,
         subjectId: context.subjectId,
-        type: field.fact_type as string,
+        type: field.fact_type ?? `form.field.${instance.templateId}.${field.id}`,
         value: parsed.value,
         turnId: input.turnId,
         source,

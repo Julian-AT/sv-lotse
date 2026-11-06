@@ -5,6 +5,7 @@ import {
   fieldQuestion,
   fieldValue,
   pendingFormQuestion,
+  questionKey,
 } from "../../src/conversation/form-answers.ts";
 import type { FormField } from "../../src/forms/schema.ts";
 import type { LotseMessage } from "../../src/tools/types.ts";
@@ -80,5 +81,17 @@ describe("questions", () => {
     const later: LotseMessage = { id: randomUUID(), role: "assistant", parts: [] };
     expect(pendingFormQuestion([asked])).toEqual(formQuestion);
     expect(pendingFormQuestion([asked, later])).toBeUndefined();
+  });
+});
+
+describe("questionKey", () => {
+  it("asks detected applicant fields by label, never provider sections", () => {
+    const detected = (label: string, owner = "applicant") =>
+      ({ ...field("form.field.t.f9"), label_de: label, owner }) as FormField;
+    expect(questionKey(detected("Familienname"))).toBe("person.family_name");
+    expect(questionKey(detected("PLZ"))).toBe("address.postcode");
+    expect(questionKey(detected("Telefon", "doctor"))).toBeUndefined();
+    expect(questionKey(detected("Diagnose"))).toBeUndefined();
+    expect(questionKey(field("person.title"))).toBeUndefined();
   });
 });

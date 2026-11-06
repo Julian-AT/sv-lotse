@@ -3,6 +3,7 @@ import type { DatabaseClient } from "@lotse/db";
 import { describe, expect, it } from "vitest";
 import {
   benefitForm,
+  openedPageUrl,
   openedPageWithoutForm,
   preparedFormAwaitingQuestion,
   prepareFormAfterOpen,
@@ -74,6 +75,7 @@ describe("after a page opened", () => {
 
   it("detects a successful page open without a prepared form", () => {
     expect(openedPageWithoutForm(history)).toBe(true);
+    expect(openedPageUrl(history)).toBe(page.url);
     expect(preparedFormAwaitingQuestion(history)).toBeUndefined();
     expect(topicTexts(history)[1]).toContain("Pflegegeld");
   });

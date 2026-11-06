@@ -16,6 +16,7 @@ import type { UIMessageStreamWriter } from "ai";
 import { and, desc, eq, sql } from "drizzle-orm";
 import type { RuntimeContext } from "../agent/context.ts";
 import { FORM_TYPE_PACE_MS } from "../config/index.ts";
+import { acquireForm } from "../forms/acquire/index.ts";
 import { prefillForm } from "../forms/instances/index.ts";
 import { getTemplate } from "../forms/registry/index.ts";
 import { type FormField, type FormToolResult, templateSchema } from "../forms/schema.ts";
@@ -140,17 +141,30 @@ export function topicTexts(history: readonly LotseMessage[]): string[] {
     .reverse();
 }
 
-/** The last assistant message opened a web page and no form was prepared in it yet. */
-export function openedPageWithoutForm(history: readonly LotseMessage[]): boolean {
+/** The page the last assistant message opened, while no form was prepared in it yet. */
+export function openedPageUrl(history: readonly LotseMessage[]): string | undefined {
   const last = history.at(-1);
-  if (last?.role !== "assistant") return false;
-  if (last.parts.some((part) => part.type === "tool-form.prefill")) return false;
-  return last.parts.some((part) => {
+  if (last?.role !== "assistant") return;
+  if (last.parts.some((part) => part.type === "tool-form.prefill")) return;
+  for (const part of last.parts) {
     const output = toolOutput(part, "tool-ui.openResource") as { success?: unknown } | undefined;
     const target =
       "input" in part ? (part.input as { target?: Target } | undefined)?.target : undefined;
-    return output?.success === true && target?.kind === "dom";
-  });
+    if (output?.success === true && target?.kind === "dom") return target.url;
+  }
+  return;
+}
+
+export function openedPageWithoutForm(history: readonly LotseMessage[]): boolean {
+  return openedPageUrl(history) !== undefined;
+}
+
+function pdfUrl(url: string): boolean {
+  try {
+    return new URL(url).pathname.toLowerCase().endsWith(".pdf");
+  } catch {
+    return false;
+  }
 }
 
 /** The prefill output of the form prepared in the last assistant message, once its open settled. */
@@ -282,16 +296,21 @@ export async function prepareFormAfterOpen(input: {
 }): Promise<{ goalConfirmed?: string } | undefined> {
   const { db, context } = input;
   if (context.actorRole !== "subject" || context.autonomyLevel === "L1") return;
-  if (!openedPageWithoutForm(input.history)) return;
+  const url = openedPageUrl(input.history);
+  if (!url) return;
   const benefit = benefitForm(topicTexts(input.history));
-  if (!benefit) return;
-  const template = await registeredTemplate(db, benefit.formId);
+  // An official PDF form outside the registry is acquired (allowlist, size cap) and detected.
+  const template =
+    (benefit ? await registeredTemplate(db, benefit.formId) : undefined) ??
+    (pdfUrl(url) ? await acquireForm(db, url, input.signal).catch(() => undefined) : undefined);
   if (!template) return;
   const [record] = await db
     .select({ confirmedGoal: cases.confirmedGoal })
     .from(cases)
     .where(eq(cases.id, context.caseId));
-  const goalConfirmed = record?.confirmedGoal ? undefined : benefit.goal;
+  const goalConfirmed = record?.confirmedGoal
+    ? undefined
+    : (benefit?.goal ?? `${template.title} vorbereiten`);
   if (goalConfirmed)
     await db
       .update(cases)
