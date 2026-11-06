@@ -107,6 +107,7 @@ extension MacShellController {
             dictation.cancel()
             recording = true
             speech.stop()
+            browserPage.cancelNavigation()
             sourceHighlights.stop(notify: false)
             sentenceActions.reset()
             showListening()

@@ -7,8 +7,10 @@ import { createLotseAgent, POLICY } from "../../src/agent/index.ts";
 import { BOOKING_ALLOWLIST_FILE } from "../../src/config/index.ts";
 import {
   answersOffer,
+  clickAllowed,
   guidanceOffer,
   isGuidanceRequest,
+  MAX_CLICKS_PER_TURN,
   offerChunks,
   recentUserTexts,
   resourceIsOpen,
@@ -286,4 +288,15 @@ it("finds the question behind a goal confirmation with or without the current me
   expect(recentUserTexts([...asked, user("Ja")] as never, "Ja")).toEqual([
     "Wo beantrage ich Pflegegeld?",
   ]);
+});
+
+it("ui.click stays on allowlisted, non-login pages and stops after five steps per turn", async () => {
+  const allowed = (await loadPortalPolicy(BOOKING_ALLOWLIST_FILE)).origins[0]?.origin ?? "";
+  const click = (url: string) => ({ target: { kind: "dom", handle: "ax-1", url } });
+  expect(await clickAllowed(click(`${allowed}/antrag`), 1)).toBe(true);
+  expect(await clickAllowed(click(`${allowed}/antrag`), MAX_CLICKS_PER_TURN)).toBe(true);
+  expect(await clickAllowed(click(`${allowed}/antrag`), MAX_CLICKS_PER_TURN + 1)).toBe(false);
+  expect(await clickAllowed(click("https://evil.example/antrag"), 1)).toBe(false);
+  expect(await clickAllowed(click(`${allowed}/login`), 1)).toBe(false);
+  expect(await clickAllowed({ target: { kind: "text", quote: "x" } }, 1)).toBe(false);
 });

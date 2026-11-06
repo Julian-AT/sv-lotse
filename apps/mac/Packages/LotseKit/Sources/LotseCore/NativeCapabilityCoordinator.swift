@@ -80,6 +80,12 @@ final class NativeCapabilityCoordinator {
             var page = await shell?.browserPage.snapshot()
             if page == nil { page = try? await shell?.guidedPortal.snapshot() }
             return .contextCapsule(ContextCapsule(focusedRegion: nil, page: page, screen: nil))
+        case .uiClick:
+            guard let shell else { throw NativeToolError("CLIENT_TOOL_UNAVAILABLE") }
+            return .actionResult(await shell.browserPage.click(invocation) { shell.presentBrowserStep($0) })
+        case .uiScroll:
+            guard let shell else { throw NativeToolError("CLIENT_TOOL_UNAVAILABLE") }
+            return .actionResult(await shell.browserPage.scroll(invocation) { shell.presentBrowserStep($0) })
         case .sessionShareWithHelper:
             // Opens the consent UI only; sharing starts after the user confirms there.
             guard let shell else { throw NativeToolError("CLIENT_TOOL_UNAVAILABLE") }

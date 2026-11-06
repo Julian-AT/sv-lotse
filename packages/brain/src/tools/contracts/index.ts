@@ -486,6 +486,22 @@ export const contracts = {
     ActionResultSchema,
     "Open an offered page, form or document after the user agreed. Returns once it has loaded; then point at the relevant field or sentence. Nothing is submitted.",
   ),
+  "ui.click": client(
+    z.strictObject({
+      target: z.strictObject({ kind: z.literal("dom"), handle: id, url: UriSchema }),
+      label: text.optional(),
+    }),
+    ActionResultSchema,
+    "Navigate the open allowlisted page in the user's browser: click one link, tab or accordion from context.readPage handles (cursor and highlight first), then wait for the next page. Never submit, sign in, pay, send, upload or delete. At most five per turn; call context.readPage after each.",
+  ),
+  "ui.scroll": client(
+    z.strictObject({
+      target: z.strictObject({ kind: z.literal("dom"), handle: id, url: UriSchema }).optional(),
+      direction: z.enum(["down", "up"]).optional(),
+    }),
+    ActionResultSchema,
+    "Scroll the open page in the user's browser: bring a context.readPage handle into view, or without target move about one screen down (or up). The cursor shows the motion. Call context.readPage afterwards.",
+  ),
   "context.readScreen": client(
     screenInput,
     ContextCapsuleSchema,

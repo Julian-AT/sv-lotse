@@ -10,7 +10,11 @@ import { createModelRouter } from "../models/index.ts";
 import { responsePreferenceInstructions } from "../preferences/prompt.ts";
 import type { TurnTelemetry } from "../telemetry/index.ts";
 import { contracts, isToolName, type ToolName, toolNames } from "../tools/contracts/index.ts";
-import { OPEN_AND_POINT_POLICY, openResourceAllowed } from "../tools/impl/ui/resource.ts";
+import {
+  clickAllowed,
+  OPEN_AND_POINT_POLICY,
+  openResourceAllowed,
+} from "../tools/impl/ui/resource.ts";
 import { buildTools, type RuntimeTools } from "../tools/registry.ts";
 import type { ToolDependencies } from "../tools/types.ts";
 import type { RuntimeContext } from "./context.ts";
@@ -72,6 +76,8 @@ export function createLotseAgent(options: {
   const tools = buildTools(options.dependencies);
   const maxSteps = options.config.agentMaxSteps ?? PIPELINE_CONFIG.maxSteps;
   let persistenceFailure: { error: unknown } | undefined;
+  /** ui.click steps this turn; the approval hook denies the sixth. */
+  let clicks = 0;
   return new ToolLoopAgent({
     model: options.model ?? createModelRouter(options.config).modelFor("orchestrator"),
     instructions: instructionsFor(options.instructions ?? POLICY),
@@ -97,6 +103,8 @@ export function createLotseAgent(options: {
       )
         return "denied";
       if (toolCall.toolName === "ui.openResource" && !(await openResourceAllowed(toolCall.input)))
+        return "denied";
+      if (toolCall.toolName === "ui.click" && !(await clickAllowed(toolCall.input, ++clicks)))
         return "denied";
       return contracts[toolCall.toolName].approval ? "user-approval" : "not-applicable";
     },

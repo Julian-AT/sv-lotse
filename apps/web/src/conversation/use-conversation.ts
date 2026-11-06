@@ -89,6 +89,8 @@ export function useConversation({
           "context.readPage",
           "context.readScreen",
           "ui.fill",
+          "ui.click",
+          "ui.scroll",
           "ui.openResource",
           "calendar.createEvent",
           "session.shareWithHelper",

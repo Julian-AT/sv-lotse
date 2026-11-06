@@ -133,6 +133,8 @@ export const ToolInvocationSchema = z.strictObject({
     "ui.fill",
     "context.readScreen",
     "context.readPage",
+    "ui.click",
+    "ui.scroll",
     "calendar.createEvent",
     "session.shareWithHelper",
   ]),

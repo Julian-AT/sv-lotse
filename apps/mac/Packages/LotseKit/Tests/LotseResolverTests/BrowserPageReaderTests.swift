@@ -102,3 +102,44 @@ private func page() -> FakeNode {
     #expect(BrowserPageReader.element(handle: "ax-stale", in: elements) == nil)
     #expect(BrowserPageReader.clean("\u{E900} Alles auf einen Blick") == "Alles auf einen Blick")
 }
+
+private func allowlisted(_ url: String) -> Bool { url.hasPrefix("https://www.pv.at/") }
+
+@Test func clicksFollowAllowlistedLinksOnly() {
+    let decide = { (url: String?) in
+        BrowserPageSafety.clickDecision(role: "link", subrole: nil, label: "Pflegegeld-Antrag", url: url, expanded: nil,
+            secure: false, allows: allowlisted)
+    }
+    #expect(decide("https://www.pv.at/web/pflegegeld/antrag") == .navigate("https://www.pv.at/web/pflegegeld/antrag"))
+    #expect(decide("https://evil.example/pflegegeld") == .denied("origin-not-allowed"))
+    #expect(decide("https://www.pv.at/login") == .denied("origin-not-allowed"))
+    #expect(decide("https://www.pv.at/tool/setup.dmg") == .denied("download-blocked"))
+    #expect(decide(nil) == .denied("no-link-target"))
+}
+
+@Test func clicksNeverSubmitSignInPayUploadOrTouchPasswords() {
+    for label in ["Absenden", "Antrag senden", "Jetzt bezahlen", "Anmelden", "Dokument hochladen", "Löschen", "Submit", "Log in"] {
+        let decision = BrowserPageSafety.clickDecision(role: "button", subrole: nil, label: label, url: nil, expanded: false,
+            secure: false, allows: allowlisted)
+        #expect(decision == .denied("blocked-control"), "\(label)")
+    }
+    #expect(BrowserPageSafety.clickDecision(role: "link", subrole: nil, label: "Zahlung", url: "https://www.pv.at/zahlung",
+        expanded: nil, secure: false, allows: allowlisted) == .denied("blocked-control"))
+    #expect(BrowserPageSafety.clickDecision(role: "textbox", subrole: nil, label: "Passwort", url: nil, expanded: nil,
+        secure: true, allows: allowlisted) == .denied("password-field"))
+}
+
+@Test func buttonsOnlyToggleTabsAndAccordions() {
+    #expect(BrowserPageSafety.clickDecision(role: "button", subrole: nil, label: "Voraussetzungen", url: nil, expanded: false,
+        secure: false, allows: allowlisted) == .toggle)
+    #expect(BrowserPageSafety.clickDecision(role: "radio", subrole: "AXTabButton", label: "Antrag", url: nil, expanded: nil,
+        secure: false, allows: allowlisted) == .toggle)
+    #expect(BrowserPageSafety.clickDecision(role: "button", subrole: nil, label: "Weiter", url: nil, expanded: nil,
+        secure: false, allows: allowlisted) == .denied("not-navigation"))
+}
+
+@Test func sameDocumentIgnoresFragmentsAndTrailingSlashOnly() {
+    #expect(BrowserPageSafety.sameDocument("https://www.pv.at/web/pflegegeld/#antrag", "https://WWW.pv.at/web/pflegegeld"))
+    #expect(BrowserPageSafety.sameDocument("https://www.pv.at/web/pflegegeld", "https://www.pv.at/web/reha") == false)
+    #expect(BrowserPageSafety.sameDocument("https://www.pv.at/a?x=1", "https://www.pv.at/a?x=2") == false)
+}

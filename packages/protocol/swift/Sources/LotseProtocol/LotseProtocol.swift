@@ -2036,7 +2036,9 @@ public enum ToolName: String, Codable, Equatable, Sendable {
     case contextReadPage = "context.readPage"
     case contextReadScreen = "context.readScreen"
     case sessionShareWithHelper = "session.shareWithHelper"
+    case uiClick = "ui.click"
     case uiFill = "ui.fill"
+    case uiScroll = "ui.scroll"
 }
 
 public enum ToolInvocationType: String, Codable, Equatable, Sendable {

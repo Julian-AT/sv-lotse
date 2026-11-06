@@ -92,3 +92,26 @@ struct BrowserPageCapabilityTests {
         #expect(moved == false)
     }
 }
+
+@Suite @MainActor
+struct BrowserNavigationTests {
+    @Test func readinessIgnoresAnOlderTabOfTheSameSiteAtFirst() {
+        let requested = "https://www.pv.at/web/pflegegeld"
+        #expect(BrowserPageCapability.pageReady(url: "https://www.pv.at/web/reha", childCount: 3, requested: requested,
+            exactOnly: true) == false)
+        #expect(BrowserPageCapability.pageReady(url: "https://www.pv.at/web/pflegegeld/", childCount: 3, requested: requested,
+            exactOnly: true))
+    }
+
+    @Test func scrollingDownPicksTheElementAboutOneScreenBelow() {
+        let page = CGRect(x: 0, y: 200, width: 1000, height: 800)
+        let elements: [(String, CGRect)] = [
+            ("visible", CGRect(x: 0, y: 500, width: 10, height: 10)),
+            ("just-below", CGRect(x: 0, y: 150, width: 10, height: 10)),
+            ("one-screen", CGRect(x: 0, y: -440, width: 10, height: 10)),
+            ("far", CGRect(x: 0, y: -2000, width: 10, height: 10))
+        ]
+        #expect(BrowserPageCapability.scrollTarget(elements, page: page, up: false) == "one-screen")
+        #expect(BrowserPageCapability.scrollTarget(elements, page: page, up: true) == nil)
+    }
+}

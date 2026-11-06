@@ -65,6 +65,16 @@ function samePage(a: string, b: string): boolean {
   }
 }
 
+/** Navigation steps the pilot may take on an open page within one turn. */
+export const MAX_CLICKS_PER_TURN = 5;
+
+/** ui.click: an allowlisted, non-login page and at most MAX_CLICKS_PER_TURN steps per turn. */
+export async function clickAllowed(input: unknown, step: number): Promise<boolean> {
+  if (step > MAX_CLICKS_PER_TURN) return false;
+  const parsed = contracts["ui.click"].input.safeParse(input);
+  return parsed.success && portalPageAllowed(parsed.data.target.url, await portalOrigins());
+}
+
 /** Whether the capsule shows the resource as already open. Unknown state counts as not open. */
 export function resourceIsOpen(target: Target, capsule: ContextCapsule | undefined): boolean {
   const pageUrl = capsule?.page?.url;

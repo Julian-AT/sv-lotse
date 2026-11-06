@@ -23,6 +23,8 @@ const labels: Record<string, { de: string; en: string }> = {
   "ui.highlight": { de: "Hervorheben", en: "Highlight" },
   "ui.offerResource": { de: "Öffnen anbieten", en: "Offer to open" },
   "ui.openResource": { de: "Seite öffnen", en: "Open page" },
+  "ui.click": { de: "Auf der Seite weiter", en: "Navigate the page" },
+  "ui.scroll": { de: "Seite scrollen", en: "Scroll the page" },
   "ui.point": { de: "Zeigen", en: "Point" },
   "web.findOfficialPage": { de: "Offizielle Seite suchen", en: "Find official page" },
 };

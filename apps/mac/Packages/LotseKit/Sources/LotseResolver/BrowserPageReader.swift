@@ -13,6 +13,12 @@ public protocol BrowserAXNode {
     /// AppKit global coordinates (bottom-left origin).
     var frame: CGRect? { get }
     var children: [Self] { get }
+    /// AXExpanded of disclosure and accordion controls; nil when the element has none.
+    var expanded: Bool? { get }
+}
+
+public extension BrowserAXNode {
+    var expanded: Bool? { nil }
 }
 
 /// A labelled element of a browser page with its screen rectangle.
@@ -35,7 +41,7 @@ public enum BrowserPageReader {
     public static let roles: [String: String] = [
         "AXHeading": "heading", "AXTextField": "textbox", "AXTextArea": "textbox", "AXComboBox": "combobox",
         "AXCheckBox": "checkbox", "AXRadioButton": "radio", "AXPopUpButton": "combobox",
-        "AXButton": "button", "AXLink": "link", "AXSearchField": "searchbox"
+        "AXButton": "button", "AXLink": "link", "AXSearchField": "searchbox", "AXDisclosureTriangle": "button"
     ]
 
     /// The first web content area below the given roots (breadth first) that the filter accepts.
@@ -200,4 +206,55 @@ public enum BrowserPageSafety {
 
     /// Only text inputs receive typed values.
     public static func isFillable(role: String) -> Bool { ["textbox", "searchbox", "combobox"].contains(role) }
+}
+
+/// What a pilot click on a page element may do. Decided natively; the brain cannot widen it.
+public enum BrowserClickDecision: Equatable, Sendable {
+    /// A link to an allowlisted page.
+    case navigate(String)
+    /// A tab or accordion that only reveals content on the same page.
+    case toggle
+    case denied(String)
+}
+
+public extension BrowserPageSafety {
+    /// Executables and archives are never opened by a pilot click.
+    static let blockedExtensions: Set<String> = ["exe", "dmg", "pkg", "msi", "zip", "app", "bat", "sh", "jar", "cmd", "scr", "iso"]
+    private static let blockedWords = [
+        "hochladen", "upload", "zahlung", "zahlen", "payment", "warenkorb", "cart", "abmelden", "logout", "registrieren",
+        "register", "passwort", "password", "kennwort"
+    ]
+
+    /// Links stay on allowlisted, non-login pages; buttons only toggle tabs or accordions. Submit,
+    /// sign-in, payment, send, upload and delete controls and password fields are always denied.
+    static func clickDecision(role: String, subrole: String?, label: String, url: String?, expanded: Bool?,
+                              secure: Bool, allows: (String) -> Bool) -> BrowserClickDecision {
+        if secure { return .denied("password-field") }
+        let text = label.lowercased()
+        let words = Set(text.split(whereSeparator: { !$0.isLetter }).map(String.init))
+        if isDenied(role: role == "radio" ? "button" : role, label: label)
+            || blockedWords.contains(where: { words.contains($0) || text.contains($0) && $0.count > 6 }) {
+            return .denied("blocked-control")
+        }
+        switch role {
+        case "link":
+            guard let url, let parsed = URL(string: url) else { return .denied("no-link-target") }
+            guard allows(url), isLoginPage(url) == false else { return .denied("origin-not-allowed") }
+            if blockedExtensions.contains(parsed.pathExtension.lowercased()) { return .denied("download-blocked") }
+            return .navigate(url)
+        case "button", "radio":
+            if subrole == "AXTabButton" || expanded != nil { return .toggle }
+            return .denied("not-navigation")
+        default:
+            return .denied("not-navigation")
+        }
+    }
+
+    /// Same document: scheme, host, port and path agree; fragments and a trailing slash are ignored.
+    static func sameDocument(_ left: String, _ right: String) -> Bool {
+        guard let lhs = URLComponents(string: left), let rhs = URLComponents(string: right) else { return false }
+        let path = { (value: URLComponents) in value.path.hasSuffix("/") ? String(value.path.dropLast()) : value.path }
+        return lhs.scheme == rhs.scheme && lhs.host?.lowercased() == rhs.host?.lowercased() && lhs.port == rhs.port
+            && path(lhs) == path(rhs) && (lhs.query ?? "") == (rhs.query ?? "")
+    }
 }

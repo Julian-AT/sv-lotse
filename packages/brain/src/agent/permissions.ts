@@ -3,6 +3,7 @@ import type { RuntimeContext } from "./context.ts";
 
 const HELPER_DENIED_TOOLS: ReadonlySet<ToolName> = new Set<ToolName>([
   "form.fillLive",
+  "ui.click",
   "case.update",
   "process.completeStep",
   "package.build",
@@ -17,7 +18,11 @@ export function allowedToolNames(
   role: RuntimeContext["actorRole"],
 ): ToolName[] {
   return toolNames.filter((name) => {
-    if (level === "L1" && (contracts[name].approval || name === "form.fillLive")) return false;
+    if (
+      level === "L1" &&
+      (contracts[name].approval || name === "form.fillLive" || name === "ui.click")
+    )
+      return false;
     if (role === "helper" && (contracts[name].approval || HELPER_DENIED_TOOLS.has(name)))
       return false;
     return true;

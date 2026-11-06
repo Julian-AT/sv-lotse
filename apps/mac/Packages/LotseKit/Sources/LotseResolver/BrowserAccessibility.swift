@@ -8,7 +8,7 @@ public final class LiveAXNode: BrowserAXNode, @unchecked Sendable {
     private let primaryTop: CGFloat
     private lazy var values: [String: CFTypeRef] = {
         let names = [kAXRoleAttribute, kAXSubroleAttribute, kAXTitleAttribute, kAXDescriptionAttribute,
-            kAXPlaceholderValueAttribute, kAXValueAttribute, kAXURLAttribute, kAXPositionAttribute, kAXSizeAttribute]
+            kAXPlaceholderValueAttribute, kAXValueAttribute, kAXURLAttribute, kAXPositionAttribute, kAXSizeAttribute, "AXExpanded"]
         var raw: CFArray?
         guard AXUIElementCopyMultipleAttributeValues(element, names as CFArray, [], &raw) == .success,
             let array = raw as? [CFTypeRef], array.count == names.count
@@ -40,6 +40,10 @@ public final class LiveAXNode: BrowserAXNode, @unchecked Sendable {
         guard let raw = values[kAXURLAttribute] else { return nil }
         if let url = raw as? URL { return url.absoluteString }
         return raw as? String
+    }
+    public var expanded: Bool? {
+        guard let raw = values["AXExpanded"], CFGetTypeID(raw) == CFBooleanGetTypeID() else { return nil }
+        return CFBooleanGetValue(unsafeDowncast(raw, to: CFBoolean.self))
     }
     public var frame: CGRect? {
         guard let position = values[kAXPositionAttribute], CFGetTypeID(position) == AXValueGetTypeID(),
@@ -93,7 +97,8 @@ public enum BrowserAccessibility {
     }
 
     /// The web area of the browser's focused (else first) window.
-    public static func webArea(pid: pid_t, primaryTop: CGFloat, where accept: (LiveAXNode) -> Bool = { $0.url != nil }) -> LiveAXNode? {
+    public static func webArea(pid: pid_t, primaryTop: CGFloat, focusedOnly: Bool = false,
+                               where accept: (LiveAXNode) -> Bool = { $0.url != nil }) -> LiveAXNode? {
         let app = AXUIElementCreateApplication(pid)
         AXUIElementSetMessagingTimeout(app, 0.25)
         var windows: [AXUIElement] = []
@@ -103,7 +108,8 @@ public enum BrowserAccessibility {
             windows.append(unsafeDowncast(focused, to: AXUIElement.self))
         }
         var all: CFTypeRef?
-        if AXUIElementCopyAttributeValue(app, kAXWindowsAttribute as CFString, &all) == .success, let list = all as? [AXUIElement] {
+        if focusedOnly == false, AXUIElementCopyAttributeValue(app, kAXWindowsAttribute as CFString, &all) == .success,
+            let list = all as? [AXUIElement] {
             windows += list
         }
         for window in windows {

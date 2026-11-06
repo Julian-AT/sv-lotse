@@ -5,6 +5,21 @@ import os
 extension MacShellController {
     /// Portal pages in the default browser: opening, approved typing, and display actions that
     /// must reach the overlay instead of the guided window. Returns true when consumed.
+    /// The companion cursor leaves the mouse, flies to the step and highlights it; it returns to the
+    /// mouse only when no further step follows for a while.
+    func presentBrowserStep(_ step: BrowserPageCapability.Step) {
+        if overlayVisible { overlay.showOverlay() }
+        overlay.state.highlights = []
+        overlay.state.target = CGPoint(x: step.rect.midX, y: step.rect.midY)
+        overlay.state.caption = step.label
+        overlay.state.annotation = .init(rect: step.rect, style: .highlight, label: nil, number: 1)
+        browserStepExpiry?.cancel()
+        browserStepExpiry = Task { @MainActor [weak self] in
+            do { try await Task.sleep(for: .seconds(6)) } catch { return }
+            self?.overlay.state.clear()
+        }
+    }
+
     /// The open result continues the conversation, so a failed delivery is retried and logged.
     private func sendBrowserResult(_ result: ActionResult) async {
         for attempt in 1...3 {
@@ -28,6 +43,8 @@ extension MacShellController {
                 guard let self else { return }
                 let result = await browserPage.open(action)
                 await sendBrowserResult(result)
+                // Show the page right away instead of waiting for the next model turn.
+                if result.success, let step = await browserPage.firstLook() { presentBrowserStep(step) }
             }
             return true
         case .action(let envelope) where envelope.payload.sourceText == nil:
