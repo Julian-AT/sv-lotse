@@ -1,0 +1,56 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: praevention-brustkrebs-opt-in-jung
+name_de: Brustkrebs-Früherkennung – freiwillige Anmeldung 40 bis 44
+name_simple: Freiwillige Programmteilnahme mit der Ärztin oder dem Arzt besprechen
+area: A
+life_situations:
+  - prevention
+scope: social_insurance
+criteria:
+  - id: published-access
+    text_de: Frauen von 40 bis 44 Jahren können sich freiwillig anmelden. Vor- und
+      Nachteile einer Teilnahme mit der Ärztin oder dem Arzt besprechen.
+    source: &a1
+      url: https://www.frueh-erkennen.at/so-koennen-sie-teilnehmen/
+      quote: Wenn Sie zwischen 40 und 44 Jahre oder älter als 74 Jahre sind, können
+        Sie sich freiwillig zum Brustkrebs-Früherkennungsprogramm anmelden.
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers:
+  - oegk
+  - svs
+  - bvaeb
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents:
+  - id: e-card
+    name_de: "e-card"
+    required: true
+    obtain_from: "Eigene e-card; nach der freiwilligen Anmeldung alle zwei Jahre für die Untersuchung freigeschaltet."
+    source: &doc1
+      url: "https://www.frueh-erkennen.at/so-koennen-sie-teilnehmen/"
+      quote: "Wenn Sie sich freiwillig für die regelmäßige Mammografie anmelden, wird Ihre e-card alle zwei Jahre für die Untersuchung freigeschalten."
+      retrieved_at: "2026-11-06T03:45:00Z"
+forms: []
+process: ref:processes/praevention-brustkrebs-opt-in-jung
+appointment_channels:
+  - kind: phone
+    number: 0800 500 181
+    verified_at: 2026-11-06
+sources:
+  - *a1
+  - &a2
+    url: https://www.gesundheit.gv.at/krankheiten/krebs/brustkrebs/frueherkennung.html
+    quote: Ziel der Früherkennung ist es, Brustkrebs in einem möglichst frühen
+      Stadium zu entdecken.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - *doc1
+as_of: 2026-11-06
+target_group:
+  age_min: 40
+  age_max: 44
+  sex: female
+  interval: alle 24 Monate nach Anmeldung
+  rationale_text: Ziel der Früherkennung ist es, Brustkrebs in einem möglichst
+    frühen Stadium zu entdecken.
+  rationale_source: *a2
