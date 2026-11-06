@@ -46,3 +46,11 @@ test("an embedded form keeps its existing approval responder without opening ano
 
   expect(CaseConversation).not.toHaveBeenCalled();
 });
+
+test("a form inside the chat does not reload the case conversation and interrupt the turn", () => {
+  render(
+    createElement(FormViewerWorkspace, { formInstanceId: caseId, language: "de", embedded: true }),
+  );
+
+  expect(CaseConversation).not.toHaveBeenCalled();
+});

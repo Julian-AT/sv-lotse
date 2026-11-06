@@ -164,7 +164,7 @@ export function ConversationForm({
               </SheetPrimitive.Close>
             </div>
             <div className="lotse-legacy min-h-0 flex-1 overflow-y-auto p-4">
-              <FormViewerWorkspace key={id} formInstanceId={id} language={language} />
+              <FormViewerWorkspace key={id} formInstanceId={id} language={language} embedded />
             </div>
           </SheetPrimitive.Content>
         </SheetPrimitive.Portal>

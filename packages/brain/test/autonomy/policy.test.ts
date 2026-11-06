@@ -161,14 +161,26 @@ describe("FR-D7 guided filling on allowlisted portals", () => {
     expect(await fillIsAllowed(undefined, input, l2)).toBe(false);
     expect(await fillIsAllowed(undefined, input, { ...l2, actorRole: "helper" })).toBe(false);
   });
-  it("never offers a tool that clicks, submits, sends, pays or books at any level", () => {
+  it("never offers a tool that submits, sends, pays or books at any level", () => {
     for (const level of ["L1", "L2", "L3"] as const)
       for (const role of ["subject", "helper"] as const)
         expect(
           allowedToolNames(level, role).filter((name) =>
-            /click|submit|send|pay|book|confirm|delete|press/iu.test(name),
+            /submit|send|pay|book|confirm|delete|press/iu.test(name),
           ),
         ).toEqual([]);
+    // The only click is page navigation: L2/L3 subjects, never helpers or L1. The Mac app follows
+    // only links, tabs and accordions on allowlisted pages and denies submit, send, pay and login.
+    expect(allowedToolNames("L1", "subject")).not.toContain("ui.click");
+    expect(allowedToolNames("L3", "helper")).not.toContain("ui.click");
+    expect(allowedToolNames("L3", "subject")).toContain("ui.click");
+    const click = { target: { kind: "dom", handle: "ax-1", url: form } };
+    expect(contracts["ui.click"].input.safeParse(click).success).toBe(true);
+    for (const extra of [{ submit: true }, { value: "x" }, { press: "Enter" }])
+      expect(contracts["ui.click"].input.safeParse({ ...click, ...extra }).success).toBe(false);
+    expect(
+      contracts["ui.click"].input.safeParse({ target: { kind: "point", x: 0.5, y: 0.5 } }).success,
+    ).toBe(false);
     // ui.fill can only type a value; there is no field to request a click, press or submit.
     const target = { kind: "dom", handle: "field", url: form };
     expect(contracts["ui.fill"].input.safeParse({ ...fillInput, target }).success).toBe(true);

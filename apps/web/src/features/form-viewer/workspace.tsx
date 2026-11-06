@@ -94,6 +94,11 @@ export function FormViewerWorkspace(props: {
   language: FormViewerLanguage;
   approval?: FormGroupApproval | undefined;
   onApprovalDecision?: ApprovalResponder | undefined;
+  /**
+   * Inside the chat the chat already owns the case conversation. A second one would reload it
+   * and interrupt the running turn, rejecting its continuation (CONTINUATION_REJECTED).
+   */
+  embedded?: boolean;
 }): JSX.Element {
   const [actions, setActions] = useState<Action[]>([]);
   const [refreshVersion, setRefreshVersion] = useState(0);
@@ -186,7 +191,7 @@ export function FormViewerWorkspace(props: {
           results.delete(result.actionId);
         }}
       />
-      {caseId && !props.onApprovalDecision && (
+      {caseId && !props.onApprovalDecision && !props.embedded && (
         <CaseConversation
           caseId={caseId}
           language={props.language}
