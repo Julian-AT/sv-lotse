@@ -5,7 +5,7 @@ wave: W2
 lane: voice
 risk: normal
 codex_effort: xhigh
-depends_on: [WP-012, WP-V4]
+depends_on: [WP-012]
 fr: [FR-D5, FR-G3, FR-O1, FR-A2]
 owns:
   - apps/mac/Packages/LotseKit/Sources/LotseVoice/**
