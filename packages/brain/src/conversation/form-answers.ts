@@ -241,7 +241,9 @@ export async function answerFormQuestion(input: {
   const fromDocuments = DOCUMENT.test(answer);
   if (!pending) {
     // A form is open and the person hands over data (typed or "from the letter"): fill it directly.
-    const data = (answer.length > 40 || MANY.test(answer)) && !answer.includes("?");
+    const data =
+      ((answer.length > 40 || MANY.test(answer)) && !answer.includes("?")) ||
+      FIELD_HINT.test(answer);
     if (!(fromDocuments || data)) return;
     const [latest] = await db
       .select({ id: formInstances.id })
@@ -262,7 +264,7 @@ export async function answerFormQuestion(input: {
       fromDocuments,
     });
   }
-  if (answer.length > 80 || MANY.test(answer) || fromDocuments)
+  if (answer.length > 80 || MANY.test(answer) || fromDocuments || CORRECTION.test(answer))
     return answerManyFields({ ...input, pending, answer, fromDocuments });
   if (answer.includes("?")) return;
   const [instance] = await db
@@ -343,6 +345,10 @@ export async function answerFormQuestion(input: {
 
 // Several values in one message ("Maria Müller, geb. 12.3.1948, Hauptstraße 5, 1100 Wien").
 const MANY = /[\n;]|,.*,|:\s*\S.*:/u;
+// Naming a field or asking for a change targets the open form even in a short message.
+const FIELD_HINT =
+  /\b(?:namens?|namen|name|vorname|nachname|familienname|geburt\w*|adresse|stra(?:ß|ss)e|plz|postleitzahl|ort|telefon|e-?mail|versicherungsnummer|svnr|patient\w*)\b/iu;
+const CORRECTION = /\b(?:ändere|änder|ersetze|korrigier\w*|statt|stattdessen|replace|change)\b/iu;
 const DOCUMENT = /brief|dokument|entlassung|befund|bescheid|unterlage|letter|document|daraus/iu;
 const extraction = z.object({
   values: z.array(
@@ -381,7 +387,8 @@ async function answerManyFields(input: {
   if (!instance) return;
   const fields = templateSchema(await getTemplate(db, instance.templateId)).fields;
   const values = formFields.parse(instance.fields);
-  const open = fields.filter((field) => askable(field) && values[field.id] === undefined);
+  // Empty fields and the person's own drafts can be (re)filled; confirmed values stay untouched.
+  const open = fields.filter((field) => askable(field) && values[field.id]?.state !== "confirmed");
   if (!open.length) return;
   const english = input.language.startsWith("en");
   // Administrative facts already read from the person's documents (e.g. a discharge letter).
@@ -399,7 +406,8 @@ async function answerManyFields(input: {
     system:
       "Map the person's text and the listed document facts onto form fields. Return only values " +
       "stated explicitly, copied as written; never guess, infer or add medical information. " +
-      "Dates as DD.MM.YYYY. Set factId to the document fact's id when the value comes from it.",
+      "Dates as DD.MM.YYYY. Set factId to the document fact's id when the value comes from it. " +
+      "A new value for a field replaces its current draft.",
     prompt: JSON.stringify({
       fields: open.map((field) => ({
         fieldId: field.id,
