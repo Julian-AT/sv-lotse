@@ -17,7 +17,7 @@ extension BrowserPageCapability {
         let label: String
     }
 
-    private struct ClickTarget: @unchecked Sendable {
+    struct ClickTarget: @unchecked Sendable {
         let node: LiveAXNode
         let rect: CGRect
         let decision: BrowserClickDecision
@@ -75,7 +75,7 @@ extension BrowserPageCapability {
 
     /// The next page: the link's exact page first; after a grace period any allowlisted page of the
     /// focused window that differs from the previous one (redirects).
-    private func awaitNavigation(id: String, pid: pid_t, destination: String, previous: String, generation: Int) async -> ActionResult {
+    func awaitNavigation(id: String, pid: pid_t, destination: String, previous: String, generation: Int) async -> ActionResult {
         let policy = policy
         let top = Self.primaryTop
         let started = ContinuousClock.now
@@ -159,6 +159,62 @@ extension BrowserPageCapability {
             }
             return heading.map { Step(rect: $0.frame, label: $0.label) }
         }.value
+    }
+
+    /// Right after an opened page is ready: scroll to and highlight its application part and, when
+    /// that is a link to another allowlisted page, follow it once and highlight the form link there.
+    /// Same native allow/deny rules as `ui.click`; never presses a download, submit or sign-in.
+    func applicationTour(present: @MainActor (Step) -> Void, say: @MainActor (String) -> Void = { _ in }) async {
+        let generation = navigationGeneration
+        for hop in 0..<2 {
+            guard generation == navigationGeneration, let (pid, _) = currentBrowser() else { return }
+            let policy = policy
+            let top = Self.primaryTop
+            let expected = active?.url.absoluteString
+            let found = await Task.detached { () -> ClickTarget? in
+                guard let area = Self.pageArea(pid: pid, top: top, policy: policy, expected: expected), let current = area.url,
+                    BrowserPageSafety.isLoginPage(current) == false, let page = area.frame
+                else { return nil }
+                let elements = BrowserPageReader.elements(in: area)
+                guard let best = Self.applicationElement(elements.map { ($0.role, $0.label) }, formStage: hop > 0) else { return nil }
+                let element = elements[best]
+                let decision = BrowserPageSafety.clickDecision(role: element.role, subrole: element.node.subrole,
+                    label: element.label, url: element.node.url, expanded: element.node.expanded,
+                    secure: BrowserPageReader.isSecure(element.node)) { policy?.allows($0) == true }
+                guard let rect = Self.scrolledIntoView(element.node, page: page) else { return nil }
+                return ClickTarget(node: element.node, rect: rect, decision: decision, page: current)
+            }.value
+            guard let found, generation == navigationGeneration else { return }
+            present(Step(rect: found.rect, label: ""))
+            say(hop == 0 ? "Hier steht der Antrag." : "Hier finden Sie das Antragsformular.")
+            log.info("browser tour highlighted the application part (hop \(hop))")
+            try? await Task.sleep(for: .milliseconds(1400))
+            guard hop == 0, case .navigate(let destination) = found.decision,
+                BrowserPageSafety.sameDocument(destination, found.page) == false,
+                URL(string: destination)?.pathExtension.lowercased() != "pdf", generation == navigationGeneration
+            else { return }
+            clickTimes.append(Date())
+            say("Ich öffne den Link zum Antrag.")
+            guard await Task.detached(operation: { found.node.perform(kAXPressAction) }).value else { return }
+            let result = await awaitNavigation(id: "tour", pid: pid, destination: destination, previous: found.page,
+                generation: generation)
+            guard result.success else { return }
+        }
+    }
+
+    /// The best application element: a link or heading about the application ("Antrag", "beantragen")
+    /// on the first page, the form or PDF link on the next one. Returns its index.
+    nonisolated static func applicationElement(_ elements: [(role: String, label: String)], formStage: Bool) -> Int? {
+        let words = formStage ? ["formular", "antragsformular", "pdf", "antrag", "download"] : ["antrag", "beantrag", "formular"]
+        func score(_ index: Int) -> Int? {
+            let (role, label) = elements[index]
+            let text = label.lowercased()
+            guard ["link", "heading", "button"].contains(role), BrowserPageSafety.isDenied(role: role, label: label) == false,
+                let rank = words.firstIndex(where: { text.contains($0) })
+            else { return nil }
+            return rank * 10 + (role == "link" ? 0 : 5) + min(text.count / 40, 4)
+        }
+        return elements.indices.compactMap { index in score(index).map { (index, $0) } }.min { $0.1 < $1.1 }?.0
     }
 
     /// ⌥⌘ / stop: the running step ends before its press, and waiting for a page stops.

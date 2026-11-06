@@ -114,4 +114,17 @@ struct BrowserNavigationTests {
         #expect(BrowserPageCapability.scrollTarget(elements, page: page, up: false) == "one-screen")
         #expect(BrowserPageCapability.scrollTarget(elements, page: page, up: true) == nil)
     }
+
+    @Test func theTourPrefersTheApplicationLinkThenTheFormLink() {
+        let page: [(role: String, label: String)] = [
+            ("link", "Pension"), ("heading", "Pflegegeld beantragen"), ("link", "Pflegegeld-Antrag"),
+            ("button", "Antrag absenden"), ("link", "Anmelden")
+        ]
+        #expect(BrowserPageCapability.applicationElement(page, formStage: false) == 2)
+        let next: [(role: String, label: String)] = [
+            ("link", "Antrag auf Pflegegeld"), ("link", "Antragsformular Pflegegeld (PDF)"), ("heading", "Antrag")
+        ]
+        #expect(BrowserPageCapability.applicationElement(next, formStage: true) == 1)
+        #expect(BrowserPageCapability.applicationElement([("link", "Kontakt")], formStage: false) == nil)
+    }
 }

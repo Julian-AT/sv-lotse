@@ -32,6 +32,7 @@ public final class MacShellController {
     lazy var shortcutSupervisor = makeShortcutSupervisor()
     var listeningHide: Task<Void, Never>?
     var browserStepExpiry: Task<Void, Never>?
+    var browserSteps: Task<Void, Never>?
     public let settings = CompanionSettingsModel()
     public let guidedPortal = GuidedPortalCapability()
     public let browserPage = BrowserPageCapability()

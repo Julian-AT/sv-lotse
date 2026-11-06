@@ -89,6 +89,11 @@ public final class BrowserPageCapability {
         guard case .openResource(let open) = action, case .dom(let dom) = open.target else {
             return Self.result(GuidedPortalCapability.destination(action)?.0 ?? "", false, "RESOURCE_UNSUPPORTED")
         }
+        // A PDF is a form, not a page to navigate: the form flow prepares it instead.
+        guard BrowserPageSafety.isDocument(dom.url) == false else {
+            log.info("browser open refused: document, handed to the form flow")
+            return Self.result(open.id, false, "PDF_HANDOFF")
+        }
         guard allows(dom.url), let url = URL(string: dom.url) else {
             log.error("browser open refused: origin not allowed")
             return Self.result(open.id, false, "origin-not-allowed")

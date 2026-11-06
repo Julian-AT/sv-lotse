@@ -143,3 +143,9 @@ private func allowlisted(_ url: String) -> Bool { url.hasPrefix("https://www.pv.
     #expect(BrowserPageSafety.sameDocument("https://www.pv.at/web/pflegegeld", "https://www.pv.at/web/reha") == false)
     #expect(BrowserPageSafety.sameDocument("https://www.pv.at/a?x=1", "https://www.pv.at/a?x=2") == false)
 }
+
+@Test func pdfsAreHandedToTheFormFlowNotNavigated() {
+    #expect(BrowserPageSafety.isDocument("https://www.pv.at/antrag/pflegegeld.PDF"))
+    #expect(BrowserPageSafety.isDocument("https://www.sozialversicherung.gv.at/cdscontent/load?contentid=10008.123"))
+    #expect(BrowserPageSafety.isDocument("https://www.pv.at/web/pflegegeld") == false)
+}

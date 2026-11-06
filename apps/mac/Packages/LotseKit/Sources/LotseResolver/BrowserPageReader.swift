@@ -250,6 +250,13 @@ public extension BrowserPageSafety {
         }
     }
 
+    /// PDFs and download endpoints are documents for the form flow, never pages to navigate.
+    static func isDocument(_ address: String) -> Bool {
+        guard let url = URL(string: address) else { return false }
+        let path = url.path.lowercased()
+        return path.hasSuffix(".pdf") || path.contains("/cdscontent/load")
+    }
+
     /// Same document: scheme, host, port and path agree; fragments and a trailing slash are ignored.
     static func sameDocument(_ left: String, _ right: String) -> Bool {
         guard let lhs = URLComponents(string: left), let rhs = URLComponents(string: right) else { return false }
