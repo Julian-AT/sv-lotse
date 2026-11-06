@@ -1,0 +1,67 @@
+import type { Labels } from "@lotse/ui";
+import type { I18n } from "../i18n/translator.ts";
+
+export const continuityCopy = {
+  de: {
+    title: "Gespräch fortsetzen",
+    loading: "Das Gespräch wird geladen.",
+    failed: "Das Gespräch konnte nicht geladen werden. Bitte öffnen Sie den Fall erneut.",
+    you: "Sie",
+    assistant: "SV KI-Lotse",
+    approve: "Bestätigen",
+    deny: "Ablehnen",
+    approval: "Bitte prüfen und bestätigen Sie die angezeigte Aktion.",
+    proposedValue: "Vorgeschlagener Wert",
+    actionDetails: "Details der vorgeschlagenen Aktion",
+    message: "Ihre Nachricht",
+    send: "Senden",
+    pending: "Bitte beantworten Sie zuerst die offene Bestätigung.",
+    jobTitle: "Hintergrundaufgaben",
+    voice: "Abschlussmeldung vorlesen",
+    requestFailed: "Die Anfrage konnte nicht abgeschlossen werden.",
+    retry: "Erneut versuchen",
+    stop: "Antwort stoppen",
+  },
+  en: {
+    title: "Continue conversation",
+    loading: "Loading the conversation.",
+    failed: "The conversation could not be loaded. Please reopen the case.",
+    you: "You",
+    assistant: "SV KI-Lotse",
+    approve: "Approve",
+    deny: "Decline",
+    approval: "Please review and confirm the displayed action.",
+    proposedValue: "Proposed value",
+    actionDetails: "Proposed action details",
+    message: "Your message",
+    send: "Send",
+    pending: "Please answer the pending approval first.",
+    jobTitle: "Background tasks",
+    voice: "Read completion notices aloud",
+    requestFailed: "The request could not be completed.",
+    retry: "Try again",
+    stop: "Stop response",
+  },
+} as const;
+
+export function workspaceLabels({ t }: I18n): Partial<Labels> {
+  return {
+    user: t("workspace.ui.user"),
+    assistant: t("workspace.ui.assistant"),
+    sources: t("workspace.ui.sources"),
+    why: t("workspace.ui.why"),
+    asOf: t("workspace.ui.asOf"),
+    legalBasis: t("workspace.ui.legalBasis"),
+    confidence: t("workspace.ui.confidence"),
+    unknowns: t("workspace.ui.unknowns"),
+    approve: t("workspace.ui.approve"),
+    decline: t("workspace.ui.decline"),
+    keyboardHint: t("workspace.ui.keyboardHint"),
+    voiceHint: t("workspace.ui.voiceHint"),
+    confirm: t("workspace.ui.confirm"),
+    edit: t("workspace.ui.edit"),
+    reject: t("workspace.ui.reject"),
+    draft: t("workspace.ui.draft"),
+    confirmed: t("workspace.ui.confirmed"),
+  };
+}
