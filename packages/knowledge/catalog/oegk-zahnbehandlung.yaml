@@ -1,0 +1,75 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 39 (1-basiert), Druckseiten 76–77.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Vertragsleistungen und private Zusatzleistungen unterscheiden. Keine Auswahl von Füllungsmaterial oder Behandlung.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+id: oegk-zahnbehandlung
+name_de: Konservierende-chirurgische Zahnbehandlung
+name_simple: Kosten für Zahnbehandlung klären
+area: C
+life_situations:
+  - illness
+scope: social_insurance
+carriers:
+  - oegk
+criteria:
+  - id: private-reimbursement
+    text_de:
+      Bei Wahlzahnbehandlung sind Vertragsleistungen zunächst selbst zu bezahlen; Erstattung 80
+      Prozent des entsprechenden Vertragstarifs.
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=39
+      quote: Werden Leistungen von einer Wahlzahnärztin bzw. einem Wahlzahnarzt im In- oder Ausland
+        erbracht, die zu den Vertragsleistungen zählen, müssen Sie die Rechnung zunächst selbst
+        bezahlen und danach einreichen. Sie erhalten von der ÖGK eine Kostenerstattung in der Höhe
+        von 80 Prozent der entsprechenden Vertragstarife.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+office_rules:
+  - when: contact_region == "Wien"
+    office: ref:offices/oegk-wien
+  - when: contact_region == "Niederösterreich"
+    office: ref:offices/oegk-niederoesterreich
+  - when: contact_region == "Burgenland"
+    office: ref:offices/oegk-burgenland
+  - when: contact_region == "Oberösterreich"
+    office: ref:offices/oegk-oberoesterreich
+  - when: contact_region == "Steiermark"
+    office: ref:offices/oegk-steiermark
+  - when: contact_region == "Kärnten"
+    office: ref:offices/oegk-kaernten
+  - when: contact_region == "Salzburg"
+    office: ref:offices/oegk-salzburg
+  - when: contact_region == "Tirol"
+    office: ref:offices/oegk-tirol
+  - when: contact_region == "Vorarlberg"
+    office: ref:offices/oegk-vorarlberg
+documents:
+  - id: invoice
+    name_de: "Bei Wahlzahnbehandlung: bezahlte Rechnung"
+    required: false
+    obtain_from: Wahlzahnärztin oder Wahlzahnarzt
+    source:
+      url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=39
+      quote: Werden Leistungen von einer Wahlzahnärztin bzw. einem Wahlzahnarzt im In- oder Ausland
+        erbracht, die zu den Vertragsleistungen zählen, müssen Sie die Rechnung zunächst selbst
+        bezahlen und danach einreichen. Sie erhalten von der ÖGK eine Kostenerstattung in der Höhe
+        von 80 Prozent der entsprechenden Vertragstarife.
+      retrieved_at: 2026-11-06T00:07:42.653242Z
+forms:
+  - search: Kostenerstattung Wahlzahnarzt
+    publisher: Österreichische Gesundheitskasse (ÖGK)
+process: ref:processes/oegk-zahnbehandlung
+appointment_channels: []
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=39
+    quote: Werden Leistungen von einer Wahlzahnärztin bzw. einem Wahlzahnarzt im In- oder Ausland
+      erbracht, die zu den Vertragsleistungen zählen, müssen Sie die Rechnung zunächst selbst
+      bezahlen und danach einreichen. Sie erhalten von der ÖGK eine Kostenerstattung in der Höhe von
+      80 Prozent der entsprechenden Vertragstarife.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870418&portal=oegkportal
+    quote: Sie können sich bei Vertragszahnärztinnen und Vertragszahnärzten, Wahlzahnärztinnen und
+      Wahlzahnärzten sowie in den Zahngesundheitszentren der Österreichischen Gesundheitskasse (ÖGK)
+      behandeln lassen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01

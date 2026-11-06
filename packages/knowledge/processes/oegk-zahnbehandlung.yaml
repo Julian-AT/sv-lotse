@@ -1,0 +1,124 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 39 (1-basiert), Druckseiten 76–77.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Vertragsleistungen und private Zusatzleistungen unterscheiden. Keine Auswahl von Füllungsmaterial oder Behandlung.
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+# Abschluss bestätigt die Verwaltungshilfe bzw. Rückfrage, keinen Leistungsanspruch.
+# Erinnerungen nach 0 Tagen sind Aufgabenhinweise, keine gesetzlichen Fristen.
+id: oegk-zahnbehandlung
+benefit: ref:catalog/oegk-zahnbehandlung
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: contact_region
+    type: enum:oegk-region
+    question_hint: In welchem Bundesland befindet sich Ihre zuständige ÖGK-Stelle laut
+      Versicherungsunterlagen? Bei Selbstversicherung mit geringfügiger Beschäftigung nennen Sie das
+      Beschäftigungsbundesland.
+    validation:
+      options:
+        - Wien
+        - Niederösterreich
+        - Burgenland
+        - Oberösterreich
+        - Steiermark
+        - Kärnten
+        - Salzburg
+        - Tirol
+        - Vorarlberg
+  - id: documents_ready
+    type: boolean
+    question_hint: Sind die genannten Unterlagen vollständig vorbereitet?
+  - id: contact_done
+    type: boolean
+    question_hint:
+      Haben Sie die Unterlagen selbst übermittelt oder die Abwicklung mit der zuständigen
+      Stelle geklärt?
+  - id: private_invoice
+    type: boolean
+    question_hint: Haben Sie eine private Rechnung für die bereits vorgesehene Leistung? Bei
+      Vertragsbehandlung erfolgt die Abrechnung mit der ÖGK.
+  - id: invoice_ready
+    type: boolean
+    question_hint: Ist die detaillierte Rechnung bezahlt und für die ÖGK vorbereitet?
+steps:
+  - id: check-requirements
+    needs:
+      - contact_region
+    criteria: ref:catalog/oegk-zahnbehandlung#criteria
+    action: office.resolve
+    outputs:
+      - id: contact-office
+        type: office
+    transitions:
+      - to: prepare
+  - id: prepare
+    needs:
+      - check-requirements
+      - documents_ready
+      - private_invoice
+    documents: ref:catalog/oegk-zahnbehandlung#documents
+    action: documents.checklist
+    outputs:
+      - id: administrative-checklist
+        type: checklist
+    transitions:
+      - to: prepare-invoice
+        when: documents_ready == true and private_invoice == true
+      - to: confirm-contact
+        when: documents_ready == true and private_invoice == false
+    reminders:
+      - after_days: 0
+        text_de:
+          Bitte besorgen Sie die fehlenden Unterlagen bei den genannten Stellen. Medizinische Angaben
+          bleiben bei den behandelnden Fachpersonen.
+        when: documents_ready == false
+  - id: prepare-invoice
+    needs:
+      - prepare
+      - invoice_ready
+    outputs:
+      - id: paid-invoice-checklist
+        type: checklist
+    transitions:
+      - to: confirm-contact
+        when: invoice_ready == true
+    reminders:
+      - after_days: 0
+        text_de:
+          Bitte besorgen Sie die bezahlte detaillierte Rechnung bei der behandelnden Fachperson. Die
+          ÖGK prüft die Erstattung.
+        when: invoice_ready == false
+  - id: confirm-contact
+    needs:
+      - prepare
+      - contact_done
+    outputs:
+      - id: contact-confirmation
+        type: confirmation
+    transitions:
+      - to: finish
+        when: contact_done == true
+  - id: finish
+    needs:
+      - confirm-contact
+    outputs:
+      - id: navigation-complete
+        type: confirmation
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=39
+    quote: Werden Leistungen von einer Wahlzahnärztin bzw. einem Wahlzahnarzt im In- oder Ausland
+      erbracht, die zu den Vertragsleistungen zählen, müssen Sie die Rechnung zunächst selbst
+      bezahlen und danach einreichen. Sie erhalten von der ÖGK eine Kostenerstattung in der Höhe von
+      80 Prozent der entsprechenden Vertragstarife.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870418&portal=oegkportal
+    quote: Sie können sich bei Vertragszahnärztinnen und Vertragszahnärzten, Wahlzahnärztinnen und
+      Wahlzahnärzten sowie in den Zahngesundheitszentren der Österreichischen Gesundheitskasse (ÖGK)
+      behandeln lassen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
