@@ -51,6 +51,8 @@ export function readPageStructure(
     .filter(Boolean)
     .slice(0, 20);
 
+  const self = new URL(pageUrl);
+  self.hash = "";
   const ranked: { link: PageLink; score: number }[] = [];
   const seen = new Set<string>();
   $("a[href]").each((_, element) => {
@@ -64,7 +66,7 @@ export function readPageStructure(
     href.hash = "";
     const label =
       clean(anchor.text()) || clean(anchor.attr("title")) || clean(anchor.attr("aria-label"));
-    if (!label || seen.has(href.href) || !allowLink(href.href)) return;
+    if (!label || href.href === self.href || seen.has(href.href) || !allowLink(href.href)) return;
     seen.add(href.href);
     const haystack = `${label} ${href.pathname}`;
     const link = {

@@ -147,7 +147,7 @@ test("uses pages from the ingested sources when the web search fails", async () 
 });
 
 const html = `<!doctype html><html><head><title>Pflegegeld | PVA</title></head><body>
-<nav><a href="/">Startseite</a><a href="https://www.facebook.com/pva">Facebook</a></nav>
+<nav><a href="#formulare">Formulare</a><a href="/">Startseite</a><a href="https://www.facebook.com/pva">Facebook</a></nav>
 <main><h1>Pflegegeld</h1><p>Das Pflegegeld beantragen Sie bei Ihrer Pensionsversicherung.</p>
 <a href="/web/pflegegeld/antrag">Pflegegeld online beantragen</a>
 <a href="/documents/antrag-pflegegeld.pdf">Antragsformular (PDF)</a>
