@@ -23,6 +23,7 @@ describe("runtime contracts", () => {
           "reminder.list",
           "reminder.extract",
           "appointment.rehearse",
+          "web.findOfficialPage",
         ]),
       ].sort(),
     );

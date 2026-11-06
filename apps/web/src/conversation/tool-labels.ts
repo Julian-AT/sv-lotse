@@ -24,6 +24,7 @@ const labels: Record<string, { de: string; en: string }> = {
   "ui.offerResource": { de: "Öffnen anbieten", en: "Offer to open" },
   "ui.openResource": { de: "Seite öffnen", en: "Open page" },
   "ui.point": { de: "Zeigen", en: "Point" },
+  "web.findOfficialPage": { de: "Offizielle Seite suchen", en: "Find official page" },
 };
 
 const normalize = (name: string) =>

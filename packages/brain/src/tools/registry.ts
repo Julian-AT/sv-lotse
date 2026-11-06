@@ -23,6 +23,7 @@ import { implementations as process } from "./impl/process/index.ts";
 import { implementations as reminder } from "./impl/reminder/index.ts";
 import { implementations as ui } from "./impl/ui/index.ts";
 import { implementations as uiResource } from "./impl/ui/resource.ts";
+import { implementations as web } from "./impl/web/index.ts";
 import type { Implementations, ToolDependencies } from "./types.ts";
 
 export type RuntimeTools = Record<ToolName, Tool<unknown, unknown, RuntimeContext>>;
@@ -48,6 +49,7 @@ export function buildTools(deps: ToolDependencies): RuntimeTools {
     ui,
     uiResource,
     formLive,
+    web,
   ])
     Object.assign(implementations, group(deps));
   return Object.fromEntries(

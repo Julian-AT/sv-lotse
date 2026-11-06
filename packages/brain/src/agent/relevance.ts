@@ -78,6 +78,7 @@ const READ_ONLY_TOOLS: ReadonlySet<ToolName> = new Set<ToolName>([
   "ui.caption",
   "ui.offerResource",
   "ui.openResource",
+  "web.findOfficialPage",
 ]);
 /** Server lookups and display tools whose sourced results carry the whole answer. */
 export const DRAFTLESS_TOOLS: ReadonlySet<string> = new Set<ToolName>([

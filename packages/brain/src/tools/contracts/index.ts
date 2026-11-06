@@ -462,6 +462,16 @@ export const contracts = {
     z.strictObject({ documentKey: id }),
     "Prepare a case summary document for handoff.",
   ),
+  "web.findOfficialPage": server(
+    z.strictObject({
+      query: text.min(1),
+      benefitId: id.optional(),
+      carrier: text.optional(),
+      region: text.optional(),
+    }),
+    z.array(z.strictObject({ url: UriSchema, title: text, snippet: text })).max(3),
+    "Search the allowlisted official sites for the specific page a person needs (application, form, service) when the catalog has no exact page. Query: short German. Returns up to 3 real pages, best first; an empty list means none was found, never guess a URL.",
+  ),
   "ui.point": display("Point to the named target."),
   "ui.highlight": display("Highlight the named target."),
   "ui.annotate": display("Annotate the named target."),
