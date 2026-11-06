@@ -1,0 +1,14 @@
+# Programme directory access; not a fabricated service provider. Awaiting human review.
+id: praevention-programmzugang
+name_de: Öffentliches Gesundheitsportal Österreichs – Beratung und Hilfe
+name_simple: Offizielles Verzeichnis von Beratungs- und Servicestellen
+jurisdiction: Informationszugang über die jeweilige offizielle Programmseite.
+  Dies ist keine gemeinsame Buchungs- oder medizinische Beratungsstelle. Die
+  tatsächliche Stelle regional auswählen.
+url: https://www.gesundheit.gv.at/service/beratungsstellen.html
+sources:
+  - url: https://www.gesundheit.gv.at/service/beratungsstellen.html
+    quote: Hier finden Sie Informationen zu Beratungs- und Servicestellen nach
+      Themenbereichen sortiert sowie wichtige Hotlines auf einen Blick.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06
