@@ -1,0 +1,109 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{T9 instances from catalog data with classical baselines: CP-SAT optimum, simulated annealing (SA) and greedy (set cover only) approximation ratios, and whether the QUBO ground state equals the CP-SAT optimum. Source: \texttt{ml/quantum/results.json} (sha256 14e54a79323f).}
+\label{tab:quantum}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{llrrrrrr}
+\toprule
+Instance & Kind & Qubits & CP-SAT opt. & SA ratio & SA feasible & Greedy ratio & QUBO = opt. \\
+\midrule
+qa-care-noe-care-s2-d1-v11 & Q-A & 11 & 2 & 1 & 1 & -- & yes \\
+qa-care-wien-care-s2-d1-v12 & Q-A & 12 & 2 & 1 & 1 & -- & yes \\
+qa-care-noe-care-s3-d1-v17 & Q-A & 17 & 4 & 0.6667 & 1 & -- & yes \\
+qa-care-wien-care-s3-d1-v18 & Q-A & 18 & 4 & 1 & 1 & -- & yes \\
+qa-care-wien-care-s4-d1-v24 & Q-A & 24 & 8 & 1 & 1 & -- & -- \\
+qa-care-wien-care-s5-d1-v30 & Q-A & 30 & 12 & 1 & 1 & -- & -- \\
+qa-care-wien-care-s4-d2-v48 & Q-A & 48 & 8 & 0.4 & 1 & -- & -- \\
+qa-care-wien-care-s7-d5-v210 & Q-A & 210 & 33 & 0.6346 & 1 & -- & -- \\
+qa-care-noe-care-s4-d5-v112 & Q-A & 112 & 8 & 0.1569 & 1 & -- & -- \\
+qb-care-req-e3-s4 & Q-B & 9 & 2 & 1 & 1 & 1 & yes \\
+qb-care-req-e6-s6 & Q-B & 16 & 3 & 1 & 0.9062 & 1 & yes \\
+qb-geringes-einkommen-req-e7-s6 & Q-B & 16 & 3 & 1 & 1 & 1 & yes \\
+qb-care-req-e9-s9 & Q-B & 24 & 4 & 1 & 1 & 1 & -- \\
+qb-care-req-e11-s9 & Q-B & 26 & 5 & 1 & 0.7812 & 1 & -- \\
+qb-care-req-e14-s10 & Q-B & 30 & 6 & 1 & 1 & 1 & -- \\
+qb-care+geringes-einkommen-req-e21-s10 & Q-B & 40 & 7 & 1 & 0.8438 & 1 & -- \\
+qb-care+geringes-einkommen-all-e45-s11 & Q-B & 71 & 10 & 1 & 0.6562 & 0.9091 & -- \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{T9 QAOA on the Aer simulator: transpiled depth, two-qubit gates, feasibility rate, best approximation ratio and probability of the optimum. Source: \texttt{ml/quantum/results.json} (sha256 14e54a79323f).}
+\label{tab:quantum-sim}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{lrlrrrrrrr}
+\toprule
+Instance & Qubits & Variant & $p$ & Depth & 2q gates & Shots & Feasible & Ratio (best) & $P(\text{opt})$ \\
+\midrule
+qa-care-noe-care-s2-d1-v11 & 11 & qaoa & 1 & 22 & 39 & 4{,}096 & 0.001709 & 1 & 0.0004883 \\
+qa-care-noe-care-s2-d1-v11 & 11 & qaoa & 2 & 34 & 78 & 4{,}096 & 0.06982 & 1 & 0.001221 \\
+qa-care-noe-care-s2-d1-v11 & 11 & qaoa & 3 & 46 & 117 & 4{,}096 & 0.1348 & 1 & 0.009033 \\
+qa-care-noe-care-s2-d1-v11 & 11 & warm-start & 1 & 22 & 39 & 4{,}096 & 0.3821 & 1 & 0.1909 \\
+qa-care-noe-care-s2-d1-v11 & 11 & warm-start & 2 & 34 & 78 & 4{,}096 & 0.5352 & 1 & 0.3162 \\
+qa-care-noe-care-s2-d1-v11 & 11 & warm-start & 3 & 46 & 117 & 4{,}096 & 0.6155 & 1 & 0.3918 \\
+qa-care-wien-care-s2-d1-v12 & 12 & qaoa & 1 & 24 & 46 & 4{,}096 & 0.00415 & 0.6667 & 0 \\
+qa-care-wien-care-s2-d1-v12 & 12 & qaoa & 2 & 37 & 92 & 4{,}096 & 0.1191 & 1 & 0.008789 \\
+qa-care-wien-care-s2-d1-v12 & 12 & qaoa & 3 & 50 & 138 & 4{,}096 & 0.03979 & 1 & 0.001709 \\
+qa-care-wien-care-s2-d1-v12 & 12 & warm-start & 1 & 24 & 46 & 4{,}096 & 0.3652 & 1 & 0.1841 \\
+qa-care-wien-care-s2-d1-v12 & 12 & warm-start & 2 & 37 & 92 & 4{,}096 & 0.5056 & 1 & 0.2996 \\
+qa-care-wien-care-s2-d1-v12 & 12 & warm-start & 3 & 50 & 138 & 4{,}096 & 0.5713 & 1 & 0.3662 \\
+qa-care-noe-care-s3-d1-v17 & 17 & qaoa & 1 & 34 & 75 & 4{,}096 & 0 & -- & 0 \\
+qa-care-noe-care-s3-d1-v17 & 17 & qaoa & 2 & 49 & 150 & 4{,}096 & 0.01782 & 1 & 0.0007324 \\
+qa-care-noe-care-s3-d1-v17 & 17 & qaoa & 3 & 65 & 225 & 4{,}096 & 0.03711 & 1 & 0.0004883 \\
+qa-care-noe-care-s3-d1-v17 & 17 & warm-start & 1 & 34 & 75 & 4{,}096 & 0.2065 & 1 & 0.09351 \\
+qa-care-noe-care-s3-d1-v17 & 17 & warm-start & 2 & 49 & 150 & 4{,}096 & 0.3301 & 1 & 0.1709 \\
+qa-care-noe-care-s3-d1-v17 & 17 & warm-start & 3 & 65 & 225 & 4{,}096 & 0.4146 & 1 & 0.2305 \\
+qa-care-wien-care-s3-d1-v18 & 18 & qaoa & 1 & 31 & 83 & 4{,}096 & 0.0002441 & 0.3077 & 0 \\
+qa-care-wien-care-s3-d1-v18 & 18 & qaoa & 2 & 47 & 166 & 4{,}096 & 0.02563 & 1 & 0.0007324 \\
+qa-care-wien-care-s3-d1-v18 & 18 & qaoa & 3 & 64 & 249 & 4{,}096 & 0.03369 & 1 & 0.001221 \\
+qa-care-wien-care-s3-d1-v18 & 18 & warm-start & 1 & 31 & 83 & 4{,}096 & 0.2021 & 1 & 0.08691 \\
+qa-care-wien-care-s3-d1-v18 & 18 & warm-start & 2 & 47 & 166 & 4{,}096 & 0.3215 & 1 & 0.1655 \\
+qa-care-wien-care-s3-d1-v18 & 18 & warm-start & 3 & 64 & 249 & 4{,}096 & 0.3816 & 1 & 0.2175 \\
+qa-care-wien-care-s4-d1-v24 & 24 & qaoa & 1 & 43 & 136 & 4{,}096 & 0 & -- & 0 \\
+qa-care-wien-care-s4-d1-v24 & 24 & qaoa & 2 & 60 & 272 & 4{,}096 & 0.00293 & 0.8 & 0 \\
+qa-care-wien-care-s4-d1-v24 & 24 & qaoa & 3 & 83 & 408 & 4{,}096 & 0.009521 & 0.8889 & 0 \\
+qa-care-wien-care-s4-d1-v24 & 24 & warm-start & 1 & 43 & 136 & 4{,}096 & 0.1157 & 1 & 0.04932 \\
+qa-care-wien-care-s4-d1-v24 & 24 & warm-start & 2 & 60 & 272 & 4{,}096 & 0.1772 & 1 & 0.09766 \\
+qa-care-wien-care-s4-d1-v24 & 24 & warm-start & 3 & 83 & 408 & 4{,}096 & 0.2124 & 1 & 0.1228 \\
+qa-care-wien-care-s5-d1-v30 & 30 & qaoa & 1 & 50 & 195 & 4{,}096 & 0 & -- & 0 \\
+qa-care-wien-care-s5-d1-v30 & 30 & qaoa & 2 & 70 & 390 & 4{,}096 & 0.0002441 & 0.5217 & 0 \\
+qa-care-wien-care-s5-d1-v30 & 30 & qaoa & 3 & 97 & 585 & 4{,}096 & 0 & -- & 0 \\
+qa-care-wien-care-s5-d1-v30 & 30 & warm-start & 1 & 50 & 195 & 4{,}096 & 0.04492 & 1 & 0.02417 \\
+qa-care-wien-care-s5-d1-v30 & 30 & warm-start & 2 & 70 & 390 & 4{,}096 & 0.07959 & 1 & 0.04956 \\
+qa-care-wien-care-s5-d1-v30 & 30 & warm-start & 3 & 97 & 585 & 4{,}096 & 0.1028 & 1 & 0.0708 \\
+qb-care-req-e3-s4 & 9 & qaoa & 1 & 9 & 13 & 4{,}096 & 0.3618 & 1 & 0.1621 \\
+qb-care-req-e3-s4 & 9 & qaoa & 2 & 15 & 26 & 4{,}096 & 0.3914 & 1 & 0.1499 \\
+qb-care-req-e3-s4 & 9 & qaoa & 3 & 21 & 39 & 4{,}096 & 0.3999 & 1 & 0.1348 \\
+qb-care-req-e3-s4 & 9 & warm-start & 1 & 9 & 13 & 4{,}096 & 0.6711 & 1 & 0.4319 \\
+\bottomrule
+\end{tabular}}
+\par\smallskip\parbox{0.95\linewidth}{\footnotesize 32 further rows are in the result file.}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{T9 QAOA on IBM hardware (backend \texttt{ibm\_marrakesh}, 4{,}096 shots, job \texttt{dbml92d8ft8s738v2ukg}). Source: \texttt{ml/quantum/results.json} (sha256 14e54a79323f).}
+\label{tab:quantum-hw}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{lrlrrrrrrr}
+\toprule
+Instance & Qubits & Variant & $p$ & Depth & 2q gates & Phys. qubits & Feasible & Ratio (best) & $P(\text{opt})$ \\
+\midrule
+qa-care-noe-care-s2-d1-v11 & 11 & qaoa & 1 & 282 & 143 & 156 & 0.004395 & 0.6667 & 0 \\
+qa-care-noe-care-s2-d1-v11 & 11 & warm-start & 1 & 287 & 143 & 156 & 0.2139 & 1 & 0.07031 \\
+qa-care-wien-care-s2-d1-v12 & 12 & qaoa & 1 & 302 & 174 & 156 & 0.003662 & 0.5 & 0 \\
+qa-care-wien-care-s2-d1-v12 & 12 & warm-start & 1 & 309 & 174 & 156 & 0.1729 & 1 & 0.06274 \\
+qa-care-noe-care-s3-d1-v17 & 17 & qaoa & 1 & 596 & 356 & 156 & 0.0002441 & 0.01194 & 0 \\
+qa-care-noe-care-s3-d1-v17 & 17 & warm-start & 1 & 592 & 356 & 156 & 0.03784 & 1 & 0.0127 \\
+qb-care-req-e6-s6 & 16 & qaoa & 1 & 103 & 87 & 156 & 0.1438 & 1 & 0.02075 \\
+qb-care-req-e6-s6 & 16 & warm-start & 1 & 103 & 87 & 156 & 0.4221 & 1 & 0.2332 \\
+qb-geringes-einkommen-req-e7-s6 & 16 & qaoa & 1 & 148 & 86 & 156 & 0.2075 & 1 & 0.02319 \\
+qb-geringes-einkommen-req-e7-s6 & 16 & warm-start & 1 & 149 & 86 & 156 & 0.3972 & 1 & 0.1189 \\
+\bottomrule
+\end{tabular}}
+\end{table}

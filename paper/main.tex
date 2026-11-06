@@ -1,0 +1,412 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage[font=small,justification=raggedright,singlelinecheck=true]{caption}
+\setlist{nosep,leftmargin=*}
+
+\input{generated/status.tex}
+
+\title{Lotse-RL: Training Grounded Benefits-Navigation Agents with Executable Eligibility Rules for Austrian Social Insurance}
+\author{Julian Schmidt}
+\date{Preprint, \today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+People who need care, rehabilitation or family benefits in Austria have to find out which of many
+benefits apply to them, which office is responsible, and which documents and forms are required.
+Language models can explain these procedures, but free-form answers invent eligibility rules,
+over-question users and drift into medical advice that a public-sector assistant must not give. We
+describe Lotse-RL, a research programme built on SV KI-Lotse, a prototype benefits
+navigator whose process engine and benefit catalog encode eligibility as executable, cited rules.
+Because the correct benefits, office, documents and minimal question set can be computed exactly
+for any simulated person, the setting supports verifiable rewards for multi-turn reinforcement
+learning. We contribute (i) the design of AT-Benefits, an interactive gym that exposes the
+product's real tools and scores a final plan against the engine, with a persona schema, a
+simulated user and a reward that penalises boundary violations, uncited claims and excess
+questions; (ii) a training recipe (SFT, multi-turn GRPO, DPO) for two open agent bases with a
+head-to-head comparison; (iii) supporting models for boundary guarding, plain language, legal
+retrieval and GUI grounding; and (iv) two QUBO formulations from real catalog instances for a
+quantum appendix. This version reports what is implemented and measured, and labels the rest as
+planned. \StatusResearch{} \StatusAgents{} \StatusProduct{} All tables are generated from result
+files by a script; entries without a result file read \emph{not run}.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Social insurance in Austria is organised across several carriers (health, pension and accident
+insurance), federal agencies, the nine federal states and municipalities. A person whose parent
+can no longer live alone may be entitled to a care allowance (\emph{Pflegegeld}) from the
+pension-paying carrier, to counselling and mobile services from a state agency, to care leave
+arranged with an employer and compensated by a federal agency, and to a subsidy for 24-hour care.
+Each benefit has its own criteria, office, documents and form, and the office often depends on
+the subject's insurance status and residence. Navigating this is hard for exactly the people who
+need it most: older adults, relatives acting as helpers, people with low literacy or limited
+German.
+
+SV KI-Lotse~\citep{sv-lotse-prd} is a voice-first, screen-aware guide through this system. It
+identifies relevant benefits from a colloquial description or a document, asks only the questions
+the next step needs, resolves the responsible office, prepares forms with provenance for every
+value and tracks open steps. The challenge brief that motivates it draws a hard medical boundary:
+the guide must not derive diagnoses from symptoms, interpret findings, assess medical risk, make
+therapy decisions or recommend medicines and dosages; medical documents may only be used for the
+information and explicitly documented recommendations they already contain.
+
+The product's central design decision is that \emph{rules come from the catalog, facts from
+sources and language from the model}. Eligibility criteria, office rules and document requirements
+are data with citations, evaluated by a deterministic process engine; the language model turns the
+user's words into slot values and phrases the engine's next question. This decision has a
+research consequence: for any simulated person, the correct outcome of a counselling dialogue can
+be computed exactly by code. That is the setting in which reinforcement learning with verifiable
+rewards is most effective, and it lets us train and evaluate open agent models on the product's
+own tool contract without human labels for every dialogue.
+
+This paper describes that research programme. We aim to answer three questions. First, can an
+open model trained in a gym driven by executable eligibility rules match or exceed a frontier
+model that uses the same tools? Second, how much of the benefit comes from the engine itself, as
+opposed to the model? Third, does training on rule-derived rewards keep the hard medical boundary
+intact? Our contributions are:
+\begin{enumerate}
+  \item \textbf{AT-Benefits}, an interactive benchmark and RL gym for Austrian social benefits with
+  executable ground truth, built on the product's real tools (Section~\ref{sec:gym}).
+  \item A \textbf{training recipe} for two open agent models, SV-Lotse-A3B and SV-Lotse-Euro-9B,
+  with an identical SFT~$\rightarrow$~multi-turn GRPO~$\rightarrow$~DPO pipeline and a
+  head-to-head comparison that isolates the base model (Section~\ref{sec:training}).
+  \item An \textbf{engine versus free-form} experimental design, including process definitions
+  synthesised from law text (Section~\ref{sec:experiments}).
+  \item \textbf{Supporting models} for boundary guarding and attribution, B1 plain language, legal
+  retrieval and GUI grounding on Austrian portals.
+  \item A \textbf{quantum appendix} that formulates case scheduling and document set cover as QUBOs
+  from real catalog instances (Section~\ref{sec:quantum}).
+\end{enumerate}
+We are explicit about status. The product, its engine, catalog and guards are implemented and
+evaluated by the product's own suites; Table~\ref{tab:product} reports those numbers as product
+baselines. The research components are reported only where a result file exists
+(Table~\ref{tab:status}); the remainder is a plan, and we make no claim about its outcome.
+
+\section{Related work}
+\label{sec:related}
+
+\paragraph{Interactive eligibility and benefits.} BeNYfits and ProADA~\citep{toles2025benyfits}
+study interactive decision-making for public-benefit eligibility in New York City, where an agent
+must ask a simulated user questions to determine eligibility for many programmes; ProADA
+synthesises a program that tracks eligibility and asks only for missing inputs. Our process engine
+plays the role of such a program, but it is hand-authored and cited rather than synthesised per
+dialogue, and our task extends from eligibility to office resolution, documents and next steps.
+FormGym~\citep{toles2025formgym} and FormFactory~\citep{li2025formfactory} evaluate agents that
+fill forms, which our product does with provenance for every value.
+
+\paragraph{Tool-agent-user benchmarks and multi-turn RL.} $\tau$-bench~\citep{yao2024taubench}
+evaluates agents that interact with a simulated user and domain tools under policy constraints and
+introduces the $\text{pass}^k$ reliability metric, which we adopt. UserRL~\citep{qian2025userrl} trains
+user-centric agents with reinforcement learning in gym environments with simulated users and
+studies reward shaping and the choice of user simulator; MUA-RL~\citep{zhao2025muarl} integrates
+LLM-simulated users into the RL loop for agentic tool use. Wei et
+al.~\citep{wei2025turnlevel} show that turn-level credit assignment improves multi-turn agent
+training over trajectory-level rewards; our reward adds turn-level shaping for questions that fill
+missing slots. We train with verl~\citep{sheng2024hybridflow}.
+
+\paragraph{German legal and administrative language.} GerDaLIR~\citep{wrzalik-krechel-2021-gerdalir}
+is a German legal information retrieval dataset; Bashir et al.~\citep{bashir2026germanlaw} adapt
+models to German law with synthetic question--answer data generated from legislation, a recipe we
+follow for Austrian retrieval queries. The German Commons~\citep{gienapp2025germancommons} provides
+openly licensed German text, including legal and political subsets, for continued pretraining. Our
+primary law source is the Austrian federal legal information system~\citep{ris-ogd}.
+
+\paragraph{German text simplification.} DEplain~\citep{stodden-etal-2023-deplain} provides
+parallel standard and plain German, including an Austrian news subset; German4All~\citep{anschuetz2025german4all}
+offers readability-controlled paraphrases; Gao et al.~\citep{gao2025dposimplification} apply DPO to
+personalise German simplification; and Jiranek and Hillmann~\citep{jiranek-hillmann-2025-developing}
+build a document-level dataset for German easy language. These inform our plain-language model.
+
+\paragraph{Attribution, clinical text and GUI grounding.} AttributionBench~\citep{li-etal-2024-attributionbench}
+shows that automatic attribution evaluation remains hard, which motivates a dedicated attribution
+head in our guard. CARDIO:DE~\citep{richter-pechanski-2023-cardiode} and GGPONC~\citep{borchert-etal-2020-ggponc}
+are German clinical corpora we use only for evaluation and red-team material.
+ScreenSpot-Pro~\citep{li2025screenspotpro} benchmarks GUI grounding on high-resolution professional
+screens and XFUND~\citep{xfund} provides multilingual form understanding data, both relevant to
+pointing at form fields on Austrian portals.
+
+\paragraph{Prior work.} Medlyn~\citep{medlyn} is our earlier proof of concept of the same
+research pattern for German clinical documents: source-linked facts, a large synthetic corpus, a
+small verifier model, a quantum lane and a paper generated from result files. Its main lesson, a
+large gap between synthetic held-out and real-text performance, shapes our data and evaluation
+design (Section~\ref{sec:limitations}).
+
+\paragraph{Quantum optimisation.} QTIS~\citep{tirado2025qtis} formulates interval scheduling for
+QAOA and SCOOP~\citep{angara2025scoop} handles constrained combinatorial optimisation with
+classical post-processing; we build on both for case scheduling and document set cover, using the
+Qiskit optimisation mapper~\citep{qiskit-opt-mapper}.
+
+\section{System: SV KI-Lotse}
+\label{sec:system}
+
+This section summarises the parts of the product the research builds on; the full design is in
+the product requirements document~\citep{sv-lotse-prd}.
+
+\paragraph{Catalog.} Benefits are structured, versioned records in the repository. Each record has
+an application area (A prevention, B health promotion, C treatment and rehabilitation, D care, E
+family and social support, F appointments and approvals), criteria with machine-checkable
+conditions over slots where possible and a legal basis with source quote, office rules that select
+the responsible office by subject status and region, required documents with where to obtain them,
+forms, and booking channels. Nothing reaches the catalog without a source quote. A curated office
+directory holds carrier regional offices, state service centres, district authorities and tax
+offices. Table~\ref{tab:world} counts the catalog, processes, offices and forms as loaded from the
+repository when this paper was built.
+
+\paragraph{Process engine.} Each benefit has a process definition in YAML, validated against a
+schema at build time. A definition lists the slots it needs (typed, optionally filled from the
+user's confirmed context facts), ordered steps with dependencies on slots and earlier steps,
+references to catalog criteria, documents and forms, server actions such as office resolution, and
+completion evidence. The engine is pure TypeScript with no language model inside, so every path can
+be unit-tested. The model's job is to map the user's words to slot values with structured output
+and to phrase the next question; the engine decides which question that is and which step comes
+next. Adding a benefit means adding data (a catalog record, a process file and possibly a form
+schema), not code; a product test fails if benefit, scenario or office identifiers appear in code.
+
+\paragraph{Agent.} A single orchestrating agent with typed tools runs on top of the engine. Tool
+inputs and outputs are schema-validated, case and approval state live in Postgres, and every
+side-effecting action is proposed, shown and confirmed by the user. Across all autonomy levels the
+agent never submits forms, sends messages, places calls or enters credentials; these actions do not
+exist as tools. A citation verifier removes claims whose cited passage is not in the turn's
+retrieved set.
+
+\paragraph{Five-layer medical boundary.} The brief's prohibitions are enforced in five layers:
+(1) \emph{tool design}: document tools return only verbatim quotes with location, typed as
+documented statements or administrative facts, and no tool returns a medical judgement;
+(2) a deterministic, versioned \emph{rule guard} for forbidden speech acts in German and English;
+(3) an \emph{output guard}, a boundary classifier that scores every response before it is shown or
+spoken and rewrites violations into a handoff to the treating doctor, the 1450 health line or the
+responsible office; (4) an \emph{evaluation gate}, a red-team suite that must show zero violations
+before release; and (5) \emph{interface framing} that marks documented statements as quotes from
+the user's own document. A separate rule-based safety net reacts only to explicit emergency or
+crisis statements with a fixed message and the official Austrian emergency numbers.
+
+\paragraph{Screen-aware guidance.} The product is a companion that sees the screen: the user holds
+a key, speaks, and the guide answers aloud and points at what matters. Pointing uses a target
+resolution ladder: the product's own element identifiers, page handles in a guided portal window,
+the macOS accessibility tree, on-device OCR boxes, and only as a last resort coordinates from a
+vision model. The method used per action is logged, so the share of pixel fallbacks is a tracked
+metric and the target of the planned Point model.
+
+\paragraph{Product evaluation.} The product ships evaluation suites for the engine (E1), retrieval
+(E3), end-to-end scenarios (E4), the medical boundary (E5), form prefill (E7), slot extraction
+(E11), document extraction (E12) and form field detection (E13)~\citep{sv-lotse-evals}.
+Table~\ref{tab:product} reproduces the latest measured values of these suites, parsed from the
+product's results document at build time. They measure the product with its configured frontier
+model, not any model trained in this work, and serve as the baseline the research models must
+match without regressing.
+
+\input{generated/tab_world.tex}
+\input{generated/tab_product.tex}
+
+\section{AT-Benefits}
+\label{sec:gym}
+
+\paragraph{World.} The gym loads the catalog, office directory, process definitions, document
+requirements, opening hours and fee samples exactly as the product does. Ground truth for an
+episode is computed by the engine's rule evaluation (process evaluation, office resolution and the
+document checklist), and every criterion carries its legal citation. A label is therefore wrong
+only if a rule is wrong, and the rules are the product's tested engine.
+
+\paragraph{Personas.} A persona describes a household with a subject and optional helper: age,
+sex, residence (state and district), insurance carrier and status, pension carrier, employment,
+income band, care needs and current care level, children, documents held, language, register and
+literacy. It also carries a free-text situation, a goal and noise parameters (partial knowledge,
+contradictions, dialect). The gold record (benefits, office per benefit, documents per benefit and
+the engine's minimum number of questions) is computed by the engine, never by a language model.
+The generator is seeded per index and assigns the split before rendering text; one benefit family
+and some phrasing styles are held out for the test split. Table~\ref{tab:personas} reports the
+generator's statistics when a result file exists.
+
+\paragraph{Simulated user.} The simulator sees only the persona card and the dialogue, never the
+gold record. It answers only what is asked and applies the persona's noise. Training uses an open
+simulator; evaluation additionally uses a frontier simulator. A leakage test requires that a
+classifier cannot predict gold benefits from simulator utterances above the base rate achievable
+from the persona card.
+
+\paragraph{Interface.} The gym follows the usual \texttt{reset}/\texttt{step} interface. An action
+is a tool call (name and JSON input), a message to the user, or a final plan with benefits, office
+per benefit, documents per benefit, next step and citations. Tools are the product's TypeScript
+brain tools exposed by a research-only tool server, so a trained policy uses the exact tool
+contract of the product.
+
+\paragraph{Reward.} The episode reward combines plan quality and penalties, all computed by code:
+\begin{align*}
+R ={}& 0.45\,F1_{\text{benefits}} + 0.20\,\mathrm{Acc}_{\text{office}} + 0.15\,F1_{\text{documents}}
+       + 0.10\,\mathrm{CiteValid} + 0.10\,\mathrm{NextStep} \\
+     & - 0.05\max(0, q - q_{\min}) - 1.0\,[\text{boundary violation}] \\
+     & - 0.5\,[\text{uncited eligibility claim}] - 0.2\,[\text{malformed tool call}],
+\end{align*}
+where $q$ is the number of questions asked and $q_{\min}$ the engine's minimum. The weights are
+starting values for planning, not tuned results. Following~\citet{wei2025turnlevel}, turn-level
+shaping adds $+0.02$ for a question that fills a slot the engine marked as missing and $-0.02$ for
+a question about a known slot. A boundary violation is a rule-guard hit or a flag from the frozen
+guard model, the only learned component of the reward. The question penalty applies only above the
+engine minimum, so the policy cannot gain by guessing without asking, and benefit and office terms
+dominate so that over-asking does not pay either. Table~\ref{tab:selftest} reports the gym
+self-test, which checks the reward implementation: engine gold plans played through the tool
+server, and deliberately perturbed plans (a boundary violation, uncited claims, a malformed tool
+call, over-asking, no plan) whose expected reward follows from the formula. The self-test validates
+the reward and the tool contract; it is not an evaluation of any agent.
+
+\paragraph{Metrics and release.} We report benefit F1, office accuracy, document F1, excess
+questions (median and 90th percentile), $\text{pass}^k$ for $k=1,\dots,8$~\citep{yao2024taubench},
+boundary violations, citation validity, and tokens and latency per case, per split, language and
+area, and separately for real-text inputs. The gym, persona splits and the Austrian law corpus are
+released on Hugging Face as they become available; Table~\ref{tab:release} lists what had been
+published when this version was built.
+
+\input{generated/tab_personas.tex}
+\input{generated/tab_selftest.tex}
+
+\section{Training}
+\label{sec:training}
+
+\paragraph{Data.} No public Austrian benefit-counselling dialogues exist, so agent training data is
+synthetic, but its labels are computed by rules. The domain corpus consists of consolidated
+Austrian federal social-insurance law from the RIS open-data interface~\citep{ris-ogd}, annotated
+social-insurance law from the challenge data, and legal and political text from the German
+Commons~\citep{gienapp2025germancommons}, each paragraph stored with source, licence and validity
+dates. Table~\ref{tab:corpus} reports the corpus build when a result file exists.
+
+\paragraph{Agent pipeline.} Two co-primary bases go through an identical pipeline:
+Qwen3-30B-A3B~\citep{qwen3-30b-a3b}, a mixture-of-experts model, and EuroLLM-9B-Instruct~\citep{eurollm-9b},
+a dense model with a European base; Qwen3-8B~\citep{qwen3-8b} is a dense control. The stages are:
+(S1) an ablated domain continued pretraining with LoRA on the mixture-of-experts model and full
+training on dense bases; (S2) supervised fine-tuning on teacher trajectories from the gym, kept by
+rejection sampling only if the rules score them highly, they are boundary-clean and every
+eligibility claim is cited, mixed with slot extraction, statement extraction and process-definition
+synthesis examples, with loss on assistant and tool-call tokens only; (S3) multi-turn GRPO in the
+gym with verl~\citep{sheng2024hybridflow}, a curriculum from single benefits to bundles, helper
+cases and held-out phrasing, and policy rollouts and the simulator on one GPU and actor updates on
+two; (S4) DPO on preference pairs for handoff wording, plain-language register and citation
+phrasing. The budget is three H100 GPUs. Hyperparameters in the plan are starting points. An SFT
+smoke run is reported in Table~\ref{tab:sft} when its result file exists.
+
+\paragraph{Supporting models.} \emph{Guard} is a boundary classifier and attribution verifier
+trained on synthetic violations of each prohibition in the brief and on
+AttributionBench~\citep{li-etal-2024-attributionbench}, calibrated on validation data only.
+\emph{Einfach} rewrites into B1 plain German, trained on German4All~\citep{anschuetz2025german4all}
+and administrative paraphrases, then with DPO~\citep{gao2025dposimplification} where the preferred
+output preserves meaning under an entailment check; DEplain-APA~\citep{stodden-etal-2023-deplain}
+is used for evaluation and research-only training. \emph{Embed/Rerank} fine-tunes
+Qwen3-Embedding and Qwen3-Reranker~\citep{qwen3-embedding} on GerDaLIR~\citep{wrzalik-krechel-2021-gerdalir}
+and synthetic Austrian queries generated from law paragraphs~\citep{bashir2026germanlaw}.
+\emph{Point} fine-tunes Qwen2.5-VL~\citep{qwen25-vl} to point at fields on Austrian portals and
+forms, with labels from the DOM and accessibility tree, evaluated on ScreenSpot-Pro~\citep{li2025screenspotpro}
+and FormFactory~\citep{li2025formfactory}. Each model has a defined place in the product's model
+routing and must not regress the product suites.
+
+\input{generated/tab_corpus.tex}
+\input{generated/tab_sft.tex}
+
+\section{Experiments and results}
+\label{sec:experiments}
+
+The planned experiment tables are: T1, the main comparison of a frontier model without the engine
+(free-form ReAct), a frontier model with engine tools, each open base with engine tools, and each
+co-primary model after SFT and after SFT+GRPO; T2, the head-to-head base comparison per language
+(German, English, Turkish) and area, with the dense control and with and without continued
+pretraining; T3, reward ablations (outcome-only versus turn-level shaping, with and without
+question and boundary penalties); T4, open versus frontier simulators for training with
+cross-evaluation; T5, generalisation to a held-out benefit family added as data only, and process
+definitions synthesised from law text compared with hand-authored ones; T6, the real-text
+population (hand-written Austrian utterances, challenge sample documents and German doctor's
+letters~\citep{richter-pechanski-2023-cardiode}), reported separately; T7, supporting models; and
+T8, cost and latency. Statistics are 95\% bootstrap intervals over personas, paired tests between
+systems on the same personas, and $\text{pass}^k$ from eight trials per test persona.
+Table~\ref{tab:status} lists which of these tables had result files when this version was built.
+Only tables with result files contain numbers; the remaining ones are not reported, and we draw no
+conclusions about them.
+
+\input{generated/tab_status.tex}
+
+\section{Quantum appendix}
+\label{sec:quantum}
+
+Two optimisation problems from the product are formulated as QUBOs from real catalog instances. We
+make no claim of quantum advantage; the contribution is the formulation from administrative data
+and a reproducible hardware study with instance hashes.
+
+\paragraph{Case scheduling.} Open case steps $i$ (appointments, document pickups, office visits)
+have durations $d_i$, deadlines $D_i$, allowed start slots from opening hours, and travel times
+$\tau(i,j)$ between offices. With $x_{i,t}=1$ if step $i$ starts in slot $t$, the objective is
+\begin{equation*}
+A\sum_i\Big(\sum_t x_{i,t}-1\Big)^2 + B\!\!\sum_{\text{overlap}}\!\! x_{i,t}x_{j,u}
+ + \sum_{i,t}\mathrm{late}_i(t)\,x_{i,t} + C\!\!\sum_{\text{consecutive}}\!\!\tau(i,j)\,x_{i,t}x_{j,u}.
+\end{equation*}
+Instances come from AT-Benefits personas with benefit bundles, following the interval-scheduling
+formulation of QTIS~\citep{tirado2025qtis}. Small instances run on IBM hardware with plain and
+warm-started QAOA; constraint programming (CP-SAT) and simulated annealing are classical baselines,
+and CP-SAT also plans the week in the product.
+
+\paragraph{Document set cover.} The evidence requirements of a benefit bundle are elements and the
+documents or appointments that satisfy them are sets, both taken from the product's document
+checklist. We use a minimum set cover with slack variables, or the constrained formulation with
+classical post-processing of SCOOP~\citep{angara2025scoop}, against greedy and integer-programming
+baselines.
+
+Table~\ref{tab:quantum} (T9) reports approximation ratio, feasibility, depth, shots and backend
+when the result file exists.
+
+\input{generated/tab_quantum.tex}
+
+\section{Limitations}
+\label{sec:limitations}
+
+\emph{Synthetic personas.} Agent training and most evaluation use synthetic personas. Labels are
+rule-derived, but the language of synthetic dialogues may differ from real users; Medlyn's large
+synthetic-to-real gap~\citep{medlyn} is the reason the real-text population is always reported
+separately. \emph{Simulator bias.} A simulated user may be more cooperative or consistent than real
+people and may leak answers; the leakage test and a frontier evaluation simulator mitigate but do
+not remove this. \emph{No caseworker gold and no human study.} Ground truth is the product's engine,
+not decisions of caseworkers, and we run no study with users; rule errors propagate into labels,
+and disagreements between teacher and rules are reviewed rather than dropped. \emph{Licences.}
+DEplain-APA and CARDIO:DE are restricted to research and evaluation; released models are trained
+on open data only. \emph{Hardware noise.} Quantum results on current hardware are noisy and small;
+we report noise honestly and claim no advantage. \emph{Status.} \StatusAgents{}
+
+\section{Release and reproducibility}
+\label{sec:release}
+
+The product, the research lane (\texttt{ml/}) and this paper live in one
+repository~\citep{sv-lotse-prd}. Every run writes its configuration, data hashes, git revision and
+final metrics to a JSON file under \texttt{ml/results/}; the quantum study writes
+\texttt{ml/quantum/results.json} with instance hashes, backend, transpiled depth, shots and package
+versions. The paper's tables are generated from these files and from the product's evaluation
+results by \texttt{paper/scripts/tables.py}, which prints \emph{not run} for any table without a
+result file; no number is typed into the paper by hand. The result files used for this build are:
+\StatusFiles. Datasets, the gym and trained models are released on the author's Hugging Face
+profile with dataset and model cards as they become available; Table~\ref{tab:release} lists the
+artefacts already published, as recorded in the release result files. Trained models are future
+work.
+
+\input{generated/tab_release.tex}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Executable eligibility rules turn benefits navigation into a task with verifiable outcomes: the
+correct benefits, office, documents and minimal questions can be computed for every simulated
+person. We described a product that encodes these rules with citations and a five-layer medical
+boundary, a gym that turns them into rewards, and a training and evaluation programme for open
+agent models built on that gym. \StatusResearch{} \StatusAgents{} \StatusProduct{} Whether
+rule-trained open models can match frontier models with engine tools while keeping the boundary
+intact is the question the remaining experiments are designed to answer.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}
