@@ -24,14 +24,15 @@ public final class PushToTalkController {
                 } catch is CancellationError {
                     return
                 } catch {
-                    guard activeHoldID == holdID else { return }
+                    // A failure after release still surfaces (the question was spoken); a newer hold wins.
+                    guard activeHoldID == holdID || activeHoldID == nil else { return }
                     onError?(error)
                 }
             }
         case .released:
+            // The connecting capture is not cancelled: the provider buffers the microphone from the press
+            // and sends a short question once its socket is ready. Only `.cancelled` discards it.
             activeHoldID = nil
-            startTask?.cancel()
-            startTask = nil
             transcription.finish()
         case .cancelled:
             cancel()

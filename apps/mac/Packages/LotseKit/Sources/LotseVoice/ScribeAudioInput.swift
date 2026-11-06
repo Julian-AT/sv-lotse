@@ -2,8 +2,15 @@ import AVFoundation
 import Foundation
 import os
 
+/// 16-bit mono PCM at `VoiceConfiguration.sampleRate`, as Scribe expects it.
 @MainActor
-final class ScribeAudioInput {
+protocol ScribeAudioSource: AnyObject {
+    var chunks: AsyncStream<Data> { get }
+    func stop()
+}
+
+@MainActor
+final class ScribeAudioInput: ScribeAudioSource {
     private let engine = AVAudioEngine()
     private var running = false
     let chunks: AsyncStream<Data>
@@ -14,8 +21,10 @@ final class ScribeAudioInput {
         let input = engine.inputNode
         let format = input.outputFormat(forBus: 0)
         guard format.sampleRate > 0, format.channelCount > 0 else { throw TranscriptionError.invalidAudioFormat }
+        let resampler = try PCMResampler(from: format)
         let continuation = continuation
-        input.installTap(onBus: 0, bufferSize: VoiceConfiguration.inputBufferSize, format: format, block: Self.tap(continuation))
+        input.installTap(onBus: 0, bufferSize: VoiceConfiguration.inputBufferSize, format: format,
+                         block: Self.tap(continuation, resampler: resampler))
         running = true
         engine.prepare()
         do { try engine.start() } catch { stop(); throw error }
@@ -30,68 +39,58 @@ final class ScribeAudioInput {
     }
 
     /// Built outside the main actor: the tap runs on the realtime audio thread.
-    nonisolated private static func tap(_ continuation: AsyncStream<Data>.Continuation) -> AVAudioNodeTapBlock {
+    nonisolated private static func tap(
+        _ continuation: AsyncStream<Data>.Continuation, resampler: PCMResampler
+    ) -> AVAudioNodeTapBlock {
         { buffer, _ in
             VoiceInputLevel.measure(buffer)
-            if let data = pcm(buffer) { continuation.yield(data) }
+            if let data = resampler.convert(buffer), data.isEmpty == false { continuation.yield(data) }
         }
-    }
-
-    nonisolated private static func pcm(_ input: AVAudioPCMBuffer) -> Data? {
-        guard let format = AVAudioFormat(
-            commonFormat: .pcmFormatInt16, sampleRate: VoiceConfiguration.sampleRate, channels: 1, interleaved: true
-        ), let converter = AVAudioConverter(from: input.format, to: format),
-            let output = AVAudioPCMBuffer(
-                pcmFormat: format,
-                frameCapacity: AVAudioFrameCount(Double(input.frameLength) * format.sampleRate / input.format.sampleRate) + 1
-            ) else { return nil }
-        // The converter's Sendable callback receives owned bytes, never the tap's borrowed buffer.
-        let feed = OSAllocatedUnfairLock(initialState: Optional(AudioPCMChunk(input)))
-        var error: NSError?
-        converter.convert(to: output, error: &error) { _, status in
-            let chunk = feed.withLock { chunk in
-                let current = chunk
-                chunk = nil
-                return current
-            }
-            guard let buffer = chunk?.makeBuffer() else { status.pointee = .noDataNow; return nil }
-            status.pointee = .haveData
-            return buffer
-        }
-        guard error == nil, let bytes = output.int16ChannelData?.pointee else { return nil }
-        return Data(bytes: bytes, count: Int(output.frameLength) * MemoryLayout<Int16>.size)
     }
 }
 
-private struct AudioPCMChunk: Sendable {
-    let commonFormat: UInt
-    let sampleRate: Double
-    let channels: UInt32
-    let interleaved: Bool
-    let frames: UInt32
-    let buffers: [Data]
+/// One converter for the whole capture. A converter per buffer drops its filter state and priming
+/// samples at every buffer edge, which chops the audio Scribe hears into clicks and gaps.
+final class PCMResampler: @unchecked Sendable {
+    private let converter: AVAudioConverter
+    private let output: AVAudioFormat
+    private let ratio: Double
+    private let lock = OSAllocatedUnfairLock()
 
-    init(_ input: AVAudioPCMBuffer) {
-        commonFormat = input.format.commonFormat.rawValue
-        sampleRate = input.format.sampleRate
-        channels = input.format.channelCount
-        interleaved = input.format.isInterleaved
-        frames = input.frameLength
-        buffers = UnsafeMutableAudioBufferListPointer(input.mutableAudioBufferList).map { buffer in
-            guard let bytes = buffer.mData else { return Data() }
-            return Data(bytes: bytes, count: Int(buffer.mDataByteSize))
-        }
+    init(from input: AVAudioFormat) throws {
+        guard let output = AVAudioFormat(
+            commonFormat: .pcmFormatInt16, sampleRate: VoiceConfiguration.sampleRate, channels: 1, interleaved: true
+        ), let converter = AVAudioConverter(from: input, to: output) else { throw TranscriptionError.invalidAudioFormat }
+        self.output = output
+        self.converter = converter
+        ratio = output.sampleRate / input.sampleRate
     }
 
-    func makeBuffer() -> AVAudioPCMBuffer? {
-        guard let common = AVAudioCommonFormat(rawValue: commonFormat),
-            let format = AVAudioFormat(commonFormat: common, sampleRate: sampleRate, channels: channels, interleaved: interleaved),
-            let output = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frames) else { return nil }
-        output.frameLength = frames
-        for (index, buffer) in UnsafeMutableAudioBufferListPointer(output.mutableAudioBufferList).enumerated() {
-            guard let destination = buffer.mData, index < buffers.count else { return nil }
-            buffers[index].copyBytes(to: destination.assumingMemoryBound(to: UInt8.self), count: Int(buffer.mDataByteSize))
+    /// Called serially from the audio thread (or a test); returns little-endian Int16 bytes.
+    func convert(_ input: AVAudioPCMBuffer) -> Data? {
+        lock.withLockUnchecked {
+            let capacity = AVAudioFrameCount((Double(input.frameLength) * ratio).rounded(.up)) + 64
+            guard let buffer = AVAudioPCMBuffer(pcmFormat: output, frameCapacity: capacity) else { return nil }
+            let feed = PCMFeed(input)
+            var error: NSError?
+            let status = converter.convert(to: buffer, error: &error) { _, outStatus in
+                guard let next = feed.take() else { outStatus.pointee = .noDataNow; return nil }
+                outStatus.pointee = .haveData
+                return next
+            }
+            guard status != .error, error == nil, let bytes = buffer.int16ChannelData?.pointee else { return nil }
+            return Data(bytes: bytes, count: Int(buffer.frameLength) * MemoryLayout<Int16>.size)
         }
-        return output
+    }
+}
+
+/// Hands the tap's buffer to the converter exactly once. The converter calls back synchronously
+/// inside `convert`, on the same thread, while the tap's buffer is still valid.
+private final class PCMFeed: @unchecked Sendable {
+    private var buffer: AVAudioPCMBuffer?
+    init(_ buffer: AVAudioPCMBuffer) { self.buffer = buffer }
+    func take() -> AVAudioPCMBuffer? {
+        defer { buffer = nil }
+        return buffer
     }
 }
