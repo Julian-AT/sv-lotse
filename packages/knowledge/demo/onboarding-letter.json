@@ -1,0 +1,17 @@
+{
+  "as_of": "2026-11-06",
+  "source": {
+    "publisher": "SV KI-Lotse",
+    "title": "Authored fictional onboarding example; not a clinical document",
+    "quote": "Die Patientin hat eine Kopie des Entlassungsbriefs erhalten."
+  },
+  "title": "Entlassungsbrief · Übungsbeispiel",
+  "notice": "Fiktives Übungsdokument. Keine medizinischen Angaben oder Empfehlungen.",
+  "paragraphs": [
+    "Name: Alex Beispiel",
+    "Die Patientin hat eine Kopie des Entlassungsbriefs erhalten.",
+    "Dieses Übungsbeispiel zeigt nur die Bedienung des Lotsen."
+  ],
+  "highlightQuote": "Die Patientin hat eine Kopie des Entlassungsbriefs erhalten.",
+  "field": { "label": "Name", "value": "Alex Beispiel", "sourceQuote": "Name: Alex Beispiel" }
+}

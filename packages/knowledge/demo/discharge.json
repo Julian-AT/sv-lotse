@@ -1,0 +1,33 @@
+{
+  "displayName": "Anna Berger (fiktive Demo-Person)",
+  "document": "Befunde/Entlassungsbefund.pdf",
+  "sources": [
+    {
+      "url": "https://www.gesundheit.gv.at/gesundheitsleistungen/kur-reha/medizinische-rehabilitation.html",
+      "publisher": "Gesundheitsportal Österreich",
+      "refresh_days": 7,
+      "carrier": null,
+      "region": "AT",
+      "life_situations": ["rehabilitation"]
+    },
+    {
+      "url": "https://www.pv.at/web/reha-und-praevention/vom-antrag-zu-reha-und-kur",
+      "publisher": "Pensionsversicherung",
+      "refresh_days": 7,
+      "carrier": "PVA",
+      "region": "AT",
+      "life_situations": ["rehabilitation"]
+    }
+  ],
+  "form": {
+    "file": "Anträge und Formulare/Antrag Kur und Reha.pdf",
+    "title": "Antrag auf Rehabilitations-, Kur- bzw. Erholungsaufenthalt",
+    "publisher": "Sozialversicherung",
+    "sourceQuote": "Patient(in)",
+    "mappings": [
+      { "acroField": "Patient(in)", "factType": "person.name" },
+      { "acroField": "Anschrift Patient(in)", "factType": "person.address" },
+      { "acroField": "Telefonnummer", "factType": "person.phone" }
+    ]
+  }
+}
