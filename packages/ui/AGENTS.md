@@ -12,16 +12,29 @@ Run from the repository root:
 
 - `bun run --filter @lotse/ui typecheck` — check source and test types.
 - `bun run --filter @lotse/ui test` — run Vitest under Node.js.
+- `bunx --no-install biome check packages/ui` — scoped lint and format checks.
+- `bun run --filter @lotse/ui generate:styles` — regenerate the published CSS from tokens and component rules.
+- `bun run --filter @lotse/ui check:styles` — reject stale generated CSS.
 - `bun run lint` — lint with Biome.
 - `bun run format:check` — check formatting.
 
-There is no build step: the package exports TypeScript source. No generation, integration or live-test
-script exists yet; add and document one only when its implementation lands. Run TypeScript tooling
-scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
+There is no build step: the package exports TypeScript source and one generated stylesheet at
+`@lotse/ui/styles.css`. Generation uses Node APIs and the installed Biome formatter and runs through Bun. No integration or live-test
+script is needed; this package has no service dependencies.
 
 ## Invariants
 
-- WCAG 2.2 AA checks in component tests.
+- Every publicly exported component belongs in the rendering/behaviour/axe catalogue.
+- WCAG 2.2 AA checks in component tests. jsdom cannot check painted contrast or geometry;
+  compute token contrast independently and preserve real-browser checks in consuming screens.
+- Components live in `src/components/`; user-facing defaults live only in `src/copy/de.ts` and
+  `src/copy/en.ts`, exposed by a partial `labels` prop. Domain text always comes from props.
+- Native controls preserve keyboard behaviour; Field connects exactly one TextInput or Select.
+- Domain components never fetch, persist, authorize or recognize voice.
+- Dialog owns focus containment, opener restoration, background isolation and scroll locking.
+  Its caller owns open state; set theme overrides on the document root for portals.
+- `src/styles.css` is generated. Edit `src/tokens/index.ts` or `src/styles/components.css` and
+  run `generate:styles`; never edit generated CSS by hand.
 - 44-point targets.
 - ESM only, with strict TypeScript; internal dependencies use `workspace:*`.
 - Export only implemented symbols from `src/index.ts`; no placeholder business logic.
@@ -29,7 +42,8 @@ scripts with `bun <file>.ts` and use only Node APIs so they also run under Node.
 
 ## Evaluation suites
 
-Keep accessibility and keyboard component tests green as components are introduced. WP-001 adds no product evaluation suites.
+Keep the public-component axe catalogue, keyboard tests, 44px target checks, light/dark token
+contrast checks and static copy checks green. No product evaluation suites run in this package.
 
 ## Forbidden paths
 
