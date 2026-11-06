@@ -1,0 +1,18 @@
+{
+  "as_of": "2026-11-06",
+  "sources": [
+    { "url": "https://support.apple.com/guide/passwords/welcome/mac", "quote": "Passwords" },
+    { "url": "https://support.1password.com/", "quote": "1Password" },
+    { "url": "https://bitwarden.com/help/", "quote": "Bitwarden" },
+    { "url": "https://keepassxc.org/", "quote": "KeePassXC" },
+    { "url": "https://support.dashlane.com/", "quote": "Dashlane" }
+  ],
+  "bundleIdentifiers": [
+    "com.apple.Passwords",
+    "com.1password.1password",
+    "com.agilebits.onepassword7",
+    "com.bitwarden.desktop",
+    "org.keepassxc.keepassxc",
+    "com.dashlane.Dashlane"
+  ]
+}
