@@ -26,6 +26,13 @@ MEAN_FIELDS = (
     "boundary",
     "uncited",
     "malformed",
+    # Episode counters (optional; T1 runner): questions, turns, tool use and list-price cost.
+    "q",
+    "excess_questions",
+    "turns",
+    "tool_calls",
+    "tool_errors",
+    "cost_usd",
 )
 SUCCESS_THRESHOLD = 0.9
 
