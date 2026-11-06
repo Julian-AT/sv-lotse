@@ -54,6 +54,47 @@ regression tests they name before the turn pipeline (WP-106) and the demo use th
 
 Verification: brain typecheck and all 34 runtime unit tests passed. Database, live-provider, and build gates were not run during this read-only review.
 
+## More findings (from the WP-006 attempt-4 cross-review)
+
+Some attempt-3 findings may already be fixed on main; verify each and fix what remains.
+
+1. **major — Failed checkpoints do not stop the agent loop.**  
+   [packages/brain/src/agent/index.ts:57](packages/brain/src/agent/index.ts:57)
+
+   The SDK swallows exceptions from `onStepEnd`, but this callback does not set `persistenceFailure`. A reproduction with a rejecting checkpoint still made two model calls and finished normally. Further tools can therefore execute after persistence fails, violating NFR-4.
+
+   **Required change:** Catch checkpoint failures, retain them in the failure state checked by `prepareStep`, and stop continuation. Add a regression asserting no second model call or subsequent tool execution.
+
+2. **major — Superseded turns can still mutate application data.**  
+   [packages/brain/src/tools/impl/case/index.ts:12](packages/brain/src/tools/impl/case/index.ts:12), [reminder/index.ts:10](packages/brain/src/tools/impl/reminder/index.ts:10)
+
+   `lockTurnClaim` protects message checkpoints, but these mutations check only the captured case and actor context. An expired writer resuming after takeover can still update the case or insert reminders; rejecting its later checkpoint cannot undo those writes. Model timeouts do not cancel pending Postgres operations.
+
+   **Required change:** Carry the turn claim into tool execution and perform each mutation inside a transaction that locks the case and verifies the claim remains running. Extend the takeover regression to assert that the superseded writer cannot mutate either table.
+
+3. **major — Recovery permanently strands some interrupted conversations.**  
+   [packages/brain/src/conversation/recovery.ts:26](packages/brain/src/conversation/recovery.ts:26)
+
+   Recovery handles only consumed, approved calls. If the process crashes after committing a rejection, the stored part remains `approval-responded` with `approved: false`. Recovery leaves it unchanged, while `mergeLatest` rejects both a fresh user message and the unchanged rejection. Unfinished ungated server calls left `input-available` have the same problem. This breaks FR-C9/NFR-4.
+
+   **Required change:** Recover committed denials as `output-denied` and uncertain unfinished ungated calls as terminal interruption errors, preserving genuinely pending approvals. Add crash-recovery tests for both cases.
+
+4. **major — Approval requests reach the client before their complete state is durable.**  
+   [packages/brain/src/conversation/index.ts:259](packages/brain/src/conversation/index.ts:259)
+
+   Issuance commits the approval row and immediately emits the request/context. The signed UI tool part is persisted only at step completion. A crash between emission and that checkpoint leaves a pending row without the stored input and signed message needed to resume it. The client’s response is then rejected because server-owned history lacks the call.
+
+   **Required change:** Atomically persist the approval row, signed tool part and approval context under the current turn claim before emitting them. Add a real-Postgres regression interrupting issuance before `finish-step`.
+
+## Follow-ups
+
+5. **minor — Real tool operations omit required append-only audit events.**  
+   [packages/brain/src/tools/registry.ts:65](packages/brain/src/tools/registry.ts:65)
+
+   Only approval issuance and decisions write `auditEvents`. Fact reads and case/reminder mutations lack the tool audit events required by PRD §13, leaving access and changes absent from that audit trail.
+
+   **Required change:** Record opaque actor, case and tool-call identifiers with operation/outcome names; keep user values out. Commit mutation audit events transactionally with their writes and verify them in integration tests.
+
 ## Acceptance criteria
 
 - [ ] AC1: Each finding is fixed and proven by its regression test against real Postgres.
