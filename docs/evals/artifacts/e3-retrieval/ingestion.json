@@ -1,0 +1,185 @@
+{
+  "gitSha": "a9526a523b72dfa0608f3e868bdfed3936ff2737",
+  "events": [
+    {
+      "event": "e3_source",
+      "url": "https://www.gesundheit.gv.at/leben/gesundheitsvorsorge/vorsorgeuntersuchung/was-wird-gemacht.html",
+      "status": "indexed",
+      "source_id": "84505065-723f-4ab7-a8db-bb2572c91ec0",
+      "chunks": 27
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.843994",
+      "status": "indexed",
+      "source_id": "25744a6e-6873-49a1-a9f0-a5d1fa97a696",
+      "chunks": 2
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.gesundheit.gv.at/leben/eltern/eltern-kind-pass/eltern-kind-pass-untersuchungen.html",
+      "status": "indexed",
+      "source_id": "74eb14ec-b2c5-4898-986e-327a2e0897b1",
+      "chunks": 23
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.840428",
+      "status": "indexed",
+      "source_id": "fd5a1405-08ec-4768-bffa-657406b49084",
+      "chunks": 15
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.bewegt-im-park.at/wie-funktioniert-bewegt-im-park/",
+      "status": "indexed",
+      "source_id": "bf2b3f99-1b07-44c9-a06d-eff96cee92ed",
+      "chunks": 11
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.svs.at/cdscontent/?contentid=10007.817066&portal=svsportal",
+      "status": "indexed",
+      "source_id": "31983313-08be-44af-8050-eaf2d200596b",
+      "chunks": 2
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.svs.at/cdscontent/?contentid=10007.817082&viewmode=content",
+      "status": "indexed",
+      "source_id": "03d6065e-f8dd-41cb-947c-8688ae47c821",
+      "chunks": 5
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialministerium.gv.at/Themen/Soziales/Sozialversicherung/Medizinische-Rehabilitationsma%C3%9Fnahmen.html",
+      "status": "indexed",
+      "source_id": "d7181a48-09f9-4b04-8a91-5579cd8105b6",
+      "chunks": 12
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.gesundheit.gv.at/gesundheitsleistungen/heilbehelfe-hilfsmittel.html",
+      "status": "indexed",
+      "source_id": "c9630590-155f-45d8-9735-8f508350338a",
+      "chunks": 14
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870516",
+      "status": "indexed",
+      "source_id": "6919b570-ce6e-4f3e-8189-32bb6c9fb9d9",
+      "chunks": 23
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.881097",
+      "status": "indexed",
+      "source_id": "2b74ee20-a8ed-4ba2-b615-58961bf95e4e",
+      "chunks": 11
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialministerium.gv.at/Themen/Pflege/Pflegegeld.html",
+      "status": "indexed",
+      "source_id": "103ba303-6b08-4922-81e2-973643060f99",
+      "chunks": 10
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.oesterreich.gv.at/de/themen/pflege/4/1/Seite.360517",
+      "status": "indexed",
+      "source_id": "7f7d814e-0893-4595-94b1-3dd66ea450b0",
+      "chunks": 6
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.859005",
+      "status": "indexed",
+      "source_id": "8e62f25e-0204-476f-b63b-2f60c725570a",
+      "chunks": 3
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialministeriumservice.gv.at/Angehoerige/Pflege_und_Betreuung/Pflegekarenz_und_-teilzeit/Pflegekarenz_und_-teilzeit.de.html",
+      "status": "indexed",
+      "source_id": "105f23ee-3de6-48cf-8b7d-444d85fe8c14",
+      "chunks": 19
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialministerium.gv.at/Themen/Pflege/24-Stunden-Betreuung.html",
+      "status": "indexed",
+      "source_id": "4a3648a3-6a61-4881-9d5b-75a0ef2fb9b0",
+      "chunks": 8
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.fsw.at/p/pflege-betreuung",
+      "status": "indexed",
+      "source_id": "b131ef71-8add-416b-a3ff-3577e16f90b2",
+      "chunks": 4
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.fsw.at/antrag",
+      "status": "indexed",
+      "source_id": "919dee17-3ab3-4282-b097-a437a321bd2d",
+      "chunks": 10
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.oesterreich.gv.at/de/themen/familie_und_partnerschaft/familienbeihilfe/Seite.450233",
+      "status": "indexed",
+      "source_id": "61329c50-a603-4fb5-9a47-3c3e5e923316",
+      "chunks": 14
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870471&portal=oegkportal",
+      "status": "indexed",
+      "source_id": "d8c99778-09b2-49e6-a8c2-a8b875cb7b56",
+      "chunks": 28
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.oesterreich.gv.at/.syndication?pageId=aca34dfd-9b8a-473c-8b8c-3c3e17703b04",
+      "status": "indexed",
+      "source_id": "df2176f3-491c-4019-81ee-f8098e248b65",
+      "chunks": 1
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.bmf.gv.at/themen/steuern/familienbeihilfe-faqs.html",
+      "status": "indexed",
+      "source_id": "7cb5428b-6f9c-4ce5-8b5e-0429d864739e",
+      "chunks": 32
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.gesundheit.gv.at/gesundheitsleistungen/arztbesuch/ueberweisung-facharzt1.html",
+      "status": "indexed",
+      "source_id": "644d41f3-6b19-4343-a721-3e9a0a15405a",
+      "chunks": 12
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.839579",
+      "status": "indexed",
+      "source_id": "616e3eeb-7ac3-461e-89f9-bed926c063ae",
+      "chunks": 28
+    },
+    {
+      "event": "e3_source",
+      "url": "https://www.sozialversicherung.gv.at/cdscontent/?contentid=10007.870715",
+      "status": "indexed",
+      "source_id": "28f543a4-408e-405c-b896-a33d5dda383c",
+      "chunks": 13
+    },
+    {
+      "event": "e3_ingested",
+      "sources": 25,
+      "failed": 0
+    }
+  ]
+}
