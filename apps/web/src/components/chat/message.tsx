@@ -263,6 +263,8 @@ export const PreviewMessage = ({
               state={toolPart.state}
               title={toolLabel(name, language)}
               language={language}
+              input={toolPart.input}
+              output={toolPart.output}
               errorText={toolPart.errorText}
               skeleton={RESULT_TOOLS.has(name)}
             />

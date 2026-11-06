@@ -1,6 +1,11 @@
 const labels: Record<string, { de: string; en: string }> = {
   "calendar.createEvent": { de: "Termin anlegen", en: "Create calendar event" },
   "case.update": { de: "Fall aktualisieren", en: "Update case" },
+  "catalog.findBenefits": { de: "Leistungen suchen", en: "Find benefits" },
+  "catalog.getBenefit": { de: "Leistung nachschlagen", en: "Look up benefit" },
+  "documents.checklist": { de: "Dokumente prüfen", en: "Check documents" },
+  "eko.lookupCoverage": { de: "Kostenübernahme prüfen", en: "Check coverage" },
+  "fees.explainReimbursement": { de: "Erstattung erklären", en: "Explain reimbursement" },
   "form.acquire": { de: "Formular besorgen", en: "Acquire form" },
   "form.analyze": { de: "Formular analysieren", en: "Analyse form" },
   "form.commitGroup": { de: "Formularangaben übernehmen", en: "Commit form fields" },
@@ -21,13 +26,33 @@ const labels: Record<string, { de: string; en: string }> = {
   "ui.point": { de: "Zeigen", en: "Point" },
 };
 
-/** Human tool title for the collapsible tool card; unknown tools fall back to their name. */
+const normalize = (name: string) =>
+  name
+    .replace(/^(lotse|mcp)[._-]+/i, "")
+    .replace(/[^a-z0-9]/gi, "")
+    .toLowerCase();
+
+const byNormalizedName = new Map(
+  Object.entries(labels).map(([key, value]) => [normalize(key), value]),
+);
+
+function humanize(name: string): string {
+  const words = name
+    .replace(/^(lotse|mcp)[._-]+/i, "")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/[._-]+/g, " ")
+    .trim()
+    .toLowerCase();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+/** Human tool title for the tool row; accepts dotted (`office.resolve`) and raw (`lotse_office_resolve`) names. */
 export function toolLabel(name: string, language: "de" | "en"): string {
-  const entry = labels[name];
+  const entry = labels[name] ?? byNormalizedName.get(normalize(name));
   if (entry) return entry[language];
   if (/knowledge|search|retriev/i.test(name))
-    return language === "de" ? "Quellen durchsuchen" : "Search sources";
+    return language === "de" ? "Wissen durchsuchen" : "Search knowledge";
   if (/benefit|eligib/i.test(name))
-    return language === "de" ? "Leistungen prüfen" : "Check benefits";
-  return name.replace(/[._-]+/g, " ");
+    return language === "de" ? "Leistungen suchen" : "Find benefits";
+  return humanize(name);
 }
