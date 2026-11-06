@@ -1,0 +1,5 @@
+# Language-level explicit confirmation for PRD FR-G7, used together with the classifier.
+affirmative:
+  - '^(?:ja|jawohl|genau|stimmt|passt|einverstanden|bestätigt|yes|correct|exactly|agreed|confirmed)\b'
+negative:
+  - '\b(?:nein|nicht|aber|doch nicht|no|not|but|instead|stattdessen)\b'
