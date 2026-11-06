@@ -93,7 +93,7 @@ public enum BrowserAccessibility {
     }
 
     /// The web area of the browser's focused (else first) window.
-    public static func webArea(pid: pid_t, primaryTop: CGFloat) -> LiveAXNode? {
+    public static func webArea(pid: pid_t, primaryTop: CGFloat, where accept: (LiveAXNode) -> Bool = { $0.url != nil }) -> LiveAXNode? {
         let app = AXUIElementCreateApplication(pid)
         AXUIElementSetMessagingTimeout(app, 0.25)
         var windows: [AXUIElement] = []
@@ -107,7 +107,7 @@ public enum BrowserAccessibility {
             windows += list
         }
         for window in windows {
-            if let area = BrowserPageReader.webArea(in: [LiveAXNode(window, primaryTop: primaryTop)]) { return area }
+            if let area = BrowserPageReader.webArea(in: [LiveAXNode(window, primaryTop: primaryTop)], where: accept) { return area }
         }
         return nil
     }

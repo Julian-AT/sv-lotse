@@ -28,7 +28,7 @@ public struct BrowserPageElement<Node: BrowserAXNode> {
 /// Reads an allowlisted page in the user's browser through Accessibility. Never reads password
 /// fields; callers refuse login pages before reading anything.
 public enum BrowserPageReader {
-    public static let maximumNodes = 4000
+    public static let maximumNodes = 8000
     public static let webAreaSearchNodes = 2500
 
     /// Accessibility roles mapped to the web roles the brain sees in page handles.
@@ -38,14 +38,18 @@ public enum BrowserPageReader {
         "AXButton": "button", "AXLink": "link", "AXSearchField": "searchbox"
     ]
 
-    /// The first web content area below the given roots (breadth first).
-    public static func webArea<Node: BrowserAXNode>(in roots: [Node]) -> Node? {
+    /// The first web content area below the given roots (breadth first) that the filter accepts.
+    /// Browsers can show several (sidebars, assistants); web areas are not searched inside.
+    public static func webArea<Node: BrowserAXNode>(in roots: [Node], where accept: (Node) -> Bool = { _ in true }) -> Node? {
         var queue = roots
         var index = 0
         while index < queue.count && index < webAreaSearchNodes {
             let node = queue[index]
             index += 1
-            if node.role == "AXWebArea" { return node }
+            if node.role == "AXWebArea" {
+                if accept(node) { return node }
+                continue
+            }
             queue += node.children
         }
         return nil
@@ -72,7 +76,9 @@ public enum BrowserPageReader {
 
     public static func clean(_ text: String?) -> String? {
         guard let text else { return nil }
-        let joined = text.split(whereSeparator: { $0.isWhitespace }).joined(separator: " ")
+        // Icon fonts put private-use glyphs into link text; they carry no meaning.
+        let visible = String(String.UnicodeScalarView(text.unicodeScalars.filter { $0.properties.generalCategory != .privateUse }))
+        let joined = visible.split(whereSeparator: { $0.isWhitespace }).joined(separator: " ")
         return String(joined.prefix(160))
     }
 
@@ -116,9 +122,12 @@ public enum BrowserPageReader {
         return result
     }
 
-    /// The element of a handle id, or a fresh one with the same role and label.
-    public static func element<Node: BrowserAXNode>(handle: String, in elements: [BrowserPageElement<Node>]) -> BrowserPageElement<Node>? {
-        elements.first { $0.id == handle }
+    /// The element of a handle id, else the first one with the label the handle had when it was read.
+    public static func element<Node: BrowserAXNode>(handle: String, label: String? = nil,
+                                                    in elements: [BrowserPageElement<Node>]) -> BrowserPageElement<Node>? {
+        if let exact = elements.first(where: { $0.id == handle }) { return exact }
+        guard let label = label?.lowercased(), label.isEmpty == false else { return nil }
+        return elements.first { $0.label.lowercased() == label }
     }
 
     /// The smallest static text (or labelled element) containing the quote, case and space insensitive.

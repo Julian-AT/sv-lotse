@@ -12,6 +12,7 @@ public struct CompanionPreferencesView: View {
     @AppStorage(OverlayPreferenceKey.cursorSpeed) private var cursorSpeed = CursorSpeed.standard.rawValue
     @AppStorage(OverlayPreferenceKey.reducedMotion) private var reducedMotion = false
     @AppStorage("analyticsOptedIn") private var analytics = false
+    @AppStorage(PortalPageMode.defaultsKey) private var portalPages = PortalPageMode.browser.rawValue
     private var model: CompanionSettingsModel { shell.settings }
     private var dashboard: DashboardModel { shell.dashboard }
     private var copy: ChromeCopy { ChromeCopy(language: model.language) }
@@ -152,6 +153,10 @@ public struct CompanionPreferencesView: View {
                     ForEach(CursorSpeed.allCases, id: \.rawValue) { Text(OverlayCopy.speeds[$0] ?? $0.rawValue).tag($0.rawValue) }
                 }
                 Toggle(OverlayCopy.reducedMotion, isOn: $reducedMotion)
+                Picker(model.language == .german ? "Webseiten öffnen in" : "Open web pages in", selection: $portalPages) {
+                    Text(model.language == .german ? "Standardbrowser" : "Default browser").tag(PortalPageMode.browser.rawValue)
+                    Text(model.language == .german ? "Lotse-Fenster" : "Lotse window").tag(PortalPageMode.guided.rawValue)
+                }
             }
             profileStatus
         }

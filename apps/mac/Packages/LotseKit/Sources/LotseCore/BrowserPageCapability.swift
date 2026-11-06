@@ -27,6 +27,8 @@ public final class BrowserPageCapability {
 
     private let log = Logger(subsystem: "dev.svkilotse.mac", category: "browser")
     private(set) var active: ActivePage?
+    /// Handle labels from the last read, so a handle still resolves after the page re-rendered.
+    private var labels: [String: String] = [:]
     var readyTimeout: Duration = .seconds(10)
     var policy: GuidedOriginPolicy? = try? GuidedWindowResources.originPolicy()
     /// Milliseconds between typed characters: readable, like the guided window.
@@ -114,7 +116,9 @@ public final class BrowserPageCapability {
         let ready = await Self.awaitReady(timeout: readyTimeout) {
             await Task.detached { () -> String? in
                 BrowserAccessibility.enableWebAccessibility(pid: pid)
-                guard let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top) else { return nil }
+                guard let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top, where: {
+                    $0.url.map { Self.sameOrigin($0, requested) } ?? false
+                }) else { return nil }
                 return Self.pageReady(url: area.url, childCount: area.children.count, requested: requested) ? area.url : nil
             }.value
         }
@@ -154,12 +158,16 @@ public final class BrowserPageCapability {
         let top = Self.primaryTop
         let page = await Task.detached { () -> Page? in
             BrowserAccessibility.enableWebAccessibility(pid: pid)
-            guard let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top), let url = area.url,
+            guard let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top, where: { $0.url.map { policy?.allows($0) == true } ?? false }),
+                let url = area.url,
                 policy?.allows(url) == true, BrowserPageSafety.isLoginPage(url) == false, let pageFrame = area.frame
             else { return nil }
             return Self.page(url: url, area: area, frame: pageFrame)
         }.value
-        if let page { log.info("browser page read via AX: \(page.handles.count) handles") }
+        if let page {
+            labels = Dictionary(page.handles.map { ($0.id, $0.label) }, uniquingKeysWith: { first, _ in first })
+            log.info("browser page read via AX: \(page.handles.count) handles")
+        }
         return page
     }
 
@@ -193,25 +201,31 @@ public final class BrowserPageCapability {
         let pid = active.pid
         let policy = policy
         let top = Self.primaryTop
-        let rect = await Task.detached { () -> CGRect? in
-            guard let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top), let url = area.url,
-                policy?.allows(url) == true, BrowserPageSafety.isLoginPage(url) == false, let pageFrame = area.frame
-            else { return nil }
+        let known = labels
+        let (rect, reason) = await Task.detached { () -> (CGRect?, String) in
+            guard let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top, where: { $0.url.map { policy?.allows($0) == true } ?? false }),
+                let url = area.url, BrowserPageSafety.isLoginPage(url) == false, let pageFrame = area.frame
+            else { return (nil, "no allowlisted page") }
             let node: LiveAXNode
             switch target {
             case .dom(let dom):
-                if dom.handle == "page" { return CGRect(x: pageFrame.midX - 40, y: pageFrame.maxY - 120, width: 80, height: 80) }
-                guard let element = BrowserPageReader.element(handle: dom.handle, in: BrowserPageReader.elements(in: area)) else { return nil }
-                node = element.node
+                if dom.handle == "page" { return (CGRect(x: pageFrame.midX - 40, y: pageFrame.maxY - 120, width: 80, height: 80), "") }
+                let elements = BrowserPageReader.elements(in: area)
+                if let element = BrowserPageReader.element(handle: dom.handle, label: known[dom.handle], in: elements) {
+                    node = element.node
+                } else if let label = known[dom.handle], let match = BrowserPageReader.textMatch(label, in: area) {
+                    node = match.0
+                } else { return (nil, "handle not found among \(elements.count)") }
             case .text(let text):
-                guard let match = BrowserPageReader.textMatch(text.quote, in: area) else { return nil }
+                guard let match = BrowserPageReader.textMatch(text.quote, in: area) else { return (nil, "quote not found") }
                 node = match.0
-            default: return nil
+            default: return (nil, "unsupported")
             }
-            return Self.scrolledIntoView(node, page: pageFrame)
+            guard let rect = Self.scrolledIntoView(node, page: pageFrame) else { return (nil, "off screen") }
+            return (rect, "")
         }.value
         guard let rect else {
-            log.info("browser target not found via AX")
+            log.info("browser target not resolved via AX: \(reason, privacy: .public)")
             return nil
         }
         NSRunningApplication(processIdentifier: pid)?.activate()
@@ -260,10 +274,12 @@ public final class BrowserPageCapability {
         let pid = active.pid
         let policy = policy
         let top = Self.primaryTop
+        let label = labels[dom.handle]
         let field = await Task.detached { () -> (LiveAXNode, CGRect)? in
-            guard let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top), let url = area.url,
+            guard let area = BrowserAccessibility.webArea(pid: pid, primaryTop: top, where: { $0.url.map { policy?.allows($0) == true } ?? false }),
+                let url = area.url,
                 policy?.allows(url) == true, BrowserPageSafety.isLoginPage(url) == false, let pageFrame = area.frame,
-                let element = BrowserPageReader.element(handle: dom.handle, in: BrowserPageReader.elements(in: area)),
+                let element = BrowserPageReader.element(handle: dom.handle, label: label, in: BrowserPageReader.elements(in: area)),
                 BrowserPageSafety.isFillable(role: element.role), BrowserPageReader.isSecure(element.node) == false,
                 let rect = Self.scrolledIntoView(element.node, page: pageFrame)
             else { return nil }

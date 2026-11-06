@@ -88,3 +88,17 @@ private func page() -> FakeNode {
     let json = try JSONSerialization.jsonObject(with: Data(contentsOf: file)) as? [String: Any]
     #expect(json?["url_patterns"] as? [String] == BrowserPageSafety.loginPatterns)
 }
+
+@Test func picksTheAcceptedWebAreaAndSkipsAssistantPanels() {
+    let sidebar = FakeNode(role: "AXWebArea", url: "https://assistant.example/")
+    let window = FakeNode(role: "AXWindow", children: [sidebar, page()])
+    let area = BrowserPageReader.webArea(in: [window]) { $0.url?.hasPrefix("https://www.sozialversicherung.at") == true }
+    #expect(area?.title == "Pflegegeld beantragen")
+}
+
+@Test func handlesFallBackToTheirLabelAndIconGlyphsAreDropped() {
+    let elements = BrowserPageReader.elements(in: page())
+    #expect(BrowserPageReader.element(handle: "ax-stale", label: "vorname", in: elements)?.role == "textbox")
+    #expect(BrowserPageReader.element(handle: "ax-stale", in: elements) == nil)
+    #expect(BrowserPageReader.clean("\u{E900} Alles auf einen Blick") == "Alles auf einen Blick")
+}

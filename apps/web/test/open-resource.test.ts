@@ -115,6 +115,34 @@ test("on Mac the guided window opens through the bridge and its ActionResult is 
   expect(await pending).toEqual({ output: expect.objectContaining({ success: true }) });
 });
 
+test("on Mac a page opened in the browser is read and filled natively", async () => {
+  const postMessage = vi.fn();
+  window.webkit = { messageHandlers: { lotse: { postMessage } } };
+  const runtime = createClientRuntime();
+  const opened = runtime.execute("open-7", "ui.openResource", page(`${allowed}/d`));
+  await vi.waitFor(() => expect(postMessage).toHaveBeenCalled());
+  receiveNativeActionResult({ actionId: "open-7", resolvedBy: "ax", confidence: 1, success: true });
+  await opened;
+  expect(await runtime.execute("read-1", "context.readPage", {})).toEqual({ native: true });
+  expect(postMessage.mock.calls.at(-1)?.[0]).toMatchObject({
+    type: "ToolInvocation",
+    payload: { toolCallId: "read-1", toolName: "context.readPage" },
+  });
+  const fill = {
+    target: { kind: "dom", handle: "ax-1", url: `${allowed}/d` },
+    value: "Anna",
+    provenance: { source: { kind: "statement", quote: "Anna" } },
+  };
+  expect(await runtime.execute("fill-1", "ui.fill", fill)).toEqual({ native: true });
+  expect(postMessage.mock.calls.at(-1)?.[0]).toMatchObject({
+    type: "ToolInvocation",
+    payload: { toolCallId: "fill-1", toolName: "ui.fill" },
+  });
+  const local = { ...fill, target: { ...fill.target, url: `${window.location.origin}/x` } };
+  await runtime.execute("fill-2", "ui.fill", local);
+  expect(guide.execute).toHaveBeenCalledWith(expect.objectContaining({ id: "fill-2" }));
+});
+
 test("opens a workspace form instance and waits for its viewer", async () => {
   const opened = vi.fn();
   window.addEventListener(OPEN_RESOURCE_CONFIG.openFormEvent, opened);
