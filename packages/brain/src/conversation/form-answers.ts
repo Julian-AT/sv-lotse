@@ -264,7 +264,13 @@ export async function answerFormQuestion(input: {
       fromDocuments,
     });
   }
-  if (answer.length > 80 || MANY.test(answer) || fromDocuments || CORRECTION.test(answer))
+  if (
+    answer.length > 80 ||
+    MANY.test(answer) ||
+    fromDocuments ||
+    CORRECTION.test(answer) ||
+    FIELD_HINT.test(answer)
+  )
     return answerManyFields({ ...input, pending, answer, fromDocuments });
   if (answer.includes("?")) return;
   const [instance] = await db
@@ -348,7 +354,7 @@ const MANY = /[\n;]|,.*,|:\s*\S.*:/u;
 // Naming a field or asking for a change targets the open form even in a short message.
 const FIELD_HINT =
   /\b(?:namens?|namen|name|vorname|nachname|familienname|geburt\w*|adresse|stra(?:ß|ss)e|plz|postleitzahl|ort|telefon|e-?mail|versicherungsnummer|svnr|patient\w*)\b/iu;
-const CORRECTION = /\b(?:ändere|änder|ersetze|korrigier\w*|statt|stattdessen|replace|change)\b/iu;
+const CORRECTION = /(?:ändere|änder|ersetze|korrigier|statt|replace|change)/iu;
 const DOCUMENT = /brief|dokument|entlassung|befund|bescheid|unterlage|letter|document|daraus/iu;
 const extraction = z.object({
   values: z.array(
