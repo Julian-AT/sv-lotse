@@ -251,7 +251,7 @@ function FormField(props: FieldProps): JSX.Element {
         else props.elements.delete(field.id);
       }}
       className={cn(
-        "scroll-my-16 rounded-lg px-1.5 py-1 transition-[background-color,box-shadow] duration-200",
+        "min-w-0 scroll-my-16 rounded-lg px-1.5 py-1 transition-[background-color,box-shadow] duration-200",
         "data-active:bg-primary/5 data-active:ring-2 data-active:ring-primary/50",
         field.type === "checkbox" ? "sm:col-span-2" : "flex flex-col gap-1",
         long && "sm:col-span-2",
@@ -260,16 +260,20 @@ function FormField(props: FieldProps): JSX.Element {
       {field.type === "checkbox" ? (
         <div className="flex items-start gap-2">
           <div className="pt-px">{control}</div>
-          <Label htmlFor={inputId} className="text-xs leading-snug font-normal" title={label}>
-            <span className="line-clamp-2">{label}</span>
+          <Label
+            htmlFor={inputId}
+            className="min-w-0 text-xs leading-snug font-normal"
+            title={label}
+          >
+            <span className="[overflow-wrap:anywhere]">{label}</span>
           </Label>
           {meta}
         </div>
       ) : (
         <>
-          <div className="flex min-h-4 items-center gap-1.5">
-            <Label htmlFor={inputId} className="min-w-0 text-xs" title={label}>
-              <span className="truncate">{label}</span>
+          <div className="flex min-h-4 items-start gap-1.5">
+            <Label htmlFor={inputId} className="min-w-0 text-xs leading-snug" title={label}>
+              <span className="[overflow-wrap:anywhere]">{label}</span>
             </Label>
             {meta}
           </div>
