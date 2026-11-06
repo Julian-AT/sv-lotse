@@ -464,6 +464,271 @@ def status_table(results, have_quantum: bool) -> tuple[str, list[str]]:
     return t, measured
 
 
+# ---------------------------------------------------------------- data release
+
+
+CARD = PAPER / "sources" / "hf-at-benefits-README.md"
+CARD_URL = "https://huggingface.co/datasets/JulianAT/at-benefits"
+
+
+def newest(results: list[tuple[Path, object]], prefix: str) -> tuple[Path, dict] | None:
+    """The result file of a family; with several, the one committed last (then modified last)."""
+    hits = [(p, d) for p, d in results if p.name.startswith(prefix) and isinstance(d, dict)]
+    if not hits:
+        return None
+
+    def when(p: Path) -> int:
+        try:
+            out = subprocess.run(["git", "-C", str(ROOT), "log", "-1", "--format=%ct", "--", str(p)],
+                                 capture_output=True, text=True, check=True).stdout.strip()
+            return int(out or 0)
+        except (OSError, subprocess.CalledProcessError, ValueError):
+            return 0
+    return max(hits, key=lambda h: (when(h[0]), h[0].stat().st_mtime))
+
+
+def card_documents() -> dict | None:
+    """Counts of the documents config, which only the published dataset card records."""
+    if not CARD.is_file():
+        return None
+    text = CARD.read_text(encoding="utf-8")
+    m = re.search(r"\*\*(\d+) documents\*\* \(([^)]*)\), (\d+) pages, (\d+) gold statements", text)
+    j = re.search(r"Pass rate so far:\s*(\d+)/(\d+) \(([0-9.]+); Wilson 95 % \[([0-9.]+), ([0-9.]+)\]\)", text)
+    if not m:
+        return None
+    out: dict = {"documents": int(m.group(1)), "splits": m.group(2), "pages": int(m.group(3)),
+                 "statements": int(m.group(4))}
+    if j:
+        out.update(judge_passed=int(j.group(1)), judge_n=int(j.group(2)), judge_rate=float(j.group(3)),
+                   judge_lo=float(j.group(4)), judge_hi=float(j.group(5)))
+    return out
+
+
+def f2(x: object) -> str:
+    return f"{x:.2f}" if isinstance(x, (int, float)) else "--"
+
+
+def f3(x: object) -> str:
+    return f"{x:.3f}" if isinstance(x, (int, float)) else "--"
+
+
+def src_cell(p: Path) -> str:
+    return r"\nolinkurl{" + p.name + "}"  # file names are [A-Za-z0-9._-]; nolinkurl may break lines
+
+
+def ds_cell(name: str, config: str | None = None) -> str:
+    cell = r"\nolinkurl{" + name + "}"
+    return cell + (r" / \texttt{" + tex(config) + "}" if config else "")
+
+
+def data_release(results: list[tuple[Path, object]], macros: dict[str, str]) -> tuple[str, list[Path]]:
+    """Table of the released datasets (Hugging Face) from the datagen and publish result files."""
+    used: list[Path] = []
+    rows: list[list[str]] = []
+    hf = "JulianAT/at-benefits"
+
+    dlg = newest(results, "datagen-dialogues-")
+    if dlg:
+        p, d = dlg
+        used.append(p)
+        tier = d.get("per_tier", {})
+        langs = len(d.get("per_language", {}))
+        macros.update(DataDialogues=fmt(d.get("release_rows")), DataDialoguesO=fmt(tier.get("O")),
+                      DataDialoguesA=fmt(tier.get("A")), DataDialoguesB=fmt(tier.get("B")),
+                      DataDialoguesLangs=fmt(langs))
+        rows.append([ds_cell(hf, "dialogues"), fmt(d.get("release_rows")),
+                     f"tier O (oracle) {fmt(tier.get('O'))}; tier A (model-verbalised oracle) {fmt(tier.get('A'))}; "
+                     f"tier B (teacher) {fmt(tier.get('B'))}; tiers A/B in {fmt(langs)} languages",
+                     f"labels and reward from the gym; mean tier A/B reward {fmt(d.get('reward_mean'))}; "
+                     f"boundary flags {fmt(d.get('boundary_flags'))}; LLM judge pass rate over all "
+                     f"{fmt(d.get('tier_A_judged'))} judged tier A attempts "
+                     f"{fmt(d.get('tier_A_judge_pass_rate_all_attempts'))} (only passing rows released)",
+                     src_cell(p)])
+
+    sit = newest(results, "datagen-situations-")
+    if sit:
+        p, d = sit
+        used.append(p)
+        counts = d.get("counts", {})
+        total = sum(v for v in counts.values() if isinstance(v, int))
+        llm = sum(v for k, v in counts.items() if k.endswith("/llm") and isinstance(v, int))
+        jd = dig(d, "natural", "judge") or {}
+        lo, hi = (jd.get("wilson_95") or [None, None])[:2]
+        variants = len([k for k in d.get("languages", {}) if k.startswith("llm/")])
+        macros.update(DataSituations=fmt(total), DataSituationsLLM=fmt(llm),
+                      DataSituationsJudge=f2(jd.get("pass_rate")), DataSituationsJudgeLo=f3(lo),
+                      DataSituationsJudgeHi=f3(hi), DataSituationsJudgeN=fmt(jd.get("n")))
+        rows.append([ds_cell(hf, "situations"), fmt(total),
+                     f"personas with situation text: {fmt(total - llm)} template texts, {fmt(llm)} model-rewritten "
+                     f"texts in {fmt(variants)} language variants",
+                     f"engine-computed gold; rewritten texts LLM-judged, pass rate {f2(jd.get('pass_rate'))} "
+                     f"(Wilson 95\\% {f3(lo)}--{f3(hi)}, $n={fmt(jd.get('n'))}$)",
+                     src_cell(p)])
+
+    docs = card_documents()
+    if docs:
+        used.append(CARD)
+        macros.update(DataDocuments=fmt(docs["documents"]), DataStatements=fmt(docs["statements"]))
+        judge = ""
+        if "judge_n" in docs:
+            judge = (f"; LLM judge passed {fmt(docs['judge_passed'])} of {fmt(docs['judge_n'])} model-written "
+                     f"documents ({f2(docs['judge_rate'])}, Wilson 95\\% {f3(docs['judge_lo'])}--{f3(docs['judge_hi'])})")
+        rows.append([ds_cell(hf, "documents"), fmt(docs["documents"]),
+                     f"synthetic letters, {fmt(docs['pages'])} pages; splits {tex(docs['splits'])}",
+                     f"{fmt(docs['statements'])} gold statements placed by the renderer{judge}",
+                     r"dataset card$^{\dagger}$"])
+
+    frm = newest(results, "datagen-forms-")
+    if frm:
+        p, d = frm
+        used.append(p)
+        src = d.get("templates_by_source", {})
+        jd = d.get("judge", {})
+        macros.update(DataForms=fmt(d.get("instances")), DataFormTemplates=fmt(d.get("templates")))
+        rows.append([ds_cell(hf, "forms"), fmt(d.get("instances")),
+                     f"filled forms from {fmt(d.get('templates'))} templates ({fmt(src.get('svbox'))} SV-Box, "
+                     f"{fmt(src.get('e13'))} SVS); {fmt(dig(d, 'release', 'rows_with_pdf'))} with PDFs",
+                     f"values from the product's prefill policy, none chosen by a model; LLM judge sample "
+                     f"pass rate {fmt(jd.get('pass_rate'))} ($n={fmt(jd.get('n'))}$)",
+                     src_cell(p)])
+
+    lqa = newest(results, "datagen-legal-qa-")
+    if lqa:
+        p, d = lqa
+        used.append(p)
+        jd = d.get("judge", {})
+        lo, hi = (jd.get("pass_rate_ci95") or [None, None])[:2]
+        macros.update(DataLegalQA=fmt(d.get("final")), DataLegalQAJudge=fmt(jd.get("pass_rate")))
+        rows.append([ds_cell(hf, "legal_qa"), fmt(d.get("final")),
+                     f"retrieval questions over {fmt(len(d.get('by_act', {})))} acts in "
+                     f"{fmt(len(d.get('by_language', {})))} language variants; BM25 recall@10 (German rendering) "
+                     f"{fmt(dig(d, 'bm25_rank_de', 'recall@10'))}",
+                     f"rule checks and LLM judge on every question, pass rate {fmt(jd.get('pass_rate'))} "
+                     f"(95\\% {f3(lo)}--{f3(hi)}, $n={fmt(jd.get('n'))}$)",
+                     src_cell(p)])
+
+    per = newest(results, "publish-personas")
+    if per:
+        p, d = per
+        used.append(p)
+        sc = d.get("split_counts", {})
+        total = sum(v for v in sc.values() if isinstance(v, int))
+        macros.update(DataPersonas=fmt(total))
+        rows.append([ds_cell(str(d.get("dataset", "personas"))), fmt(total),
+                     "splits " + ", ".join(f"{tex(k.replace('_', ' '))} {fmt(v)}" for k, v in sc.items()),
+                     f"engine gold; leakage test passed: {fmt(dig(d, 'leakage', 'passed'))} (text F1 "
+                     f"{fmt(dig(d, 'leakage', 'text_f1'))}, card F1 {fmt(dig(d, 'leakage', 'card_f1'))}, "
+                     f"base rate {fmt(dig(d, 'leakage', 'base_rate_f1'))})",
+                     src_cell(p)])
+
+    law = newest(results, "publish-corpus")
+    corpus = newest(results, "corpus-")
+    if law:
+        p, d = law
+        used.append(p)
+        attribution = corpus[1].get("attribution") if corpus else None
+        macros.update(DataLaw=fmt(d.get("records")))
+        if attribution:
+            macros.update(DataLawAttribution=tex(attribution))
+        rows.append([ds_cell(str(d.get("dataset", "law"))), fmt(d.get("records")),
+                     "sections of consolidated federal social-insurance law from the RIS open-data interface",
+                     f"licence {tex(str(d.get('licence', '')).replace('-', ' '))}; complete: {fmt(d.get('complete'))}",
+                     src_cell(p)])
+
+    caption = (r"Released datasets on Hugging Face (\url{https://huggingface.co/JulianAT}). Every number is read from "
+               r"the result file in the last column (under \texttt{ml/results/}). $^{\dagger}$The documents counts exist "
+               r"only on the published dataset card, \url{" + CARD_URL + r"}, read from its snapshot "
+               r"\texttt{paper/sources/hf-at-benefits-README.md}" + (f" (sha256 {sha12(CARD)})" if CARD.is_file() else "")
+               + ". Judge pass rates come from uncalibrated LLM judges.")
+    if not rows:
+        return not_run("tab:data", caption, ["Dataset", "Rows"], "a dataset release"), used
+    pc = r">{\raggedright\arraybackslash}p"
+    spec = f"{pc}{{0.15\\linewidth}}r{pc}{{0.27\\linewidth}}{pc}{{0.31\\linewidth}}{pc}{{0.13\\linewidth}}"
+    return table("tab:data", caption, ["Dataset / config", "Rows", "Composition", "Labels and quality checks", "Source"],
+                 rows, spec=spec, wide=True), used
+
+
+# ---------------------------------------------------------------- numbers for the prose
+
+
+def product_numbers(macros: dict[str, str]) -> None:
+    """Headline numbers of the product suites, parsed from docs/evals/results.md."""
+    if not EVALS_MD.is_file():
+        return
+    md = EVALS_MD.read_text(encoding="utf-8")
+    m = re.search(r"Latest full run: \*\*(\d+)/(\d+) passed; (\d+) violations", md)
+    if m:
+        macros.update(EvalEFivePassed=m.group(1), EvalEFiveCases=m.group(2), EvalEFiveViolations=m.group(3))
+    suites = {clean_md(r[0]): clean_md(r[2]) for r in md_table_after(md, "| Suite | Observations | Measured result")
+              if len(r) >= 3 and "superseded" not in r[0].lower()}
+
+    def find(prefix: str, pattern: str) -> re.Match | None:
+        for name, val in suites.items():
+            if name.startswith(prefix):
+                return re.search(pattern, val)
+        return None
+
+    if (m := find("E1 ", r"(\d+)/(\d+) passed")):
+        macros.update(EvalEOne=f"{m.group(1)}/{m.group(2)}")
+    if (m := find("E3 ", r"Recall@10 ([0-9.]+)%.*?nDCG@10 ([0-9.]+)")):
+        macros.update(EvalEThreeRecall=m.group(1) + r"\%", EvalEThreeNdcg=m.group(2))
+    if (m := find("E7 ", r"Exact ([0-9.]+)% \((\d+)/(\d+)\)")):
+        macros.update(EvalESeven=f"{m.group(2)}/{m.group(3)}")
+    if (m := find("E11 ", r"(\d+)/(\d+) exact slot maps, ([0-9.]+)%")):
+        macros.update(EvalEEleven=m.group(3) + r"\%")
+    if (m := find("E12 ", r"Precision ([0-9.]+)%.*?recall ([0-9.]+)%")):
+        macros.update(EvalETwelveP=m.group(1) + r"\%", EvalETwelveR=m.group(2) + r"\%")
+    if (m := find("E13 ", r"Recall ([0-9.]+)%.*?precision ([0-9.]+)%")):
+        macros.update(EvalEThirteenR=m.group(1) + r"\%", EvalEThirteenP=m.group(2) + r"\%")
+    if (m := re.search(r"precision remains below (\d+)%", md)):
+        macros.update(EvalEThirteenTarget=m.group(1) + r"\%")
+    judged = succ = 0
+    for r in md_table_after(md, "| Batch | Judged / attempted | Verified task successes"):
+        if len(r) < 3:
+            continue
+        j = re.match(r"(\d+)/\d+", r[1])
+        s = re.match(r"(\d+)/\d+", r[2])
+        if j and s:
+            judged += int(j.group(1))
+            succ += int(s.group(1))
+    if judged:
+        macros.update(EvalEFourSuccesses=str(succ), EvalEFourJudged=str(judged))
+
+
+def quantum_numbers(data: dict, macros: dict[str, str]) -> None:
+    """Headline numbers of the quantum study for the appendix text."""
+    runs = dig(data, "aer", "runs") or []
+    if runs:
+        secs = [s for s in (dig(r, "baselines", "cpsat", "seconds") for r in runs) if isinstance(s, (int, float))]
+        optimal = all(dig(r, "baselines", "cpsat", "status") == "OPTIMAL" for r in runs)
+        macros.update(QInstances=fmt(len(runs)), QCpsatStatus="optimal" if optimal else "not always optimal")
+        if secs:
+            macros.update(QCpsatMaxMs=f"{max(secs) * 1000:.0f}")
+    hw = data.get("hardware")
+    if isinstance(hw, dict) and hw.get("status") == "done":
+        circ = hw.get("circuits") or []
+        names = list(dict.fromkeys(c.get("name") for c in circ))
+        kinds = {c.get("name"): (c.get("kind"), c.get("qubits")) for c in circ}
+        qa = [n for n in names if kinds[n][0] == "Q-A"]
+        qb = [n for n in names if kinds[n][0] == "Q-B"]
+
+        def reached(variant: str) -> list[str]:
+            return [c.get("name") for c in circ if c.get("variant") == variant and c.get("approx_ratio_best") == 1]
+
+        def qubits(ns: list[str]) -> str:
+            qs = list(dict.fromkeys(str(kinds[n][1]) for n in ns))
+            return qs[0] if len(qs) == 1 else "/".join(qs)
+
+        plain = reached("qaoa")
+        warm = reached("warm-start")
+        macros.update(QHwBackend=tex(hw.get("backend")), QHwInstances=fmt(len(names)), QHwShots=fmt(hw.get("shots")),
+                      QHwQA=fmt(len(qa)), QHwQAQubits=qubits(qa) if qa else "--",
+                      QHwQB=fmt(len(qb)), QHwQBQubits=qubits(qb) if qb else "--",
+                      QHwPlainOpt=fmt(len(plain)), QHwWarmOpt=fmt(len(warm)),
+                      QHwPlainOptWhich=("the set-cover (Q-B) instances" if plain and all(kinds[n][0] == "Q-B" for n in plain)
+                                        else "a subset of the instances"))
+
+
 # ---------------------------------------------------------------- main
 
 
@@ -505,16 +770,14 @@ def main() -> int:
                                         "evaluated on a single-turn plan proxy rather than the multi-turn gym; "
                                         "it is not a result of the planned SFT stage.", found["sft"], "an SFT run"))
 
-    if found["release"]:
-        rrows = []
-        for p, d in found["release"]:
-            if isinstance(d, dict):
-                rrows.append([fmt(d.get("dataset") or d.get("model") or p.stem), r"\url{" + str(d.get("url", "")) + "}",
-                              fmt(d.get("records") if d.get("records") is not None else d.get("n")), fmt(d.get("published_at"))])
-        write("tab_release.tex", table("tab:release", "Published artefacts on Hugging Face, from \\texttt{ml/results/publish-*.json}.",
-                                       ["Artefact", "URL", "Records", "Published"], rrows, spec="llrl", wide=True))
-    else:
-        write("tab_release.tex", not_run("tab:release", "Published artefacts on Hugging Face.", ["Artefact", "URL"], "a release"))
+    macros: dict[str, str] = {}
+    data_tex, data_used = data_release(results, macros)
+    write("tab_data.tex", data_tex)
+    used += [p for p in data_used if p not in used]
+    stale = OUT / "tab_release.tex"  # superseded by tab_data.tex
+    if stale.exists():
+        stale.unlink()
+    product_numbers(macros)
 
     quantum: list[tuple[Path, object]] = []
     if QUANTUM.is_file():
@@ -532,6 +795,8 @@ def main() -> int:
     else:
         qt = generic_tables("tab:quantum", "T9 quantum study.", quantum, "the quantum study")
     write("tab_quantum.tex", qt)
+    if quantum and isinstance(quantum[0][1], dict):
+        quantum_numbers(quantum[0][1], macros)
 
     product, have_product = product_table()
     write("tab_product.tex", product)
@@ -547,6 +812,8 @@ def main() -> int:
         have.append("the persona generator")
     if found["selftest"]:
         have.append("the gym self-test")
+    if any(p.name.startswith("datagen-") for p in used):
+        have.append("the dataset generators")
     if found["sft"]:
         have.append("an SFT smoke run")
     if quantum:
@@ -571,6 +838,8 @@ def main() -> int:
                   "they are described as planned work and no claim about their performance is made.")
     product_s = ("The product's own evaluation suites are reported separately as product baselines."
                  if have_product else "")
+    write("numbers.tex", "% generated by scripts/tables.py: numbers quoted in the prose\n"
+          + "".join(f"\\newcommand{{\\{k}}}{{{v}}}\n" for k, v in sorted(macros.items())))
     files = "; ".join(f"\\nolinkurl{{{rel(p)}}} ({sha12(p)})" for p in used) or "none"
     write("status.tex",
           "% generated by scripts/tables.py\n"

@@ -1,0 +1,20 @@
+\begin{table}[htbp]
+\centering
+\small
+\caption{Released datasets on Hugging Face (\url{https://huggingface.co/JulianAT}). Every number is read from the result file in the last column (under \texttt{ml/results/}). $^{\dagger}$The documents counts exist only on the published dataset card, \url{https://huggingface.co/datasets/JulianAT/at-benefits}, read from its snapshot \texttt{paper/sources/hf-at-benefits-README.md} (sha256 7eb044b84538). Judge pass rates come from uncalibrated LLM judges.}
+\label{tab:data}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.15\linewidth}r>{\raggedright\arraybackslash}p{0.27\linewidth}>{\raggedright\arraybackslash}p{0.31\linewidth}>{\raggedright\arraybackslash}p{0.13\linewidth}}
+\toprule
+Dataset / config & Rows & Composition & Labels and quality checks & Source \\
+\midrule
+\nolinkurl{JulianAT/at-benefits} / \texttt{dialogues} & 10{,}352 & tier O (oracle) 10{,}000; tier A (model-verbalised oracle) 351; tier B (teacher) 1; tiers A/B in 9 languages & labels and reward from the gym; mean tier A/B reward 0.9975; boundary flags 0; LLM judge pass rate over all 476 judged tier A attempts 0.7374 (only passing rows released) & \nolinkurl{datagen-dialogues-5883eff5.json} \\
+\nolinkurl{JulianAT/at-benefits} / \texttt{situations} & 1{,}000{,}000 & personas with situation text: 999{,}575 template texts, 425 model-rewritten texts in 13 language variants & engine-computed gold; rewritten texts LLM-judged, pass rate 0.88 (Wilson 95\% 0.848--0.906, $n=483$) & \nolinkurl{datagen-situations-d89a5bfa.json} \\
+\nolinkurl{JulianAT/at-benefits} / \texttt{documents} & 449 & synthetic letters, 499 pages; splits heldout\_family 35, test 22, train 368, val 24 & 4{,}296 gold statements placed by the renderer; LLM judge passed 417 of 549 model-written documents (0.76, Wilson 95\% 0.722--0.793) & dataset card$^{\dagger}$ \\
+\nolinkurl{JulianAT/at-benefits} / \texttt{forms} & 15{,}120 & filled forms from 27 templates (7 SV-Box, 20 SVS); 4{,}924 with PDFs & values from the product's prefill policy, none chosen by a model; LLM judge sample pass rate 0.8727 ($n=110$) & \nolinkurl{datagen-forms-0653e934.json} \\
+\nolinkurl{JulianAT/at-benefits} / \texttt{legal\_qa} & 404 & retrieval questions over 8 acts in 11 language variants; BM25 recall@10 (German rendering) 0.6757 & rule checks and LLM judge on every question, pass rate 0.9926 (95\% 0.979--0.998, $n=407$) & \nolinkurl{datagen-legal-qa-b2ba28a2.json} \\
+\nolinkurl{JulianAT/at-benefits-personas} & 55{,}000 & splits train 50{,}000, val 2{,}000, test 2{,}000, heldout family 1{,}000 & engine gold; leakage test passed: yes (text F1 0.9764, card F1 1, base rate 0.3404) & \nolinkurl{publish-personas.json} \\
+\nolinkurl{JulianAT/at-sv-law} & 2{,}863 & sections of consolidated federal social-insurance law from the RIS open-data interface & licence CC BY 4.0; complete: yes & \nolinkurl{publish-corpus.json} \\
+\bottomrule
+\end{tabular}}
+\end{table}

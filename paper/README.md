@@ -1,7 +1,7 @@
 # Lotse-RL preprint
 
-LaTeX source of *Lotse-RL: Training Grounded Benefits-Navigation Agents with Executable Eligibility
-Rules for Austrian Social Insurance* (arXiv, cs.CL / cs.AI). The research plan is in
+LaTeX source of *Lotse-RL: Executable Eligibility Rules as Verifiable Ground Truth for Benefits
+Navigation in Austrian Social Insurance* (arXiv, cs.CL / cs.AI). The research plan is in
 [docs/research/lotse-rl.md](../docs/research/lotse-rl.md).
 
 ```sh
@@ -21,9 +21,11 @@ Requirements: Python 3 (standard library only) and [tectonic](https://tectonic-t
 | `ml/results/*persona*.json`, `*corpus*.json`, `*selftest*`/`*gym*.json`, `*sft*.json` | Personas, corpus, gym self-test, SFT smoke run |
 | `ml/results/*.json` (by table id or name) | Status of planned tables T1–T8 |
 | `ml/quantum/results.json` | T9 quantum study |
+| `ml/results/datagen-*.json`, `publish-*.json`, `sources/hf-at-benefits-README.md` | Data release table (`tab_data.tex`); the card snapshot supplies only the documents counts |
+| all of the above | `generated/numbers.tex`: macros for every number quoted in the prose |
 
 A table without an input file prints a single *not run* row. The abstract, limitations and
-conclusion include generated status sentences (`generated/status.tex`), so the text never claims a
+conclusion use generated macros (`generated/status.tex`, `generated/numbers.tex`), so the text never claims a
 result the tables do not contain. Do not type numbers into `main.tex` by hand.
 
 `refs.bib` only cites sources listed in section 15 of the research plan; metadata comes from arXiv,
