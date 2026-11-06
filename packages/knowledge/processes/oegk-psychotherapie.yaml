@@ -1,0 +1,192 @@
+# SV-Box: data/svbox/Leistungskataloge/Serviceratgeber-2026_Broschuere_A5_OEAM_99-19_klein_korr.pdf
+# PDF-Seite 20 (1-basiert), Druckseiten 38–39.
+# Quellenstand der Broschüre: 01.01.2026; Abrufdatum in sources.
+# Fachliche Leistungsvoraussetzungen werden ausschließlich durch befugte Fachpersonen und ÖGK festgestellt; keine Diagnose erheben oder auswerten. Keine parallele Psychotherapie und klinisch-psychologische Behandlung (PDF S. 38).
+# Keine erfundenen Terminangebote: appointment_channels bleibt bis zur menschlichen Prüfung leer.
+# Abschluss bestätigt die Verwaltungshilfe bzw. Rückfrage, keinen Leistungsanspruch.
+# Erinnerungen nach 0 Tagen sind Aufgabenhinweise, keine gesetzlichen Fristen.
+id: oegk-psychotherapie
+benefit: ref:catalog/oegk-psychotherapie
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: contact_region
+    type: enum:oegk-region
+    question_hint: In welchem Bundesland befindet sich Ihre zuständige ÖGK-Stelle laut
+      Versicherungsunterlagen? Bei Selbstversicherung mit geringfügiger Beschäftigung nennen Sie das
+      Beschäftigungsbundesland.
+    validation:
+      options:
+        - Wien
+        - Niederösterreich
+        - Burgenland
+        - Oberösterreich
+        - Steiermark
+        - Kärnten
+        - Salzburg
+        - Tirol
+        - Vorarlberg
+  - id: examination_confirmed
+    type: boolean
+    question_hint: Liegt die schriftliche Bestätigung der ärztlichen Untersuchung vor der zweiten Behandlung vor?
+  - id: units
+    type: number
+    question_hint: Wie viele Einheiten sind laut Behandlungsunterlagen vorgesehen?
+  - id: approval_present
+    type: boolean
+    question_hint: Liegt bei mehr als zehn Einheiten die Bewilligung der ÖGK vor?
+  - id: parallel_contract_treatment
+    type: boolean
+    question_hint: Erhalten Sie für die privat verrechnete Behandlung zugleich eine Leistung auf Kassenrechnung?
+  - id: other_psychological_treatment
+    type: boolean
+    question_hint: Erhalten Sie neben der hier vorgesehenen Psychotherapie gleichzeitig eine
+      klinisch-psychologische Behandlung oder umgekehrt?
+  - id: documents_ready
+    type: boolean
+    question_hint: Sind die genannten Unterlagen vollständig vorbereitet?
+  - id: contact_done
+    type: boolean
+    question_hint:
+      Haben Sie die Unterlagen selbst übermittelt oder die Abwicklung mit der zuständigen
+      Stelle geklärt?
+  - id: clarification_done
+    type: boolean
+    question_hint:
+      Haben Sie die offenen Voraussetzungen mit der ÖGK geklärt? Eine Leistungszusage kann
+      nur die zuständige Stelle geben.
+  - id: private_invoice
+    type: boolean
+    question_hint: Haben Sie eine private Rechnung für die bereits vorgesehene Leistung? Bei
+      Vertragsbehandlung erfolgt die Abrechnung mit der ÖGK.
+  - id: invoice_ready
+    type: boolean
+    question_hint: Ist die detaillierte Rechnung bezahlt und für die ÖGK vorbereitet?
+steps:
+  - id: check-requirements
+    needs:
+      - contact_region
+      - examination_confirmed
+      - units
+      - approval_present
+      - parallel_contract_treatment
+      - other_psychological_treatment
+      - private_invoice
+    criteria: ref:catalog/oegk-psychotherapie#criteria
+    action: office.resolve
+    outputs:
+      - id: contact-office
+        type: office
+    transitions:
+      - to: prepare
+        when: (examination_confirmed == true) and (units <= 10 or approval_present == true) and
+          (private_invoice == false or parallel_contract_treatment == false) and
+          (other_psychological_treatment == false)
+      - to: clarify
+        when: not ((examination_confirmed == true) and (units <= 10 or approval_present == true) and
+          (private_invoice == false or parallel_contract_treatment == false) and
+          (other_psychological_treatment == false))
+  - id: prepare
+    needs:
+      - check-requirements
+      - documents_ready
+    documents: ref:catalog/oegk-psychotherapie#documents
+    action: documents.checklist
+    outputs:
+      - id: administrative-checklist
+        type: checklist
+    transitions:
+      - to: prepare-invoice
+        when: documents_ready == true and private_invoice == true
+      - to: confirm-contact
+        when: documents_ready == true and private_invoice == false
+    reminders:
+      - after_days: 0
+        text_de:
+          Bitte besorgen Sie die fehlenden Unterlagen bei den genannten Stellen. Medizinische Angaben
+          bleiben bei den behandelnden Fachpersonen.
+        when: documents_ready == false
+  - id: prepare-invoice
+    needs:
+      - prepare
+      - invoice_ready
+    outputs:
+      - id: paid-invoice-checklist
+        type: checklist
+    transitions:
+      - to: confirm-contact
+        when: invoice_ready == true
+    reminders:
+      - after_days: 0
+        text_de:
+          Bitte besorgen Sie die bezahlte detaillierte Rechnung bei der behandelnden Fachperson. Die
+          ÖGK prüft die Erstattung.
+        when: invoice_ready == false
+  - id: confirm-contact
+    needs:
+      - prepare
+      - contact_done
+    outputs:
+      - id: contact-confirmation
+        type: confirmation
+    transitions:
+      - to: finish
+        when: contact_done == true
+  - id: finish
+    needs:
+      - confirm-contact
+    outputs:
+      - id: navigation-complete
+        type: confirmation
+  - id: clarify
+    needs:
+      - check-requirements
+      - clarification_done
+    outputs:
+      - id: carrier-clarification
+        type: handoff
+    transitions:
+      - to: finish-clarification
+        when: clarification_done == true
+    reminders:
+      - after_days: 0
+        text_de: Bitte klären Sie die offenen Voraussetzungen mit der ÖGK.
+        when: clarification_done == false
+  - id: finish-clarification
+    needs:
+      - clarify
+    outputs:
+      - id: clarification-complete
+        type: confirmation
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote: Der schriftliche Nachweis, dass spätestens vor der zweiten psychotherapeutischen bzw.
+      klinisch-psychologischen Behandlung eine ärztliche Untersuchung durchgeführt wurde. Diese
+      Bestätigung kann formlos oder durch das dafür vorgesehene Formular erfolgen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote: Bei Behandlungen, die mehr als zehn Therapieeinheiten erfordern, ist ein Antrag auf
+      Bewilligung der Psychotherapie bzw. klinisch-psychologischen Behandlung erforderlich.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote:
+      Es ist nicht möglich, gleichzeitig eine Therapie auf Rechnung in einer Vertragseinrichtung
+      bzw. in einem Gesundheitszentrum zu machen und einen Kostenzuschuss zu erhalten.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote:
+      Es ist auch nicht möglich, eine klinisch-psychologische Behandlung und eine Psychotherapie
+      gleichzeitig in Anspruch zu nehmen.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/load?contentid=10008.748630&version=1786021238#page=20
+    quote: Die ÖGK leistet einen Kostenzuschuss gegen Vorlage der saldierten, detaillierten
+      Honorarrechnung.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+  - url: https://www.oegk.at/cdscontent/?contentid=10007.870222&portal=oegkportal
+    quote: Ab der 11. Sitzung ist eine Bewilligung notwendig.
+    retrieved_at: 2026-11-06T00:07:42.653242Z
+as_of: 2026-01-01
