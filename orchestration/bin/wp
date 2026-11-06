@@ -26,6 +26,9 @@ fi
 # Deadline mode: normal-risk WPs land when their gates pass; the cross-review runs after landing
 # and its findings become follow-ups. risk: high WPs are still reviewed before landing.
 : "${REVIEW_AFTER_LAND:=1}"
+# Fast mode (owner, 2026-11-06): ownership is advisory, every WP (also risk: high) lands when its
+# gates pass, and workers build what they need instead of stopping.
+: "${FAST_MODE:=1}"
 : "${XREVIEW_EFFORT:=xhigh}"
 FOLLOWUPS_DIR="${FOLLOWUPS_DIR:-$ROOT/.orchestration/followups}"
 # One Compose project for every worktree: gates and workers share the same Postgres and MinIO on
@@ -669,7 +672,7 @@ cmd_verify() {
   if [ "$kind" != orch ]; then
     if [ -f "$run/report.json" ]; then
       st="$(jq -r '.status // "missing"' "$run/report.json" 2>/dev/null || echo invalid)"
-      if [ "$st" = "done" ]; then record report pass "status=done"
+      if [ "$st" = "done" ] || { [ "$FAST_MODE" = 1 ] && [ "$st" = partial ]; }; then record report pass "status=$st"
       elif [ -s "$run/report-override.md" ]; then record report warn "worker status=$st, overridden by reviewer (report-override.md)"
       else record report fail "worker status=$st"; fi
       if [ "$(jq '.contract_change_requests | length' "$run/report.json" 2>/dev/null || echo 0)" -gt 0 ]; then
@@ -686,7 +689,7 @@ cmd_verify() {
   ownset="$(owns_of "$id")"
   while IFS= read -r f; do
     [ -n "$f" ] || continue
-    matches_any "$f" "$claimset" || package_doc_allowed "$f" "$ownset" || record ownership fail "$f is outside owns/may_touch"
+    matches_any "$f" "$claimset" || package_doc_allowed "$f" "$ownset" || record ownership "$([ "$FAST_MODE" = 1 ] && echo warn || echo fail)" "$f is outside owns/may_touch"
     if [ "$kind" != orch ]; then
       set -f
       for p in $GLOBAL_FORBIDDEN; do
@@ -813,7 +816,7 @@ auto_flow() {
       continue
     fi
     [ "$st" = verified ] || return 0
-    if [ "$REVIEW_AFTER_LAND" = 1 ] && [ "$AUTO_LAND" = 1 ] && [ "$(fm_get "$b" risk)" != high ]; then
+    if [ "$REVIEW_AFTER_LAND" = 1 ] && [ "$AUTO_LAND" = 1 ] && { [ "$FAST_MODE" = 1 ] || [ "$(fm_get "$b" risk)" != high ]; }; then
       auto_commit "$id" "$run" || { warn "$id: automatic commit not possible; waiting for the orchestrator"; return 0; }
       if cmd_pr "$id" && cmd_land "$id"; then
         post_land_review "$id" "$run" &
