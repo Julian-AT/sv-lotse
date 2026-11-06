@@ -1,0 +1,58 @@
+# Awaiting human review; administrative access only.
+id: praevention-brustkrebs-frueherkennung
+benefit: ref:catalog/praevention-brustkrebs-frueherkennung
+actor_roles:
+  - subject
+  - helper
+slots:
+  - id: region
+    type: string
+    question_hint: In welchem Bundesland suchen Sie ein Angebot?
+steps:
+  - id: programme-information
+    needs: []
+    criteria: ref:catalog/praevention-brustkrebs-frueherkennung#criteria
+    outputs:
+      - id: published-programme
+        type: document
+    transitions:
+      - to: doctor-clarification
+  - id: doctor-clarification
+    action: appointment.prepare
+    needs: []
+    criteria: ref:catalog/praevention-brustkrebs-frueherkennung#criteria
+    outputs:
+      - id: doctor-questions
+        type: document
+    transitions:
+      - to: prepare-access
+  - id: prepare-access
+    needs:
+      - region
+    outputs:
+      - id: official-access
+        type: document
+    transitions:
+      - to: finish
+  - id: finish
+    needs: []
+    outputs:
+      - id: access-summary
+        type: document
+completion:
+  evidence:
+    - user_statement
+sources:
+  - url: https://www.frueh-erkennen.at/so-koennen-sie-teilnehmen/
+    quote: Wenn Sie zwischen 45 und 74 Jahre alt sind, ist Ihre e-card automatisch
+      für eine Früherkennungsmammografie alle 2 Jahre freigeschaltet.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.gesundheit.gv.at/krankheiten/krebs/brustkrebs/frueherkennung.html
+    quote: Ziel der Früherkennung ist es, Brustkrebs in einem möglichst frühen
+      Stadium zu entdecken.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.frueh-erkennen.at/faqs/
+    quote: Wenn es in Ihrer Familie Brustkrebserkrankungen gibt, sprechen Sie bitte
+      mit Ihrer Ärztin oder Ihrem Arzt darüber.
+    retrieved_at: 2026-11-06T01:36:22Z
+as_of: 2026-11-06

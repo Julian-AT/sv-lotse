@@ -1,0 +1,64 @@
+# Awaiting human review; official sources retrieved 2026-11-06.
+id: praevention-brustkrebs-frueherkennung
+name_de: Brustkrebs-Früherkennung – automatische Freischaltung
+name_simple: Information zum Früherkennungsprogramm
+area: A
+life_situations:
+  - prevention
+scope: social_insurance
+criteria:
+  - id: published-access
+    text_de: "Frauen von 45 bis 74 Jahren: automatische Freischaltung der e-card
+      alle zwei Jahre. Bei Brustkrebserkrankungen in der Familie entscheidet die
+      Ärztin oder der Arzt über den individuellen Weg und einen früheren
+      Beginn."
+    source: &a1
+      url: https://www.frueh-erkennen.at/so-koennen-sie-teilnehmen/
+      quote: Wenn Sie zwischen 45 und 74 Jahre alt sind, ist Ihre e-card automatisch
+        für eine Früherkennungsmammografie alle 2 Jahre freigeschaltet.
+      retrieved_at: 2026-11-06T01:36:22Z
+carriers:
+  - oegk
+  - svs
+  - bvaeb
+office_rules:
+  - when: "true"
+    office: ref:offices/praevention-programmzugang
+documents:
+  - id: e-card
+    name_de: "e-card"
+    required: true
+    obtain_from: "Eigene e-card; sie ist alle zwei Jahre automatisch für die Mammografie freigeschaltet."
+    source: &doc1
+      url: "https://www.frueh-erkennen.at/so-koennen-sie-teilnehmen/"
+      quote: "Ihre e-card ist automatisch freigeschaltet. Sie können alle 2 Jahre eine Mammografie im Rahmen des Früherkennungsprogramms in Anspruch nehmen."
+      retrieved_at: "2026-11-06T03:45:00Z"
+forms: []
+process: ref:processes/praevention-brustkrebs-frueherkennung
+appointment_channels:
+  - kind: phone
+    number: 0800 500 181
+    verified_at: 2026-11-06
+sources:
+  - *a1
+  - &a2
+    url: https://www.gesundheit.gv.at/krankheiten/krebs/brustkrebs/frueherkennung.html
+    quote: Ziel der Früherkennung ist es, Brustkrebs in einem möglichst frühen
+      Stadium zu entdecken.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - url: https://www.frueh-erkennen.at/faqs/
+    quote: Wenn es in Ihrer Familie Brustkrebserkrankungen gibt, sprechen Sie bitte
+      mit Ihrer Ärztin oder Ihrem Arzt darüber.
+    retrieved_at: 2026-11-06T01:36:22Z
+  - *doc1
+as_of: 2026-11-06
+target_group:
+  age_min: 45
+  age_max: 74
+  sex: female
+  interval: alle 24 Monate
+  family_history_criteria:
+    - Brustkrebserkrankungen in der Familie
+  rationale_text: Ziel der Früherkennung ist es, Brustkrebs in einem möglichst
+    frühen Stadium zu entdecken.
+  rationale_source: *a2
