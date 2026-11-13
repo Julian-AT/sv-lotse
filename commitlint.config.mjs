@@ -35,7 +35,6 @@ const scopes = [
   "paper",
 ];
 
-
 export default {
   extends: ["@commitlint/config-conventional"],
   rules: {

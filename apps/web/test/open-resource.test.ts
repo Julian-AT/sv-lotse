@@ -6,8 +6,8 @@ import { createClientRuntime } from "../src/conversation/client-tools.ts";
 import { pendingOfferQuestion, pendingOpenOffer } from "../src/conversation/open-offer.tsx";
 import {
   formFieldElementId,
-  OPEN_RESOURCE_CONFIG,
   nativePageCapsule,
+  OPEN_RESOURCE_CONFIG,
   openPortalPageNow,
   receiveNativeActionResult,
   receiveNativePage,

@@ -7,7 +7,13 @@ import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
 
-function PureChatHeader({ title, showSidebarToggle }: { title: string; showSidebarToggle: boolean }) {
+function PureChatHeader({
+  title,
+  showSidebarToggle,
+}: {
+  title: string;
+  showSidebarToggle: boolean;
+}) {
   const { toggleSidebar } = useSidebar();
   const heading = (
     <h1 className="sr-only" id="conversation-title">

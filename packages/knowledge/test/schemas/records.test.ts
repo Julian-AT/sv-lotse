@@ -109,12 +109,9 @@ const reviewableRecords = [
   [SourceRegistrySchema, { sources: [source], as_of: "2026-11-01" }],
 ] as const;
 
-test.each(reviewableRecords)(
-  "AC1 accepts records awaiting human review",
-  (schema, record) => {
-    expect(schema.safeParse({ ...record, verified_at: undefined }).success).toBe(true);
-  },
-);
+test.each(reviewableRecords)("AC1 accepts records awaiting human review", (schema, record) => {
+  expect(schema.safeParse({ ...record, verified_at: undefined }).success).toBe(true);
+});
 
 test.each(reviewableRecords)("AC1 rejects malformed review dates", (schema, record) => {
   for (const verified_at of [
